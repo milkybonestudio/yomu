@@ -1,0 +1,1138 @@
+
+
+
+
+
+[set,true,riku,james,nadia,molly,erinbaldo,nash]
+
+
+[set, true, 
+
+    riku:eden 
+    james:king
+
+
+]
+
+
+[  set,true, riku:eden ]
+
+
+
+[fn, true, esconder_nomes, molly, erinbaldo, nadia, riku]
+
+[fn,true,tirar_highlight, todos]
+
+[mov,true,0,0,0,-1000,-1000,1000]
+
+
+[fn,false,trocar_background, images/in_game/background/catedral/nara_room/bed_up_view_n]
+
+
+[fn,false,transicao_inicio,longa]
+
+
+[audio, true, music_1  ,music/celta_2]
+
+[fn,true,trocar_background,images/in_game/background/capital/castelo/corredor]
+
+[fn,true,  escurecer_tela , 4]
+
+
+[fn,false,transicao_final,longa]
+
+
+
+
+[ic,true,armor@happy@bf@frente(manto)]
+
+
+[fn,true,trocar_cor,riku,noite,true]
+[fn,true,trocar_cor,molly,noite,true]
+[fn,true,trocar_cor,erinbaldo,noite,true]
+
+
+[fn,true,mudar_modo_tela,1,1]
+
+
+[fn,false,mostrar_personagens,riku]
+
+
+[text,false,0,riku,hum~ HUM~ hum~~]
+
+[text,false,0,erinbaldo,who's there!?]
+[text,false,0,riku,*James told me to be cautious*]
+
+
+
+[ic,true,0,0,0,0,armor@rage@ba@frente(combate)]
+[fn,true,mostrar_personagens,erinbaldo]
+[mov,true,300,0,0,0,-350]
+
+[fn,true,mudar_modo_tela,4,0]
+
+
+
+[text,false,0,erinbaldo,Stopped! how the fuck you thi...]
+[ic,true,0,0,0,0,armor@fear@ba@frente(combate)]
+[text,false,0,erinbaldo,...]
+[ic,true,0,0,0,0,armor@neutral@ba@frente(continencia)]
+[text,false,0,erinbaldo,go... good night sir!]
+
+
+
+
+
+
+[ic,true,armor@happy@ba@frente(manto),0,0,0,armor@neutral@bf@frente(continencia)]
+[text,false,0,riku,Hello mrs guard, great night hum!?]
+
+
+[ic,true,armor@happy@bf@frente(manto),0,0,0,armor@neutral@ba@frente(continencia)]
+[text,false,0,erinbaldo,yes sir!]
+
+
+
+
+[fn, true, mostrar_nomes, riku]
+[ic,true,armor@happy@ba@frente(manto),0,0,0,armor@happy@bf@frente(continencia)]
+[text,false,0,riku,sir is too much, you can call me Riku]
+
+[ic,true,armor@happy@bf@frente(manto),0,0,0,armor@happy@ba@frente(continencia)]
+[text,false,0,erinbaldo,I feel that this would be very disrespectful sir]
+
+
+[ic,true,armor@happy@ba@frente(manto),0,0,0,armor@happy@bf@frente(continencia)]
+[text,false,0,riku,As you wish then. But since you are here... I'm looking for general Kronos, did you see him?]
+
+
+[ic,true,armor@happy@bf@frente(manto),0,0,0,armor@happy@ba@frente(continencia)]
+[text,false,0,erinbaldo,Unfortunately I did not see him sir.]
+
+[ic,true,armor@mad@ba@frente(manto),0,0,0,armor@neutral@bf@frente(continencia)]
+[text,false,0,riku,AH... I wanted to talk to him about the new shipment of wine.I ask 300 roosters or more and I receive only 150!]
+
+
+[ic,true,armor@mad@bf@frente(manto),0,0,0,armor@neutral@ba@frente(continencia)]
+[text,false,0,erinbaldo,This seems... tragic sir]
+
+
+
+
+
+[ic,true,armor@mad@ba@frente(manto),0,0,normal_clothes@happy@ba@direita,armor@neutral@bf@frente(continencia)]
+[mov,true,p,p,p,-1000]
+[text,false,0,riku,Well, if you find him and can pass the message I would appreciate it.]
+[mov,true,450,p,p,-500,0]
+[ic,true,armor@happy@bf@frente(manto),0,0,normal_clothes@happy@ba@direita,armor@neutral@bf@frente(continencia)]
+[fn,true,mostrar_personagens,molly]
+[text,false,0,molly,riku?]
+
+
+
+[mov,true,0,p,p,p,500]
+[ic,true,armor@happy@ba@frente(manto),0,0,normal_clothes@happy@bf@direita,armor@neutral@bf@frente(continencia)]
+[text,false,0,riku,hello my little thing]
+
+[ic,true,armor@mad@bf@frente(manto),0,0,normal_clothes@sad@bf@direita,armor@neutral@ba@frente(continencia)]
+[text,false,0,erinbaldo,what it is doing here? the slaves block is far from here.]
+
+
+[ic,true,armor@mad@bf@frente(manto),0,0,normal_clothes@sad@bf@direita,armor@neutral@bf@frente(continencia)]
+[text,false,0,molly,...]
+
+
+
+[ic,true,armor@mad@ba@frente(manto),0,0,normal_clothes@sad@bf@direita,armor@neutral@bf@frente(continencia)]
+[text,false,0,riku,ahg... this is my personal dwarf, and my things can stay here if they want it.]
+[text,false,0,riku,You have a problem with it?]
+
+
+[ic,true,armor@mad@bf@frente(manto),0,0,normal_clothes@sad@bf@direita,armor@neutral@ba@frente(continencia)]
+[text,false,0,erinbaldo,ahmm... no... no sir!]
+
+
+[ic,true,armor@mad@ba@frente(manto),0,0,normal_clothes@sad@bf@direita,armor@neutral@bf@frente(continencia)]
+[text,false,0,riku,I think you should go]
+
+[ic,true,armor@mad@bf@frente(manto),0,0,normal_clothes@sad@bf@direita,armor@neutral@ba@frente(continencia)]
+[text,false,0,erinbaldo,Right! have a good night sir!]
+[fn,true,esconder_personagens,erinbaldo]
+
+[mov,true,200,p,p,-250,1000]
+
+[ic,true,armor@happy@ba@frente(manto),0,0,normal_clothes@shy(horny)@bf@direita,armor@neutral@ba@frente(continencia)]
+[text,false,0,riku,So, how are my favorite dwarf today?]
+
+[ic,true,armor@happy@bf@frente(manto),0,0,normal_clothes@shy(horny)@bf@direita,armor@neutral@ba@frente(continencia)]
+[text,false,0,molly,~~]
+
+[ic,true,armor@happy@bf@frente(manto),0,0,normal_clothes@shy(horny)@ba@direita,armor@neutral@ba@frente(continencia)]
+[text,false,0,molly,I'm fine... now I'm better]
+
+[ic,true,armor@mad@ba@frente(manto),0,0,normal_clothes@happy@bf@direita]
+[text,false,0,riku,Good, I hadn't seen you for a while. even my friends are hiding from me.]
+
+[ic,true,armor@happy@bf@frente(manto),0,0,normal_clothes@happy@ba@direita]
+[text,false,0,molly,haha I was trying to find you but you never come here anymore]
+
+[ic,true,armor@happy@bf@frente(manto),0,0,normal_clothes@shy(horny)@bf@direita]
+[text,false,0,riku,Hum~]
+
+[ic,true,armor@happy@bf@frente(manto),0,0,normal_clothes@shy(horny)@bf@direita]
+[text,false,0,riku,...]
+
+
+
+[ic,true,armor@happy@ba@frente(manto),0,0,normal_clothes@shy(horny)@bf@direita]
+[text,false,0,riku,Do you want to ask me something?]
+
+[ic,true,armor@happy@bf@frente(manto),0,0,normal_clothes@shy(horny)@bf@direita]
+[text,false,0,molly,...]
+[ic,true,armor@happy@bf@frente(manto),0,0,normal_clothes@shy(horny)@ba@direita]
+[text,false,0,molly,You know... it's been a long time... since we spent time together...]
+
+
+[ ic,true,
+
+    jayden:armor@neutral@ba@frente(manto)
+    nara:armor@neutral@ba@frente
+    
+]
+
+[text,false,0,
+
+    personagem: riku
+    text: Sorry molly, but I still have some subjects to solve today.
+    
+]
+
+
+[ic,true,
+    jayden:armor@neutral@ba@frente(manto)
+    nara:armor@neutral@ba@frente
+]
+
+
+
+[ic,true,armor@neutral@ba@frente(manto),0,0,normal_clothes@sad@bf@direita]
+[text,false,0,riku,Sorry molly, but I still have some subjects to solve today.]
+
+[fn, true, mostrar_nomes, molly]
+[ic,true,armor@neutral@bf@frente(manto),0,0,normal_clothes@sad@bf@direita]
+[text,false,0,molly,...]
+[mov,true,200,p,p,-400]
+[ic,true,armor@neutral@bf@frente(manto),0,0,normal_clothes@sad@ba@esquerda]
+[text,false,0,molly,Sure, no problem. I already imagined that you could be busy.]
+
+
+[mov,true,-200,p,p,-400]
+[ic,true,armor@happy@ba@frente(manto),0,0,normal_clothes@sad@bf@esquerda]
+[text,false,0,riku,But if you want, tomorrow I have to visit some officers in the lower city. If you want we can go together]
+
+
+[ic,true,armor@happy@bf@frente(manto),0,0,normal_clothes@shy(horny)@ba@direita]
+[text,false,0,molly,I won't bother you?]
+
+[ic,true,armor@happy@ba@frente(manto),0,0,normal_clothes@shy(horny)@bf@direita]
+[mov,true,200,p,p,-250]
+[text,false,0,riku,Of course not! If I don't demonstrate that I care about you how can I think better of myself?.]
+[text,false,0,riku,maybe I would need to buy another one to show how I am against the system.]
+
+
+[ic,true,armor@happy@bf@frente(manto),0,0,normal_clothes@shy(horny)@ba@direita]
+[text,false,0,molly,well... if you can not handle 1 buy another one would be stupidy]
+[text,false,0,molly,you don't give me your care in a long time]
+
+[ic,true,armor@happy@ba@frente(manto),0,0,normal_clothes@shy(horny)@bf@direita]
+[mov,true,200,p,p,-250]
+[text,false,0,riku,hum~ so maybe tomorrow I have debts to pay]
+
+[text,false,0,molly,Great! so we talk about the morning ok?]
+
+[ic,true,armor@happy@ba@frente,0,0,normal_clothes@shy(horny)@bf@direita]
+[text,false,0,riku,I won't complain if you want to wake me up, nothing would make me more happy than you be the first thing I saw in the morning]
+[ic,true,armor@happy@bf@frente,0,0,normal_clothes@shy(horny)@bf@direita]
+[text,false,0,molly,~~]
+
+[ic,true,armor@happy@bf@frente,0,0,normal_clothes@shy(horny)@ba@direita]
+[text,false,0,molly,right...bye!...]
+
+[ic,true,armor@happy@bf@frente(manto)]
+[fn,true,esconder_personagens,molly]
+[mov,true,0]
+
+
+[text,false,0,narrator,..]
+[text,false,2,narrator,....]
+[text,false,2,narrator,......]
+
+
+[text,false,0,riku,right]
+
+[fn,true,trocar_cor,riku,default]
+[mov,false,-100]
+
+[fn,true,esconder_personagens,riku]
+[fn,true,abaixar_texto]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[fn,false,trocar_background, images/in_game/splashes/sets_obrigatorios/sara_wake_up/nadia_sofa , default, default , cor_0 ]
+
+
+[fn,true,levantar_texto]
+
+
+[mov,true,400,-250, -500]
+[text,false,0,riku,Am I interrupting something?]
+
+
+[fn,true,trocar_cor,riku,default]
+
+[ic,true,armor@happy@bf@frente(manto), uniform@neutral@bf@frente , halfArmor@(shy)nervous@ba@frente ]
+
+[fn,true,mostrar_personagens,riku,nadia,james]
+
+[fn,true,trocar_background, images/in_game/background/capital/castelo/james_room , default, colocar_desfoco , cor_2 ]
+
+[text,false,0,nadia,Ah..go...Good night sir!]
+
+[ic,true,armor@happy@bf@frente(manto), uniform@neutral@ba@frente , halfArmor@(shy)nervous@bf@frente ]
+
+[text,false,0,james,You arrive early]
+
+
+
+[ic,true,armor@happy@ba@frente(manto), uniform@mad@bf@frente , halfArmor@(shy)nervous@bf@frente ]
+[text,false,0,riku,I think I arrived at the time, you that are too slow.]
+
+
+[ic,true,armor@happy@bf@frente(manto), uniform@mad@ba@frente , halfArmor@(shy)nervous@bf@frente ]
+[text,false,0,james,Why I would rush myself?]
+
+
+[ic,true,armor@happy@ba@frente(manto), uniform@mad@bf@frente , halfArmor@(shy)nervous@bf@frente ]
+[text,false,0,riku,This is actually very disrespectful to her! Have you ever thought about how she feels for you to take so long!?]
+[text,false,0,riku,"... Why is he taking so long? Does he find me bad at this?". poor thing.]
+
+
+[ic,true,armor@happy@bf@frente(manto), uniform@mad@ba@frente , halfArmor@(shy)nervous@bf@frente ]
+[text,false,0,james,You could worry about your own things]
+
+
+[ic,true,armor@happy@ba@frente, uniform@mad@bf@frente , halfArmor@(shy)nervous@bf@frente ]
+[text,false,0,riku,you are right! so good bye then]
+
+[ic,true,armor@happy@bf@frente, uniform@mad@ba@frente , halfArmor@nervous@bf@frente ]
+[text,false,0,james,wait]
+
+[ic,true,armor@mad@ba@frente, uniform@mad@bf@frente , halfArmor@nervous@bf@frente ]
+[text,false,0,riku,oh no~ It seems that I can't take care of my things. You could be more grateful, such a good friend I am.]
+
+
+[ic,true,armor@mad@bf@frente, uniform@mad@ba@frente , halfArmor@nervous@bf@frente ]
+[text,false,0,james,friend? if I don't pay you you don't even show up]
+
+
+[ic,true,armor@mad@ba@frente, uniform@mad@bf@frente , halfArmor@nervous@bf@frente ]
+[text,false,0,riku,I will always have time for you, but not in the night.]
+[ic,true,armor@happy@ba@frente, uniform@mad@bf@frente , halfArmor@nervous@bf@frente ]
+[text,false,0,riku,maybe in the night, but we need to have some rules, I don't bottom]
+
+
+
+[ic,true,armor@happy@bf@frente, uniform@mad@ba@frente , halfArmor@nervous@bf@frente ]
+[text,false,0,james,I need more realiable friends. Or better employees]
+
+
+
+[mov,true,-175,150, -500]
+[ic,true,armor@smug@ba@esquerda, uniform@mad@bf@frente , halfArmor@(shy)nervous@bf@frente ]
+[text,false,0,riku,And this girl? she can not do the job?]
+
+[ic,true,armor@happy@ba@frente(manto), uniform@neutral@bf@frente , halfArmor@(shy)nervous@bf@frente ]
+[text,false,0,riku,Like things here blow up some times and...]
+
+[ic,true,armor@happy@ba@frente(manto), uniform@neutral@ba@frente , halfArmor@(shy)nervous@bf@frente ]
+[text,false,0,james,Just stop.]
+
+[ic,true,armor@mad@bf@frente(manto), uniform@neutral@bf@frente , halfArmor@(shy)nervous@bf@frente ]
+[text,false,0,riku,...]
+[ic,true,armor@mad@ba@frente(manto), uniform@neutral@bf@frente , halfArmor@(shy)nervous@bf@frente ]
+[text,false,0,riku,You are so boring.]
+
+[ic,true,armor@happy@bf@frente(manto), uniform@neutral@bf@frente , halfArmor@(shy)nervous@ba@frente ]
+[text,false,0,nadia,I..I think I'm in the way here ... Can I withdraw?]
+
+
+
+[mov,true,300,-405, -500]
+
+[ic,true,armor@happy@bf@frente(manto), uniform@neutral@ba@frente , halfArmor@(shy)nervous@bf@frente ]
+[text,false,0,james,Stay a little longer, but wait on the porch.]
+
+
+
+
+[fn,true,tirar_transicao_cor,nadia]
+[fn,true,tirar_transicao_movimento,nadia]
+[fn,true,esconder_personagens,nadia]
+
+
+[ic,true,armor@mad@ba@frente(manto), james_mao_cabeca_nadia_00, halfArmor@(shy)nervous@bf@frente ]
+[text,false,0,riku,she will be bored this way, and it's useless to asking me to be cautious if you'll be talking to everyone]
+
+
+[ic,true,armor@mad@bf@frente(manto), james_mao_cabeca_nadia_01 , halfArmor@(shy)nervous@bf@frente ]
+[text,false,0,nadia,I won't t.. tell anyone sir!]
+
+
+[ic,true,armor@mad@bf@frente(manto), james_mao_cabeca_nadia_02 , halfArmor@(shy)nervous@bf@frente ]
+[text,false,0,james,See]
+
+
+[ic,true,armor@mad@ba@frente(manto), james_mao_cabeca_nadia_00 , halfArmor@(shy)nervous@bf@frente ]
+[text,false,0,riku,Good that you trust anyone now.]
+
+
+
+[ic,true,armor@mad@bf@frente(manto), uniform@mad@ba@frente , halfArmor@(shy)nervous@bf@frente ]
+
+[fn,true,mostrar_personagens,nadia]
+
+[fn,true,colocar_transicao_cor,nadia]
+[fn,true,colocar_transicao_movimento,nadia]
+
+
+
+[fn, true, trocar_nomes_display, 
+
+    nadia:nadia
+
+]
+
+
+[text,false,0,james,If you didn't skip so much you would know that Nadia is spending a lot of time here.]
+
+[fn,true,esconder_personagens,nadia]
+[mov,true,300,-350, -700]
+
+
+[ic,true,armor@mad@ba@frente(manto), uniform@mad@bf@frente , halfArmor@(shy)nervous@bf@frente ]
+[text,false,0,riku,So, what can I help you today my king?]
+
+
+[ic,true,armor@mad@bf@frente(manto), uniform@neutral@bf@frente ]
+[text,false,0,narrator,...]
+
+
+[ic,true,armor@mad@bf@frente(manto), uniform@neutral@ba@frente ]
+[text,false,0,james,I know you would be sleeping at this time so I will be soon]
+
+
+[ic,true,armor@happy@ba@frente, uniform@neutral@bf@frente ]
+[text,false,0,riku,Good]
+
+
+[ic,true,armor@neutral@bf@frente, uniform@mad@ba@frente]
+[text,false,0,james,Two priests were murdered at the Cathedral, were beheaded.]
+
+[ic,true,armor@neutral@bf@frente(manto), uniform@mad@bf@frente]
+[text,false,0,riku,!?]
+
+[ic,true,armor@neutral@ba@frente(manto), uniform@mad@bf@frente]
+[text,false,0,riku,Did they find the culprit?]
+
+
+
+
+
+
+
+
+[ic,true,armor@neutral@bf@frente(manto), uniform@mad@ba@frente]
+[text,false,0,james,They found a suspect, but he killed himself when they caught him. I am worried.]
+
+
+[ic,true,armor@neutral@ba@frente(manto), uniform@neutral@bf@frente]
+[text,false,0,riku,Wasn't it just one crazy guy? Maybe some new sect?]
+
+
+
+
+
+
+[ic,true,armor@neutral@bf@frente(manto), uniform@neutral@bf@frente]
+[text,false,0,james,He died before the second. And besides this had 3 more attempts to kidnap, but they were nuns.]
+
+
+[ic,true,armor@neutral@ba@frente(manto), uniform@mad@bf@frente]
+[text,false,0,riku,It can be an organized group.]
+
+[ic,true,armor@neutral@bf@frente(manto), uniform@mad@ba@frente]
+[text,false,0,james,And at the moment this is what more worries me. So I need your help.]
+
+
+[ic,true,armor@neutral@ba@frente(manto), uniform@mad@bf@frente]
+[text,false,0,riku,Is it a request and not an order?]
+
+[ic,true,armor@neutral@bf@frente(manto), uniform@neutral@ba@frente]
+[text,false,0,james,I can't order this, it will be a long mission]
+
+[ic,true,armor@happy@ba@frente(manto), uniform@neutral@bf@frente]
+[text,false,0,riku,I can do it quickly, 1 day of travel and 1 day of work]
+
+
+[ic,true,armor@neutral@bf@frente(manto), uniform@neutral@ba@frente]
+[text,false,0,james,You can't just kill who is in charge. This kind of thing cannot be won in strength.]
+
+
+[ic,true,armor@neutral@bf@frente(manto), uniform@neutral@ba@frente]
+[text,false,0,james,I think the hole is a little below. Do you remember that strange case that occurred in May?]
+
+[ic,true,armor@neutral@ba@frente(manto), uniform@neutral@bf@frente]
+[text,false,0,riku,May? ... the group near the waterfall?]
+
+[ic,true,armor@neutral@bf@frente(manto), uniform@neutral@ba@frente]
+[text,false,0,james,Yes, the bodies were left without the heads as well as the cases in the cathedrals. And I have no idea if they intended to take their heads out of the nuns.]
+
+[mov,true,300,-150]
+[text,false,0,james,I investigated more and find this.]
+
+
+
+
+
+[ic,true,armor@neutral@bf@frente(manto), uniform@neutral@bf@frente]
+[mov,true,-300,350]
+
+[ic,true,armor@neutral@bf@frente(manto), uniform@neutral@bf@frente]
+[text,false,0,narrator,...]
+
+
+[text,false,0,riku,!?]
+
+
+[ic,true,armor@neutral@ba@frente(manto), uniform@neutral@bf@frente]
+[text,false,0,riku,Why no one saw this before? How long has this happened?]
+
+[ic,true,armor@neutral@bf@frente(manto), uniform@neutral@ba@frente]
+[text,false,0,james,The time and place were always very different, was not so obvious. The first report was 7 years ago]
+
+
+[ic,true,armor@neutral@bf@frente(manto), uniform@neutral@ba@frente]
+[text,false,0,james,what I want you to do is very simple. Go to the Cathedral and check what are the situation]
+[text,false,0,james,90% went down the central line, So I am worried about the cathedral safety]
+
+
+
+[ic,true,armor@neutral@ba@frente(manto), uniform@neutral@bf@frente]
+[text,false,0,riku,even if is a group or a sect I think Christopher can protect the cathedral alone.]
+
+[ic,true,armor@neutral@bf@frente(manto), uniform@neutral@ba@frente]
+[text,false,0,james,No, he can't]
+
+
+[ic,true,armor@neutral@ba@frente(manto), uniform@neutral@bf@frente]
+
+[text,false,0,riku,Why not? he is still healthy right?]
+
+[ic,true,armor@neutral@bf@frente(manto), uniform@neutral@bf@frente]
+[text,false,0,narrator,...]
+
+[ic,true,armor@mad@ba@frente(manto), uniform@neutral@bf@frente]
+[text,false,0,riku,Are you hiding something from me?]
+
+[ic,true,armor@mad@bf@frente(manto), uniform@mad@ba@frente]
+[text,false,0,james,There are things I am not sure yet.]
+
+[ic,true,armor@mad@ba@frente(manto), uniform@neutral@bf@frente]
+[text,false,0,riku,and what are this things?]
+
+
+[ic,true,armor@mad@bf@frente(manto), uniform@mad@ba@frente]
+[text,false,0,james,I prefer not to give information that are not confirmed]
+
+
+[ic,true,armor@mad@ba@frente(manto), uniform@neutral@bf@frente]
+[text,false,0,riku,...sure]
+[text,false,0,riku,You know...When your sister was still here she told me I wasn't important enough to know everything. Good to know nothing change]
+
+
+[ic,true,armor@neutral@bf@frente, uniform@mad@ba@frente]
+[text,false,0,james,I want to protect you, I know how you always over react. You don't trust me?]
+
+[ic,true,armor@neutral@ba@frente, uniform@mad@bf@frente]
+[text,false,0,riku,I trust you, but seems that you don't trust me.]
+[ic,true,armor@mad@ba@frente, uniform@mad@bf@frente]
+[text,false,0,riku,And you protect me is a joke]
+
+
+[ic,true,armor@neutral@bf@frente, uniform@mad@ba@frente]
+[mov,true,p,100]
+[text,false,0,james,I just don't want you worrying about unnecessary things. You already have things to do.]
+
+
+
+
+
+
+[ic,true,armor@neutral@ba@frente, uniform@neutral@bf@frente]
+[text,false,0,riku,and how I will exactly enter? you wanna transfer me as a teacher? will raise suspicion]
+
+[ic,true,armor@neutral@bf@frente(manto), uniform@neutral@ba@frente]
+[text,false,0,james,No, in the cathedral entry test this year a small scandal happened]
+
+
+[ic,true,armor@neutral@ba@frente(manto), uniform@neutral@bf@frente]
+[text,false,0,riku, What scandal? I didn't hear anything that can be useful.]
+
+
+
+[ic,true,armor@neutral@bf@frente(manto), uniform@neutral@ba@frente]
+[text,false,0,james,A group of priests ... "abused" a participant.]
+[text,false,0,james,They denied all external participants of the test on the 17th region, except 1 woman.]
+
+[ic,true,armor@neutral@bf@frente(manto), uniform@neutral@bf@frente]
+[text,false,0,riku,!?]
+[ic,true,armor@mad@ba@frente(manto), uniform@neutral@bf@frente]
+[text,false,0,riku,Reject everyone? it's ridiculous. And why this woman pass? is she a prodigy or anything?]
+
+
+[fn,true,trocar_background,  images/in_game/splashes/sets_obrigatorios/sara_wake_up/noah_saving  , default ,  default]
+
+
+[ic,true,armor@mad@bf@frente(manto), uniform@neutral@ba@frente]
+[text,false,0,james,Christopher described not as a light thing. The woman help to resolve the problem, so they give her a pass]
+[text,false,0,james,You will meet her, you both you go in the same carriage.]
+
+
+[fn,true,trocar_background, images/in_game/background/capital/castelo/james_room , default, default]
+
+
+[ic,true,armor@neutral@ba@frente, uniform@neutral@bf@frente]
+[text,false,0,riku,The religious wing won`t like this. they could at least put one men]
+
+
+[ic,true,armor@neutral@bf@frente, uniform@neutral@ba@frente]
+[text,false,0,james,I agree. And this is the opportunity. Take this...]
+
+
+
+[text,false,0,narrator,*james entrega um anel*]
+
+
+[ic,true,armor@neutral@ba@frente, uniform@neutral@bf@frente]
+[text,false,0,riku,This... it's too much risk.]
+
+
+
+[ic,true,armor@neutral@bf@frente(manto), uniform@neutral@ba@frente]
+[text,false,0,james,I ask that toy of yours to make a copy. Of course the copy dosn't work. But anyone will use the original anyway]
+
+
+
+[ic,true,armor@neutral@ba@frente(manto), uniform@neutral@bf@frente]
+[text,false,0,riku,Good that you are trusting her more]
+
+
+[ic,true,armor@mad@bf@frente(manto), uniform@neutral@ba@frente]
+[text,false,0,james,well, it's useful]
+
+
+[fn,true,trocar_background, images/in_game/background/capital/castelo/james_room , default, default]
+
+
+[mov,true,300,-350]
+
+
+[ic,true,armor@happy@bf@frente(manto), uniform@neutral@bf@frente]
+[text,false,0,narrator,...]
+
+
+[ic,true,armor@neutral@ba@frente(manto), uniform@neutral@bf@frente]
+[text,false,0,riku,we are risking a lot with this]
+
+
+[ic,true,armor@neutral@bf@frente, uniform@neutral@ba@frente,0,0,0,normal_clothes@neutral@ba@frente]
+[text,false,0,james,I can't let the cathedral fall. If it falls the capital falls in sequence.]
+
+
+[ic,true,armor@neutral@ba@frente(manto), uniform@neutral@bf@frente]
+[text,false,0,riku,right... I need to think a little.]
+
+
+
+[ic,true,armor@happy@bf@frente, uniform@neutral@ba@frente,0,0,0,normal_clothes@neutral@ba@frente]
+[text,false,0,james,One more thing]
+
+
+
+[ic,true,armor@neutral@bf@frente, uniform@neutral@ba@frente,halfArmor@(shy)nervous@bf@frente ,0,0,normal_clothes@neutral@bf@frente]
+
+[fn,true,mostrar_personagens,nadia]
+[mov,true,450,0,-550,p,p,1000]
+
+[ic,true,armor@mad@ba@frente, uniform@mad@bf@frente,0,0,0,normal_clothes@neutral@bf@frente]
+[text,false,0,riku,more?! for the fuck sake]
+
+
+[ic,true,armor@neutral@bf@frente, uniform@neutral@ba@frente,halfArmor@(shy)nervous@bf@frente,0,0,normal_clothes@neutral@bf@frente]
+[text,false,0,james,take nadia with you]
+
+
+[ic,true,armor@happy@ba@frente,   uniform@neutral@bf@frente,   halfArmor@(shy)nervous@bf@frente]
+
+[text,false,0,riku,ok]
+
+[ic,true,armor@happy@bf@frente,   uniform@mad@ba@frente,   halfArmor@(shy)nervous@bf@frente]
+[text,false,0,james,that's a fast answer]
+
+[ic,true,armor@happy@bf@frente,   uniform@mad@bf@frente,   halfArmor@(shy)nervous@ba@frente]
+[text,false,0,nadia,what!? I am in some kinda danger?]
+
+[ic,true,armor@happy@bf@frente,   uniform@neutral@ba@frente,   halfArmor@(shy)nervous@bf@frente]
+[text,false,0,james,no, just sleep with him this night]
+
+[ic,true,armor@happy@bf@frente,   uniform@mad@bf@frente,   halfArmor@(shy)nervous@bf@frente]
+[text,false,0,nadia,!?]
+
+
+[ic,true,armor@happy@ba@frente,   uniform@mad@bf@frente,   halfArmor@(shy)nervous@bf@frente]
+[text,false,0,riku,good, I have some snacks... we will have some fun]
+
+
+[ic,true,armor@happy@bf@frente(manto),   uniform@mad@bf@frente,   halfArmor@(shy)nervous@ba@frente]
+[text,false,0,nadia,can I... refuse? like... Respectfully refuse]
+
+
+
+[audio, true, music_1 , music/terror_4_1, 1500,1500]
+[ic,true,armor@happy@bf@frente(manto),   uniform@neutral@ba@frente,   halfArmor@(shy)nervous@bf@frente]
+[text,false,0,james,that an order, but You know that I would never put you in danger]
+
+[ic,true,armor@happy@bf@frente(manto),   uniform@neutral@bf@frente,   halfArmor@(shy)nervous@ba@frente]
+[text,false,0,nadia,ha...hay!]
+
+
+
+
+
+
+[mov,true,p,-25]
+[fn,true,  escurecer_tela ,1]
+[ic,true,armor@happy@bf@frente(manto),   uniform@mad@ba@frente,   halfArmor@nervous@bf@frente]
+[text,false,0,james,Do you think I would do that? you don't trust me?]
+
+[fn,true,  escurecer_tela ,2]
+[ic,true,armor@neutral@bf@frente(manto),   uniform@mad@bf@frente,   halfArmor@nervous@ba@frente]
+[text,false,0,nadia,no.. no! I trust you sir]
+
+
+
+
+[fn, true, trocar_nomes_display, 
+
+    james:j?me$
+
+]
+
+
+
+[fn, true, mudar_cor_pergaminho, 5]
+
+
+[fn,true,trocar_cor,riku,dark_8]
+[mov,true,p,-50]
+[fn,true,  escurecer_tela ,3]
+[ic,true,armor@neutral@bf@frente(manto),   uniform@mad(demon)@ba@frente,   halfArmor@nervous@bf@frente]
+[text,false,0,james,you are lying, is that why I fucking hate this pathetic beings...you all are not worth my kindness. this castle is a nest of foolish humans]
+
+
+[fn,true,trocar_cor,riku,dark_5]
+[ic,true,armor@neutral@bf@frente(manto),   uniform@mad(demon)@bf@frente,   halfArmor@nervous@bf@frente]
+[text,false,0,nadia,...]
+
+[fn,true,flip_foco]
+[mov,true,p,-75]
+[fn,true,trocar_cor,riku,dark_3]
+[fn,true,  escurecer_tela ,7]
+[ic,true,armor@neutral@bf@frente(manto),   uniform@mad(demon)@ba@frente,   halfArmor@nervous@bf@frente]
+[text,false,0,james,I do not deserve your words? you will say nothing to me? I wont just kill you right now because you alive worth a little more]
+
+[fn,true,  escurecer_tela ,13]
+[ic,true,armor@neutral@bf@frente(manto),   uniform@mad(demon)@bf@frente,   halfArmor@nervous@ba@frente]
+[text,false,0,nadia,sorry...]
+
+
+[fn, true, mudar_cor_pergaminho, 18]
+[fn,true,trocar_cor,riku,dark_2]
+
+[fn, true, mudar_cor_texto_personagens,
+
+    riku:green_light
+    james:yellow_light
+    nadia: white
+
+]
+
+
+[audio, true, music_1 , music/terror_4_2, 200,200]
+
+[mov,true,p,-250]
+[fn,true,  escurecer_tela ,17]
+
+
+[ic,true,armor@neutral@bf@frente(manto),   uniform@rage(demon)@ba@frente,   halfArmor@fear@ba@frente]
+[text,false,0,james,the only reasson why I don't rape you right now is because you don't deserve it, you are nothing, you born with nothing and will die as nothing]
+
+
+[ic,true,armor@neutral@bf@frente(manto),   uniform@rage(demon)@bf@frente,   halfArmor@fear@ba@frente]
+[text,false,0,nadia,...]
+
+[ic,true,armor@neutral@bf@frente(manto),   uniform@rage(demon)@ba@frente,   halfArmor@fear@ba@frente]
+[text,false,0,james,say something!]
+
+[mov,true,-400,450,-750]
+[fn,true,mudar_index_personagem,james,2]
+[fn,true,mudar_index_personagem,riku,1]
+[fn,true,trocar_cor,nadia,dark_5]
+[fn,true,mudar_index_personagem,nadia,0]
+[fn,true,trocar_cor,riku,white]
+
+[ic,true,armor@neutral@ba@frente(manto),   uniform@rage(demon)@bf@frente,   halfArmor@fear@ba@frente]
+[text,false,0,riku,right right, you can stop this nonsense now]
+
+
+[ic,true,armor@neutral@bf@frente(manto),   uniform@rage(demon)@ba@frente,   halfArmor@fear@ba@frente]
+[text,false,0,james,Don't you dare stay in my way. Stay out of it!]
+
+
+[fn,true,trocar_cor,nadia,dark_2]
+[ic,true,armor_hold_swords@mad@ba@frente,   uniform@rage(demon)@bf@frente,   halfArmor@fear@ba@frente]
+[text,false,0,riku,You've had enough time out here, now leave him alone]
+
+[ic,true,armor_hold_swords@mad@bf@frente,   uniform@rage(demon)@ba@frente,   halfArmor@fear@ba@frente]
+[text,false,0,james,ksksks Do you think that I have fear of you?!]
+[text,false,0,james,even if you burn your soul and pray for the gods you would still be too weak, you could not even hurt me]
+
+
+[ic,true,armor_hold_swords@mad@ba@frente,   uniform@rage(demon)@bf@frente,   halfArmor@fear@ba@frente]
+[text,false,0,riku,If we fight again the result would not change, I will just win again. Just go back to sleep.]
+
+
+
+[ic,true,armor_hold_swords@mad@bf@frente,   uniform@rage(demon)@ba@frente,   halfArmor@fear@ba@frente]
+[text,false,0,james,You won? kskssk. That was not even a fight. My existence is bigger than everything your imagination can create]
+[text,false,0,james,When my vase change I will finally get my opportunity, then you will see what I am capable to]
+
+[ic,true,armor_hold_swords@mad@ba@frente,   uniform@rage(demon)@bf@frente,   halfArmor@fear@ba@frente]
+[text,false,0,riku,Nothing will change.]
+
+[ic,true,armor_hold_swords@mad@bf@frente,   uniform@rage(demon)@ba@frente,   halfArmor@fear@ba@frente]
+[text,false,0,james,kskssk. Things always change. They won't allow the pieces of the game stay in peace for too long. ]
+
+
+
+[ic,true,armor_hold_swords@mad@ba@frente,   uniform@rage(demon)@bf@frente,   halfArmor@fear@ba@frente]
+[text,false,0,riku,You talk enough already. just go away]
+
+
+[ic,true,armor_hold_swords@mad@bf@frente,   uniform@rage(demon)@ba@frente,   halfArmor@fear@ba@frente]
+[text,false,0,james,A mundane being talk back to an ethereal entity is disrespectful to the natural flow of the world.]
+[text,false,0,james,But maybe my destiny will be just to enjoy see you suffer. They are moving you towards other one. Can you feel this? someone is working towards our dream]
+
+
+[ic,true,armor_hold_swords@mad@ba@frente,   uniform@rage(demon)@bf@frente,   halfArmor@fear@ba@frente]
+[text,false,0,riku,What are you talking about?]
+
+
+[ic,true,armor_hold_swords@mad@bf@frente,   uniform@rage(demon)@bf@frente,   halfArmor@fear@ba@frente]
+[text,false,0,james,Sooner or later we will all arouse, the years of waiting are coming to an end.]
+[text,false,0,james,I hope that you don't die before I can have the pleasure to dismember every piece of your body]
+
+
+[audio, true, music_1  ,music/celta_2, 7000,3000]
+[text,false,0,james,k..gh.]
+
+[ic,true,armor_hold_swords@mad@bf@frente,   uniform@pain(demon)@bf@frente,   halfArmor@fear@ba@frente]
+
+[mov,true,p,475]
+
+[fn,true,  escurecer_tela ,12]
+[text,false,0,james,ghr...]
+[fn,true,  trocar_cor ,nadia,4]
+[fn,true,  escurecer_tela ,8]
+[text,false,0,james,...]
+[fn,true,  escurecer_tela ,5]
+[text,false,0,james,.....]
+[fn,true,  escurecer_tela ,2]
+[ic,true,0,   uniform@mad@ba@frente]
+
+
+[fn, true, mudar_cor_texto_personagens,
+
+    riku:default
+    james:default
+    nadia: default
+
+]
+
+
+[fn, true, trocar_nomes_display, 
+
+james:james
+
+]
+
+[fn, true, mudar_cor_pergaminho, 0]
+
+[text,false,0,james,sorry...]
+
+[fn,true,flip_foco]
+
+
+
+[ic,true,armor_hold_swords@mad@bf@frente,   uniform@mad@bf@frente,   halfArmor@fear@ba@frente]
+[text,false,0,nadia,...]
+
+
+[ic,true,armor@mad@ba@frente,   uniform@mad@bf@frente,   halfArmor@fear@ba@frente]
+[fn,true,  trocar_cor ,nadia,default]
+[fn,true,  escurecer_tela ,0]
+[mov,true,-100]
+
+
+
+
+
+[text,false,0,riku,you need to be more carefull. Next time I maybe not be here.]
+
+[ic,true,armor@mad@bf@frente,   uniform@mad@ba@frente,   halfArmor@fear@ba@frente]
+[text,false,0,james,I know, just go you both, I need some time alone]
+
+[ic,true,armor@neutral@bf@frente,   uniform@mad@ba@frente,   halfArmor@fear@ba@frente]
+[mov,true,p,p,-250]
+[text,false,0,james,nadia tomorrow I...]
+
+[ic,true,armor@neutral@bf@frente,   uniform@mad@bf@frente,   halfArmor@fear@ba@frente]
+
+
+[text,false,0,james,...]
+
+[ic,true,armor@neutral@ba@frente,   uniform@mad@bf@frente,   halfArmor@fear@ba@frente]
+[text,false,0,riku,right...]
+[ic,true,armor@happy@ba@frente,   uniform@mad@bf@frente,   halfArmor@fear@ba@frente]
+[text,false,0,riku, we need to simulate like you are a victim of a abusive superior]
+
+[ic,true,armor@happy@ba@frente,   uniform@mad@bf@frente,   halfArmor@fear@ba@frente]
+[text,false,0,nadia,ho..]
+
+[fn,true,tirar_transicao,nadia]
+[fn,true,esconder_personagens,nadia]
+
+[ic,true,nadia_up,   uniform@neutral@bf@frente]
+
+[text,false,0,nadia,Ah!]
+
+[ic,true,armor_hold_nadia@mad@ba@esquerda, uniform@neutral@bf@frente]
+[text,false,0,riku,Now we are fine, but I am scared that people will think less of me!]
+
+[ic,true,armor_hold_nadia@mad@ba@esquerda, uniform@mad@bf@frente]
+[text,false,0,riku,do you think about my reputation?]
+
+
+[ic,true,armor_hold_nadia@mad@bf@esquerda, uniform@mad@ba@frente]
+[text,false,0,james,sure, abuse a guard would be the worst that you already did]
+
+
+[ic,true,armor_hold_nadia@happy@ba@esquerda, uniform@mad@bf@frente]
+[text,false,0,riku,right, let's go]
+[ic,true,holdNadiaSpank,uniform@mad@bf@frente]
+
+[fn,false,transicao_inicio]
+[fn,true,esconder_personagens,todos]
+
+
+
+
+
+[fn,true,flip_foco]
+
+[text,false,0,guard,hi sir... can I help... with something?]
+[text,false,0,riku,hello good men, thank you but I am fine]
+[text,false,0,guard,ok?]
+
+[text,false,0,riku,ah this girl? yes! I will do sexual stuff with her, a lot of things]
+[text,false,0,nadia,what!?]
+
+[text,false,0,guard,right]
+
+[text,false,0,riku,you are not understant, I will do everything you can imagine]
+
+[text,false,0,guard,I understand sir]
+
+[text,false,0,riku,like from the front, from the side, from the behind, from the other side... everything]
+
+[text,false,0,guard,I already understood sir]
+
+[text,false,0,riku,and I don't like to share things, so if you or anyone else try something with her I will erase your existence]
+[text,false,0,guard,y...Yes sir!]
+
+
+
+
+[text,false,0,riku,..]
+[text,false,0,riku,this will take you out of trouble, good we arrive]
+
+
+
+
+
+
+[text,false,0,nadia,thank you...I guess?]
+
+
+[text,false,0,nadia,...]
+
+
+[fn,true,trocar_background,images/in_game/splashes/sets_obrigatorios/sara_wake_up/nadia_pajama]
+
+[text,false,0,riku,you don't need to be so afraid, wait a minute...]
+[text,false,0,riku,take a bath and wear this]
+
+[text,false,0,nadia,? are you sure? this?]
+
+
+[text,false,0,riku,there is other colors if you want]
+
+[text,false,0,nadia,no no, its fine]
+[text,false,0,narrator,...]
+
+[text,false,0,riku,you know, my hour is very expansive, so you will entertain me for a while, be prepared]
+[text,false,0,nadia,ok!]
+
+[text,false,0,narrator,...]
+
+[text,false,0,riku,sorry... this never happened before]
+[text,false,0,nadia,haha its fine, you can use my hand if you want]
+
+[text,false,0,riku,no, I don't need help. I am good at it ok?!]
+[text,false,0,nadia,haha sure, to be honest I expected a little more]
+
+
+[fn,true,transicao_final,longa]
+[fn,false,abaixar_texto]
+
+
+[text,false,0,riku,are you ok?]
+[text,false,0,nadia,yeh, but I said something wrong?]
+
+[text,false,0,riku,haha you don't say nothing wrong, he is just... a little complicate]
+[text,false,0,riku,That chiken comes time to time saying some stupidy nonsense speeches]
+
+[text,false,0,nadia,What is that thing?]
+
+
+[text,false,0,riku,Sorry, this is confidential information. You see that was a mistake, I apologize.]
+[text,false,0,riku,Maybe I'm not suited for this kind of work.]
+
+
+
+
+
+
+[text,false,0,nadia,Well the king seems to trust you]
+
+[text,false,0,riku,Trust? that piece of shit relies on me since we were children.]
+
+[text,false,0,nadia,Do you know each other for a long time? You talk to him in a very relaxed way]
+
+[text,false,0,riku,yeh... I met him when I was 10. good times. I mean horrible times... but good times. simple times]
+
+[text,false,0,nadia,And how was he? ]
+
+[text,false,0,riku,Interested in our majesty? haha. sorry but he is already married. With like 4 or 5 wives.]
+
+
+
+[text,false,0,nadia,there are 5 or 4?]
+
+[text,false,0,riku,We can do the average, are 4 womans and 1 girl]
+[text,false,0,riku,ghr... sorry Nash said to not make unconfort jokes anymore]
+
+[text,false,0,nadia,Maybe is better this way haha...]
+
+[text,false,0,nadia,But anyway.... if he already have 4 he don't mind to have 5]
+
+
+[text,false,0,riku,What are you talking about? you are still a girl]
+
+[text,false,0,nadia,What!?]
+
+[text,false,0,riku,everyone below 35 is just a kid]
+
+[text,false,0,nadia,you don't look that old. How old are you?]
+
+[text,false,0,riku,34]
+
+[text,false,0,nadia,haha]
+[text,false,0,nadia,wait...]
+
+
+[text,false,0,riku,don't think too much about it. it's just a joke. it is always a joke]
+[text,false,0,riku,and jokes never hurt anyone.]
+
+
+[text,false,0,nadia,but maybe he prefer girls, the queens are always younger right?]
+[text,false,0,nadia,And have some rumors about this too]
+
+
+[text,false,0,riku,Saying this to the first ring is not a very clever decision]
+
+[text,false,0,nadia,So..Sorry! I mean... I]
+
+[text,false,0,riku,You don't need to apologize, but just don't say this so casually here for your own sake.]
+[text,false,0,riku,And the majority of the things you hear are false. at least now]
+[text,false,0,riku,We are not in a real war anymore. people have time to think about morality and stuff]
+
+
+[text,false,0,nadia,it's fine now then]
+
+
+[text,false,0,riku,fine? if james kiss a 14 year old girl he is dead, if the queen suck a 10 year old boy dick people envy the boy]
+[text,false,0,riku,such a fair world to live in]
+
+
+[text,false,0,nadia,this would never happaned! it's a joke right?]
+[text,false,0,riku,Of couse it is! james would never do such thing with a minor]
+[text,false,0,riku,Anyway. About our great majesty, he was a normal kid I guess. one time we...]
+
+
+
+
+
+[end, 
+
+    script_controlador: 0
+    script_cenas: 1
+    path_proximo_script: cenas_obrigatorias/1/sara_introducao/parte_1/dia_carruagem
+    tem_transicao: true
+
+]
+

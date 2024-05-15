@@ -1,0 +1,46 @@
+[set,true,nara]
+
+
+
+[fn,true,trocar_background,images/in_game/black,0,true]
+[fn,false,transicao_inicio,true]
+
+[fn,true,transicao_final,longa]
+
+[fn,false,trocar_background, images/in_game/background/catedral/sara_room/yuki_orgia ]
+
+[fn,true,levantar_texto]
+
+[text,false,0,nara,*!?*]
+
+[text,false,0,nara,*what from my holy lord is this grotesque scene?!*]
+[text,false,0,nara,*oh my... I am not with my clothes! did they touch me...?*]
+[text,false,0,nara,*ghr....*]
+
+[ic,true,roupao@horny@bf@direita]
+[fn,true,mudar_modo_tela,2,1]
+[fn,true,mostrar_personagens,nara]
+
+[fn,true,trocar_background,  images/in_game/background/catedral/nara_room/back_n  ,1]
+
+[text,false,0,nara,*this can not be the cathedral rigth?*]
+[text,false,0,nara,*they would be dead with this*]
+
+[text,false,0,nara,*but what is this weird feeling?*]
+[text,false,0,nara,*the letter said dia was waiting I "wake up", maybe they drug me? make sense*]
+[text,false,0,nara,*...*]
+[text,false,0,nara,*thinking better I am not chained or nothing. and her letter was... warm in some way.*]
+[text,false,0,nara,*I am so weak, even if I fight a girl I would lose*]
+[text,false,0,nara,*maybe sleep is the only thing I can do*]
+
+[audio, true, sfx, sfx/doors/knock_1]
+
+
+[end, 
+
+    script_controlador: 0
+    script_cenas: 1
+    path_proximo_script: nada
+    tem_transicao: false
+
+]

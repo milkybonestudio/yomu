@@ -1,0 +1,88 @@
+[set,true,sara,lala,hand]
+[ic,true,nucleo@esquerda,normal@happy@ba@frente]
+
+
+
+[mov,true,700,-700]
+[fn,true,trocar_cor,lala,dark_1]
+[fn,true,trocar_cor,sara,dark_1]
+
+[fn,true,mudar_index_personagem,lala,0]
+[fn,true,mudar_index_personagem,sara,1]
+
+
+[fn,false,transicao_inicio]
+[fn,true,trocar_background, images/in_game/background/catedral/sara_room/throne ]
+[fn,false,transicao_final,longa]
+[mov,true,450,-450]
+[fn,true,mostrar_personagens,lala,sara]
+[text,false,0,lala,.a...u.]
+[fn,true,trocar_cor,sara,dark_2]
+[text,false,0,lala,w.k...p]
+[fn,true,trocar_cor,sara,dark_3]
+[text,false,0,lala,wake up!]
+
+[fn,true,trocar_cor,lala,dark_4]
+[fn,true,trocar_cor,sara,default]
+[text,false,0,sara,AH!.. where I am?]
+
+[ic,true,nucleo@direita,normal@happy@ba@frente]
+[text,false,0,lala,good morning my little child ]
+
+[ic,true,nucleo@esquerda,normal@happy@bf@frente]
+[text,false,0,sara,good morning miss squid]
+
+[ic,true,nucleo@direita,normal@happy@ba@frente(bracos_lado)]
+[text,false,0,lala,kkk I am not a squid your retarded piece of shit ]
+
+[ic,true,nucleo@direita,normal@happy@bf@frente(bracos_lado)]
+[text,false,0,sara,... you dont need to talk to me like that]
+
+
+[ic,true,nucleo@esquerda,normal@happy@ba@frente(bracos_tras)]
+[text,false,0,lala,I apologize, I am not a squid my dear]
+
+[ic,true,nucleo@direita,normal@happy@bf@frente(bracos_tras)]
+[mov,true,600]
+[text,false,0,sara,thats better, so ms squid can you guide me to the exit door?]
+
+
+[ic,true,nucleo@esquerda,normal@happy@ba@frente(bracos_tras)]
+[mov,true,450]
+[text,false,0,lala,w__t d_ y__ ___n? __u d_ _o an_w__re. y__ ___ in_i_e ________]
+
+[ic,true,nucleo@direita,normal@happy@bf@frente(bracos_tras)]
+[mov,true,600]
+[text,false,0,sara,what?]
+
+
+
+[ic,true,nucleo@esquerda,normal@happy@ba@frente(bracos_tras)]
+[mov,true,450]
+[text,false,0,lala,a__ y__ __ar___ me?]
+
+
+
+[ic,true,nucleo@direita,normal@happy@bf@frente(bracos_tras)]
+[mov,true,600]
+[text,false,0,sara,... what?]
+
+
+
+[ic,true,nucleo@esquerda,normal@happy@ba@frente(bracos_tras)]
+[mov,true,450]
+[text,false,0,lala,____ __]
+
+
+
+
+
+
+[end, 
+
+    script_controlador: 0
+    script_cenas: 1
+    path_proximo_script: nada
+    tem_transicao: false
+
+]

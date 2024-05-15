@@ -1,0 +1,147 @@
+<>
+nome:hole
+formato:desenvolvimento/final
+versao:1.0
+status:denvolvimento/final
+comentario:""
+<>
+
+[
+    set
+    nara
+
+]
+
+
+
+[ 
+    fn:transicao_inicio:true
+    duracao : 0
+]
+
+
+[
+    fn:mudar_background:true
+
+    path : images/in_game/background/catedral/sara_room/yuki_orgia
+    tipo_transicao : instantaneo
+
+]
+
+[ 
+    fn:transicao_final:true
+    duracao : 2000
+    
+]
+
+
+
+[
+    text:false
+    per : nara
+    texto : *!?*
+
+]
+
+[
+    text:false
+    per : nara
+    texto : *what from my holy lord is this grotesque scene?!*
+
+]
+[
+    text:false
+    per : nara
+    texto : *oh my... I am not with my clothes! did they touch me...?*
+
+]
+[
+    text:false
+    per : nara
+    texto : *ghr....*
+
+]
+
+[ ic,true,nara : robe@horny@bf@direita ]
+[
+    fn:mudar_foco_camera_personagens :true
+    modo : proximo 
+
+]
+[ fn,true,mostrar_personagens,nara]
+
+[
+    fn:mudar_background:true
+    path : images/in_game/background/catedral/nara_room/back_n
+    tipo_foco : desfoco
+    
+]
+
+[
+    text:false
+    per : nara
+    texto : *this can not be the cathedral rigth?*
+
+]
+[
+    text:false
+    per : nara
+    texto : *they would be dead with this*
+
+]
+
+[
+    text:false
+    per : nara
+    texto : *but what is this weird feeling?*
+
+]
+[
+    text:false
+    per : nara
+    texto : *the letter said dia was waiting I "wake up", maybe they drug me? make sense*
+
+]
+[
+    text:false
+    per : nara
+    texto : *...*
+
+]
+[
+    text:false
+    per : nara
+    texto : *thinking better I am not chained or nothing. and her letter was... warm in some way.*
+
+]
+[
+    text:false
+    per : nara
+    texto : *I am so weak, even if I fight a girl I would lose*
+
+]
+[
+    text:false
+    per : nara
+    texto : *maybe sleep is the only thing I can do*
+
+]
+
+[
+    audio  :  false
+    tipo   :  sfx
+    path   :  sfx/doors/knock_1
+    loop   :  false
+
+    modificar_volume  : 100
+
+]
+
+
+
+[
+    end
+
+    script_cenas: NARA_INTRODUCAO_liberar_cama_E_corredor
+    
+]

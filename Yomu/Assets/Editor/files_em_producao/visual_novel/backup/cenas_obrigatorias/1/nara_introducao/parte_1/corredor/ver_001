@@ -1,0 +1,601 @@
+<>
+versao:001 
+<>
+
+
+[
+    set
+
+    nara
+    alkatroz :  ???
+    lala : ???
+    voice_1
+    voice_2
+]
+
+
+
+
+[
+    text:false 
+    per : lala
+    texto : *I dont think you must open this lock my little child*
+
+]
+[
+    text:false 
+    per : nara
+    texto : *little child? whats wrong with me...*
+
+]
+
+
+
+[
+    choice
+
+    pode_voltar : false
+    tipo        : pergaminho
+    pergunta    : _P_abrir_a_porta_
+
+    op: Open
+    op: Don't open
+
+]
+
+
+
+[
+    jump
+
+    default     : nada
+    obrigatorio : true
+
+    vai_para    :   NAO_vai_ver_alkatroz 
+    pergunta    :  _P_abrir_a_porta_
+    resposta_necessaria :  Don't open
+
+]
+
+
+[ pointer : NAO_vai_ver_alkatroz ]
+
+
+[
+    text:false 
+    per : nara
+    texto : *Maybe is better I just sleep*
+
+]
+
+
+[
+    end 
+    screen_play_sequencia : NARA_INTRODUCAO_wake_up
+    
+]
+
+
+
+
+
+[ pointer : vai_ver_alkatroz ]
+
+
+
+
+[
+    mov : true
+    nara : 425
+    alkatroz : -425
+
+]
+[
+    fn : mudar_foco_camera_personagens :true
+    modo : proximo
+    tipo_transicao : instantaneo
+]
+
+
+
+[ ic:true
+    nara :  robe@neutral@bf@direita 
+    alkatroz :  normal_clothes@neutral@ba@frente   ]
+
+
+pegar abrir porta
+[
+    audio  :  false
+    tipo   :  sfx
+    path   :  sfx/doors/knock_1
+    loop   :  false
+
+    modificar_volume  : 100
+
+]
+
+
+[ 
+    fn:mudar_background:false
+
+    path : images/in_game/splashes/sets_obrigatorios/nara_wake_up/door_1
+]
+[ 
+    fn:mudar_background:false
+
+    path : images/in_game/splashes/sets_obrigatorios/nara_wake_up/door_2
+]
+
+
+[
+    text:false 
+    per : alkatroz
+    texto : kkk ... I thought you would never really wake up
+
+]
+[
+    text:false 
+    per : nara
+    texto : hi..?
+
+]
+
+[
+    text:false 
+    per : alkatroz
+    texto : hello my name is Alkatroz.The church told me to wait for you wake up. Do you mind if I get inside?
+
+]
+[
+    text:false 
+    per : nara
+    texto : Forgiveme but ... I'm not dressed in a suitable way, I think is  better you stay there
+
+]
+
+[
+    text:false 
+    per : alkatroz
+    texto : Sure? I brought a gift. You stayed in a coma for a few weeks and you received a letter from your parents
+
+]
+[
+    text:false 
+    per : nara
+    texto : are they safe!? what happened with me?
+
+]
+
+[
+    text:false 
+    per : alkatroz
+    texto : Do you mind if I get in? I know I can look a little scary but I'm a priest like any other.
+
+]
+[
+    text:false 
+    per : alkatroz
+    texto : After many missions it is hard to your body be normal.
+
+]
+
+[
+    text:false 
+    per : nara
+    texto : *Mother also have a disconfigured body, how biased I am...*
+
+]
+[
+    text:false 
+    per : nara
+    texto : Of course, came in
+
+]
+
+
+[
+    fn:mudar_background:true
+    path : images/in_game/background/catedral/nara_room/back_n
+    tipo_foco : desfoco
+    
+]
+
+[ 
+    fn:mostrar_personagens:true
+    nara
+    alkatroz
+    
+]
+
+
+[
+    text:false 
+    per : alkatroz
+    texto : You scared everyone when you arrived
+
+]
+
+[ ic:true
+    nara: robe@neutral@ba@esquerda 
+    alkatroz :  normal_clothes@neutral@bf@frente ]
+[
+    text:false 
+    per : nara
+    texto : what happened with me? I don't even remember leaving home
+
+]
+
+[ ic:true
+    nara: robe@neutral@ba@esquerda 
+    alkatroz :  normal_clothes@neutral@bf@frente ]
+[
+    text:false 
+    per : alkatroz
+    texto : I don't know, you don't remember?
+
+]
+
+[ ic:true
+    nara: robe@neutral@ba@esquerda 
+    alkatroz :  normal_clothes@neutral@bf@frente ]
+[
+    text:false 
+    per : nara
+    texto : no... and how long was I sleeping?
+
+]
+
+[ ic:true
+    nara: robe@neutral@ba@esquerda 
+    alkatroz :  normal_clothes@neutral@bf@frente ]
+[
+    text:false 
+    per : alkatroz
+    texto : Around one week, you could have woke up just before. I stayed awake every day waiting
+
+]
+
+[ ic:true
+    nara: robe@neutral@ba@esquerda 
+    alkatroz :  normal_clothes@neutral@bf@frente ]
+[
+    text:false 
+    per : nara
+    texto : Right... But why were you waiting at night?
+
+]
+
+[ ic:true
+    nara: robe@neutral@ba@esquerda 
+    alkatroz :  normal_clothes@neutral@bf@frente ]
+[
+    text:false 
+    per : alkatroz
+    texto : We never know when you would get up
+
+]
+
+[ ic:true
+    nara: robe@neutral@ba@esquerda 
+    alkatroz :  normal_clothes@neutral@bf@frente ]
+[
+    text:false 
+    per : nara
+    texto : Make sense, so can you give me the letters
+
+]
+
+[ ic:true
+    nara: robe@neutral@ba@esquerda 
+    alkatroz :  normal_clothes@neutral@bf@frente ]
+[mov,true,425,100]
+[
+    text:false 
+    per : alkatroz
+    texto : oh.. I don't have it. I just want to enter here
+
+]
+
+[mov,true,-425,425]
+[ ic:true
+    nara: robe@neutral@ba@esquerda 
+    alkatroz :  normal_clothes@neutral@bf@frente ]
+[
+    text:false 
+    per : nara
+    texto : stay alway from me!
+
+]
+
+
+[ ic:true
+    nara: robe@neutral@ba@esquerda 
+    alkatroz :  normal_clothes@neutral@bf@frente ]
+[
+    text:false 
+    per : alkatroz
+    texto : ? Why do you want to go out? I'm doing you a favor! We are friends now right?
+
+]
+
+[ ic:true
+    nara: robe@neutral@ba@esquerda 
+    alkatroz :  normal_clothes@neutral@bf@frente ]
+[
+    text:false 
+    per : alkatroz
+    texto : hum ... apparently you don't like me
+
+]
+
+[ ic:true
+    nara: robe@neutral@ba@esquerda 
+    alkatroz :  normal_clothes@neutral@bf@frente ]
+[
+    text:false 
+    per : nara
+    texto : *Can I win? He doesn't look very strong*
+
+]
+
+
+[ ic:true
+    nara: robe@neutral@ba@esquerda 
+    alkatroz :  normal_clothes@neutral@bf@frente ]
+[
+    text:false 
+    per : alkatroz
+    texto : Apparently you don't want to be my friend, I could make things easier for you.
+
+]
+
+[ ic:true
+    nara: robe@neutral@ba@esquerda 
+    alkatroz :  normal_clothes@neutral@bf@frente ]
+[
+    text:false 
+    per : nara
+    texto : Do you really think you can win?
+
+]
+
+[ ic:true
+    nara: robe@neutral@ba@esquerda 
+    alkatroz :  normal_clothes@neutral@bf@frente ]
+[
+    text:false 
+    per : alkatroz
+    texto : ?
+
+]
+
+[ ic:true
+    nara: robe@neutral@ba@esquerda 
+    alkatroz :  normal_clothes@neutral@bf@frente ]
+[
+    text:false 
+    per : alkatroz
+    texto : Ha^ha...ha^ha...
+
+]
+[
+    text:false 
+    per : alkatroz
+    texto : East people are just retarded. Why you think I wouldn't win?
+
+]
+
+[ ic:true
+    nara: robe@neutral@ba@esquerda 
+    alkatroz :  normal_clothes@neutral@bf@frente ]
+[
+    text:false 
+    per : nara
+    texto : I'm strong enough to pass ... in the admission test
+
+]
+
+[ ic:true
+    nara: robe@neutral@ba@esquerda 
+    alkatroz :  normal_clothes@neutral@bf@frente ]
+[
+    text:false 
+    per : alkatroz
+    texto : I don't feel much mana coming from you and you don't seem very strong.
+
+]
+
+[ ic:true
+    nara: robe@neutral@ba@esquerda 
+    alkatroz :  normal_clothes@neutral@bf@frente ]
+[
+    text:false 
+    per : alkatroz
+    texto : or be very intelligent.
+
+]
+
+[mov,true,-475]
+[ ic:true
+    nara: robe@neutral@ba@esquerda 
+    alkatroz :  normal_clothes@neutral@bf@frente ]
+[
+    text:false 
+    per : alkatroz
+    texto : ...
+
+]
+
+[ ic:true
+    nara: robe@neutral@ba@esquerda 
+    alkatroz :  normal_clothes@neutral@bf@frente ]
+[
+    text:false 
+    per : alkatroz
+    texto : If you pass the test, it lost the purpose.
+
+]
+
+[
+    fn:abaixar_texto:true
+    abaixar_texto
+
+]
+[
+    fn:esconder_personagens:true
+    todos
+]
+
+[
+    fn:transicao_inicio:true
+    duracao : 1000
+]
+
+[
+    fn : mudar_background : true
+
+    path : images/in_game/splashes/sets_obrigatorios/nara_wake_up/torture
+    tipo_foco : foco 
+    tipo_transicao : instantaneo
+
+]
+
+[
+    fn:transicao_final:true
+    duracao : 3000
+]
+
+
+
+[
+    text:false 
+    per : voice_1
+    texto : you find?
+
+]
+[
+    text:false 
+    per : voice_2
+    texto : nothing important, she doesn't remembers the accident
+
+]
+[
+    text:false 
+    per : voice_1
+    texto : um, and the sword? $<<& will kill me 
+
+]
+
+
+[
+    text:false 
+    per : voice_2
+    texto : here was nothing in her room and she doesn't know where she is.
+
+]
+[
+    text:false 
+    per : nara
+    texto : ahs..Shh.s.
+
+]
+[
+    text:false 
+    per : voice_1
+    texto : can't she talk?
+
+]
+
+
+
+
+[
+    text:false 
+    per : voice_2
+    texto : she can, but after I pulled her teeth she lost will.
+
+]
+[
+    text:false 
+    per : voice_2
+    texto : can I kill her? everyone already have a turn.
+
+]
+[
+    text:false 
+    per : voice_1
+    texto : who would like to do with her in this state?
+
+]
+
+
+[
+    text:false 
+    per : voice_2
+    texto : the guys did before I start.
+
+]
+[
+    text:false 
+    per : voice_2
+    texto : ut actualy #@!$$ and &^88 asked for me to finished first
+
+]
+[
+    text:false 
+    per : voice_1
+    texto : they did?
+
+]
+
+[
+    text:false 
+    per : voice_2
+    texto : not yet
+
+]
+
+[
+    text:false 
+    per : voice_1
+    texto : so dont kill her
+
+]
+
+
+[
+    text:false 
+    per : voice_2
+    texto : hey want her dead ~
+
+]
+
+
+
+[
+    text:false 
+    per : voice_1
+    texto : oh. then ok.
+
+]
+
+[ 
+    fn:transicao_inicio:false
+    duracao : 2000
+]
+
+[
+    text : false 
+    
+    per : nara
+    texto : AHG! .. agh..
+
+]
+
+
+[
+    end 
+
+    script_cenas : NARA_INTRODUCAO_alkatroz
+]
+

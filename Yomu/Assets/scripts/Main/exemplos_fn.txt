@@ -1,0 +1,86 @@
+
+
+[
+
+    fn:mudar_background:true
+
+        path            : \cenas
+        tipo_transicao  : nada
+        cor             : nada
+        tipo_foco       : nada
+        
+
+]
+
+
+[
+    fn:mostrar_personagens:true
+
+        lily
+
+
+]
+
+
+
+[
+    fn:esconder_personagens:true
+
+        lily
+
+
+]
+
+
+
+
+
+[
+    fn:colocar_highlight_personagens:true
+       
+       p1
+       p2
+
+]
+
+
+[
+    fn:tirar_highlight_personagens:true
+       
+       p1
+       p2
+
+]
+
+
+[
+    fn:bloquear_cenas:false
+    duracao: 10000
+    true_block: true
+    numero_clicks : 0
+]
+
+
+
+
+[
+    fn:mudar_index_personagens:false
+
+    lily  :  0   ( na frente ) = > passa para o maximo de persoangens - 1 
+    dia   :  1   ( atras )
+
+
+]
+
+
+
+[
+    fn:mudar_volume:false
+
+    tipo : music
+    slot : 1
+    tempo_transicao : 500
+    volume : 50
+
+]
+

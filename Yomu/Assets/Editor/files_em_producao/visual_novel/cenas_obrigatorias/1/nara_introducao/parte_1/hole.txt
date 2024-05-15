@@ -1,0 +1,219 @@
+<>
+nome:hole
+formato:desenvolvimento/final
+versao:1.0
+status:denvolvimento/final
+comentario:""
+<>
+
+[
+    set
+    nara
+
+]
+
+
+
+[
+    fn : transicao_final :true
+    duracao : 0
+]
+
+
+
+
+[
+    fn : mudar_cor_personagem :true
+    nara : dark_4
+]
+
+
+
+
+[
+    fn:mudar_background:false
+
+    path : images/in_game/splashes/sets_obrigatorios/nara_wake_up/yuki_orgia
+    cor : black
+    tipo_transicao : instantaneo
+
+]
+
+[
+    fn : mudar_posicao_pergaminho : false
+    esquerda
+]
+
+[
+    fn:mudar_background:false
+
+    path : images/in_game/splashes/sets_obrigatorios/nara_wake_up/yuki_orgia
+    cor : dark_9
+
+]
+
+
+
+[
+    text : false
+    per : nara
+    texto : *what is that?*
+
+]
+
+
+
+
+
+[
+    fn:mudar_background:false
+
+    path : images/in_game/splashes/sets_obrigatorios/nara_wake_up/yuki_orgia
+    cor : dark_8
+    
+
+]
+
+
+[
+    fn:mudar_background:false
+
+    path : images/in_game/splashes/sets_obrigatorios/nara_wake_up/yuki_orgia
+    cor : dark_6
+
+]
+
+
+
+
+
+
+[
+    text : false
+    per : nara
+    texto : *!?*
+
+]
+
+
+[
+    text:false
+    per : nara
+    texto : *what from my holy lord is this grotesque scene?!*
+
+]
+[
+    text:false
+    per : nara
+    texto : *oh my... I am not with my clothes!...?*
+
+]
+[
+    text:false
+    per : nara
+    texto : *ghr....*
+
+]
+
+[
+    fn : mudar_posicao_pergaminho : true
+    baixo
+
+]
+
+
+
+[
+    fn:mudar_foco_camera_personagens : true
+    modo : proximo 
+    instantaneo : true
+
+]
+[ fn,true,mostrar_personagens,nara]
+
+[
+    fn:mudar_background:true
+    path : images/in_game/background/catedral/nara_room/back_n
+    tipo_foco : desfoco
+    
+]
+
+
+
+[ ic,true,nara : robe@fear@bf@esquerda ]
+[
+    text:false
+    per : nara
+    texto : *this can not be the cathedral rigth?*
+
+]
+[
+    text:false
+    per : nara
+    texto : *they would be dead with this*
+
+]
+
+
+
+[ ic,true, nara : robe@horny@bf@direita ]
+
+[
+    text:false
+    per : nara
+    texto : *Maybe is a ritual or something?*
+
+]
+
+[ ic,true, nara : robe@neutral@bf@direita ]
+[
+    text:false
+    per : nara
+    texto : *the letter said that Dia was waiting I "wake up", maybe they drug me? make sense*
+
+]
+[
+    text:false
+    per : nara
+    texto : *...*
+
+]
+[
+    text:false
+    per : nara
+    texto : *weel... I am not chained or nothing. and her letter was... warm in some way.*
+
+]
+[
+    text:false
+    per : nara
+    texto : *I am so weak, even if I fight a girl I would lose*
+
+]
+
+[ ic,true, nara : robe@happy@bf@direita ]
+[
+    text:false
+    per : nara
+    texto : *maybe sleep is the only thing I can do*
+
+]
+
+[
+    audio  :  true
+    tipo   :  sfx
+    path   :  doors/knock_1
+    loop   :  false
+
+    modificador_volume  : 50
+
+]
+
+
+
+[
+    end
+
+    script_end : NARA_INTRODUCAO_liberar_cama_E_corredor
+    
+]

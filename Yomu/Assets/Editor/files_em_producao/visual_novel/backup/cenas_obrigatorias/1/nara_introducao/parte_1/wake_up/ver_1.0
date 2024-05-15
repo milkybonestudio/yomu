@@ -1,0 +1,4629 @@
+<>
+nome:wake_up
+formato:desenvolvimento/final
+versao:1.0
+status:denvolvimento/final
+comentario:""
+<>
+
+[
+    set
+
+    nara
+    lily
+    ruby
+    jayden
+    eden
+    christopher
+    
+]
+
+[
+    fn:mudar_background:true
+    path : pegar_path_teto
+    tipo_transicao : instantaneo
+    
+]
+
+
+
+[
+     ic:true 
+    nara   :  robe@happy@ba@direita
+    lily   :  clothes@happy@ba@esquerda
+    ruby   :  clothes@happy@bf@esquerda
+    jayden :  clothes@neutral@bf@frente
+    eden   :  clothes@happy@ba@esquerda
+    christopher : clothes@neutral@bf@frente
+    
+]
+
+
+
+[
+    mov : true
+    nara   : -800
+    lily   : 100
+    ruby   : 1200
+    jayden : 800
+    eden : -200
+    christopher : 800 
+    
+]
+
+
+
+[ text,false , per : lily , texto : I am telling you, bread with chocolate dont make sense ]
+[ text,false , per : eden , texto : Of course it does! It's the same as a cake ]
+
+[ text,false , per : lily , texto : A cake is completely different ]
+[ text,false , per : eden , texto : It is mass, with chocolate. It's exactly the same ]
+
+[ text,false , per : lily , texto : But when you think of BREad you think of BREakfast, not dessert. ]
+[ text,false , per : lily , texto : I've seen someone finish eating a ham and talk "Wow all I wanted now was a bread"? ]
+
+[ text,false , per : eden , texto : you are a person who does not know other cultures, this may seem strange ]
+[ text,false , per : eden , texto : but different places has different customs ]
+
+
+
+
+
+[ 
+    fn : mudar_background : true
+    
+    path : images/in_game/background/catedral/sara_room/front_d
+    tipo_foco : desfoco
+    
+]
+
+
+[ fn,true,mostrar_personagens,lily,eden ]
+
+
+
+[   ic:true   
+   lily : clothes@happy@ba@esquerda
+    eden : clothes@happy@bf@direita   ]
+[
+    text  : false
+    per   : lily
+    texto : So you are saying that there are a culture that eats bread as dessert ?
+
+]
+
+
+[   ic:true   
+   lily : clothes@happy@bf@esquerda
+    eden : clothes@happy@ba@direita   ]
+[
+    text  : false
+    per   : eden
+    texto : Yes, there is a sub-specie of dragons that eats the prey and then eats bread
+
+]
+
+
+[   ic:true   
+   lily : clothes@happy@bf@esquerda
+    eden : clothes@happy@ba@direita   ]
+[
+    text  : false
+    per   : lily
+    texto : Really!?
+
+]
+
+
+[   ic:true   
+   lily : clothes@happy@bf@esquerda
+    eden : clothes@happy@ba@direita   ]
+[
+    text  : false
+    per   : eden
+    texto : No... but could be
+
+]
+
+
+[   ic:true   
+   lily : clothes@happy@bf@esquerda
+    eden : clothes@happy@ba@direita   ]
+[
+    text  : false
+    per   : lily
+    texto : Stop making fun of me!
+
+]
+
+
+[
+    mov : true
+    nara : -450 
+    lily : 450
+    eden : 0
+]
+
+[ fn,true,mostrar_personagem,nara ]
+
+
+[   ic:true   
+    lily : clothes@happy@bf@esquerda
+    nara : robe@happy@ba@direita    ]
+[
+    text  : false
+    per   : nara
+    texto : bo...bouth are great. I guess
+
+]
+
+
+[   ic:true   
+    nara : robe@happy@bf@direita
+    lily  :  clothes@happy@ba@esquerda  ]
+[
+    text  : false
+    per   : lily
+    texto : See I...
+
+]
+
+[
+    mov : true
+    lily : -200 
+    eden : 450
+]
+
+
+[
+    text  : false
+    per   : lily 
+    tipo : mesma_linha
+    texto : Oh you finally woke up!
+
+]
+
+
+[
+    text  : false
+    per   : 
+    texto : 
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : 
+    texto : 
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : 
+    texto : 
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : 
+    texto : 
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : 
+    texto : 
+
+]
+
+
+[   ic:true   
+    lily : clothes@happy@ba@esquerda
+    eden  :  clothes@happy@ba@esquerda  ]
+[
+    text  : false
+    per   : eden
+    texto : how are you feeling?
+
+]
+
+
+[   ic:true   
+    nara : robe@happy@ba@direita  
+    eden  :  clothes@happy@bf@esquerda  ]
+[
+    text  : false
+    per   : nara
+    texto : I'm fine I think, but my body is still weak
+
+]
+
+[
+    mov : true
+    lily : 0
+
+]
+
+
+[   ic:true   
+    nara : robe@happy@bf@direita  
+    eden  :  clothes@happy@ba@esquerda  ]
+[
+    text  : false
+    per   : lily
+    texto : Don't worry about anything, I'll take care of you
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :  And who will take care of you?  ]
+[
+    text  : false
+    per   : nara
+    texto : I didn't know that childrens can enter the church
+
+]
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : pf..
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : lily
+    texto : hey! I'm not a kid .. look at my voluptuous breasts!
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : you look like a disfigured goblin
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : lily
+    texto : I look like a sexy goblin
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : nara
+    texto : I think you are.. you know... cute
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : lily
+    texto : see she has good taste, you have old men taste
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : I have a taste for qualified and refined women.
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : ...
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : lily
+    texto : sure
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : lily
+    texto : if this pervert try something on you just scream that i can to help you
+
+]
+
+
+[mov,true, -350,p,p,p, 350]
+[
+    mov : true
+    nara : -350
+    lily : 550
+    eden 350
+]
+
+[ fn, false, esconder_personagem, lily ]
+
+
+
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : shut up gremlin prototype.... she already gone.
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : nara
+    texto :  anh...sir... ?
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : what?... you don't remember me?
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : nara
+    texto : I guess...
+
+]
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : nara
+    texto :  anh...sir... ?
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : in the end I mean so little to you? when I give you the best ring I could buy...
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : nara
+    texto : wait... What!? 
+
+]
+
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : yes, we... we spend some time together, you don't remember?.
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : nara
+    texto : n... no. I dont't remember doing nothing! doesn't count right?
+
+]
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : nara
+    texto :  anh...sir... ?
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : what do you remember darling?
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : nara
+    texto : I don't know exactly. I remeber talk with this... Dia and then I come here some how.
+
+]
+[
+    text  : false
+    per   : nara
+    texto : Oh my god... I was virgin rigth!?
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : Would be good if you still are. not that I would like you less by the way you are now
+
+]
+
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : nara
+    texto : oh... so you are this type of guy?
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : I am more the milf guy
+
+]
+
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : nara
+    texto : "milf" guy?
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : Is a guy that like womans, not girls.
+
+]
+
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : nara
+    texto : you are implying that I am not a woman?
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : yes. womans are like a good glass of wine, need to be preserved in a trunk for several years before I can cosume it.
+and the best wine are free wine from other people
+
+]
+
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : nara
+    texto : For your concern I am alredy a lot of experience ok? 
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : nara
+    texto : really? like what?
+
+]
+
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : nara
+    texto : I...I help my familly a lot
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : great, a woman would already have a family. you are what 10? 
+
+]
+
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : nara
+    texto : I am 20!
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : With 20 I expected 3 kids and a job.
+
+]
+
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : nara
+    texto : So you have a job and 3... 3 kids?
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : 
+    texto : 
+
+]
+
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : well, I don't have any 
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : nara
+    texto : good...
+
+]
+
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : but I feel this will change. Are you still sick?
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   :  nara
+    texto : wha...oh fuck...
+
+]
+
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : it's fine
+
+]
+
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : nara
+    texto : fuck! FUCk!
+
+]
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : You don't need to express your happines this way!
+
+]
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : but... but you said that I was still a virgin!?
+
+]
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : I said that "Would be good if you still are".
+
+]
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : nara
+    texto : what I will say to may family?!
+
+]
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : dont't worried! we can talk with him together. In like 7 or 8 months?
+
+]
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : nara 
+    texto : oh...why this always happaned to me...
+
+]
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden 
+    texto : yeah, maybe the gods like you or something
+
+]
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : nara
+    texto : can I continue here? oh god.. I will lose my allowance?!
+
+]
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : why would you lose it? we did nothing wrong in the eyes of god
+
+]
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : at least this...
+
+]
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : you really don't remember nothing more? 
+
+]
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : nara
+    texto : yeah...
+
+]
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : hum. Maybe is better this way.
+
+]
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : what do you mean?
+
+]
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : christopher
+    texto : Did you find the sword?
+
+]
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : nara
+    texto : !?
+
+]
+
+[   ic:true   
+    lily : 
+    eden  :    ]
+[
+    text  : false
+    per   : eden
+    texto : yo
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : ruby
+    texto : Don't say "yo" to the cardinal
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : My dear, we are already intimate
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : ruby
+    texto : You are very abused for someone in the first year
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : Okay, you can stop. You two are bothering Mrs. Nara
+
+]
+[
+    text  : false
+    per   : 
+    texto : Ruby could you take her clothes in my room?
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : ruby
+    texto : of course, leave it to me
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : I was asking her carefully
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : who is this old men?
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : ghu... this is Cardinal Christopher, the most important person in the cathedral
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : *good, at least I am really in the cathedral*
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : *oh god I call he old*
+
+]
+
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : eh.. am... sa.. salutations! ... sir..sorry...
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : good morning for you too sweety. And don't worry. The fact we never meet before is a good thing. 
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto :  So going to bussines, where do you put that sword you bring with you?
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : 
+    texto : Sorry sir I don't... I don't know what you talking about...
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : She has lost memory?
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : Apparently 
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : what happaned to me?
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : You all were attacked when they were coming here. A lot of other carriages also have. tragic.
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : so... why I lost my memories?
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : thats a good question. For now is because was a traumatic experience. 
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : You can not hide things from her.
+
+]
+[
+    text  : false
+    per   : christopher
+    texto : When you came here you were holding a especific sword, do you remember?
+
+]
+
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : Sorry I don't. My mind is foggy
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : Don't need to rush or pressure yourself.
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : But, you need this sword back? Did I get borrowed or something?
+
+]
+
+
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : it's not that important
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : It is extremely important! that sword is a mark. the mark of a king.
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : what?
+
+]
+
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : That sword is probably a copy of the excalibur, you know about it right?
+
+]
+[
+    text  : false
+    per   : eden
+    texto : Because the design is simple people make copies to try to sell. Even that is illegal.
+
+]
+[
+    text  : false
+    per   : eden
+    texto : so if is just a copy is cheap right? Can I just pay it? or discount how much I earn here?
+
+]
+
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : It was real! I can tell
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : We see you with it when you came here, but its just it disappeared when we cut your hand off.
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : ?... maybe you are confusing me with someone else?
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : no, we are not. when I bring you here You didn't drop it.
+
+]
+
+[ 
+    fn : mudar_background : true
+    path : images/in_game/splashes/sets_obrigatorios/sara_wake_up/memory 
+    tipo_foco : foco
+
+]
+
+
+[
+    fn : mudar_cor_personagens : true
+    eden : dark_4
+    christopher : dark_4
+    nara : dark_4
+
+]
+
+
+
+[
+    mov :true
+    eden : 250 
+    christopher : 435
+
+]
+
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : Eden arrived carrying you on the edge of all bloody death, holding the sacred sword 
+
+]
+[
+    text  : false
+    per   : christopher
+    texto : Seems like your life was being sucking, so we try to take the sword.
+
+]
+[
+    text  : false
+    per   : christopher
+    texto : But you did not drop it at all and anyone else could touch, in the hurry we cut your hand.
+
+]
+
+
+
+
+[
+     fn:mudar_background:true
+    path : images/in_game/background/catedral/sara_room/front_d  
+
+]
+
+[
+    mov : true
+    eden : 0
+    christopher : 450
+]
+
+
+
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : And did you put the hand back later?
+
+]
+
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : No, you create another one alone
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : But this is not necessarily linked with the sword 
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : We've seen the old queen create an arm in seconds. This is another sign that the sword is real
+
+]
+
+
+
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : Maybe she has a unique magic.
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : Don't be stupidy, What are your chances to have this ability specifically?!
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : More than the sword was real
+
+]
+
+
+
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : Well but now going straight to the point, I believe you are entitled to some part of the kingdom. But I need evidence.
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : Sir, I appreciate, but I don't want to be queen of anything
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : King
+
+]
+
+
+
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : ?
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : It is well defined that the first bearer will be a king.So I want you to be the first king of your lineage.
+
+]
+[
+    text  : false
+    per   : christopher
+    texto : And you need to get special training as a priest here
+
+]
+
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : And They informed me that you came from the Gulart village
+
+]
+
+
+
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : ye..yes 
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : it's one more sign
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : but... I am a woman
+
+]
+
+
+
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : yes you are
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : and I pass in the test as a nun right?
+
+]
+
+
+
+
+
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : well, you pass in the test exam. we don't have teste especific for nuns, we allow people to do the test independent of sex.
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : if the person is a woman we normally put her with the nuns. but in your case you will go with priest. or both. 
+
+]
+[
+    text  : false
+    per   : christopher
+    texto : You can still take baths with the others nuns, go to the female dormitory or engage in romantic behavior with other priest as long as don't have sexual things envolve in it. 
+
+]
+[
+    text  : false
+    per   : christopher
+    texto : The classes are the same. You don't have too much to worry about. 
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : ...
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : Can I.. refuse?
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : I don't want to draw attention to me.
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : maybe I can just go back to my village?
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : Of course you can not go back. when you pass the test you enter in the church.
+
+]
+[
+    text  : false
+    per   : christopher
+    texto : now you give us your body and soul. you are a tool of god in all his fights
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : but I am married with this guy right!? so I can not be a priest! that would be illegal!
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : What she is talking about? 
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : I don't know 
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : but... but you said...
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : I never said we are together, I just give you a ring as a present.
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : Oh gud... you sleep with me with out the marriage?!
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : 
+    texto : what!?
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : again, I don't know what you are talking about. I just said that "I feel that i will have a child" and "are you still felling sick"
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : but... you said we will se my familly in 7 months! 
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : Yes, they allow nuns to go back home to see parents in the Christmas.
+
+]
+[
+    text  : false
+    per   : eden
+    texto : That will be in 7 months and 17 days
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : If he try something on you just talk to me. I will cut off the problem
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : Why you said that?!
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : I was just playing with you. Don't be so bitch about it
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : how dere you!? I am sick and you fu...
+
+]
+[
+    text  : false
+    per   : nara
+    texto : ...
+
+]
+[
+    text  : false
+    per   : nara
+    texto : sorry...
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : if you don't go harsh on me is not fun.
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : Why you are so unpleasant?
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : I apologize! is not my fault... god made me this way. and I am still in the road to change, to become a better person!
+
+]
+[
+    text  : false
+    per   : eden
+    texto : some people fake good traits, I show them all!
+
+]
+[
+    text  : false
+    per   : eden
+    texto : to show people that I can change
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : Just ignore him, he is a good guy. most of the time.
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : actually I will make you her pair
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : they will be mad at you 
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : They are always mad at me.
+
+]
+
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : pair like...
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : we will go in quest that I decide
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : That she decide
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : I am the woman of the relationship!?
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : It's math of our hierarchy. men < king
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : oh god... ok. treat me well from now on 
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : I don't... you know... want he
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : I am being reject!?
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : no no!.. I just don't feel very...comfortable with the situation
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : It's not a option, he will protect you
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : ...
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : ghm...
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : I am sorry for make jokes with you. I will behave better. I will make effort.
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : if you put this way, maybe we cold be friends
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : I was rejected again
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : oh and another thing, you hear Someone or something... trying to spoke to you? Like a big stupidy bird.
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : Not that I remember, why?
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : Um, I just wanted to confirm something. But anyway as long the sword is lost we don't have nothing right?
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : What I need to do to prove that you are wrong?
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : I won't leave it aside! The destiny of this woman is to be a king! as the old writing say
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : sorry for interrupt bu..but I am just.. you know... a peassant girl trying to earn some money... so...
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : No need to listen to this old man, He can no longer reason right.
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : ruby
+    texto : Here sir
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : Great, I ask the nuns to make a special clothes to you. 
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : I.. prefer the normal one sir. if don't bother, I can wear anything, but I would like to just... be normal and... quiety.
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : you can not. as long you are in my cathedral you are a king.
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : ruby
+    texto : sir I don't want to receice Special treatment for something I didn't do.
+
+]
+[
+    text  : false
+    per   : nara
+    texto : Or don't have
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : sweety, life give us roles and we must...
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : we must life as normal people. she doesn't want this, don't force thoughts on her
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : ruby
+    texto : do not interrupt the cardinal!
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : whatever
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : If is just clothes I don't mind, but more than this is...
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : if you want something just say it. he cant force you to do anything.
+
+]
+[
+    text  : false
+    per   : eden
+    texto : ...
+
+]
+[
+    text  : false
+    per   : eden
+    texto :ok he can, but you could at least try
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : ...
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : well is just cothes right? take it sweety
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : So until I have more proves you will be considered a special class nun to the other people.
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : 
+    texto : Special class nun is a nun that is possessed by a demon. Normaly.
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : 
+    texto : But... people will think I am bad?
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : Be a special class is the biggest honor a woman can have. Is a prove of your sacrifice for the cause
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : and I don't have any other option?
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : no
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : ok then...
+
+]
+
+
+
+[
+    fn: mudar_index_personagens : true
+
+    nara : 0
+    christopher : 1
+
+]
+
+[
+    mov :true
+    nara : -175
+
+]
+
+
+
+
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : thank you sir
+
+]
+
+
+[ fn,false,abaixar_texto ]
+
+[ fn,false,esconder_personagens,todos ]
+
+[ 
+    fn : mudar_background : false
+    path : images/in_game/splashes/sets_obrigatorios/nara_wake_up/christopher_aura
+    tipo_foco : foco
+    
+]
+
+
+[ fn,true, mostrar_personagens, todos ]
+
+[ 
+    fn : mudar_background : true
+    path : images/in_game/background/catedral/nara_room/front_d
+    tipo_foco : desfoco
+    
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : ?!
+
+]
+
+
+
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : Stop bothering the girl
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : 
+    texto : I have my own research methods
+
+]
+
+
+[
+    fn:tirar_transicao_movimento_personagens:true
+    lily
+    ruby
+    jayden
+
+]
+
+[
+    mov : true
+    lily : 1250 
+    ruby : 1250
+    jayden : 1250
+
+]
+
+
+
+
+[
+    fn : mudar_index_personagem : true
+
+    jayden :  0 
+    ruby   :  1
+    lily   :  2 
+
+]
+
+
+[
+    fn:colocar_transicao_movimento_personagens:true
+
+    lily
+    ruby
+    jayden
+
+]
+
+[
+    mov : true 
+
+    nara : -500
+    lily : 450 
+    ruby : 375 
+    jayden : 600
+    eden : -300 
+    christopher : 0
+
+]
+
+[ fn,true,mostrar_personagens,lily,jayden,ruby]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : lily
+    texto : Don't exclude us!
+
+]
+
+[
+    mov:true
+    lily : 550
+    ruby : 425
+    jayden : 250
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : jayden
+    texto : sir
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : What I can do for you my dear?
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : jayden
+    texto : Connor and Onix began to fight
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : what happened?
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : jayden
+    texto : Onix said some things to Nia, then Connor said some things to him, then Maki came into the conversation too and lastly Connor spoke a few very unpleasant words, then
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : Can you resume.
+
+]
+
+
+ 
+
+[   ic:true   ]
+[
+    text  : false
+    per   : jayden
+    texto : Onix started the discussion and Connor started the fight.
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : Um ... I'll find out, thank you.
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : christopher
+    texto : And nara, we are still going to talk more. When you find the sword comes to my office
+
+]
+
+
+ [ fn,true,esconder_personagem,christopher ]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : jayden
+    texto : Oh you finally woke up
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : nara
+    texto : good morning
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : jayden
+    texto : my name is jayden, I stayed guard here a few days. I'm relieved that you seems fine
+
+]
+
+
+ 
+
+[   ic:true   ]
+[
+    text  : false
+    per   : 
+    texto : my name is nara, nice to meet you
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : ruby
+    texto : Okay, let's dress you. You need to do the tour of the cathedral
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : It's a good idea  
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : narrator
+    texto : ...
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : what?
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : ah... eden... she's a lady. so you can get the fuck out of here
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : 
+    texto : yes, I don't think that would be appropriate. It's agains the rules, more especific the page 178, paragraph 4.
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : edn
+    texto : eh? I dont care about young brats
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : lily
+    texto : oi!
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : not brat, brats
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : ruby
+    texto :  ghph... I think it would be unacceptable for a man to see a naked woman without them being committed. This will make her lose her value.
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : I dont think that you understant how life work my dear
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : ruby
+    texto : don't call me this ridiculous thing!
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto : I already see her naked when I bring her here. what's the problem?
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : ruby
+    texto : You saw a naked unconscious girl... you are the worst.
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : jayden
+    texto : If you don't have interest you don't lose nothing be outside right?
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : 
+    texto : strong argument, go far from this people will call me a pedo. 
+
+]
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto :  ok ok I will get out. treat well our new king
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : lily
+    texto :  what?
+
+]
+
+[   ic:true   ]
+[
+    text  : false
+    per   : eden
+    texto :  She is a special class, treat her with respect. 
+
+]
+
+[ fn,true,esconder_personagem,eden]
+
+[
+    mov : true
+    eden : 850
+
+]
+
+
+
+
+
+
+
+[
+    fn: mudar_background : true
+    path : images/in_game/background/catedral/nara_room/back_d
+
+]
+
+
+
+[
+    fn:tirar_transicao_movimento_personagens:true
+    todos
+
+]
+
+[mov,true,422,130,-470,-221]
+[fn,true,colocar_transicao,todos]
+
+
+
+
+
+[   ic:true  
+    nara : robe@neutral@bf@esquerda  
+    lily :  normal_clothes@happy@ba@esquerda  
+    ruby : normal_clothes@mad@bf@frente
+    jayden : normal_clothes@neutral@bf@frente ]
+[
+    text  : false
+    per   : lily
+    texto : Really?!
+
+]
+
+
+[   ic:true   
+   lily : normal_clothes@happy@bf@esquerda 
+    ruby : normal_clothes@mad@ba@frente  ]
+[
+    text  : false
+    per   : ruby 
+    texto : She just came here, of course he was joking
+
+]
+[   ic:true   
+   ruby : normal_clothes@mad@bf@frente
+   lily : normal_clothes@happy@ba@esquerda  ]
+[
+    text  : false
+    per   : lily
+    texto : Wouldn't it be a queen anyway?
+
+]
+
+[   ic:true   
+    nara : 
+    lily : normal_clothes@happy@bf@esquerda 
+    ruby: normal_clothes@happy@bf@frente  ]
+[
+    text  : false
+    per   : sara
+    texto : ha ha...
+
+]
+
+[   ic:true   
+   lily : normal_clothes@happy@ba@direita
+   nara :   ]
+[
+    text  : false
+    per   : lily
+    texto : You look strange to me, something happened?
+
+]
+
+[   ic:true   
+  nara  : robe@neutral@ba@esquerda
+  lily  :  normal_clothes@happy@bf@direita   ]
+[
+    text  : false
+    per   : nara
+    texto : I am a little afraid
+
+]
+
+
+[ fn , true, mudar_background, cor : dark_1 ]
+
+
+
+[   ic:true   
+   nara : robe@neutral@bf@esquerda  ]
+[
+    text  : false
+    per   : nara
+    texto : *Why did I say that?*
+
+]
+
+
+[ fn , true, mudar_background, cor : white ]
+
+
+
+[   ic:true   
+    lily : normal_clothes@happy@ba@direita   ]
+[
+    text  : false
+    per   : lily
+    texto : There is no reason to be afraid, I will defend you from all the problems
+
+]
+
+
+
+
+[   ic:true   
+    nara: robe@happy@bf@esquerda
+    lily : normal_clothes@happy@bf@esquerda 
+    ruby : normal_clothes@happy@ba@frente    ]
+[
+    text  : false
+    per   : ruby 
+    texto : All the bad already passed, now you are in good hands. you are safe
+
+]
+
+[   ic:true   
+    jayden : normal_clothes@neutral@ba@frente
+    ruby : normal_clothes@mad@bf@frente   ]
+[
+    text  : false
+    per   : jayden
+    texto : It depends on the sense of secure
+
+]
+
+[   ic:true   
+    ruby : normal_clothes@mad@ba@frente
+    jayden : normal_clothes@neutral@bf@frente   ]
+[
+    text  : false
+    per   : ruby 
+    texto : watch your month
+
+]
+
+
+
+[   ic:true   
+   jayden  : normal_clothes@neutral@ba@frente
+    ruby   : normal_clothes@mad@bf@frente  ]
+[
+    text  : false
+    per   : jayden
+    texto : sorry
+
+]
+
+
+[   ic:true   
+   nara : robe@neutral@ba@esquerda
+    jayden : normal_clothes@neutral@bf@frente  ]
+[
+    text  : false
+    per   : nara
+    texto : something happened?
+
+]
+
+
+[   ic:true   
+  lily  : normal_clothes@happy@ba@direita 
+  nara  : robe@neutral@bf@esquerda  ]
+[
+    text  : false
+    per   : lily
+    texto : Some people are missing
+
+]
+
+
+[   ic:true   
+   lily  : normal_clothes@happy@bf@esquerda
+   ruby :  normal_clothes@happy@ba@frente  ]
+[
+    text  : false
+    per   : ruby
+    texto : They aren't missing, some priest got realocate in last minute
+
+]
+
+
+[   ic:true   
+    lily : normal_clothes@happy@ba@esquerda
+    ruby : normal_clothes@mad@bf@frente  ]
+[
+    text  : false
+    per   : lily
+    texto : That's too weird to be true, and last month 3 nuns almost get captured
+
+]
+
+
+[   ic:true   
+    ruby : normal_clothes@happy@ba@frente
+    lily : normal_clothes@happy@bf@esquerda   ]
+[
+    text  : false
+    per   : ruby 
+    texto : ghph...Unfortunately some people are evil in this world, but we are the shield that protect the peasants!
+
+]
+[
+    text  : false
+    per   : ruby
+    texto : so this are more like a prize... a test! a test from god. To prove our loyalty
+
+]
+
+
+[   ic:true   
+  jayden  : normal_clothes@neutral@ba@frente
+  ruby  : normal_clothes@happy@bf@frente  ]
+[
+    text  : false
+    per   : jayden
+    texto : Aren't you feeling pain? When you arrived here you were deplorable
+
+]
+
+
+[   ic:true   
+   nara : robe@happy@ba@esquerda
+   jayden :normal_clothes@neutral@bf@frente   ]
+[
+    text  : false
+    per   : nara
+    texto : I'm still weak but overall I'm fine. But tomorrow I'll be fine
+
+]
+
+[
+    text  : false
+    per   : nara
+    texto : I always wanted to see what the training center is here
+
+]
+
+
+[   ic:true   
+   nara  : robe@neutral@bf@esquerda
+    ruby : normal_clothes@happy@ba@frente   ]
+[
+    text  : false
+    per   : ruby
+    texto : You shouldn't train so much, this is a man thing. Womans need to be reserved and intelligent
+
+]
+
+
+[   ic:true   
+   jayden  : normal_clothes@neutral@ba@frente 
+    ruby : normal_clothes@happy@bf@frente  ]
+[
+    text  : false
+    per   : jayden
+    texto : The best thing is to find something that one likes to do. There's something you like to do?
+
+]
+
+
+[   ic:true   
+    nara  : robe@happy@ba@esquerda
+    jaden : normal_clothes@neutral@bf@frente   ]
+[
+    text  : false
+    per   : nara
+    texto : Ahm .. I don't know for sure
+
+]
+
+
+[   ic:true   
+   nara  : robe@neutral@bf@esquerda
+   ruby  : normal_clothes@mad@ba@frente   ]
+[
+    text  : false
+    per   : ruby
+    texto : that was disrespectful! East people have to work hard to support the family
+
+]
+
+
+[   ic:true   
+   ruby  : normal_clothes@mad@bf@frente
+    jayden : normal_clothes@neutral@ba@frente  ]
+[
+    text  : false
+    per   : jayden 
+    texto : Sorry, I didn't know that your family situation was bad.
+
+]
+
+
+[   ic:true   
+   lily : normal_clothes@happy@ba@esquerda
+   ruby  : normal_clothes@mad@bf@frente  ]
+[
+    text  : false
+    per   : lily
+    texto : I think you are exaggerating
+
+]
+
+
+[   ic:true   
+   nara : robe@happy@ba@esquerda
+   lily : normal_clothes@happy@bf@esquerda  
+   ruby : normal_clothes@happy@bf@frente]
+[
+    text  : false
+    per   : nara
+    texto : I always spent my time training or taking care of my brothers
+
+]
+
+
+[   ic:true   
+   nara : robe@happy@bf@esquerda
+    jayden : normal_clothes@neutral@ba@frente  ]
+[
+    text  : false
+    per   : jayden
+    texto : I can teach you how to play violin if you want
+
+]
+
+
+[   ic:true   
+   nara : robe@happy@bf@esquerda
+    jayden : normal_clothes@neutral@bf@frente(book) ]
+[
+    text  : false
+    per   : nara
+    texto : ?
+
+]
+[   ic:true   
+   nara : robe@happy@ba@esquerda
+    jayden : normal_clothes@happy@bf@frente(book)  ]
+[
+    text  : false
+    per   : nara
+    texto : s..sure! I would love to learn
+
+]
+
+
+
+
+
+[   ic:true   
+    nara : nara : robe@happy@bf@esquerda
+   jayden  : normal_clothes@happy@bf@frente(book)   ]
+[
+    text  : false
+    per   : jayden 
+    texto : ~~
+
+]
+
+
+[   ic:true   
+   jayden  : normal_clothes@happy@ba@frente(book)   ]
+[
+    text  : false
+    per   : jayden 
+    texto : So after I will talk to you
+
+]
+
+[
+    mov : true 
+    lily : -100
+]
+
+[ fn,true,mudar_index_personagem, lily : 9 ] 
+
+
+[   ic:true   
+   jayden  : normal_clothes@happy@bf@frente
+    lily   :  normal_clothes@happy@ba@esquerda  ]
+[
+    text  : false
+    per   : lily
+    texto : You can teach me too
+
+]
+
+
+
+
+[   ic:true   
+    lily : normal_clothes@happy@bf@esquerda
+    jayden :  normal_clothes@neutral@ba@frente  ]
+[
+    text  : false
+    per   : jayden
+    texto : I already tried, you said it was too complicated.
+
+]
+
+[
+    text  : false
+    per   : jayden
+    texto : then I tried to teach other instruments and in the end I taught you how to play rattle 
+
+]
+
+
+
+
+[   ic:true   
+    lily  :  normal_clothes@happy@ba@esquerda
+   jayden : normal_clothes@neutral@bf@frente  ]
+[
+    text  : false
+    per   : lily
+    texto : I don't remember any of this ... but that explains why I know how to play the rattle.
+
+]
+
+[
+    mov :true
+    lily : 130 
+]
+
+
+[
+    text  : false
+    per   : lily
+    texto : But if I don't remember it didn't happen!So you can try again
+
+]
+
+
+[   ic:true   
+   ruby  : normal_clothes@mad@ba@frente
+   lily  :  normal_clothes@happy@bf@esquerda  ]
+[
+    text  : false
+    per   :  ruby 
+    texto : This is a very bad way to see things
+
+]
+[
+    mov : true
+    lily : 300
+]
+
+[   ic:true   
+   nara  : robe@shy@bf@esquerda
+    ruby : normal_clothes@mad@bf@frente   ]
+[
+    text  : false
+    per   : lily
+    texto : what!? this is the best way
+
+]
+
+
+[   ic:true   
+   lily : normal_clothes@happy@bf@esquerda
+    ruby : normal_clothes@mad@ba@frente  ]
+[
+    text  : false
+    per   : ruby
+    texto : Only bad people think so, to get away with the bad things they did
+
+]
+
+
+[   ic:true   
+    jayden :  normal_clothes@neutral@ba@frente
+    ruby :  normal_clothes@mad@bf@frente   ]
+[
+    text  : false
+    per   : jayden
+    texto : I don't think people forget the bad things they did 
+
+]
+
+[
+    mov : true
+    lily : 130 
+
+]
+
+
+
+
+[   ic:true   
+  jayden  : normal_clothes@neutral@bf@frente
+   ruby   : normal_clothes@mad@ba@frente  ]
+[
+    text  : false
+    per   : ruby
+    texto : Of course they forget, good people don't forget because of the guilt
+
+]
+
+
+[   ic:true   
+    nara : robe@happy@bf@esquerda
+    lily : normal_clothes@happy@ba@esquerda
+    ruby :  normal_clothes@mad@bf@frente ]
+[
+    text  : false
+    per   : ruby
+    texto : What if no one remembers anything about what happened?
+
+]
+
+
+[   ic:true   
+   lily  : normal_clothes@happy@bf@esquerda
+    ruby :  normal_clothes@mad@ba@frente  ]
+[
+    text  : false
+    per   : ruby
+    texto : And how would this be possible?
+
+]
+
+[   ic:true   
+   lily : normal_clothes@happy@ba@esquerda
+    ruby :  normal_clothes@mad@bf@frente   ]
+[
+    text  : false
+    per   : lily
+    texto : People could be drugged or drunk 
+
+]
+
+
+[   ic:true   
+   lily : normal_clothes@happy@ba@esquerda ]
+[
+    text  : false
+    per   : ruby
+    texto : ...
+
+]
+
+
+[   ic:true   
+    nara : robe@neutral@bf@esquerda
+    ruby : normal_clothes@mad@ba@frente ]
+[
+    text  : false
+    per   : ruby
+    texto : It's for things like this that there are bad people here 
+
+]
+
+
+[   ic:true   
+    nara : robe@happy@bf@esquerda
+    jayden : normal_clothes@neutral@ba@frente
+    ruby :normal_clothes@happy@bf@frente   ]
+[
+    text  : false
+    per   : jayden
+    texto : I think we can help her now
+
+]
+
+
+[   ic:true   
+   lily : normal_clothes@happy@ba@esquerda
+    jayden : normal_clothes@neutral@bf@frente  ]
+[
+    text  : false
+    per   : lily
+    texto : yes~ 
+
+]
+
+[   ic:true   
+   jayden : normal_clothes@neutral@ba@frente
+    lily  : normal_clothes@happy@bf@esquerda  ]
+[
+    text  : false
+    per   : jayden
+    texto : They give you a pajama already?
+
+]
+
+
+[
+    mov :true
+
+    nara : -500
+    lily : 450
+    ruby : -200
+    jayden : 150
+
+]
+
+
+
+
+[   ic:true   
+   nara : robe@happy@ba@esquerda
+   jayden : normal_clothes@neutral@bf@frente   ]
+[
+    text  : false
+    per   : nara
+    texto : I'm not sure... there's nothing here.
+
+]
+
+
+
+[
+    mov :true
+
+    ruby : 150
+    jayden : -200
+
+]
+
+
+
+[   ic:true   
+    jayden : normal_clothes@neutral@ba@frente
+    nara : robe@happy@bf@direita  ]
+[
+    text  : false
+    per   : jayden
+    texto : I will ask then one and I give to you later 
+
+]
+
+
+
+
+
+[   ic:true   
+   nara : robe@happy@ba@esquerda
+    jayden :normal_clothes@neutral@bf@frente   ]
+[
+    text  : false
+    per   : nara
+    texto : Thanks
+
+]
+
+
+[   ic:true   
+    nara : robe@happy@bf@esquerda
+    lily : normal_clothes@happy@ba@esquerda  ]
+[
+    text  : false
+    per   : lily
+    texto : right, now is time to dress you. But first and more important we need to undress 
+
+]
+
+[
+    mov : true
+
+    lily : -200
+    ruby : 400 
+    jayden : 100 
+
+]
+
+
+[   ic:true   
+   lily  : set_1_01  ]
+[
+    text  : false
+    per   : lily 
+    texto : The clothes are a little difficult to put so I will take it to show how to put it
+
+]
+
+
+
+[   ic , true, lily : set_1_01 ]
+[   ic , true, lily : set_1_02 ]
+
+
+[
+    mov : true
+    nara : -550
+    lily : -400
+
+]
+[ fn,false,mudar_index_personagem, nara : 0 ]
+
+[   
+    ic : true
+    nara : robe@horny@bf@direita
+    lily : set_1_03
+
+]
+
+
+[   ic:true   
+    lily : set_1_05
+    nara : robe@shy@bf@direita  ]
+[
+    text  : false
+    per   : lily
+    texto : First we have this top, this is the first piece you have to put.
+
+]
+
+
+[   ic:true   
+   lily : set_1_06 ]
+[
+    text  : false
+    per   : lily
+    texto : We also have the track!, it is the last thing you will put. You who put the corset and skirt first. 
+
+]
+
+
+[   ic:true   
+  ruby  : normal_clothes@mad@bf@frente
+  lily  : set_1_07
+  nara : robe@shy@ba@direita  ]
+[
+    text  : false
+    per   : nara
+    texto : Amh ... won't you ...why there is nothing under the skirt?
+
+]
+
+
+[   ic:true   
+   nara  : robe@shy@bf@direita
+   lily : set_1_04 
+   ruby : normal_clothes@mad@ba@frente ]
+[
+    text  : false
+    per   : ruby
+    texto : Lily!
+
+]
+
+
+[   ic:true   
+   lily : set_1_05
+    ruby :normal_clothes@mad@bf@frente   ]
+[
+    text  : false
+    per   : lily
+    texto : It's too hot to wear so much clothes
+
+]
+
+
+
+[   ic:true   
+   lily : set_1_04
+    ruby :normal_clothes@mad@ba@frente   ]
+[
+    text  : false
+    per   : ruby
+    texto : lily, suffer is the price for aesthetics
+
+]
+
+
+[
+    mov : true
+    nara : -575
+    lily : -450
+    
+]
+
+
+[   ic:true   
+  lily   : set_1_05
+   ruby : normal_clothes@mad@bf@frente  ]
+[
+    text  : false
+    per   : lily
+    texto : I honestly prefer comfort. Life is too short to this
+
+]
+[
+    mov : true
+    nara : -550
+    lily : -400
+    
+]
+
+
+
+
+[   ic:true   
+  nara  : robe@happy@bf@direita
+    lily : set_1_04
+    ruby : normal_clothes@happy@ba@frente   ]
+[
+    text  : false
+    per   : ruby
+    texto : You can opt for a leotard that takes the whole torso or use a part for the breasts and a groin belongs
+
+]
+
+[ fn,true,mudar_index_personagem,jayden : 0]
+
+[
+    mov : true
+
+    jayden : -375
+    lily : 0
+    
+]
+
+
+[   ic:true   
+    jayden  : robe@happy@bf@direita
+    ruby : normal_clothes@neutral@ba@frente(hold_skirt)   ]
+[
+    text  : false
+    per   : jayden
+    texto : You can wear men's clothing if you want too, I don't like the bottom of the womans clothes
+
+]
+
+[ fn,true,mudar_index_personagem, lily : 0]
+
+[
+    mov : true
+    lily : 285 
+    jayden : -200
+]
+
+[   ic:true   
+   lily  : set_1_05
+    jayden :normal_clothes@neutral@bf@frente(hold_skirt)  ]
+
+[
+    text  : false
+    per   : lily
+    texto : I think using the example Ruby is better
+
+]
+
+
+[
+    text  : false
+    per   : narrator
+    texto : mudar cena!!! lily doro + object clothes
+
+]
+
+
+[   ic:true   
+    nara : robe@neutral@ba@direita
+    lily : semi_clothes@horny@bf@esquerda   ]
+[
+    text  : false
+    per   : nara
+    texto : how you... take all the clothes off?
+
+]
+
+
+
+[   ic:true   
+    nara : robe@shy@bf@direita
+    lily : semi_clothes@happy@ba@esquerda    ]
+[
+    text  : false
+    per   : lily
+    texto : Don't think about complex things.
+
+]
+
+
+[   ic:true   
+   lily : semi_clothes@happy@bf@esquerda  
+   jayden :  normal_clothes@neutral@ba@frente ]
+[
+    text  : false
+    per   : jayden
+    texto : It's a original magic. 
+
+]
+
+
+[   ic:true   
+    lily :   semi_clothes@happy@ba@esquerda  
+    jayden : normal_clothes@neutral@bf@frente   ]
+[
+    text  : false
+    per   : lily
+    texto : incredible right? some people can summom demons, or cast spells unique. I can take clothes off!
+
+]
+[
+    text  : false
+    per   : lily 
+    texto :Anyway  You can only use church clothes here, but the are liberal towards what parts you chose.
+
+]
+
+[
+    text  : false
+    per   : lily 
+    texto : You can only use church clothes here, but the are liberal towards what parts you chose.
+
+]
+
+
+
+[   ic:true   
+    nara : robe@happy@bf@direita
+    lily : semi_clothes@happy@ba@esquerda    ]
+[
+    text  : false
+    per   : ruby
+    texto : There is not. arround 10 years ago in the form of protest several nuns go complete nude to the class.
+
+]
+
+
+[   ic:true   
+    nara : robe@happy@ba@direita
+    lily : semi_clothes@happy@bf@esquerda    ]
+[
+    text  : false
+    per   : nara
+    texto : what?
+
+]
+
+
+
+[   ic:true 
+    jayden  : normal_clothes@neutral@ba@frente 
+    nara : robe@happy@bf@direita  ]
+[
+    text  : false
+    per   : jayden
+    texto : but I recommend you wear the full uniform in the first year
+
+]
+
+
+[   ic:true   
+    jayden  : normal_clothes@neutral@bf@frente
+    lily : semi_clothes@happy@ba@esquerda    ]
+[
+    text  : false
+    per   : lily
+    texto : reaches me the clothes
+
+]
+
+
+[   ic:true   
+    lily : semi_clothes@happy@bf@esquerda    ]
+
+[
+    mov:false
+    nara : 0
+]
+
+
+
+
+[   ic:true   
+    lily : semi_clothes@happy@ba@esquerda    ]
+
+[
+    text  : false
+    per   : lily
+    texto : oh! your clothes are so nice!
+
+]
+
+
+
+
+
+
+
+
+
+[   ic:true   
+   nara : robe@happy@bf@direita
+    lily : semi_clothes@happy@ba@esquerda    ]
+[
+    text  : false
+    per   : nara
+    texto : Christopher said my clothes were a mixture of male and female uniform
+
+]
+
+[   ic:true   
+    lily : semi_clothes@happy@bf@esquerda  
+    ruby :  normal_clothes@mad@bf@frente ]
+[
+    text  : false
+    per   : ruby
+    texto : Are you really a Special Class? 
+
+]
+
+
+[   ic:true   
+   ruby : normal_clothes@mad@bf@frente
+   nara  : nara : robe@happy@ba@direita  ]
+[
+    text  : false
+    per   : nara
+    texto : Apparently
+
+]
+
+[   ic:true   
+   ruby : normal_clothes@mad@bf@frente
+   nara  : nara : robe@happy@ba@direita  ]
+[
+    text  : false
+    per   : jayden
+    texto : Do you have a demon?
+
+]
+
+
+[   ic:true   
+   ruby : normal_clothes@mad@bf@frente
+   nara  : nara : robe@happy@ba@direita  ]
+[
+    text  : false
+    per   : nara
+    texto : jusus, no ha.. ha
+
+]
+[
+    text  : false
+    per   : nara
+    texto : Is just a mistake, I probably this will go back to normal tomorrow
+
+]
+
+[   ic:true   
+   ruby : normal_clothes@mad@ba@frente
+   nara  : nara : robe@happy@bf@direita  ]
+[
+    text  : false
+    per   : ruby
+    texto : But... why the mistake?
+
+]
+
+
+[   ic:true   
+   ruby : normal_clothes@mad@bf@frente
+    nara : robe@happy@ba@direita  ]
+[
+    text  : false
+    per   :  nara
+    texto : its complicated. Would be easy if was just because of my dick haha...
+
+]
+
+
+[   ic:true   
+    nara : robe@happy@bf@direita 
+    ruby : normal_clothes@mad@bf@frente ]
+[
+    text  : false
+    per   : ruby
+    texto : Don't make inappropriate jokes.
+
+]
+
+
+[   ic:true   
+     nara : robe@happy@ba@direita  ]
+[
+    text  : false
+    per   : nara
+    texto : what?
+
+]
+
+
+
+
+[   ic:true   
+     nara : robe@happy@bf@direita  ]
+[
+    text  : false
+    per   : lily 
+    texto : Don't be a dick
+
+]
+
+
+[   ic:true   
+    nara : robe@happy@bf@direita 
+    ruby : normal_clothes@mad@bf@frente ]
+[
+    text  : false
+    per   : ruby
+    texto : Sorry if I like to be decent person.
+
+]
+
+[   ic:true   
+    nara : robe@happy@bf@direita 
+    ruby : normal_clothes@mad@bf@frente ]
+[
+    text  : false
+    per   : lily
+    texto : You are right! being naked is what a decent person does. 
+
+]
+[
+    text  : false
+    per   : lily
+    texto : So take off the robe 
+
+]
+
+
+[   ic:true   
+    nara :  ]
+[
+    text  : false
+    per   : nara
+    texto : !?
+
+]
+
+[   ic:true   
+    nara :  ]
+[
+    text  : false
+    per   : lily
+    texto : well we can not put the clothes over right? thats fine we are all girls right?
+
+]
+
+[   ic:true   
+    nara :  ]
+[
+    text  : false
+    per   : jayden
+    texto : maybe if we be all naked she will not be shy
+
+]
+
+[   ic:true   
+    nara :  ]
+[
+    text  : false
+    per   : lily
+    texto : great ideia
+
+]
+
+[   ic:true   
+    nara :  ]
+[
+    text  : false
+    per   : ruby
+    texto : I do not agree with this
+
+]
+
+[   ic:true   
+    nara :  ]
+[
+    text  : false
+    per   : lily
+    texto : but you are already naked, you pervert~
+
+]
+
+[   ic:true   
+    jayden : normal_clothes@neutral@ba@frente(book) ]
+[
+    text  : false
+    per   : jayden
+    texto : I didn't know that you have such interest
+
+]
+
+[   ic:true   
+    jayden : normal_clothes@neutral@ba@frente(book) ]
+[
+    text  : false
+    per   : jayden
+    texto : I will be more carefull in the future for our friendship
+
+]
+
+[   ic:true   
+    jayden : normal_clothes@neutral@bf@frente(book)  ]
+[
+    text  : false
+    per   : ruby
+    texto : ...
+
+]
+
+[   ic:true   
+    nara :  ]
+[
+    text  : false
+    per   : ruby
+    texto : I don't know if I am ok with this
+
+]
+
+[   ic:true   
+    nara :  ]
+[
+    text  : false
+    per   : lily
+    texto : What? you care about being naked in front other woman? this is kinda gay
+
+]
+
+
+
+[ fn,true,esconder_personagens,lily,jayden]
+
+
+[
+    mov : true
+
+    nara : -200
+    lily : 550
+    ruby : 200
+    jayden : 550
+
+]
+
+
+
+
+[   ic:true   
+    nara :  ]
+[
+    text  : false
+    per   : ruby
+    texto : pgh... You don't need to be shy. We are not gay. There's not wrong been done here. Right? I am right?
+
+]
+[   ic:true   
+    nara :  ]
+[
+    text  : false
+    per   : nara
+    texto : ye..yeh!  nothing wrong
+
+]
+
+
+
+
+[ fn,true,mostrar_personagens,lily,jayden]
+
+
+[
+    mov : true
+    nara : -450
+    lily : 350
+    ruby : 200
+    jayden : 550
+    
+]
+
+
+[   ic:true   
+    nara : robe@happy@bf@direita
+    lily :  naked@happy@ba@esquerda
+    ruby : naked@happy@bf@frente
+    jayden : naked@neutral@bf@frente  ]
+
+[
+    text  : false
+    per   : 
+    texto : 
+
+]
+
+[   ic:true   
+    lily : naked@happy@ba@esquerda ]
+[
+    text  : false
+    per   : lily
+    texto :  right now is all right, start to strip baby~
+
+]
+
+[   ic:true   
+    lily : naked@happy@bf@esquerda   ]
+[
+    text  : false
+    per   : nara
+    texto : ...
+
+]
+
+[   ic:true   
+    nara : robe@happy@ba@direita ]
+[
+    text  : false
+    per   : nara
+    texto : ok
+
+]
+
+[   ic:false 
+    nara :  costas ]
+
+
+    
+[   ic:true   
+    nara :  ]
+[
+    text  : false
+    per   : nara
+    texto : so can we start?
+
+]
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : narrator
+    texto : ...
+
+]
+
+
+[   ic:true   ]
+[
+    text  : false
+    per   : lily
+    texto : that's unexpected
+
+]
+
+
+[ 
+    mov : true
+    nara : 0
+    lily : 125
+    ruby : -100
+    jayden : 100
+
+]
+
+[
+    fn:mudar_index_personagem:true
+
+    jayden : 0
+    lily : 1
+    nara : 2
+    ruby : 3
+    
+]
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : ruby
+    texto : what is wrong with you?
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : lily 
+    texto : Don't say this!
+
+]
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : jayden 
+    texto : maybe this was a treatment side effect?
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : ruby
+    texto : make sense.
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : nara
+    texto : sorry... I know it is small. I.. I don't know how
+
+]
+[
+    text  : false
+    per   : nara
+    texto : My mothers is biggerthan mine
+
+]
+
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : lily 
+    texto : what!?
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : ruby
+    texto : jesus christ... Are you curse? we can try to help you
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : jayden 
+    texto : So is this why you have different clothes?
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : ruby 
+    texto : I will talk with the nurse for you... this can be dangerous
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : lily
+    texto : You get hard?
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : ruby 
+    texto : this question is inap...
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : lily 
+    texto : ok ok whatever. You get hard?
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : nara
+    texto : yeah... normally. 
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : 
+    texto : We can give her some medicines..him? they.. it 
+
+]
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : lily
+    texto : don't call her "it"!
+
+]
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : ruby
+    texto : I dont think her is apropriate
+
+]
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : lily 
+    texto : why not?
+
+]
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : ruby
+    texto : she have a penis insted of a vagina
+
+]
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : lily 
+    texto : Woman is a synonymous to "fuckble"
+ 
+]
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : ruby 
+    texto : I am not referring to you disturbing mind
+
+]
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : nara
+    texto : 
+
+]
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : jayden
+    texto : maybe is a third leg prototype
+
+]
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : nara
+    texto : actually... I have both.
+
+]
+
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : ruby
+    texto : !?
+
+]
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : lily
+    texto : ho! thats the firs time a see something like this
+
+]
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : ruby
+    texto : You can have a child!?
+
+]
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : nara
+    texto : I think so
+
+]
+
+[
+    text  : false
+    per   : ruby
+    texto : Can you be the father of you own child!?
+
+]
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : lily 
+    texto : This is a inappropriate question
+
+]
+
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : ruby
+    texto : I am worried for it's health
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : lily
+    texto : I am too... let's see 
+
+]
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : ruby
+    texto : Oi don't touch it
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : lily
+    texto : I said to use she
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : 
+    texto : 
+
+]
+
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : nara
+    texto : can you all give me some spa...
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : ruby
+    texto : I am talking about the... thing
+
+]
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : lily
+    texto : oh my goddness... it's getting so thick!
+
+]
+
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : jayden
+    texto : I read that some ones can multiply the size a lot when excited
+
+]
+
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : nara
+    texto : I am not felling well...
+
+]
+
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : lily
+    texto : Don't be so shy~ I just need to check something
+
+]
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : lily
+    texto : You can learn how a dick work 
+
+]
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : ruby
+    texto : Just for you knowledge I have intercurse regularly with my husband 
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : lily
+    texto : If he is fucking you right you would not be so touchy about everything.
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : ruby
+    texto : I only express my thoughts about what is wrong. It's normal.
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : nara
+    texto : ahgm....
+
+]
+
+[ 
+    fn :transicao_inicio:true
+    duraco : 200
+]
+
+
+Colocar animacao
+
+
+[ 
+    fn :transicao_final : true
+    duraco : 200
+]
+
+
+//IGNORAR
+
+
+
+[
+    text  : false
+    per   : narrator
+    texto : "colocar ali"
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : 
+    texto : 
+
+]
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : 
+    texto : 
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : 
+    texto : 
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : 
+    texto : 
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : 
+    texto : 
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : 
+    texto : 
+
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : lily
+    texto : Okay, let's put on these clothes
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : 
+    texto : 
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : 
+    texto : 
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : 
+    texto : 
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : 
+    texto : 
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : 
+    texto : 
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : 
+    texto : 
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : 
+    texto : 
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : 
+    texto : 
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : 
+    texto : 
+
+]
+
+[   ic:true   
+      :  ]
+[
+    text  : false
+    per   : 
+    texto : 
+
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[
+    end 
+
+    screen_play_sequencia : NARA_INTRODUCAO_vestindo
+
+
+]
+
+
+

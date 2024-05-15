@@ -1,0 +1,1073 @@
+<>
+<>
+
+[
+    set 
+
+    lily  
+    nara 
+    
+    maki : ??? 
+    minerva : ??? 
+
+    rhea : ??? 
+    xenon : ??? 
+
+    marta : ??? 
+    linda : ??? 
+
+    ariel : ??? 
+    amon  : ??? 
+
+
+]
+
+
+
+
+[
+     text : false
+    per : maki
+    texto : Good to see you here.
+
+]
+
+
+[
+     text : false
+    per : lily
+    texto : Oh maki!
+
+]
+
+
+[
+     text : false
+    per : nara
+    texto : !?
+
+]
+
+
+[
+     text : false
+    per : maki
+    texto : I am glad that you finally wake up. 
+
+]
+
+
+[
+     text : false
+    per : nara
+    texto : Thank you. 
+
+]
+
+
+[
+     text : false
+    per : lily
+    texto : This is maki. 
+
+]
+
+[
+     text : false
+    per : maki
+    texto : I think she already undestant that. 
+
+]
+
+
+
+[
+     text : false
+    per : lily
+    texto : She is technically my boss. 
+
+]
+
+
+[
+     text : false
+    per : nara
+    texto : You are someone important?
+
+]
+
+
+[
+     text : false
+    per : maki
+    texto : Of course not, I am not more special than anyone else. 
+
+]
+
+[
+
+     text : false
+    per : maki
+    texto : But I have some duties that normal people don't have. 
+
+]
+
+[
+     text : false
+    per : minerva
+    texto : ...
+
+]
+
+[
+
+     text : false
+    per : maki
+    texto : Where are my manners. This is my right arm Minerva 
+
+]
+
+
+[
+     text : false
+    per : minerva
+    texto : Nice to meet you Nara!
+
+]
+
+[
+     text : false
+    per : nara
+    texto : hi... how you know my name?
+
+]
+
+
+[
+     text : false
+    per : minerva
+    texto : Everyone knows about you. How you is a prodigy that destroy all you competitors in the exam...
+
+]
+
+[
+     text : false
+    per : minerva
+    texto : And when comming here you kill the monster that were attacking the carriages.
+
+]
+
+
+
+[
+     text : false
+    per : eden 
+    texto : She dosn't remember nothing that happaned. 
+
+]
+
+
+[
+     text : false
+    per : minerva
+    texto : That's so sad, but you came here in a deplorable state anyway. 
+
+]
+
+
+
+
+
+
+[
+
+     text : false
+    per : marta
+    texto : At least is what they told us. 
+
+]
+
+
+[
+
+     text : false
+    per : rhea
+    texto : Maybe you just heard wrong? Is not like you work well anyway.
+
+]
+
+
+
+[
+
+     text : false
+    per : marta
+    texto : I am blind not deaf.
+
+]
+
+
+[
+
+     text : false
+    per : maki
+    texto : As aways the vultures don't lose time. 
+
+]
+
+[
+
+     text : false
+    per : rhea
+    texto : Hahaha... I though you were going to a meeting with Elizabeth now. 
+
+]
+
+[
+
+     text : false
+    per : rhea
+    texto : Don't respecting peoples time as aways.
+
+]
+
+[
+
+     text : false
+    per : maki
+    texto : I have no idea of what you are talking about. She ask me to pass the meeting to saturday by an emergency. 
+
+]
+
+
+[
+
+     text : false
+    per : marta
+    texto : And what you make to cause a emergency?
+
+]
+
+[
+
+     text : false
+    per : maki
+    texto : As a favor for the handcap people I will pretend I didn't hear you acusations. 
+
+]
+
+
+[
+
+     text : false
+    per : marta
+    texto : I don't need my eyes to see you how you really are.
+
+]
+
+
+[
+
+     text : false
+    per : maki
+    texto : Ha~ and what I look like then? can you make the pleasure?
+
+]
+
+
+[
+
+     text : false
+    per : marta
+    texto : You could stop ask questions when you already know the answer.
+
+]
+
+
+[
+
+     text : false
+    per : ariel 
+    texto : ...
+
+]
+
+[
+
+    fn : mudar_background :true 
+    path : 4 se encarando 
+
+]
+
+
+
+[
+
+     text : false
+    per : ariel 
+    texto : Such a interesting view. It's rare to find all the girls together. 
+
+]
+
+[
+
+     text : false
+    per : marta
+    texto : Sorry, we are talking about things too much complicated for you understand. Maybe you should go to another place.
+
+]
+
+
+[
+
+     text : false 
+    per   : ariel 
+    texto : Sure 3 girls can talk about a lot of things, like cooking, how they feel mantaly abused or some other bullshit.
+
+]
+
+
+[
+
+     text : false
+    per   : ariel 
+    texto : Or just gossiping about others people lifes?
+
+]
+
+
+
+
+[
+
+     text : false
+    per : marta
+    texto : Oh I don't realise your wife was here. Is she?
+
+]
+
+
+[
+
+     text : false
+    per : linda
+    texto : She is not! 
+
+]
+
+
+[
+
+     text : false
+    per : nara 
+    texto : Is not nice to talk about ruby this way.
+
+]
+
+
+[
+
+     text : false
+    per : narrator
+    texto : ...
+
+]
+
+
+
+[
+
+     text : false
+    per : marta
+    texto : The girl have some courage. Maybe she can protect your wife better than you. 
+
+]
+
+
+[
+
+     text : false
+    per : ariel
+    texto : My wife already have help enogh for everything she needs or wants.
+
+]
+
+
+[
+
+     text : false
+    per : ariel
+    texto : Maybe some day you will find someone, a lot of people like to do charity. 
+
+]
+
+
+[
+
+     text : false
+    per : rhea
+    texto : You say a lot for someone that buy yours. 
+
+]
+
+
+[
+
+     text : false
+    per : ariel
+    texto : As always you start to talk about money. And I can see you don't have any client, maybe you program could be more cheap.
+
+]
+
+[
+
+     text : false
+    per : rhea
+    texto : My hour is very expansive, but for you could be a investment. I could tech you how to get a better relationship.
+
+]
+
+
+
+[
+
+     text : false
+    per : ariel
+    texto : You really thought that you have knowledge about how to contruct a good relationship? You need to pay people to be around you.
+
+]
+
+
+[
+
+     text : false
+    per : ariel
+    texto : I don't need help in how to treat my wife.
+
+]
+
+
+
+[
+
+     text : false
+    per : rhea
+    texto : Sorry I wasn't very clear... apparently. 
+
+]
+
+[
+
+     text : false
+    per : rhea
+    texto : I don't want to tech you how to beat your wife when you are drunk. I know you know how to do it.
+
+]
+
+
+[
+
+     text : false
+    per : rhea
+    texto : I was thinking about teach you how to act in bed.
+
+]
+
+[
+
+     text : false
+    per : maki
+    texto : Maybe she is right... now is around 3 years? 
+
+]
+
+
+[
+
+     text : false
+    per : marta
+    texto : 3 years with out a child may be a disappoint. 
+
+]
+
+
+
+
+
+
+
+
+[
+
+     text : false
+    per : nara 
+    texto : We need to be here?
+
+]
+
+
+[
+
+     text : false
+    per : lily
+    texto : It's fine. They are always like this. But they like each other. 
+
+]
+
+
+[
+
+     text : false
+    per : nara 
+    texto : You sure?
+
+]
+
+
+[
+
+     text : false
+    per : lily
+    texto : Maybe some hate but a small amout. 
+
+]
+
+
+
+[
+
+     text : false
+    per : ariel
+    texto : Well, a part from you all I don't have time to lose here. Miss Nara right?
+
+]
+
+
+[
+
+     text : false
+    per : nara 
+    texto : Ye..Yes sir!
+
+]
+
+
+[
+
+     text : false
+    per : ariel
+    texto : Ruby talk with me about you. She likes you a lot for some reasson. 
+
+]
+
+[
+
+     text : false
+    per : ariel
+    texto : So I am formaly making you a offer to enter in the Whitefang.
+
+]
+
+
+[
+
+     text : false
+    per : ariel
+    texto : I would appreciate a lot if you could continue with your friendship with my wife. 
+
+]
+
+
+[
+
+     text : false
+    per : lily
+    texto : Oi! take your hands out of her! she is ours! 
+
+]
+
+
+[
+
+     text : false
+    per : maki
+    texto : That's is right. You can not just appear to a sick woman and ask her this things 
+
+]
+
+
+
+[
+
+     text : false
+    per : ariel
+    texto : I never said that I need a answer now. You can take your time. 
+
+]
+
+
+
+
+[
+
+     text : false
+    per : ariel
+    texto : I never said that I need a answer now. You can take your time. 
+
+]
+
+
+[
+
+     text : false
+    per : rhea 
+    texto : I will not allow this. This woman is clearly a special class or something.
+
+]
+
+
+[
+
+     text : false
+    per : ariel
+    texto : Is it right?
+
+]
+
+
+
+[
+
+     text : false
+    per : nara
+    texto : Yes..
+
+]
+
+
+[
+
+     text : false
+    per : ariel
+    texto : Hum... in this case we need to talk with Christopher. But I will stand my offer. 
+
+]
+
+
+
+[
+
+     text : false
+    per : rhea
+    texto : in this case I will also offer my clan as well. 
+
+]
+
+
+
+[
+
+     text : false
+    per : ariel
+    texto : Why would she enter you tiny and mediocre clan? 
+
+]
+
+
+[
+
+     text : false
+    per : rhea
+    texto : As my informant told me you are a peasant right? 
+
+]
+
+
+[
+
+     text : false
+    per : nara
+    texto : Yes, I come from a village from the extreme west.
+
+]
+
+
+[
+
+     text : false
+    per : rhea
+    texto : What you parents work with?
+
+]
+
+
+[
+
+     text : false
+    per : nara
+    texto : ?
+
+]
+
+[
+
+     text : false
+    per : nara
+    texto : Sorry this is a little perso...
+
+]
+
+
+[
+
+     text : false
+    per : rhea
+    texto : I am just joking.
+
+]
+
+
+
+[
+
+     text : false
+    per : nara
+    texto : Ah... haha
+
+]
+
+
+[
+
+     text : false
+    per : rhea
+    texto : I already know that you dad Conor is the main village guard. 
+
+]
+
+
+[
+
+     text : false
+    per : nara
+    texto : !? 
+
+]
+
+
+
+[
+
+     text : false
+    per : rhea
+    texto : If you join my clan I can pay you extra salary besides what the cathedral pays you.
+
+]
+
+
+[
+
+     text : false
+    per : maki
+    texto : You are literally trying to buy her? 
+
+]
+
+
+
+[
+
+     text : false
+    per : nara
+    texto : Of course! she seems reasonably enogh to understand that the thing with most value int he end is always money. 
+
+]
+
+
+[
+
+     text : false
+    per : marta
+    texto : So you already know where she came from?
+
+]
+
+
+[
+
+     text : false
+    per : rhea
+    texto : Well, nothing everything is perfect. 
+
+]
+
+
+
+[
+
+     text : false
+    per : marta
+    texto : Sweety.
+
+]
+
+
+[
+
+     text : false
+    per : nara
+    texto : Yes mam!
+
+]
+
+[
+
+     text : false
+    per : marta
+    texto : You can call me Marta. 
+
+]
+
+[
+
+     text : false
+    per : marta
+    texto : Independent of you decision you can come to my clan, we only accepts womans so you can feel confort and safe. 
+
+]
+
+
+[
+
+     text : false
+    per : nara
+    texto : Thank you but I have some... 
+
+]
+
+
+
+
+[
+
+     text : false
+    per : marta
+    texto : We would never treat you different by you condition.
+
+]
+
+
+
+[
+
+     text : false
+    per : maki
+    texto : Plese stop trying to manipulate her. 
+
+]
+
+
+[
+
+     text : false
+    per : marta
+    texto : I am just saying the truth.
+
+]
+
+
+
+[
+
+     text : false
+    per : ariel 
+    texto : If you want to sell your soul or go on a path of laziness I will not intervane. 
+
+]
+
+
+[
+
+     text : false
+    per : ariel 
+    texto : But if your desire is to become a prestige nun and follow the sacred code...
+
+]
+
+[
+
+     text : false
+    per : ariel 
+    texto : Our is the only one.
+
+]
+
+
+[
+
+     text : false
+    per : eden
+    texto : Jesus christ. 
+
+]
+
+
+[
+
+     text : false
+    per : eden
+    texto : She is not this useful you four think she is. 
+
+]
+
+
+[
+
+     text : false
+    per : lily
+    texto : Oi!. 
+
+]
+
+
+
+[
+
+     text : false
+    per : maki
+    texto : What do you mean? 
+
+]
+
+
+
+[
+
+     text : false
+    per : eden
+    texto : She is weak. 
+
+]
+
+
+
+[
+
+     text : false
+    per : maki
+    texto : This can not be true. 
+
+]
+
+[
+
+     text : false
+    per : eden
+    texto : We can make a demonstration. 
+
+]
+
+[
+
+     text : false
+    per : eden
+    texto : Someone wants to fight her? 
+
+]
+
+
+[
+
+     text : false
+    per : linda
+    texto : Can I!?. 
+
+]
+
+[
+
+     text : false
+    per : eden
+    texto : Sure.
+
+]
+
+
+[
+
+     text : false
+    per : nara 
+    texto : But... I am still weak.
+
+]
+
+[
+
+     text : false
+    per : eden
+    texto : It's not a serius fight. Just exchange some punches.
+
+]
+
+
+
+[
+
+     text : false
+    per : linda
+    texto : Don't horry, I know you are hurt. I will take easy on you.
+
+]
+[
+
+     text : false
+    per : nara
+    texto : ...
+
+]
+
+[
+
+     text : false
+    per : eden
+    texto : Thank you I guess.
+
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,989 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using System;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+using TMPro;
+
+
+/*
+
+
+**  objectos usam o meio da tela como (0,0). seria intresante mudar depois, mas nao é importante
+
+
+*/
+
+
+
+
+public class BLOCO_menu { 
+
+
+      
+    public static BLOCO_menu instancia;
+    public static BLOCO_menu Pegar_instancia( bool _forcar = false  ){
+
+            if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("BLOCO_menu")) { instancia = new BLOCO_menu();instancia.Iniciar();} return instancia;}
+            if(  instancia == null) { instancia = new BLOCO_menu(); instancia.Iniciar(); }
+            return instancia;
+
+    }
+
+      
+   
+      
+      public  GameObject canvas_menu;
+      public  GameObject canvas_menu_movel;
+      public  Image canvas_menu_image;
+      public  RectTransform canvas_menu_rect;
+        
+       
+      public  Coroutine coroutine_atual;
+
+      public  GameObject menu_background; 
+      public  Transform menu_background_transform;
+      public  RectTransform menu_background_rect_transform;
+
+
+
+       public GameObject galery_container;
+
+      public Menu_objects_generico menu_galery_botao_proximo;
+      public Menu_objects_generico menu_galery_botao_anterior;
+
+      public Menu_objects_generico[] menu_galery_arr = new Menu_objects_generico[8];
+
+
+      public GameObject save_container;
+
+      public Menu_objects_generico[] menu_saves_arr = new Menu_objects_generico[4];
+
+      public Save_information[] menu_save_information_arr = new Save_information[4];
+
+
+
+
+
+      public GameObject personagens_container;
+
+
+      public Menu_objects_generico menu_personagens_botao_proximo;
+      public Menu_objects_generico menu_personagens_botao_anterior;
+
+      public Menu_objects_generico[] menu_personagens_arr = new Menu_objects_generico[8];
+
+
+      public GameObject opcoes_container;
+
+      public Menu_objects_generico[] menu_opcoes_arr = new Menu_objects_generico[5];
+
+      public Botao[] botoes = new Botao[5];
+
+
+      public GameObject  config;
+      public Configuration_container configuration_container;
+
+
+      
+      public GameObject new_game_container;
+
+      public Menu_objects_generico[] new_game_arr = new Menu_objects_generico[1];
+      public Menu_objects_generico new_game;
+
+      public Menu_type estado_atual = Menu_type.new_game;
+
+      public int numero_pagina_galeria = 0;
+      
+      public Controlador_configuration controlador_configuration;
+      
+      public Controlador_data controlador_data;
+
+      
+
+      public Dados_blocos dados_blocos;
+      
+
+       
+      public void Iniciar (){ 
+
+        controlador_configuration = Controlador_configuration.Pegar_instancia(true);
+     
+        controlador_data = Controlador_data.Pegar_instancia(true);
+
+        dados_blocos = Dados_blocos.Pegar_instancia(true);
+
+         
+        return;
+        
+      }
+
+
+    public void Zerar_dados(){
+
+       Mono_instancia.DestroyImmediate(canvas);
+       canvas = null;
+       canvas_menu = null;
+       canvas_menu_movel = null;
+       canvas_menu_image  = null;
+       canvas_menu_rect  = null;
+       
+
+
+    }
+
+    public GameObject canvas;
+      
+
+
+
+    public void Iniciar_menu( ){
+
+
+
+
+      Controlador_input.ativar_movimentacao_mouse = true;
+      Controlador_cursor.Pegar_instancia().Mudar_cursor(Cor_cursor.off);
+      Controlador_input.tipo_teclado = Tipo_teclado.plataforma;
+
+
+      Menu_START data = dados_blocos.menu_START;
+
+       
+      
+
+        //   canvas 
+
+        string path = "images/menu_images/" + controlador_configuration.menu_background; 
+        Sprite menu_background = Resources.Load<Sprite>(path);
+
+
+        canvas = GameObject.Find("Tela/Canvas/Menu");
+
+        // Ajustar_();
+        
+        canvas_menu = new GameObject("Canvas_menu");
+        canvas_menu.transform.SetParent(canvas.transform, false);
+
+        canvas_menu_movel = new GameObject("Canvas_menu_movel");
+
+        canvas_menu_movel.transform.SetParent(canvas_menu.transform, false);
+
+     
+        canvas_menu_image = canvas_menu_movel.AddComponent<Image>();
+
+        canvas_menu_rect = canvas_menu_movel.GetComponent<RectTransform>();
+
+        canvas_menu_rect.SetSizeWithCurrentAnchors(   RectTransform.Axis.Horizontal  , 8160f);
+        canvas_menu_rect.SetSizeWithCurrentAnchors(   RectTransform.Axis.Vertical  , 1080f);
+        //localScale = new Vector3(1f,1f,1f);
+
+        canvas_menu_image.sprite = menu_background;
+        
+   
+
+
+
+
+
+   
+        // new game 
+      
+        new_game_container = new GameObject("New_game_container");
+        new_game_container.transform.SetParent(canvas_menu_movel.transform, false);
+        new_game_container.transform.localPosition = new Vector3(0f,0f,0f);
+
+
+
+        new_game = new Menu_objects_generico("New_game", new_game_container,"images/menu_images/menu_new_quadro_novo_jogo" ,11f,126f, 345f , 358f);
+
+        new_game.On_click = Ativar_new_game;
+        
+        
+
+
+        new_game_arr[0] = new_game;
+
+        
+
+
+        //    galeria
+
+
+        // ** ver se localPosition vai funcionar sem o Parent setado primeiro 
+        // colocar as funcoes depois
+
+
+        galery_container = new GameObject("Galery_container");
+
+        galery_container.transform.SetParent(canvas_menu_movel.transform, false);
+
+        galery_container.transform.localPosition = new Vector3(-1560f,0f,0f);
+
+     
+    
+        menu_galery_arr[0]    =   new Menu_objects_generico( "Menu_galery_1" , galery_container , "images/menu_images/default_galeria_1_menu" ,  0f  , 140f,    398f , 177f  );
+
+        menu_galery_arr[1]    =   new Menu_objects_generico( "Menu_galery_2" ,galery_container , "images/menu_images/default_galeria_2_menu" ,   395f ,  99f ,   282f , 191f );
+
+        menu_galery_arr[2]    =   new Menu_objects_generico( "Menu_galery_3" ,galery_container , "images/menu_images/default_galeria_3_menu" ,  104f,  -147f ,  474f , 182f );
+
+        menu_galery_arr[3]    =   new Menu_objects_generico( "Menu_galery_4" ,galery_container , "images/menu_images/default_galeria_4_menu" , -352f , -98f , 139f, 297f );
+
+
+
+        menu_galery_arr[4]    =   new Menu_objects_generico( "Menu_galery_5" ,galery_container , "images/menu_images/default_galeria_5_menu" , -454f , 156f,  225f , 131f );
+
+        menu_galery_arr[5]    =   new Menu_objects_generico( "Menu_galery_6" ,galery_container , "images/menu_images/default_galeria_6_menu" , 17f , 395f  ,  305f,  188f );
+         
+
+
+        
+        menu_galery_botao_proximo  = new Menu_objects_generico( "Menu_galery_botao_proximo" , galery_container , "images/menu_images/menu_seta_direita" ,  378f  , 339f,    191f , 113f  );
+        menu_galery_arr[6] = menu_galery_botao_proximo;
+
+
+        menu_galery_botao_anterior  = new Menu_objects_generico( "Menu_galery_botao_anterior" , galery_container , "images/menu_images/menu_seta_esquerda" ,  -332f  , 336f,    196f , 109f  );
+        menu_galery_arr[7] = menu_galery_botao_anterior;
+
+
+
+
+
+        Verificar_galeria();
+
+
+
+      
+      
+
+
+
+       //  saves
+       
+        save_container = new GameObject("Save_container");
+        save_container.transform.SetParent(canvas_menu_movel.transform,false);
+        save_container.transform.localPosition = new Vector3(1560f,0f,0f);
+
+        
+
+        menu_saves_arr[0] = new Menu_objects_generico( "Menu_save_1", save_container , "images/menu_images/sem_save_image",   -279f , 216f , 287f ,142f);
+        menu_save_information_arr[0] = new Save_information("Menu_save_1_info", save_container, -283f,396f);
+
+
+        menu_saves_arr[1] = new Menu_objects_generico( "Menu_save_2", save_container , "images/menu_images/sem_save_image" ,  -279f , -186f ,  287f ,142f);
+
+        menu_save_information_arr[1] = new Save_information("Menu_save_2_info", save_container, -282f,  -10f);
+        
+        
+        menu_saves_arr[2] = new Menu_objects_generico( "Menu_save_3", save_container ,"images/menu_images/sem_save_image" , 314f , 215f,287f ,142f);
+        menu_save_information_arr[2] = new Save_information("Menu_save_3_info", save_container, 322f,394f);
+
+        menu_saves_arr[3] = new Menu_objects_generico( "Menu_save_4", save_container ,"images/menu_images/sem_save_image" , 315f , -186f , 287f ,142f);
+        menu_save_information_arr[3] = new Save_information("Menu_save_4_info", save_container, 311f, -11f);
+
+
+        Verificar_saves();
+
+  
+
+
+
+       //  configs
+
+
+
+        config = new GameObject("Config");
+        config.transform.SetParent(canvas_menu_movel.transform, false);
+        config.transform.localPosition = new Vector3(3120f,0f,0f);
+
+      
+        
+
+        configuration_container = new Configuration_container(  0f, 100f , config.transform  );
+
+
+        //configuration_container.game_object.transform.SetParent(  config.transform , false );
+
+
+        //configuration_container.game_object.transform.localScale = new Vector3(1f,1f,1f);
+        //  configuration_container.game_object.transform.localPosition = new Vector3(0f,100f,0f);
+
+
+        // characters
+
+        personagens_container = new GameObject("Personagens_container");
+        personagens_container.transform.SetParent(canvas_menu_movel.transform,false);
+        personagens_container.transform.localPosition = new Vector3(-3120f,0f,0f);
+
+
+        menu_personagens_arr[0]  = new Menu_objects_generico( "Menu_personagem_1", personagens_container ,"images/menu_images/default_personagem_menu" , -369f , 173f , 172f , 146f );
+
+        menu_personagens_arr[1]  = new Menu_objects_generico( "Menu_personagem_2", personagens_container ,"images/menu_images/default_personagem_menu" , -369f , -86f, 172f , 146f);
+        
+        menu_personagens_arr[2]  = new Menu_objects_generico( "Menu_personagem_3", personagens_container ,"images/menu_images/default_personagem_menu" , -4f , 268f, 172f , 146f);
+
+        menu_personagens_arr[3]  = new Menu_objects_generico( "Menu_personagem_4", personagens_container ,"images/menu_images/default_personagem_menu" , -4f , 9f, 172f , 146f);
+
+        menu_personagens_arr[4]  = new Menu_objects_generico( "Menu_personagem_5", personagens_container ,"images/menu_images/default_personagem_menu" , 343f , 173f, 172f , 146f);
+        
+        menu_personagens_arr[5]  = new Menu_objects_generico( "Menu_personagem_6", personagens_container ,"images/menu_images/default_personagem_menu" , 343f , -86f, 172f , 146f);
+
+
+
+        menu_personagens_botao_proximo  = new Menu_objects_generico( "Menu_personagens_botao_proximo" , personagens_container , "images/menu_images/menu_seta_direita" ,  342f  , 341f,    191f , 113f  );
+        menu_personagens_arr[6] = menu_personagens_botao_proximo;
+
+
+        menu_personagens_botao_anterior  = new Menu_objects_generico( "Menu_personagens_botao_anterior" , personagens_container , "images/menu_images/menu_seta_esquerda" ,  -371f  , 339f,    196f , 109f  );
+        menu_personagens_arr[7] = menu_personagens_botao_anterior;
+
+        
+
+
+        //  botoes
+
+
+        opcoes_container = new GameObject("Opcoes_container");
+        Image opcoes_container_image = opcoes_container.AddComponent<Image>();
+        RectTransform opcoes_container_rect = opcoes_container.GetComponent<RectTransform>();
+
+        opcoes_container_rect.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, 1920f  );
+        opcoes_container_rect.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, 1080f );
+
+
+
+         Sprite sprite_opcoes_container = Resources.Load<Sprite>("images/menu_images/menu_new_opcoes");
+
+         opcoes_container_image.sprite = sprite_opcoes_container;
+
+         if(sprite_opcoes_container == null) throw new ArgumentException("a");
+
+
+        opcoes_container.transform.SetParent(canvas_menu.transform,false);
+        opcoes_container.transform.localPosition = new Vector3(0f,0f,0f);
+
+
+        string som_click = "audio/geral_sfx/botoes/click_2";
+
+
+        
+        Sprite[] imagens_personagens = new Sprite[2];
+
+        imagens_personagens[0] = Resources.Load<Sprite>("images/menu_images/botao_characters_off");
+        imagens_personagens[1] = Resources.Load<Sprite>("images/menu_images/botao_characters_on");
+
+
+        botoes[0] = new Botao(
+            
+          "Personagens_opcao",
+
+          250f,
+          85f,
+          -600f,
+          -480f,
+          opcoes_container.transform,
+          Ir_characters,
+          Tipo_botao.dinamico,
+          true, 
+          imagens_personagens
+
+        );
+        botoes[0] .Colocar_som_click(som_click);
+
+        Sprite[] imagens_galeria = new Sprite[2];
+        imagens_galeria[0] = Resources.Load<Sprite>("images/menu_images/botao_galeria_off");
+        imagens_galeria[1] = Resources.Load<Sprite>("images/menu_images/botao_galeria_on");
+
+
+        botoes[1] = new Botao(
+            
+          "Galeria_opcao",
+
+          250f,
+          85f,
+          -300f,
+          -480f,
+          opcoes_container.transform,
+          Ir_galery,
+          Tipo_botao.dinamico,
+          true, 
+          imagens_galeria
+
+        );
+
+        botoes[1].Colocar_som_click(som_click);
+
+
+        Sprite[] imagens_new_game = new Sprite[2];
+        imagens_new_game[0] = Resources.Load<Sprite>("images/menu_images/botao_new_game_off");
+        imagens_new_game[1] = Resources.Load<Sprite>("images/menu_images/botao_new_game_on");
+
+
+        botoes[2] = new Botao(
+            
+          "new_game_opcao",
+
+          250f,
+          85f,
+          0f,
+          -480f,
+          opcoes_container.transform,
+          Ir_new_game,
+          Tipo_botao.dinamico,
+          true, 
+          imagens_new_game
+
+        );
+        botoes[2].Colocar_som_click(som_click);
+
+        Sprite[] imagens_save = new Sprite[2];
+        imagens_save[0] = Resources.Load<Sprite>("images/menu_images/botao_saves_off");
+        imagens_save[1] = Resources.Load<Sprite>("images/menu_images/botao_saves_on");
+
+
+        botoes[3] = new Botao(
+            
+          "save_opcao",
+
+          250f,
+          85f,
+          300f,
+          -480f,
+          opcoes_container.transform,
+          Ir_saves,
+          Tipo_botao.dinamico,
+          true, 
+          imagens_save
+
+        );
+        botoes[3].Colocar_som_click(som_click);
+
+
+        Sprite[] imagens_config = new Sprite[2];
+        imagens_config[0] = Resources.Load<Sprite>("images/menu_images/botao_config_off");
+        imagens_config[1] = Resources.Load<Sprite>("images/menu_images/botao_config_on");
+
+
+        botoes[4] = new Botao(
+            
+          "config_opcao",
+
+          250f,
+          85f,
+          600f,
+          -480f,
+          opcoes_container.transform,
+          Ir_configurations,
+          Tipo_botao.dinamico,
+          true, 
+          imagens_config
+
+        );
+        botoes[4].Colocar_som_click(som_click);
+
+
+    /*
+       
+       menu_opcoes_arr[0] =  new Menu_objects_generico( "opcoes_characters", opcoes_container ,"images/menu_images/botao" ,   -600f , -460f , 230f , 100f);
+       menu_opcoes_arr[0].Colocar_texto("Characters");
+       menu_opcoes_arr[0].On_click = Ir_characters;
+
+       
+       menu_opcoes_arr[1] = new Menu_objects_generico( "opcoes_galeria", opcoes_container ,"images/menu_images/botao" ,   -300f , -460f , 230f , 100f);
+       menu_opcoes_arr[1].Colocar_texto("Galery");
+       menu_opcoes_arr[1].On_click = Ir_galery;
+
+
+
+       
+
+
+       menu_opcoes_arr[2] = new Menu_objects_generico( "opcoes_new_game", opcoes_container ,"images/menu_images/botao" ,   0f , -460f , 230f , 100f);
+       menu_opcoes_arr[2].Colocar_texto("New Game");
+       menu_opcoes_arr[2].On_click = Ir_new_game;
+
+
+       menu_opcoes_arr[3] = new Menu_objects_generico( "opcoes_saves", opcoes_container ,"images/menu_images/botao" ,   300f , -460f , 230f, 100f);
+       menu_opcoes_arr[3].Colocar_texto("Saves");
+       menu_opcoes_arr[3].On_click = Ir_saves;
+
+  
+
+       
+       menu_opcoes_arr[4] = new Menu_objects_generico( "opcoes_configurations", opcoes_container ,"images/menu_images/botao" ,   600f , -460f, 230f , 100f);
+       menu_opcoes_arr[4].Colocar_texto("Configurations");
+       menu_opcoes_arr[4].On_click = Ir_configurations;
+
+
+       */
+
+
+       string audio_path =  "audio/blocos_pequenos/menu/" + controlador_configuration.music_menu;
+
+    
+       Controlador_audio.Pegar_instancia().Start_music( _slot: 1 , audio_path );
+
+
+        //   menu_galery_img1 = GameObject.Find("Menu_controlador/Canvas/Background/Galery_container/Menu_galery_img_1").GetComponent<Image>();
+    ///--------------
+    // THINGS
+    ///--------------
+
+    }
+
+
+
+
+
+
+
+
+     public void Update(){
+
+        
+
+        bool esta_nos_botoes = Update_botoes();
+
+        if( esta_nos_botoes  ) { return ;  }
+
+        
+      
+        switch(estado_atual){
+
+            case Menu_type.transicao: break;
+
+            case Menu_type.personagens:  Update_generico(menu_personagens_arr); break;
+
+            case Menu_type.galeria:  Update_generico(menu_galery_arr) ; break;
+
+            case Menu_type.new_game: Update_generico(new_game_arr) ; break;
+
+            case Menu_type.saves: Update_generico(menu_saves_arr)    ; break;
+
+            case Menu_type.configurations:  configuration_container.Update() ; break;
+
+
+        }
+
+
+     }
+
+
+
+     public bool Update_botoes(){
+
+        
+            bool is_click = Controlador_input.Get_up(Key_code.mouse_left);
+            
+
+            for(int i = 0 ;    i <  botoes.Length ;   i++){
+
+                    Botao botao = botoes[i];
+                    
+                    if( botao.Update(  is_click, controlador_data.posicao_mouse )) { return true; }
+
+            }
+
+            return false ;
+
+            // Controlador_cursor.Pegar_instancia().Mudar_cursor( Cor_cursor.off );
+
+
+     }
+
+
+
+     
+
+    public void Update_generico( Menu_objects_generico[] _arr ){
+
+     
+          float mouse_x = controlador_data.posicao_mouse[0] - 960f;
+          float mouse_y = controlador_data.posicao_mouse[1] - 540f;
+
+
+          
+          float x_min ;
+          float x_max ;
+            
+          float y_min;
+          float y_max ;
+            
+
+          for (int i = 0  ; i < _arr.Length  ;i++ ){
+
+                
+             
+              _arr[i].image.color = Cores.Pegar_cor( Nome_cor.dark_2 ) ;
+
+              x_min  = _arr[i].rect.localPosition[0] - (_arr[i].rect.rect.width / 2);
+              x_max  = _arr[i].rect.localPosition[0] + (_arr[i].rect.rect.width / 2) ;
+            
+              y_min = _arr[i].rect.localPosition[1] - (_arr[i].rect.rect.height / 2) ;
+              y_max = _arr[i].rect.localPosition[1] + (_arr[i].rect.rect.height / 2) ;
+
+
+
+              if(Mat.Verificar_ponto_dentro_retangulo(  mouse_x,  mouse_y   , x_min, x_max, y_min , y_max   )   ){
+
+                  _arr[i].image.color = Color.white;
+
+                  if( Controlador_input.Get_down(Key_code.mouse_left)) {
+                    
+                    _arr[i].On_click();
+                    
+                  }
+                  
+                  Controlador_cursor.Pegar_instancia().Mudar_cursor( Cor_cursor.red );
+
+                  return ;
+                  
+              }
+
+          }
+
+          Controlador_cursor.Pegar_instancia().Mudar_cursor( Cor_cursor.off );
+
+        return;
+
+    }
+
+
+
+
+
+
+    //  public void Update_botao(){
+
+
+
+
+    //       float mouse_x = controlador_data.posicao_mouse[0] - 960f;
+    //       float mouse_y = controlador_data.posicao_mouse[1] - 540f;
+
+
+          
+    //       float x_min ;
+    //       float x_max ;
+            
+    //       float y_min;
+    //       float y_max ;
+            
+
+    //       for (int i = 0  ; i < 5  ;i++ ){
+
+
+    //           menu_opcoes_arr[i].image.color = Cores.cor_85;
+
+    //           x_min  = menu_opcoes_arr[i].rect.localPosition[0] - (menu_opcoes_arr[i].rect.rect.width / 2);
+    //           x_max  = menu_opcoes_arr[i].rect.localPosition[0] + (menu_opcoes_arr[i].rect.rect.width / 2) ;
+            
+    //           y_min = menu_opcoes_arr[i].rect.localPosition[1] - (menu_opcoes_arr[i].rect.rect.height / 2) ;
+    //           y_max = menu_opcoes_arr[i].rect.localPosition[1] + (menu_opcoes_arr[i].rect.rect.height / 2) ;
+
+
+
+    //           if(Mat.Verificar_ponto_dentro_retangulo(  mouse_x,  mouse_y   , x_min, x_max, y_min , y_max   )   ){
+
+    //               menu_opcoes_arr[i].image.color = Color.white;
+
+                 
+
+    //               if( Input.GetMouseButtonDown(0) ){
+
+    //                 menu_opcoes_arr[i] ?. On_click();
+                
+    //               }
+
+                  
+    //           }
+
+
+    //       }
+
+
+        
+
+    //     return;
+
+
+
+
+    //  } 
+
+
+     public void Update_new_game(){
+           
+
+
+          float mouse_x = controlador_data.posicao_mouse[0] - 960f;
+          float mouse_y = controlador_data.posicao_mouse[1] - 540f;
+
+
+          
+          float x_min ;
+          float x_max ;
+            
+          float y_min;
+          float y_max ;
+            
+
+          new_game.image.color = Cores.Pegar_cor( Nome_cor.dark_2 );
+
+          x_min  = new_game.rect.localPosition[0] - (new_game.rect.rect.width / 2);
+          x_max  = new_game.rect.localPosition[0] + (new_game.rect.rect.width / 2) ;
+            
+          y_min = new_game.rect.localPosition[1] - (new_game.rect.rect.height / 2) ;
+          y_max = new_game.rect.localPosition[1] + (new_game.rect.rect.height / 2) ;
+
+
+
+          if(Mat.Verificar_ponto_dentro_retangulo(  mouse_x,  mouse_y   , x_min, x_max, y_min , y_max   )   ){
+
+              new_game.image.color = Color.white;
+
+              if( Controlador_input.Get_down(Key_code.mouse_left)){
+
+                    new_game ?. On_click();
+                
+              }
+                  
+          }
+
+        
+
+
+
+
+
+          
+          return;
+
+     }
+     public void Update_saves(){
+          
+          return;
+
+     }
+     public void Update_personagens(){
+          
+          return;
+
+     }
+
+     public void Update_galeria(){
+          
+          return;
+
+     }
+
+
+
+
+
+
+    public   void Ativar_new_game() {
+
+          //**  teria que carregaro save aqui, porque faz mais sentido. para o player ir para um save ele sempre vai ter que ir no menu
+
+          // dados_blocos.req_transicao = new Req_transicao (
+
+          //   Tipo_troca_bloco.SWAP, 
+          //   Bloco.jogo
+
+          // );
+
+
+          // dados_blocos.jogo_START = new Jogo_START();
+          // dados_blocos.jogo_START.eh_novo_jogo = true;
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+                          //    360 /   1200  / 360 
+                          //      +- 1560
+
+     public void Ir_saves(){ if(coroutine_atual != null) { estado_atual = Menu_type.transicao;  Mono_instancia.Stop_coroutine(coroutine_atual); }; coroutine_atual = Mono_instancia.Start_coroutine( Ir_coroutine(-1560f, Menu_type.saves)); }
+     public void Ir_configurations(){ if(coroutine_atual != null) { estado_atual = Menu_type.transicao; Mono_instancia.Stop_coroutine(coroutine_atual)   ; }; coroutine_atual =  Mono_instancia.Start_coroutine(Ir_coroutine(-3120f, Menu_type.configurations)); }
+     public void Ir_new_game(){ if(coroutine_atual != null) { estado_atual = Menu_type.transicao; Mono_instancia.Stop_coroutine(coroutine_atual)   ; }; coroutine_atual =  Mono_instancia.Start_coroutine(Ir_coroutine(0f, Menu_type.new_game)); }
+     public void Ir_galery(){ if(coroutine_atual != null) { estado_atual = Menu_type.transicao; Mono_instancia.Stop_coroutine(coroutine_atual)   ; }; coroutine_atual =  Mono_instancia.Start_coroutine(Ir_coroutine(1560f, Menu_type.galeria)); }
+     public void Ir_characters(){ if(coroutine_atual != null) { estado_atual = Menu_type.transicao; Mono_instancia.Stop_coroutine(coroutine_atual)   ; }; coroutine_atual =  Mono_instancia.Start_coroutine(Ir_coroutine(3120f, Menu_type.personagens)); }
+
+
+    IEnumerator Ir_coroutine(float x_position, Menu_type _novo_tipo){
+
+
+           float x_inicial = canvas_menu_movel.transform.localPosition.x;
+
+           float x_dif = x_inicial - x_position;
+    
+
+           float t_x_dif = Mathf.Abs(x_dif);
+           float speed_ms = t_x_dif > 6000f ? 600f : t_x_dif > 4000f ?  500f  : t_x_dif > 3000f ?  400f :  300f ;
+
+          
+           
+          float numero_ciclos = speed_ms * 60f / 1000f;
+
+           float d_x = x_dif / numero_ciclos;
+           
+           float count = 0f;
+
+         
+
+           while(  count <  numero_ciclos  ){
+            
+             
+               count += 1f;
+               x_inicial -= d_x;
+
+
+               canvas_menu_movel.transform.localPosition = new Vector3( x_inicial , 0f , 0f);
+               yield return null;
+
+           }
+
+
+           canvas_menu_movel.transform.localPosition = new Vector3(x_position,0f,0f);
+           
+           coroutine_atual = null;
+
+           estado_atual = _novo_tipo;
+
+           yield break;
+            
+          
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    // public void New_game_button_hover(){menu_new_game_image.color = new Color(1f,1f,1f,1f);}
+    // public void New_game_button_over(){menu_new_game_image.color = new Color(0.8f,0.8f,0.8f,1f);}
+    // public void New_game_buttOn_click(){coroutine_atual = Mono_instancia.StartCoroutine(New_game_animation());}
+
+
+
+    public IEnumerator New_game_animation(){
+      
+         
+      
+       
+
+       yield break;
+       
+      
+       
+       
+    }
+
+
+
+
+
+    
+
+      public void Verificar_galeria(){
+
+          int p0 =  numero_pagina_galeria * 6;
+          for(int i = 0 ;  i < 6 ; i++){
+
+             if(controlador_configuration.galeria_imagens_liberadas[i]){menu_galery_arr[i].image.sprite = Resources.Load<Sprite>("images/menu_images/galeria_image_" + Convert.ToString(i));}
+
+          }
+
+          
+
+          return;
+
+        }
+
+
+        public void Passar_pagina_galeria(){
+
+
+            int max =  (controlador_configuration.galeria_imagens_liberadas.Length/6);
+
+            if(  numero_pagina_galeria  +  1  > max  ) return; 
+
+            numero_pagina_galeria++;
+   
+            Verificar_galeria();
+
+
+
+        }
+
+
+        public void Voltar_pagina_galeria(){
+
+            if(  numero_pagina_galeria  - 1  < 0  ) return; 
+
+            numero_pagina_galeria--;
+   
+            Verificar_galeria();
+
+        }
+
+
+
+
+
+
+        public void Verificar_saves() {
+
+            
+
+            Save_menu_info save_menu_info = dados_blocos.menu_START.save_menu_info;
+            
+            if(save_menu_info == null) return;
+
+            for(  int i = 0 ; i < 4 ; i++  ){
+
+                  if(save_menu_info.is_active_arr[i]){
+
+                  menu_saves_arr[i].image.sprite = save_menu_info.image_save_arr[i];
+                  menu_save_information_arr[i].progresso.text = "Progress : " + save_menu_info.progresso_arr[i];
+                  menu_save_information_arr[i].tempo_total_jogo.text = "Time : " + save_menu_info.save_time_arr[i];
+                  menu_save_information_arr[i].x_image.color = new Color(1f,1f,1f, 0f);
+
+                  }
+                  continue;
+
+            }
+
+
+          
+
+        }
+
+
+
+ 
+
+     
+    
+}

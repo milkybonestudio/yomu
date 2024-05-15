@@ -1,0 +1,159 @@
+[set,true,nara,alkatroz]
+
+[mov,true,425,-425]
+[fn,true,mudar_modo_tela,4,1]
+[ic,true,  roupao@neutral@bf@direita ,  normal_clothes@neutral@ba@frente ]
+
+[fn,false,trocar_background,images/in_game/splashes/sets_obrigatorios/nara_wake_up/door_1]
+[fn,false,trocar_background,images/in_game/splashes/sets_obrigatorios/nara_wake_up/door_2]
+[fn,true,levantar_texto]
+[fn,true,flip_foco]
+[text,false,0,alkatroz,kkk ... I thought you would never really wake up]
+[text,false,0,nara,hi..?]
+
+[text,false,0,alkatroz,hello my name is Alkatroz.The church told me to wait for you wake up. Do you mind if I get inside?]
+[text,false,0,nara,Forgiveme but ... I'm not dressed in a suitable way, I think is  better you stay there]
+
+[text,false,0,alkatroz,Sure? I brought a gift. You stayed in a coma for a few weeks and you received a letter from your parents]
+[text,false,0,nara,are they safe!? what happened with me?]
+
+[text,false,0,alkatroz,Do you mind if I get in? I know I can look a little scary but I'm a priest like any other.]
+[text,false,0,alkatroz,After many missions it is hard to your body be normal.]
+
+[text,false,0,nara,*Mother also have a disconfigured body, how biased I am...*]
+[text,false,0,nara,Of course, came in]
+
+
+
+[fn,true,trocar_background,images/in_game/background/catedral/nara_room/front_n ]
+[fn,true,mostrar_personagens,nara,alkatroz]
+
+
+[text,false,0,alkatroz,You scared everyone when you arrived]
+
+[ic,true,  roupao@neutral@ba@esquerda ,  normal_clothes@neutral@bf@frente ]
+[text,false,0,nara,what happened with me? I don't even remember leaving home]
+
+[ic,true,  roupao@neutral@bf@esquerda ,  normal_clothes@neutral@ba@frente ]
+[text,false,0,alkatroz,I don't know, you don't remember?]
+
+[ic,true,  roupao@neutral@ba@esquerda ,  normal_clothes@neutral@bf@frente ]
+[text,false,0,nara,no... and how long was I sleeping?]
+
+[ic,true,  roupao@neutral@bf@esquerda ,  normal_clothes@neutral@ba@frente ]
+[text,false,0,alkatroz,Around one week, you could have woke up just before. I stayed awake every day waiting]
+
+[ic,true,  roupao@neutral@ba@esquerda ,  normal_clothes@neutral@bf@frente ]
+[text,false,0,nara,Right... But why were you waiting at night?]
+
+[ic,true,  roupao@neutral@bf@esquerda ,  normal_clothes@neutral@ba@frente ]
+[text,false,0,alkatroz,We never know when you would get up]
+
+[ic,true,  roupao@neutral@ba@esquerda ,  normal_clothes@neutral@bf@frente ]
+[text,false,0,nara,Make sense, so can you give me the letters]
+
+[ic,true,  roupao@neutral@bf@esquerda ,  normal_clothes@neutral@ba@frente ]
+[mov,true,425,100]
+[text,false,0,alkatroz,oh.. I don't have it. I just want to enter here]
+
+[mov,true,-425,425]
+[ic,true,  roupao@neutral@ba@direita ,  normal_clothes@neutral@bf@frente ]
+[text,false,0,nara,stay alway from me!]
+
+
+[ic,true,  roupao@neutral@bf@direita ,  normal_clothes@neutral@ba@frente ]
+[text,false,0,alkatroz,? Why do you want to go out? I'm doing you a favor! We are friends now right?]
+
+[ic,true,  roupao@neutral@bf@direita ,  normal_clothes@neutral@ba@frente ]
+[text,false,0,alkatroz,hum ... apparently you don't like me]
+
+[ic,true,  roupao@neutral@ba@direita ,  normal_clothes@neutral@bf@frente ]
+[text,false,0,nara,*Can I win? He doesn't look very strong*]
+
+
+[ic,true,  roupao@neutral@bf@direita ,  normal_clothes@neutral@ba@frente ]
+[text,false,0,alkatroz,Apparently you don't want to be my friend, I could make things easier for you.]
+
+[ic,true,  roupao@neutral@ba@direita ,  normal_clothes@neutral@bf@frente ]
+[text,false,0,nara,Do you really think you can win?]
+
+[ic,true,  roupao@neutral@bf@direita ,  normal_clothes@neutral@bf@frente ]
+[text,false,0,alkatroz,?]
+
+[ic,true,  roupao@neutral@bf@direita ,  normal_clothes@neutral@ba@frente ]
+[text,false,0,alkatroz,Ha^ha...ha^ha...]
+[text,false,0,alkatroz,East people are just retarded. Why you think I wouldn't win?]
+
+[ic,true,  roupao@neutral@ba@direita ,  normal_clothes@neutral@bf@frente ]
+[text,false,0,nara,I'm strong enough to pass ... in the admission test]
+
+[ic,true,  roupao@neutral@bf@direita ,  normal_clothes@neutral@ba@frente ]
+[text,false,0,alkatroz,I don't feel much mana coming from you and you don't seem very strong.]
+
+[ic,true,  roupao@neutral@bf@direita ,  normal_clothes@neutral@ba@frente ]
+[text,false,1,alkatroz,or be very intelligent.]
+
+[mov,true,-475]
+[ic,true,  roupao@fear@bf@direita ,  normal_clothes@neutral@bf@frente(angel) ]
+[text,false,0,alkatroz,...]
+
+[ic,true,  roupao@fear@bf@direita ,  normal_clothes@neutral@ba@frente(angel)]
+[text,false,0,alkatroz,If you pass the test, it lost the purpose.]
+
+[fn,true,abaixar_texto]
+[fn,true,esconder_personagens,todos]
+[fn,false,transicao_inicio]
+
+
+[fn,true,trocar_background,images/in_game/splashes/sets_obrigatorios/nara_wake_up/torture,false,1]
+[fn,false,transicao_final,longa]
+
+[fn,true,levantar_texto]
+
+
+
+[text,false,0,???,what you find?]
+[text,false,0,!??@,Nothing important, she doesn't remembers the accident]
+[text,false,0,???,hum, and the sword? $&<<& will kill me ]
+
+
+[text,false,0,!??@,There was nothing in her room and she doesn't know where she]
+[text,false,0,nara,ahs..Shh.s.]
+[text,false,0,???,Can't she talk?]
+
+
+
+
+[text,false,0,!??@,she can, but after I pulled her teeth she lost will.]
+[text,false,0,!??@,can I kill her? everyone already have a turn.]
+[text,false,0,???,who would like to do with her in this state?]
+
+
+[text,false,0,!??@,the guys did before I start.]
+[text,false,0,!??@,but actualy #@!$$ and &^88 asked for me to finished first]
+[text,false,0,???,They did?]
+
+[text,false,0,!??@,not yet]
+
+[text,false,0,???,So dont kill her]
+
+
+[text,false,0,!??@,they want her dead ~]
+
+
+
+[text,false,0,???,oh. then ok]
+
+[fn,false,transicao_inicio,longa]
+[text,false,0,nara,AHG! .. agh..]
+
+
+
+[end, 
+
+    script_controlador: 0
+    script_cenas: 1
+    path_proximo_script: nada
+    tem_transicao: false
+
+]

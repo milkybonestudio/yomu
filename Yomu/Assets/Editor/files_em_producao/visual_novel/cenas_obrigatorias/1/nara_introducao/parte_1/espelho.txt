@@ -1,0 +1,123 @@
+<>
+nome:espelho
+formato:desenvolvimento/final
+versao:1.0
+status:denvolvimento/final
+comentario:""
+<>
+
+[
+    set
+    nara
+
+]
+
+
+[ 
+    fn : mudar_foco_camera_personagens : true
+    modo : proximo
+    instantaneo : true 
+
+]
+
+
+
+[ 
+
+    fn:mudar_background:true
+    path : images/in_game/background/catedral/nara_room/front_n
+    tipo_foco : desfoco
+    
+]
+
+[
+    fn : tirar_transicao_cor_personagem : true 
+    nara
+]
+
+[ 
+    fn:mudar_cor_personagem:true
+    nara : black
+]
+
+
+[
+    fn : colocar_transicao_cor_personagem : true 
+    nara
+]
+
+
+
+
+
+[  ic,true ,nara : robe@neutral@bf@direita]
+
+
+
+
+[
+    fn:mostrar_personagem:false
+    nara
+
+]
+
+
+[ 
+    fn:mudar_cor_personagem:true
+    nara : dark_4
+]
+
+
+
+
+[ ic, true , nara : robe@neutral@bf@direita ]
+[ 
+    text : false
+
+    per : nara
+    texto : ...
+
+]
+
+
+  [
+
+    ic :true
+
+    nara : robe(mostrando_costas)@neutral@bf@direita
+
+  ]
+
+[
+     text:false
+
+    per : nara
+    texto : *my scars... they gone*
+
+]
+
+
+[ ic,true,nara : robe@neutral@bf@direita]
+[ 
+    text:false
+
+    per : nara
+    texto : *maybe this is a dream?* 
+
+]
+[ 
+    text:false
+
+    per   : nara
+    texto : *yes! is just a dream. later you will wake up and go back to your normal and happy life*]
+
+
+
+[
+    end
+
+    script_end: NARA_INTRODUCAO_liberar_mesa
+    
+
+]
+

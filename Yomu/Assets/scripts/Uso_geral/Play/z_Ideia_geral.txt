@@ -1,0 +1,26 @@
+
+
+Dados dinamicos vai ter os dados que vão estar no save ou os dados default antes do jogo iniciar
+
+A maior parte dos dados estaticos vão ser especificos de cada bloco. Os dados estaticos tem 2 tipos pincipais,  os valores e as funcoes.
+funcoes podem precisar tanto de dados dinamicos quanto dados estaticos.
+
+porque tender a deixar dados estaticos em blocos ao invez de globais? 
+ter um escopo fechado é melhor para organizar, se eu tenho uma classe que se chama "Player" vale a pena essa classe ficar em plataforma que é onde eu vou 
+usar ela. Pelo natureza de estaticos e dinamicos:
+
+estaticos => + classes => precisa de tipos do bloco
+dinamicos => + tipos universais
+
+Personagens: 
+
+Os dados estaticos dos personagens vão ficar em cada bloco, e os dados dinamicos vão ficar no Dados dinamicos (uou).
+
+
+dados estaticos plataforma => construtor personagens combate (usam dados dinamicos info_plataforma) 
+
+dados estaticos jogo => conversas (usam dados dinamicos dados_personagens ) 
+
+conversa e personagens_plataforma nunca vão se cruzar, e ninguem alem do bloco pode precisar dessa informacao. Então nao faz sentido ficarem no mesmo bloco.
+
+

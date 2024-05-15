@@ -1,0 +1,58 @@
+
+
+[
+    bloco  :  start 
+    mod    :  amizade : 50
+    add    :  R_1 , R_2
+    remove : 
+
+    [ lily ,, normal_clothes@happy@ba@direita , where is my cookie?! ]
+    [ nara ,, normal_clothes@happy@bf@direita , ... ]
+    [ lily ,, normal_clothes@happy@ba@direita , Did you saw anyone stealing it!?]
+    
+]
+
+
+[
+    bloco  :  R_1
+    texto  :  I...don't
+    mod    :  amizade : -10
+    add    :  
+    remove : 
+
+    
+    [ lily , normal_clothes@happy@ba@direita , sorry... I saw you later... ]
+    
+]
+
+
+[
+    bloco  :  R_2
+    texto  :  sorry I eat then. And I would eat again
+    mod    :  amizade : 50
+    add    :  
+    remove : 
+
+    [ lily , normal_clothes@happy@ba@direita , hoho ]
+    [ lily , normal_clothes@horny@ba@direita , so I will make you pay me ]
+    
+    
+]
+
+[
+    bloco  :  sair
+    texto  :  I need to go
+    mod    :  amizade : 50
+    add    :  
+    remove : 
+
+    [ lily , normal_clothes@happy@ba@direita , olha so ]
+    [ nara , normal_clothes@happy@ba@direita , olha so ]
+    
+]
+
+
+
+
+
+

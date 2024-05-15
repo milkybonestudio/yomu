@@ -1,0 +1,41 @@
+nome : lily
+local : reino : humano , estado : San sebastion, cidade : 
+
+
+
+
+
+
+
+
+
+triggers : [
+
+    loli, 
+    ninfo, 
+    rape_jokes, 
+    zoo_jokes, 
+    pedo_jokes, 
+    incest_jokes, 
+    drugs, 
+    
+
+]
+
+caracteristicas_fisicas: [
+
+    cabelo_azul, 
+    baixa_altura, 
+    cabelo_curto, 
+    nao_mostra_olhos,
+
+] 
+
+caracteristicas_personalidade : [
+
+
+
+]
+
+interesse_player : 00@100
+

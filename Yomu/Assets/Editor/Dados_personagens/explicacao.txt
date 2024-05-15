@@ -1,0 +1,2 @@
+aqui vao ficar os containers com as imagens de cada personagem
+** vao ser tanto vs, como cartas, ou splashes

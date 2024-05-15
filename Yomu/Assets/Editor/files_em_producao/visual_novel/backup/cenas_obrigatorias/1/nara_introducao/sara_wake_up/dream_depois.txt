@@ -1,0 +1,226 @@
+[set,true,sara,lala,hand]
+[ic,true,nucleo@esquerda,normal@happy@ba@frente]
+
+
+
+[mov,true,700,-700]
+[fn,true,trocar_cor,lala,dark_1]
+[fn,true,trocar_cor,sara,dark_1]
+
+[fn,true,mudar_index_personagem,lala,0]
+[fn,true,mudar_index_personagem,sara,1]
+
+
+[fn,false,transicao_inicio]
+[fn,true,trocar_background, images/in_game/background/catedral/sara_room/throne ]
+[fn,false,transicao_final,longa]
+[mov,true,450,-450]
+[fn,true,mostrar_personagens,lala,sara]
+[text,false,0,lala,.a...u.]
+[fn,true,trocar_cor,sara,dark_2]
+[text,false,0,lala,w.k...p]
+[fn,true,trocar_cor,sara,dark_3]
+[text,false,0,lala,wake up!]
+
+[fn,true,trocar_cor,lala,dark_4]
+[fn,true,trocar_cor,sara,default]
+[text,false,0,sara,AH!.. where I am?]
+
+[ic,true,nucleo@direita,normal@happy@ba@frente]
+[text,false,0,lala,good morning my little child ]
+
+[ic,true,nucleo@esquerda,normal@happy@bf@frente]
+[text,false,0,sara,good morning miss squid]
+
+[ic,true,nucleo@direita,normal@happy@ba@frente(bracos_lado)]
+[text,false,0,lala,kkk I am not a squid your retarded piece of shit ]
+
+[ic,true,nucleo@direita,normal@happy@bf@frente(bracos_lado)]
+[text,false,0,sara,... you dont need to talk to me like that]
+
+
+[ic,true,nucleo@esquerda,normal@happy@ba@frente(bracos_tras)]
+[text,false,0,lala,I apolagise, I am not a squid my dear]
+
+[ic,true,nucleo@direita,normal@happy@bf@frente(bracos_tras)]
+[mov,true,600]
+[text,false,0,sara,thats better, so ms squid can you guide me to the exit door?]
+
+
+
+[ic,true,nucleo@esquerda,normal@happy@ba@frente(bracos_tras)]
+[mov,true,450]
+[text,false,0,lala,what do you mean? you do go anywhere. you are inside yourself]
+
+
+[ic,true,nucleo@esquerda,normal@happy@ba@frente]
+[text,false,0,sara,understand]
+[ic,true,nucleo@esquerda,normal@happy@bf@frente]
+[text,false,0,lala,...]
+[ic,true,nucleo@esquerda,normal@happy@ba@frente]
+[text,false,0,lala,you are in a dream, in my... our dream]
+
+[ic,true,nucleo@esquerda,normal@happy@bf@frente]
+[text,false,0,sara,thank you miss squid ]
+
+[ic,true,nucleo@esquerda,normal@happy@ba@frente]
+[text,false,0,lala,stop call me that! my name is lalatoph ]
+
+[ic,true,nucleo@esquerda,normal@happy@bf@frente(bracos_tras)]
+[text,false,0,sara,my name is sara, nice to meet you. can I call you lala? looks more cute]
+
+[ic,true,nucleo@direita,normal@happy@ba@frente(bracos_lado)]
+[mov,true,600]
+[text,false,0,lala,do you think that I am cute? I am a horrifying demon.]
+
+[ic,true,nucleo@direita,normal@happy@bf@frente(bracos_tras)]
+[text,false,0,sara,my mothers always told me to not Judge a book by the cover]
+
+
+[mov,true,450]
+[ic,true,nucleo@esquerda,normal@happy@ba@frente(bracos_lado)]
+[text,false,0,lala,I agree, the cover just overshadow the good things inside. Is that why I enjoy just remove it]
+[ic,true,nucleo@esquerda,normal@happy@ba@frente(bracos_tras)]
+[text,false,1,lala,so direct to bussines, I not sure how much you memory get destroyed. ]
+[text,false,0,lala,when I possed you I dont thought your mana was so scarce, but was my mistake. ]
+
+
+[ic,true,nucleo@esquerda,normal@happy@bf@frente(bracos_tras)]
+[text,false,0,sara,so you are real?]
+[ic,true,nucleo@esquerda,normal@happy@ba@frente(bracos_tras)]
+[text,false,0,lala,kkkk yes I am very real. if was not for me you already being dead.]
+
+
+[ic,true,nucleo@esquerda,normal@happy@ba@frente(movimento)]
+[mov,true,xy,p,p,p,1200]
+[text,false,0,sara,dead by what?]
+
+
+
+
+[mov,true,-400]
+[text,false,0,lala,I dont know who he was, but some guy was hunting you. ]
+
+
+[ic,true,nucleo@direita]
+[text,false,0,lala,and then you found me in the bottle of a lake ]
+
+[mov,true,400]
+[text,false,0,sara,hum I dont remember, sorry]
+
+[ic,true,nucleo@esquerda]
+[text,false,0,lala,I can help you remember something if you want]
+
+
+[mov,true,-400]
+[text,false,0,sara,sure, thank you]
+
+
+[ic,true,nucleo@direita]
+[text,false,0,lala,lets see...]
+
+[mov,true,0]
+[fn,true,esconder_personagem,sara]
+
+[fn,true,transicao_inicio]
+[text,false,0,narrator,...]
+
+[fn,true,transicao_final,longa]
+[fn,true,mostrar_personagem,sara]
+
+[fn,true,mudar_transicao_personagem,lala,false,false]
+[mov,true,xy,p,p,0,-1200]
+[fn,true,mudar_transicao_personagem,lala,true,true]
+
+
+
+[text,false,0,sara,so I was being hunted and this guy save me, and the other guy hunt me, and then you save me ]
+[text,false,0,lala,I think so]
+
+
+
+[text,false,0,sara,so you help me for free? I hear that demons make pacts and stuff]
+
+[mov,true,xy,550,p,p,0]
+[ic,true,nucleo@esquerda]
+[text,false,0,lala,whe make one, our aggreament was: ]
+
+[ic,true,nucleo@esquerda,normal@happy@ba@frente]
+[text,false,2,lala,"in exchange to help you, I will dwell in your body"]
+
+[ic,true,nucleo@direita,normal@happy@bf@frente]
+[text,false,0,sara,oh.. ok]
+[text,false,0,lala,...]
+[ic,true,nucleo@esquerda,normal@happy@ba@frente]
+[text,false,0,lala,are you felling something?]
+
+[ic,true,nucleo@esquerda,normal@happy@bf@frente]
+[mov,true,0]
+[text,false,0,sara,not really]
+
+[ic,true,nucleo@esquerda,normal@mad@ba@frente]
+[fn,true,trocar_cor,lala,default]
+[text,false,0,lala,very good]
+[text,false,0,lala,now we have to make you big ]
+[mov,true,-400]
+
+[fn,true,mudar_transicao_personagem,lala,false,false]
+[fn,true,trocar_cor,lala,dark_4]
+[fn,true,mudar_transicao_personagem,lala,true,true]
+
+[ic,true,nucleo@esquerda,normal@happy@bf@frente(bracos_tras)]
+[text,false,0,sara,I dont want to be fat ]
+
+[ic,true,nucleo@direita,normal@happy@ba@frente(bracos_tras)]
+[text,false,0,lala,it's not... why are you being so stupid?]
+
+[mov,true,400]
+[ic,true,nucleo@direita,normal@happy@bf@frente(bracos_tras)]
+[text,false,0,sara,I dont know, I dont feel any pressure. I can try my best if you want.]
+
+
+[ic,true,nucleo@esquerda,normal@happy@ba@frente(bracos_tras)]
+[text,false,0,lala,hum...I dont want to talk to you this way. we will talk later. ]
+[mov,true,-400]
+[text,false,0,lala,and someone come to the room]
+
+
+[fn,true,esconder_personagem,sara]
+[text,false,0,sara,wha...]
+
+[fn,true,mudar_modo_tela,3]
+
+[ic,true,0,normal@happy@ba@frente]
+[text,false,0,lala,so interesting, her soul have a lobster form. Crush her will be fun]
+[ic,true,0,set_1_02]
+[text,false,0,left,Don't be so mean to her! she help us get out]
+
+[ic,true,0,normal@happy@ba@frente(hands_fucking)]
+[text,false,0,lala,Fuck you! was a fair trade we owe nothing to her]
+
+[ic,true,0,set_1_01]
+[text,false,0,left,Right, so why we don't hurt her in a more sophisticated way?]
+
+[ic,true,0,set_1_03]
+[text,false,0,lala,What you have in mind?]
+
+[ic,true,0,set_1_02]
+[text,false,0,left,when we possess her I made a copy of her original soul]
+
+[ic,true,0,set_1_04]
+[text,false,0,right,That can be way more fun~]
+
+
+[ic,true,0,set_1_05]
+[text,false,0,lala,So let's chose this route]
+
+[fn,true,esconder_personagem,lala]
+[fn,true,trocar_background,images/in_game/splashes/sets_obrigatorios/sara_wake_up/lala]
+[text,false,0,lala,As a gift for save us, we will give her only the psych part of the pain]
+
+
+
+
+
+[end,0,0]
+[end,0,0,cenas_obrigatorias/1/sara_wake_up/wake_2]

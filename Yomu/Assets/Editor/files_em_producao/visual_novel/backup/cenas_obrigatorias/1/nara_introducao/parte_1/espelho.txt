@@ -1,0 +1,28 @@
+[set,true,nara]
+[fn,true,mudar_modo_tela,2,1]
+[fn,true,levantar_texto]
+[fn,false,trocar_background,images/in_game/background/catedral/nara_room/front_n,1]
+
+
+[ic,true,roupao(shadow)@neutral@bf@direita]
+[fn,false,mostrar_personagem,nara]
+[ic,true,roupao@neutral@bf@direita]
+[text,false,0,nara,...]
+[ic,true,roupao@neutral@bf@costas]
+[text,false,0,nara,*my scars... they gone*]
+[ic,true,roupao_semi_undress@neutral@bf@direita]
+[text,false,0,nara,*maybe this is a dream?*]
+
+[text,false,0,nara,*yes! is just a dream. later you will wake up and go back to your normal and happy life*]
+
+
+
+[end, 
+
+    script_controlador: 0
+    script_cenas: 1
+    path_proximo_script: nada
+    tem_transicao: false
+
+]
+

@@ -1,0 +1,265 @@
+<>
+nome : dream
+formato:desenvolvimento/final
+versao:1.0
+status:denvolvimento/final
+comentario:""
+<>
+
+[
+    set
+
+    NARA
+    lala : ???
+    hand
+]
+
+[ ic,true, nara : nucleo@esquerda, lala : normal@happy@ba@frente ]
+
+
+[
+    mov : true
+    nara : 700
+    lala : -700
+]
+[
+    fn:mudar_cor_personagens : true
+    lala : dark_1
+
+]
+
+[
+    fn : mudar_cor_personagens : true
+    nara : dark_1
+
+]
+
+[
+    fn:mudar_index_personagem:true
+    nara : 1
+    lala : 0
+
+]
+
+[
+    fn:transicao_inicio:false
+    duracao : 0
+]
+
+[
+    fn:mudar_background:true
+    path : images/in_game/background/catedral/nara_room/throne 
+    tipo_transicao : instantaneo
+
+]
+
+[
+    fn:transicao_final:false
+    duracao : 500
+]
+
+[
+    mov:true
+    nara : 450
+    lala : -450
+
+]
+
+[
+    fn: mostrar_personagens :true
+    lala
+    nara
+
+]
+
+[ 
+    text : false
+    per : lala,
+    texto : .a...u.
+
+]
+
+[
+    fn:mudar_cor_personagens:true
+    nara : dark_2
+]
+
+[ 
+    text : false
+    per : lala
+    texto : w.k...p
+
+]
+
+[
+    fn:mudar_cor_personagens:true
+    nara : dark_3
+
+]
+[
+    text : false
+    per : lala
+    texto : wake up!
+
+]
+
+[
+    fn:mudar_cor_personagens:true
+    lala : dark_4
+    
+]
+[
+    fn:mudar_cor_personagens:true
+    nara : white
+]
+
+[
+    text : false
+    per : nara
+    texto : AH!.. where I am?
+
+]
+
+[ ic,true,nara : nucleo@direita, lala : normal@happy@ba@frente ]
+[
+    text : false
+    per : lala
+    texto : good morning my little child 
+
+]
+
+[ ic,true, nara : nucleo@esquerda, lala :normal@happy@bf@frente ]
+[
+    text : false
+    per : nara
+    texto : good morning miss squid
+
+]
+
+[ ic,true, nara : nucleo@direita, lala :normal@happy@ba@frente(bracos_lado) ]
+[
+    text : false
+    per : lala
+    texto : kkk I am not a squid your retarded piece of shit 
+
+]
+
+[ ic,true,nucleo@direita,normal@happy@bf@frente(bracos_lado)]
+[
+    text : false
+    per : nara
+    texto : ... you dont need to talk to me like that
+
+]
+
+
+[ ic,true, nara : nucleo@esquerda, lala : normal@happy@ba@frente(bracos_tras) ]
+[
+    text : false
+    per : lala
+    texto : I apologize, I am not a squid my dear
+
+]
+
+[ ic,true,nucleo@direita,normal@happy@bf@frente(bracos_tras)]
+[ 
+    mov:true
+    nara : 600
+]
+
+[
+    text : false
+    per : nara
+    texto : thats better, so ms squid can you guide me to the exit door?
+
+]
+
+
+[ ic,true,nucleo@esquerda,normal@happy@ba@frente(bracos_tras)]
+[
+    mov,true 
+    nara :450
+
+]
+
+[
+    text:false,
+    per : lala
+    texto : w__t d_ y__ ___n? __u d_ _o an_w__re. y__ ___ in_i_e ________
+
+]
+
+[ ic,true, nara : nucleo@direita, lala : normal@happy@bf@frente(bracos_tras) ]
+[ 
+    mov : true
+    nara : 600
+
+]
+[
+    text : false
+    per : nara
+    texto : what?
+
+]
+
+
+
+[ ic,true, nara : nucleo@esquerda, lala : normal@happy@ba@frente(bracos_tras)]
+[
+    mov : true
+    nara : 450
+
+]
+[
+    text : false
+    per : lala
+    texto : a__ y__ __ar___ me?
+
+]
+
+
+
+[ ic,true, nara : nucleo@direita, lala : normal@happy@bf@frente(bracos_tras) ]
+[
+    mov : true
+    nara : 600
+
+]
+
+[
+    text : false
+    per : nara
+    texto : ... what?
+
+]
+
+
+
+[ ic,true,nara : nucleo@esquerda, lala : normal@happy@ba@frente(bracos_tras) ]
+[ 
+    mov : true
+    nara : 450
+
+]
+[
+    text : false
+    per : lala
+    texto : ____ __
+
+]
+
+[
+    fn : transicao_inicio :true
+    duracao : 2000
+]
+
+
+
+
+[
+    end
+    script_cenas : NARA_INTRODUCAO_finalizar
+    screen_play_sequencia : NARA_INTRODUCAO_wake_up
+
+
+]

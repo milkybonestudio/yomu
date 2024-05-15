@@ -1,0 +1,65 @@
+<>
+
+script :  lily_
+
+<>
+
+
+[
+    bloco  :  start 
+    texto  : start
+    mod    :  amizade : 50
+    add    :  R_1 , R_2, sair
+    remove : 
+
+    [ lily ,, clothes@happy@ba@direita , where is my cookie?! ]
+
+    [ nara ,, clothes@happy@bf@direita , ... ]
+    [ lily ,, clothes@happy@ba@direita , Did you saw anyone stealing it!?]
+    [ clothes@happy@bf@direita ]
+    
+]
+
+
+[
+    bloco  :  R_1
+    texto  :  I...don't
+    mod    :  amizade : -10
+    add    :  
+    remove : R_1, R_2
+
+    
+    [ lily ,, clothes@happy@ba@direita , sorry... I saw you later... ]
+    [ clothes@happy@bf@direita ]
+    
+]
+
+
+[
+    bloco  :  R_2
+    texto  :  sorry I eat then. And I would eat again
+    mod    :  amizade : 50
+    add    :  
+    remove : R_1, R_2
+
+    [ lily ,, clothes@happy@ba@direita , hoho ]
+    [ lily ,, clothes@horny@ba@direita , so I will make you pay me ]
+
+    [ clothes@horny@bf@direita ]
+
+    
+    
+]
+
+[
+
+    bloco  :  sair
+    texto  :  I need to go
+    mod    :  amizade : 50
+    add    :  
+    remove : R_1, R_2, sair
+
+    [ lily ,, clothes@happy@ba@direita , okie ]
+    [ clothes@happy@bf@direita ]
+    
+]

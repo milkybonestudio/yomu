@@ -1,0 +1,27 @@
+
+
+
+---IMAGENS_LOCALIZADORES---
+
+
+tem os dados de: 
+    - onde esta o png 
+    - quando começa
+    - qunado termina
+
+
+O tamanho maximo de cada container .dat sao de no maximo 4gb. Entao pode cada pointer pode ser colocado em 4 bytes
+
+
+      id container   pointer_1    pointer_2
+      ( 1 byte )    ( 4 bytes )   ( 4 bytes )
+
+ Entao com o id, ele comeca em :
+
+    index( id ) = 9 * id;
+
+
+
+Por hora todo id container vai estar no container_generico. vai levar bastante tempo até que precise separar 
+
+-------------------------

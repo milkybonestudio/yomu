@@ -1,0 +1,113 @@
+0t&nara,alkatroz,lala,voice_1,voice_2&0,robe@neutral@bf@direita,robe@neutral@ba@esquerda,robe@neutral@bf@esquerda,robe@fear@bf@direita,robe@mad@ba@esquerda,robe@mad@bf@esquerda,robe@mad@ba@direita,robe@fear@bf@esquerda,,,,,,,,,,,|0,clothes@neutral@ba@frente,clothes@neutral@bf@frente,clothes@neutral@bf@frente(pose),clothes@neutral@ba@frente(pose),clothes(anjo)@neutral@bf@frente,clothes(anjo)@neutral@ba@frente,clothes(anjo)@neutral@bf@frente(mao_levantada),clothes(anjo)@neutral@ba@frente(mao_levantada),,,,,,,,,,,|0,,,,,,,,,,,,,,,,,,,|0,,,,,,,,,,,,,,,,,,,|0,,,,,,,,,,,,,,,,,,,&_P_abrir_a_porta_&Open,Don't open&10,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0&NAO_vai_ver_alkatroz,vai_ver_alkatroz,,,,,,,,,,,,,,,,,,
+2tZ1???
+2tZ2???
+2tE002images/in_game/background/catedral/nara_room/corredor_n
+2tQ0<1<
+2f8
+4f0200*I dont think you must open this lock my little child*
+4f0000*little child? whats wrong with me...*
+9ff00
+7tf0f/f/0100
+8a0
+4f0000*Maybe is better I just sleep*
+5f04f
+8a1
+3t000Ī11Ī
+2tD2t
+6t21f00doors/door_open_2
+6t11tNὰὰterror_4_1
+2fE102images/in_game/splashes/sets_obrigatorios/nara_wake_up/door_1
+2fE102images/in_game/splashes/sets_obrigatorios/nara_wake_up/door_2
+4f0100Kkk ... I thought you would never really wake up.
+4f0000Hi..?
+4f0100Hello my name is Alkatroz. The church told me to wait for you wake up.
+4f0100Do you mind if I get inside?
+2tZ1alkatroz
+4f0000Forgiveme but ... I'm not dressed in a suitable way, I think is  better you stay there.
+4f0100Sure? I brought a gift. You stayed in a coma for a few weeks and you received a letter from your parents.
+4f0000Are they safe!? What happened with me?
+4f0100Do you mind if I get in? I know I can look a little scary but I'm a priest like any other.
+4f0100After many missions it is hard to your body be normal.
+4f0000*Mother also have a disconfigured body, how biased I am...*
+4f0000Of course, came in.
+2tE122images/in_game/background/catedral/nara_room/back_n
+2tIt01
+1t0111
+4f0100You scared everyone when you arrived.
+1t0212
+4f0000what happened with me? I don't even remember leaving home.
+1t0211
+4f0100I don't know, you don't remember?
+1t0212
+4f0000No... and how long was I sleeping?
+1t0311
+4f0100Around two week, you could have woke up just before. I stayed awake every day waiting.
+1t0212
+4f0000Right... But why were you waiting at night?
+1t0311
+4f0100We never know when you would get up.
+1t0212
+4f0000Make sense, so can you give me the letters
+3t000Ǚ10
+1t0411
+4f0100Oh.. I don't have it. I just want to enter here.
+3t001Ǚ10Ǚ
+1t0513
+4f0000Stay alway from me!
+1t0614
+4f0100Why do you want to go out? I'm doing you a favor! We are friends now right?
+1t0611
+4f0100Hum ... apparently you don't like me.
+1t0512
+4f0000*Can I win? He doesn't look very strong*
+1t0611
+4f0100Apparently you don't want to be my friend, I could make things easier for you.
+1t0512
+4f0000Do you really think you can win?
+1t0612
+4f0100?
+1t0614
+4f0100Ha^ha...ha^ha...
+4f0100Western people are really naive. Why you think I wouldn't win?
+3t001Æ
+1t0712
+4f0000I'm strong enough to pass ... in the admission test.
+3t001Ī
+1t0815
+4f0000!?
+1t0816
+4f0100We know that you just help rescue the girl was being tortured.
+3t001ȋ
+1t0817
+4f0100...
+1t0818
+4f0100I was afraid you really have the sword.
+4f0100Maybe we are wrong. In this case I apologize by the things I will do to you.
+2tW
+2t>0И
+2f6Иf3f
+2tL0t01234
+2tIf01234
+2tE02?images/in_game/splashes/sets_obrigatorios/nara_wake_up/torture
+2t?0৴
+2f6৴f3t
+2t@
+4f0300You find?
+2tE10<images/in_game/splashes/sets_obrigatorios/nara_wake_up/torture
+4f0400Nothing important, she doesn't remembers the accident.
+4f0300um, and the sword? $<<& will kill me.
+4f0400There was nothing in her room and she doesn't know where she is.
+4f0000ahs..Shh.s.
+4f0300Can't she talk?
+4f0400She can, but after I pulled her teeth she just mumble like this.
+4f0400Can I kill her? everyone already have a turn.
+4f0300Who would like to do with her in this state?
+4f0400Stop.
+4f0400Sorry.
+4f0c00...
+4f0300Ok then. I will report.
+4t0000AHG! .. agh..
+6t11tbࠀ௨arabic_2
+2t>0ࠀ
+2f6ࠀf3t
+5f10f

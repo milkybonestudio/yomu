@@ -1,0 +1,12 @@
+
+[text,false,0,lala,*I dont think you must open this lock my little child*]
+[text,false,0,nara,*little child? whats wrong with me*]
+
+[end, 
+
+    script_controlador: 0
+    script_cenas: 1
+    path_proximo_script: nada
+    tem_transicao: false
+
+]
