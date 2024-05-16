@@ -15,7 +15,7 @@ using UnityEngine;
 public class Controlador_UI_visual_novel {
 
         public static Controlador_UI_visual_novel instancia;
-        public static Controlador_UI_visual_novel Pegar_instancia(){ if( instancia == null){ throw new Exception( "instancia do bloco Controlador_UI_visual_novel nao foi instanciado" );} return instancia;};
+        public static Controlador_UI_visual_novel Pegar_instancia(){ if( instancia == null){ throw new Exception( "instancia do bloco Controlador_UI_visual_novel nao foi instanciado" );} return instancia;}
         public static void Construir(){ instancia = new Controlador_UI_visual_novel();} 
 
 

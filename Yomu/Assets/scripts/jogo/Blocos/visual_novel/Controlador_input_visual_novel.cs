@@ -7,20 +7,11 @@ using UnityEngine;
 public class Controlador_input_visual_novel {
 
 
-        public Tipo_iniciar_UI tipo_iniciar_UI = Tipo_iniciar_UI.DEFAULT;
-
     	// vai ser salvo no save 
         public byte[] dados_ui;
 
         public void Mudar_input(){
 
-
-                switch( this.tipo_iniciar_UI ){
-
-                        case Tipo_iniciar_UI.DEFAULT : break;
-                        default: throw new Exception( "" );
-
-                }
 
         }
 

@@ -247,7 +247,6 @@ using System;
                         case Bloco.movimento: throw new Exception( "" );
                         case Bloco.visual_novel: {
 
-                                switch(  )
 
                         } break;
 
@@ -274,7 +273,7 @@ using System;
 
 
 
-                Mudar_UI( _novo_bloco , _tipo );
+//                Mudar_UI( _novo_bloco , _tipo );
 
                 Criar_tela( _novo_bloco );
                 Esconder_telas_nao_utilizadas( _novo_bloco ) ;
