@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class Jogo {
 
+        int a  = 15;
+
 
         public static Jogo instancia;
         public static Jogo Pegar_instancia( bool _forcar = false  ){

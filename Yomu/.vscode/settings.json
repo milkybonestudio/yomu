@@ -56,8 +56,7 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "versao_002.sln", 
-    
+    "dotnet.defaultSolution": "Yomu.sln",
     "editor.tokenColorCustomizations": {
         "textMateRules": [
             {
