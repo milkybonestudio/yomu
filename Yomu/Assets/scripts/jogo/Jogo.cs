@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class Jogo {
 
-        int a  = 15;
+        int a  = 10;
 
 
         public static Jogo instancia;
