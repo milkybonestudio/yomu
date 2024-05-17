@@ -9,14 +9,11 @@ public  class Lista_navegacao {
 
 
 
-    public static Lista_navegacao instancia;
-    public static Lista_navegacao Pegar_instancia( bool _forcar = false  ){
 
-            if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("Lista_navegacao")) { instancia = new Lista_navegacao();instancia.Iniciar();} return instancia;}
-            if(  instancia == null) { instancia = new Lista_navegacao(); instancia.Iniciar(); }
-            return instancia;
+        public static Lista_navegacao instancia;
+        public static Lista_navegacao Pegar_instancia(){ return instancia; }
+        public static Lista_navegacao Construir(){ instancia = new Lista_navegacao(); return instancia;}
 
-    }
 
 
   

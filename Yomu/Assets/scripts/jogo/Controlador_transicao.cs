@@ -33,14 +33,8 @@ using System;
 
         
         public static Controlador_transicao instancia;
-        public static Controlador_transicao Pegar_instancia( bool _forcar = false  ){
-
-                if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("Controlador_transicao")) { instancia = new Controlador_transicao();instancia.Iniciar();} return instancia;}
-                if(  instancia == null) { instancia = new Controlador_transicao(); instancia.Iniciar(); }
-                return instancia;
-
-        }
-
+        public static Controlador_transicao Pegar_instancia(){ return instancia; }
+        public static Controlador_transicao Construir(){ instancia = new Controlador_transicao(); return instancia;}
 
         public Jogo jogo;
 
@@ -101,7 +95,7 @@ using System;
                 transicao_tela_imagem = transicao_tela.GetComponent<Image>();
                 transicao_canvas_imagem = transicao_canvas.GetComponent<Image>();
 
-                dados_blocos = Dados_blocos.Pegar_instancia(true);
+                dados_blocos = Dados_blocos.Pegar_instancia();
         
 
         }

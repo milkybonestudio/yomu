@@ -66,16 +66,11 @@ public class UI_info {
 public class Controlador_UI {
 
 
-    public static Controlador_UI instancia;
-    public static Controlador_UI Pegar_instancia( bool _forcar = false  ){
+      
+        public static Controlador_UI instancia;
+        public static Controlador_UI Pegar_instancia(){ return instancia; }
+        public static Controlador_UI Construir(){ instancia = new Controlador_UI(); return instancia;}
 
-            if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("Controlador_UI")) { instancia = new Controlador_UI();instancia.Iniciar();} return instancia;}
-            if(  instancia == null) {  instancia = new Controlador_UI(); instancia.Iniciar(); }
-
-            return instancia;
-
-
-    }
 
 
     public System.Object UI_objeto;

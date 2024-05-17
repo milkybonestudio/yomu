@@ -12,16 +12,12 @@ using System;
 public class Controlador_utilidades{
 
       
-    public static Controlador_utilidades instancia;
-    public static Controlador_utilidades Pegar_instancia( bool _forcar = false  ){
+        public static Controlador_utilidades instancia;
+        public static Controlador_utilidades Pegar_instancia(){ return instancia; }
+        public static Controlador_utilidades Construir(){ instancia = new Controlador_utilidades(); return instancia;}
 
-            if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("Controlador_utilidades")) { instancia = new Controlador_utilidades();instancia.Iniciar();} return instancia;}
-            if(  instancia == null) { instancia = new Controlador_utilidades(); instancia.Iniciar(); }
-            return instancia;
 
-    }
-
-       public void Iniciar(){
+       public Controlador_utilidades(){
 
             
             canvas_utilidades = GameObject.Find("Tela/Canvas/Jogo/Outros");

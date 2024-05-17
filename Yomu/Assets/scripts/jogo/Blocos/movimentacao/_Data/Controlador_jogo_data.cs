@@ -9,14 +9,9 @@ public class Controlador_jogo_data{
 
 
       
-    public static Controlador_jogo_data instancia;
-    public static Controlador_jogo_data Pegar_instancia( bool _forcar = false  ){
-
-            if( _forcar ) { if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("Controlador_jogo_data")) { instancia = new Controlador_jogo_data();instancia.Iniciar();} return instancia;}
-            if(  instancia == null) { instancia = new Controlador_jogo_data(); instancia.Iniciar(); }
-            return instancia;
-
-    }
+        public static Controlador_jogo_data instancia;
+        public static Controlador_jogo_data Pegar_instancia(){ return instancia; }
+        public static Controlador_jogo_data Construir(){ instancia = new Controlador_jogo_data(); return instancia;}
 
 
 

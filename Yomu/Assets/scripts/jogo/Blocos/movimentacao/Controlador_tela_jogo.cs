@@ -10,15 +10,9 @@ using System.Collections;
 public class Controlador_tela_movimento{
 
 
-      
-    public static Controlador_tela_movimento instancia;
-    public static Controlador_tela_movimento Pegar_instancia( bool _forcar = false  ){
-
-            if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("Controlador_tela_movimento")) { instancia = new Controlador_tela_movimento();instancia.Iniciar();} return instancia;}
-            if(  instancia == null) { instancia = new Controlador_tela_movimento(); instancia.Iniciar(); }
-            return instancia;
-
-    }
+        public static Controlador_tela_movimento instancia;
+        public static Controlador_tela_movimento Pegar_instancia(){ return instancia; }
+        public static Controlador_tela_movimento Construir(){ instancia = new Controlador_tela_movimento(); return instancia;}
 
 
         
@@ -55,10 +49,10 @@ public class Controlador_tela_movimento{
 
 
                   
-                  posicao_mouse = Controlador_data.Pegar_instancia( true ).posicao_mouse;
-                  controlador_interativos = Controlador_interativos.Pegar_instancia( true );
-                  controlador_cursor = Controlador_cursor.Pegar_instancia( true );
-                  player_estado_atual = Player_estado_atual.Pegar_instancia( true );
+                  posicao_mouse = Controlador_data.Pegar_instancia().posicao_mouse;
+                  controlador_interativos = Controlador_interativos.Pegar_instancia();
+                  controlador_cursor = Controlador_cursor.Pegar_instancia();
+                  player_estado_atual = Player_estado_atual.Pegar_instancia();
 
                   background_1 = GameObject.Find("Tela/Canvas/Jogo/Background/Background_1");
                   background_1_image = background_1.GetComponent<Image>();

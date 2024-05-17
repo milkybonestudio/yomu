@@ -6,17 +6,20 @@ using System ;
 
 public class Controlador_UI_compartilhado {
 
-    public static Controlador_UI_compartilhado instancia;
-    public static Controlador_UI_compartilhado Pegar_instancia( bool _forcar = false  ){
+        public static Controlador_UI_compartilhado instancia;
+        public static Controlador_UI_compartilhado Pegar_instancia(){ return instancia; }
+        public static Controlador_UI_compartilhado Construir(){ instancia = new Controlador_UI_compartilhado(); return instancia;}
 
-            if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("Controlador_UI_compartilhado")) { instancia = new Controlador_UI_compartilhado();instancia.Iniciar();} return instancia;}
-            if(  instancia == null) { instancia = new Controlador_UI_compartilhado(); instancia.Iniciar(); }
-            return instancia;
+
+    public Controlador_UI_compartilhado(){
+
+        
+        string[] UIs = new string[ numero_slots_inicias ];
+        string[][] chaves = new string[ numero_slots_inicias ][];
+        Action[][] functions = new Action[ numero_slots_inicias ][];
+
 
     }
-
-     public void Iniciar(){}
-
 
 
 
@@ -31,15 +34,6 @@ public class Controlador_UI_compartilhado {
     public string[][] chaves = null;
     public Action[][] functions = null;
 
-    public Controlador_UI_compartilhado(){
-
-        
-        string[] UIs = new string[ numero_slots_inicias ];
-        string[][] chaves = new string[ numero_slots_inicias ][];
-        Action[][] functions = new Action[ numero_slots_inicias ][];
-
-
-    }
 
 
     public void Colocar_UI( string _nome_UI , string[] _metodos_nomes , Action[] _actions ){

@@ -7,6 +7,9 @@ public static class Controlador_development {
 
 
 
+   public static bool bloquear_development_tests = true;
+
+
     // vai controlador coisas relaciondo com o desenvolvimento
 
     public static bool atualizar_dados_sistema_personagens = false;
@@ -26,6 +29,8 @@ public static class Controlador_development {
 
 
     public static void Verificar(){
+
+        if( bloquear_development_tests){ return; }
 
 
         if(  atualizar_dados_sistema_personagens ){ Atualizar_dados_sistema_personagens ();}

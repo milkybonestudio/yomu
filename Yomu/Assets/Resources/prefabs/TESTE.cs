@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class teste_camera : MonoBehaviour
+public class TESTE : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start(){
+
+        
+        Debug.Log("a");
         
     }
 

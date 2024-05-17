@@ -71,15 +71,10 @@ public class Controlador_personagens_visual_novel{
 
 
       
-    public static Controlador_personagens_visual_novel instancia;
-    public static Controlador_personagens_visual_novel Pegar_instancia( bool _forcar = false  ){
 
-            if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("Controlador_personagens_visual_novel")) { instancia = new Controlador_personagens_visual_novel();instancia.Iniciar();} return instancia;}
-            if(  instancia == null) { instancia = new Controlador_personagens_visual_novel(); instancia.Iniciar(); }
-            return instancia;
-
-    }
-
+        public static Controlador_personagens_visual_novel instancia;
+        public static Controlador_personagens_visual_novel Pegar_instancia(){ return instancia; }
+        public static Controlador_personagens_visual_novel Construir(){ instancia = new Controlador_personagens_visual_novel(); return instancia;}
 
 
     public Coroutine_objeto foco_camera_personagens_coroutine_objeto = new Coroutine_objeto( 2 + 1 );

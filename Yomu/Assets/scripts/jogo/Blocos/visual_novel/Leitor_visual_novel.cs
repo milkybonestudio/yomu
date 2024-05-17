@@ -8,14 +8,9 @@ public class Leitor_visual_novel{
 
    
   
-    public static Leitor_visual_novel instancia;
-    public static Leitor_visual_novel Pegar_instancia( bool _forcar = false  ){
-
-            if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("Leitor_visual_novel_bloco_cenas")) { instancia = new Leitor_visual_novel();instancia.Iniciar();} return instancia;}
-            if(  instancia == null) { instancia = new Leitor_visual_novel(); instancia.Iniciar(); }
-            return instancia;
-
-    }
+        public static Leitor_visual_novel instancia;
+        public static Leitor_visual_novel Pegar_instancia(){ return instancia; }
+        public static Leitor_visual_novel Construir(){ instancia = new Leitor_visual_novel(); return instancia;}
 
  
     public BLOCO_visual_novel bloco_visual_novel;
@@ -60,11 +55,11 @@ public class Leitor_visual_novel{
     public void Iniciar(){
 
 
-        bloco_visual_novel = BLOCO_visual_novel.Pegar_instancia(true);
+        bloco_visual_novel = BLOCO_visual_novel.Pegar_instancia();
 
-        controlador_tela_visual_novel = Controlador_tela_visual_novel.Pegar_instancia(true);
+        controlador_tela_visual_novel = Controlador_tela_visual_novel.Pegar_instancia();
 
-        controlador_personagens_visual_novel = Controlador_personagens_visual_novel.Pegar_instancia(true);
+        controlador_personagens_visual_novel = Controlador_personagens_visual_novel.Pegar_instancia();
 
         
          

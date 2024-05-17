@@ -58,17 +58,10 @@ public class Blocos_conversa_info {
 
 public class BLOCO_conversas {
 
-
         public static BLOCO_conversas instancia;
-        public static BLOCO_conversas Pegar_instancia( bool _forcar = false  ){
-
-                if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("BLOCO_conversas")) { instancia = new BLOCO_conversas();instancia.Iniciar();} return instancia;}
-                if(  instancia == null) { instancia = new BLOCO_conversas(); instancia.Iniciar(); }
-                return instancia;
-
-        }
-
-        
+        public static BLOCO_conversas Pegar_instancia(){ return instancia; }
+        public static BLOCO_conversas Construir(){ instancia = new BLOCO_conversas(); return instancia;}
+ 
         public bool tem_opcoes = false;
 
         public Pergaminho_modelo_1 pergaminho;
@@ -87,7 +80,7 @@ public class BLOCO_conversas {
         public void Iniciar(){
 
           //  bloco_jogo = BLOCO_jogo.Pegar_instancia( true );
-            conversas_leitor = Conversas_leitor.Pegar_instancia( true );
+            conversas_leitor = Conversas_leitor.Pegar_instancia();
 
         }
 

@@ -23,15 +23,16 @@ public class Controlador_data {
 
 
       public static Controlador_data instancia;
-      public static Controlador_data Pegar_instancia( bool _forcar = false  ){
+      public static Controlador_data Pegar_instancia(){ return instancia; }
+      public static Controlador_data Construir(){ instancia = new Controlador_data(); return instancia;}
 
-            if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("Controlador_data")) { instancia = new Controlador_data();instancia.Iniciar();} return instancia;}
-            if(  instancia == null) { instancia = new Controlador_data(); instancia.Iniciar(); }
-            return instancia;
+
+
+      public Controlador_data(){
+
+        
 
       }
-
-
 
       
       public float[] posicao_mouse = new float[2];
@@ -42,11 +43,6 @@ public class Controlador_data {
 
 
       
-      public void Iniciar(){
-
-        
-
-      }
 
 
 

@@ -6,24 +6,25 @@ using UnityEngine.SceneManagement;
 public class Inicio_aplicativo : MonoBehaviour{
 
 
-    [ SerializeField ] public float tempo_video = 13;
-    
-    void Start(){
+        private bool ja_esta_carregando = false;
+
+        [ SerializeField ] public float tempo_video = 11f;
         
-    }
+    
+        // Update is called once per frame
+        void Update(){
 
-    // Update is called once per frame
-    void Update(){
+                if( ja_esta_carregando ){ return; }
 
+                tempo_video -= Time.deltaTime;
 
-        tempo_video -= Time.deltaTime;
-        if( tempo_video < 0 ){
+                if( tempo_video < 0 ){
 
-            SceneManager.LoadSceneAsync("in_game" );
+                        ja_esta_carregando = true;
+                        SceneManager.LoadSceneAsync("in_game" );
 
+                }
+                
         }
 
-
-        
-    }
 }

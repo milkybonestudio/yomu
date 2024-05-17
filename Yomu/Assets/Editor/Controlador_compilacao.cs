@@ -11,17 +11,7 @@ using UnityEngine;
 class Controlador_compilacao_post:IPostprocessBuildWithReport {
 
 
-
-        /*
-
-
-                aqui depois vai ser usado para criar o container.dat que tem as imagens 
-
-
-        
-        */
-
-        
+        // aqui vai estar 
 
         public static BuildFile abc;
 
@@ -32,10 +22,20 @@ class Controlador_compilacao_post:IPostprocessBuildWithReport {
 
         public void OnPostprocessBuild(BuildReport _a ){
 
+          string path_assets =  Application.dataPath;
+          string pre_path_game =  System.IO.Directory.GetParent(System.IO.Directory.GetParent( path_assets ).ToString()).ToString();
+          string path_para_salvar =  Application.dataPath  + "/Editor/imagens_para_deletar_na_build";
+          string path_para_pegar_arquivos = pre_path_game + "/folder_para_colocar_de_novo";
+
+          if( System.IO.Directory.Exists( path_para_salvar ) ){
+
+                Debug.Log( "vai deletar para a volta folder vazio no path: " + path_para_salvar );
+                System.IO.Directory.Delete( path_para_salvar );
+
+          } 
 
 
-            //       Debug.Log( Controlador_compilacao_pre.path);
-
+        System.IO.Directory.Move(  path_para_pegar_arquivos,  path_para_salvar );
 
 
 

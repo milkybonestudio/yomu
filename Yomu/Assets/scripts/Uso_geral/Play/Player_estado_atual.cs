@@ -3,18 +3,16 @@ using UnityEngine;
 
 
 
-public class Player_estado_atual{
-
-    public static Player_estado_atual instancia;
-    public static Player_estado_atual Pegar_instancia( bool _forcar = false  ){
-
-            if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("Player_estado_atual")) { instancia = new Player_estado_atual();instancia.Iniciar();} return instancia;}
-            if(  instancia == null) { instancia = new Player_estado_atual(); instancia.Iniciar(); }
-            return instancia;
-
-    }
+public class Player_estado_atual {
 
 
+        public static Player_estado_atual instancia;
+        public static Player_estado_atual Pegar_instancia(){ return instancia; }
+        public static Player_estado_atual Construir(){ instancia = new Player_estado_atual(); return instancia;}
+
+
+
+  
 
 
     public int posicao_atual = 0;
@@ -26,6 +24,7 @@ public class Player_estado_atual{
     public int[] mochila = new int[9];
 
     public Item_nome[] itens_mochila = new Item_nome[ 9 ]{
+
         Item_nome.albuin_meat,
         Item_nome.nada,
         Item_nome.nada,
@@ -35,6 +34,7 @@ public class Player_estado_atual{
         Item_nome.nada,
         Item_nome.nada,
         Item_nome.nada,
+
     };
 
     public int[] bau = new int[24];
@@ -359,6 +359,10 @@ public class Player_estado_atual{
         return;
 
     }
+
+
+
+    public Molde_icone[] icones_movimento;
 
   
 

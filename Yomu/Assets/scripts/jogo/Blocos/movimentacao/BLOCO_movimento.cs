@@ -8,14 +8,9 @@ public class BLOCO_movimento {
 
 
       
-    public static BLOCO_movimento instancia;
-    public static BLOCO_movimento Pegar_instancia( bool _forcar = false  ){
-
-            if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("BLOCO_movimento")) { instancia = new BLOCO_movimento();instancia.Iniciar();} return instancia;}
-            if(  instancia == null) { instancia = new BLOCO_movimento(); instancia.Iniciar(); }
-            return instancia;
-
-    }
+        public static BLOCO_movimento instancia;
+        public static BLOCO_movimento Pegar_instancia(){ return instancia; }
+        public static BLOCO_movimento Construir(){ instancia = new BLOCO_movimento(); return instancia;}
 
 
     public Controlador_dados_dinamicos dados;
@@ -72,24 +67,24 @@ public class BLOCO_movimento {
 
      
 
-                controlador_interativos = Controlador_interativos.Pegar_instancia(true);
-                controlador_tela_movimento = Controlador_tela_movimento.Pegar_instancia(true);
+                controlador_interativos = Controlador_interativos.Pegar_instancia();
+                controlador_tela_movimento = Controlador_tela_movimento.Pegar_instancia();
 
 
-                ///controlador_movimento = Controlador_movimento.Pegar_instancia(true);
-                controlador_utilidades = Controlador_utilidades.Pegar_instancia(true);
-                //controlador_conversas = Controlador_conversas.Pegar_instancia(true);
+                ///controlador_movimento = Controlador_movimento.Pegar_instancia();
+                controlador_utilidades = Controlador_utilidades.Pegar_instancia();
+                //controlador_conversas = Controlador_conversas.Pegar_instancia();
 
-                controlador_cursor = Controlador_cursor.Pegar_instancia( true );
+                controlador_cursor = Controlador_cursor.Pegar_instancia();
 
-                Controlador_jogo_data.Pegar_instancia( true );
-                controlador_data = Controlador_data.Pegar_instancia( true );
+                Controlador_jogo_data.Pegar_instancia();
+                controlador_data = Controlador_data.Pegar_instancia();
                 posicao_mouse = controlador_data.posicao_mouse;
 
 
 
-                player_estado_atual = Player_estado_atual.Pegar_instancia(true);
-                dados_blocos = Dados_blocos.Pegar_instancia(true);
+                player_estado_atual = Player_estado_atual.Pegar_instancia();
+                dados_blocos = Dados_blocos.Pegar_instancia();
 
                 Colocar_UI_atual = Colocar_UI_bloco_movimento.Default ;
                 Colocar_input_atual  = Colocar_input_bloco_movimento.Default ;

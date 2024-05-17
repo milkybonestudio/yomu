@@ -9,17 +9,11 @@ using UnityEngine;
 public class Dados_blocos {
 
 
+        public static Dados_blocos instancia;
+        public static Dados_blocos Pegar_instancia(){ return instancia; }
+        public static Dados_blocos Construir(){ instancia = new Dados_blocos(); return instancia;}
 
 
-    public static Dados_blocos instancia;
-    public static Dados_blocos Pegar_instancia( bool _forcar = false  ){
-
-            if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("Dados_blocos")) { instancia = new Dados_blocos();instancia.Iniciar();} return instancia;}
-
-            if(  instancia == null) { instancia = new Dados_blocos(); instancia.Iniciar(); }
-            return instancia;
-
-    }
 
 
     public void Iniciar(){}

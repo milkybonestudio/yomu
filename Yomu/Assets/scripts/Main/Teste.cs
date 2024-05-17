@@ -61,14 +61,10 @@ public  class Teste {
 
 
       
-    public static Teste instancia;
-    public static Teste Pegar_instancia( bool _forcar = false  ){
+        public static Teste instancia;
+        public static Teste Pegar_instancia(){ return instancia; }
+        public static Teste Construir(){ instancia = new Teste(); return instancia;}
 
-            if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("Teste")) { instancia = new Teste();instancia.Iniciar();} return instancia;}
-            if(  instancia == null) { instancia = new Teste(); instancia.Iniciar(); }
-            return instancia;
-
-    }
 
      public void Iniciar(){}
 
@@ -123,7 +119,6 @@ public  class Teste {
     int  run_1_HASH = 0;
 
      public void teste_generico_escopo() {
-
 
 
           Sprite[] sprites_arr = new Sprite[10];
@@ -634,6 +629,9 @@ public  class Teste {
 
 
 public bool Verificar_teste(){
+
+     // nao tem teste
+     return false;
 
      Teste_performace();
      teste_generico_escopo();

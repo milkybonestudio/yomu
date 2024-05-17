@@ -16,14 +16,10 @@ public class Controlador_interativos {
 
 
       
-    public static Controlador_interativos instancia;
-    public static Controlador_interativos Pegar_instancia( bool _forcar = false  ){
-
-            if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("Controlador_interativos")) { instancia = new Controlador_interativos();instancia.Iniciar();} return instancia;}
-            if(  instancia == null) { instancia = new Controlador_interativos(); instancia.Iniciar(); }
-            return instancia;
-
-    }
+      
+        public static Controlador_interativos instancia;
+        public static Controlador_interativos Pegar_instancia(){ return instancia; }
+        public static Controlador_interativos Construir(){ instancia = new Controlador_interativos(); return instancia;}
 
 
 

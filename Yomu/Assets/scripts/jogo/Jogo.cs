@@ -7,23 +7,21 @@ using UnityEngine;
 
 public class Jogo {
 
-        int a  = 10;
-
 
         public static Jogo instancia;
-        public static Jogo Pegar_instancia( bool _forcar = false  ){
-                if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("Jogo")) { instancia = new Jogo();instancia.Iniciar();} return instancia;}
-                if(  instancia == null) { instancia = new Jogo(); instancia.Iniciar(); }
-                return instancia;
-        }
+        public static Jogo Pegar_instancia(){ return instancia; }
+        public static Jogo Construir(){ instancia = new Jogo(); return instancia;}
 
-        public void Iniciar(){
 
-            /*
+        public Jogo(){
 
-                Iniciar os blocos 
-            
-            */
+                Controlador_UI.Construir();
+                Controlador_transicao.Construir();
+                Dados_blocos.Construir();
+                Controlador_dados_dinamicos.Construir();
+                Controlador_timer.Construir();
+                Player_estado_atual.Construir();
+
 
         }
 
@@ -56,7 +54,7 @@ public class Jogo {
 
                 // Controlador_audio.Pegar_instancia().Update();
 
-
+                
 
                 switch (  Player_estado_atual.Pegar_instancia().bloco_atual ) {
                     

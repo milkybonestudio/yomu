@@ -6,15 +6,9 @@ using System;
 public class Controlador_dados_dinamicos{
 
 
-    public static Controlador_dados_dinamicos instancia;
-    public static Controlador_dados_dinamicos Pegar_instancia( bool _forcar = false  ){
-
-            if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("Controlador_dados_dinamicos")) { instancia = new Controlador_dados_dinamicos();instancia.Iniciar();} return instancia;}
-            if(  instancia == null) { instancia = new Controlador_dados_dinamicos(); instancia.Iniciar(); }
-            return instancia;
-
-    }
-
+        public static Controlador_dados_dinamicos instancia;
+        public static Controlador_dados_dinamicos Pegar_instancia(){ return instancia; }
+        public static Controlador_dados_dinamicos Construir(){ instancia = new Controlador_dados_dinamicos(); return instancia;}
 
 
 
@@ -24,7 +18,7 @@ public class Controlador_dados_dinamicos{
 
     public void Iniciar(){
 
-        lista_navegacao = Lista_navegacao.Pegar_instancia( true );
+        lista_navegacao = Lista_navegacao.Pegar_instancia();
         dados_blocos = new Dados_blocos();
 
     }

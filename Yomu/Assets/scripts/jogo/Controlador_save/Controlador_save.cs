@@ -25,20 +25,16 @@ controlador_save sempre vai iniciar o modo_tela: jogo, cenas e o modo tela atual
 
 
 
-public class Controlador_save{
+public class Controlador_save {
 
 
 
-    public static Controlador_save instancia;
-    public static Controlador_save Pegar_instancia( bool _forcar = false  ){
+      
+        public static Controlador_save instancia;
+        public static Controlador_save Pegar_instancia(){ return instancia; }
+        public static Controlador_save Construir(){ instancia = new Controlador_save(); return instancia;}
 
-            if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("Controlador_save")) { instancia = new Controlador_save();instancia.Iniciar();} return instancia;}
-            if(  instancia == null) { instancia = new Controlador_save(); instancia.Iniciar(); }
-            return instancia;
 
-    }
-
- 
 
   /*
     

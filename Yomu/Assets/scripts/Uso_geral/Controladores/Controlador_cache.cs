@@ -8,15 +8,13 @@ public class Controlador_cache {
 
 
         public static Controlador_cache instancia;
-        public static Controlador_cache Pegar_instancia( bool _forcar = false  ){
+        public static Controlador_cache Pegar_instancia(){ return instancia; }
+        public static Controlador_cache Construir(){ instancia = new Controlador_cache(); return instancia;}
 
-            if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("Controlador_cache")) { instancia = new Controlador_cache();instancia.Iniciar();} return instancia;}
-            if(  instancia == null) { instancia = new Controlador_cache(); instancia.Iniciar(); }
-            return instancia;
 
-        }
 
-        public void Iniciar(){
+
+        public Controlador_cache(){
 
                 dados = new System.Object[ numero_inicial ];                
                 slots_locks = new bool [ numero_inicial ] ;

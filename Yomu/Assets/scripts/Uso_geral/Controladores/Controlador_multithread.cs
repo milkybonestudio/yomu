@@ -7,17 +7,13 @@ using UnityEngine;
 public class Controlador_multithread  {
 
 
+
         public static Controlador_multithread instancia;
-        public static Controlador_multithread Pegar_instancia( bool _forcar = false  ){
-
-            if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("Controlador_multithread")) { instancia = new Controlador_multithread(); instancia.Iniciar();} return instancia;}
-            if(  instancia == null) { instancia = new Controlador_multithread(); instancia.Iniciar(); }
-            return instancia;
-
-        } 
+        public static Controlador_multithread Pegar_instancia(){ return instancia; }
+        public static Controlador_multithread Construir(){ instancia = new Controlador_multithread(); return instancia;}
 
 
-        public void Iniciar(){}
+        public Controlador_multithread(){}
 
         public int quantidade_para_adicionar = 10;
         public long tempo_maximo_em_songle_thread_ms = 2L;

@@ -18,16 +18,30 @@ using System;
 
  public class Controlador_audio {
 
-    public static Controlador_audio instancia;
-    public static Controlador_audio Pegar_instancia( bool _forcar = false  ){
 
-            if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("Controlador_audio")) { instancia = new Controlador_audio();instancia.Iniciar();} return instancia;}
-            if(  instancia == null) { instancia = new Controlador_audio(); instancia.Iniciar(); }
-            return instancia;
-
-    }
+        public static Controlador_audio instancia;
+        public static Controlador_audio Pegar_instancia(){ return instancia; }
+        public static Controlador_audio Construir(){ instancia = new Controlador_audio(); return instancia;}
 
 
+
+        public  Controlador_audio(){
+
+                Controlador_audio.instancia = this;
+     
+                audio_game_object =  GameObject.Find("Audio");
+
+                music_1 = new Audio_objeto("Music_1" , Tipo_audio.music);
+                music_2 = new Audio_objeto("Music_2" , Tipo_audio.music);
+
+                voice_1 = new Audio_objeto("Voice_1" , Tipo_audio.voice);
+                voice_2 = new Audio_objeto("Voice_2" , Tipo_audio.voice);
+                voice_3 = new Audio_objeto("Voice_3" , Tipo_audio.voice);
+
+                audio_source_uso_interno = new Audio_objeto("audio_source_uso_interno" , Tipo_audio.INTERNO);
+
+        }
+        
 
 
 
@@ -62,21 +76,6 @@ using System;
 
         public Audio_objeto audio_source_uso_interno;
 
-        
-        public  void Iniciar(){
-     
-                audio_game_object =  GameObject.Find("Audio");
-
-                music_1 = new Audio_objeto("Music_1" , Tipo_audio.music);
-                music_2 = new Audio_objeto("Music_2" , Tipo_audio.music);
-
-                voice_1 = new Audio_objeto("Voice_1" , Tipo_audio.voice);
-                voice_2 = new Audio_objeto("Voice_2" , Tipo_audio.voice);
-                voice_3 = new Audio_objeto("Voice_3" , Tipo_audio.voice);
-
-                audio_source_uso_interno = new Audio_objeto("audio_source_uso_interno" , Tipo_audio.INTERNO);
-
-        }
         
          public void Update(){
 

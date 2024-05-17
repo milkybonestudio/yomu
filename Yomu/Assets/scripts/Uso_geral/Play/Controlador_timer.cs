@@ -12,14 +12,12 @@ using System.Diagnostics;
 
 public class Controlador_timer {
 
-    public static Controlador_timer instancia;
-    public static Controlador_timer Pegar_instancia( bool _forcar = false  ){
 
-            if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("Controlador_timer")) { instancia = new Controlador_timer();instancia.Iniciar();} return instancia;}
-            if(  instancia == null) { instancia = new Controlador_timer(); instancia.Iniciar(); }
-            return instancia;
+        public static Controlador_timer instancia;
+        public static Controlador_timer Pegar_instancia(){ return instancia; }
+        public static Controlador_timer Construir(){ instancia = new Controlador_timer(); return instancia;}
 
-    }
+
 
 
 

@@ -19,20 +19,14 @@ using TMPro;
 
 
 
-public class BLOCO_menu { 
+public class Menu { 
 
 
-      
-    public static BLOCO_menu instancia;
-    public static BLOCO_menu Pegar_instancia( bool _forcar = false  ){
+      public static Menu instancia;
+      public static Menu Pegar_instancia(){ return instancia; }
+      public static Menu Construir(){ instancia = new Menu(); return instancia;}
 
-            if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("BLOCO_menu")) { instancia = new BLOCO_menu();instancia.Iniciar();} return instancia;}
-            if(  instancia == null) { instancia = new BLOCO_menu(); instancia.Iniciar(); }
-            return instancia;
-
-    }
-
-      
+    
    
       
       public  GameObject canvas_menu;
@@ -107,13 +101,18 @@ public class BLOCO_menu {
       
 
        
-      public void Iniciar (){ 
+      public Menu (){ 
 
-        controlador_configuration = Controlador_configuration.Pegar_instancia(true);
+        Controlador.Pegar_instancia().modo_controlador_atual = Controlador_modo.menu;
+
+        controlador_configuration = Controlador_configuration.Pegar_instancia();
      
-        controlador_data = Controlador_data.Pegar_instancia(true);
+        controlador_data = Controlador_data.Pegar_instancia();
 
-        dados_blocos = Dados_blocos.Pegar_instancia(true);
+        dados_blocos = Dados_blocos.Pegar_instancia();
+
+
+        Iniciar_menu();
 
          
         return;
@@ -139,7 +138,7 @@ public class BLOCO_menu {
 
 
 
-    public void Iniciar_menu( ){
+    public void Iniciar_menu(){
 
 
 
@@ -149,7 +148,7 @@ public class BLOCO_menu {
       Controlador_input.tipo_teclado = Tipo_teclado.plataforma;
 
 
-      Menu_START data = dados_blocos.menu_START;
+    //  Menu_START data = dados_blocos.menu_START;
 
        
       
@@ -955,25 +954,25 @@ public class BLOCO_menu {
 
         public void Verificar_saves() {
 
+            // fazer depois
+
+            // Save_menu_info save_menu_info = dados_blocos.menu_START.save_menu_info;
             
+            // if(save_menu_info == null) return;
 
-            Save_menu_info save_menu_info = dados_blocos.menu_START.save_menu_info;
-            
-            if(save_menu_info == null) return;
+            // for(  int i = 0 ; i < 4 ; i++  ){
 
-            for(  int i = 0 ; i < 4 ; i++  ){
+            //       if(save_menu_info.is_active_arr[i]){
 
-                  if(save_menu_info.is_active_arr[i]){
+            //       menu_saves_arr[i].image.sprite = save_menu_info.image_save_arr[i];
+            //       menu_save_information_arr[i].progresso.text = "Progress : " + save_menu_info.progresso_arr[i];
+            //       menu_save_information_arr[i].tempo_total_jogo.text = "Time : " + save_menu_info.save_time_arr[i];
+            //       menu_save_information_arr[i].x_image.color = new Color(1f,1f,1f, 0f);
 
-                  menu_saves_arr[i].image.sprite = save_menu_info.image_save_arr[i];
-                  menu_save_information_arr[i].progresso.text = "Progress : " + save_menu_info.progresso_arr[i];
-                  menu_save_information_arr[i].tempo_total_jogo.text = "Time : " + save_menu_info.save_time_arr[i];
-                  menu_save_information_arr[i].x_image.color = new Color(1f,1f,1f, 0f);
+            //       }
+            //       continue;
 
-                  }
-                  continue;
-
-            }
+            // }
 
 
           

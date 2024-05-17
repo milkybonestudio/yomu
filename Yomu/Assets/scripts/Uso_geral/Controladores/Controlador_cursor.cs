@@ -9,12 +9,23 @@ using System;
 public class Controlador_cursor {
 
 
-    public static Controlador_cursor instancia;
-    public static Controlador_cursor Pegar_instancia( bool _forcar = false  ){
+        public static Controlador_cursor instancia;
+        public static Controlador_cursor Pegar_instancia(){ return instancia; }
+        public static Controlador_cursor Construir(){ instancia = new Controlador_cursor(); return instancia;}
 
-            if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("Controlador_cursor")) { instancia = new Controlador_cursor();instancia.Iniciar();} return instancia;}
-            if(  instancia == null) { instancia = new Controlador_cursor(); instancia.Iniciar(); }
-            return instancia;
+
+    public Controlador_cursor(){
+
+
+         cursor_blue = Resources.Load<Texture2D>("images/utilidade_geral/cursores/cursor_blue");
+         cursor_red= Resources.Load<Texture2D>("images/utilidade_geral/cursores/cursor_red");
+         cursor_green= Resources.Load<Texture2D>("images/utilidade_geral/cursores/cursor_green");
+         cursor_yellow= Resources.Load<Texture2D>("images/utilidade_geral/cursores/cursor_yellow");
+         cursor_pink= Resources.Load<Texture2D>("images/utilidade_geral/cursores/cursor_pink");
+         cursor_default= Resources.Load<Texture2D>("images/utilidade_geral/cursores/cursor_default");
+
+         cursor_hotspot = Vector2.zero;
+
 
     }
 
@@ -32,21 +43,6 @@ public class Controlador_cursor {
 
     public     Cor_cursor                     cursor_atual   = Cor_cursor.off;
 
-
-    public void Iniciar(){
-
-
-         cursor_blue = Resources.Load<Texture2D>("images/utilidade_geral/cursores/cursor_blue");
-         cursor_red= Resources.Load<Texture2D>("images/utilidade_geral/cursores/cursor_red");
-         cursor_green= Resources.Load<Texture2D>("images/utilidade_geral/cursores/cursor_green");
-         cursor_yellow= Resources.Load<Texture2D>("images/utilidade_geral/cursores/cursor_yellow");
-         cursor_pink= Resources.Load<Texture2D>("images/utilidade_geral/cursores/cursor_pink");
-         cursor_default= Resources.Load<Texture2D>("images/utilidade_geral/cursores/cursor_default");
-
-         cursor_hotspot = Vector2.zero;
-
-
-    }
 
 
      public void Mudar_cursor(Cor_cursor _tipo){

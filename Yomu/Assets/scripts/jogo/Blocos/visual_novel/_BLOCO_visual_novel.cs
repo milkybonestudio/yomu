@@ -96,12 +96,11 @@ public enum Tipo_mudanca {
 
 public class BLOCO_visual_novel {
 
-    public static BLOCO_visual_novel instancia;
-    public static BLOCO_visual_novel Pegar_instancia( bool _forcar = false  ){
-            if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("BLOCO_visual_novel")) { instancia = new BLOCO_visual_novel();instancia.Iniciar();} return instancia;}
-            if(  instancia == null) { instancia = new BLOCO_visual_novel(); instancia.Iniciar(); }
-            return instancia;
-    }
+      
+        public static BLOCO_visual_novel instancia;
+        public static BLOCO_visual_novel Pegar_instancia(){ return instancia; }
+        public static BLOCO_visual_novel Construir(){ instancia = new BLOCO_visual_novel(); return instancia;}
+
 
 
     public void Iniciar(){
@@ -157,15 +156,15 @@ public class BLOCO_visual_novel {
             */
 
     
-            leitor_visual_novel  = Leitor_visual_novel.Pegar_instancia(true);
-            controlador_personagens_visual_novel = Controlador_personagens_visual_novel.Pegar_instancia(true);
-            controlador_tela_visual_novel = Controlador_tela_visual_novel.Pegar_instancia(true);
+            leitor_visual_novel  = Leitor_visual_novel.Pegar_instancia();
+            controlador_personagens_visual_novel = Controlador_personagens_visual_novel.Pegar_instancia();
+            controlador_tela_visual_novel = Controlador_tela_visual_novel.Pegar_instancia();
 
 
             controlador_UI_visual_novel = new Controlador_UI_visual_novel();
 
             
-            dados_blocos = Dados_blocos.Pegar_instancia(true);
+            dados_blocos = Dados_blocos.Pegar_instancia();
             
             Mudar_UI = Visual_novel_mudar_UI.Default ; 
             Mudar_input = Visual_novel_mudar_input.Default ; 

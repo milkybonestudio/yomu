@@ -14,7 +14,7 @@ public class Mono_instancia : MonoBehaviour {
     public static Coroutine Start_coroutine(IEnumerator _IEnumerator){
 
      
-       return instancia.StartCoroutine(_IEnumerator);
+       return instancia.StartCoroutine( _IEnumerator);
 
     }
 

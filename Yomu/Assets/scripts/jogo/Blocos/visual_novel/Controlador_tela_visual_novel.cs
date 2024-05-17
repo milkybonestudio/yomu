@@ -38,17 +38,14 @@ public class Controlador_tela_visual_novel {
 
 
         public static Controlador_tela_visual_novel instancia;
-        public static Controlador_tela_visual_novel Pegar_instancia( bool _forcar = false  ){
-                if( _forcar ) { if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("Controlador_tela_visual_novel")) { instancia = new Controlador_tela_visual_novel();instancia.Iniciar();} return instancia; }
-                if(  instancia == null) { instancia = new Controlador_tela_visual_novel(); instancia.Iniciar(); }
-                return instancia;
-        }
+        public static Controlador_tela_visual_novel Pegar_instancia(){ return instancia; }
+        public static Controlador_tela_visual_novel Construir(){ instancia = new Controlador_tela_visual_novel(); return instancia;}
 
 
 
         public void  Iniciar(){
 
-                bloco_visual_novel = BLOCO_visual_novel.Pegar_instancia( true );
+                bloco_visual_novel = BLOCO_visual_novel.Pegar_instancia();
                 desfoco_opacidade = Resources.Load<Material>("materials/desfoco_opacidade");/// *tem que pegar desfoco
 
         }

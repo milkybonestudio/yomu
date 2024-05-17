@@ -6,20 +6,12 @@ using System.IO;
 
 
 
-
-
-
  public class Controlador_configuration {
 
 
-    public static Controlador_configuration instancia;
-    public static Controlador_configuration Pegar_instancia( bool _forcar = false  ){
-
-            if( _forcar ) {if( Verificador_instancias_nulas.Verificar_se_pode_criar_objetos("Controlador_configuration")) { instancia = new Controlador_configuration();instancia.Iniciar();} return instancia;}
-            if(  instancia == null) { instancia = new Controlador_configuration(); instancia.Iniciar(); }
-            return instancia;
-
-    }
+        public static Controlador_configuration instancia;
+        public static Controlador_configuration Pegar_instancia(){ return instancia; }
+        public static Controlador_configuration Construir(){ instancia = new Controlador_configuration(); return instancia;}
 
 
 
@@ -29,8 +21,8 @@ using System.IO;
 
         public float volume;
         public Tipo_construcao_texto tipo_texto;
-        public string music_login;
 
+        public string music_login;
 
         public string menu_background;
         public string music_menu;
@@ -210,45 +202,20 @@ using System.IO;
 
 
 
-        public void Iniciar(){
+        public Controlador_configuration(){
 
-                Controlador_audio.Pegar_instancia(true);
 
+                Controlador_audio.Pegar_instancia();
 
                 string path_raiz = Controlador_data.Pegar_instancia().Pegar_path_raiz();
                 string path = path_raiz + "/arquivos_mutaveis/configurations.txt" ;
-
-                // Debug.Log(path);
-                // Debug.Log(System.IO.File.Exists(path));
-                // throw new ArgumentException("a");
 
                 string[] lines = null ;
 
 
                 lines = Resources.Load<TextAsset>("files/configurations_default").text.Split("\r\n") ; 
 
-                // trocar depois, muito trampo e pode dar erro 
-
-
-
-
-
-                // if(  !System.IO.File.Exists( path ) ) {
-
-                
-                //         lines = Resources.Load<TextAsset>("files/configurations_default").text.Split("\r\n") ; 
-                //         System.IO.File.WriteAllLines( path , lines ) ;
-                //         Debug.Log( " vai salvar em : " + path  ) ;
-
-
-                // } else {
-
-                //         lines = System.IO.File.ReadAllLines( path ) ;
-
-                // }
-
-
-
+  
                 lines_arr_config = lines;
 
                 int i = 1;
@@ -266,6 +233,7 @@ using System.IO;
                 tipo_texto =   ( Tipo_construcao_texto ) ( Enum.Parse( typeof( Tipo_construcao_texto )   , lines[i].Trim() )  ) ;       Passar(ref i);
 
                 login_background = lines[i].Trim() ;Passar(ref i);
+                
                 music_login = lines[i].Trim();Passar(ref i);
                 menu_background = lines[i].Trim();Passar(ref i);
                 music_menu = lines[i].Trim();Passar(ref i);
