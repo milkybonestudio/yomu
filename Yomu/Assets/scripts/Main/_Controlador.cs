@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using System.IO;
 
 using Unity.Collections;
+using System.Security.Cryptography;
 
 
 /*
@@ -76,7 +77,7 @@ public class Controlador : MonoBehaviour {
 
     // ----------USO CONTROLADOR
 
-            public  Controlador_save controlador_save;
+            //public  Controlador_save controlador_save;
             public Controlador_transicao controlador_transicao;
             public  Teste teste;
             public Controlador_UI controlador_UI;
@@ -126,7 +127,7 @@ public class Controlador : MonoBehaviour {
                         
                         controlador_audio = Controlador_audio.Construir();
                         controlador_cursor = Controlador_cursor.Construir();
-                        controlador_save = Controlador_save.Construir();
+                        //controlador_save = Controlador_save.Construir();
                         Controlador_data.Construir();
 
                         controlador_configuration = Controlador_configuration.Construir();
@@ -152,6 +153,8 @@ public class Controlador : MonoBehaviour {
                         if(Input.GetKeyDown(KeyCode.F1)) Application.Quit();   
                         Controlador_input.Update_mouse();
                         Controlador_data.Pegar_instancia().Atualizar_mouse_atual(); 
+
+                        // tirar depois
                         teste.Update();
 
                         // controlador_audio.Update();

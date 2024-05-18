@@ -38,6 +38,8 @@ public  class Login {
         public Image imagem_correntes;
         public  Botao botao;
         public  float[] posicao_mouse;
+        // todas vão ser deletadas quando o mobjeto for destruido
+        public Chave_cache[] chaves_imagens;
 
         
         public GameObject canvas;
@@ -46,273 +48,237 @@ public  class Login {
    
 
 
-    public bool esta_entrando_menu = false;
+        public bool esta_entrando_menu = false;
 
-    public void Update(){
+        public void Update(){
 
 
-            if( esta_entrando_menu ){ return; }
+                if( esta_entrando_menu ){ return; }
 
-            bool mouse_down = Controlador_input.Get_down(Key_code.mouse_left);
+                bool mouse_down = Controlador_input.Get_down(Key_code.mouse_left);
 
-            if( mouse_down )  Controlador_audio.Pegar_instancia().Acrecentar_sfx( "audio/geral_sfx/botoes/click_4"  );
-                
-            botao.Update(   mouse_down ,  posicao_mouse);
-
-
-
-            // if( pode_entrar_menu ){
-            
-            //     _data.login_data_OUTPUT = new Login_data_OUTPUT();
-
-            //     //Zerar_dados();
-            
-            // }
-
-          
-    }
-
-
-    
-
-
-
-
-    public  void Iniciar_login(){
-
-
-
-            Controlador_input.ativar_movimentacao_mouse = true;
-            Controlador_cursor.Pegar_instancia().Mudar_cursor(Cor_cursor.off);
-            Controlador_input.tipo_teclado = Tipo_teclado.normal;
-
-
-
-
-            string nome_background = Controlador_configuration.Pegar_instancia().login_background;
-
-            Sprite login_image = Resources.Load<Sprite>("images/login_images/" + nome_background);
-                
-
-            // o canvas vai ser o canvas em si, pode só excluir o canvas_login depois
-            canvas = GameObject.Find("Tela/Canvas");
-            
-
-            canvas_login =  new GameObject("Canvas_login");
-
-
-            canvas_login.transform.SetParent(canvas.transform, false);
-            canvas_login_image  =    canvas_login.AddComponent<Image>();
-            RectTransform rect = canvas_login.GetComponent<RectTransform>();
-            rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal , 1920f);
-            rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical , 1080f);
-
-            
-
-
-
-
-            correntes = new GameObject("Correntes");
-
-            correntes.transform.SetParent(canvas_login.transform, false);
-
-            imagem_correntes = correntes.AddComponent<Image>();
-            imagem_correntes.color = Color.clear;
-
-            RectTransform rect_corrente = correntes.GetComponent<RectTransform>();
-
-            rect_corrente.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal , 1920f);
-            rect_corrente.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical , 1080f);
-
-
-
-
-
-            canvas_login_image.sprite = login_image;
-            canvas_login_image.color = Color.black;
-
-
-            Sprite[] imagens = new Sprite[2];
-            imagens[0] = Resources.Load<Sprite>("images/login_images/login_botao_off");
-            imagens[1] = Resources.Load<Sprite>("images/login_images/login_botao_on");
-            
-            
-            botao = new Botao(
-
-            "Botao_login",
-            250f,
-            85f,
-            0f,
-            -64f,
-            canvas_login.transform,
-            Entrar_menu,
-            Tipo_botao.dinamico,
-            true, 
-            imagens
-        
-            );
-
-            botao.Colocar_texto(
-            "Iniciar",
-            200f ,
-            75f ,
-            50f
-
-            );
-
-
-            botao.Mudar_cor_hover(Cor_cursor.red);
-
-            botao.Esconder_botao(0f);
-            botao.Trancar_botao();
-
-            
-            login_coroutine = Mono_instancia.Start_coroutine(  Iniciar_login_coroutine()  );
-            
-            string audio_path  = "audio/blocos_pequenos/login/" + Controlador_configuration.Pegar_instancia().music_login;
-
-            Controlador_audio.Pegar_instancia().Start_music( _slot: 1 , _path_completo: audio_path , _tempo_ms_tirar : 0f , _tempo_ms_colocar : 500f , _modificador_volume: 0.7f );
-
-                
-    }
-
-
-
-    public void Zerar_dados(){
-
-        canvas = null;
-        canvas_login = null;
-        canvas_login_image = null;
-        
-    }
-
-
-
-    
-    public void Entrar_menu(){
-
-        esta_entrando_menu = true;
-
-        Mono_instancia.Start_coroutine( Entrar_menu_c() );
-
-        IEnumerator Entrar_menu_c(){
-
-
-            // inicia a pegar as imagens do menu no miultithread
-
-
-            yield return null;
-
-
-            GameObject transicao_canvas = new GameObject( "transicao_canvas" );
-            transicao_canvas.transform.SetParent( canvas_login.transform,  false );
-
-            Image transicao_image = transicao_canvas.AddComponent<Image>();
-
-            RectTransform rect = transicao_canvas.GetComponent<RectTransform>();
-            rect.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, 1080f );
-            rect.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, 1920f );
-            transicao_image.color = Color.clear;
-
-
-            float variante = 0.01f;
-
-            // vai para o 1f => preto
-            while( transicao_image.color.a < 0.95f ){
-
-
-                    float cor_atual = transicao_image.color[ 3 ];
-                    float nova_cor = cor_atual + variante;
+                if( mouse_down )  Controlador_audio.Pegar_instancia().Acrecentar_sfx( "audio/geral_sfx/botoes/click_4"  );
                     
-                    transicao_image.color = new Color( 0f, 0f, 0f, nova_cor );  
-                    yield return null;
+                botao.Update(   mouse_down ,  posicao_mouse);
+
+        
+        }
 
 
-            }
+    
+
+        public  void Iniciar_login(){
+
+                /*
+
+                    Pensar em um jeito de isso funcionar. 
+                    se um container tiver algo especifico que possa ser indexado é mais simple de como criar os index
+                    Talvez um enum geral com os index? 
+
+                    Poderia ter um enum sobre tipo e outro especifico de cada tipo 
+
+                    A chave seria( tipo, especifico )
+
+                    Controlador_cache.Pegar_instancia().Pedir_dados( chaves_imagens ) => pedir chaves + multithread 
+                    
+                */
 
 
-            Controlador.Pegar_instancia().menu = Menu.Construir();
-            Debug.Log( Controlador.Pegar_instancia().menu );
-            Controlador.Pegar_instancia().login = null;
+                Controlador_input.ativar_movimentacao_mouse = true;
+                Controlador_cursor.Pegar_instancia().Mudar_cursor(Cor_cursor.off);
+                Controlador_input.tipo_teclado = Tipo_teclado.normal;
 
-            GameObject.Destroy( canvas_login );
 
-            instancia = null;
+                string nome_background = Controlador_configuration.Pegar_instancia().login_background;
 
-            yield break;
+                Sprite login_image = Resources.Load<Sprite>("images/login_images/" + nome_background);
+                    
+                canvas = GameObject.Find("Tela/Canvas");                
+
+                canvas_login =  new GameObject("Canvas_login");
+                canvas_login.transform.SetParent(canvas.transform, false);
+                canvas_login_image  =    canvas_login.AddComponent<Image>();
+                RectTransform rect = canvas_login.GetComponent<RectTransform>();
+                rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal , 1920f);
+                rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical , 1080f);
+
+
+                correntes = new GameObject("Correntes");
+                correntes.transform.SetParent(canvas_login.transform, false);
+
+                imagem_correntes = correntes.AddComponent<Image>();
+                imagem_correntes.color = Color.clear;
+
+                RectTransform rect_corrente = correntes.GetComponent<RectTransform>();
+
+                rect_corrente.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal , 1920f);
+                rect_corrente.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical , 1080f);
+
+                canvas_login_image.sprite = login_image;
+                canvas_login_image.color = Color.black;
+
+                Sprite[] imagens = new Sprite[2];
+                imagens[0] = Resources.Load<Sprite>("images/login_images/login_botao_off");
+                imagens[1] = Resources.Load<Sprite>("images/login_images/login_botao_on");
+                
+                
+                botao = new Botao(
+
+                    "Botao_login",
+                    250f,
+                    85f,
+                    0f,
+                    -64f,
+                    canvas_login.transform,
+                    Entrar_menu,
+                    Tipo_botao.dinamico,
+                    true, 
+                    imagens
+                
+                );
+
+                botao.Colocar_texto(
+
+                    "Iniciar",
+                    200f ,
+                    75f ,
+                    50f
+
+                );
+
+
+                botao.Mudar_cor_hover(Cor_cursor.red);
+
+                botao.Esconder_botao(0f);
+                botao.Trancar_botao();
+
+                
+                login_coroutine = Mono_instancia.Start_coroutine(  Iniciar_login_coroutine()  );
+                
+                string audio_path  = "audio/blocos_pequenos/login/" + Controlador_configuration.Pegar_instancia().music_login;
+
+                Controlador_audio.Pegar_instancia().Start_music( _slot: 1 , _path_completo: audio_path , _tempo_ms_tirar : 0f , _tempo_ms_colocar : 500f , _modificador_volume: 0.7f );
+
+                    
+        }
+
+
+        
+        public void Entrar_menu(){
+
+                esta_entrando_menu = true;
+
+                Mono_instancia.Start_coroutine( Entrar_menu_c() );
+
+                IEnumerator Entrar_menu_c(){
+
+
+                        // inicia a pegar as imagens do menu no miultithread
+
+
+                        yield return null;
+
+
+                        GameObject transicao_canvas = new GameObject( "transicao_canvas" );
+                        transicao_canvas.transform.SetParent( canvas_login.transform,  false );
+
+                        Image transicao_image = transicao_canvas.AddComponent<Image>();
+
+                        RectTransform rect = transicao_canvas.GetComponent<RectTransform>();
+                        rect.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, 1080f );
+                        rect.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, 1920f );
+                        transicao_image.color = Color.clear;
+
+
+                        float variante = 0.01f;
+
+                        // vai para o 1f => preto
+                        while( transicao_image.color.a < 0.95f ){
+
+                                float cor_atual = transicao_image.color[ 3 ];
+                                float nova_cor = cor_atual + variante;
+                                
+                                transicao_image.color = new Color( 0f, 0f, 0f, nova_cor );  
+                                yield return null;
+
+                        }
+
+
+                        Controlador.Pegar_instancia().menu = Menu.Construir();
+                        Debug.Log( Controlador.Pegar_instancia().menu );
+                        Controlador.Pegar_instancia().login = null;
+                        // colocar depois
+                        // Controlador_cache.Pegar_instancia().Excluir_dados( chaves_imagens );
+
+                        
+                        GameObject.Destroy( canvas_login );
+
+                        instancia = null;
+
+                        yield break;
+
+
+                }
 
 
         }
 
 
-
-    }
-
-
-    
+        
 
 
-    public  IEnumerator Iniciar_login_coroutine(){
+        public IEnumerator Iniciar_login_coroutine(){
 
-          
+                
+                yield return new WaitForSeconds(1.5f);
 
-          yield return new WaitForSeconds(1.5f);
+                float d_a = 0.005f;
 
+                float total_cor = 0f;
 
-          float d_a = 0.005f;
+                while(canvas_login_image.color.r < 0.95f ){
 
-          float total_cor = 0f;
+                        float total_cor_alterada = total_cor * total_cor;
 
-          while(canvas_login_image.color.r < 0.95f ){
+                        Color cor_atual = new Color(total_cor_alterada, total_cor_alterada, total_cor_alterada, 1f);  
+                        canvas_login_image.color = cor_atual;
+                        total_cor += d_a;
+                        yield return null;
 
-              float total_cor_alterada = total_cor * total_cor;
+                }
 
-              Color cor_atual = new Color(total_cor_alterada, total_cor_alterada, total_cor_alterada, 1f);  
-              canvas_login_image.color = cor_atual;
-              total_cor += d_a;
-              yield return null;
+                
+                canvas_login_image.color = new Color(  1f ,   1f,   1f,   1f  );
 
-          }
+                Controlador_audio.Pegar_instancia().Acrecentar_sfx( "audio/blocos_pequenos/login/correntes_abrindo" );
 
-          
-          canvas_login_image.color = new Color(  1f ,   1f,   1f,   1f  );
+                yield return new WaitForSeconds(0.25f);
 
-          Controlador_audio.Pegar_instancia().Acrecentar_sfx( "audio/blocos_pequenos/login/correntes_abrindo" );
-
-          yield return new WaitForSeconds(0.25f);
-
-          imagem_correntes.sprite = Resources.Load<Sprite>("images/login_images/login_botao_correntes");
+                imagem_correntes.sprite = Resources.Load<Sprite>("images/login_images/login_botao_correntes");
 
 
-          total_cor = 0f;
-          d_a = 0.01f;
+                total_cor = 0f;
+                d_a = 0.01f;
 
-          while(imagem_correntes.color.a < 0.95f ){
+                while(imagem_correntes.color.a < 0.95f ){
 
-              Color cor_atual = new Color(1f, 1f, 1f, total_cor);  
-              imagem_correntes.color = cor_atual;
-              total_cor += d_a;
-              yield return null;
+                        Color cor_atual = new Color(1f, 1f, 1f, total_cor);  
+                        imagem_correntes.color = cor_atual;
+                        total_cor += d_a;
+                        yield return null;
 
-          }
+                }
 
-          imagem_correntes.color = new Color(  1f ,   1f,   1f,   1f  );
-
-
-          
-
-          yield return Mono_instancia.Start_coroutine(  botao.Mudar_visibilidade_botao_c( 1f, 750f ) );
-
-          botao.Liberar_botao();
-          yield break;
-    
-
-    }
+                imagem_correntes.color = new Color(  1f ,   1f,   1f,   1f  );
 
 
+                yield return Mono_instancia.Start_coroutine(  botao.Mudar_visibilidade_botao_c( 1f, 750f ) );
 
+                botao.Liberar_botao();
+                yield break;
+            
 
+        }
 
-   
 
 }

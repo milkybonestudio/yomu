@@ -5,6 +5,7 @@ public enum Bloco {
     nada,
     transicao,
     teste,
+    salvando,
 
 
     visual_novel,

@@ -105,6 +105,10 @@ public  class Teste {
 
      public Teste(){
 
+          Debug.Log( "veio teste" );
+
+          Teste_performace();
+
           controlador  =  Controlador.instancia;
      
      }
@@ -459,10 +463,9 @@ public  class Teste {
                     }
 
 
-                              long __tempo_por_sprite = ( timePerParse.ElapsedMilliseconds)  ;
-                              timePerParse.Stop();
-                              Debug.Log( "parte na main thread : " + __tempo_por_sprite  );
-
+                    long __tempo_por_sprite = ( timePerParse.ElapsedMilliseconds)  ;
+                    timePerParse.Stop();
+                    Debug.Log( "parte na main thread : " + __tempo_por_sprite  );
                     timePerParse = System.Diagnostics.Stopwatch.StartNew();
 
 
@@ -939,233 +942,48 @@ public void Teste_com_timer(){
 
 
 
-
-public delegate int Subtrair( int i );
-
-
-
-public class Personagem {
-
-     public Subtrair sub;
-
-     public Personagem(){
-
-
-               Somar_um = () => {
-
-               valor += 1;
-               return;
-
-          };
-
-
-          sub = ( int i ) => { return i + 5 ; };
-
-     
-
-
-     }
-
-
-     public int valor = 1;
-
-
-     public Action Somar_um;
-
-     public void Somar_dois(){
-
-          valor += 2;
-          return;
-     }
-
-     public delegate int Somar_tres();
-
-}
-
-
-
-public class Maki : Personagem {
-
-     public void Somar_dois(){
-
-          valor += 3;
-          return;
-
-     }
-
-
-
-
-}
-
-
- 
-
-
  public void Teste_performace(){
 
 
-          string bloco_teste = "";
-
-
-     
-bloco_teste += "                      nome : clothes@happy@esquerda ";
-bloco_teste +=  " \n\r                 ";
-bloco_teste +=  " \n\r                                           base            =>    imagem_nome // path ";
-bloco_teste +=  " \n\r                                           secundaria      =>    iamgem_nome // path : posicao ";
-bloco_teste +=  " \n\r                                           animacao_boca   =>  { ";
-bloco_teste +=  " \n\r                                           a ";
-bloco_teste +=  " \n\r                                           a ";
-bloco_teste +=  " \n\r                                           a ";
-bloco_teste +=  " \n\r                                            } ";
-
-
-bloco_teste +=  " \n\r                                           animacao_boca   =>  { ";
-bloco_teste +=  " \n\r                                           a ";
-bloco_teste +=  " \n\r                                           a ";
-bloco_teste +=  " \n\r                                           a ";
-bloco_teste +=  " \n\r                                            } ";
 
 
 
-bloco_teste +=  " \n\r                                           animacao_olhos    => {} ";
-bloco_teste +=  " \n\r                                           animacao_completa => {} ";
+          string texto_para_salvar = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+
+          for( int www = 0 ; www < 10  ; www++ ){
+
+               texto_para_salvar += texto_para_salvar;
+
+          }
+
+
+
+          byte[] byte_arr = new byte[ 1_000_000 ];
+
+
 
           
 
+          Debug.Log( "lg: " + (byte_arr.Length /1000) + "kb" );
 
+          
+          string path_para_salvar = "C:\\Users\\User\\Desktop\\yomu_things\\yomu\\yomu\\folder_para_teste_EXCLUIR_BUILD";
 
 
-// Atualizar_imagens_personagens_especificos( bloco_teste) ;
-// return;
-        void Atualizar_imagens_personagens_especificos( string bloco ){
+          if( !System.IO.Directory.Exists( path_para_salvar ) ){ System.IO.Directory.CreateDirectory( path_para_salvar ); }
 
 
+          //  string path = path_para_salvar + "/txt_teste.txt" ;
 
-     
-                                int numero_imagens_extras = 0;
-                                bool ja_pegou_na_linha = false;
-                                bool iniciou_extras = false;
-                                char caracter_em_analise = '0';
+          //      Debug.Log( $"path : { path }" );
 
-                                for( int c = 0 ; c < bloco.Length ; c++ ){
-
-
-                                        // caracter_em_analise = bloco[ c ];
-
-                                        // // vai comecar a pegar
-                                        // if( caracter_em_analise == '{'){
-
-                                        //         bool vazio = false;
-                                        //         c++;
-                                        //         for( ;c < bloco.Length; c++){
-
-
-                                        //                 caracter_em_analise = bloco[ c ];
-                                        //                 if( caracter_em_analise == ' ') {continue;}
-                                        //                 if( caracter_em_analise == '}' ){
-                                        //                         vazio =true;
-                                        //                         break;
-                                        //                 }
-                                        //                 break;
-
-                                        //         }
-                                        //         if( vazio ){ continue;}
-                                                  
-                                        //           // nao conta a posicao
-                                        //           numero_imagens_extras--;
-                                        //           for( ;c < bloco.Length ; c++ ){
-
-                                        //                     caracter_em_analise = bloco[ c ];
-
-
-                                        //                     if( caracter_em_analise == '}' ){break;}
-                                        //                     if( caracter_em_analise == ' ' ){continue;}
-                                        //                     if( caracter_em_analise == '\r' ){continue;}
-                                        //                     if( caracter_em_analise == '\n' ){
-                                        //                               ja_pegou_na_linha = false;
-                                        //                          continue;
-                                        //                     }
-
-                                        //                     if( ja_pegou_na_linha ){ continue;}
-                                                            
-                                        //                     numero_imagens_extras++;
-                                        //                     ja_pegou_na_linha = true;
-
-
-
-                                        //           }
-
-
-                                        // }
-
-                                      
-
-
-
-                                }
-
-                               // Debug.Log("esxtras: " + numero_imagens_extras);
-
-
-
-
-
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     string a = "abcde";
-     string b = "abcdef";
-
-     char[] a_arr = new char[]{
-          'a',
-          'b',
-          'c',
-          'd',
-          'e'
-     };
-
-
-     char[] b_arr = new char[]{
-          'a',
-          'b',
-          'c',
-          'd',
-          'e',
-          'f'
-     } ;
-
-
-
-
+          //      System.IO.File.WriteAllText( texto_para_salvar ,  path  );
 
 
 
        System.Diagnostics.Stopwatch timePerParse = System.Diagnostics.Stopwatch.StartNew();
+
+
       
        
 //        int k = 0;
@@ -1175,8 +993,15 @@ bloco_teste +=  " \n\r                                           animacao_comple
 // //        t T = new t();
    
 
-        int n_1 = 1000 * 1000 ;
+        int n_1 = 25;
 
+          byte[] b_a = new byte[ n_1 ];
+          for( int h = 0; h < b_a.Length ;h++ ){
+               b_a[ h ] = 97;
+          }
+
+
+          
 // //           Assembly s = Assembly.LoadFrom(Application.dataPath + "/Plugins/a.dll" );
 
 // //           var b = s.GetType("teste_dll.Math_teste").GetMethod("Somar");
@@ -1187,61 +1012,33 @@ bloco_teste +=  " \n\r                                           animacao_comple
 // //           float x  = 0f;
 
 
-          void abc( string a ){ 
-
-               if( a.Length > 1000 ){
-                    a = "";
-                    return;
-               }
-
-          }
-
-          void abcd( char[] a ){ 
-
-               if( a.Length > 1000 ){
-                    a[ 0 ] = 'a';
-                    return;
-               }
-
-          }
-
+          string path = path_para_salvar + "/txt_teste_1.dat";
+          Stream stream = File.Open( path, FileMode.Open ) ;
 
         while( _i < n_1  ){
 
                _i++;
 
-          //p.Somar_um()   ;
-          //maki.Somar_dois();
-
-               //     abc( a );
-               // abc( b );
+               
 
 
+// //               Debug.Log( $"path : { path }" );
 
-          // int a_arr_length = a_arr.Length;
-          // int b_arr_length = b_arr.Length;
+//                // System.IO.File.WriteAllText( path  , texto_para_salvar  );  
 
+//                System.IO.File.WriteAllBytes( path  , byte_arr );  
+
+
+
+
+               stream.Position = 0;
+
+               stream.Write( b_a, 0 , _i);
+
+
+
+     
           
-                           if( b_arr.Length == a_arr.Length ){
-
-                    bool igual = true;
-
-                    for( int c = 0 ; c < a_arr.Length ;c++ ){
-
-                         if( a_arr[ c ] != b_arr[ c ] ){ 
-                              igual = false;
-                              break; 
-                         }
-
-                    }
-                    if( igual ){
-                         a = "aaa";
-                    }
-
-          }
-  
-
-
 
 
 
@@ -1269,44 +1066,6 @@ bloco_teste +=  " \n\r                                           animacao_comple
 
   
                
-               // abcd( a_arr );
-               // abcd( b_arr );
-
-
-   
-
-               
-               if( a.Length == b.Length ){
-
-                    if( a == b ){
-                         a = "aaaaaa";
-
-                    }
-
-               }
-
-
-
-
-
- 
-
-
-
-
-        
-
-              // string c = new string ( a_arr );
-
-
-
-          
-          
-
-               //p.Somar_dois();
-               //a();
-               //abc();
-
 
         }
 
@@ -1319,13 +1078,13 @@ bloco_teste +=  " \n\r                                           animacao_comple
 
 
 
-//      //Debug.Log("tempo dif: " + (ticksThisTime - ticksThisTime_2) + "ms");
-//      float dif_percentual = ((  ((ticksThisTime - ticksThisTime_2) * 100l ) / ticksThisTime_2 )  ) ;
+     //Debug.Log("tempo dif: " + (ticksThisTime - ticksThisTime_2) + "ms");
+//     float dif_percentual = ((  ((ticksThisTime - ticksThisTime_2) * 100l ) / ticksThisTime_2 )  ) ;
      
-//    Debug.Log("tempo dif_percent: " + dif_percentual + "%");
+   //Debug.Log("tempo dif_percent: " + dif_percentual + "%");
      
-//      Debug.Log("tempo 1: " + (ticksThisTime) + "ms");
-//      Debug.Log("tempo 2: " + ( ticksThisTime_2) + "ms");
+     Debug.Log("tempo 1: " + (ticksThisTime) + "ms");
+     //Debug.Log("tempo 2: " + ( ticksThisTime_2) + "ms");
 
      
 

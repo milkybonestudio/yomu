@@ -48,6 +48,33 @@ public class Controlador_cache {
         }
 
 
+
+
+        public System.Object Pegar_dados( Chave_cache _chave ){
+
+
+                int slot = _chave.slot;
+                int senha = _chave.senha;
+                                
+                bool slot_liberado =  slots_locks [ slot ] ;
+
+                if( !( slot_liberado ) ) { Debug.Log("slot " + slot + " nao estava liberado") ;return; }
+
+                int senha_real = slots_senhas[ slot ] ;
+
+                bool senha_aceita = ( senha == senha_real ) ;
+
+                if( !( senha_aceita ) ) { Debug.Log("slot " + slot + " nao foi aceito senha" + senha + " | " + senha_real) ; return; }
+
+                return dados[ slot ];
+
+
+
+
+
+        }
+
+
         public void Adicionar_dados (  Chave_cache _chave, System.Object _objeto  ){
 
 
@@ -76,7 +103,7 @@ public class Controlador_cache {
         }
 
 
-        public void Excluir_dados( Chave_cache _chave ){
+        public void Excluir_dado( Chave_cache _chave ){
 
                 int slot = _chave.slot;
                 int senha = _chave.senha;
@@ -95,6 +122,35 @@ public class Controlador_cache {
                     dados[ slot ] = null;
 
                 return;
+
+        }
+
+        public void Excluir_dados( Chave_cache[] _chaves ){
+
+
+                for( int chave_index = 0; chave_index < _chaves.Length ;chave_index++ ){
+
+                        Chave_cache chave = _chaves[ chave_index ];
+
+                        int slot = chave.slot;
+                        int senha = chave.senha;
+
+                        if( slots_senhas[ slot ] != senha ) {
+                        
+                        Debug.Log("nao passou em senha no excluir dados. Senha que veio: " + senha + " senha que precisava : " + slots_senhas[ slot ] );
+                        return;
+
+                        }
+
+                        Debug.Log("vai excluir dados do slot: " + slot );
+
+                        slots_locks[ slot ] = false;
+                        slots_senhas[ slot ] = 0;
+                        dados[ slot ] = null;
+                }
+
+                return;
+
 
         }
 

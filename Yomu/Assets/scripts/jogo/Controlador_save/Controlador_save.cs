@@ -6,47 +6,108 @@ using System.Collections;
 using UnityEngine;
 
 
-/*
-
-controlador_save sempre vai iniciar o modo_tela: jogo, cenas e o modo tela atual se dor diferente (plataforma ou minigames)
-
-*/
-
-/*
--1 -> nada
-0  -> iniciar default
-1-4 => saves
 
 
-*/
+public class Controlador_arquivos {
 
 
 
 
+            public static Controlador_arquivos instancia;
+            public static Controlador_arquivos Pegar_instancia(){ return instancia; }
+            public static Controlador_arquivos Construir( int _save ){ instancia = new Controlador_arquivos(); return instancia;}
 
+
+            public Controlador_arquivos(){
+                  
+                  string path_arquivo_de_controle = Paths_gerais.Pegar_path_folder_dados_save(  )
+                  arquivo_de_controle = System.IO.File.Open(  )
+
+
+
+            }
+
+            // vai lidar com salvar e ler arquivos 
+            // controlador_save vai ficar responsavel somente por coisas ligadas ao save 
+            // ao confundir save com salvar 
+
+
+            // ler arquivos não precisa de tanta segurança 
+
+            // sempre fechar quando nao estiver usando 
+            // pegar a quantidade para cada operação 
+            public StreamReader[] leitor_arquivo;
+
+
+            public StreamReader arquivo_de_controle;
+
+
+
+            // salvar arquivos eu nao quero que seja no multithread para não almentar muito a complexidade. 
+            // talvez seja necessario mas quando?
+            public void Salvar_arquivos( byte[][] _arquivos_arr_byte_arr , string[] _paths ){
+
+
+            }
+
+
+            public string[] arquivos_sendo_salvos_atualmente;
+
+
+
+}
 
 public class Controlador_save {
 
 
+
+      /*
+
+
+            problema : o jogo precisa ser salvo a todo momento 
+            porque? : o player vai fazer muitas escolhas, e eu quero que essa escolhas tenha mais peso 
+
+            preciso confirma: quanto tempo leva para mudar um arquivo de texto e fazer uam relacao de quantidade x tamanho 
+
+
+            carregar : 
+              - alem de carregar os dados normalmente ele vai precisar também verificar se existe algum arquivo que estava sendo salvo. 
+
+                  precisa levar em conta que o computador pode desligar no meio por nenhum motivo e que salvar tem um custo de processamento. 
+                  o jogo vai ficar salvando algo em torno de 1 vez por minutos e sempre que o player sair. 
+                  para isso seria interessante salvar partes de arquivos de cada vez                
+                arquivo_1.dat
+
+            salvar: 
+               - tem 2 tipos de salvar : run_time e save_de_morte
+               save run_time vai ser 
+
+
+
+            ** save vai ficar responsavel por transformar logica em bytes e saber como descompactar 
+      
+      */
 
       
         public static Controlador_save instancia;
         public static Controlador_save Pegar_instancia(){ return instancia; }
         public static Controlador_save Construir(){ instancia = new Controlador_save(); return instancia;}
 
+        public Controlador_save( int _save ){
+
+                  // tudo aqui vai ser instanciado na multithread 
+
+                  Controlador_UI.Construir();
+                  Controlador_transicao.Construir();
+                  Dados_blocos.Construir();
+                  Controlador_dados_dinamicos.Construir();
+                  Controlador_timer.Construir();
+                  Player_estado_atual.Construir();
 
 
-  /*
-    
-    processo para acrescentar variaveis no save: 
-      1 : em player_data declarar o tipo como public e com um nome descritivo
-      2 : no player_data constructor definir o valor dessa variavel, exemplo: var = controlador.controlador_personagens.personagens.guarda_17.sara.amizade
-      3 : aqui em load fazer o caminho inverso:  controlador.controlador_personagens.personagens.guarda_17.sara.amizade =  player_data.var
 
-    para alterar o nome de alguma variavel tem que alterar nas 3 posicoes
+        }
 
-    
-  */
 
 
 
@@ -54,13 +115,11 @@ public class Controlador_save {
 
       public bool is_saving = false;
 
-      public void Iniciar(){}
 
+      
 
-
-
+      // isso poderia estar em ferramentas 
       public  void  Screen_shot (string _path = null , int _compress_w = 1920 , int _compress_h = 1080){
-
 
             Mono_instancia.Start_coroutine(a());
             return;
@@ -70,7 +129,6 @@ public class Controlador_save {
                         yield return new WaitForEndOfFrame();        
 
                         string path =  _path != null ? _path : System.IO.Directory.GetCurrentDirectory() + "\\Assets\\Resources\\images\\in_game\\teste_imagem_compress.png" ;
-
             
                         int  compress_w = _compress_w;
                         int  compress_h = _compress_h;
@@ -111,7 +169,6 @@ public class Controlador_save {
             
                         }
                   
-
                         int I_H = pular_h;
                         int I_W = pular_w;
             
@@ -145,6 +202,7 @@ public class Controlador_save {
   
             byte[] byte_arr; 
             byte_arr = System.IO.File.ReadAllBytes (path); 
+            // esta no formato mais lentos
             Texture2D tex = new Texture2D(1,1); 
             tex.LoadImage( byte_arr );
 
@@ -153,40 +211,31 @@ public class Controlador_save {
    
       }
 
+      
+
     
+      public void Update(){
 
 
+
+      }
 
       
-      public void Salvar_save(  int _save  ){
-
+      public void Salvar(  int _save  ){
 
             throw new ArgumentException("por hora não é para salvar");
 
+      }
 
-      //   //Debug.Log()
+      
 
-      //       string path_imagem = Controlador_data.Pegar_instancia().Pegar_path_raiz() + "/saves/save_" + _save.ToString() + "_image.png";
-            
-      //       //CancellationTokenSource cancelar = new CancellationTokenSource();
-
-
-      //       //Thread thread_save = new Thread(   ()=>{    Salvar_save_new_thread(_save , path_imagem , cancelar ) ;}   );
-      //       Thread thread_save = new Thread(   ()=>{    Salvar_save_new_thread(_save , path_imagem  ) ;}   );
+      public void Carregar( int _save ){
 
 
-
-            
-      //       thread_save.Start();
-      //       /*
-      //       *   StartCoroutine(       animation: check if x = salvando yield return null else break       )
-      //       */
-
-
-          
-      //       Screen_shot(path_imagem, 384 ,  216 );
 
       }
+
+      
 
 
 
