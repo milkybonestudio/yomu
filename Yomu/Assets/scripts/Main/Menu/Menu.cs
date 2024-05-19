@@ -550,47 +550,94 @@ public class Menu {
       public void Update_personagens(){ return; }
       public void Update_galeria(){ return; }
 
+      public int Pegar_save_disponivel(){
+
+        // por hora sempre vai no 1
+        return 1;
+
+      }
+
+
+      public class Sistema_mensagens{
+
+            public void Alertar_player( string _mensagem ){
+
+                Debug.Log( "fazer mensagem depois" );
+                Debug.Log( _mensagem );
+                return;
+
+            }
+
+      }
+
 
       public void Ativar_new_game() {
 
         
-            // precisa adicionar uma transicao;
-
-            //  vai instanciar o jogo com o save 0
-            // talvez Jogo possa precisar de um index save -1 => novo jogo
-            // precisa destruir as imagens também 
-            // ainda esta usando resources.Load()
-
             // talvez seja interessante ver qual save esta disponivel 
-            /*
+   
+
+            int save = Pegar_save_disponivel();
+
+            if( save == -1 ){
+
+                    // *nao tem saves livres 
+
+                    Sistema_mensagens.Alertar_player( "nao tem saves disponivel" );
+                    nao deixa iniciar o jogo
+                    return; 
+
+            }
 
 
-                    int save = Pegar_save_disponivel();
-                    if( save == -1 ){
 
-                        *nao tem saves livres 
+            Controlador.Pegar_instancia().jogo = Jogo.Construir( _save: save , _novo_jogo: true );
 
-                        Mensagem( "nao tem saves disponivel" );
 
-                        return; => nao deixa iniciar o jogo
 
-                    }
+            IEnumerator Entrar_novo_jogo(){
 
-                    Iniciar_animacao(){
-                        
-                         criar_canvas_transciao();
 
-                        - Salvar_arquivos_slot( save );
+                Task_req task_criar_os_arquivos = new Task_req(
 
-                        Controlador.Pegar_instancia().jogo = Jogo.Construir( _save: save , _novo_jogo : true );
+                    new Chave_cache(),
+                    "Inicio_novo_jogo"
 
-                        GameObject.Destroy( canvas_menu );
+                );
 
-                    }
+                task_criar_os_arquivos.fn_iniciar = ( Task_req _req ) =>{
+
+                    Controlador_save.Pegar_instancia().Copiar_dados_novo_jogo( save );
+
+                }
+
+
+
+                Controlador_multithread.Pegar_instancia().Adicionar_task( task_criar_os_arquivos );
+
+
+
+
+
+            }
+
+
+
+            Iniciar_animacao(){
+                
+                        //criar_canvas_transciao();
+
+                    - Salvar_arquivos_slot( save );
+
+                    
+                    
+                    
+                    GameObject.Destroy( canvas_menu );
+
+            }
                 
 
-            */
-
+          
 
 
 

@@ -58,13 +58,13 @@ public class Controlador_cache {
                                 
                 bool slot_liberado =  slots_locks [ slot ] ;
 
-                if( !( slot_liberado ) ) { Debug.Log("slot " + slot + " nao estava liberado") ;return; }
+                if( !( slot_liberado ) ) { Debug.LogError("slot " + slot + " nao estava liberado") ; throw new Exception(); }
 
                 int senha_real = slots_senhas[ slot ] ;
 
                 bool senha_aceita = ( senha == senha_real ) ;
 
-                if( !( senha_aceita ) ) { Debug.Log("slot " + slot + " nao foi aceito senha" + senha + " | " + senha_real) ; return; }
+                if( !( senha_aceita ) ) { Debug.LogError("slot " + slot + " nao foi aceito senha" + senha + " | " + senha_real) ; throw new Exception(); }
 
                 return dados[ slot ];
 
@@ -85,13 +85,13 @@ public class Controlador_cache {
 
                 bool slot_liberado =  slots_locks [ slot ] ;
 
-                if( !( slot_liberado ) ) { Debug.Log("slot " + slot + " nao estava liberado") ;return; }
+                if( !( slot_liberado ) ) { Debug.LogError("slot " + slot + " nao estava liberado") ;throw new Exception(); }
 
                 int senha_real = slots_senhas[ slot ] ;
 
                 bool senha_aceita = ( senha == senha_real ) ;
 
-                if( !( senha_aceita ) ) { Debug.Log("slot " + slot + " nao foi aceito senha" + senha + " | " + senha_real) ; return; }
+                if( !( senha_aceita ) ) { Debug.LogError("slot " + slot + " nao foi aceito senha" + senha + " | " + senha_real) ; throw new Exception(); }
 
 
                 Debug.Log("vai adicionar objeto no slot " + slot);

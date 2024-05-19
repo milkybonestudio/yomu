@@ -12,10 +12,10 @@ public class Jogo {
 
         public static Jogo instancia;
         public static Jogo Pegar_instancia(){ return instancia; }
-        public static Jogo Construir( int _save ){ instancia = new Jogo( _save ); return instancia;}
+        public static Jogo Construir( int _save, bool _novo_jogo ){ instancia = new Jogo( _save, _novo_jogo ); return instancia;}
 
 
-        public Jogo( int _save  ){
+        public Jogo( int _save, bool _novo_jogo  ){
 
                 /*
                         oque pode ser complicado? 
@@ -41,10 +41,10 @@ public class Jogo {
 
                 Mono_instancia.Start_coroutine( Iniciar_jogo_c() );
 
-                IEnumerable Iniciar_jogo_c(){
+                IEnumerator Iniciar_jogo_c(){
 
-                        //** tomar cuidado que ele tem que se auto encerrar
-                        // aqui os dados de cada personagem já vão ter sido tranferidos para cada folder
+
+
 
 
 
@@ -53,13 +53,15 @@ public class Jogo {
                                 new Chave_cache(),
                                 "Iniciar_jogo"
 
-                        )
+                        );
 
                         req_iniciar_jogo.fn_iniciar = ( Task_req req ) => { 
-                                
-                                Controlador_save.Construir( _save );
 
-                        }
+
+                                Controlador_save.Construir( _save, _novo_jogo );
+
+
+                        };
 
                         Controlador_multithread.Pegar_instancia().Adicionar_task( req_iniciar_jogo );
 
@@ -137,10 +139,10 @@ public class Jogo {
 
 
                 // pegar o save se tiver
-                if( _novo_jogo == -1 ){ Iniciar_primeiro_jogo(); return; }
+                
                 // logica: Carregar_save vai ser async com o jogo e vai iniciar a tela de carregamento. 
                 // quando os dados forem carregados o controlador_save vai mudar o tipo de update diretamente para movimento e iniciar qualquer coisa que precise ser iniciado 
-                Controlador_save.Pegar_instancia().Carregar_save( _save );
+                //Controlador_save.Pegar_instancia().Carregar_save( _save );
 
 
 

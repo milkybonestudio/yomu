@@ -938,17 +938,20 @@ public void Teste_com_timer(){
 
 
 
+     public FileStream[] streams;
+     public BinaryWriter[] b_ws ;
 
 
+  public static bool pular = false;
 
 
  public void Teste_performace(){
 
-
-
+  
 
 
           string texto_para_salvar = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+
 
           for( int www = 0 ; www < 10  ; www++ ){
 
@@ -958,9 +961,21 @@ public void Teste_com_timer(){
 
 
 
-          byte[] byte_arr = new byte[ 1_000_000 ];
+          byte bggg =  ( byte ) ( Mat.Pegar_chance() * 250f );
 
 
+          int NUMERO_DE_BYTES = 1000;
+           
+
+          byte[] byte_arr = new byte[ NUMERO_DE_BYTES ];
+
+          for( int bbb = 0 ; bbb <  byte_arr.Length ; bbb++ ){
+
+               byte_arr[ bbb ] = bggg;
+
+          }
+
+          int y = 0;
 
           
 
@@ -981,7 +996,6 @@ public void Teste_com_timer(){
 
 
 
-       System.Diagnostics.Stopwatch timePerParse = System.Diagnostics.Stopwatch.StartNew();
 
 
       
@@ -993,12 +1007,12 @@ public void Teste_com_timer(){
 // //        t T = new t();
    
 
-        int n_1 = 25;
+        int n_1 = 3000;
 
-          byte[] b_a = new byte[ n_1 ];
-          for( int h = 0; h < b_a.Length ;h++ ){
-               b_a[ h ] = 97;
-          }
+          // byte[] b_a = new byte[ n_1 ];
+          // for( int h = 0; h < b_a.Length ;h++ ){
+          //      b_a[ h ] = 97;
+          // }
 
 
           
@@ -1012,42 +1026,107 @@ public void Teste_com_timer(){
 // //           float x  = 0f;
 
 
-          string path = path_para_salvar + "/txt_teste_1.dat";
-          Stream stream = File.Open( path, FileMode.Open ) ;
 
-        while( _i < n_1  ){
+   //  [  id_container ,  id_index , valor_4_bytes  ]
+
+
+     //  long GC_MemoryStart = GC.GetTotalMemory(true);
+
+
+     //      string __path = path_para_salvar + "/txt_teste_1.dat";
+     //      var s = System.IO.File.Open( __path , FileMode.Open );
+
+
+
+     // long GC_MemoryEnd = GC.GetTotalMemory(true);
+
+     // GC.KeepAlive( s );
+
+
+     // Debug.Log( $" tamanho: { (GC_MemoryStart - GC_MemoryEnd)/1000l } kb" );
+
+     // return;
+
+
+     streams = new FileStream[ n_1  ];
+     b_ws = new BinaryWriter[ n_1 ];
+
+
+
+     for( int _o = 1 ; _o <= n_1 ; _o++ ){
+
+
+          string path = path_para_salvar + "/txt_teste_" +  _o.ToString()  + ".dat";
+          streams[ _o - 1] = System.IO.File.Open( path , FileMode.Open );
+          b_ws[ _o - 1] = new BinaryWriter( streams[ _o - 1 ] );
+
+     }
+
+
+
+     // return;
+
+
+
+
+       System.Diagnostics.Stopwatch timePerParse = System.Diagnostics.Stopwatch.StartNew();
+
+       while( _i < n_1 ){
 
                _i++;
 
+
+              // string path = path_para_salvar + "/txt_teste_" +  _i.ToString()  + ".dat";
+
+
+          // salvar
+
+               byte car  = 98;
+
+
+               BinaryWriter b_w = b_ws[ _i - 1 ];
+
+               b_w.Seek(  10,  SeekOrigin.Begin );
+               b_w.Write( car );
+               b_w.Seek(  12,  SeekOrigin.Begin );
+               b_w.Write( car );
+
+               //b_w.Close();
                
+               // System.IO.File.WriteAllText( path  , texto_para_salvar  );  
+
+               // System.IO.File.WriteAllBytes( path  , byte_arr );  
 
 
-// //               Debug.Log( $"path : { path }" );
+       }
 
-//                // System.IO.File.WriteAllText( path  , texto_para_salvar  );  
-
-//                System.IO.File.WriteAllBytes( path  , byte_arr );  
-
-
-
-
-               stream.Position = 0;
-
-               stream.Write( b_a, 0 , _i);
+      timePerParse.Stop();
+       pular = true;
 
 
 
-     
-          
+       byte[][] byte_repositor = new byte[ n_1 ][];
+       _i = 0;
 
 
+
+        while( _i < n_1  ){
+
+
+               // ler 
+
+               _i++;
+               string path = path_para_salvar + "/txt_teste_" +  _i.ToString()  + ".dat";
+
+
+               
+              // byte_repositor[ _i -1 ] = System.IO.File.ReadAllBytes( path );
 
 
 
               
         }
   
-      timePerParse.Stop();
 
      long ticksThisTime = timePerParse.ElapsedMilliseconds;
 
@@ -1085,6 +1164,20 @@ public void Teste_com_timer(){
      
      Debug.Log("tempo 1: " + (ticksThisTime) + "ms");
      //Debug.Log("tempo 2: " + ( ticksThisTime_2) + "ms");
+
+
+
+
+     //      for( int _o_ = 1 ; _o_ <= n_1 ; _o_++ ){
+
+
+     //      streams[ _o_ - 1].Close();
+     //      b_ws[ _o_ - 1].Close();
+
+     // }
+
+
+
 
      
 

@@ -69,6 +69,9 @@ public  class Login {
 
         public  void Iniciar_login(){
 
+
+                Debug.Log("AAAAAAAA");
+
                 /*
 
                     Pensar em um jeito de isso funcionar. 

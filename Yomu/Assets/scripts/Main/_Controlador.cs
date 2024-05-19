@@ -102,6 +102,18 @@ public class Controlador : MonoBehaviour {
             public  void  Awake(){
 
 
+                  
+
+            }
+
+
+
+            void Start(){
+
+
+                       Debug.Log( "bbbbb" );
+
+
                         // o controlador não vai mais iniciar nada referente ao jogo, somente menu e login 
 
                         #if UNITY_EDITOR
@@ -131,15 +143,14 @@ public class Controlador : MonoBehaviour {
                         Controlador_data.Construir();
 
                         controlador_configuration = Controlador_configuration.Construir();
+
+                        Debug.Log("AAAAAAA");
                         
                         teste = Teste.Construir();      
                   
 
-            }
 
-
-
-            void Start(){
+                        Debug.Log("aaaaa");
                   
                         if( teste.Verificar_teste()  ) {return;}
                         login = Login.Construir();

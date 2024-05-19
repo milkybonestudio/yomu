@@ -51,6 +51,24 @@ using UnityEngine;
 
             }
 
+
+            public string Pegar_path_folder_com_os_saves_defaults() {
+
+
+                throw new Exception( "ainda nao fiz" );
+                
+                #if UNITY_EDITOR 
+
+                         // assets 
+                    return Application.dataPath  + "/Editor";
+
+
+                #endif
+
+
+
+            }
+
         #if UNITY_EDITOR
 
                 // se algum codigo pedir aqui na builda vai dar erro 
