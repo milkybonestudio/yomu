@@ -982,7 +982,7 @@ public void Teste_com_timer(){
           Debug.Log( "lg: " + (byte_arr.Length /1000) + "kb" );
 
           
-          string path_para_salvar = "C:\\Users\\User\\Desktop\\yomu_things\\yomu\\yomu\\folder_para_teste_EXCLUIR_BUILD";
+          string path_para_salvar = "C:\\Users\\User\\Desktop\\yomu_things\\yomu\\dados_de_producao\\folder_para_teste_EXCLUIR_BUILD";
 
 
           if( !System.IO.Directory.Exists( path_para_salvar ) ){ System.IO.Directory.CreateDirectory( path_para_salvar ); }
