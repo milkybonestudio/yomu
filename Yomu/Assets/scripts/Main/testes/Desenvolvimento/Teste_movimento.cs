@@ -72,14 +72,8 @@ public static class Teste_movimento {
                 lily.dados_sistema.personagem_esta_ativo = true;
                 lily.dados_sistema.nome_personagem = Personagem_nome.Lily;
 
-
-                Debug.Log( "vai entrar" );
-
-
+                // funcionou
                 Controlador_dados_dinamicos.Pegar_instancia().dados_run_time.Carregar_personagem( lily );
-
-
-                Debug.Log( "valor: " + lily.variavel_1 );
 
                 
 

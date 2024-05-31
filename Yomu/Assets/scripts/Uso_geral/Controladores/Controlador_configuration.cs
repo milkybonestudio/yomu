@@ -219,7 +219,6 @@ using System.IO;
         public Controlador_configuracoes(){
 
                 lines_arr_config = Pegar_dados_config();
-                Debug.Log( lines_arr_config );
 
                 int i = 1;
                 
