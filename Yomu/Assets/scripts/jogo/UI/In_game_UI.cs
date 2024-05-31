@@ -312,7 +312,7 @@ public static  void Update_Icone_barra( Icone_barra _icone ){
 
             bool mouse_is_click =  Controlador_input.Get_down( Key_code.mouse_left );
 
-            float[] posicao_mouse = Controlador_data.Pegar_instancia().posicao_mouse;
+            float[] posicao_mouse = Controlador_dados.Pegar_instancia().posicao_mouse;
             
 
 
@@ -402,7 +402,7 @@ public static  void Update_Icone_barra( Icone_barra _icone ){
 
             bool mouse_is_click =  Controlador_input.Get_down( Key_code.mouse_left );
 
-            float[] posicao_mouse = Controlador_data.Pegar_instancia().posicao_mouse;
+            float[] posicao_mouse = Controlador_dados.Pegar_instancia().posicao_mouse;
             float p_x = posicao_mouse[ 0 ] ; 
             float p_y = posicao_mouse[ 1 ]  -  pergaminho.pergaminho_texto.transform.localPosition[ 1 ] - 178f; 
 

@@ -34,7 +34,36 @@ using System;
         
         public static Controlador_transicao instancia;
         public static Controlador_transicao Pegar_instancia(){ return instancia; }
-        public static Controlador_transicao Construir(){ instancia = new Controlador_transicao(); return instancia;}
+
+
+
+
+        public static Controlador_transicao Construir(){ 
+                
+                instancia = new Controlador_transicao(); 
+
+                instancia.jogo = Jogo.Pegar_instancia();
+
+
+                instancia.transicao_tela = GameObject.Find("Tela/UI/Transicao");
+                instancia.transicao_canvas = GameObject.Find("Tela/Canvas/Transicao");
+                
+                
+                
+                instancia.transicao_tela_imagem = instancia.transicao_tela.GetComponent<Image>();
+                instancia.transicao_canvas_imagem = instancia.transicao_canvas.GetComponent<Image>();
+
+                instancia.dados_blocos = Dados_blocos.Pegar_instancia();
+        
+
+                
+                return instancia;
+                
+        }
+
+
+
+
 
         public Jogo jogo;
 
@@ -54,26 +83,10 @@ using System;
 
         public Action start_transition_down;
         public Action end_transition_down;
-        public Action Carregar_save;
+
 
 
         // public Bloco[] blocos_sequencia = new Bloco[10];
-
-        public int numero_save_para_carregar = -1;
-
-
-        public void _Carregar_save(){
-
-
-                Controlador_save.Pegar_instancia().Carregar_save(numero_save_para_carregar);
-
-                Carregar_save = null;
-                numero_save_para_carregar = -1;
-
-                return;
-
-
-        }
 
 
           
@@ -82,23 +95,7 @@ using System;
 
 
 
-        public  void Iniciar(){
 
-                jogo = Jogo.Pegar_instancia();
-
-
-                transicao_tela = GameObject.Find("Tela/UI/Transicao");
-                transicao_canvas = GameObject.Find("Tela/Canvas/Transicao");
-                
-                
-                
-                transicao_tela_imagem = transicao_tela.GetComponent<Image>();
-                transicao_canvas_imagem = transicao_canvas.GetComponent<Image>();
-
-                dados_blocos = Dados_blocos.Pegar_instancia();
-        
-
-        }
 
         
         public void Verificar_req( Req_transicao _req ){ if(_req == null ){throw new ArgumentException("req em controlador_transicao.Mudar_bloco veio null");}}
@@ -138,6 +135,13 @@ using System;
 
         }
 
+        /*
+
+
+                os blocos sempre vao ter containers que nunca vão ser apagados 
+        
+        */
+
 
         
         public void Deletar_bloco( Bloco _bloco_para_excluir ){
@@ -155,11 +159,21 @@ using System;
 
                         string modo_tela_para_comparar = canvas.transform.GetChild( i ).name.ToLower();
                         
-                        if(  modo_tela_para_comparar == modo_tela_nome  ) {
-                                
-                                foi_achado = true;
-                                break;
-                        }                
+                        if(  modo_tela_para_comparar != modo_tela_nome  ) { continue; }
+
+                        Transform bloco_para_excluir_componentes_transform = canvas.transform.GetChild( i );
+
+                        int numero_objs = bloco_para_excluir_componentes_transform.childCount;
+
+                        for( int game_object_index = 0 ; game_object_index < numero_objs ; game_object_index++ ){
+
+                                GameObject obj_para_destruir = bloco_para_excluir_componentes_transform.GetChild( game_object_index ).gameObject;
+                                GameObject.Destroy( obj_para_destruir );
+
+                        }
+
+                        foi_achado = true;
+                        break;
 
                 }
 
@@ -167,18 +181,10 @@ using System;
                 if ( !foi_achado ) throw new ArgumentException("nao foi achado modo tela para excluir, veio: " + modo_tela_nome);
 
 
-                /* acho que essa funcao vai mudar */
-
-
                 switch( _bloco_para_excluir ){
 
-                        // case Bloco.jogo: controlador.bloco_jogo .Zerar_dados(); break;
-                        // case Bloco.visual_novel: controlador.bloco_visual_novel .Zerar_dados(); break;
-                        // //case Bloco.plataforma: controlador.bloco_plataforma .Zerar_dados(); break;
-
-                        // case Bloco.menu: controlador.bloco_menu .Zerar_dados(); break;
-                        // case Bloco.login: controlador.bloco_login .Zerar_dados(); break;
-
+                        case Bloco.visual_novel: jogo.bloco_visual_novel.Finalizar(); break;
+                        
                 }
 
 
@@ -292,7 +298,6 @@ using System;
                         switch( _novo_bloco ) {
 
                                 case Bloco.visual_novel: lidar_retorno = jogo.bloco_visual_novel.Lidar_retorno ; break ;
-                                //case Bloco.jogo: lidar_retorno = jogo.bloco_jogo.Lidar_retorno ; break ;
                                 
 
                         }
@@ -320,8 +325,8 @@ using System;
 
                         switch( _novo_bloco ){
 
-                                //case Bloco.jogo: controlador.bloco_jogo.Iniciar_jogo(); break;
-                             //   case Bloco.visual_novel: controlador.bloco_visual_novel .Iniciar_visual_novel(); break;
+                                
+                                case Bloco.visual_novel: jogo.bloco_visual_novel.Iniciar_visual_novel(); break;
 
                         }
 
@@ -423,8 +428,6 @@ using System;
                 _req.start_transition_rise();
                 _req.end_transition_rise();
 
-                if( Carregar_save != null) { Carregar_save() ; } //???
-
 
 
                 if( _req.bloco_para_excluir  !=  Bloco.nada ){ Deletar_bloco ( _req.bloco_para_excluir ) ; }
@@ -479,8 +482,7 @@ using System;
 
                 _req.end_transition_rise(); 
 
-                if(Carregar_save != null) {Carregar_save();} // ????
-
+                
 
                 if( _req.bloco_para_excluir  !=  Bloco.nada ){ Deletar_bloco ( _req.bloco_para_excluir ) ; }
 

@@ -4,63 +4,9 @@ using System;
 using System.Threading;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 
-
-
-public class Controlador_arquivos {
-
-
-            public static Controlador_arquivos instancia;
-            public static Controlador_arquivos Pegar_instancia(){ return instancia; }
-            public static Controlador_arquivos Construir( int _save, bool _novo_jogo ){ instancia = new Controlador_arquivos(  _save, _novo_jogo ); return instancia;}
-
-
-            public Controlador_arquivos( int _save, bool _novo_jogo ){}
-      
-      
-            // sempre fechar quando nao estiver usando 
-            // pegar a quantidade para cada operação 
-
-
-
-
-            public StreamReader[] leitor_arquivo ;
-            public StreamReader arquivo_de_controle ;
-
-
-
-            // salvar arquivos eu nao quero que seja no multithread para não almentar muito a complexidade. 
-            // talvez seja necessario mas quando?
-            public void Salvar_arquivos( byte[][] _arquivos_arr_byte_arr , string[] _paths ){
-
-
-            }
-
-
-
-
-}
-
-
-
-/*
-
-
-
-      ( evento ) => (
-
-            add personagens : (
-
-                  lily_id, container, tipo, id_evento
-
-            )
-
-      )
-
-
-
-*/
 
 
 
@@ -68,58 +14,6 @@ public class Controlador_arquivos {
 public class Controlador_save {
 
 
-      /*
-
-            talvez dados gerais nao precise de nada? 
-
-            genericos tem somente updates que geralmente só escondem os personagens 
-
-            update(){
-
-                  switch( dia_semana ){
-
-                        case segunda: {
-
-
-                              switch( periodo ){
-
-                                    case manha: {
-
-                                          mov( Ponto_nome.quarto_lily )
-
-
-
-                                    }
-
-                              }
-
-                        }
-
-                  }
-
-
-                  mov( Ponto_nome.Esconder )
-
-
-            }
-
-            
-
-      
-      */
-
-
-      /*
-            1mb parece um absurdo até que nao seja 
-
-            O personagem vai ter dados o suficiente para funcionar no modelo que ele esta
-            O unico momento que ele vai poder pegar dados é:
-
-                   - para updates programaveis (tempo)
-                   - trocas de rank que não precisam ser no mesmo frame e podem esperar.
-                   - conversas 
-            
-      */
 
 
 
@@ -172,144 +66,307 @@ public class Controlador_save {
               
                1 - coroutines => entra no modo update que esta passando de um ponto para outro. mas só completo quando os dados estiverem completos 
                2 - passar para  multithread, criar um loop na main e usar sleep 
+
+
       
       */
 
-
-
-      /*
-
-
-            problema : o jogo precisa ser salvo a todo momento 
-            porque? : o player vai fazer muitas escolhas, e eu quero que essa escolhas tenha mais peso 
-
-            preciso confirma: quanto tempo leva para mudar um arquivo de texto e fazer uam relacao de quantidade x tamanho 
-
-
-            carregar : 
-              - alem de carregar os dados normalmente ele vai precisar também verificar se existe algum arquivo que estava sendo salvo. 
-
-                  precisa levar em conta que o computador pode desligar no meio por nenhum motivo e que salvar tem um custo de processamento. 
-                  o jogo vai ficar salvando algo em torno de 1 vez por minutos e sempre que o player sair. 
-                  para isso seria interessante salvar partes de arquivos de cada vez                
-                arquivo_1.dat
-
-            salvar: 
-               - tem 2 tipos de salvar : run_time e save_de_morte
-               save run_time vai ser 
-
-
-
-            ** save vai ficar responsavel por transformar logica em bytes e saber como descompactar 
-      
-      */
 
             
             public static Controlador_save instancia;
             public static Controlador_save Pegar_instancia(){ return instancia; }
-            public static Controlador_save Construir( int _save, bool _novo_jogo ){ instancia = new Controlador_save( _save, _novo_jogo ); return instancia;}
-
-            public Controlador_save( int _save, bool _novo_jogo ){
 
 
-                        if( _novo_jogo ){
+            public static bool esta_em_teste = false;
 
-                              // copiar arquivos que vão estar em path_mutaveis ** definir 
-                              
-                              Copiar_arquvios_do_novo_jogo( _save );
+            public static Controlador_save Construir_teste (){
 
-                        }
+                        // vai ser executado na main thread
 
+                        esta_em_teste = true;
 
-                        // tudo aqui vai ser instanciado na multithread 
-
-                        // nao consomem tempo
+                        instancia = new Controlador_save(); 
+                        
                         Dados_blocos.Construir();
                         Controlador_timer.Construir();
 
+                        Controlador_dados_dinamicos.Construir();
+                        
+                        Controlador_UI.Construir();
+                        Controlador_transicao.Construir();
+
+                        Player_estado_atual.Construir();
+
+                        
+
+                        // nao vai construir nenhum personagem além da nara
+                        Controlador_personagens.Construir_teste();
+                        
+
+                        return instancia;
+
+
+            }
+
+
+
+
+
+
+            public static Controlador_save Construir( int _save, bool _novo_jogo ){
+
+                        throw new Exception( "ainda nao esta pronto" );
+
+                        instancia = new Controlador_save(); 
+                        
+                        
+                        // ** nao faz sentido eu pensar em salvar sem ter o formato dos arquivos 
+
+                        
+                        // tudo aqui vai ser instanciado na multithread 
+                        // nao consomem tempo
+
+                        Dados_blocos.Construir();
+                        Controlador_timer.Construir();
 
                         Controlador_dados_dinamicos.Construir();
                         
-                        Player_estado_atual.Construir();
                         Controlador_UI.Construir();
                         Controlador_transicao.Construir();
 
 
 
 
-                        // no final vai ter algum Script_retorno.start( byte[] ) ou algo 
-                        // quando esse retunr for ativado a tela vai começar a aparecer já no novo modo 
 
+
+                        if( _save > 5 ) { throw new Exception( "tentou carregar save " + _save.ToString() ); }
+
+                        if( _novo_jogo ){
+
+                              // copiar arquivos que vão estar em path_mutaveis ** definir
+                              instancia.Copiar_arquvios_do_novo_jogo( _save );
+
+                        }
+
+
+
+                        instancia.path_save_folder = Paths_gerais.Pegar_path_folder_dados_save( _save );
+
+
+
+
+
+
+                        // ---- PERSONAGENS
+                        
+
+
+                        string path_dados_sistema = instancia.path_save_folder + "/Dados_programa/dados_programa.dat";
+                        string path_dados_seguranca = instancia.path_save_folder + "/Dados_programa/dados_seguranca.txt";
+                        string path_personagens = instancia.path_save_folder + "/Personagens/";
+
+                        FileMode file_mode = FileMode.Open;
+                        FileAccess file_accees = FileAccess.ReadWrite;
+                        FileShare file_share = FileShare.Read;
+                        FileOptions file_options = FileOptions.WriteThrough;
+
+                        instancia.stream_dados_sistema  = new FileStream( path_dados_sistema, file_mode, file_accees , file_share, instancia.tamanho_dados_sistema , file_options );
+
+                        if( File.Exists( path_dados_seguranca ) ){
+
+                              // algo deu errado
+
+
+                        }
+
+
+                        System.IO.File.WriteAllBytes( path_dados_seguranca, new byte[ instancia.length_arquivo_segurancao_maximo ] );
+                        instancia.stream_dados_auto_save = new FileStream( path_dados_seguranca, file_mode, file_accees , file_share, instancia.length_arquivo_segurancao_maximo , file_options );
+
+
+                        byte[] dados_sistema = new byte[ instancia.tamanho_dados_sistema ];
+                        instancia.stream_dados_sistema.Read( dados_sistema , 0, dados_sistema.Length );
+                                    
+
+                        // com dados sistema eu posso realmente criar os personagens 
+
+                        Dados_sistema_personagem[] dados_sistema_personagens = Tradutor_save.Descompactar_dados_sistema_personagens( dados_sistema );
+
+
+
+                              
+                        
+                        instancia.controlador_save_personagens = new Controlador_save_personagens(  dados_sistema_personagens,  _save  ); 
+                        Controlador_personagens.Construir( dados_sistema_personagens, _save ); 
+
+                        // personagem.Mudar_valores( thing, novo_valor ); => ativa Controlador_personagem => entrega_valores_para_update 
+
+                        // thing_1()
+                        // thing_2()
+                        // ...
+
+                        // Controlador_save.Update() => pega dados Controlador_personagens
+
+                        // Player_estado_atual.Construir(  ); ** talvez eu tenha que passar o save também 
+
+                        return instancia;
 
 
             }
+
+
+
+
+
+
+
+
+
+
+            public string path_save_folder; 
+            public int tamanho_dados_sistema = 10_000; // numero de personagens * 
+
+            public byte[][] dados_para_salvar;
+
+            public Controlador_save_personagens controlador_save_personagens;
+
+
+            public int frame = 0;
+
+
+            public void Update(){
+
+                  // quando estiver em teste nao vai deixar salvar 
+                  if( esta_em_teste ) { return ;}
+
+                  frame = ( frame + 1 ) % 10;
+
+                  // verifiacr atualizacoes em blocos que precisam ser salvos: 
+                  // todo dado que for pego aqui já vai estar no jogo 
+                  // realmente atualizam a cada 10 frames 
+
+                  if( frame == 0 ){ Atualizar_dados_seguranca(); }
+
+
+            }
+
+
+
+                        
+            public void Atualizar_dados_seguranca(){
+
+
+                        // ** execuar na multithread faria mais sentido
+
+                        // formato: 
+
+                        // sefty   length             sefty  
+                        // 1 byte              1 byte
+
+                        // pega todos os dados 
+
+                        byte[] dados_personagens_seguranca = controlador_save_personagens.Pegar_dados_em_espera();
+                        //byte[] dados_woirld = controlador_save_world.Pegar_dados_em_espera();
+
+                        int length_dados_reais = dados_personagens_seguranca.Length;
+
+                                          //  1 no inicio e no final  / length    
+                        int legnth_dados_para_adicionar = 2   +            2     +  length_dados_reais  ;
+                        byte[] dados_para_adicionar = new byte[ legnth_dados_para_adicionar ];
+
+                        // se byte[ length + 1 ] for 0 => nao foi salvo corretamente;
+
+                        dados_para_adicionar[ 0 ] = 1 ;
+                        dados_para_adicionar[ 1 ] = ( byte ) (length_dados_reais >> 8 ) ;
+                        dados_para_adicionar[ 2 ] = ( byte ) (length_dados_reais >> 0 ) ;
+                        dados_para_adicionar[ (dados_para_adicionar.Length - 1) ] = 1 ;
+
+                        int index_acumulador = 3;
+
+                        int index = 0;
+
+                        for(  index = 0;  index < dados_personagens_seguranca.Length ; index++ ){
+
+                                    dados_para_adicionar[ index_acumulador +  index ] = dados_personagens_seguranca[ index ];
+
+                        }
+
+                        //length_arquivo_segurancao += 
+                        stream_dados_auto_save.Write( dados_personagens_seguranca, 0, dados_personagens_seguranca.Length );
+
+            }
+
+
+            
+            public byte[] info_auto_save = new byte[ 0 ];
+
+            public FileStream stream_dados_sistema ;
+            
+            public System.Text.UTF8Encoding encoder = new System.Text.UTF8Encoding( true );
+
+
+            int length_arquivo_segurancao_maximo = 50_000;
+            int length_arquivo_segurancao = 0;
+            public FileStream stream_dados_auto_save;
+
+
+
 
 
             public void Copiar_arquvios_do_novo_jogo( int _save ){
 
-                  // acho que seria melhor colocar somente os personagens principais 
-                  // Poderia ter uma funcao Adicionar_personagem 
-                  // mas os dados genericos ainda estariam no geral
+                        
+                        // acho que seria melhor colocar somente os personagens principais 
+                        // Poderia ter uma funcao Adicionar_personagem 
+                        // mas os dados genericos ainda estariam no geral
 
-                  string path_save_para_salvar = Paths_gerais.Pegar_path_folder_dados_save( _save );
-                  string path_com_os_dados = Paths_gerais.Pegar_path_folder_com_os_saves_defaults();
+                        /*
+
+                              a unica coisa de dados_sistema que precisa ter realmente dados fixos é onde que o personagem começa 
+                              talvez eu faça uma lista com os dados e o resto é criado tudo por default 
+
+                        */
+
+                        string path_com_os_dados = Paths_gerais.Pegar_path_folder_com_os_saves_defaults();
+
+
+                        // onde vai ser salvo
+                        string path_folder_dados_personagens = Paths_gerais.Pegar_path_folder_dados_save( _save ) + "/Personagens";
+                        string path_folder_dados_personagens_morte = Paths_gerais.Pegar_path_folder_dados_save( _save )  + "save_morte/Personagens";
+                        
+                        string path_folder_save_default = Paths_gerais.Pegar_path_folder_dados_save_default() + "/Personagens";
+
+                        // normal
+                        Copiar_pasta_inteira(  
+
+                        _local_para_salvar: path_folder_dados_personagens ,
+                        _local_para_copiar : path_folder_save_default
+                        );
+
+                        // morte 
+                        Copiar_pasta_inteira(  
+
+                        _local_para_salvar: path_folder_dados_personagens_morte ,
+                        _local_para_copiar : path_folder_save_default
+                        );
 
 
             }
 
 
-
-
-
-    public void Criar_dados_iniciais_personagens( int _save ){
-
-            /*
-                a unica coisa de dados_sistema que precisa ter realmente dados fixos é onde que o personagem começa 
-                talvez eu faça uma lista com os dados e o resto é criado tudo por default 
-
-            */
-
-
-
-            // onde vai ser salvo
-            string path_folder_dados_personagens = Paths_gerais.Pegar_path_folder_dados_save( _save ) + "/Personagens";
-            string path_folder_dados_personagens_morte = Paths_gerais.Pegar_path_folder_dados_save( _save )  + "save_morte/Personagens";
-            
-            string path_folder_save_default = Paths_gerais.Pegar_path_folder_dados_save_default() + "/Personagens";
-
-            // normal
-            Copiar_pasta_inteira(  
-
-                _local_para_salvar: path_folder_dados_personagens ,
-                _local_para_copiar : path_folder_save_default
-            );
-
-            // morte 
-            Copiar_pasta_inteira(  
-
-                _local_para_salvar: path_folder_dados_personagens_morte ,
-                _local_para_copiar : path_folder_save_default
-            );
+      
 
 
 
 
 
 
+      // pastas só são criadas no save 
+      // testei e já funciona corretamente
+      // talvez possar ter o argumento para ver se pode ser com cache ou nao
+      public void Copiar_pasta_inteira(  string _local_para_salvar,  string _local_para_copiar ){
 
-
-    }
-
-
-
-        // assume que a pasta já existe 
-        // testei e já funciona corretamente
-        public void Copiar_pasta_inteira(  string _local_para_salvar,  string _local_para_copiar ){
-
-                    Debug.Log( $"pasta para salvar: { _local_para_salvar }" );
-
-                
-                
+                                
                 // Sempre assume que o folder nao foi criado
                 System.IO.Directory.CreateDirectory( _local_para_salvar );
 
@@ -337,22 +394,18 @@ public class Controlador_save {
 
                 return;
 
-            }
+      }
 
 
 
 
 
 
+      // public void Update(){
 
+      //       // Save pode usar o update para salvar os arquivos de segurança 
 
-
-
-
-
-      
-
-      public bool is_saving = false;
+      // }
 
 
       
@@ -436,458 +489,41 @@ public class Controlador_save {
 
  
 
-      public Sprite Pegar_sprite_png ( string path ) {
-  
-  
-            byte[] byte_arr; 
-            byte_arr = System.IO.File.ReadAllBytes (path); 
-            // esta no formato mais lentos
-            Texture2D tex = new Texture2D(1,1); 
-            tex.LoadImage( byte_arr );
-
-            return Sprite.Create(tex  ,     new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
-
-   
-      }
-
-      
-
     
-      public void Update(){
-
-
-
-      }
 
       
-      public void Salvar(  int _save  ){
+      // public void Salvar(  int _save  ){
 
-            throw new ArgumentException("por hora não é para salvar");
+      //       throw new ArgumentException("por hora não é para salvar");
 
-      }
+      // }
 
       
 
-      public void Carregar( int _save ){
+      // public void Carregar( int _save ){
 
 
 
-      }
+      // }
 
       
 
 
-
-      public void Salvar_save_new_thread(int _save, string _path_imagem  , CancellationTokenSource _cancelar = null ){
-
-
-           // Debug.Log("thread ativada");
-
-            is_saving = true;
-
-           
-        
-            System.Diagnostics.Stopwatch timePerParse = System.Diagnostics.Stopwatch.StartNew();
-         
-            if(_save > 6 || _save< 0) throw new ArgumentException("nao veio numero save aceitavel");
-
-
-            string path_raiz = Controlador_data.Pegar_instancia().Pegar_path_raiz();
-
-
-            string path_default = path_raiz + "/saves/save_default.txt";
-            string path_salvar = path_raiz + "/saves/save_" + _save.ToString() + ".txt";
-            string path_SALVANDO = path_raiz + "/saves/SALVANDO_save_" + _save.ToString() + ".txt";
-        
-       
-            StreamReader r = new StreamReader(  path_default  );
-            StreamWriter w = new StreamWriter(  path_SALVANDO   );
-        
-            // bool ler_linhas = false;
-            // bool ler_divisao = false;
-
-            // string key;
-            // string value;
-
-
-            Player_estado_atual player_estado_atual = Player_estado_atual.Pegar_instancia();
-            Controlador_personagens_ controlador_personagens = Controlador_personagens_.Pegar_instancia();
-
-
-
-            // w.WriteLine(r.ReadLine());
-            // w.WriteLine(r.ReadLine());
-      
-            // w.WriteLine(r.ReadLine());
-            // w.WriteLine(  IntArr_to_string( player_estado_atual.posicao_arr ) );r.ReadLine();
-
-            // w.WriteLine(r.ReadLine());
-            // w.WriteLine( IntArr_to_string(player_estado_atual.interativos) );r.ReadLine();
-
-            // w.WriteLine(r.ReadLine());
-            // w.WriteLine(player_estado_atual.dinheiro.ToString());r.ReadLine();
-
-            // w.WriteLine(r.ReadLine());
-            // w.WriteLine(  IntArr_to_string(player_estado_atual.mochila) );r.ReadLine();
-
-            // w.WriteLine(r.ReadLine());
-            // w.WriteLine(  IntArr_to_string(player_estado_atual.bau) );r.ReadLine();
-
-            // w.WriteLine(r.ReadLine());
-            // w.WriteLine(player_estado_atual.sadismo.ToString());r.ReadLine();
-
-
-            // w.WriteLine(r.ReadLine());
-
-
-            // //personagens
-       
-       
-            // w.WriteLine(r.ReadLine());
-            // w.WriteLine(r.ReadLine());
  
-            // // lily
-            // w.WriteLine(r.ReadLine());
-
-            // w.WriteLine(r.ReadLine()); 
-            // w.WriteLine(controlador_personagens.personagens.lily.relacoes.sara.tesao.ToString());r.ReadLine();
-
-            // w.WriteLine(r.ReadLine());       
-            // w.WriteLine(controlador_personagens.personagens.lily.relacoes.sara.amizade.ToString());r.ReadLine();
-
-            // w.WriteLine(r.ReadLine());       
-            // w.WriteLine(controlador_personagens.personagens.lily.relacoes.sara.amor.ToString());r.ReadLine();
-
-            // w.WriteLine(r.ReadLine());       
-            // w.WriteLine(controlador_personagens.personagens.lily.relacoes.sara.odio.ToString());r.ReadLine();
-
-
-
-            // w.WriteLine(r.ReadLine());
-            // w.WriteLine(r.ReadLine());
-
-
-
-    
-            // // dia
-            // w.WriteLine(r.ReadLine());
-
-            // w.WriteLine(r.ReadLine()); 
-            // w.WriteLine(controlador_personagens.personagens.dia.relacoes.sara.tesao.ToString());r.ReadLine();
-
-            // w.WriteLine(r.ReadLine());        
-            // w.WriteLine(controlador_personagens.personagens.dia.relacoes.sara.amizade.ToString());r.ReadLine();
-
-            // w.WriteLine(r.ReadLine());        
-            // w.WriteLine(controlador_personagens.personagens.dia.relacoes.sara.amor.ToString());r.ReadLine();
-
-            // w.WriteLine(r.ReadLine());        
-            // w.WriteLine(controlador_personagens.personagens.dia.relacoes.sara.odio.ToString());r.ReadLine();
-
-
-
-
-            // w.WriteLine(r.ReadLine());
-            // w.WriteLine(r.ReadLine());
-
-            // // jayden
-            // w.WriteLine(r.ReadLine());
-
-            // w.WriteLine(r.ReadLine());
-            // w.WriteLine(controlador_personagens.personagens.jayden.relacoes.sara.tesao.ToString());r.ReadLine();
-            // w.WriteLine(r.ReadLine());       
-            // w.WriteLine(controlador_personagens.personagens.jayden.relacoes.sara.amizade.ToString());r.ReadLine();
-            // w.WriteLine(r.ReadLine());       
-            // w.WriteLine(controlador_personagens.personagens.jayden.relacoes.sara.amor.ToString());r.ReadLine();
-            // w.WriteLine(r.ReadLine());       
-            // w.WriteLine(controlador_personagens.personagens.jayden.relacoes.sara.odio.ToString());r.ReadLine();
-
-
-            // w.WriteLine(r.ReadLine());
-            // w.WriteLine(r.ReadLine());
-
-            // r.Close();
-            // w.Close();
-
-            timePerParse.Stop();
-
-            long ticksThisTime = timePerParse.ElapsedMilliseconds;
-
-            Debug.Log("tempo 1: " + (ticksThisTime) + "ms");
-
-           
-
-             
-           File.Delete(path_salvar);
-
-
-           File.Move(   path_SALVANDO  ,   path_salvar    );
-          
-           int trava_seguranca = 0;
-
-           //Debug.Log("thread ativada 2");
-
-           while( true ){
-                
-                if(trava_seguranca > 5 * 10) throw new ArgumentException("imagem do save nao foi salva no intervalo determinado maximo");
-
-                Debug.Log(File.Exists(_path_imagem));
-
-                if(File.Exists(_path_imagem)) break;
-
-                Debug.Log("deu sleep");
-                 
-                 Thread.Sleep(200);
-
-           }
-           
-
-      is_saving = false;
-
-     // Thread.CurrentThread.Join();
-
-      
-
-
-
-
-
-
-
-        }
-
-        
-
-
-
-
-
-
-    public int save_para_carregar = 0;   
- 
-    public void Carregar_save(int _save = -1){
+    public void Carregar_save(  int _save = -1 ){
 
             return;
 
              
-      
-     
-            // if(save_para_carregar == 0){
-
-            //       // se precisar fazer algo no novo_jogo
-
-            //       Controlador.Pegar_instancia().controlador_scripts_controlador.Ativar_script(0);
-            //       return;
-
-            // }
-
-            // save_para_carregar = _save;
-            
-
-
-            // string path = Controlador_data.Pegar_instancia().Pegar_path_raiz() + "/saves/save_" + _save + ".txt";
-
-            
-
-            // if(!File.Exists(path))   throw new ArgumentException("tentou carregar um save que nao existe, numero: " + _save);
-
-            
-            
-
-            // StreamReader r = new StreamReader(  path  );
-      
-            // bool ler_linhas = false;
-            // bool ler_divisao = false;
-
-            // string key;
-            // string value;
-
-
-
-            
-
-
-            // void ler(){
-            // if(ler_divisao){
-            //       Debug.Log(r.ReadLine());
-            // }
-            // else {
-            //       r.ReadLine();
-            // }
-            // return;
-            // }
-
-            // string line(){
-
-
-
-
-            //       if(ler_linhas) { 
-
-            //       key = r.ReadLine();
-            //       value = r.ReadLine();
-                  
-            //             Debug.Log (  key + " : " + value);
-            //             return value.Trim();
-
-            //       } else {   
-                  
-            //       r.ReadLine() ; 
-            //       return  r.ReadLine().Trim();
-
-            //       } ;
-
-
-                  
-
-                  
-
-
-            // //#if UNITY_EDITOR 
-            // // #else 
-
-            // //  return  r.ReadLine().Trim();
-
-            // // #endif
-
-
-
-
-                  
-            // }
-
-
-            // Player_estado_atual player_estado_atual = Player_estado_atual.Pegar_instancia();
-            // Controlador_personagens controlador_personagens = Controlador_personagens.Pegar_instancia();
-
-            /*
-
-            esses 2 primeiros blocos vão isntanciar cenas e o jogo, controlador_save pode usar controaldor_tela direto pelo controaldor: controlador.jogo_BLOCO.controlador_tela_jogo.background e bla bla bla
-
-
-            */
-
-
-            ///----------------------------
-            // estado_atual      
-
-
-            // try{
-
-            // ler();
-            // r.ReadLine();
-      
-            // player_estado_atual.posicao_arr = ToIntArr( line() );
-
-            // player_estado_atual.interativos = ToIntArr( line() );
-
-            // player_estado_atual.dinheiro = Convert.ToInt32( line()  );
-
-            // player_estado_atual.mochila = ToIntArr( line() );
-
-            // player_estado_atual.bau = ToIntArr( line() );
-
-            // player_estado_atual.sadismo =Convert.ToSingle( line() );
-
-            
-          
-            // player_estado_atual.ponto_atual.ponto_nome = (Ponto_nome) Convert.ToInt32( line() );
-            // player_estado_atual.ponto_atual.folder_path = line();
-
-            // player_estado_atual.ponto_atual.ponto_flip = Convert.ToInt32( line() );
-
-            // player_estado_atual.ponto_atual.background_name = line();
-
-            // player_estado_atual.ponto_atual.interativos_nomes  =  ToInterativosArr( line() );
-
-
-            // player_estado_atual.ponto_atual.personagens_no_ponto = To_personagens_nome_arr( line() ) ;
-
-            // player_estado_atual.ponto_atual.script_entrada = Convert.ToInt32( line() );
-
-            // r.ReadLine();
-
-
-
-            // ///----------------------------
-
-            // //   CENAS
-
-
-
-            // ///----------------------------
-
-
-
-            // //personagens
-            // ler();
-            // r.ReadLine();
-      
-            // // lily
-            // ler();
-
-            // controlador_personagens.personagens.lily.relacoes.sara.tesao = Convert.ToSingle(  line()  );
-            // controlador_personagens.personagens.lily.relacoes.sara.amizade = Convert.ToSingle(  line()  ); 
-            // controlador_personagens.personagens.lily.relacoes.sara.amor = Convert.ToSingle(  line()  );
-            // controlador_personagens.personagens.lily.relacoes.sara.odio = Convert.ToSingle(  line()  );
-
-            // ler();
-            // r.ReadLine();
-
-
-
-      
-            // // dia
-            // ler();
-
-            // controlador_personagens.personagens.dia.relacoes.sara.tesao = Convert.ToSingle(  line()  );
-            // controlador_personagens.personagens.dia.relacoes.sara.amizade = Convert.ToSingle(  line()  ); 
-            // controlador_personagens.personagens.dia.relacoes.sara.amor = Convert.ToSingle(  line()  );
-            // controlador_personagens.personagens.dia.relacoes.sara.odio = Convert.ToSingle(  line()  );
-
-
-            // ler();
-            // r.ReadLine();
-
-
-            
-
-
-            // // jayden
-            // ler();
-
-            // controlador_personagens.personagens.jayden.relacoes.sara.tesao = Convert.ToSingle(  line()  );
-            // controlador_personagens.personagens.jayden.relacoes.sara.amizade = Convert.ToSingle(  line()  ); 
-            // controlador_personagens.personagens.jayden.relacoes.sara.amor = Convert.ToSingle(  line()  );
-            // controlador_personagens.personagens.jayden.relacoes.sara.odio = Convert.ToSingle(  line()  );
-
-
-            // ler();
-            // r.ReadLine();
-
-
-
-
-            // Debug.Log("a: " + controlador_personagens.personagens.jayden.relacoes.sara.tesao );
-
-
-
-
-            // r.Close();
-
-
-            // } catch (Exception e){
-            //       Debug.Log(e);
-            //       Debug.Log("teve um erro");
-            // }
-
-
-      
-
-
 
 
     }
+
+
+
+
+
+
 
 
     public string IntArr_to_string(int[] arr){
@@ -952,7 +588,7 @@ public class Controlador_save {
 
 
     
-
+   
         public Personagem_nome[] To_personagens_nome_arr(string line){
 
         if(line == "") return new Personagem_nome[0];

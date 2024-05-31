@@ -35,7 +35,7 @@ public static class Script_end_1 {
 
     public static  void NARA_INTRODUCAO_liberar_mesa( Screen_play _screen_play ) {
 
-          Lista_navegacao lista = Lista_navegacao.Pegar_instancia();
+          Lista_navegacao lista = Controlador_dados_dinamicos.Pegar_instancia().lista_navegacao;
 
             lista.Remover_interativo_para_subtrair (  Ponto_nome.FRONT_quarto_nara ,  new int[ 1 ]{ 1 },   Interativo_nome.MESA_front_quarto_nara  );
             lista.Adicionar_interativo_para_subtrair (  Ponto_nome.FRONT_quarto_nara ,  new int[ 1 ]{ 1 },   Interativo_nome.ESPELHO_front_quarto_nara  );
@@ -52,7 +52,7 @@ public static class Script_end_1 {
     public static  void NARA_INTRODUCAO_liberar_buraco ( Screen_play _screen_play ) {
 
 
-            Lista_navegacao lista = Lista_navegacao.Pegar_instancia();
+            Lista_navegacao lista = Controlador_dados_dinamicos.Pegar_instancia().lista_navegacao;
 
 
             lista.Remover_interativo_para_acrescentar (  Ponto_nome.MESA_quarto_nara ,  new int[ 1 ]{ 1 },   Interativo_nome.CARTA_DIA_mesa_quarto_nara  );
@@ -77,7 +77,7 @@ public static class Script_end_1 {
 
 
       
-          Lista_navegacao lista = Lista_navegacao.Pegar_instancia();
+          Lista_navegacao lista = Controlador_dados_dinamicos.Pegar_instancia().lista_navegacao;
 
     
           lista.Adicionar_interativo_para_subtrair (  Ponto_nome.BACK_quarto_nara ,  new int[ 1 ]{ 1 },   Interativo_nome.BURACO_back_quarto_nara );

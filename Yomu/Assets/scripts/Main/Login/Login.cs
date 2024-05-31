@@ -18,7 +18,7 @@ public  class Login {
 
 
 
-            posicao_mouse = Controlador_data.Pegar_instancia().posicao_mouse;
+            posicao_mouse = Controlador_dados.Pegar_instancia().posicao_mouse;
 
             // Menu e login vão sempre mudar diretamente o modo do controlador
             Controlador.Pegar_instancia().modo_controlador_atual = Controlador_modo.login;
@@ -70,7 +70,6 @@ public  class Login {
         public  void Iniciar_login(){
 
 
-                Debug.Log("AAAAAAAA");
 
                 /*
 
@@ -92,7 +91,7 @@ public  class Login {
                 Controlador_input.tipo_teclado = Tipo_teclado.normal;
 
 
-                string nome_background = Controlador_configuration.Pegar_instancia().login_background;
+                string nome_background = Controlador_configuracoes.Pegar_instancia().login_background;
 
                 Sprite login_image = Resources.Load<Sprite>("images/login_images/" + nome_background);
                     
@@ -158,7 +157,7 @@ public  class Login {
                 
                 login_coroutine = Mono_instancia.Start_coroutine(  Iniciar_login_coroutine()  );
                 
-                string audio_path  = "audio/blocos_pequenos/login/" + Controlador_configuration.Pegar_instancia().music_login;
+                string audio_path  = "audio/blocos_pequenos/login/" + Controlador_configuracoes.Pegar_instancia().music_login;
 
                 Controlador_audio.Pegar_instancia().Start_music( _slot: 1 , _path_completo: audio_path , _tempo_ms_tirar : 0f , _tempo_ms_colocar : 500f , _modificador_volume: 0.7f );
 

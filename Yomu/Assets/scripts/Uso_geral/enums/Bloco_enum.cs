@@ -4,7 +4,7 @@ public enum Bloco {
 
     nada,
     transicao,
-    teste,
+teste,
     salvando,
 
 

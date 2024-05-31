@@ -150,40 +150,40 @@ public struct Posicao {
 // nao vale a pena ficar preocupado em iniciar somente quando algum trigger acontecer 
 
 
-public class Dados_sistema_personagem {
+// public class Dados_sistema_personagem {
 
-        // quando for finalizar verificar ou quando for salvar run time 
-        public bool esta_salvo = true;
+//         // quando for finalizar verificar ou quando for salvar run time 
+//         public bool esta_salvo = true;
 
-        /*
-            Essa classe vai ter os dados essenciais para calculos internos no sistema. 
-            vai ter os updates do personagem, como que esta a relação do player com esse personagem ( nao da nara mas o player em si)
+//         /*
+//             Essa classe vai ter os dados essenciais para calculos internos no sistema. 
+//             vai ter os updates do personagem, como que esta a relação do player com esse personagem ( nao da nara mas o player em si)
                 
-        */
+//         */
         
-        public Personagem_nome nome_personagem;
-        //  entre 0 e 1000.  
-        public int interesse_player;
-        public int projecao_interesse_player;
-        // entre -1000 e 1000
-        public int afetividade;
-        public int projecao_afetividade;
+//         public Personagem_nome nome_personagem;
+//         //  entre 0 e 1000.  
+//         public int interesse_player;
+//         public int projecao_interesse_player;
+//         // entre -1000 e 1000
+//         public int afetividade;
+//         public int projecao_afetividade;
 
         
-        public Posicao posicao_atual_personagem;
-        public bool personagem_ja_foi_apresentado_ao_player;
-        public Data quando_personagem_foi_introduzido;
-        public Nivel_de_interesse_player_no_personagem nivel_interesse;
+//         public Posicao posicao_atual_personagem;
+//         public bool personagem_ja_foi_apresentado_ao_player;
+//         public Data quando_personagem_foi_introduzido;
+//         public Nivel_de_interesse_player_no_personagem nivel_interesse;
         
-        public bool player_colocou_personagem_em_foco;
+//         public bool player_colocou_personagem_em_foco;
 
-        public bool personagem_bloqueado;
+//         public bool personagem_bloqueado;
         
         
 
-        public int[] updates;
+//         public int[] updates;
 	
-}
+// }
 
 
 public enum Trigger {

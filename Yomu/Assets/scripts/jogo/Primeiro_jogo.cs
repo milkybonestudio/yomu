@@ -34,7 +34,7 @@ public static class Primeiro_jogo {
 
 
       
-                    Lista_navegacao lista = Lista_navegacao.Pegar_instancia();
+                    Lista_navegacao lista = Controlador_dados_dinamicos.Pegar_instancia().lista_navegacao;
 
 
                     /// frente 

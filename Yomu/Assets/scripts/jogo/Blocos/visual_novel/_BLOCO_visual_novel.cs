@@ -99,13 +99,11 @@ public class BLOCO_visual_novel {
       
         public static BLOCO_visual_novel instancia;
         public static BLOCO_visual_novel Pegar_instancia(){ return instancia; }
-        public static BLOCO_visual_novel Construir(){ instancia = new BLOCO_visual_novel(); return instancia;}
 
 
-
-    public void Iniciar(){
-
-
+        public static  BLOCO_visual_novel Construir(){
+            
+            
 
             /*
 
@@ -155,27 +153,36 @@ public class BLOCO_visual_novel {
 
             */
 
-    
-            leitor_visual_novel  = Leitor_visual_novel.Pegar_instancia();
-            controlador_personagens_visual_novel = Controlador_personagens_visual_novel.Pegar_instancia();
-            controlador_tela_visual_novel = Controlador_tela_visual_novel.Pegar_instancia();
 
 
-            controlador_UI_visual_novel = new Controlador_UI_visual_novel();
+            instancia = new BLOCO_visual_novel(); 
 
-            
-            dados_blocos = Dados_blocos.Pegar_instancia();
-            
-            Mudar_UI = Visual_novel_mudar_UI.Default ; 
-            Mudar_input = Visual_novel_mudar_input.Default ; 
 
-            Lidar_retorno = Visual_novel_lidar_retorno.Default;
+                instancia.leitor_visual_novel  = Leitor_visual_novel.Construir();
+                instancia.controlador_personagens_visual_novel = Controlador_personagens_visual_novel.Construir();
+                instancia.controlador_tela_visual_novel = Controlador_tela_visual_novel.Construir();
+
+
+                instancia.controlador_UI_visual_novel = new Controlador_UI_visual_novel();
+                
+                instancia.Mudar_UI = Visual_novel_mudar_UI.Default ; 
+                instancia.Mudar_input = Visual_novel_mudar_input.Default ; 
+
+                instancia.Lidar_retorno = Visual_novel_lidar_retorno.Default;
+
+                instancia.dados_blocos = Dados_blocos.Pegar_instancia();
+
+                instancia.container_visual_novel = new GameObject( "Visual_novel" );
+                instancia.container_visual_novel.transform.SetParent( GameObject.Find( "Tela/Canvas/Jogo" ).transform , false);
+
+
+            return instancia;
 
     }
 
 
 
-    public void Zerar_dados(){
+    public void Finalizar(){
 
 
             screen_play = null;
@@ -195,15 +202,19 @@ public class BLOCO_visual_novel {
     public Controlador_UI_visual_novel controlador_UI_visual_novel;
 
 
+    public GameObject container_visual_novel;
+
+
 
 
     public Leitor_visual_novel leitor_visual_novel;
     public Controlador_tela_visual_novel controlador_tela_visual_novel;
     public Controlador_personagens_visual_novel controlador_personagens_visual_novel;
-    
 
     public Dados_blocos dados_blocos;
+    
 
+    
     public Action fn_click_espera = null;
 
     public Screen_play screen_play = null;
@@ -247,7 +258,7 @@ public class BLOCO_visual_novel {
 
             controlador_tela_visual_novel.Criar_tela();
     
-            Visual_novel_START data_start = dados_blocos.visual_novel_START;
+            Visual_novel_START data_start = Dados_blocos.Pegar_instancia().visual_novel_START;
 
             Iniciar_screen_play( data_start );
 
@@ -257,17 +268,6 @@ public class BLOCO_visual_novel {
 
 
 
-
-/*
-
-        sempre que for editor tem que pegar os dados na hora 
-
-
-        byte[][][] pngs_array_byte_array
-
-        figure_x => 1 
-
-*/
 
 
 

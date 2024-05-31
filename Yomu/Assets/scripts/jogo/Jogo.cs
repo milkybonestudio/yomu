@@ -6,46 +6,95 @@ using UnityEngine.UI;
 
 
 
+/*
+
+        Contruir() => cria o objeto 
+
+        Iniciar() => junto com os dados de Dados_blocos inicia o bloco sempre na transicao 
+        Finalizar() => destroi os objetos que precisam ser destruido no BLOCO 
+
+*/
+
 
 public class Jogo {
 
 
         public static Jogo instancia;
         public static Jogo Pegar_instancia(){ return instancia; }
-        public static Jogo Construir( int _save, bool _novo_jogo ){ instancia = new Jogo( _save, _novo_jogo ); return instancia;}
 
 
-        public Jogo( int _save, bool _novo_jogo  ){
-
-                /*
-                        oque pode ser complicado? 
-                        criar os arquivos 
-
-                        // tela preta
-                        while( anim ){
-
-                        oque pode demorar? 
-
-                        - load dlls : max : 100mb => +- 1 seg
-                        - verificar arquivos .tmp 
-                        - carregar_personagens
-                        - descomprimir imagens necessarias UI
-                
-
-                        }
+        public Jogo(){
 
                 
-                */
+
+                // jogo vai criar o canvas do jogo e os objetos necessarios
+                canvas = GameObject.Find( "Tela/Canvas" );
+                GameObject jogo_canvas = new GameObject( "Jogo" );
+                jogo_canvas.transform.SetParent( canvas.transform, false );
+
+                bloco_visual_novel = BLOCO_visual_novel.Construir();
+                bloco_movimento =  BLOCO_movimento.Construir();
+                bloco_conversas = BLOCO_conversas.Construir();
+                bloco_cartas = BLOCO_cartas.Construir();
+                bloco_minigames = BLOCO_minigames.Construir();
+                
+
+                Controlador_transicao.Construir();
+
+                // Para iniciar um bloco precisa pedrie em controlador_transicao.Mudar_bloco()
 
 
+        }
+
+
+
+        public static Jogo Construir_teste(){ 
+
+
+                
+                instancia = new Jogo(); 
+
+                // os dados nao vao ser colocado no save
+                // vao ser colocados no bloco de teste. 
+                // esse bloco vai ter a cadeia tste => jogo        
+
+
+                Controlador_save.Construir_teste(); 
+
+
+
+                Controlador_AI.Construir_teste(); 
+                instancia.bloco_atual = Bloco.nada;
+
+
+
+                
+                
+                return instancia;
+
+                
+        }
+
+
+
+        
+        public static Jogo Construir( int _save, bool _novo_jogo  ){
+
+
+                return Construir_teste();
+
+
+                instancia = new Jogo( ); 
 
                 Mono_instancia.Start_coroutine( Iniciar_jogo_c() );
+
+                return instancia;
+
 
                 IEnumerator Iniciar_jogo_c(){
 
 
-
-
+                        // em teste isso nao vai demorar porque nao vai copiar arquivos ou carregar muitos personagens 
 
 
                         Task_req req_iniciar_jogo = new Task_req(
@@ -59,14 +108,31 @@ public class Jogo {
 
 
                                 Controlador_save.Construir( _save, _novo_jogo );
+                                Controlador_AI.Construir();
 
 
                         };
 
                         Controlador_multithread.Pegar_instancia().Adicionar_task( req_iniciar_jogo );
 
+                        // chacar se a animacao do menu acabou
+                        GameObject tela_transicao_do_menu = GameObject.Find( "Tela/Canvas/Transicao_inicio_jogo" );                           
+
+                        Image imagem_transicao = null;
+
+                        if( tela_transicao_do_menu != null ){
+
+                                imagem_transicao = tela_transicao_do_menu.GetComponent<Image>();
+                                
+                                // tranca até a animacao acabar 
+                                while( imagem_transicao.color[ 3 ] < 1f ){ yield return null; }
+
+                        }
+
+
 
                         // ESPERA OS DADOS FICAREM PRONTOS 
+                        // ** provavelmente já vao estar prontos pelo tempo da animacao do menu
                 
                         float tempo_maximo = 20f;
                         float tempo_entre_checks = 0.5f;
@@ -86,11 +152,8 @@ public class Jogo {
 
                         // ENCERRA TRANSICAO
 
-                        GameObject tela_transicao_do_menu = GameObject.Find( "Tela/Canvas/Transicao_inicio_jogo" );   
                         
                         if( tela_transicao_do_menu != null ){
-
-                                Image imagem_transicao = tela_transicao_do_menu.GetComponent<Image>();
 
                                 float alp = imagem_transicao.color[ 3 ];
                                 
@@ -114,42 +177,19 @@ public class Jogo {
                         
                         */
 
-                        bloco_atual = Bloco.movimento;
+
+                        instancia.bloco_atual = Bloco.nada;
 
                         GameObject.Destroy( tela_transicao_do_menu );
 
 
-
-
                         yield break;
 
-
-
                 }
-                
-
-
-                
-                // System.Diagnostics.Stopwatch timePerParse = System.Diagnostics.Stopwatch.StartNew();
-                // long tempo = ( timePerParse.ElapsedMilliseconds)  ;
-                // timePerParse.Stop();
-                // Debug.Log( "TEMPO PARA CRIAR OS CONTROALDORES: " + tempo  );
-
-
-
-
-                // pegar o save se tiver
-                
-                // logica: Carregar_save vai ser async com o jogo e vai iniciar a tela de carregamento. 
-                // quando os dados forem carregados o controlador_save vai mudar o tipo de update diretamente para movimento e iniciar qualquer coisa que precise ser iniciado 
-                //Controlador_save.Pegar_instancia().Carregar_save( _save );
-
-
 
 
         }
 
-        public void Iniciar_primeiro_jogo(){}
 
 
 
@@ -158,10 +198,14 @@ public class Jogo {
 
 
         public BLOCO_visual_novel bloco_visual_novel;
+
+
         public BLOCO_conversas bloco_conversas;
         public BLOCO_movimento bloco_movimento;
         public BLOCO_cartas bloco_cartas;
         public BLOCO_minigames bloco_minigames;
+
+        public GameObject canvas;
         
 
         
@@ -176,21 +220,20 @@ public class Jogo {
             
                 // if(  Controlador_UI.Pegar_instancia().Update() ) { return; }
 
-                // if( Controlador_transicao.Pegar_instancia().em_transicao ) { return; }
+                //if( Controlador_transicao.Pegar_instancia().em_transicao ) { return; }
 
-                // Controlador_audio.Pegar_instancia().Update();
+                Controlador_audio.Pegar_instancia().Update();
 
-                
 
-                switch (  Player_estado_atual.Pegar_instancia().bloco_atual ) {
+                switch (  bloco_atual ) {
                     
-                        // case Bloco.visual_novel :  bloco_visual_novel.Update() ;  break;
-                        // case Bloco.jogo :  bloco_jogo.Update(); break;
-                        // case Bloco.login :  bloco_login.Update() ; break;
-                        // case Bloco.menu : bloco_menu.Update() ; break;
-                        //case Bloco.teste: teste.Update();break;
-                        //case Bloco.NADA: console.log("esta no modo_tela NADA"); break;
+                        case Bloco.visual_novel :  bloco_visual_novel.Update() ;  break;
+                        case Bloco.movimento: bloco_movimento.Update(); break;
 
+                        // case Bloco.jogo :  bloco_jogo.Update(); break;
+                        // case Bloco.NADA: console.log("esta no modo_tela NADA"); break;
+
+                        case Bloco.transicao :    return;
                 }
 
 

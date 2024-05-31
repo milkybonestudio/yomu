@@ -49,23 +49,31 @@ class Controlador_compilacao_pre:IPreprocessBuildWithReport {
 
           // tem que excluir aquela imagem
 
-          string path_assets =  Application.dataPath;
-          string pre_path_game =  System.IO.Directory.GetParent(System.IO.Directory.GetParent( path_assets ).ToString()).ToString() ;
+          // string path_assets =  Application.dataPath;
+          // string pre_path_game =  System.IO.Directory.GetParent(System.IO.Directory.GetParent( path_assets ).ToString()).ToString() ;
 
 
-          string path_para_pegar_arquivos = Application.dataPath + "/Editor/imagens_para_deletar_na_build";
-          string path_para_salvar = pre_path_game + "/folder_para_colocar_de_novo";
+          // string path_para_pegar_arquivos = Application.dataPath + "/Editor/imagens_para_deletar_na_build";
+          // string path_para_salvar = pre_path_game + "/folder_para_colocar_de_novo";
 
 
-          if( System.IO.Directory.Exists( path_para_salvar ) ){
+          // if( System.IO.Directory.Exists( path_para_salvar ) ){
 
-                Debug.Log( "vai deletar path vazio: " + path_para_salvar );
-                System.IO.Directory.Delete( path_para_salvar );
+          //       Debug.Log( "vai deletar path vazio: " + path_para_salvar );
+          //       System.IO.Directory.Delete( path_para_salvar );
 
-          } 
+          // } 
 
 
-          System.IO.Directory.Move( path_para_pegar_arquivos , path_para_salvar );
+          // System.IO.Directory.Move( path_para_pegar_arquivos , path_para_salvar );
+
+
+
+
+
+
+
+
 
 
 

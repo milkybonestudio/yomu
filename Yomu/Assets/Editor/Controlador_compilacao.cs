@@ -13,7 +13,7 @@ class Controlador_compilacao_post:IPostprocessBuildWithReport {
 
         // aqui vai estar 
 
-        public static BuildFile abc;
+        // public static BuildFile abc;
 
 
         //         why?
@@ -22,20 +22,20 @@ class Controlador_compilacao_post:IPostprocessBuildWithReport {
 
         public void OnPostprocessBuild(BuildReport _a ){
 
-          string path_assets =  Application.dataPath;
-          string pre_path_game =  System.IO.Directory.GetParent(System.IO.Directory.GetParent( path_assets ).ToString()).ToString();
-          string path_para_salvar =  Application.dataPath  + "/Editor/imagens_para_deletar_na_build";
-          string path_para_pegar_arquivos = pre_path_game + "/folder_para_colocar_de_novo";
+        //   string path_assets =  Application.dataPath;
+        //   string pre_path_game =  System.IO.Directory.GetParent(System.IO.Directory.GetParent( path_assets ).ToString()).ToString();
+        //   string path_para_salvar =  Application.dataPath  + "/Editor/imagens_para_deletar_na_build";
+        //   string path_para_pegar_arquivos = pre_path_game + "/folder_para_colocar_de_novo";
 
-          if( System.IO.Directory.Exists( path_para_salvar ) ){
+        //   if( System.IO.Directory.Exists( path_para_salvar ) ){
 
-                Debug.Log( "vai deletar para a volta folder vazio no path: " + path_para_salvar );
-                System.IO.Directory.Delete( path_para_salvar );
+        //         Debug.Log( "vai deletar para a volta folder vazio no path: " + path_para_salvar );
+        //         System.IO.Directory.Delete( path_para_salvar );
 
-          } 
+        //   } 
 
 
-        System.IO.Directory.Move(  path_para_pegar_arquivos,  path_para_salvar );
+        // System.IO.Directory.Move(  path_para_pegar_arquivos,  path_para_salvar );
 
 
 
@@ -68,16 +68,16 @@ class Controlador_compilacao_post:IPostprocessBuildWithReport {
 
 
 
-                BuildTarget tipo = BuildTarget.StandaloneWindows64;
+                // BuildTarget tipo = BuildTarget.StandaloneWindows64;
                 
-                    // EH TETRA CARALHOOOOOOO
+                //     // EH TETRA CARALHOOOOOOO
                 
-                string path = EditorUserBuildSettings.GetBuildLocation(tipo);
+                // string path = EditorUserBuildSettings.GetBuildLocation(tipo);
 
-                string[] str_arr = path.Split( "\\" );
+                // string[] str_arr = path.Split( "\\" );
                 
-                Debug.Log("path :" + path);
-                Debug.Log(str_arr[0]  );
+                // Debug.Log("path :" + path);
+                // Debug.Log(str_arr[0]  );
 
 
 
@@ -89,7 +89,7 @@ class Controlador_compilacao_post:IPostprocessBuildWithReport {
 
 
 
-        }
+        // }
         
 
 
@@ -97,7 +97,7 @@ class Controlador_compilacao_post:IPostprocessBuildWithReport {
 }
 
 
-
+}
 
 
 

@@ -6,12 +6,21 @@ using System.IO;
 
 
 
- public class Controlador_configuration {
+ public class Controlador_configuracoes {
 
 
-        public static Controlador_configuration instancia;
-        public static Controlador_configuration Pegar_instancia(){ return instancia; }
-        public static Controlador_configuration Construir(){ instancia = new Controlador_configuration(); return instancia;}
+        public static Controlador_configuracoes instancia;
+        public static Controlador_configuracoes Pegar_instancia(){ return instancia; }
+
+
+        public static Controlador_configuracoes Construir(){ 
+                
+
+                instancia = new Controlador_configuracoes(); 
+                
+                return instancia;
+                
+        }
 
 
 
@@ -29,6 +38,11 @@ using System.IO;
 
         public string login_background;
 
+        public int numero_saves_slots = 6;
+
+        
+        public bool[] saves_ativados;
+
         public Bloco[] save_tela_atual = new Bloco[5];
 
 
@@ -44,15 +58,6 @@ using System.IO;
                 jayden = 6,
 
         }
-
-        // public  bool menu_is_maki_unlock;
-        // public  bool menu_is_connor_unlock;
-        // public  bool menu_is_eden_unlock;
-        // public  bool menu_is_dia_unlock;
-        // public  bool menu_is_lily_unlock;
-        // public  bool menu_is_jayden_unlock;
-        // public  bool menu_is_noah_unlock;
-
 
         public  bool save_1_is_active;
         public  bool save_2_is_active;
@@ -89,7 +94,8 @@ using System.IO;
 
         public void Salvar_configurations(){
 
-          string path = Controlador_data.Pegar_instancia().Pegar_path_raiz() + "/configurations.txt";
+          //string path = Controlador_dados.Pegar_instancia().Pegar_path_raiz() + "/configurations.txt";
+          string path = Paths_gerais.Pegar_path_folder_usuario() +  "/configurations.txt";
           string[] lines = System.IO.File.ReadAllLines(path);
 
          int i = 1;
@@ -148,14 +154,11 @@ using System.IO;
 
         }
 
-        if(  galeria_imagens_liberadas[galeria_imagens_liberadas.Length - 1 ]) {  lines[i] += "1" ;}else{lines[i] += "0" ;};
+        if(  galeria_imagens_liberadas[galeria_imagens_liberadas.Length - 1 ]) {  lines[i] += "1" ;} else {lines[i] += "0" ;};
 
 
 
-         File.WriteAllLines(path, lines);
-
-
-
+        File.WriteAllLines(path, lines);
 
 
 
@@ -183,72 +186,69 @@ using System.IO;
 
         public void Mudar_volume(float _novo_volume){
 
-
                 //  %
                 volume = _novo_volume;
 
-
                 float volume_convertido = volume / 100f;
-
 
                 Controlador_audio.Pegar_instancia().Alterar_volume_mixer(   Tipo_audio.master , volume_convertido);
 
                 return;
-
-
 
         }
 
 
 
 
-        public Controlador_configuration(){
+        /*
 
 
-                Controlador_audio.Pegar_instancia();
+                bloco:    
+                
+                - [ precisa carregar_coisas ]
+                - fazer coisas com esses dados
 
-                string path_raiz = Controlador_data.Pegar_instancia().Pegar_path_raiz();
-                string path = path_raiz + "/arquivos_mutaveis/configurations.txt" ;
+        
+        
+        */
 
-                string[] lines = null ;
 
 
-                lines = Resources.Load<TextAsset>("files/configurations_default").text.Split("\r\n") ; 
 
-  
-                lines_arr_config = lines;
+
+        public Controlador_configuracoes(){
+
+                lines_arr_config = Pegar_dados_config();
+                Debug.Log( lines_arr_config );
 
                 int i = 1;
                 
-                // Debug.Log("i: " + i);
-                // Debug.Log("line: " + lines[i]);
-                // Debug.Log("line[0]: " + lines[0]);
-                  
-                full_screen = Convert.ToBoolean(lines[i].Trim());Passar(ref i);
 
-                volume = Convert.ToSingle(lines[i].Trim());Passar(ref i);
+                full_screen = Convert.ToBoolean(lines_arr_config[i].Trim());Passar(ref i);
+
+                volume = Convert.ToSingle(lines_arr_config[i].Trim());Passar(ref i);
 
                 Mudar_volume(volume);
 
-                tipo_texto =   ( Tipo_construcao_texto ) ( Enum.Parse( typeof( Tipo_construcao_texto )   , lines[i].Trim() )  ) ;       Passar(ref i);
+                tipo_texto =   ( Tipo_construcao_texto ) ( Enum.Parse( typeof( Tipo_construcao_texto )   , lines_arr_config[i].Trim() )  ) ;       Passar(ref i);
 
-                login_background = lines[i].Trim() ;Passar(ref i);
+                login_background = lines_arr_config[i].Trim() ;Passar(ref i);
                 
-                music_login = lines[i].Trim();Passar(ref i);
-                menu_background = lines[i].Trim();Passar(ref i);
-                music_menu = lines[i].Trim();Passar(ref i);
+                music_login = lines_arr_config[i].Trim();Passar(ref i);
+                menu_background = lines_arr_config[i].Trim();Passar(ref i);
+                music_menu = lines_arr_config[i].Trim();Passar(ref i);
 
 
                 //  localizador: 
                 Passar(ref i);
 
-                characters_liberados[0] = Convert.ToBoolean(lines[i].Trim());Passar(ref i);  
-                characters_liberados[1] = Convert.ToBoolean(lines[i].Trim());Passar(ref i);
-                characters_liberados[2]= Convert.ToBoolean(lines[i].Trim());Passar(ref i);
-                characters_liberados[3]= Convert.ToBoolean(lines[i].Trim());Passar(ref i);
-                characters_liberados[4]= Convert.ToBoolean(lines[i].Trim());Passar(ref i);
-                characters_liberados[5]= Convert.ToBoolean(lines[i].Trim());Passar(ref i);
-                characters_liberados[6]= Convert.ToBoolean(lines[i].Trim());Passar(ref i);
+                characters_liberados[0] = Convert.ToBoolean(lines_arr_config[i].Trim());Passar(ref i);  
+                characters_liberados[1] = Convert.ToBoolean(lines_arr_config[i].Trim());Passar(ref i);
+                characters_liberados[2]= Convert.ToBoolean(lines_arr_config[i].Trim());Passar(ref i);
+                characters_liberados[3]= Convert.ToBoolean(lines_arr_config[i].Trim());Passar(ref i);
+                characters_liberados[4]= Convert.ToBoolean(lines_arr_config[i].Trim());Passar(ref i);
+                characters_liberados[5]= Convert.ToBoolean(lines_arr_config[i].Trim());Passar(ref i);
+                characters_liberados[6]= Convert.ToBoolean(lines_arr_config[i].Trim());Passar(ref i);
 
 
                 //  localizador: 
@@ -256,10 +256,10 @@ using System.IO;
 
 
 
-                save_1_is_active= Convert.ToBoolean(lines[i].Trim());Passar(ref i);
-                save_2_is_active= Convert.ToBoolean(lines[i].Trim());Passar(ref i);
-                save_3_is_active= Convert.ToBoolean(lines[i].Trim());Passar(ref i);
-                save_4_is_active= Convert.ToBoolean(lines[i].Trim());Passar(ref i);
+                save_1_is_active= Convert.ToBoolean(lines_arr_config[i].Trim());Passar(ref i);
+                save_2_is_active= Convert.ToBoolean(lines_arr_config[i].Trim());Passar(ref i);
+                save_3_is_active= Convert.ToBoolean(lines_arr_config[i].Trim());Passar(ref i);
+                save_4_is_active= Convert.ToBoolean(lines_arr_config[i].Trim());Passar(ref i);
                
 
 
@@ -268,10 +268,10 @@ using System.IO;
 
 
 
-                save_1_time = Convert.ToInt32(lines[i].Trim());Passar(ref i);
-                save_2_time = Convert.ToInt32(lines[i].Trim());Passar(ref i);
-                save_3_time= Convert.ToInt32(lines[i].Trim());Passar(ref i);
-                save_4_time= Convert.ToInt32(lines[i].Trim());Passar(ref i);
+                save_1_time = Convert.ToInt32(lines_arr_config[i].Trim());Passar(ref i);
+                save_2_time = Convert.ToInt32(lines_arr_config[i].Trim());Passar(ref i);
+                save_3_time= Convert.ToInt32(lines_arr_config[i].Trim());Passar(ref i);
+                save_4_time= Convert.ToInt32(lines_arr_config[i].Trim());Passar(ref i);
 
 
 
@@ -280,17 +280,17 @@ using System.IO;
 
 
 
-                save_1_progress = Convert.ToInt32(lines[i].Trim());Passar(ref i);
-                save_2_progress = Convert.ToInt32(lines[i].Trim());Passar(ref i);
-                save_3_progress= Convert.ToInt32(lines[i].Trim());Passar(ref i);
-                save_4_progress= Convert.ToInt32(lines[i].Trim());Passar(ref i);
+                save_1_progress = Convert.ToInt32(lines_arr_config[i].Trim());Passar(ref i);
+                save_2_progress = Convert.ToInt32(lines_arr_config[i].Trim());Passar(ref i);
+                save_3_progress= Convert.ToInt32(lines_arr_config[i].Trim());Passar(ref i);
+                save_4_progress= Convert.ToInt32(lines_arr_config[i].Trim());Passar(ref i);
                 
 
 
                 //  localizador: 
                 Passar(ref i);
 
-                string[] galeria_imagens = lines[i].Split(",");
+                string[] galeria_imagens = lines_arr_config[i].Split(",");
 
 
                 for(   int imagem_galeria = 0; imagem_galeria < galeria_imagens_liberadas.Length ;  imagem_galeria++){
@@ -316,6 +316,37 @@ using System.IO;
 
 
         }
+
+
+
+        public string[] Pegar_dados_config(){
+
+
+
+                #if UNITY_EDITOR
+
+
+                        // ** por enquanto esta pegando somente o default 
+                        string[] retorno  = Resources.Load<TextAsset>("files/configurations_default").text.Split("\r\n") ; 
+                        return retorno;
+                        
+
+                #endif
+                
+
+
+
+                // ainda tem que fazer 
+
+                return  Resources.Load<TextAsset>("files/configurations_default").text.Split("\r\n") ; 
+                
+
+                string path = Paths_gerais.Pegar_path_folder_usuario() + "/arquivos_mutaveis/configurations.txt" ;
+                return null;
+
+
+        }
+
 
         public bool ler_dados = false;
         public string[] lines_arr_config;

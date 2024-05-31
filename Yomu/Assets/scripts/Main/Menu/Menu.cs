@@ -31,8 +31,8 @@ public class Menu {
 
           Controlador.Pegar_instancia().modo_controlador_atual = Controlador_modo.menu;
 
-          controlador_configuration = Controlador_configuration.Pegar_instancia();
-          controlador_data = Controlador_data.Pegar_instancia();
+          controlador_configuracoes = Controlador_configuracoes.Pegar_instancia();
+          controlador_dados = Controlador_dados.Pegar_instancia();
           dados_blocos = Dados_blocos.Pegar_instancia();
 
           Iniciar_menu();
@@ -103,9 +103,9 @@ public class Menu {
 
       public int numero_pagina_galeria = 0;
       
-      public Controlador_configuration controlador_configuration;
+      public Controlador_configuracoes controlador_configuracoes;
       
-      public Controlador_data controlador_data;
+      public Controlador_dados controlador_dados;
 
     
       public Dados_blocos dados_blocos;
@@ -136,7 +136,7 @@ public class Menu {
 
             //   canvas 
 
-            string path = "images/menu_images/" + controlador_configuration.menu_background; 
+            string path = "images/menu_images/" + controlador_configuracoes.menu_background; 
             Sprite menu_background = Resources.Load<Sprite>(path);
             
             GameObject canvas = GameObject.Find("Tela/Canvas");
@@ -402,7 +402,7 @@ public class Menu {
 
 
 
-            string audio_path =  "audio/blocos_pequenos/menu/" + controlador_configuration.music_menu;
+            string audio_path =  "audio/blocos_pequenos/menu/" + controlador_configuracoes.music_menu;
 
         
             Controlador_audio.Pegar_instancia().Start_music( _slot: 1 , audio_path );
@@ -444,7 +444,7 @@ public class Menu {
             for(int i = 0 ;    i <  botoes.Length ;   i++){
 
                     Botao botao = botoes[i];                    
-                    if( botao.Update(  is_click, controlador_data.posicao_mouse )) { return true; }
+                    if( botao.Update(  is_click, controlador_dados.posicao_mouse )) { return true; }
 
             }
 
@@ -457,8 +457,8 @@ public class Menu {
 
     public void Update_generico( Menu_objects_generico[] _arr ){
      
-          float mouse_x = controlador_data.posicao_mouse[0] - 960f;
-          float mouse_y = controlador_data.posicao_mouse[1] - 540f;
+          float mouse_x = controlador_dados.posicao_mouse[0] - 960f;
+          float mouse_y = controlador_dados.posicao_mouse[1] - 540f;
 
           
           float x_min ;
@@ -511,8 +511,8 @@ public class Menu {
 
     public void Update_new_game(){
            
-          float mouse_x = controlador_data.posicao_mouse[0] - 960f;
-          float mouse_y = controlador_data.posicao_mouse[1] - 540f;
+          float mouse_x = controlador_dados.posicao_mouse[0] - 960f;
+          float mouse_y = controlador_dados.posicao_mouse[1] - 540f;
 
 
           float x_min ;
@@ -558,9 +558,9 @@ public class Menu {
       }
 
 
-      public class Sistema_mensagens{
+      public static class Sistema_mensagens{
 
-            public void Alertar_player( string _mensagem ){
+            public static void Alertar_player( string _mensagem ){
 
                 Debug.Log( "fazer mensagem depois" );
                 Debug.Log( _mensagem );
@@ -573,9 +573,19 @@ public class Menu {
 
       public void Ativar_new_game() {
 
-        
-            // talvez seja interessante ver qual save esta disponivel 
-   
+
+
+
+            #if UNITY_EDITOR
+
+                // *** ativar pelo menu vai funcionar somente na build
+                //return;
+
+            #endif
+
+
+
+            
 
             int save = Pegar_save_disponivel();
 
@@ -584,58 +594,54 @@ public class Menu {
                     // *nao tem saves livres 
 
                     Sistema_mensagens.Alertar_player( "nao tem saves disponivel" );
-                    nao deixa iniciar o jogo
+                    // nao deixa iniciar o jogo
                     return; 
 
             }
 
 
 
+            // 
+
             Controlador.Pegar_instancia().jogo = Jogo.Construir( _save: save , _novo_jogo: true );
 
 
+            Mono_instancia.Start_coroutine( New_game_start_c() );
 
-            IEnumerator Entrar_novo_jogo(){
-
-
-                Task_req task_criar_os_arquivos = new Task_req(
-
-                    new Chave_cache(),
-                    "Inicio_novo_jogo"
-
-                );
-
-                task_criar_os_arquivos.fn_iniciar = ( Task_req _req ) =>{
-
-                    Controlador_save.Pegar_instancia().Copiar_dados_novo_jogo( save );
-
-                }
-
-
-
-                Controlador_multithread.Pegar_instancia().Adicionar_task( task_criar_os_arquivos );
-
-
-
-
-
-            }
-
-
-
-            Iniciar_animacao(){
-                
-                        //criar_canvas_transciao();
-
-                    - Salvar_arquivos_slot( save );
+            IEnumerator New_game_start_c(){
 
                     
-                    
-                    
+                    Geral.Criar_imagem(
+
+                        _nome: "canvas_menu_transicao", 
+                        _pai: Controlador.Pegar_instancia().canvas,
+                        _width: 1920f
+                    );
+
+                    Image imagem = Geral.ultima_imagem;
+
+
+                    while( imagem.color[ 3 ] < 1f ){
+
+                        float novo_alp = imagem.color[ 3 ] + (Time.deltaTime * 0.75f);
+                        imagem.color = new Color( 0f,0f,0f , novo_alp );
+                        yield return null;
+
+                    }
+
                     GameObject.Destroy( canvas_menu );
+                    Controlador.Pegar_instancia().menu = null;
+                    Controlador.Pegar_instancia().modo_controlador_atual = Controlador_modo.jogo;
+
+
+                    yield break;
+
 
             }
-                
+
+
+
+
 
           
 
@@ -692,7 +698,7 @@ public class Menu {
             int p0 =  numero_pagina_galeria * 6;
             for(int i = 0 ;  i < 6 ; i++){
 
-                bool esta_liberada = controlador_configuration.galeria_imagens_liberadas[i];
+                bool esta_liberada = controlador_configuracoes.galeria_imagens_liberadas[i];
                 if( esta_liberada ){  
 
                   // tem que passar depois para o sistema proprio
@@ -712,7 +718,7 @@ public class Menu {
         public void Passar_pagina_galeria(){
 
 
-            int max =  ( controlador_configuration.galeria_imagens_liberadas.Length / 6 );
+            int max =  ( controlador_configuracoes.galeria_imagens_liberadas.Length / 6 );
 
             if(  numero_pagina_galeria  +  1  > max  ){ return; }
 

@@ -313,143 +313,143 @@ quantos_biscoitos_lily_comeu => 10
 
 */
 
-public static class Dados_sistema_personagens_ferramentas {
+// public static class Dados_sistema_personagens_ferramentas {
 
 
-		public static Dados_sistema_personagem Ler( string _dados_str ){
+// 		public static Dados_sistema_personagem Ler( string _dados_str ){
 
-			return null;
+// 			return null;
 
 
-		}
+// 		}
 
 	
 
-}
+// }
 
 
-// classe dinamica 
-// toda classe dinamica precisa iniciar com o save para pegar o local dos dados 
-public class Controlador_personagens {
+// // classe dinamica 
+// // toda classe dinamica precisa iniciar com o save para pegar o local dos dados 
+// public class Controlador_personagens {
 
-		public static Controlador_personagens instancia;
-		public static Controlador_personagens Pegar_instancia(){ return instancia;}
-		public static void Construir( int _save ){ instancia = new Controlador_personagens( _save ); return; }
+// 		public static Controlador_personagens instancia;
+// 		public static Controlador_personagens Pegar_instancia(){ return instancia;}
+// 		public static void Construir( int _save ){ instancia = new Controlador_personagens( _save ); return; }
 
 
 		
-		public Dados_sistema_personagem[] dados_sistema_personagens; 
+// 		public Dados_sistema_personagem[] dados_sistema_personagens; 
 
-		public string path_folder_dados_personagens ;
-		public string path_save_morte;
-
-
-		// Controlador personagem vai estar em dados dinamicos  
-		public Controlador_personagens( int _save ){
+// 		public string path_folder_dados_personagens ;
+// 		public string path_save_morte;
 
 
+// 		// Controlador personagem vai estar em dados dinamicos  
+// 		public Controlador_personagens( int _save ){
 
-				
-				path_folder_dados_personagens = Paths_gerais.Pegar_path_folder_dados_save( _save ) + "/Personagens";
 
-				// ** nao precisa aqui
-				// path_save_morte = Paths_gerais.Pegar_path_folder_dados_save( _save ) + "/Save_morte/Personagens";
-
-				string[] personagens_nomes = Enum.GetNames( typeof( Personagem_nome ));
-				int numero_personagens = personagens_nomes.Length ;
 
 				
+// 				path_folder_dados_personagens = Paths_gerais.Pegar_path_folder_dados_save( _save ) + "/Personagens";
+
+// 				// ** nao precisa aqui
+// 				// path_save_morte = Paths_gerais.Pegar_path_folder_dados_save( _save ) + "/Save_morte/Personagens";
+
+// 				string[] personagens_nomes = Enum.GetNames( typeof( Personagem_nome ));
+// 				int numero_personagens = personagens_nomes.Length ;
+
+				
 
 
-				dados_sistema_personagens = new Dados_sistema_personagem[ numero_personagens ];
-				personagens = new Personagem[ numero_personagens ];
+// 				dados_sistema_personagens = new Dados_sistema_personagem[ numero_personagens ];
+// 				personagens = new Personagem[ numero_personagens ];
 
-				for( int personagem_index = 0 ; personagem_index < numero_personagens ; personagem_index++  ){
+// 				for( int personagem_index = 0 ; personagem_index < numero_personagens ; personagem_index++  ){
 
 
-						string nome_personagem = personagens_nomes[ personagem_index ];
-						string path_personagem_dados_sistema = path_folder_dados_personagens + "/" + nome_personagem + "_dados_sistema.txt";
+// 						string nome_personagem = personagens_nomes[ personagem_index ];
+// 						string path_personagem_dados_sistema = path_folder_dados_personagens + "/" + nome_personagem + "_dados_sistema.txt";
 
-						// os dados aqui vao estar compactados
-						// eu nao vou ser capaz de usar strings 
-						// minha mente vai ser a minha propria derrota
-						string[] texto_linhas = System.IO.File.ReadAllLines( path_personagem_dados_sistema );
-						Dados_sistema_personagem dados  = new Dados_sistema_personagem();
-						dados_sistema_personagens[ personagem_index ] = dados;
+// 						// os dados aqui vao estar compactados
+// 						// eu nao vou ser capaz de usar strings 
+// 						// minha mente vai ser a minha propria derrota
+// 						string[] texto_linhas = System.IO.File.ReadAllLines( path_personagem_dados_sistema );
+// 						Dados_sistema_personagem dados  = new Dados_sistema_personagem();
+// 						dados_sistema_personagens[ personagem_index ] = dados;
 
-						dados.esta_salvo = true;
-						dados.nome_personagem = ( Personagem_nome ) personagem_index;
-						dados.interesse_player = 200;
+// 						dados.esta_salvo = true;
+// 						dados.nome_personagem = ( Personagem_nome ) personagem_index;
+// 						dados.interesse_player = 200;
 
-						dados.posicao_atual_personagem = new Posicao();
+// 						dados.posicao_atual_personagem = new Posicao();
 
 
 
 						
-				}
+// 				}
 
 				
-			//	personagens = new Personagem[];
+// 			//	personagens = new Personagem[];
 					
 			
-		}
+// 		}
 
 		
-		public Dados_sistema_personagem Pegar_dados_sistema( string _nome){
-			return null;
+// 		public Dados_sistema_personagem Pegar_dados_sistema( string _nome){
+// 			return null;
 
-			string path = this.path_folder_dados_personagens + _nome + "/dados_sistema.dat";
-			string[] dados = System.IO.File.ReadAllLines( path );
-			if( dados == null ){ throw new System.Exception( "nao foi achado dados no path: " + path ) ;}
+// 			string path = this.path_folder_dados_personagens + _nome + "/dados_sistema.dat";
+// 			string[] dados = System.IO.File.ReadAllLines( path );
+// 			if( dados == null ){ throw new System.Exception( "nao foi achado dados no path: " + path ) ;}
 
-			Dados_sistema_personagem dados_retorno = new Dados_sistema_personagem();
-
-
-			// deixar o nome do personafgem seria bom se caso eu tiver o arquivo para saber de qual personagem é 
+// 			Dados_sistema_personagem dados_retorno = new Dados_sistema_personagem();
 
 
+// 			// deixar o nome do personafgem seria bom se caso eu tiver o arquivo para saber de qual personagem é 
 
 
 
-			// dados_retorno.nome_personagem = _nome;
-			// dados__retorno.interesse_player = 
+
+
+// 			// dados_retorno.nome_personagem = _nome;
+// 			// dados__retorno.interesse_player = 
 
 			
 			
-		}
+// 		}
 
 
-	/*
+// 	/*
 
-		**funcao 
-		pega os personagens;
-		entrega os personagens;
-		guarda actions;
+// 		**funcao 
+// 		pega os personagens;
+// 		entrega os personagens;
+// 		guarda actions;
 		
 	
-	*/
+// 	*/
 
-		public Personagem[] personagens;
+// 		public Personagem[] personagens;
 
-		public string Pegar_path_dados_sistema( string _nome_personagem ){
+// 		public string Pegar_path_dados_sistema( string _nome_personagem ){
 			
-			string path_folder_personagens = "colocar_path";
-			return path_folder_personagens + _nome_personagem + "/";
+// 			string path_folder_personagens = "colocar_path";
+// 			return path_folder_personagens + _nome_personagem + "/";
 			
-		}
+// 		}
 
-		public Personagem Pegar_personagem( Personagem_nome _personagem_nome ){
+// 		public Personagem Pegar_personagem( Personagem_nome _personagem_nome ){
 
-			return null;
+// 			return null;
 
 			
 			
-		}
+// 		}
 
 
 
   
-}
+// }
 
 
 

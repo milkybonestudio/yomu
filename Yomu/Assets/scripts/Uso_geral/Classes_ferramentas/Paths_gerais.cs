@@ -18,7 +18,8 @@ using UnityEngine;
                         // aqui é onde os dados de teste vao estar salvos.
                         // provavelmente vai ter varios saves diferentes, poderia ter um enum com oque cada save significa
                         //          Assets
-                        return Application.dataPath + "/Editor/Dados_saves_para_teste/" + _save.ToString() + "/Personagens";
+                        // talvez path de problemas em outros OS? 
+                        return Application.dataPath + "/Editor/Dados_saves_para_teste/save_" + _save.ToString() + "/Personagens";
 
 
                     #else
@@ -52,7 +53,7 @@ using UnityEngine;
             }
 
 
-            public string Pegar_path_folder_com_os_saves_defaults() {
+            public static string Pegar_path_folder_com_os_saves_defaults() {
 
 
                 throw new Exception( "ainda nao fiz" );
@@ -69,9 +70,29 @@ using UnityEngine;
 
             }
 
+
+            public static string Pegar_path_folder_usuario(){
+
+
+                #if UNITY_EDITOR
+
+                    return Application.dataPath + "/Resources/files";
+
+                #endif
+
+
+                return Application.persistentDataPath + "/user_info";
+
+            }
+
+
+
+
+        // SOMENTE PRODUCAO
+        // se algum codigo pedir aqui na builda vai dar erro 
+
         #if UNITY_EDITOR
 
-                // se algum codigo pedir aqui na builda vai dar erro 
 
                 public static string Pegar_path_folder_dados_producao(){
 

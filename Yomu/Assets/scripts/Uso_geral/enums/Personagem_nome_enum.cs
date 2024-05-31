@@ -8,6 +8,8 @@ public  enum Personagem_nome {
     nada,
   
     Nara, 
+
+    
     Lily, 
     Eden, 
     Nia, 

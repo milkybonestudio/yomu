@@ -2,11 +2,11 @@ using System;
 using UnityEngine;
 
 
-public class Controlador_save_ {
+// public class Controlador_save_ {
 
-    public static Controlador_save_ instancia;
-    public static Controlador_save_ Pegar_instancia(){ return instancia; }
-    public static void Construir( int _save, bool _new_game ){ instancia = new Controlador_save_( _save, _new_game );return; }
+//     public static Controlador_save_ instancia;
+//     public static Controlador_save_ Pegar_instancia(){ return instancia; }
+//     public static void Construir( int _save, bool _new_game ){ instancia = new Controlador_save_( _save, _new_game );return; }
 
 
     // ** funcao 
@@ -25,29 +25,29 @@ public class Controlador_save_ {
     // controlador save vai assumir que oque vier aqui faz sentido 
     // ** controlador_save tem que sempre ser o primeiro a iniciar para se caso for new game criar os folders 
 
-    public Controlador_save_( int _save , bool _new_game ){
+    // public Controlador_save_( int _save , bool _new_game ){
 
-            Controlador_save_.instancia = this;
+    //         Controlador_save_.instancia = this;
 
 
-            if( _new_game ){ 
+    //         if( _new_game ){ 
 
-                string folder_save_path = Paths_gerais.Pegar_path_folder_dados_save( _save );
-                System.IO.Directory.CreateDirectory( folder_save_path );
+    //             string folder_save_path = Paths_gerais.Pegar_path_folder_dados_save( _save );
+    //             System.IO.Directory.CreateDirectory( folder_save_path );
                 
-                // se acrescentar coisas colocar aqui 
-                Criar_dados_iniciais_personagens( _save );
+    //             // se acrescentar coisas colocar aqui 
+    //             //Criar_dados_iniciais_personagens( _save );
 
 
-            }
+    //         }
 
-            Controlador_personagens.Construir( _save );
+    //         Controlador_personagens.Construir( _save );
 
             
 
 
 
-    }
+    // }
 
 
 
@@ -136,4 +136,4 @@ public class Controlador_save_ {
 
 
 
-}
+//}

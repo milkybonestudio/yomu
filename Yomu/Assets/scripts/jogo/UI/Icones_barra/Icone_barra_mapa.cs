@@ -57,7 +57,7 @@ public static class Icone_barra_mapa {
             }
 
 
-            float[] posicao = Controlador_data.Pegar_instancia().posicao_mouse;
+            float[] posicao = Controlador_dados.Pegar_instancia().posicao_mouse;
 
 
 

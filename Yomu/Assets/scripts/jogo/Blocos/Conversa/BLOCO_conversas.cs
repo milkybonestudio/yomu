@@ -60,7 +60,23 @@ public class BLOCO_conversas {
 
         public static BLOCO_conversas instancia;
         public static BLOCO_conversas Pegar_instancia(){ return instancia; }
-        public static BLOCO_conversas Construir(){ instancia = new BLOCO_conversas(); return instancia;}
+
+
+        public static BLOCO_conversas Construir(){ 
+                
+                instancia = new BLOCO_conversas(); 
+                                
+                        //  bloco_jogo = BLOCO_jogo.Pegar_instancia( true );
+                        instancia.conversas_leitor = Conversas_leitor.Pegar_instancia();
+
+                        instancia.container_conversa = new GameObject( "Conversa" );
+                        instancia.container_conversa.transform.SetParent( GameObject.Find( "Tela/Canvas/Jogo" ).transform , false);
+
+
+                
+                return instancia;
+                
+        }
  
         public bool tem_opcoes = false;
 
@@ -74,19 +90,12 @@ public class BLOCO_conversas {
 
         public Blocos_conversa_info blocos_info = null;
 
-        public GameObject conversa_game_object;
-
-
-        public void Iniciar(){
-
-          //  bloco_jogo = BLOCO_jogo.Pegar_instancia( true );
-            conversas_leitor = Conversas_leitor.Pegar_instancia();
-
-        }
+        public GameObject container_conversa;
 
 
 
-        public void Iniciar_conversas ( string _personagem_nome , string _nome_conversa  ){
+
+        public void Iniciar ( string _personagem_nome , string _nome_conversa  ){
 
 
 
@@ -380,6 +389,17 @@ public class BLOCO_conversas {
 
 
 
+
+
+        public void Finalizar(){
+
+                // passar encerrar para ca
+
+        }
+
+
+
+
         public void Encerrar_conversa(){
 
 
@@ -396,8 +416,8 @@ public class BLOCO_conversas {
 
 
 
-                Mono_instancia.Destroy( conversa_game_object );
-                conversa_game_object = null ;
+                Mono_instancia.Destroy( container_conversa );
+                container_conversa = null ;
 
 
                 blocos_info = null ;
@@ -450,11 +470,11 @@ public class BLOCO_conversas {
                 }
 
 
-                this.conversa_game_object = new GameObject("Conversas") ;
-                conversa_game_object.transform.SetParent(  container.transform   , false ) ;
+                this.container_conversa = new GameObject("Conversas") ;
+                container_conversa.transform.SetParent(  container.transform   , false ) ;
 
 
-                blocos_info.personagem = Geral.Criar_imagem( "Personagem" , conversa_game_object, 2160f, 2160f,  null , 1f ) ;
+                blocos_info.personagem = Geral.Criar_imagem( "Personagem" , container_conversa, 2160f, 2160f,  null , 1f ) ;
               //  blocos_info.personagem.transform.localPosition = new Vector3( 0f , -540f , 0f );
                 blocos_info.personagem_imagem = Geral.ultima_imagem ;
 

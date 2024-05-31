@@ -158,7 +158,7 @@ public class Controlador_tela_visual_novel {
                 // pergaminho = new Pergaminho_modelo_1();
 
 
-                posicao_mouse = Controlador_data.Pegar_instancia().posicao_mouse;
+                posicao_mouse = Controlador_dados.Pegar_instancia().posicao_mouse;
 
 
 

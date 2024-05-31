@@ -97,7 +97,7 @@ public static class Icone_barra_mochila {
 
 
             bool click = Controlador_input.Get_down( Key_code.mouse_left );
-            float[] posicao = Controlador_data.Pegar_instancia().posicao_mouse;
+            float[] posicao = Controlador_dados.Pegar_instancia().posicao_mouse;
             
 
 

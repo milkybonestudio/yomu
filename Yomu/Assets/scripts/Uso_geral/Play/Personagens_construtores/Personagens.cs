@@ -19,6 +19,11 @@ public class Personagens {
       public Eden   eden   =   new Eden();
       public Jayden jayden =   new Jayden();
 
+      
+
+
+
+
 }
 
 
@@ -202,84 +207,84 @@ public class Personagens {
 
 
 
-public class Personagem {
+// public class Personagem {
 
 
  
-    public float amizade = 500f;
-    public float tesao = 500f;
+//     public float amizade = 500f;
+//     public float tesao = 500f;
 
 
 
 
-  // todo personagem precisa ter a opiniao sobre a nara, mas poderia ter opinioes sobre outros personagens 
+//   // todo personagem precisa ter a opiniao sobre a nara, mas poderia ter opinioes sobre outros personagens 
 
 
 
-      // quando o personagem inicia
+//       // quando o personagem inicia
 
-      public void Atualizar_entrada(){}
+//       public void Atualizar_entrada(){}
 
-      /*
+//       /*
 
-            connor => relativo com maki 
+//             connor => relativo com maki 
 
-              - Maki_nara_acontecimentos.nara_beijou_pe_de_maki ( privado )
-              - Maki_nara_acontecimentos.nara_desrespeitou_maki_em_publico ( publico )
-
-
-            conversa: connor x nara
+//               - Maki_nara_acontecimentos.nara_beijou_pe_de_maki ( privado )
+//               - Maki_nara_acontecimentos.nara_desrespeitou_maki_em_publico ( publico )
 
 
-            updata() => connor tem que atualizar que nara beijou o pe de maki 
-
-                       op 1 : atualiza na interacao Maki x Nara quando teve a mudanca
-
-                                => vai ter que fazer load das dlls com as informacoes de todos os personagens que tem ligacao com maki.Porem isso pode ser feito na multithread com baixa prioridade 
-                                => o tempo seria numero_de_personagens * ( tempo / personagem ). 
-                                => maki => [ minerva, cordelia, connor, ariel, rhead,   ]
-                                => personagens importantes vao demorar muito para coisas publicas. Mas ao mesmo tempo eles vão ter poucas interacoes 
-                                => na realidade personagens importantes vai ter que atualizar praticamente todo se for informacao publica 
+//             conversa: connor x nara
 
 
-                       op 2 : atualiza na interacao Connor x Nara quando essa mudaca precisou realmente ser feita 
+//             updata() => connor tem que atualizar que nara beijou o pe de maki 
+
+//                        op 1 : atualiza na interacao Maki x Nara quando teve a mudanca
+
+//                                 => vai ter que fazer load das dlls com as informacoes de todos os personagens que tem ligacao com maki.Porem isso pode ser feito na multithread com baixa prioridade 
+//                                 => o tempo seria numero_de_personagens * ( tempo / personagem ). 
+//                                 => maki => [ minerva, cordelia, connor, ariel, rhead,   ]
+//                                 => personagens importantes vao demorar muito para coisas publicas. Mas ao mesmo tempo eles vão ter poucas interacoes 
+//                                 => na realidade personagens importantes vai ter que atualizar praticamente todo se for informacao publica 
+
+
+//                        op 2 : atualiza na interacao Connor x Nara quando essa mudaca precisou realmente ser feita 
 
 
 
       
-      */
+//       */
 
 
-      // run_time 
+//       // run_time 
 
-      public void Sofrer_acao(){}
-      public void Causar_acao(){}
-
-
-      public void Falar(){}
-      public void Ouvir(){}
+//       public void Sofrer_acao(){}
+//       public void Causar_acao(){}
 
 
-      public void Dar(){}
-      public void Receber(){}
+//       public void Falar(){}
+//       public void Ouvir(){}
 
 
-      public void Entregar_relato(){}
-      public void Receber_relato(){}
-
-      // end 
-
-      public void Atualizar_saida(){}
+//       public void Dar(){}
+//       public void Receber(){}
 
 
+//       public void Entregar_relato(){}
+//       public void Receber_relato(){}
+
+//       // end 
+
+//       public void Atualizar_saida(){}
 
 
 
-}
 
 
-public class Nia {
+// }
 
-  public Personagem generico;
 
-}
+// public class Nia {
+
+//   public Personagem generico;
+
+// }
