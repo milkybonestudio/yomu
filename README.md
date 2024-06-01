@@ -4,6 +4,9 @@
  &nbsp;&nbsp;This is basically the entire game. If you wanna install and change some things it`s fine. But the code is in portuguese, at least 90%. Some people encrypt information with aes, I just use brazil language. I will just not show the files in production, generally in the first draft I make some questionable jokes that just after I read one day later I realise that was written in the worst way possible. The actual content used in the game will be show and can be modified.<br>
  &nbsp;&nbsp;Actual functionality code would be hard to implement, but I will develop in a way that makes create change content/date more easy. Things like change images, alternative visual novel scripts, change character's internal data will be more easy
 
+ > [!CAUTION]
+> The code now is a little messy because I am changing a bunch of stuff. so the majority of it is just pure :x: useless :x:
+
  &nbsp;&nbsp;A short introduction of how to read the code:
 
 
@@ -77,17 +80,18 @@ And are more specific blocks:
 
         Controlador_FUNCTION controlador = new Controlador_FUNCTION();
 
-                ...
-                ...  ( create block )
-                ...
+               //...
+               //...  ( create block )
+               //...
+
         instancia = controlador;
         return instancia;
 
     }
 
-    ....
-    .... ( things of the block )
-    ....
+   // ....
+   //.... ( things of the block )
+   // ....
 
     
 
