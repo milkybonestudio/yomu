@@ -6,6 +6,15 @@
 
  &nbsp;&nbsp;A short introduction of how to read the code:
 
+
+ The code has 5 main assemblyes: 
+ - Development
+ - Jogo
+ - Main
+ - Run_time_data
+ - Uso_geral
+
+
  
  The important blocks are called "Controladores" :shipit: and they use a singleton logic. Every block has:
  
@@ -35,7 +44,7 @@
 
  }
  ```
-
+The "Construir" is necessary by the way that Unity handles static fields with no reload domain. With the normal check if( instance == null ){ construct(); } tha last object will still be there and give bugs here and there.
  
 
 
