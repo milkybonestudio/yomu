@@ -1,0 +1,49 @@
+
+
+
+
+---FIGURES_LOCALIZADORES---
+
+Figures_localizador serve para pegar a informacao de onde esta a informacao de uma figure. 
+Os dados de cada figure no figures_dados vão ser separados por algum caracter especial, para achar os dados de uma figure com id 150 não teria como ir direto para
+algum pointer pois a quantidade de dados muda dependendo da figure 
+
+ex: 
+
+
+dados_dados_dados '&'      dados      '&'      dados_dados_dados_dados '&' ... 
+  ( 17 bytes )   1 byte  ( 5 bytes )   1 byte      ( 23 bytes )
+
+a informacao do primeiro comeca em byte[ 0 ], o segundo em byte [ 18 ] e o terceiro em byte[ 24 ] e quinto em byte[ 48 ] 
+para isso serve o Figures_localizador.dat. Ele mostra onde cada um começa. 
+esse arquivo vai ser  relativamente leve. Tem 2 bytes oque da +- 65k de posibilidades, mas se precisar mudar não vai ser muito complicado. esse arquivo vai estar sendo reescrito com frequencia 
+O tamanho maximo do arquivo obviamente é 130kb.
+
+o array seria [  0, 18 , 24 , 48 ....  ]
+
+
+
+
+
+
+---FIGURES_DADOS---
+
+Figures_dados vai ter os dados das figures em si. Porem ela não conteu dados de onde as imagens estao, somente seus respectivos ids.
+
+Os dados de figures_dados criam Figure_dados, tem os ids das imagens, dimensoes e posicoes das imagens 
+
+
+o padrao seria 
+
+clothes@happy@direita   separar   width / heigth      id_base      id_est     posicao_extra    separar    posicao extra        id_1       id_2      id_3          separar        posicao extra   id_1       id_2      id_3       separar              
+  ( 21 bytes )        ( 1 byte )    (2 bytes)        (2 bytes)   ( 2 bytes)  ( 4 bytes)      ( 1 byte)       (4 bytes)      (2 bytes)  (2 bytes)  (2 bytes)      ( 1 byte )       (2 bytes)   (2 bytes)  (2 bytes) (2 bytes)   ( 1 byte )    ( 2 bytes )
+
+
+padrao short => byte  ( n * 256 ) | ( n * 1 )
+
+cada fugure tem 50 bytes
+
+65k figures => 
+
+-----
+

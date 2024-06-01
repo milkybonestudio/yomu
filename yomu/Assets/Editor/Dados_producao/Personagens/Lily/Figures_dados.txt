@@ -1,0 +1,14 @@
+
+
+
+
+
+
+
+nome : clothes@happy@esquerda 
+
+                    base            =>    clothes@default@esquerda
+                    secundaria      =>    clothes@default@esquerda : 111,0
+                    animacao_boca   =>  {}
+                    animacao_olhos    => {}
+                    animacao_completa => {}

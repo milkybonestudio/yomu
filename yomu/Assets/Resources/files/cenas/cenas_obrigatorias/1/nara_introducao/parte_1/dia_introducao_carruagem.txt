@@ -1,0 +1,671 @@
+0t&dia,takeru,bill,nara,conor&0,semi_clothes@bored@bf@esquerda,semi_clothes@bored@ba@esquerda,semi_clothes@bored@ba@direita,semi_clothes@bored@bf@direita,semi_clothes@mad@bf@direita,semi_clothes@horny@ba@esquerda,semi_clothes@mad@ba@direita,semi_clothes@mad@ba@esquerda,semi_clothes@mad@bf@esquerda,semi_clothes@happy@ba@esquerda,semi_clothes@happy@bf@esquerda,semi_clothes@happy@bf@direita,semi_clothes@horny@bf@esquerda,semi_clothes@horny@ba@direita,semi_clothes@horny@bf@direita,semi_clothes@happy@ba@direita,dad_imitation_1@ba,dad_imitation_1@bf,dad_imitation_2@ba,dad_imitation_2@bf,clothes@bored@bf@direita,clothes@bored@ba@direita,clothes@happy@ba@direita,clothes@happy@bf@direita,clothes@mad@bf@direita,clothes@mad@ba@direita,clothes@horny@ba@direita,clothes@shy@ba@direita,clothes@shy@bf@direita,clothes@horny@bf@direita,clothes@bored@bf@esquerda,clothes@bored@ba@esquerda,clothes@happy@ba@esquerda,clothes@happy@bf@esquerda,clothes@horny@ba@esquerda,clothes@horny@bf@esquerda,clothes@mad@ba@esquerda,clothes@mad@bf@esquerda,|0,clothes@neutral@bf@esquerda,clothes@neutral@ba@esquerda,clothes@mad@ba@direita,clothes@mad@bf@direita,clothes@happy@ba@esquerda,clothes@happy@bf@esquerda,clothes@mad@bf@esquerda,clothes@mad@ba@esquerda,clothes@shy@bf@esquerda,clothes@shy@ba@esquerda,clothes@neutral@bf@direita,clothes@neutral@ba@direita,clothes@shy@bf@direita,clothes@shy@ba@direita,,,,,|0,clothes@laugh@ba(charuto)@frente(sentado),clothes@neutral@ba(charuto)@direita(sentado),clothes@neutral@bf(charuto)@frente(sentado),clothes@neutral@ba(charuto)@frente(sentado),,,,,,,,,,,,,,,|0,village_clothes@happy@ba@direita,village_clothes@fear@ba@direita,village_clothes@fear@bf@direita,village_clothes@neutral@ba@direita,village_clothes@neutral@bf@direita,village_clothes@happy@bf@direita,village_clothes@horny@ba@direita,village_clothes@horny@bf@direita,village_clothes@fear@ba@esquerda,village_clothes@fear@bf@esquerda,village_clothes@happy@ba@esquerda,village_clothes@happy@bf@esquerda,village_clothes@neutral@bf@esquerda,village_clothes@horny@ba@esquerda,,,,,|0,clothes(sword_albuin)@neutral@ba@frente,clothes(sword_albuin)@neutral@bf@frente,clothes(sword)@neutral@ba@frente,clothes(sword)@neutral@bf@frente,,,,,,,,,,,,,,,&&&0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0&,,,,,,,,,,,,,,,,,,,
+2tZ0???
+2tZ1???
+2tZ3???
+2tZ4???
+2tD2f
+2tE032images/in_game/splashes/sets_obrigatorios/nara_wake_up/dia_1
+6f11tࠀ௨comedia_2
+2f8
+2t?0ࠀ
+2f6ࠀf3f
+2t@
+2tL1t01
+3t010΂01΂21Ӡ
+2tL1c01
+1t011131
+2tIt01
+2tE1120
+3f001Ǝ10Ǝ
+1t02
+4f0000Ahhhhhh .... Why is so hot here?
+1t0112
+4f0100Well, I hear that the weast is very hot this time of year.
+1t0311
+4f0000If I knew you were going to do this to me I would stay in the cathedral.
+1t0413
+4f0100This was not not an option. And it's not that bad, stop complaining about everything.
+1t0314
+4f0000They could at least give us a close one. where this guy live?
+1t0412
+4f0100We are close, probably more 30 minutes.
+1t0311
+4f0000How do you know?
+1t0515
+4f0100I don't. I just wanna you to shut up.
+1t0316
+4f0000Pfh... I have so much better stuff to do.
+1t0415
+4f0100Like what?
+1t0611
+4f0000You know.. new year means new nuns for me to be friend with.
+3t001Ī
+1t0711
+4f0000And they send me in this end of world to what? to find a guy?!
+1t0512
+4f0100Just chill a little, you can talk with them whem we go back. One or two weaks don't change nothing.
+3t001Ǝ
+1t0811
+4f00002 weaks is enogh to that self entitled little bitch talk shit about me.
+1t0912
+4f0100Ruby would never to this.
+1t0217
+4f0000She definitely would. She is always saying "Dia this Dia that".
+2tZ0dia
+1t0912
+4f0100You are just imagining things.
+1t0217
+4f0000You are on her side now? next time ask her to suck your dick then.
+1t0118
+4f0100Stop saying this! you know she is married.
+1t0317
+4f0000This is all that need for you to give up? such a weak men.
+1t0317
+4f0000The best womans are wifes of other men right?
+1t0412
+4f0100Some times you surprise me.
+1t0412
+4f0100Even if this was true I have honor enogh to not try.
+1t0217
+4f0000You are just scaried that Ariel would kill you.
+1t0118
+4f0100Thas not fair.
+1t0217
+4f0000How many times you win a duel with him?
+1t0117
+4f0100...
+1t0118
+4f1100I almost win one time.
+1t0:17
+4f0000Wow, this is almost impresive.
+1t0;12
+4f0100Anyway, don't you have people enogh already?
+1t0:11
+4f0000Of course not. Good things are never enogh.
+1t0518
+4f0100You are still with this weird thoughts? is that hard to just be normal? if they catch you I will be in trouble.
+1t0717
+4f0000I know that you always become irritated by the fact your friend gets more womans than you.
+4f0000But you could at least demonstrate a little of gratitude for the things I do for you.
+1t0311
+4f0000I help you so much and you still don't appreciate my effort.
+1t0412
+4f0100Yeah, I remember the first time you help me... oh... there's none actually.
+1t0319
+4f0000Weird, because I remember all yours "first times" with me.
+1t0<1:
+4f0100Sh... shut up!
+1t0611
+4f0000There is no reasson for not admire my fellows nuns friends.
+4f0000God made womans to be beautiful... and soft... and so.. fucking hot.
+1t0=12
+4f0100Sure.
+1t0611
+4f0000Oh god! why give to us such a strong obstacles!
+1t0=12
+4f0100Normaly people avoid the obstacles. Not jump on them.
+4f0100Luke talk to me last week about you and Ana sleeping together.
+3t001Ŝ
+1t0711
+4f0000I am a good friend ok!? if my friend say to me that she is scared to sleep alone and she comes to me.
+1t0>11
+4f0000Dressing only a pajama.
+1t0711
+4f0000In the middle of the night... of course will help ok!?
+1t0512
+4f0100So y...
+1t0>17
+4f0000And if in the middle of the night maybe I couldn't sleep for some reasson and maybe... maybe!... we stay just you know...
+4f0000Hugged the whole night as her open up with me.. just a vunerable cute creature...
+4f0000And I fell her breast over my body and I may touch her here and there... I am wrong!?
+3t001Ī
+1t0512
+4f0100Yes.
+4f0100You are a horrible person.
+3t001Ǝ
+1t0217
+4f0000If god make me this way is not my fault.
+1t0118
+4f0100You are blaming god? really?
+1t0217
+4f0000It's my interpretetion of the truth.
+1t0418
+4f0100You could focus on the things really matter. You already decide where you wanna go after the training?
+1t0>14
+4f0000The only people I want to worry about me are my princesses... hehe.
+1t0?13
+4f0100Why you always talk like a old men when the topic is womans?
+1t0714
+4f0000I donno, why you always talk like a virgin when the topic is womans?
+1t0514
+4f0100...
+1t0:11
+4f0000Ho, and I spent time with maki too.
+1t0;12
+4f0100Really? and how it was?
+1t0@11
+4f0000Um... she is too much for me. But after she gave me the wand I can be more useful, so I owe her a lot.
+1t0<12
+4f0100Finally one girl I don't need to worried.
+1t0711
+4f0000She is not a girl.
+1t0@11
+4f0000She is a woman.
+4f0000With a big W.
+1t0>17
+4f0000But this can be interesting... being used like a toy by a strong woman.
+1t0?12
+4f0100I don't need to hear this.
+1t0>17
+4f0000She is not my type, but I can appreciate every type of woman. no matter size, personality or age.
+1t0?12
+4f0100I don't ask.
+1t0>17
+4f0000My type would be... a tall, fit, extremely shy, tanned skin, long hair, strong hands and....
+1t0?18
+4f0100You will just ignore me?
+1t0>17
+4f0000I would like to be her first... and I would teach her everything!
+1t0512
+4f0100I will be more clear. I am not interested in your weird tastes.
+1t0719
+4f0000Sure, is not like you always ask me about my past experiences when you're drunk.
+1t051:
+4f0100Was just one time!
+1t0319
+4f0000One time that you remember. The most fun is when you ask me to jerk you off when I talk.
+1t041:
+4f0100This I am sure that never happaned!
+1t0>19
+4f0000Ok never happaned, but could happen if you want.
+1t0?19
+4f0100...
+1t0:19
+4f0000But it`s fine, I find cute your interest in my life.
+1t0:11
+4f0000But it's good to be aware that I am a high valuable woman.
+1t0111
+4f0000...
+1t0211
+4f0000I will start looking for a husband anyway.
+1t0115
+4f0100Aham, you?
+1t0316
+4f0000Of course, I'm 21. It's time to look for a good husband.
+1t0216
+4f0000I need to find one before my dad chose one for me.
+1t0112
+4f0100So you will finally straighten yourself?
+1t0@11
+4f0000Very foolish of you takeru, me father always says...
+2tZ1takeru
+1t0A11
+4f0000Listen to me kids, the most important of a relationship is to understand that...
+4f0000You will have a relationship and love from your soulmate.
+4f0000And will have sex and pleasure with the maid HAHAHAHA.
+1t0B12
+4f0100I don't think he was talking to you when he said that.
+1t0711
+4f0000But I heard, and he always said to listen to everything he said.
+1t0>11
+4f0000That's it, I'm right.
+1t0512
+4f0100You could hear the other things he said too. But that means that your husband will betray you with the maid?
+1t0311
+4f0000Hehe you dont understand!
+1t0A11
+4f0000Takeru! every person wants the same thing...
+1t0C11
+4f0000They want to touch womans hearts!
+1t0D
+4f0c00...
+1t0311
+4f0000I touched the wrong so you could say...
+1t0>11
+4f0000"oh your stupid girl the heart is here hehe".
+1t0?12
+4f0100... we are already in the village, I think is better you put on some clothes.
+3t0010
+1t0311
+4f0000Ah ... have you ever thought about how your lack of interest in me affects my self-steem?
+1t0412
+4f0100Don't put more weight on me please.
+3t000ǀ10Ȥ
+2tJ04
+2tE132images/in_game/background/moveis/carruagem/sofa_1
+1t0>17
+4f0000You think so?
+2tIf10
+2t>0Ŝ
+2f6Ŝf3t
+2tE102images/in_game/splashes/sets_obrigatorios/nara_wake_up/dia_5
+2t?0Ŝ
+2f6Ŝf3t
+2t@
+4f0100Ei!
+4f0000Sorry is this too much weight for you?
+4f0100Just get off... someone can see us.
+4f0000That's more exciting right?
+4f0100I am not comfortable with this.
+4f0000You are sure? he seems very comfortable.
+4f0100Bill can hear us.
+4f0000Bill can we make a stop? I need to stretch my legs.
+4f0200If you both wanna to fuck I don't care. But for the fuck sake clean after. I don't wanna other mens cum in my carriage.
+4f0000Thats a yes?
+4f0100Just get out.
+4f0000Ok...ok...
+2tL1t10
+3t001Ǝ10Ǝ
+2tL1c10
+2tIt1
+2tE102images/in_game/background/moveis/carruagem/sofa_1
+1t0018
+4f0100You need to stop doing this.
+2tE122images/in_game/splashes/sets_obrigatorios/nara_wake_up/dia_2
+2tIt0
+1t0E11
+1t0F11
+4f0000With how much I help you should already be in love with me.
+1t0E12
+4f0100I appreciate you as a friend.
+1t0F11
+4f0000Just as a friend?
+1t0E12
+4f0100You don't need to worry about it. I will not start to think that you like me or something.
+1t0G19
+4f0000What are you talking about? I like you a lot.
+1t0H1:
+4f0100Thank you.
+1t0G16
+4f0000But if you fall in love with me would be nice.
+1t0H15
+4f0100Sure.
+1t0G16
+4f0000I'm being honest. We already do a lot of couple things together.
+1t0I15
+4f0100Sure.
+1t0J16
+4f0000Stop just saying "sure", "sure", "sure". I am offering you my whole being!
+1t0I12
+4f0100You are asking genuinely if I wanna to propose to you?
+1t0J11
+4f0000Yes!
+1t0I12
+4f0100Oh...
+4f1100No, I am fine.
+1t0F1;
+4f0000Ahhh I need to give my soul to get some pussy and you waste a oportunity to have every day.
+1t0F14
+4f0000I always thought I was good at it by how fast you cum... maybe you are a shortcoming.
+1t0E1<
+4f0100I don't think we are a good match. You know that.
+1t0G1;
+4f0000Of course we are!
+1t0H12
+4f0100So in a scale off 1 to 10.  how good is doing it with me?
+1t0G17
+4f0000Hum.. probably around 2 or 2.5
+1t0I13
+4f0100See.
+1t0J1;
+4f0000Marriage is not about sexual plesure! is about commitment and trust.
+1t0H15
+4f0100So you will just be with me?
+1t0G17
+4f0000Are you kidding? of course not.
+1t0G14
+4f0000But I swear to God that I will never sleep with other men.
+1t0H13
+4f0100How surprising.
+1t0G14
+4f0000And I like you so much that even if you cheat on me with another person I don't mind.
+1t0K14
+4f0000You could have me all day or go find another one. I can even help you find someone.
+1t0G14
+4f0000I have money enogh for both of us and I like you a lot. I am offer you the best life I can think.
+1t0H1;
+4f0100...
+1t0H13
+4f0100Why you want this? I can offer you nothing. You already have my friendship independently of it.
+1t0G14
+4f0000You are my best option. Is you or the guy my father you chose. And you give me more freedom.
+4f0000We both gain what we want.
+1t0H13
+4f0100Sure, nothing better to be the "less worst option".
+1t0L1;
+4f0000A prefer the "best option".
+1t0I1<
+4f0100But not a good one.
+1t0J14
+4f0000Jeus christ. Just accept my irrecusible offer.
+4f0000What more you want?!
+1t0I1<
+4f0100I don't want you to discart me later. You will find a woman that you like, then you will just leave me alone.
+1t0F14
+4f0000Oh... so I am the men of the relationship.
+1t0E13
+4f0100Shut up!
+1t0F1;
+4f0000Look, even if I find someone that I fall in love with nothing will change. I am not stupid, lust came and go. But what I feel for you is different.
+1t0L1;
+4f0000Just the fact that you accept me as myself have more value than what every other person can give to me.
+1t0M1=
+4f0c00...
+1t0H1>
+4f0100So you would not sleep with more womans if I wanted?
+1t0G1;
+4f0000I am open to stop for some time if make you comfortable.
+1t0H1<
+4f0100So... 2 years?
+1t0J1;
+4f0000Are you insane?!
+1t0I1;
+4f0000...
+1t0J1;
+4f00001 month.
+1t0I14
+4f0100...
+1t0I13
+4f01001 year.
+1t0J14
+4f00002 months.
+1t0I13
+4f01006 months.
+1t0J14
+4f00003 months and more than this I will become shit person to be around.
+1t0H15
+4f0100You will really do this?
+1t0J16
+4f0000If this helps you to understand my feelings I am ok with it.
+1t0E12
+4f0100I don't think your father will aprove me.
+1t0J11
+4f0000And why should I care? I already have money enogh. And even him can not go against the church.
+1t0H15
+4f0100Hum... so where we are going to go after we graduate?
+1t0G16
+4f0000That is the time for you show predisposition! Where we will go?
+1t0H15
+4f0100Let's see... we couldn't go to weast, We need to be far from your dad.
+4f0100Going to south we would fight in the war.
+4f0100North is too close to the capital and the central church.
+1t0K16
+4f0000I don't mind to be close to others nuns.
+1t0I18
+4f0100I mind if will make you end up in a bonfire.
+1t0G16
+4f0000So let's go to east.
+1t0H12
+4f0100You don't mind?
+1t0G11
+4f0000Why would I?
+1t0H12
+4f0100Like... you probably will cut every friendship you have in the cathedral. Go to the east capital is not one day of travel.
+1t0F11
+4f0000What are you talking about? you are my only friend.
+1t0E12
+4f0100That.. that's not true. You have Lily, Jayden, sophia, cordelia... and that blond girl. The crazy one.
+1t0F11
+4f0000I don't consider any of them my friends. Did I call them a friend any time?
+1t0E12
+4f0100Well no but... you said that you like to spend time with them. This a friend.
+1t0F11
+4f0000I consider a friend someone that will be with me even if my existence can bring them trouble.
+4f0000Be with someone when everything is fine doesn't mean too much to me.
+1t0G16
+4f0000So you are my only friend.
+1t0H15
+4f0100Well, if you are fine just with me I am fine just with you.
+1t0K11
+4f0000I never said we will be alone... I am a high maintance woman. I need at least 3 maids.
+1t0N12
+4f0100Things in the east are very expansive. 3 maids would cost around around 5 golds a month.
+4f0100And you won't find a maid that will be fine with your abuses.
+1t0G17
+4f0000Of couse I can find one! maybe some poor girl that just wanna get out her home and need money.
+1t0K17
+4f0000Then a gentle lady will help her giving her a job and a bed... my bed.
+1t0I12
+4f0100Saying again... Some times you surprise me.
+1t0J11
+4f0000Sorry... our bed.
+1t0O13
+4f0100I would never sleep with another woman.
+1t0P19
+4f0000So you will just watch? ow fuck I'm married with a cuck.
+1t0Q19
+4f0000Or you wanna another men?! we would be the most gay couple out there.
+1t0R18
+4f0100I am normal ok? I just like woman.
+1t0S11
+4f0000So we would be the most normal couple out there.
+2tIt2
+3t000ø10ǲ21Ǝ
+1t0R1121
+4f0200HAHAHA
+1t001022
+4f0200Sorry to interrupt your plans, but we are already enter the village.
+1t001223
+4f0100Oh right.
+1t0T1124
+4f0200Okay, we came to get only one person, Mr. na .... Ms. Nara.
+1t0S1723
+4f0000It's a girl!?
+1t0T1823
+4f0100Oh no...
+1t0T1124
+4f0200If she passed the adminission test she's tough. In all my years I see like... 10 more or less.
+4f0200The last one was that maki you 2 were talking about.
+1t0R1223
+4f0100I would appreciate if you don't listen our talk.
+1t001720
+4f0200If you don't want people to listen to you just don't speak.
+1t001722
+4f0200Oi, can we make a stop?
+1t0H1223
+4f0100What happaned?
+1t0R1124
+4f0200Look throw the window.
+2tE112images/in_game/splashes/sets_obrigatorios/nara_wake_up/carr_1
+2tW
+2fIf012
+4f0100Is this normal here? theres a lot there.
+2tE102images/in_game/splashes/sets_obrigatorios/nara_wake_up/carr_2
+4f0200We are receiving reports of monster increase in all regions.
+4f0200They even are trying to make me fight again.
+4f0200This risk is only for young people.
+2tE102images/in_game/splashes/sets_obrigatorios/nara_wake_up/carr_3
+4f0000But we have all life to live! you almost there.
+4f0200HAHAHA.
+4f0200Shut up stupid bitch.
+2tIt210
+2tE112images/in_game/splashes/sets_obrigatorios/nara_wake_up/dia_2
+1t0U1123
+4f0000Hey don't talk to me in this tone!
+1t0L1920
+4f0000Hubby~...
+3t000Ŝ
+1t0J1720
+4f0000help me here!
+1t0I1124
+4f0200Great! she is already acting like a wife.
+1t0V1621
+4f0200HAHAHA.
+1t0U1623
+4f0000I will not stay here hearing this!
+2tIf0
+2fE102images/in_game/background/moveis/carruagem/sofa_1
+1t1223
+4f0100Do you wanna help?
+1t1123
+4f0000Sure, why not.
+2t>0И
+2f6Иf3t
+2tL0t01234
+2tL1t01234
+2tIf21
+2tQ36
+2tL0c01234
+3t010͐00ʈ31ʈ41͐
+2tL1c01234
+2tE032images/in_game/splashes/sets_obrigatorios/nara_wake_up/dia_3
+2tW
+2t?0И
+2f6Иf3f
+2t@
+4f0d00You can press W to shoot and use the arrows to move.
+4f0d00here would have a small platform part, but it bugged in the browser. so i cut it out.
+2tE022images/in_game/background/sara_vila/caminho
+2tIt30
+3t000Ŝ31Ŝ
+1t320R
+4f0300Yo.. you are ok? like... are you ok?...
+1t330Q
+4f0000Yes, thank you. There are a little more than I expected haha.
+1t310R
+4f0300Yye... yes! things are crazy here.
+4f0300?
+1t340R
+4f0300This clothes... you are some sort of dancer?
+1t350Q
+4f0000Haha what? you never have seen a nun before?
+1t310R
+4f0300This don't look like... a nun outfit.
+1t360Q
+4f0000This is the normal outfit they give us in the cathedral. We are differente from the normal nuns.
+1t370T
+4f0300But, why it show so much skin?
+1t380S
+4f0000We cant use all that normal clothes, we could stumble in the middle of combat. So the design allow us to move quickly.
+1t310R
+4f0300Make some sense... but is mandatory?
+1t310Q
+4f0000Of course not, this outfit is almost the complete one. A lot of girls don't use all the pieces.
+1t370R
+4f0300They show even more!?
+1t360Q
+4f0000Well, some people.
+1t360S
+4f0000Just for asking, I am part of the church so I need to know how other people see us for... ahm.... search, Yes!
+1t380Q
+4f0000So do you think we should wear less or more clothes?
+3t010ǀ31ǀ010
+2tIt1
+1t380I18
+4f0100Stop trying to put ideais on her head.
+1t350J17
+4f0000Shut up!
+1t350H12
+4f0100Are you ok?
+1t350G17
+4f0000Of course I am.
+1t350I18
+4f0100I was talking to the girl here.
+1t310R11
+4f0300Ye.. yes I am ok...
+1t360F11
+4f0000She saves me. You could learn with her.
+1t360E12
+4f0100You went ahead for no reason, If it catches you would be you fault.
+1t310O11
+4f0300Maybe you should... take more care.
+1t360I12
+4f0100She is always like this. She goes, try to do every thing, her magic stuff don't have more fuel and then I need to save her.
+1t360J17
+4f0000For your information I can save my self alone.
+1t360I18
+4f0100Sure, is not like they almost take you. But maybe you like it. You have weird taste already.
+1t360J17
+4f0000If my taste is weird your also is. And I need you to at least follow my speed.
+4f0000And comparing yourself to a monster? such a joke.
+1t360P17
+4f0000But make sense, maybe I prefer that than ride your pathetic dick.
+1t360V13
+4f0100Oh yeah? then go there! next time I won't save you.
+1t340R11
+4f0300Sorry I don't want to interrupt but...
+1t360V16
+4f0300You should not trying to engage in sexual intercorse with the albuins.
+1t330U16
+4f0000Do you think that I would try it!?
+1t320V16
+4f0300No!.. no.. just.. I was trying to catch what you are both are talking.
+4f0300Sorry...
+1t330I15
+4f0100She have good eyes, realizing that you are crazy.
+2tD0f
+3t010ǲ31Æ00Æ41ǲ
+2tIt4
+1t32410R11
+4f0400Hoho~ tough days.
+1t3142
+4f0300It's over?
+1t3641
+4f0400Yes sweetheart. How much you take? And who could be you 2?
+1t3142
+4f0300Already 10... I am exhausted.
+1t32430R11
+4f0400And who could be you 2?
+1t32440Q
+4f0000Aham... My name is Dia and this is Takeru. We come here to catch a new member.
+1t430R
+4f0400Hoh~ they finally came! aren't you happy sweetheart?
+1t4339
+4f0300Su..sure!...
+1t123:
+4f0100Can I ask your names?
+1t1143
+4f0400My name is Conor, I am the village main guard. And this is my oldest daughter.
+2tZ4conor
+1t3;44
+4f0300My name is Nara, nice to met you.
+2tZ3nara
+1t3<
+4f0100...
+1t3;
+4f0300Any problem?
+1t3=120I
+4f0100Not really I just... just 10 is a little...
+1t3=170J
+4f0000Shut up!
+1t0Q
+4f0000It's my pleasure! I am so happy that I can at least talk to another girl in the way back.
+1t3>0T
+4f0300Ye..yeah! will be great.
+1t3=0Q
+4f0000Yeah it was great, was a nice travel for you.
+1t3=0R
+4f0300?
+1t15
+4f0100Yeah, at least you return safe.
+1t1643
+4f0400Sorry for my daughter being so incapable.
+4f0300What are y
+2t^1100
+2tW
+2f6Æf3t
+2t>00
+2tL0t01234
+2tIf01234
+2tL0c01234
+2fE032images/in_game/background/catedral/nara_room/bed_up_view_n
+2t?0،
+2f6،f3t
+2t@
+2tD2t
+6t11tb0Ꮈarabic_2
+4f0300...
+4f0300......
+4f0300..........
+4f0300AH!
+2tE102images/in_game/background/catedral/nara_room/front_n
+2tL1t3
+3t0310
+2tIt3
+4f0300...
+4f0300*Whe...where am I?*
+4f0300*What is this building? there was something like this in the village?*
+4f0300Dad? guys?
+4f0300...
+4f0300*Rigth, think nara, think. you dont know where you are, you are weak, are in some kinda of pajama and you have no wepons.*
+5f00f

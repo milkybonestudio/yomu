@@ -1,0 +1,18 @@
+0t&nara&0,robe@neutral@bf@direita,robe(mostrando_costas)@neutral@bf@direita,,,,,,,,,,,,,,,,,&&&0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0&,,,,,,,,,,,,,,,,,,,
+2tD2t
+2f8
+2tE122images/in_game/background/catedral/nara_room/front_n
+2tL0t0
+2tQ06
+2tL0c0
+1t01
+2fIt0
+2tQ0<
+1t01
+4f0000...
+1t02
+4f0000*my scars... they gone*
+1t01
+4f0000*maybe this is a dream?*
+4f0000*yes! is just a dream. later you will wake up and go back to your normal and happy life*
+5f30f

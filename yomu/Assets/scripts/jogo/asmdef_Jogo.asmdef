@@ -1,0 +1,22 @@
+{
+    "name": "jogo_asm",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6e9d183e13cb2bc4b80dbd10e84a77ae",
+        "GUID:a18eb61b1a566ec49a6e746d96ca1467",
+        "GUID:e2d3e033c1fb19c489f7d05e015ec55a",
+        "GUID:f75343de297820a40aba1f9eeec77ff5",
+        "GUID:56ec995b3fccc5147a9363771db1fe14",
+        "GUID:78b1e125ccbea0c4d81103b44cda4021",
+        "GUID:b06354894c2e34849ae8cb7cf7af9bf4"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

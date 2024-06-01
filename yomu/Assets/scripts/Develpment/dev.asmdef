@@ -1,0 +1,19 @@
+{
+    "name": "dev",
+    "rootNamespace": "",
+    "references": [
+        "GUID:78b1e125ccbea0c4d81103b44cda4021",
+        "GUID:62bca32632135b74e877e1a10652403a"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
