@@ -14,8 +14,9 @@
  - Run_time_data => Data that don`t make sense load everything to the ram, load dynamically with reflection :fearful:
  - Uso_geral => Things that every logic needs to have or know
 
-
  <br>
+
+ The "jogo"/Game contains blocks with one in their own assemblye and responsable for one game type. <br>
 
  The flow is:
  ```
@@ -47,7 +48,23 @@
 ```                  
  <br>
  
- The important blocks are called "Controladores" :shipit: and they use a singleton logic. Every block has:
+ The important blocks are called "Controladores" :shipit: and they use a singleton logic. 
+ 
+ There are generic types like: 
+ - Controlador_audio
+ - Controlador_input
+ - Controlador_configuracoes
+ - Controlador_cursor
+
+And are more especifc blocks: 
+- Controlador_personagens_visual_novel ( used in visual novel ( uou ) )
+- Controlador_interativos ( used in moviment )
+- Controlador_dados_dinamicos ( used to store danamicy data )
+- Controlador_save ( used only in Jogo )
+- Controlador_multithread 
+ 
+ 
+ Every block has:
  
  ```
 
