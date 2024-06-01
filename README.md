@@ -8,7 +8,7 @@
 
 
  The code has 5 main assemblyes: 
- - Development : Manipulating files into final compact form + testing
+ - Development : Manipulating files into final compact form + testing ** DON`T EXIST IN BUILD 
  - Main : Can control everything + have the only Update function of the entire code
  - Jogo : The game itself => need to load stuff
  - Run_time_data => Data that don`t make sense load everything to the ram, load dynamically with reflection :fearful:
@@ -25,16 +25,16 @@
                      ---------------------------|
                      |                          |
                      |                          V                                                                 
-                     |                         Jogo                                                         
-                     |                          |   \                                                             
-                     |                          |    \                                                            
-                     |                          |      \---------------------------------------                  
-                     V                          |          |          |         |             |             
+                     |                 ------> Jogo                                                         
+                     |               /          |   \                                                             
+                     |             /            |     \                                                            
+                     |           /              |       \--------------------------------------
+                     V         /                |          |          |         |             |             
                   development                   |          V          V         V             V         
-                              \                 |        move   visual_novel  cards   | other_blocks blocks ... | 
-                                 \              |       /         /           /            /              
-                                    \           |     /        /         /            /               
-                                      V         V   V       V         V           V                  
+                               \                |        move   visual_novel  cards   | other_blocks blocks ... | 
+                                  \             |       /         /           /            /              
+                                     \          |     /        /         /            /               
+                                        V       V   V       V         V           V                  
                           ------------------uso_geral -----------------------------
                          |                      /\                          
                          |                      |
