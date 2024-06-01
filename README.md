@@ -19,22 +19,30 @@
 
  The flow is:
  ```
-                   Main  
-                    |------------------------------------------------------------------
-                    |                                                                 |
-Run_time_data      jogo                                                         development
-     |              |   \                                                             |
-     |              |    \                                                            |
-     |              |      \---------------------------------------                   |
-     |              |          |          |         |             |                   |
-     |              |          V          V         V             V                   |
-     |              |       move   visual_novel  cards   | importans blocks ... |     |
-     |              |       /         /           /             /                     |
-     |              |     /        /         /            /                           |
-     |              |   V       V         v          v                                |
-     |------->  uso_geral <-----------------------------------------------------------|
-                    |
-                    |
+  A -> B  =>  ( A ) knows / can access / have as reference ( B ) 
+
+                                              Main  
+                     ---------------------------|
+                     |                          |
+                     |                          V                                                                 
+                     |                         Jogo                                                         
+                     |                          |   \                                                             
+                     |                          |    \                                                            
+                     |                          |      \---------------------------------------                  
+                     V                          |          |          |         |             |             
+                  development                   |          V          V         V             V         
+                              \                 |        move   visual_novel  cards   | other_blocks blocks ... | 
+                                 \              |       /         /           /            /              
+                                    \           |     /        /         /            /               
+                                      V         V   V       V         V           V                  
+                          ------------------uso_geral -----------------------------
+                         |                      /\                          
+                         |                      |
+                         |                      |
+                     (dynamic)            ( compilation )                  
+                         |                      |                         
+                         |                      |                       
+                          ---------- >   Run_time_data 
 
 ```                  
  <br>
