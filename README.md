@@ -12,7 +12,7 @@
  &nbsp;&nbsp;A short introduction of how to read the code:
 
 
- The code has 5 main assemblyes: 
+ The code has 5 main assemblies: 
  - Development : Manipulating files into final compact form + testing ** DON`T EXIST IN BUILD 
  - Main : Can control everything + have the only Update function of the entire code
  - Jogo : The game itself => need to load stuff
