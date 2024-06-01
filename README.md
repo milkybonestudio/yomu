@@ -19,14 +19,14 @@
  The important blocks are called "Controladores" :shipit: and they use a singleton logic. Every block has:
  
  ```
- public class Controlador_generico(){
+ public class Controlador_FUNCTION(){
 
-    public static Controlador_generico instancia;
-    public static Controlador_generico Pegar_instancia(){ return instancia; };
+    public static Controlador_FUNCTION instancia;
+    public static Controlador_FUNCTION Pegar_instancia(){ return instancia; };
 
-    public static Controlador_generico Construir( args ){
+    public static Controlador_FUNCTION Construir( args ){
 
-        Controlador_generico controlador = new Controlador_generico();
+        Controlador_FUNCTION controlador = new Controlador_FUNCTION();
 
                 ...
                 ...  ( create block )
