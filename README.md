@@ -19,6 +19,7 @@
  The important blocks are called "Controladores" :shipit: and they use a singleton logic. Every block has:
  
  ```
+
  public class Controlador_FUNCTION(){
 
     public static Controlador_FUNCTION instancia;
@@ -43,6 +44,7 @@
     
 
  }
+
  ```
 The "Construir" is necessary by the way that Unity handles static fields with no reload domain. With the normal check if( instance == null ){ construct(); } tha last object will still be there and give bugs here and there.
  
