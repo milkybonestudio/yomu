@@ -56,7 +56,7 @@
  - Controlador_configuracoes
  - Controlador_cursor
 
-And are more especifc blocks: 
+And are more specific blocks:
 - Controlador_personagens_visual_novel ( used in visual novel ( uou ) )
 - Controlador_interativos ( used in moviment )
 - Controlador_dados_dinamicos ( used to store danamicy data )
@@ -66,7 +66,7 @@ And are more especifc blocks:
  
  Every block has:
  
- ```
+ ```C#
 
  public class Controlador_FUNCTION(){
 
