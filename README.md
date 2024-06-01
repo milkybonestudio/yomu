@@ -18,6 +18,7 @@
  <br>
 
  The flow is:
+ ```
                    Main  
                     |------------------------------------------------------------------
                     |                                                                 |
@@ -34,7 +35,8 @@ Run_time_data      jogo                                                         
      |------->  uso_geral <-----------------------------------------------------------|
                     |
                     |
-                      
+
+```                  
  <br>
  
  The important blocks are called "Controladores" :shipit: and they use a singleton logic. Every block has:
