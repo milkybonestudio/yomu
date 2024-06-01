@@ -63,7 +63,7 @@
 
 And are more specific blocks:
 - Controlador_personagens_visual_novel ( used in visual novel ( uou ) )
-- Controlador_interativos ( used in moviment )
+- Controlador_interativos ( used in movement )
 - Controlador_dados_dinamicos ( used to store danamicy data )
 - Controlador_save ( used only in Jogo )
 - Controlador_multithread 
