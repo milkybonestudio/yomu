@@ -64,6 +64,7 @@ sysinfo.txt
 
 
 *files_em_producao/
+*dados_de_producao/
 
 # Crashlytics generated file
 crashlytics-build.properties
