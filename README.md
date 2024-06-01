@@ -15,7 +15,7 @@
  - Uso_geral => Things that every logic needs to have or know
 
 
- 
+ <br>
  The important blocks are called "Controladores" :shipit: and they use a singleton logic. Every block has:
  
  ```
