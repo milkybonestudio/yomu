@@ -8,11 +8,11 @@
 
 
  The code has 5 main assemblyes: 
- - Development
- - Jogo
- - Main
- - Run_time_data
- - Uso_geral
+ - Development : Manipulating files into final compact form + testing
+ - Main : Can control everything + have the only Update function of the entire code
+ - Jogo : The game itself => need to load stuff
+ - Run_time_data => Data that don`t make sense load everything to the ram, load dynamically with reflection :fearful:
+ - Uso_geral => Things that every logic needs to have or know
 
 
  
