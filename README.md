@@ -21,7 +21,7 @@
 
  <br>
 
- The "jogo"/Game contains blocks with one in their own assemblye and responsable for one game type. <br>
+ The "jogo"/Game contains blocks with one in their own assembly and responsable for one game type. <br>
 
  The flow is:
  ```
