@@ -1,2 +1,0 @@
-[fn,false,0,levantar_texto]
-[texto,false,0,0,james,olha so]
