@@ -15,18 +15,6 @@ using System.Reflection;
 
 
 
-/*
- 
-     passos para entrar:
-     
-     player inicia todos os modulos => vai entrar no "in_game" => zerar todos os dados/voltar default( garante que sempre tem os dados default ) => tem save? s: => save intera sobre os dados default 
-                                                                                                                                                              n: => jogo inicia com os dados default
-     
-*/
-
-
-
-
 public enum Controlador_modo {
 
       nada,
