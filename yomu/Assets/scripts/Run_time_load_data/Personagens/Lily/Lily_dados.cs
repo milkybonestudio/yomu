@@ -6,11 +6,6 @@ using System;
 
 
 
-/*
-    ** todos tem somente 1 byte
-    formato :   [     run_time , periodo , dia , semana ,  mes  ]
-
-*/
 
 
 
@@ -43,11 +38,19 @@ public class Lily_dados {
         
 
         public void Pegar_dados(){
+
+                 // esse metodo vai ser 
         
                 Personagem lily = Controlador_personagens.Pegar_instancia().Pegar_personagem( Personagem_nome.Lily );
-            
+                  
                 byte[] dados_para _iniciar = Lily.dados_updates;
-                
+
+               /*
+                     ** todos tem somente 1 byte
+                     formato :   [     run_time , periodo , dia , semana ,  mes  ]
+         
+               */
+
                 Lily_update_run_time update_run_time = ( Lily_update_run_time ) dados_para_iniciar[ Index_updates.run_time ];
                 Lily.Update_run_time = Construtor_update_run_time( update_run_time );
                 
