@@ -3,6 +3,7 @@
 
 
 using System.IO;
+using System;
 
 public enum Tipo_dado_personagem {
 
@@ -210,6 +211,16 @@ public class Personagem {
 
 
         }
+
+
+        public System.Object dados_personagem_run_time;
+
+
+        public Action Update_run_time;
+        public Action Update_periodo;
+        public Action Update_dia;
+        public Action Update_semana;
+        public Action Update_mes;
 
 
 

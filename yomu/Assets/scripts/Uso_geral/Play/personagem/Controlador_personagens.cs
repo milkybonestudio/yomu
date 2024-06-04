@@ -510,6 +510,20 @@ public class Controlador_personagens {
 
 
 
+		public Personagem Pegar_personagem( Personagem_nome _personagem_nome ){
+
+			if( ! ( dados_sistema_personagens[ ( int )_personagem_nome ].personagem_esta_ativo ) ){ 
+
+				throw new Exception( $"pediu para pegar o personagem { _personagem_nome } mas ele nao estava ativo" );
+
+			 }
+
+			return personagens[ ( int )_personagem_nome ];
+
+		}
+
+
+
 
 
 

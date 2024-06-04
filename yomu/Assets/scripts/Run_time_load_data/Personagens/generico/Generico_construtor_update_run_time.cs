@@ -1,6 +1,6 @@
 using System;
 
-public class Lily_construtor_update_run_time {
+public class Generico_construtor_update_run_time {
     // todos as classes estao em Run_time_scripts
 
     public Action Pegar( Lily_update_run_time _nome_update ){

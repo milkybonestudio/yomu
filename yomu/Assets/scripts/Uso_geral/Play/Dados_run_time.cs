@@ -51,6 +51,11 @@ public class Dados_run_time {
 
         public void Carregar_personagem( Personagem _personagem ){
 
+                // sempre assume que ele nao foi carregado 
+                if ( _personagem.dados_personagem_run_time != null ){
+                        throw new Exception( "tentou carregar personagem 2 vezes" );
+                }
+
                                                 
                 string personagem_metodo_nome =  _personagem.dados_sistema.nome_personagem.ToString() + "_dados";
                         
@@ -62,6 +67,8 @@ public class Dados_run_time {
                         throw new Exception();
 
                 }
+
+                _personagem.dados_personagem_run_time = personagem_objeto_generico;
 
                 MethodInfo metodo_info = asm_personagens.GetType( personagem_metodo_nome ).GetMethod("Pegar_dados");
 

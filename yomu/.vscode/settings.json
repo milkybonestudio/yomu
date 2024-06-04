@@ -56,7 +56,7 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Yomu.sln",
+    "dotnet.defaultSolution": "yomu.sln",
     "editor.tokenColorCustomizations": {
         "textMateRules": [
             {
