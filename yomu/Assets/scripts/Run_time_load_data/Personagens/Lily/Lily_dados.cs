@@ -17,6 +17,15 @@ public class Lily_dados {
         // run_time => opcional => move personagem 
         //                      => tenta encontrar personagens => busca em certos lugares 
 
+        // periodo => principalmente movimento 
+
+
+        // dia => mudancas de estado mental 
+        //     => compras / troca de itens 
+
+        // semana => thoughts 
+        // mensal => thoughts 
+
 
 
 
@@ -58,6 +67,10 @@ public class Lily_dados {
 
                 Lily_update_mes update_mes = ( Lily_update_mes ) dados_para_iniciar[ ( int ) Index_updates.periodo ];
                 lily.Update_mes = construtor_update_mes.Pegar( update_mes );
+
+
+
+                byte update = ( byte ) 0;
                 
                 
                 return;

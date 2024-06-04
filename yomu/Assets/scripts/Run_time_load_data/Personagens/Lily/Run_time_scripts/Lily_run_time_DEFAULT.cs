@@ -3,12 +3,19 @@
 public class  Run_time_DEFAULT {
 
     
+
+
+
+
     public void fn() {
 
             // aqui vai estar a logica em sim
             Personagem lily = Controlador_personagens.Pegar_instancia().Pegar_personagem( Personagem_nome.Lily );
-
             Periodo_tempo periodo = Controlador_timer.Pegar_instancia().periodo_atual;
+
+
+            
+
 
             switch( periodo ){
 
@@ -24,7 +31,14 @@ public class  Run_time_DEFAULT {
     }
 
 
+
+
+
+
+
     public void Lidar_manha( Personagem lily ){
+
+
 
 
 

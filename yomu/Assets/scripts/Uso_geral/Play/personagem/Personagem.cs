@@ -42,25 +42,116 @@ public class Personagem_dados_internos {
 
 
 
+public enum Evento_caracteristica {
+
+    evento_em_grupo, 
+
+
+
+}
+
+
+public class Evento {
+
+    public string nome = "regar_flores";
+    public Personagem_nome[] personagens_envolvidos;
+    public Evento_caracteristica[] compromisso_caracteristicas; 
+
+}
+
+
+
+public class Compromisso {
+
+
+    public Evento evento;
+    // quando colocar em um personagem cada um vai ter um proprio. 
+    // quando for colocar um evento o personagem tem lidar se ele vai ou nao 
+
+    // 0  => ignora => nao acha importante 
+    // 1  => cumpre  => vai 
+    // -1 =>  nao cumpre => nao vai por algum motivo e é importante 
+    public Del_personagem_TO_int verificar_ida;
+
+
+    public Action< Personagem > lidar_cumprir = ( Personagem per ) => { throw new Exception( "nao foi colocado fn evento personagem " +  ) };
+    public Action< Personagem > lidar_nao_cumprir = ( Personagem per ) => { throw new Exception( "nao foi colocado fn evento personagem " +  ) };
+
+    public Action< Personagem > lidar_ignorar = ( Personagem per ) => { throw new Exception( "nao foi colocado fn evento personagem " +  ) };
+
+
+}
+
+// onde isso vai ficar?
+public delegate int Del_personagem_TO_int ( Personagem _personagem );
+public delegate bool Del_personagem_TO_bool ( Personagem _personagem );
+
 
 // os containers vao apontar para os mesmos dados que save_personagem 
 
-public class Personagem {
+
+public class Gerenciador_estado_mental {
 
 
-        public Personagem(  ){
 
+}
 
+public class Gerenciador_compromisso {
+
+        public Gerenciador_compromisso( Personagem _personagem ){ personagem = _personagem; }
+
+        public Personagem personagem;
+
+        public Compromisso[] deveres = new Evento[ 35 ];
+        public Compromisso[] eventos_futuros = new Evento[ 5 ];
+        public int[]  eventos_futuros_dias = new int[ 5 ];
+
+        public bool Verificar_compromisso( Semana_periodo _semana_periodo ){
+
+                // false => nao impede o update
+                // true => impede o update 
+
+                if( deveres[ _semana_periodo ] == null ){ return false; }
 
 
         }
 
+        public void Adicionar_compromisso( Semana_periodo _tempo , Compromisso _compromisso ){
 
-        public int variavel_1 = 1;
+
+
+            
+
+        }
+ 
+
+
+
+}
+
+
+public class Gerenciador_quests {
+
+
+
+
+}
+
+
+public class Personagem {
+
+
+        // gerenciadores fazem mais sentido 
+        public Gerenciador_estado_mental gerenciador_estado_mental;
+        public Gerenciador_compromisso gerenciador_compromisso;
+
+        public Gerenciador_quests gerenciador_quests;
 
 
 
         public Dados_sistema_personagem dados_sistema;
+
+
 
         // essa classe so vai ser criada se o personagem estiver ativo, poucos vão estar o tempo todo
         // vai ser instanciado sempre no Controlador_save
@@ -80,6 +171,12 @@ public class Personagem {
 
         // se algo de alguma tabela sair de padrão vai ser alterado aqui
         public byte[] variacoes_de_tabelas;
+
+
+
+
+
+
 
         public float Pegar_estado_mental( Estado_mental _estado_mental ){
 
@@ -107,16 +204,6 @@ public class Personagem {
 
         }
 
-        // public int Pegar_bool_quests_dados( Dados_bool _dado ) {
-
-
-        //         in index_inicio_bools = dados_quests[ 15 ];
-        //         int index_inicio_dados = ( int ) _dado + index_inicio_bools;
-
-        //         return ( bool ) dados_quests[ index_inicio_dados ];
-
-
-        // }
 
 
         public Estado_mental_personagem estado_mental = new Estado_mental_personagem();
@@ -186,31 +273,6 @@ public class Personagem {
         }
 
 
-        public void Update_movimento( Personagem self ){
-
-
-                // Estado_mental_personagem estado_mental = self.estado_mental;
-
-
-                // if( periodo_atual == 5 ){
-
-
-                //         if( self.Pegar_estado_mental( Estado_mental.felicidade ) > 500f ){
-
-
-                //         }
-
-                        
-                //         if( estado_mental.felicidade > 500f ){
-
-
-                //         }
-
-
-                // }
-
-
-        }
 
 
         public System.Object dados_personagem_run_time;
@@ -253,6 +315,8 @@ public class Personagem {
         
         // MES   SEMANA  DIA   periodo   run_time
         public System.Action[] Updates_movimento = new System.Action[ 5 ];
+
+        public Action[] updates;
 
 
   
