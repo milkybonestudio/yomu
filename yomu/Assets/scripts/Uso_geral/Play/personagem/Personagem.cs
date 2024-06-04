@@ -1,20 +1,8 @@
 
 
 
-
 using System.IO;
 using System;
-
-public enum Tipo_dado_personagem {
-
-    eventos_valores_fixos,
-    eventos_valores_variados, 
-
-
-    movimentos_mapa,
-
-
-}
 
 
 
@@ -29,8 +17,21 @@ public enum Estado_mental {
 
 public class Estado_mental_personagem {
 
-    public float felicidade;
-    public float depressao;
+    
+    // variavis emocionais 
+    // momento 
+    public float alegria;         // felicidade : 500+ sadness 500-
+    public float iniciativa;      // raiva : 500+ medo : 500-
+    public float atratividade;    // 
+    public float previsibilidade; // 
+
+    public void Calcular_guily(){
+
+
+        float guilty =    alegria   -  iniciativa 
+
+        
+    }
 
 }
 
@@ -45,8 +46,6 @@ public class Personagem_dados_internos {
 public enum Evento_caracteristica {
 
     evento_em_grupo, 
-
-
 
 }
 
@@ -91,6 +90,81 @@ public delegate bool Del_personagem_TO_bool ( Personagem _personagem );
 
 
 public class Gerenciador_estado_mental {
+
+    public Estado_mental_personagem estado_mental;
+
+        public void Mudar_estado_mental(   Estado_mental _estado, float _novo_valor  ){
+
+                /*
+                    processo para mudar: 
+                     - mudar valor no jogo
+                     - ver oque precisa mudar no container para atualizar o valor 
+                     - mudar no buffer 
+                     - enviar um byte[] de como mudar esses dados em caso de encerramento brisco
+                */
+
+
+                // muda o dado em si 
+
+                switch( _estado ){
+
+                    case Estado_mental.felicidade: estado_mental.felicidade += _novo_valor; break;
+                    case Estado_mental.depressao: estado_mental.depressao += _novo_valor; break;
+
+                }
+
+                Salvar_novo_valor(  _estado , _novo_valor  );
+
+                return;
+
+
+                // ve oque precisa mudar nos containers
+                int byte_index = ( int ) _estado * 2;
+                int estado_mental_valor = ( int ) dados_internos_personagens[ byte_index ] ; 
+
+                // transform u => s
+                estado_mental_valor -= 128;
+
+                estado_mental_valor = estado_mental_valor << 8 ;
+                estado_mental_valor += ( int ) dados_internos_personagens[ byte_index + 1 ] ;
+
+                byte[] byte_estado_mental = new byte[ 3 ] ;
+
+                int container = 1;
+                int start_point = 1;
+                byte[] dados_retorno = new byte[ 10 ];
+
+                // muda o buffer
+                // mudar o buffer não vai mudar o valor, vai somente deixar o novo valor na ram 
+                // nao vale a pena iniciar uma gravação para somente alguns bytes. é melhor deixar eles acumularem 
+
+                dados_sistema.streams[ container ].Seek(  start_point,  SeekOrigin.Begin ) ;
+                dados_sistema.streams[ container ].Write( dados_retorno, 0 , dados_retorno.Length ) ;
+
+
+                // passa para controaldor personagens o byte que pode reconstruir esse dados se o sistema sair bruscamente 
+                Controlador_personagens.Pegar_instancia().Pedir_para_salvar_dados( dados_retorno );
+
+                return ;
+
+
+
+        }
+
+
+    public void Salvar_novo_valor(  _estado , _novo_valor  ){
+
+
+        
+
+
+        
+    }
+        
+
+
+
+    
 
 
 
@@ -208,69 +282,6 @@ public class Personagem {
 
         public Estado_mental_personagem estado_mental = new Estado_mental_personagem();
 
-
-        public void Mudar_estado_mental(   Estado_mental _estado, float _novo_valor  ){
-
-                /*
-
-                    processo para mudar: 
-                     - mudar valor no jogo
-                     - ver oque precisa mudar no container para atualizar o valor 
-                     - mudar no buffer 
-                     - enviar um byte[] de como mudar esses dados em caso de encerramento brisco
-                
-                */
-
-
-                // muda o dado em si 
-
-                switch( _estado ){
-
-                    case Estado_mental.felicidade: estado_mental.felicidade += _novo_valor; break;
-                    case Estado_mental.depressao: estado_mental.depressao += _novo_valor; break;
-
-                }
-
-
-
-                // ** por hora nao vai salvar nada 
-                return; 
-
-
-
-
-                // ve oque precisa mudar nos containers
-                int byte_index = ( int ) _estado * 2;
-                int estado_mental_valor = ( int ) dados_internos_personagens[ byte_index ] ; 
-
-                // transform u => s
-                estado_mental_valor -= 128;
-
-                estado_mental_valor = estado_mental_valor << 8 ;
-                estado_mental_valor += ( int ) dados_internos_personagens[ byte_index + 1 ] ;
-
-                byte[] byte_estado_mental = new byte[ 3 ] ;
-
-                int container = 1;
-                int start_point = 1;
-                byte[] dados_retorno = new byte[ 10 ];
-
-                // muda o buffer
-                // mudar o buffer não vai mudar o valor, vai somente deixar o novo valor na ram 
-                // nao vale a pena iniciar uma gravação para somente alguns bytes. é melhor deixar eles acumularem 
-
-                dados_sistema.streams[ container ].Seek(  start_point,  SeekOrigin.Begin ) ;
-                dados_sistema.streams[ container ].Write( dados_retorno, 0 , dados_retorno.Length ) ;
-
-
-                // passa para controaldor personagens o byte que pode reconstruir esse dados se o sistema sair bruscamente 
-                Controlador_personagens.Pegar_instancia().Pedir_para_salvar_dados( dados_retorno );
-
-                return ;
-
-
-
-        }
 
 
 
