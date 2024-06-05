@@ -24,26 +24,28 @@ public class Lily_periodo_DEFAULT {
 
                 }
                         
+                bool bloqueou_por_compromisso = lily.gerenciador_compromisso.Verificar_compromisso( semana_periodo );
 
-                Compromisso dever = lily.deveres[ ( int ) semana_periodo ];
+                if( bloqueou_por_compromisso ){ return; }
 
-                if( dever != null ){
 
-                        bool vai_no_evento = dever.verificar_ida( lily );
+                // if( dever != null ){
 
-                        if( vai_no_evento ){
+                //         bool vai_no_evento = dever.verificar_ida( lily );
 
-                                // se vai no evento precisa ter essa funcao 
-                                dever.lidar_cumprir( lily );
-                                dever.lidar_nao_cumprir( lily );
+                //         if( vai_no_evento ){
+
+                //                 // se vai no evento precisa ter essa funcao 
+                //                 dever.lidar_cumprir( lily );
+                //                 dever.lidar_nao_cumprir( lily );
                                 
-                        }
+                //         }
 
-                        // verificar se vai fazer o dever 
+                //         // verificar se vai fazer o dever 
 
 
 
-                }
+                // }
 
 
                                         
@@ -65,48 +67,56 @@ public class Lily_periodo_DEFAULT {
 
             int dia_semana = 0;
 
+            Estado_mental estado_mental = lily.gerenciador_estado_mental.estado_mental;
+
             switch( dia_semana ){
 
-                    case 0: {
+                        case 0: {
 
-                            switch( periodo ){
+                                switch( periodo ){
 
-                                    case Periodo_tempo.manha: {
-
-
-
-                                        float vontade_de_regar_flores =    lily.estado_mental.felicidade  / ( lily.estado_mental.depressao );
-
-                                        if( vontade_de_regar_flores > 500f ){
-
-                                            // regar_flores();
-
-                                        }
-
-                                            // code 
-
-                                            // personagem.Move( nova_posicao ) 
+                                        case Periodo_tempo.manha: {
 
 
+                                                float vontade_de_regar_flores =    estado_mental.felicidade  / ( estado_mental.tristeza );
 
-                                            return;
+                                                if( vontade_de_regar_flores > 500f ){
 
-                                    };
-                                    case Periodo_tempo.dia:  Lidar_dia( lily )  ; break;
-                                    case Periodo_tempo.tarde:  Lidar_tarde( lily )  ; break;
-                                    case Periodo_tempo.noite:  Lidar_noite( lily )  ; break;
-                                    case Periodo_tempo.madrugada:  Lidar_madrugada( lily )  ; break;
 
-                            }
+                                                        // regar_flores();
+
+
+                                                }
+
+                                                // code 
+
+                                                // personagem.Move( nova_posicao ) 
 
 
 
-                    }
+                                                return;
+
+                                        };
+                                        case Periodo_tempo.dia:  Lidar_dia( lily )  ; break;
+                                        case Periodo_tempo.tarde:  Lidar_tarde( lily )  ; break;
+                                        case Periodo_tempo.noite:  Lidar_noite( lily )  ; break;
+                                        case Periodo_tempo.madrugada:  Lidar_madrugada( lily )  ; break;
+
+                                }
+                                
+                                break;
+
+
+
+                        }
+                        
 
             }
 
 
     }
+
+
 
 
 

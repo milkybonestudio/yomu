@@ -3,7 +3,7 @@ using System;
 
 public enum Update {
 
-    continenteCentral_reinoHumano_santaMadalena_catedral
+    catedral
 
 }
 
@@ -13,10 +13,10 @@ public class Personagem_dados {
 
     public void Pegar_dados( Personagem personagem ){
 
-        Update update = Update.continenteCentral_reinoHumano_santaMadalena_catedral;
+        // Update update = Update.catedral;
 
 
-        personagem.updates = Pegar_updates( update );
+        // personagem.updates = Pegar_updates( update );
 
     }
 
@@ -26,16 +26,10 @@ public class Personagem_dados {
 
             int index = ( int ) update;
 
-            switch( index ){
-
-                case 0 : index++;break;
-                case int.MaxValue : index++;break;
-
-            }
 
             switch( update ) {
 
-                case Update.continenteCentral_reinoHumano_santaMadalena_catedral: if( updates[ index ] == null ){ updates[ index ] = new Update_continenteCentral_reinoHumano_santaMadalena_catedral().Pegar_updates(); } return updates[ index ]; 
+                case Update.catedral: if( updates[ index ] == null ){ updates[ index ] = new Lily_update_catedral().Pegar_updates(); } return updates[ index ]; 
 
             }
 
@@ -48,7 +42,7 @@ public class Personagem_dados {
 }
 
 
-public class Update_continenteCentral_reinoHumano_santaMadalena_catedral {
+public class Lily_update_catedral {
 
     public System.Action[] Pegar_updates(){
 

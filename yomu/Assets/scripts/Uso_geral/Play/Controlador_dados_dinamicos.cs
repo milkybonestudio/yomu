@@ -18,6 +18,7 @@ public class Controlador_dados_dinamicos{
 
                         controlador.dados_run_time = new Dados_run_time();
                         controlador.lista_navegacao = new Lista_navegacao();
+                        controlador.tradutor_save_dinamico = new Tradutor_save_dinamico();
 
 
                 instancia = controlador; 
@@ -27,6 +28,7 @@ public class Controlador_dados_dinamicos{
 
     public Lista_navegacao lista_navegacao;
     public Dados_run_time dados_run_time;
+    public Tradutor_save_dinamico tradutor_save_dinamico ;
 
     
 

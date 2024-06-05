@@ -51,6 +51,8 @@ public class Dados_run_time {
 
         public void Carregar_personagem( Personagem _personagem ){
 
+                
+
                 // sempre assume que ele nao foi carregado 
                 if ( _personagem.dados_personagem_run_time != null ){
                         throw new Exception( "tentou carregar personagem 2 vezes" );

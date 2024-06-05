@@ -154,8 +154,8 @@ public class Dados_sistema_personagem {
 
 
 
-
-        public int tipo_armazenamento; // 0 => container_compactado, 1 => arquivos separados
+        // ** vai começar como compacto porque eu preciso saber oque eu reciso antes de pensar em compactar
+        public int tipo_armazenamento = 1 ; // 0 => container_compactado, 1 => arquivos separados
 
         // ** lembrar de adicionar
         public int length_container_geral; // so usar se for 0

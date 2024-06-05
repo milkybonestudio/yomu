@@ -4,62 +4,6 @@ using UnityEngine;
 /*
 
 
-*** personagens que não estão em foco não precisam de dados?
-*** isso vai fazer 
-** o total de ram que o sistema vai usar por conta dos personagens vai ser numero_maximo_de_personagens * dados_por_personagem * espaço_medio_por_dado
-   certas coisas vao precisar ser strings ( ? ) 
-   poderia ser enum. 
-
-o numero de personagens não pode crescer infinitamente, mas eu não tenho ainda noção de escala 
-
-o valor principal para ver é o tamanho da dll. 
-quanto de memoria eu estou disposto a usar? 
-
-somente o jogo normal com a unity gasta em torno de 150mb 
-acho que até 300mb é algo aceitavel 
-150mb => 150_000_000 bytes
-com 150 personagens pode ter 1mb
-todas as classes com os metodos vão ser estaticos. 
-Pois como oque é realmente grande vai ser as proprios funcoes nao faz sentido colocar parte da logica dentro da dll. 
-
-oque eu tenhop que pensar é quem vai conseguir puxar essa funcao e quem vai conseguir mudar 
-
-  sistema :: assembly.class().metodo 
-
-  a classe precisa ter um metodo que coloca os dados
-
-  public enum Tipo_mov_lily {
-
-  	default, 
-        normal, 
-  
-  }
-
-  precisa ser algo: class {
-
-  		//                                esses dados estariam complexos 
-  		void Colocar_dados( Lily _lily , string _dados_str ) { 
-
-				// 
-    				int index_movimento = 0; 
-    				char tipo_mov_char = _dados_str [ index_movimento ];
-				Tipo_mov_lily tipo_mov = ( Tipo_mov_lily ) tipo_mov_char;
-
-    				switch( tipo_mov ){
-					case Tipo_mov_lily.default: _lily.Updat_movimento = Lily_lidar_movimento; break; 
-					default : Exception("a");	
-     
-				}
-
- 
-		}
-	
-  
-  }
-
-chamar o metodo nao vai ter muito custo, mas colocar tem. 
-
-
 parte generica  => 
 
 nome : ##
@@ -89,85 +33,6 @@ personagem {
    [ ... ][ ... ] => container com informacoes sobre os personagens
    
  
-   dados_atualizar_dia
-
-   Update_dia(){
-
-
-
-   }
-
-
-
-
-}
-
-
-ponto_atual 
-
-public action(){
-
-}
-
-
-lily.Movimentar( mes , semana, dia , priodo ){
-
-
-	switch( dia_semana ){	
-
-	case Dia.Segunda : lidar_movimento_segunda( mes , semana, dia , priodo )
-
-
-}
-
-
-lidar_movimento_segunda(){
-
-
-      switch( periodo ){
-
-case Periodo.Manha: {
-
-if( variavel ) { dados[ clothes ] = clothes.duck; return;} 
-if( variavel_2 ) { dados[ clothes ] = clothes.normal; return;} 
-
-
-braak;
-
-
-}
-
-}
-      if( variavel ) { dados[ clothe ] = Clothes.duck; }
-
-
-
-}
-
-
-
-}
-
-
-
-
-** dados 
-
-   todo personagem precisa de dados dinamicos que são resetados depois de cada dia 
-
- 
-
- 
-tempo para atualizar
-
-
- - mensal 
- - semana
- - dia
- - periodo 
- - tempo real
-
-
 
 
 personagem 
@@ -246,100 +111,8 @@ updates vs atos
 Update : depende de tempo 
 Ato : depende de algo iniciar 
 
-
-
-
-
-** preciso checar mais oque? 
-
-
-
-
-reposta = Pegar_resposta()::bool 
-
-mudar_valor()::void
-
-
-
-
-
-lily_comeu_biscoito => bool 
-quantos_biscoitos_lily_comeu => 10
-
-
- 
 */
 
-
-
-
-/*
-
-
-
-
-	save /  
-
-	      personagens  /
-
-    	 	                lily  /
-
-									// dados exclusivos do save 
-
-									dados_sistema.txt
-
-									// se o personagem esta em foco 
-
-									dados_container_bool.dat
-									dados_container_int.dat
-									dados_container_string.txt
-									dados_container_datas.dat
-
-								
-							ruby  /
-							
-
-
-
-** oque pode introduzir personagens
-         => tempo       
-		 => mudar de local 
-		 => quests 
-	** nao precisa ser o player. 
-	se a lily for para outra cidade o jogo precisa iniciar todos os personagens da cidade. 
-	mas não é iniciar na ram, vai ser soment efazer uma copia dos arquivos de cada personagem para o save.
-						
- 
-
-*/
-
-public static class Dados_sistema_personagens_ferramentas {
-
-
-		public static Dados_sistema_personagem Ler( string _dados_str ){
-
-			return null;
-
-
-		}
-
-	
-
-}
-
-
-
-// public class Personagem {
-
-
-// 	public Ass
-
-
-
-// }
-
-
-	
 
 
 
@@ -351,115 +124,87 @@ public class Controlador_personagens {
 
 		// personagens nao salva nada, ou seja nao tem porque ele saber sobre como vao ficar os container.dat
 
-		/*
-
-			Cada persoangem tem dlls corespondetes para cada regiao			
-		
-		*/
 
 		public static Controlador_personagens instancia;
 		public static Controlador_personagens Pegar_instancia(){ return instancia;}
-		
+
+
 		public static Controlador_personagens Construir ( Dados_sistema_personagem[] _dados_sistema_personagens , int _save ){
 
+				throw new Exception( "aind anao pode vir aqui porque eu nao defini como pegar os dados do save ainda " );
 
-				instancia = new Controlador_personagens();
+				Controlador_personagens controlador = new Controlador_personagens();
 
-				instancia.dados_sistema_personagens = _dados_sistema_personagens;
-				instancia.personagens = new Personagem[ instancia.dados_sistema_personagens.Length ];
+						controlador.dados_sistema_personagens = _dados_sistema_personagens;
+						controlador.personagens = new Personagem[ controlador.dados_sistema_personagens.Length ];
 
-				int index_personagem = 0;
+						controlador.path_folder_dados_personagens = Paths_gerais.Pegar_path_folder_dados_save( _save )  ;
+						controlador.path_folder_dados_personagens_morte = Paths_gerais.Pegar_path_folder_dados_save( _save ) + "/morte" ;
 
-				int numero_personagens_ativos = 0;
+						int index_personagem = 0;
 
-				for( index_personagem = 0 ; index_personagem <  instancia.dados_sistema_personagens.Length ; index_personagem++){ 
+						int numero_personagens_ativos = 0;
 
-						if( instancia.dados_sistema_personagens[ index_personagem ].personagem_esta_ativo ){ numero_personagens_ativos++;}
+						for( index_personagem = 0 ; index_personagem <  controlador.dados_sistema_personagens.Length ; index_personagem++){ 
 
-				}
+								if( controlador.dados_sistema_personagens[ index_personagem ].personagem_esta_ativo ){ numero_personagens_ativos++;}
 
-				Personagem_nome[] personagens_ativos = new Personagem_nome[ numero_personagens_ativos ];
-
-
-				int personagens_ativos_index = 0;
-				for( index_personagem = 0 ; index_personagem < instancia.dados_sistema_personagens.Length ; index_personagem++ ){
-
-						Dados_sistema_personagem dados_sistema_personagem = _dados_sistema_personagens[ index_personagem ];
-						if( dados_sistema_personagem.personagem_esta_ativo ){ 
-								
-								personagens_ativos[ personagens_ativos_index ] = dados_sistema_personagem.nome_personagem;
-								personagens_ativos_index++;
-
-								Personagem novo_personagem = new Personagem();
-
-								// por hora vai ser criado no script
-								novo_personagem.dados_sistema = dados_sistema_personagem;
-								
-								Personagem_nome personagem_nome = dados_sistema_personagem.nome_personagem;
-								string path_dados_personagem = Paths_gerais.Pegar_path_folder_dados_save( _save ) + "/Personagens/" + personagem_nome.ToString() + "/";
-
-								int tipo_armazenamento = dados_sistema_personagem.tipo_armazenamento;
-
-								if( tipo_armazenamento == 0 ){
-										// ** o compacto vai ser na realidade mais dificil, vale a pena por hora fazer todos com arquivos separados
-										// container compacto
-
-										throw new System.Exception( "nao era para vir aqui, tipo armazenamento 0 no personagem " + personagem_nome.ToString() );
-
-								}
-
-								if( tipo_armazenamento == 1 ){
-										// arquivos separados
-
-										// Tradutor_personagens_completo.Traduzir( instancia , path_dados_personagem );
-
-								}
-
-								
-								instancia.personagens[ index_personagem ] = novo_personagem; 
-								continue;
-							
 						}
 
+						controlador.personagens_ativos = new Personagem_nome[ numero_personagens_ativos ];
 
-				}
 
+						int personagens_ativos_index = 0;
+						for( index_personagem = 0 ; index_personagem < controlador.dados_sistema_personagens.Length ; index_personagem++ ){
+
+								Dados_sistema_personagem dados_sistema_personagem = _dados_sistema_personagens[ index_personagem ];
+
+								if( dados_sistema_personagem.personagem_esta_ativo ){ 
+
+										controlador.Carregar_personagem( dados_sistema_personagem );
+										
+										controlador.personagens_ativos[ personagens_ativos_index ] = dados_sistema_personagem.nome_personagem;
+										personagens_ativos_index++;
+										continue;
+									
+								}
+
+						}
+
+				instancia = controlador;
 				return instancia;
 			
 		}
 
-
-
-
-		// aqui todos os personagens exeto a nara vão ser instanciados como null
+		// aqui todos os personagens exceto a nara vão ser instanciados como null
 		public static Controlador_personagens Construir_teste ( ){
 
+				Controlador_personagens controlador = new Controlador_personagens();
 
-				instancia = new Controlador_personagens();
-
-				// inicia somente com o player ativo
-				string[] persoangens_nomes = Enum.GetNames( typeof( Personagem_nome ) );
-				Dados_sistema_personagem[] dados = new Dados_sistema_personagem[ persoangens_nomes.Length ];
-				Personagem[] personagens = new Personagem[ persoangens_nomes.Length ];
+						// inicia somente com o player ativo
+						string[] persoangens_nomes = Enum.GetNames( typeof( Personagem_nome ) );
+						Dados_sistema_personagem[] dados = new Dados_sistema_personagem[ persoangens_nomes.Length ];
+						Personagem[] personagens = new Personagem[ persoangens_nomes.Length ];
 
 
-				for( int per = 0 ; per < persoangens_nomes.Length  ; per++){ 
+						for( int per = 0 ; per < persoangens_nomes.Length ; per++ ){ 
 
-						dados[ per ] = new Dados_sistema_personagem(); 
+								dados[ per ] = new Dados_sistema_personagem();
+								
+						}
+
+						dados[ ( int ) Personagem_nome.Nara ].personagem_esta_ativo = true;
+
+						controlador.dados_sistema_personagens = dados;
+						controlador.personagens = personagens;
 						
-				}
 
-				dados[ ( int ) Personagem_nome.Nara ].personagem_esta_ativo = true;
+						Personagem_nome[] personagens_ativos = new Personagem_nome[ 1 ] { Personagem_nome.Nara };
 
-				instancia.dados_sistema_personagens = dados;
-				instancia.personagens = personagens;
-				
+						personagens[ ( int ) Personagem_nome.Nara ] = new Personagem();
 
-				Personagem_nome[] personagens_ativos = new Personagem_nome[ 1 ] { Personagem_nome.Nara };
-				personagens[ ( int ) Personagem_nome.Nara ] = new Personagem();
-				
+				instancia = controlador;				
 				return instancia;
-
 			
 		}
 
@@ -468,43 +213,107 @@ public class Controlador_personagens {
 
 
 
+				
+		public Dados_sistema_personagem[] dados_sistema_personagens; 
+		public Personagem[] personagens;
+		public Personagem_nome[] personagens_ativos;
+
+		public string path_folder_dados_personagens ;
+		public string path_folder_dados_personagens_morte;
+
+		
 
 
-		public Personagem Construir_personagem( Dados_sistema_personagem _dados_sistema_personagem, int _save ){
 
-				return null;
+
+
+	
+
+		public void Carregar_personagem( Dados_sistema_personagem _dados_sistema_personagem ){
+
+
+
+				Personagem_nome personagem_nome = _dados_sistema_personagem.nome_personagem;
+				string path_dados_personagem = path_folder_dados_personagens + "/Personagens/" + personagem_nome.ToString() + "/";
+				
+
+				Dados_para_construir_personagem dados_para_construir_personagem = Leitor_dados_contrucao_personagem.Pegar( path_dados_personagem, _dados_sistema_personagem );
+
+				Personagem novo_personagem =  Construir_personagem( dados_para_construir_personagem );
+				novo_personagem.dados_sistema = _dados_sistema_personagem;
+
+
+				personagens[ ( int ) personagem_nome ] = novo_personagem; 
+				return;
 
 		}
 
-		public Personagem Construir_personagem_teste(){
-
-			return null;
-
-                // // por hora vai ser criado no script
-                // this.dados_sistema = _dados_sistema_persoangem;
-                // return;
 
 
-                // Personagem_nome personagem_nome = _dados_sistema_persoangem.nome_personagem;
-                // string path_dados_personagem = Paths_gerais.Pegar_path_folder_dados_save( _save ) + "/Personagens/" + personagem_nome.ToString() + "/";
 
-                // int tipo_armazenamento = dados_sistema.tipo_armazenamento;
 
-                // if( tipo_armazenamento == 0 ){
-                //     // ** o compacto vai ser na realidade mais dificil, vale a pena por hora fazer todos com arquivos separados
-                //     // container compacto
 
-                //     throw new System.Exception( "nao era para vir aqui, tipo armazenamento 0 no personagem " + personagem_nome.ToString() );
+		public void Carregar_personagem_teste ( Dados_sistema_personagem _dados_sistema_personagem , Dados_para_construir_personagem _dados_para_construir_personagem ){
 
-                // }
 
-                // if( tipo_armazenamento == 1 ){
-                //     // arquivos separados
 
-                //     Tradutor_personagens_completo.Traduzir( this , path_dados_personagem );
+				Personagem_nome personagem_nome = _dados_sistema_personagem.nome_personagem;
+				string path_dados_personagem = path_folder_dados_personagens + "/Personagens/" + personagem_nome.ToString() + "/";
+				int tipo_armazenamento = _dados_sistema_personagem.tipo_armazenamento;
 
-                // }
+				Personagem novo_personagem = Construir_personagem_teste( _dados_para_construir_personagem );
+				novo_personagem.dados_sistema = _dados_sistema_personagem;
 
+
+				personagens[ ( int ) personagem_nome ] = novo_personagem; 
+				return;
+
+		}
+
+
+
+
+
+
+
+
+
+		public Personagem Construir_personagem( Dados_para_construir_personagem _dados ){
+
+				// ** responsavel por passar os bytes[] e instanciar os Gerenciadores 
+				
+				// precisa dos dados completos
+
+				Personagem personagem = new Personagem();
+ 
+				personagem.gerenciador_estado_mental = Gerenciador_estado_mental_construtor.Construir( personagem,  _dados.dados_gerenciador_estado_mental );
+
+
+				return personagem;
+
+		}
+
+
+
+
+		public Personagem Construir_personagem_teste( Dados_para_construir_personagem _dados ){
+
+				// a unica diferená é que aqui se vier null ele só constroi o objeto sem dados;
+
+
+				Personagem personagem = new Personagem();
+
+				if ( _dados.dados_gerenciador_estado_mental != null )
+
+						{ personagem.gerenciador_estado_mental = Gerenciador_estado_mental_construtor.Construir( personagem,  _dados.dados_gerenciador_estado_mental );}
+						
+						else 
+						
+						{ personagem.gerenciador_estado_mental = new Gerenciador_estado_mental( personagem );}
+		
+
+
+				return personagem;
 
 		}
 
@@ -512,13 +321,20 @@ public class Controlador_personagens {
 
 		public Personagem Pegar_personagem( Personagem_nome _personagem_nome ){
 
-			if( ! ( dados_sistema_personagens[ ( int )_personagem_nome ].personagem_esta_ativo ) ){ 
 
-				throw new Exception( $"pediu para pegar o personagem { _personagem_nome } mas ele nao estava ativo" );
 
-			 }
+			if( ! ( dados_sistema_personagens[ ( int )_personagem_nome ].personagem_esta_ativo ) )
+				
+				{ throw new Exception( $"pediu para pegar o personagem { _personagem_nome } mas ele nao estava ativo" ); }
+
+			
+			if( personagens[ ( int ) _personagem_nome ] == null  )
+			
+				{ throw new Exception( $"pediu para pegar o personagem { _personagem_nome } mas ele nao foi criado" ); }
+
 
 			return personagens[ ( int )_personagem_nome ];
+
 
 		}
 
@@ -526,52 +342,26 @@ public class Controlador_personagens {
 
 
 
-
-
-
-		
-		public Dados_sistema_personagem[] dados_sistema_personagens; 
-
-		public string path_folder_dados_personagens ;
-		public string path_save_morte;
-
-		// save in buffer dont save in disk
-
-
-		public Personagem[] personagens;
-
-		// vao ser resetados quando os dados forem salvos 
 		
 		public byte[][] dados_para_adicionar = new byte[ 10 ][];
 
 		public void Pedir_para_salvar_dados(  byte[] _dados_seguranca ){
 
+				int index = 0;
 
-				for( int index = 0 ; index < dados_para_adicionar.Length ; index++ ){
+				for(  ; index < dados_para_adicionar.Length ; index++ ){
 
 						if( dados_para_adicionar[ index ] == null ){ dados_para_adicionar[ index ] = _dados_seguranca; return;}
 
 
 				}
 
-				byte[][] novo_arr = new byte[ dados_para_adicionar.Length + 10 ][];
+				// nao tem disponivel
 
-				int length_para_adicionar = dados_para_adicionar.Length;
-				novo_arr[ length_para_adicionar ] = _dados_seguranca;
-
-				
-				for( int index_arr = 0 ; index_arr < dados_para_adicionar.Length ; index_arr++ ){
-
-						novo_arr[ index_arr ] =  dados_para_adicionar[ index_arr ];
-
-				}
-
-				dados_para_adicionar = novo_arr;
+				dados_para_adicionar = BYTE.Aumentar_length_array_2d( dados_para_adicionar, 10 );
+				dados_para_adicionar[ index ] = _dados_seguranca;
 
 				return;
-				
-
-
 
 
 		}
