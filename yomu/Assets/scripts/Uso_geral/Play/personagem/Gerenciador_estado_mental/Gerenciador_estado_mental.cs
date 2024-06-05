@@ -4,26 +4,23 @@ using UnityEngine;
 
 
 
-
 public class Gerenciador_estado_mental {
 
-        public Gerenciador_estado_mental( Personagem _personagem ){
-
-                personagem = _personagem;
-
-                // transformar dados bytes em dados
-
-        }
-
-
+        public Gerenciador_estado_mental( Personagem _personagem ){ personagem = _personagem; }
         public Personagem personagem;
 
 
 
+        public Estado_mental estado_mental;
+        public Action< Estado_mental, float >[] modificadores; 
 
+        public Action <Estado_mental, float> Modificar_felicidade;
+        public Action <Estado_mental, float> Modificar_afeto;
+        public Action <Estado_mental, float> Modificar_coragem;
+        public Action <Estado_mental, float> Modificar_previsibilidade;
 
-
-    public Estado_mental estado_mental;
+        public Action <Estado_mental, Emocao_base ,float> Modificar_estado_mental;
+        
 
         public void Mudar_estado_mental(   Emocao _estado, float _novo_valor  ){
 
@@ -35,24 +32,26 @@ public class Gerenciador_estado_mental {
                      - enviar um byte[] de como mudar esses dados em caso de encerramento brisco
                 */
 
+                if ( Modificar_estado_mental == null )
+                        {
+                                throw new Exception( "nao foi colocado fn: Modificar_estado_mental" );
+                        }
+                
+                // pode alterar 1, 2, ... , todos ou nenhum 
+                Modificar_estado_mental( estado_mental, _estado, _novo_valor );
 
-                // // muda o dado em si 
+                // salvar todos faz mais sentido
+                
+                Salvar_novo_valor();
 
-                // switch( _estado ){
-
-                //     case Emocao.felicidade: estado_mental.felicidade += _novo_valor; break;
-                //     case Emocao.tristeza: estado_mental.tristeza += _novo_valor; break;
-
-                // }
-
-                // Salvar_novo_valor(  _estado , _novo_valor  );
-
-                // return;
+                return;
 
 
 
     
         }
+
+        
 
 
 
@@ -191,39 +190,93 @@ public class Gerenciador_estado_mental {
         }
 
 
+        public enum Tipo_funcao_salvar_geral {
 
-        public void Salvar_novo_valor( int _estado , float _novo_valor  ){
+                modificar_personagem,
+                
+        }
 
+        public enum Funcao_especifico_modificar_personagem {
 
-
-                // // ve oque precisa mudar nos containers
-                // int byte_index = ( int ) _estado * 2;
-                // int estado_mental_valor = ( int ) dados_internos_personagens[ byte_index ] ; 
-
-                // // transform u => s
-                // estado_mental_valor -= 128;
-
-                // estado_mental_valor = estado_mental_valor << 8 ;
-                // estado_mental_valor += ( int ) dados_internos_personagens[ byte_index + 1 ] ;
-
-                // byte[] byte_estado_mental = new byte[ 3 ] ;
-
-                // int container = 1;
-                // int start_point = 1;
-                // byte[] dados_retorno = new byte[ 10 ];
-
-                // // muda o buffer
-                // // mudar o buffer não vai mudar o valor, vai somente deixar o novo valor na ram 
-                // // nao vale a pena iniciar uma gravação para somente alguns bytes. é melhor deixar eles acumularem 
-
-                // dados_sistema.streams[ container ].Seek(  start_point,  SeekOrigin.Begin ) ;
-                // dados_sistema.streams[ container ].Write( dados_retorno, 0 , dados_retorno.Length ) ;
+                modificar_estado_mental,
+                
+        }
 
 
-                // // passa para controaldor personagens o byte que pode reconstruir esse dados se o sistema sair bruscamente 
-                // Controlador_personagens.Pegar_instancia().Pedir_para_salvar_dados( dados_retorno );
 
-                // return;
+        public void Salvar_novo_valor( ){
+
+                // ** tem que salvar todos os stats 
+
+                // o padrao vai ser [ tipo_geral , tipo_especifico, args (...) ]
+
+                //         tipo       funcionalidade     personagem_id     valor_1      valor_2   ...
+                // [    ( 2 byte )    (  2 bytes  )      (  2 bytes  )   ( 2 bytes )   ( 2 bytes )   +    ]
+
+                int numero_bytes_necessarios = 0 ;
+
+                numero_bytes_necessarios += 2 ; // tipo_funcao_geral => modificar_personagem
+                numero_bytes_necessarios += 2 ; // tipo_modificar_personagem => funcionalidade : mudar estado emocional
+                numero_bytes_necessarios += 2 ; // personagem_id
+                numero_bytes_necessarios += 16 ; // numero de emocoes_base.
+
+                
+                
+
+                byte[] dados_para_salvar = new byte[ numero_bytes_necessarios ];
+
+                dados_para_salvar[ 0 ] = ( byte )( int ) Tipo_funcao_salvar_geral.modificar_personagem << 8;
+                dados_para_salvar[ 1 ] = ( byte )( int ) Tipo_funcao_salvar_geral.modificar_personagem << 0;
+
+
+                dados_para_salvar[ 2 ] = ( byte )( int ) Funcao_especifico_modificar_personagem.modificar_estado_mental << 8;
+                dados_para_salvar[ 3 ] = ( byte )( int ) Funcao_especifico_modificar_personagem.modificar_estado_mental << 0;
+
+                Personagem_nome personagem_nome =  personagem.dados_sistema.nome_personagem;
+
+                dados_para_salvar[ 4 ] = ( byte )( int ) personagem_nome << 8;
+                dados_para_salvar[ 5 ] = ( byte )( int ) personagem_nome << 0;
+
+                
+                int felicidade = estado_mental.felicidade;
+                dados_para_salvar[ 6 ] = felicidade << 16;
+                dados_para_salvar[ 7 ] = felicidade << 8;
+                dados_para_salvar[ 8 ] = felicidade << 0;
+
+                
+                int ponto_inicial = 6;
+                int index_emocao = 0
+                        
+                for( index_emocao = 0 ; index_emocao < 8 ; index_emocao++ ){
+
+                        int emocao_valor = ( int ) estado_mental.Pegar_valor_emocao_base( ( Emocao_base ) index_emocao );
+                        
+                        dados_para_salvar[ ponto_inicial + ( index_emocao * 3) + 0 ] = felicidade << 16;
+                        dados_para_salvar[ ponto_inicial + ( index_emocao * 3) + 1 ] = felicidade << 8;
+                        dados_para_salvar[ ponto_inicial + ( index_emocao * 3) + 2 ] = felicidade << 0;
+                        
+                }
+
+                
+
+                // muda o buffer
+                // mudar o buffer não vai mudar o valor, vai somente deixar o novo valor na ram 
+                // nao vale a pena iniciar uma gravação para somente alguns bytes. É melhor deixar eles acumularem 
+
+                int tipo_armazenamento = personagem.dados_sistema.tipo_armazenamento;
+                
+
+                // temq que fazer uma funcao para pegar o numero
+                int ponto_iniciao_para_gravar_dados = 0;
+                
+                personagem.dados_sistema.streams[ container ].Seek(  start_point,  SeekOrigin.Begin ) ;
+                personagem.dados_sistema.streams[ container ].Write( dados_retorno, 0 , dados_retorno.Length ) ;
+                
+
+                // passa para controaldor personagens o byte que pode reconstruir esse dados se o sistema sair bruscamente 
+                Controlador_personagens.Pegar_instancia().Pedir_para_salvar_dados( dados_retorno );
+
+                return;
 
             
         }
