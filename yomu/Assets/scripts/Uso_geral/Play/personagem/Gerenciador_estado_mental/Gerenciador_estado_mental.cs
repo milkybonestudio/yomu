@@ -264,11 +264,33 @@ public class Gerenciador_estado_mental {
                 // nao vale a pena iniciar uma gravação para somente alguns bytes. É melhor deixar eles acumularem 
 
                 int tipo_armazenamento = personagem.dados_sistema.tipo_armazenamento;
+
+                // tipo de armazenamento importa aqui? 
+                // sim => porque ele precisar salvar o buffer
+
+                int ponto_inicial_container = 0;
+                
+                // pegar o nome certo depois
+                int container_id = Container_dados.Container_es
+
+                if( tipo_armazenamento == 0 )
+                        {
+                                // compresso 
+                                int[] localizadores = personagem.dados_sistema.localizadores_container_geral;
+                                ponto_inicial_container= localizadores[ container_id ];
+                                       
+                        }
+
                 
 
                 // temq que fazer uma funcao para pegar o numero
-                int ponto_iniciao_para_gravar_dados = 0;
-                
+                // pegar o ponto de algum jeito e fazer o jump caso seja o compacto. 
+                // eu nao estou gostando que essa classe tenha que levar em conta como que os dados são armazenados
+                // mas 
+                int ponto_iniciao_para_gravar_dados =  ponto_inicial_container + 0;
+
+                // container dados_personagens
+                // eu preciso definir como os containers são estruturados
                 personagem.dados_sistema.streams[ container ].Seek(  start_point,  SeekOrigin.Begin ) ;
                 personagem.dados_sistema.streams[ container ].Write( dados_retorno, 0 , dados_retorno.Length ) ;
                 
