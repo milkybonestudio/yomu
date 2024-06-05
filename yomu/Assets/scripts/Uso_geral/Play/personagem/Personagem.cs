@@ -9,6 +9,17 @@ using System;
 
 public enum Emocao_base {
 
+
+
+}
+
+public enum Emocao {
+
+         // ver os valores certos 
+         // https://en.wikipedia.org/wiki/Emotion#/media/File:Plutchik_Dyads.svg
+
+         // base 
+
          felicidade = 0 ,
          tristeza   = 1 ,
         
@@ -21,17 +32,16 @@ public enum Emocao_base {
          previsibilidade = 6 ,
          instabilidade = 7
 
-}
 
-public enum Emocao {
+         //-----------
     
         agressividade,
         otimismo,
-        amor,
-        submissao,
+        amor = ( 4 + 0 ),
+        submissao = (  50 + 4 ),
 
     
-        terror,
+        terror = ( 70 + 3 ),
         desaprovamento,
         remorso,
         desprezo,
@@ -62,6 +72,28 @@ public enum Emocao {
         
 }
 
+public Emocao_secundaria Pegar_emocao( Emocao _emocao_1 , Emocao _emocao_2 ){
+
+         int emocao_1_int = ( int ) _emocao_1;
+         int emocao_2_int = ( int ) _emocao_2;
+
+         if( emocao_1_int == emocao_2_int ){ throw new Exception( "What?" ); }
+         
+
+         int maior = emocao_1_int;
+         int menor = emocao_2_int;
+         
+         if( maior < menor ){
+         
+                  int maior = emocao_2_int;
+                  int menor = emocao_1_int;
+         }
+         
+
+         
+         
+         
+}
 
 
 public class Estado_mental_personagem {
