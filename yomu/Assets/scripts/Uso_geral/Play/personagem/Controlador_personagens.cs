@@ -129,6 +129,17 @@ public class Controlador_personagens {
 		public static Controlador_personagens Pegar_instancia(){ return instancia;}
 
 
+				
+		public Dados_sistema_personagem[] dados_sistema_personagens; 
+		public Personagem[] personagens;
+		public Personagem_nome[] personagens_ativos;
+
+		public string path_folder_dados_personagens ;
+		public string path_folder_dados_personagens_morte;
+
+		
+
+
 		public static Controlador_personagens Construir ( Dados_sistema_personagem[] _dados_sistema_personagens , int _save ){
 
 				throw new Exception( "aind anao pode vir aqui porque eu nao defini como pegar os dados do save ainda " );
@@ -176,8 +187,29 @@ public class Controlador_personagens {
 			
 		}
 
+		public void Carregar_personagem( Dados_sistema_personagem _dados_sistema_personagem ){
+
+
+				Personagem_nome personagem_nome = _dados_sistema_personagem.nome_personagem;
+				string path_dados_personagem = path_folder_dados_personagens + "/Personagens/" + personagem_nome.ToString() + "/";
+				
+
+				Dados_para_construir_personagem dados_para_construir_personagem = Leitor_dados_contrucao_personagem.Pegar( path_dados_personagem, _dados_sistema_personagem );
+
+				Personagem novo_personagem =  Construtor_personagem.Construir( dados_para_construir_personagem );
+				novo_personagem.dados_sistema = _dados_sistema_personagem;
+
+
+				personagens[ ( int ) personagem_nome ] = novo_personagem; 
+				return;
+
+		}
+
+
+
+
 		// aqui todos os personagens exceto a nara vão ser instanciados como null
-		public static Controlador_personagens Construir_teste ( ){
+		public static Controlador_personagens Construir_teste (){
 
 				Controlador_personagens controlador = new Controlador_personagens();
 
@@ -209,50 +241,6 @@ public class Controlador_personagens {
 		}
 
 
-
-
-
-
-				
-		public Dados_sistema_personagem[] dados_sistema_personagens; 
-		public Personagem[] personagens;
-		public Personagem_nome[] personagens_ativos;
-
-		public string path_folder_dados_personagens ;
-		public string path_folder_dados_personagens_morte;
-
-		
-
-
-
-
-
-	
-
-		public void Carregar_personagem( Dados_sistema_personagem _dados_sistema_personagem ){
-
-
-
-				Personagem_nome personagem_nome = _dados_sistema_personagem.nome_personagem;
-				string path_dados_personagem = path_folder_dados_personagens + "/Personagens/" + personagem_nome.ToString() + "/";
-				
-
-				Dados_para_construir_personagem dados_para_construir_personagem = Leitor_dados_contrucao_personagem.Pegar( path_dados_personagem, _dados_sistema_personagem );
-
-				Personagem novo_personagem =  Construir_personagem( dados_para_construir_personagem );
-				novo_personagem.dados_sistema = _dados_sistema_personagem;
-
-
-				personagens[ ( int ) personagem_nome ] = novo_personagem; 
-				return;
-
-		}
-
-
-
-
-
-
 		public void Carregar_personagem_teste ( Dados_sistema_personagem _dados_sistema_personagem , Dados_para_construir_personagem _dados_para_construir_personagem ){
 
 
@@ -267,29 +255,6 @@ public class Controlador_personagens {
 
 				personagens[ ( int ) personagem_nome ] = novo_personagem; 
 				return;
-
-		}
-
-
-
-
-
-
-
-
-
-		public Personagem Construir_personagem( Dados_para_construir_personagem _dados ){
-
-				// ** responsavel por passar os bytes[] e instanciar os Gerenciadores 
-				
-				// precisa dos dados completos
-
-				Personagem personagem = new Personagem();
- 
-				personagem.gerenciador_estado_mental = Gerenciador_estado_mental_construtor.Construir( personagem,  _dados.dados_gerenciador_estado_mental );
-
-
-				return personagem;
 
 		}
 
