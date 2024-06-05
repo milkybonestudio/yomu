@@ -7,23 +7,201 @@ using System;
 
 
 
-public enum Estado_mental {
+public enum Emocao_base {
 
-    felicidade,
-    depressao,
+         felicidade = 0 ,
+         tristeza   = 1 ,
+        
+         coragem    = 2 ,
+         medo       = 3 ,
+        
+         atracao    = 4 ,
+         nojo       = 5 ,
+    
+         previsibilidade = 6 ,
+         instabilidade = 7
 
 }
+
+public enum Emocao {
+    
+        agressividade,
+        otimismo,
+        amor,
+        submissao,
+
+    
+        terror,
+        desaprovamento,
+        remorso,
+        desprezo,
+        
+        orgulho,
+        esperanca,
+        culpa,
+
+        curiosidade,
+        
+        desespero, 
+        incredulidade,
+        inveja, 
+        
+        cinismo,
+
+        
+
+        dominancia, 
+        anciedade,
+        deleito,
+
+        sentimentalismo,
+        vergonha,
+        indignação,
+        pessimismo,
+        morbio
+        
+}
+
 
 
 public class Estado_mental_personagem {
 
     
-    // variavis emocionais 
-    // momento 
-    public float alegria;         // felicidade : 500+ sadness 500-
-    public float iniciativa;      // raiva : 500+ medo : 500-
-    public float atratividade;    // 
-    public float previsibilidade; // 
+        // variavis emocionais 
+        // momento 
+        public float alegria;         // felicidade : 500+ sadness 500-
+        public float iniciativa;      // raiva : 500+ medo : 500-
+        public float atratividade;    // 
+        public float previsibilidade; // 
+        
+        
+        
+        
+        public float felicidade; // 700      +20 
+        public float tristeza;
+        
+        public float coragem;      // raiva : 500+ medo : 500-
+        public float medo;
+        
+        public float atracao;    
+        public float nojo;
+        
+        public float previsibilidade;
+        public float instabilidade; 
+
+        // dentro do personagem em run_time.dll
+
+        
+        public void Modificar_felicidade( float valor ){
+        
+        
+        
+        }
+        
+        
+        public void Modificar_medo( float valor ){
+        
+                Modificar_felicidade( - valor );
+                medo = 1000 - felicidade;
+            
+        }
+
+
+
+    
+
+
+    public int Pegar_emocao_atual(){
+
+            float[] emocoes_axis = new float[]{
+                
+                 felicidade,
+                 tristeza,
+                
+                 coragem,
+                 medo,
+                
+                 atracao,
+                 nojo,
+            
+                 previsibilidade,
+                 instabilidade
+
+            };
+
+        // talvez de problema quando for felicidade 500 e tristeza 500
+        // nesse caso nao é mais axis MUDAR DEPOIS
+            // esta errado isso vai devolver algo como [ 750, 725, 650 ... ] tem que voltar [ 5, 1 , 0 ]
+            // e depois fazer  float valor_mais_alto =  arr[ rank[ 0 ] ]
+            float[] emocoes_axis_crescentes = new float[ emocoes_axis.Length ];
+
+            for( int emocao_axis = 0, int index_maximo ; emocao_axis < emocoes_axis.Length ; emocao_axis++ ){
+
+                    float valor_para_acrescentar = emocoes_axis[ emocao_axis ];
+                    
+                    for( int emocao_axis_crescente = 0 ; emocao_axis_crescente =< emocao_axis ; emocao_axis_crescente++ ){
+    
+                            float emocao_acrecentar_em_analise = emocoes_axis_crescentes[ emocao_axis_crescente ];
+                            if( valor_para_acrescentar > emocao_acrecentar_em_analise ){
+    
+                                    emocao_acrecentar_em_analise = emocoes_axis_crescentes[ emocao_axis_crescente ];
+                                    emocoes_axis_crescentes[ emocao_axis_crescente ] = valor_para_acrescentar;
+                                    valor_para_acrescentar  = emocao_acrecentar_em_analise;
+                                    
+                            }
+                    
+                    }
+                    
+            }
+
+            float maior = arr[ 0 ];
+            float segundo = arr[ 0 ];
+
+            
+
+        
+    }
+
+
+    
+
+    
+
+    
+    // public int Pegar_emocao_atual(){
+
+    //         float[] emocoes_axis = new float[ 4 ]{
+                
+    //                 alegria, 
+    //                 iniciativa, 
+    //                 atratividade, 
+    //                 previsibilidade
+                    
+    //         };
+
+    //         float[] emocoes_axis_crescentes = new float[ emocoes_axis.Length ];
+
+    //         for( int emocao_axis = 0, int index_maximo ; emocao_axis < emocoes_axis.Length ; emocao_axis++ ){
+
+    //                 float valor_para_acrescentar = emocoes_axis[ emocao_axis ];
+                    
+    //                 for( int emocao_axis_crescente = 0 ; emocao_axis_crescente =< emocao_axis ; emocao_axis_crescente++ ){
+    
+    //                         float emocao_acrecentar_em_analise = emocoes_axis_crescentes[ emocao_axis_crescente ];
+    //                         if( valor_para_acrescentar > emocao_acrecentar_em_analise ){
+    
+    //                                 emocao_acrecentar_em_analise = emocoes_axis_crescentes[ emocao_axis_crescente ];
+    //                                 emocoes_axis_crescentes[ emocao_axis_crescente ] = valor_para_acrescentar;
+    //                                 valor_para_acrescentar  = emocao_acrecentar_em_analise;
+                                    
+    //                         }
+                    
+    //                 }
+                    
+    //         }
+
+        
+    // }
 
     public void Calcular_guily(){
 
