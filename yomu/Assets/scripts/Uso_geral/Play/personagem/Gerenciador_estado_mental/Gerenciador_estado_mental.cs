@@ -220,9 +220,7 @@ public class Gerenciador_estado_mental {
                 numero_bytes_necessarios += 2 ; // personagem_id
                 numero_bytes_necessarios += 16 ; // numero de emocoes_base.
 
-                
-                
-
+        
                 byte[] dados_para_salvar = new byte[ numero_bytes_necessarios ];
 
                 dados_para_salvar[ 0 ] = ( byte )( int ) Tipo_funcao_salvar_geral.modificar_personagem << 8;
@@ -243,74 +241,28 @@ public class Gerenciador_estado_mental {
                         
                 for( index_emocao = 0 ; index_emocao < 8 ; index_emocao++ ){
 
-                        int emocao_valor = ( int ) estado_mental.Pegar_valor_emocao_base( ( Emocao_base ) index_emocao );
-                        
+                        int emocao_valor = ( int ) estado_mental.Pegar_valor_emocao_base( ( Emocao_base ) index_emocao );        
                         dados_para_salvar[ ponto_inicial + ( index_emocao * 2) + 0 ] = emocao_valor << 8;
                         dados_para_salvar[ ponto_inicial + ( index_emocao * 2) + 1 ] = emocao_valor << 0;
                         
-                        
                 }
 
+                // talvez mudar o nome para Pedir_para_salvar_dados_seguranca
                 Controlador_personagens.Pegar_instancia().Pedir_para_salvar_dados( dados_para_salvar );
 
-
-                byte[] dados_para_salvar_buffer = new byte[ 8 * 3 ];
+                
+                // buffer
+                byte[] dados_para_salvar_buffer = new byte[ 8 * 2 ];
 
                 for(  index_emocao = 0 ; index_emocao < 8 ; index_emocao++ ){
 
                         dados_para_salvar_buffer[ ( index_emocao * 2) + 0 ] = dados_para_salvar[ ponto_inicial + ( index_emocao * 2) + 0 ];
-                        dados_para_salvar_buffer[ ( index_emocao * 3) + 1 ] = dados_para_salvar[ ponto_inicial + ( index_emocao * 2) + 1 ];
+                        dados_para_salvar_buffer[ ( index_emocao * 2) + 1 ] = dados_para_salvar[ ponto_inicial + ( index_emocao * 2) + 1 ];
                         
                         
                 } 
 
                 Controlador_personagem.Pegar_instancia().Salvar_dados_buffer( personagem );
-
-                public void Salvar_dados_buffer( Personagem _personagem ){
-                
-                                // muda o buffer
-                                // mudar o buffer não vai mudar o valor, vai somente deixar o novo valor na ram 
-                                // nao vale a pena iniciar uma gravação para somente alguns bytes. É melhor deixar eles acumularem 
-                
-                                int tipo_armazenamento = personagem.dados_sistema.tipo_armazenamento;
-                
-                                // tipo de armazenamento importa aqui? 
-                                // sim => porque ele precisar salvar o buffer
-                
-                                int ponto_inicial_container = 0;
-                                
-                                // pegar o nome certo depois
-                                int container_id = Container_dados.Container_es
-                
-                                if( tipo_armazenamento == 0 )
-                                        {
-                                                // compresso 
-                                                int[] localizadores = personagem.dados_sistema.localizadores_container_geral;
-                                                ponto_inicial_container= localizadores[ container_id ];
-                                                       
-                                        }
-                
-                                
-                
-                                // temq que fazer uma funcao para pegar o numero
-                                // pegar o ponto de algum jeito e fazer o jump caso seja o compacto. 
-                                // eu nao estou gostando que essa classe tenha que levar em conta como que os dados são armazenados
-                                // mas 
-                                int ponto_iniciao_para_gravar_dados =  ponto_inicial_container + 0;
-                
-                                // container dados_personagens
-                                // eu preciso definir como os containers são estruturados
-                                personagem.dados_sistema.streams[ container ].Seek(  start_point,  SeekOrigin.Begin ) ;
-                                personagem.dados_sistema.streams[ container ].Write( dados_retorno, 0 , dados_retorno.Length ) ;
-                                
-                
-                                // passa para controaldor personagens o byte que pode reconstruir esse dados se o sistema sair bruscamente 
-                                
-
-                        
-                        
-                }
-                
 
                 return;
 
