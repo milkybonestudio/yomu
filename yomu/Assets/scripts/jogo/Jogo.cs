@@ -80,6 +80,7 @@ public class Jogo {
         
         public static Jogo Construir( int _save, bool _novo_jogo  ){
 
+                Debug.LogError( "tentou contruir jogo normal. Por hora somente forma de teste" );
 
                 return Construir_teste();
 
@@ -107,8 +108,8 @@ public class Jogo {
                         req_iniciar_jogo.fn_iniciar = ( Task_req req ) => { 
 
 
-                                Controlador_save.Construir( _save, _novo_jogo );
-                                Controlador_AI.Construir();
+                                Jogo.Pegar_instancia().controlador_save = Controlador_save.Construir( _save, _novo_jogo );
+                                Jogo.Pegar_instancia().controlador_AI = Controlador_AI.Construir();
 
 
                         };
@@ -205,6 +206,9 @@ public class Jogo {
         public BLOCO_cartas bloco_cartas;
         public BLOCO_minigames bloco_minigames;
 
+        public Controlador_save controlador_save;
+        public Controlador_AI controlador_AI;
+
         public GameObject canvas;
         
 
@@ -217,12 +221,20 @@ public class Jogo {
         public void Update(){
 
 
+
+                if( controlador_save.esta_salvando )
+                        {
+                                controlador_save.Update_salvando();
+                                return;
+
+                        }
+
             
                 // if(  Controlador_UI.Pegar_instancia().Update() ) { return; }
 
                 //if( Controlador_transicao.Pegar_instancia().em_transicao ) { return; }
 
-                Controlador_audio.Pegar_instancia().Update();
+                
 
 
                 switch (  bloco_atual ) {

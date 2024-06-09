@@ -156,6 +156,8 @@ public class Gerenciador_acontecimentos {
 
 
 public class Gerenciador_dados_sistema {
+        // vai ficar responsavel por mudar os dados de sistema 
+        // principalmente interesse e afeto
 
 
 
@@ -211,7 +213,29 @@ public class Gerenciador_desejos {
 }
 
 
+
+public class Gerenciador_memorias_outros_personagens {
+
+}
+
+
+
+
+
 public class Personagem {
+
+        public Personagem(  int _personagem_id,  Posicao_geral_personagem _posicao_geral, Atividade _atividade ){
+
+                posicao = _posicao_geral ;
+                atividade = _atividade ;
+                personagem_id = _personagem_id ;
+
+
+        }
+
+        public int personagem_id;
+        public Posicao_geral_personagem posicao;
+        public Atividade atividade;
 
 
         // parte interna 
@@ -223,10 +247,10 @@ public class Personagem {
 
 
 
-
         // outros persoangens
 
         public Gerenciador_relacionamentos gerenciador_relacionamentos;
+        public Gerenciador_memorias_outros_personagens gerenciador_memorias_outros_personagens;
 
 
         // parte externa 
@@ -239,7 +263,8 @@ public class Personagem {
         public Gerenciador_updates gerenciador_updates;
         public Gerenciador_acontecimentos gerenciador_acontecimentos;
         public Gerenciador_dados_sistema gerenciador_dados_sistema;
-        public Dados_sistema_personagem dados_sistema;
+        public Gerenciador_containers_dados gerenciador_containers_dados; 
+
 
         public System.Object dados_personagem_run_time;
 

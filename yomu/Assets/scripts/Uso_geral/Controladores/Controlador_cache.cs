@@ -167,7 +167,7 @@ public class Controlador_cache {
 
                         OBJECT.Aumentar_length_array( ref dados, quantidade_para_aumentar );
                         BOOL.Aumentar_length_array( ref slots_locks , quantidade_para_aumentar );
-                        INT.Aumentar_length_array( ref slots_senhas , quantidade_para_aumentar );
+                        slots_senhas = INT.Aumentar_length_array( slots_senhas , quantidade_para_aumentar );
 
                 }
 

@@ -68,11 +68,9 @@ public static class Teste_movimento {
                 // --- construir personagem
 
                 Personagem lily = new Personagem();
-                lily.dados_sistema = new Dados_sistema_personagem();
-                lily.dados_sistema.personagem_esta_ativo = true;
-                lily.dados_sistema.nome_personagem = Personagem_nome.Lily;
 
-                // funcionou
+                Containers_dados_personagem dados_para_construir_personagem = new Containers_dados_personagem();
+                
                 Controlador_dados_dinamicos.Pegar_instancia().dados_run_time.Carregar_personagem( lily );
 
                 

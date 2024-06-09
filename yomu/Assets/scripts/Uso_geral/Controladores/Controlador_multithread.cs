@@ -93,6 +93,7 @@ public class Controlador_multithread  {
                         }
 
                         task.fn_finalizar( task ); 
+                        // ** nao tinha que colocar os dados no cache??
                         tasks_prontas_para_finalizar[ index_com_maior_prioridade ] = null;
 
                         if( ! ( Pode_continuar() ) ) { return; }

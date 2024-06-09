@@ -7,92 +7,112 @@ using System.IO;
 public class Controlador_save_personagens {
 
         
-        public Controlador_save_personagens ( Dados_sistema_personagem[] _dados_sistema_personagens, int _save ){ 
+        public Controlador_save_personagens ( ){ 
 
+                // **ele precisa ter pointers para os arrays containers dos personagens ativos
 
-                nomes_arquivos_personagens = Enum.GetNames( typeof( Arquivos_dados_personagem ) );
-                // o numero 0 é o container geral
-                numero_de_arquivos_personagem = nomes_arquivos_personagens.Length - 1;
+                // compactar_instrucoes personagens 
+                // compactar_containers
 
-                    
-                path_save_personagens = Paths_gerais.Pegar_path_folder_dados_save( _save ) + "/Personagens/"; 
-            
-                for( int personagem_index = 0 ; personagem_index <  dados_sistema_personagens.Length ; personagem_index++){
-                        
-                        if( dados_sistema_personagens[ personagem_index ].personagem_esta_ativo ){ Construir_streams( _dados_sistema_personagens[ personagem_index ] ); }
-
-                }
+                controlador_save = Controlador_save.Pegar_instancia();
 
             
         }
+
+
+        public Containers_dados_personagem[] containers_dados_personagens = new Containers_dados_personagem[ 10 ];
+        public Controlador_save controlador_save;
+        public int[] personagens_para_salvar_primeiro_plano = new int[ 10 ];
+        public int[] personagens_para_salvar_segundo_plano =  new int[ 10 ];
 
 
         public byte[] dados_para_adicionar_personagens;
 
         public int frames = 0;
 
-        
-        public byte[] Pegar_dados_em_espera(){
-                
 
-                // na realidade eu posso ir salvando aos poucos sem nenhum problema 
-                // oque eu tenho que garantir é que o primeiro flush vai ser sempre do save de segurança 
+        public int[] Iniciar_salvar(){
 
-                
-                frames = ( frames + 1 ) % 10 ;
-
-                if( frames == 0 ) {
-
-                }
-
-                
-                byte[][] dados_para_adicionar_personagens =  Controlador_personagens.Pegar_instancia().dados_para_adicionar;
-                
-
-                int dados_length = 0;
-                int dados_arr_index = 0; 
-
-                for( dados_arr_index = 0 ; dados_arr_index < dados_para_adicionar_personagens.Length ; dados_arr_index++ ){
-
-                        if( dados_para_adicionar_personagens[ dados_arr_index] == null ) { break; }
-                        dados_length += dados_para_adicionar_personagens[ dados_arr_index].Length;
-
-                        continue;
-                        
-                }
+                int[] personagens_ativos = Controlador_personagens.Pegar_instancia().personagens_ativos;
+                int[] 
 
 
-                byte[] dados_compilados = new byte[ dados_length ];
-
-                int index_atual = 0 ;
 
 
-                for(  dados_arr_index = 0 ; dados_arr_index < dados_para_adicionar_personagens.Length ; dados_arr_index++ ){
+        }
 
-                        if( dados_para_adicionar_personagens[ dados_arr_index] == null ) { break; }
 
-                        byte[] dados = dados_para_adicionar_personagens[ dados_arr_index ];  
 
-                        for( int dados_index = 0 ; dados_index < dados.Length ; dados_index++ ){
+        public bool Verificar_se_tem_personagens_para_salvar(){
 
-                                dados_compilados[ index_atual ] = dados[ dados_index ] ;
-                                index_atual++ ;
+                for( int slot_personagem_para_salvar = 0 ; slot_personagem_para_salvar < personagens_para_salvar.Length ; slot_personagem_para_salvar++ ){
+
+                        if( personagens_para_salvar[ slot_personagem_para_salvar ] != 0  )
+                                {
+                                        Containers_dados_personagem container = containers_dados_personagens[ slot_personagem_para_salvar ];
+
+                                        string path = controlador_save.path_dados_personagens + "/" + (( Personagem_nome ) personagens_para_salvar[ slot_personagem_para_salvar ]).ToString() + "_dados.dat";
+                                        byte[] dados = Compilar_dados_personagem( container );
+                                        
                                 
-                        }
+                                        personagens_para_salvar[ slot_personagem_para_salvar ] = 0;
+                                        containers_dados_personagens[ slot_personagem_para_salvar ] = null;
 
-                        continue;
-                        
+                                        controlador_save.Criar_task_salvar_dados( path , dados );
+                                        return true;
+
+                                
+                                        
+                                }
+
                 }
 
-                
-                for( dados_arr_index = 0 ; dados_arr_index < dados_para_adicionar_personagens.Length ; dados_arr_index++ ){
+                // nao tem nada
 
-                        dados_para_adicionar_personagens[ dados_arr_index] = null;
-                        
+                return false ;
+
+
+        }
+
+
+        public byte[] Compilar_dados_personagem( Containers_dados_personagem _dados ){
+
+                // vai levar em conta que certos dados sempre tem uma margem que pode ser cortado 
+
+
+        }
+
+        
+        public byte[][][] Pegar_instrucoes_de_seguranca( Modo_save_atual _modo_save ){
+
+                // vai voltar sempre um byte[ 4 ][] 
+
+                byte[][][] retorno = new byte[ 4 ][][]{
+
+                        new byte[ 0 ][], 
+                        new byte[ 0 ][], 
+                        new byte[ 0 ][], 
+                        new byte[ 0 ][]
+                };
+
+
+
+                byte[][][] primeiro_plano_instrucoes = Pegar_intrucoes_primeiro_plano();
+
+                retorno[ 0 ] = fn();
+
+
+
+
+                switch( _modo_save ){
+
+                        case Modo_save_atual.nada: return Compactar_intrucoes_de_seguranca_simples();
+                        case Modo_save_atual.salvando_primeiro_plano: return Compactar_intrucoes_de_seguranca_salvando_primeiro_plano();
+                        case Modo_save_atual.salvando_segundo_plano: return Compactar_intrucoes_de_seguranca_salvando_segundo_plano();
+
                 }
 
 
-                return dados_compilados;
 
 
                 // aqui poderia pegar 1 arquivo para fazer o update também 
@@ -102,6 +122,119 @@ public class Controlador_save_personagens {
 
 
   
+        }
+
+
+        public byte[][][] Pegar_intrucoes_primeiro_plano( Modo_save_atual _modo ){
+
+
+                byte[][][] retorno = new byte[ 2 ][][];
+
+
+
+                if( _modo == Modo_save_atual.salvando_primeiro_plano )
+                
+                        {
+
+                                // dados personagens sempre esta no formato: 
+                                        
+                                // [      1 byte            2 bytes            char     ] 
+                                // [  metodo_geral  ,  metodo_especifico ,    2 bytes    ]
+
+
+                                byte[][] dados_completo =  Controlador_personagens.Pegar_instancia().dados_para_adicionar_primeiro_plano;
+
+                                int numero_personagens_file_1 = 0;
+
+                                for( int index = 0 ; index < dados_completo.Length ; index++ ){
+
+                                        byte[] dados = dados_completo[ index ];
+
+                                        int personagem = 0; 
+                                        personagem +=   (( int ) dados[ 3 ] << 8 );
+                                        personagem +=   (( int ) dados[ 3 ] << 0 );
+
+
+                                        INT.Tem_valor_no_array( personagens_para_salvar_primeiro_plano , personagem );
+                                        
+
+
+                                }
+
+                                byte[][] dados_file_1 = ;
+                                byte[][] dados_file_2 = ;
+
+
+
+
+
+
+                                retorno[ 0 ] = Controlador_personagens.Pegar_instancia().dados_para_adicionar_primeiro_plano ;
+                                retorno[ 1 ] = Controlador_personagens.Pegar_instancia().dados_para_adicionar_primeiro_plano ;
+
+                                return retorno;
+
+                        }
+
+
+                // --- NORMAL
+                
+
+
+                byte[][] dados_para_adicionar_personagens_primario =  
+                retorno[ 0 ] = dados_para_adicionar_personagens_primario;
+
+
+                retorno[ 0 ] =  BYTE.Compactar_byte_array_3d_PARA_NULL( dados_para_compactar_primeiro_plano );
+
+
+
+
+        }
+
+        
+
+        public byte[][] Compactar_intrucoes_de_seguranca_simples(){
+
+                
+
+                byte[][] retorno = new byte[ 4 ][];
+
+
+                // --- PRIMARIO
+
+                // talvez tenha que aumentar 
+                byte[][][] dados_para_compactar_primeiro_plano = new byte[ 1 ][][];
+                
+
+                byte[][] dados_para_adicionar_personagens_primario =  Controlador_personagens.Pegar_instancia().dados_para_adicionar_primeiro_plano;
+                dados_para_compactar_primeiro_plano[ 0 ] = dados_para_adicionar_personagens_primario;
+
+
+                retorno[ 0 ] =  BYTE.Compactar_byte_array_3d_PARA_NULL( dados_para_compactar_primeiro_plano );
+
+
+
+
+
+                // ---- SECUNDARIO
+
+                byte[][][] dados_para_compactar_segundo_plano = new byte[ 1 ][][];
+
+                byte[][] dados_para_adicionar_personagens_secundario =  Controlador_personagens.Pegar_instancia().dados_para_adicionar_segundo_plano;
+                dados_para_compactar_segundo_plano[ 0 ] = dados_para_adicionar_personagens_secundario;
+
+
+                retorno[ 2 ] =  BYTE.Compactar_byte_array_3d_PARA_NULL( dados_para_compactar_segundo_plano );
+
+
+
+
+
+                return retorno;
+
+                
+
         }
 
 
@@ -120,14 +253,14 @@ public class Controlador_save_personagens {
 
         // CAMPOS
 
-        public Dados_sistema_personagem[] dados_sistema_personagens;
+        // public Dados_sistema_personagem[] dados_sistema_personagens;
         public Personagem[] personagens;
 
         public string path_save_personagens;
 
         
         
-        public void Construir_streams( Dados_sistema_personagem _dados_sistema_personagem ){
+        public void Construir_streams( Dados_sistema_personagem_essenciais _dados_sistema_personagem ){
 
                 // agora as streams vão ficar no personagem, tem que tomar cuidado para quando um persoangem não estivar mais ativo remover as streams;
 
@@ -135,58 +268,15 @@ public class Controlador_save_personagens {
                 // todos os streams vao ter o mesmo FileOptions => qunaod ativar o Flush() no writer ele vai salvar realmente o arquivo 
                 // os dados vão ser colocados com o gravador ao longo do tempo. 
                 
-                int tipo_armazenamento = _dados_sistema_personagem.tipo_armazenamento;
-
+                
                 FileMode file_mode = FileMode.Open;
                 FileAccess file_accees = FileAccess.ReadWrite;
                 FileShare file_share = FileShare.Read;
                 FileOptions file_options = FileOptions.WriteThrough;
 
-                string path_personagem = path_save_personagens + _dados_sistema_personagem.nome_personagem.ToString() + "/";
+                // string path_personagem = path_save_personagens + _dados_sistema_personagem.nome_personagem.ToString() + "/";
 
                 
-
-
-                if( tipo_armazenamento == 0 ){
-                        
-                        // esta tudo em 1 container
-                        // o container geral tem sempre as informacoes de como chegar nos dados dentro dele no inicio do container 
-
-                        string path_para_container_geral = path_personagem + "dados_gerais_container.dat";
-                        int tamanho_buffer_arquivo_completo = _dados_sistema_personagem.length_container_geral;
-
-                        _dados_sistema_personagem.streams = new FileStream[ 1 ];
-                        _dados_sistema_personagem.streams[ 0 ] = new FileStream( path_para_container_geral, file_mode, file_accees , file_share, tamanho_buffer_arquivo_completo , file_options );
-                        
-                        
-                        return;
-
-                } 
-
-
-                if( tipo_armazenamento == 1 ){
-
-                        // esta separado em cada arquivo 
-
-                        // ** tomar cuidado quando for modificar algum container. Tem que modificar também no 
-
-                        int[] buffers_tamanhos = _dados_sistema_personagem.length_containers;
-
-                        int index_inicial_sem_o_container_geral = 1;
-
-                        // _dados_sistema_personagem.streams
-                        // _dados_sistema_personagem.streams_gravadores
-
-                        for( int campo = index_inicial_sem_o_container_geral ; campo < numero_de_arquivos_personagem ; campo++ ){
-
-                                string path_dados_internos = path_personagem +  nomes_arquivos_personagens[ campo ]  + ".dat";
-                                int tamanho_dados_internos = buffers_tamanhos[ ( int ) Arquivos_dados_personagem.dados_internos ];
-
-                        }
-
-
-
-                }
 
         }
 

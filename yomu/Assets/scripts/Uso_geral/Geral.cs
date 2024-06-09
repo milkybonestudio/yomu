@@ -14,6 +14,7 @@ public static class Geral {
 
 
 
+
             public static void Ler_todos( string[] _str_arr){
 
                 for(  int i = 0 ;  i < _str_arr.Length  ;i++ ){

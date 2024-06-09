@@ -2,30 +2,31 @@ using System;
 
 
 
-public static class Tradutor_save {
+public static class Tradutor_dados_sistema {
 
-        public static Dados_sistema_personagem[] Descompactar_dados_sistema_personagens( byte[] _dados_sistema ){
 
-                // converte para dados
-                return null;
-
-        }
-
-        public static byte[] Compactar_dados_sistema_personagens( Dados_sistema_personagem[] _dados_sistema ){
+        public static Dados_sistema_personagem_essenciais[] Descompactar_dados_sistema_personagens_essenciais( byte[] _dados_sistema ){
 
                 // converte para dados
                 return null;
 
         }
 
+        public static byte[] Compactar_dados_sistema_personagens_essenciais( Dados_sistema_personagem_essenciais[] _dados_sistema ){
 
-        public static Personagem[] Descompactar_dados_personagens( Dados_sistema_personagem[] _dados_sistema ){
+                // converte para dados
+                return null;
+
+        }
+
+
+        public static Dadoss_sistema_cidade_essenciais[] Descompactar_dados_sistema_cidades_essenciais( byte[] _dados_sistema ){
 
                 return null;
 
         }
 
-        public static byte[] Descompactar_dados_personagens( Personagem[] _dados_sistema ){
+        public static byte[] Compactar_dados_sistema_cidades_essenciais( Dadoss_sistema_cidade_essenciais[] _dados_sistema ){
                 
                 return null;
 

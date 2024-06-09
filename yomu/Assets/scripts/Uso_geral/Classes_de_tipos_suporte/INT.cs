@@ -30,7 +30,7 @@ public static class INT {
     }
 
 
-    public static void Aumentar_length_array( ref int[] _array , int quantidade_para_adicionar = 5 ){
+    public static int[] Aumentar_length_array( int[] _array , int quantidade_para_adicionar = 5 ){
 
 
             int length_atual = _array.Length;
@@ -44,10 +44,9 @@ public static class INT {
 
             }
 
-            _array = novo_array;
+            return novo_array;
 
-            return;
-
+            
 
     }
 

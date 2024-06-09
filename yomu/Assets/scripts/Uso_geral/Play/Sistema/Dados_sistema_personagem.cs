@@ -48,13 +48,13 @@
 */
 
 /*
-          gosta
-        |
-            |
+              gosta
+                |
+                |
 tedio ----------|-------- interesse
-            |
-            |
-          odeia
+                |
+                |
+              odeia
 
 interesse => se o player pode interagir ele interage. 
 
@@ -66,26 +66,8 @@ interesse alto e
 
 
 
-
 using System.IO;
 
-public enum Nivel_de_interesse_player_no_personagem : byte {
-
-        muito_baixo ,
-        baixo,
-        medio, 
-        alto,
-        muito_alto, 
-
-}
-
-
-/*
-   muito baixo => na dll_geral
-   nivel baixo e media => dll_1
-   alto e muito alto => dll_2
-
-*/
 
 // ** trocar prioridades também precisa ser controlado 
 
@@ -107,74 +89,110 @@ public enum Nivel_de_interesse_player_no_personagem : byte {
 // nao vale a pena ficar preocupado em iniciar somente quando algum trigger acontecer 
 
 
+public enum Atividade {
+
+    nada
+
+}
+
+
+public class Posicao_geral_personagem {
+
+
+        public int cidade_id;
+        public Posicao_local posicao_local;
+        public Posicao_mundial posicao_mundial;
+
+
+}
+
+
+
+public struct Posicao_local {
+
+    public int ponto;
+    public int area;
+    public int regiao;
+
+}
+
+public struct Posicao_mundial {
+
+    public byte continente;
+    public byte reinos;
+    public byte estados;
+
+
+}
+
+
+
 // Isso vai ser limpo no save ou em personagens?
-public class Dados_sistema_personagem {
-
-
-
-        /*
-            Essa classe vai ter os dados essenciais para calculos internos no sistema. 
-            vai ter os updates do personagem, como que esta a relação do player com esse personagem ( nao da nara mas o player em si)
-                
-        */
-        
-        public Personagem_nome nome_personagem;
-        //  entre 0 e 1000.  
-        public int interesse_player;
-        public int projecao_interesse_player;
-        // entre -1000 e 1000
-        public int afetividade;
-        public int projecao_afetividade;
+public class Dados_sistema_personagem_essenciais {
 
         
-        public Posicao posicao_atual_personagem;
+        // projecoes 
+        //  entre 0 e 100.  
+        // se o personagem ainda nao foi apresentado vira projecao
+        public byte interesse_player;
+        public byte afetividade;
+
+        public short periodo_ultimo_update;
+        
+
+        // info basica 
+        // vai ser copiada para os personagens ativos para fazer persoangem.posicao_atual 
+        // public Personagem_nome nome_personagem;
+
+
+        public Posicao_geral_personagem posicao_atual_personagem;
+        public Atividade atividade_atual;
+
+
+        public bool personagem_bloqueado = false;
         public bool personagem_ja_foi_apresentado_ao_player;
-        public Data quando_personagem_foi_introduzido;
-        public Nivel_de_interesse_player_no_personagem nivel_interesse;
-        
-        public bool personagem_em_foco;
-        public bool player_colocou_personagem_em_foco;
-        public bool personagem_esta_ativo = false;
 
-        
-        public bool personagem_bloqueado;
-        
-        public int[] updates; 
-
-
-        // personagens pequenos precisam ter tudo armazenado em somente 1 arquivo para nao acupar espaço 
-        // mesmo se tiver que reescrever muitos arquivos 
-
-
-        // remover
-        // public int index_streams = -1; // -1 => nao tem
-
-        public FileStream[] streams; // null => nao ativo
-        
-
-
-
-        // ** vai começar como compacto porque eu preciso saber oque eu reciso antes de pensar em compactar
-        public int tipo_armazenamento = 1 ; // 0 => container_compactado, 1 => arquivos separados
-
-        // ** lembrar de adicionar
-        public int[] localizadores_container_geral; // so usar se for 0
-        public int[] length_containers;    // so usar se for 1
- 
-
-
-        // pode mudar dependendo do ponto da historia 
-        
-        public Trigger[] triggers;
-        public Caracteristica_fisica[] caracteristicas_fisicas;
-        public Caracteristica_psicologicas caracteristicas_psicologicas;
-
-
-        
-
-
+    
 	
 }
+
+
+public class Dados_sistema_personagem_ {
+
+
+            // essa logica vai ficar em Player_dados_sistema
+            // public bool player_colocou_personagem_em_foco; // mesmo com interesse baixo fica em foco alto 
+            
+            // isso faz mais sentido ficar dentro dos proprios dados. 
+            // se tudo vai ser somente 1 container 
+
+            public int update; 
+
+            // ** tipo_de_armazenamento só vai importar na pratica quando for salvar
+            // os dados sao descompactados quando eles sao colocados em cada container 
+
+            public byte tipo_armazenamento = 1 ; // 0 => container_compactado, 1 => arquivos separados
+            // ** lembrar de adicionar
+            public int[] localizadores_container_geral; // so usar se for 0
+            public int[] length_containers;    // so usar se for 1
+    
+
+            // pode mudar dependendo do ponto da historia 
+        
+            public Trigger[] triggers;
+            public Caracteristica_fisica[] caracteristicas_fisicas;
+            public Caracteristica_psicologicas caracteristicas_psicologicas;
+
+
+
+
+
+
+}
+
+
+
+
 
 
 

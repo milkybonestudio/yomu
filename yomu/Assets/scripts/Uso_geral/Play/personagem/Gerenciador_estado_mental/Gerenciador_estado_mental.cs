@@ -22,7 +22,7 @@ public class Gerenciador_estado_mental {
         public Action <Estado_mental, Emocao_base ,float> Modificar_estado_mental;
         
 
-        public void Mudar_estado_mental(   Emocao _estado, float _novo_valor  ){
+        public void Mudar_estado_mental(   Emocao_base _estado, float _novo_valor  ){
 
                 /*
                     processo para mudar: 
@@ -204,7 +204,17 @@ public class Gerenciador_estado_mental {
 
 
 
-        public void Salvar_novo_valor( ){
+
+
+
+
+
+
+        public void Salvar_novo_valor(){
+        unchecked {
+
+
+                
 
                 // ** tem que salvar todos os stats 
 
@@ -221,19 +231,19 @@ public class Gerenciador_estado_mental {
                 numero_bytes_necessarios += 16 ; // numero de emocoes_base.
 
         
-                byte[] dados_para_salvar = new byte[ numero_bytes_necessarios ];
+                byte[] instrucoes_de_seguranca = new byte[ numero_bytes_necessarios ];
 
-                dados_para_salvar[ 0 ] = ( byte )( int ) Tipo_funcao_salvar_geral.modificar_personagem << 8;
-                dados_para_salvar[ 1 ] = ( byte )( int ) Tipo_funcao_salvar_geral.modificar_personagem << 0;
+                instrucoes_de_seguranca[ 0 ] = ( byte )( ( int ) Tipo_funcao_salvar_geral.modificar_personagem ) >> 8;
+                instrucoes_de_seguranca[ 1 ] = ( byte )( ( int ) Tipo_funcao_salvar_geral.modificar_personagem ) >> 0;
 
 
-                dados_para_salvar[ 2 ] = ( byte )( int ) Funcao_especifico_modificar_personagem.modificar_estado_mental << 8;
-                dados_para_salvar[ 3 ] = ( byte )( int ) Funcao_especifico_modificar_personagem.modificar_estado_mental << 0;
+                instrucoes_de_seguranca[ 2 ] = ( byte ) (  ( int ) Funcao_especifico_modificar_personagem.modificar_estado_mental ) >> 8;
+                instrucoes_de_seguranca[ 3 ] = ( byte ) (  ( int ) Funcao_especifico_modificar_personagem.modificar_estado_mental ) >> 0;
 
-                Personagem_nome personagem_nome =  personagem.dados_sistema.nome_personagem;
+                int personagem_nome = ( int ) personagem.nome;
 
-                dados_para_salvar[ 4 ] = ( byte )( int ) personagem_nome << 8;
-                dados_para_salvar[ 5 ] = ( byte )( int ) personagem_nome << 0;
+                instrucoes_de_seguranca[ 4 ] = ( byte ) ( personagem_nome >> 8 );
+                instrucoes_de_seguranca[ 5 ] = ( byte ) ( personagem_nome >> 0 );
 
                 
                 int ponto_inicial = 6;
@@ -241,37 +251,58 @@ public class Gerenciador_estado_mental {
                         
                 for( index_emocao = 0 ; index_emocao < 8 ; index_emocao++ ){
 
-                        int emocao_valor = ( int ) estado_mental.Pegar_valor_emocao_base( ( Emocao_base ) index_emocao );        
-                        dados_para_salvar[ ponto_inicial + ( index_emocao * 2) + 0 ] = emocao_valor << 8;
-                        dados_para_salvar[ ponto_inicial + ( index_emocao * 2) + 1 ] = emocao_valor << 0;
+                        int emocao_valor = ( int )( Pegar_valor_emocao_base( ( Emocao_base ) index_emocao ) * 10f);  
+                        instrucoes_de_seguranca[ ponto_inicial + ( index_emocao * 2) + 0 ] =  ( byte ) ( emocao_valor >> 8 );
+                        instrucoes_de_seguranca[ ponto_inicial + ( index_emocao * 2) + 1 ] =  ( byte ) ( emocao_valor >> 0 );
                         
                 }
 
-                // talvez mudar o nome para Pedir_para_salvar_dados_seguranca
-                Controlador_personagens.Pegar_instancia().Pedir_para_salvar_dados( dados_para_salvar );
+                
+                Controlador_personagens.Pegar_instancia().Colocar_instrucoes_de_seguranca( instrucoes_de_seguranca );
+
+
+
+                // buffer
+
+                //     header
+                //   [          ][        ]
+                //  [     p1 ( 3 bytes )    , p2 ( 3 bytes )      ]
+
+
+                // quando pegar o container já vai sinalizar que o container precisa ser salvo
+                byte[] container_buffer = personagem.gerenciador_containers_dados.Pegar_buffer( Container_dados_personagem.dados_internos );
+
+                int index_sub_part_container = ( ( int ) Dados_internos_personagens.estado_mental ) * 3 ;
+
+
+                // 
+                int index_estado_mental = 0;
+
+                index_estado_mental +=  ( ( int )  container_buffer[  index_sub_part_container + 0 ] ) << 16  ;
+                index_estado_mental +=  ( ( int )  container_buffer[  index_sub_part_container  + 1 ] ) << 8   ;
+                index_estado_mental +=  ( ( int )  container_buffer[  index_sub_part_container  + 2 ] ) << 0   ;
 
                 
-                // buffer
-                byte[] dados_para_salvar_buffer = new byte[ 8 * 2 ];
 
                 for(  index_emocao = 0 ; index_emocao < 8 ; index_emocao++ ){
 
-                        dados_para_salvar_buffer[ ( index_emocao * 2) + 0 ] = dados_para_salvar[ ponto_inicial + ( index_emocao * 2) + 0 ];
-                        dados_para_salvar_buffer[ ( index_emocao * 2) + 1 ] = dados_para_salvar[ ponto_inicial + ( index_emocao * 2) + 1 ];
-                        
+
+                        container_buffer[ index_estado_mental + ( index_emocao * 2 ) + 0  ]  =  instrucoes_de_seguranca[ ponto_inicial + ( index_emocao * 2 ) + 0 ] ;
+                        container_buffer[ index_estado_mental + ( index_emocao * 2 ) + 1  ]  =  instrucoes_de_seguranca[ ponto_inicial + ( index_emocao * 2 ) + 1 ] ;
                         
                 } 
 
-                Controlador_personagem.Pegar_instancia().Salvar_dados_buffer( personagem );
 
                 return;
 
             
         }
+        }
             
 
 
 }
+
 
 
 

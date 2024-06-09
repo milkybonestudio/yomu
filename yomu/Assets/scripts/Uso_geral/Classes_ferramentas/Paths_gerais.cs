@@ -19,7 +19,7 @@ using UnityEngine;
                         // provavelmente vai ter varios saves diferentes, poderia ter um enum com oque cada save significa
                         //          Assets
                         // talvez path de problemas em outros OS? 
-                        return Application.dataPath + "/Editor/Dados_saves_para_teste/save_" + _save.ToString() + "/Personagens";
+                        return Application.dataPath + "/Editor/Dados_saves_para_teste/save_" + _save.ToString() ;
 
 
                     #else

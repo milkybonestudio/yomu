@@ -9,117 +9,102 @@ using UnityEngine.UI;
 
 
 
+public enum Modo_save_atual {
 
+
+      nada,
+      salvando_primeiro_plano,
+      salvando_segundo_plano
+
+}
 
 public class Controlador_save {
-
-
-
-
-
-
-      /*
-
-            ** os personagens tem todos os dados que estão disponiveis para eles usarem nos updates normais 
-             
-                o unico momento que eu posso precisar pegar dados para algum personagem é: 
-                     - mudança de prioridade 
-                     - update mensal
-
-
-
-                essas mudanças podem ser controladas pelo sistema e vão acontecer quando o player for dormir. Isso da uns 2 segundaos para qualquer tipo de calculo 
-
-
-            ** coisas que podem influenciar o mundo ou outros personagens são armazenadas no proprio mundo.
-
-                  se uma maça foi tirada de um deposito e vai influenciar alguem. quem tirou importa? sim => fica marcado no personagem que tirou 
-                                                                                                              e no personagem que vai influenciar 
-                                                                                                      nao => personagem + mundo 
-
-                 ** personagem pegou uma maça em um depoisito 
-                                  => influencia algum outro personagem ?  nao  => fica somente no player 
-                                                                          sim  => afeta muitos? nao => fica no player e no outro personagem 
-                                                                                                sim => fica no geral 
-
-
-                                                                          
-            salvar pode criar chunks e ir salvando aos poucos, tendo comente cuidado com cada chunk 
-
-            Pegar dados só vai acontecer em momentos muito especificos que podem ser controlados pelo sistema 
-
-                  ** fazer dormir como um modo e atualizar coisas internas 
-                  ** dormir vai ser algo muito importante, o jogo nunca pode pular um dia sem chamar a funcao Dormir() porque ela trabalha para atualizar
-
-
-            Na realidade isso é muita estupidez. atualizar pode ser em qualquer frame.um personagem com atualização mensal pode carregar os arquivos em 0.5ms 
-            Mas controlador personagem tem que ter um sistema para controlador. Todos de uma vez pode travar. 
-
-            Moral: personagens de nivel baixo precisa ter mais cuidado no update em trocas de nivel 
-
-
-
-            pegar dados precisa ser na thread, ou seja eu preciso pensar em como fazer para interromper a main thread e esperar ele pegar 
-
-
-            como interromper a thread :
-              
-               1 - coroutines => entra no modo update que esta passando de um ponto para outro. mas só completo quando os dados estiverem completos 
-               2 - passar para  multithread, criar um loop na main e usar sleep 
-
-
-      
-      */
 
 
             
             public static Controlador_save instancia;
             public static Controlador_save Pegar_instancia(){ return instancia; }
 
-
+            
             public static bool esta_em_teste = false;
+
+            
+            public System.Text.UTF8Encoding encoder = new System.Text.UTF8Encoding( true );
+
+
+
+
+
+
+            public string path_save_folder; 
+            public string path_dados_sistema;
+            public string path_dados_personagens;
+
+            public Modo_save_atual modo_save_atual = Modo_save_atual.nada;
+
+            public int tamanho_dados_sistema = 10_000; // numero de personagens * 
+
+            public byte[][] dados_para_salvar;
+
+            public Controlador_save_personagens controlador_save_personagens;
+            public Controlador_instrucoes_de_seguranca controlador_instrucoes_de_seguranca;
+
+
+
+
+            public Task_req task_salvar;
+            public bool esta_salvando_container = false ;  
+            public bool esta_esperando_multithread = false ;
+
+
 
             public static Controlador_save Construir_teste (){
 
-                        // vai ser executado na main thread
+                  // vai ser executado na main thread
+                  esta_em_teste = true;
 
-                        esta_em_teste = true;
+                  instancia = new Controlador_save(); 
+                  
+                  Dados_blocos.Construir();
+                  Controlador_timer.Construir();
 
-                        instancia = new Controlador_save(); 
-                        
-                        Dados_blocos.Construir();
-                        Controlador_timer.Construir();
+                  Controlador_dados_dinamicos.Construir();
+                  
+                  Controlador_UI.Construir();
+                  Controlador_transicao.Construir();
 
-                        Controlador_dados_dinamicos.Construir();
-                        
-                        Controlador_UI.Construir();
-                        Controlador_transicao.Construir();
+                  Player_estado_atual.Construir();
 
-                        Player_estado_atual.Construir();
-
-                        
-
-                        // nao vai construir nenhum personagem além da nara
-                        Controlador_personagens.Construir_teste();
-                        
-
-                        return instancia;
-
+                  
+                  // nao vai construir nenhum personagem além da nara
+                  Controlador_personagens.Construir_teste();
+            
+                  return instancia;
 
             }
 
 
 
-
-
-
             public static Controlador_save Construir( int _save, bool _novo_jogo ){
 
-                        throw new Exception( "ainda nao esta pronto" );
 
-                        instancia = new Controlador_save(); 
-                        
-                        
+                  throw new Exception( "ainda nao esta pronto" );
+
+                  Controlador_save controlador = new Controlador_save(); 
+                  
+
+                        if( _save > 5 ) 
+                              { throw new Exception( "tentou carregar save " + _save.ToString() ); }
+
+
+                        if( _novo_jogo )
+                              { 
+
+                                    // copiar arquivos que vão estar em path_mutaveis ** definir
+                                    controlador.Copiar_arquvios_do_novo_jogo( _save );
+
+                              }
+
                         // ** nao faz sentido eu pensar em salvar sem ter o formato dos arquivos 
 
                         
@@ -135,69 +120,57 @@ public class Controlador_save {
                         Controlador_transicao.Construir();
 
 
+                        // ---- USO SAVE
+
+                        controlador.path_save_folder = Paths_gerais.Pegar_path_folder_dados_save( _save );
+                        controlador.path_dados_sistema = controlador.path_save_folder + "/Dados_programa/dados_programa.dat";
+                        controlador.path_dados_personagens = controlador.path_save_folder + "/Personagens/";
+                        
+
+                        controlador.controlador_save_personagens = new Controlador_save_personagens(); 
+
+                        controlador.controlador_instrucoes_de_seguranca = new Controlador_instrucoes_de_seguranca();
+                        controlador.controlador_instrucoes_de_seguranca.Verificar_arquivo_das_instrucoes_de_seguranca();
+                        controlador.controlador_instrucoes_de_seguranca.Renovar_arquivo_das_instrucoes();
+
+                  
 
 
 
 
-                        if( _save > 5 ) { throw new Exception( "tentou carregar save " + _save.ToString() ); }
+                        // ----- SISTEMA
 
-                        if( _novo_jogo ){
-
-                              // copiar arquivos que vão estar em path_mutaveis ** definir
-                              instancia.Copiar_arquvios_do_novo_jogo( _save );
-
-                        }
+                        if( System.IO.File.Exists( controlador.path_dados_sistema ) )
+                              { throw new Exception( $"dados_programa.dat nao foi encontrado no path{ path_dados_sistema }"); }
 
 
-
-                        instancia.path_save_folder = Paths_gerais.Pegar_path_folder_dados_save( _save );
-
+                        byte[] dados_sistema = System.IO.File.ReadAllBytes( path_dados_personagens.path_dados_sistema );
 
 
+                        // esses dados vão ser colocados nos lugares mais adequados
+                        Dados_sistema_personagem_essenciais[] dados_sistema_personagens_necessario = Tradutor_dados_sistema.Descompactar_dados_sistema_personagens_necessarios( dados_sistema );
+                        Dados_sistema_cidade_essenciais[] dados_sistema_cidade_essenciais = Tradutor_dados_sistema.Descompactar_dados_sistema_cidades_necessarios( dados_sistema );
+                        Dados_sistema_estado_atual dados_sistema_estado_atual = Tradutor_dados_sistema.Descompactar_dados_sistema_atual( dados_sistema );
+                        // Coisa_2[] coisa_2 = Tradutor_save.Descompactar_dados_sistema_Coisa_2( dados_sistema );
+                        // Coisa_3[] coisa_3 = Tradutor_save.Descompactar_dados_sistema_Coisa_3( dados_sistema );
+                        // Coisa_4[] coisa_4 = Tradutor_save.Descompactar_dados_sistema_Coisa_4( dados_sistema );
+                        // ....
+
+
+
+                        // ----- PLAYER  
+                        
 
 
 
                         // ---- PERSONAGENS
+
+
                         
 
-
-                        string path_dados_sistema = instancia.path_save_folder + "/Dados_programa/dados_programa.dat";
-                        string path_dados_seguranca = instancia.path_save_folder + "/Dados_programa/dados_seguranca.txt";
-                        string path_personagens = instancia.path_save_folder + "/Personagens/";
-
-                        FileMode file_mode = FileMode.Open;
-                        FileAccess file_accees = FileAccess.ReadWrite;
-                        FileShare file_share = FileShare.Read;
-                        FileOptions file_options = FileOptions.WriteThrough;
-
-                        instancia.stream_dados_sistema  = new FileStream( path_dados_sistema, file_mode, file_accees , file_share, instancia.tamanho_dados_sistema , file_options );
-
-                        if( File.Exists( path_dados_seguranca ) ){
-
-                              // algo deu errado
+                        Controlador_personagens.Construir( dados_sistema_personagens_necessario, _save ); 
 
 
-                        }
-
-
-                        System.IO.File.WriteAllBytes( path_dados_seguranca, new byte[ instancia.length_arquivo_segurancao_maximo ] );
-                        instancia.stream_dados_auto_save = new FileStream( path_dados_seguranca, file_mode, file_accees , file_share, instancia.length_arquivo_segurancao_maximo , file_options );
-
-
-                        byte[] dados_sistema = new byte[ instancia.tamanho_dados_sistema ];
-                        instancia.stream_dados_sistema.Read( dados_sistema , 0, dados_sistema.Length );
-                                    
-
-                        // com dados sistema eu posso realmente criar os personagens 
-
-                        Dados_sistema_personagem[] dados_sistema_personagens = Tradutor_save.Descompactar_dados_sistema_personagens( dados_sistema );
-
-
-
-                              
-                        
-                        instancia.controlador_save_personagens = new Controlador_save_personagens(  dados_sistema_personagens,  _save  ); 
-                        Controlador_personagens.Construir( dados_sistema_personagens, _save ); 
 
                         // personagem.Mudar_valores( thing, novo_valor ); => ativa Controlador_personagem => entrega_valores_para_update 
 
@@ -209,111 +182,267 @@ public class Controlador_save {
 
                         // Player_estado_atual.Construir(  ); ** talvez eu tenha que passar o save também 
 
-                        return instancia;
+
+
+
+                  instancia = controlador;
+
+                  return instancia;
 
 
             }
 
 
-
-
-
-
-
-
-
-
-            public string path_save_folder; 
-            public int tamanho_dados_sistema = 10_000; // numero de personagens * 
-
-            public byte[][] dados_para_salvar;
-
-            public Controlador_save_personagens controlador_save_personagens;
 
 
             public int frame = 0;
-
-
+            public int espacamento = 10;
             public void Update(){
 
-                  // quando estiver em teste nao vai deixar salvar 
-                  if( esta_em_teste ) { return ;}
 
-                  frame = ( frame + 1 ) % 10;
+                  // quando estiver em teste nao vai deixar salvar      
+                  if( esta_em_teste ) 
+                        { return ;}
 
-                  // verifiacr atualizacoes em blocos que precisam ser salvos: 
-                  // todo dado que for pego aqui já vai estar no jogo 
-                  // realmente atualizam a cada 10 frames 
 
-                  if( frame == 0 ){ Atualizar_dados_seguranca(); }
+                  // ** vai ser chamado a cada 10 frames 
+
+                  frame = ( frame + 1 ) % espacamento ;
+                  if( frame  == 0 )
+                        {
+                              // Main thread
+                              // garante que todos os arquivos das instrucoes de seguranca esstao atualizados 
+                              Controlador_instrucoes_de_seguranca.Pegar_instancia().Update(); 
+                              return;
+                        } 
+
+                                    
+
+                  if( modo_save_atual == Modo_save_atual.nada ) 
+                        { 
+                              if( frame == 5 )
+                                    {
+                                          Verificar_arquivos_para_salvar();
+                                    }
+                              return;
+                        }
+
+
+                        
+                  if( ! ( task_salvar.finalizado ) ) 
+                        { return; }
+
+
+                  switch( modo_save_atual ){
+
+                        case Modo_save_atual.salvando_primeiro_plano: Salvar_primeiro_plano_update(); break;
+                        case Modo_save_atual.salvando_primeiro_plano: Salvar_segundo_plano_update();  break;
+
+                  }
+
+
+
+
+
+
+
+
+
+                  // #if UNITY_EDITOR
+
+                  //       if( Config.salvar_arquivos_instrucoes_de_segurança )
+                  //             {
+                  //                   string path_folder_para_analisar = Application.dataPath + "/colocar_depois";
+
+                  //             }
+
+
+                  // #endif
+
+                  
 
 
             }
+
+
+            public void Verificar_arquivos_para_salvar(){
+
+                  // verificar primario
+
+                  if( controlador_instrucoes_de_seguranca.index_byte_instrucoes_de_seguranca_1 > 200_000 )
+                        {
+                              // vai iniciar salvar primario
+
+                              modo_save_atual = Modo_save_atual.salvando_segundo_plano;
+                              controlador_save_personagens.Iniciar_salvar_primeiro_plano();
+                              return;
+
+                        }
+
+
+                  // salva segundo plano 
+                  // ** segundo plano sempre vai ter algo para salvar, mas ele vai ser salvo mais lentamente 
+
+                  if( controlador_ )
+
+                  modo_save_atual = Modo_save_atual.salvando_segundo_plano;
+                  return;
+
+                  
+            }
+
+
+            
+            public bool Salvar_primeiro_plano_update(){
+
+                  // quando for iniciar o salvar sempre tem que criar a task 
+
+
+                  bool dados_para_salvar = false;
+
+                  
+                  tem_dados_para_salvar = controlador_save_personagens.Verificar_se_tem_personagens_para_salvar();
+                  if( tem_dados_para_salvar ) 
+                        { return ; }
+
+
+
+
+                  esta_salvando_container = false;
+                  return;
+
+
+
+            }
+
+
+
+            
+            public bool Salvar_segundo_plano_update(){
+
+                  // o segundo plano vai ser um pouco diferente 
+                  // ele sempre tem uma quantidade de cidades na ram com uma em foco
+                  // as cidades vizinhas 
+
+
+                  bool dados_para_salvar = false;
+
+                  
+                  tem_dados_para_salvar = controlador_save_personagens.Verificar_se_tem_personagens_para_salvar();
+                  if( tem_dados_para_salvar ) 
+                        { return ; }
+
+
+
+
+                  esta_salvando_container = false;
+                  return;
+
+
+
+            }
+
+
+
+            
+
+
+
+            public void Iniciar_salvar(){
+
+                  // só vai ser chamada quando a quantidade de dados no buffer passar de 200kb
+
+                  int[] personagens_ids =  controlador_save_personagens.Iniciar_salvar();
+
+            }
+
+
+            public void Salvar_multithread( Action fn ){
+
+
+            }
+
+
+            public void Criar_task_salvar_dados( string _path , byte[] _dados ){
+
+                  
+                  task_salvar = new Task_req( new Chave_cache() , "salvando arquivos" );
+
+                  task_salvar.fn_iniciar =  () => {
+
+                        string path_temp = ( _path + ".temp" ) ;
+                        string path_temp_save = ( _path + ".2.temp" );
+
+                        //System.IO.File.Create(  path_temp , _dados.Length, FileOptions.WriteThrough );
+                        System.IO.File.WriteAllBytes( path_temp , _dados  );
+
+                        FileMode file_mode = FileMode.Open;
+                        FileAccess file_accees = FileAccess.ReadWrite;
+                        FileShare file_share = FileShare.Read;
+                        FileOptions file_options = FileOptions.WriteThrough;
+
+                        FileStream str = new FileStream(  path_temp,  file_mode, file_accees , file_share, _dados.Length , file_options );
+
+                        str.Flush();
+                        str.Close();
+
+
+                        // muda o nome do antigo
+                        System.IO.File.Move(  _path , path_temp_save );
+
+                        // coloca o nome correto 
+                        System.IO.File.Move(  _path_temp , _path  );
+
+                        // deleta o save
+                        System.IO.File.Delete( path_temp_save );
+
+                  
+                        return;
+
+                  };
+
+
+
+                  Controlador_multithread.Pegar_instancia().Adicionar_task( task_salvar );
+
+                  return;
+
+            }
+
 
 
 
                         
-            public void Atualizar_dados_seguranca(){
 
 
-                        // ** execuar na multithread faria mais sentido
-
-                        // formato: 
-
-                        // sefty   length             sefty  
-                        // 1 byte              1 byte
-
-                        // pega todos os dados 
-
-                        byte[] dados_personagens_seguranca = controlador_save_personagens.Pegar_dados_em_espera();
-                        //byte[] dados_woirld = controlador_save_world.Pegar_dados_em_espera();
-
-                        int length_dados_reais = dados_personagens_seguranca.Length;
-
-                                          //  1 no inicio e no final  / length    
-                        int legnth_dados_para_adicionar = 2   +            2     +  length_dados_reais  ;
-                        byte[] dados_para_adicionar = new byte[ legnth_dados_para_adicionar ];
-
-                        // se byte[ length + 1 ] for 0 => nao foi salvo corretamente;
-
-                        dados_para_adicionar[ 0 ] = 1 ;
-                        dados_para_adicionar[ 1 ] = ( byte ) (length_dados_reais >> 8 ) ;
-                        dados_para_adicionar[ 2 ] = ( byte ) (length_dados_reais >> 0 ) ;
-                        dados_para_adicionar[ (dados_para_adicionar.Length - 1) ] = 1 ;
-
-                        int index_acumulador = 3;
-
-                        int index = 0;
-
-                        for(  index = 0;  index < dados_personagens_seguranca.Length ; index++ ){
-
-                                    dados_para_adicionar[ index_acumulador +  index ] = dados_personagens_seguranca[ index ];
-
-                        }
-
-                        //length_arquivo_segurancao += 
-                        stream_dados_auto_save.Write( dados_personagens_seguranca, 0, dados_personagens_seguranca.Length );
-
-            }
 
 
-            
-            public byte[] info_auto_save = new byte[ 0 ];
-
-            public FileStream stream_dados_sistema ;
-            
-            public System.Text.UTF8Encoding encoder = new System.Text.UTF8Encoding( true );
 
 
-            int length_arquivo_segurancao_maximo = 50_000;
-            int length_arquivo_segurancao = 0;
-            public FileStream stream_dados_auto_save;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 
             public void Copiar_arquvios_do_novo_jogo( int _save ){
+
+
+                        // ** TIRAR DEPOIS 
+                        return;
 
                         
                         // acho que seria melhor colocar somente os personagens principais 

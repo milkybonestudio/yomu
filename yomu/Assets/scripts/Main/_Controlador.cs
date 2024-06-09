@@ -186,10 +186,13 @@ public class Controlador : MonoBehaviour {
 
 
                         if( Teste_escopo.ativado ){ Teste_escopo.Update(); return;}
+                        
+                        if( Input.GetKey( KeyCode.F1 ) && Input.GetKey(KeyCode.Escape ) ) { Application.Quit(); } 
+
+                        Controlador_audio.Pegar_instancia().Update();
 
 
 
-                        if(Input.GetKeyDown(KeyCode.F1)) { Application.Quit(); }   
                         Controlador_input.Update_mouse();
                         Controlador_dados.Pegar_instancia().Atualizar_mouse_atual(); 
 
