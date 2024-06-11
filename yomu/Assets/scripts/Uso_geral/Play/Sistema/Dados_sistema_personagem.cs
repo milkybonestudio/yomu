@@ -96,7 +96,7 @@ public enum Atividade {
 }
 
 
-public class Posicao_geral_personagem {
+public class Posicao_geral {
 
 
         public int cidade_id;
@@ -145,7 +145,7 @@ public class Dados_sistema_personagem_essenciais {
         // public Personagem_nome nome_personagem;
 
 
-        public Posicao_geral_personagem posicao_atual_personagem;
+        public Posicao_geral posicao_atual_personagem;
         public Atividade atividade_atual;
 
 

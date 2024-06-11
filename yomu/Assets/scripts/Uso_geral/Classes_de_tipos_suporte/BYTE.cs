@@ -9,6 +9,12 @@
 public static class BYTE {
 
 
+
+
+
+        
+
+
         
         public static byte[] Aumentar_length_array( byte[] _arr , int numero_para_aumentar ){
 
@@ -146,7 +152,7 @@ public static class BYTE {
                                 if( slot_1d == null ) 
                                         { break; }
 
-                                for( int dados_index = 0 ; dados_index < dados.Length ; dados_index++ ){
+                                for( int dados_index = 0 ; dados_index < slot_1d.Length ; dados_index++ ){
 
                                         dados_compactados[ index_atual ] = slot_1d[ dados_index ] ;
                                         index_atual++ ;
@@ -188,13 +194,13 @@ public static class BYTE {
 
 
 
-        public static void Zerar_array_3d( ref byte[][] _dados ){
+        public static void Zerar_array_3d( ref byte[][][] _dados ){
 
                 
                 for( int slot_2d_index = 0 ; slot_2d_index < _dados.Length ; slot_2d_index++ ){
                         
                         
-                        for( int slot_1d_index = 0 ; int slot_1d_index < _dados.Length ; int slot_1d_index++ ){
+                        for( int slot_1d_index = 0 ; slot_1d_index < _dados.Length ; slot_1d_index++ ){
                                 
                                 
                                 _dados[ slot_2d_index ][ slot_1d_index ] = null;
@@ -206,6 +212,39 @@ public static class BYTE {
 
 
         }
+
+        public static int Pegar_quantidade_de_bytes_arr_3d( byte[][][] _arr_3d ){
+
+                int retorno = 0 ;
+
+                for( int slot_2d_index = 0 ; slot_2d_index < _arr_3d.Length ; slot_2d_index++ ){
+
+                        byte[][] slot_2d = _arr_3d[ slot_2d_index ];
+                        if( slot_2d == null )
+                                { continue; }
+
+                        for( int slot_1d_index = 0 ; slot_1d_index < slot_2d.Length ; slot_1d_index++  ){
+
+                                byte[] slot_1d = slot_2d[ slot_1d_index ];
+                                if( slot_1d == null )
+                                        { continue; }
+
+                                retorno += slot_1d.Length;
+                                continue;
+                        
+                        }
+
+                        continue;
+
+                }
+
+                return retorno;
+
+        }
+
+
+
+
 
 
 

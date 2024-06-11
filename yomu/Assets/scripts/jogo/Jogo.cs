@@ -222,12 +222,12 @@ public class Jogo {
 
 
 
-                if( controlador_save.esta_salvando )
-                        {
-                                controlador_save.Update_salvando();
-                                return;
+                // if( controlador_save.esta_salvando )
+                //         {
+                //                 controlador_save.Update_salvando();
+                //                 return;
 
-                        }
+                //         }
 
             
                 // if(  Controlador_UI.Pegar_instancia().Update() ) { return; }

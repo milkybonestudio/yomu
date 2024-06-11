@@ -240,7 +240,7 @@ public class Gerenciador_estado_mental {
                 instrucoes_de_seguranca[ 2 ] = ( byte ) (  ( int ) Funcao_especifico_modificar_personagem.modificar_estado_mental ) >> 8;
                 instrucoes_de_seguranca[ 3 ] = ( byte ) (  ( int ) Funcao_especifico_modificar_personagem.modificar_estado_mental ) >> 0;
 
-                int personagem_nome = ( int ) personagem.nome;
+                int personagem_nome = personagem.personagem_id;
 
                 instrucoes_de_seguranca[ 4 ] = ( byte ) ( personagem_nome >> 8 );
                 instrucoes_de_seguranca[ 5 ] = ( byte ) ( personagem_nome >> 0 );
@@ -257,8 +257,7 @@ public class Gerenciador_estado_mental {
                         
                 }
 
-                
-                Controlador_personagens.Pegar_instancia().Colocar_instrucoes_de_seguranca( instrucoes_de_seguranca );
+                Controlador_personagens.Pegar_instancia().gerenciador_save_personagens.Colocar_instrucoes_de_seguranca(  personagem_nome ,  instrucoes_de_seguranca );
 
 
 

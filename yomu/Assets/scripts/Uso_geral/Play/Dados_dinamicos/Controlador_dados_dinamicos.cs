@@ -16,29 +16,35 @@ public class Controlador_dados_dinamicos{
                 Controlador_dados_dinamicos controlador = new Controlador_dados_dinamicos(); 
 
 
-                        controlador.dados_run_time = new Dados_run_time();
                         controlador.lista_navegacao = new Lista_navegacao();
                         controlador.tradutor_save_dinamico = new Tradutor_save_dinamico();
 
+                        controlador.dados_dinamicos_personagens = new Dados_dinamicos_personagens();
+                        // controlador.dados_dinamicos_cidades = new Dados_dinamicos_cidades();
+                        // controlador.dados_dinamicos_plots = new Dados_dinamicos_plots();
+
 
                 instancia = controlador; 
-                return instancia;}
+                return instancia;
+                
+        }
 
 
 
-    public Lista_navegacao lista_navegacao;
-    public Dados_run_time dados_run_time;
-    public Tradutor_save_dinamico tradutor_save_dinamico ;
+        public Lista_navegacao lista_navegacao;
+        public Tradutor_save_dinamico tradutor_save_dinamico ;
 
+
+        public Dados_dinamicos_personagens dados_dinamicos_personagens;
+        // public Dados_dinamicos_cidades dados_dinamicos_cidades;
+        // public Dados_dinamicos_plots dados_dinamicos_plots;
+    
     
 
-    
+        public void Zerar(){
 
-    public void Zerar(){
-
-        lista_navegacao.Zerar();
-
-    }
+                instancia = null;
+        }
 
 
 

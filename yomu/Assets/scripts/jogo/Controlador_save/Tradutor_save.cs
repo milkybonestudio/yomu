@@ -20,17 +20,40 @@ public static class Tradutor_dados_sistema {
         }
 
 
-        public static Dadoss_sistema_cidade_essenciais[] Descompactar_dados_sistema_cidades_essenciais( byte[] _dados_sistema ){
+        public static Dados_sistema_cidade_essenciais[] Descompactar_dados_sistema_cidades_essenciais( byte[] _dados_sistema ){
 
                 return null;
 
         }
 
-        public static byte[] Compactar_dados_sistema_cidades_essenciais( Dadoss_sistema_cidade_essenciais[] _dados_sistema ){
+        public static byte[] Compactar_dados_sistema_cidades_essenciais( Dados_sistema_cidade_essenciais[] _dados_sistema ){
                 
                 return null;
 
         }
+
+        
+        public static Dados_sistema_estado_atual Descompactar_dados_sistema_estado_atual(  byte[]  _dados_sistema ){
+                
+                return null;
+
+        }
+
+        
+        public static Dados_sistema_player Descompactar_dados_sistema_player(  byte[]  _dados_sistema ){
+                
+                return null;
+
+        }
+
+
+
+        
+
+
+        
+
+
 
 
             /*

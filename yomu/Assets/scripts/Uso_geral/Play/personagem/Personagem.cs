@@ -224,7 +224,7 @@ public class Gerenciador_memorias_outros_personagens {
 
 public class Personagem {
 
-        public Personagem(  int _personagem_id,  Posicao_geral_personagem _posicao_geral, Atividade _atividade ){
+        public Personagem(  int _personagem_id,  Posicao_geral _posicao_geral, Atividade _atividade ){
 
                 posicao = _posicao_geral ;
                 atividade = _atividade ;
@@ -234,8 +234,10 @@ public class Personagem {
         }
 
         public int personagem_id;
-        public Posicao_geral_personagem posicao;
+        public Posicao_geral posicao;
         public Atividade atividade;
+
+        public Plano plano = Plano.quarto;
 
 
         // parte interna 

@@ -5,116 +5,183 @@ using System.IO;
 
 public class Controlador_instrucoes_de_seguranca {
 
+
+
+                //  ** LOGICA
+                //  O jogo tem que salvar em run time, mas eu preciso minimizar o acesso ao disco. 
+                //  escrever 10 bytes em 10 arquivos é muito ( muito ) mais lento que 100 bytes em 1 arquivo 
+
+                //  Com as instrucoes de seguranca eu posso ir para o momento atual do jogo com o momento passado
+                //     fn_atualizar (  arquivo_antigo , instrucoes_de_seguranca ) => arquivo _atual
+                //  mas esses dados só vão ser usados caso o sistema seja interrempido ( tanto pelo player para evitar uma escolha ruim quanto pelo proprio sistema )  
+                //  decodificar as instrucoes vai levar muito mais tempo, é somente para seguranca.
+
+                //   O jogo vai ir salvando lentamente os arquivos de cada entidade ( personagem, cidade, plot ) como um grande container
+                //   e quando o player fechar a aplicação ou sair do jogo para o menu o jogo vai primeiro salvar todos os containers ativos
+
+                // As instrucoes de seguranca vão ficar em uma grande stack de momentos que contem todas as instrucoes para faze o sistema passar do ponto p1 para o ponto p2. 
+                // tendo como padrao o formato: [  momento 1  ][ momento 2 ] ... [ momento n ]
+                // cada momento: [ momento ] => [   intrucao 1   ]  
+                //                              [   intrucoa 2   ]
+                //                              [   intrucoa 3   ]
+                //                              [      ....      ]
+                 
+
+
+                //  ** SEGURANCA
+                //  o Jogo tem 2 planos de entidades principais : primeiro plano e segundo plano 
+                //    - primeiro plano tem as entidades que estão perto do player e são atualizados com frequencia mas quase não são trocados 
+                //    - segundo plano tem as entidades longe do player e são atualizados com baixa frequencia mas são trocados constantemente
+                //  esses planos vão ser salvos em turnos com certos requerimentos :
+                //  primeiro_plano => length dos dados de seguranca passarem de 200kb 
+                //  segundo plano  => sempre que tiver alguma cidade secundaria para atualizar, ele tem que salvar as entidades que não vão mais ser usadas 
+
+                //  O controlador_save vai sempre verificar qual p
+
+
+
                 public static Controlador_instrucoes_de_seguranca instancia;
                 public static Controlador_instrucoes_de_seguranca Pegar_instancia(){ return instancia; }
 
                 public Controlador_instrucoes_de_seguranca(){
 
+
                         controlador_save = Controlador_save.Pegar_instancia();
-                        path_instrucoes_de_seguranca_1 = controlador_save.path_save_folder + "/Dados_programa/instrucoes_de_seguranca_1.dat";
-                        path_instrucoes_de_seguranca_2 = controlador_save.path_save_folder + "/Dados_programa/instrucoes_de_seguranca_2.dat";
+                        path_instrucoes_de_seguranca_1 = controlador_save.path_save_folder + "/Dados_programa/instrucoes_de_seguranca_1.dat" ;
+                        path_instrucoes_de_seguranca_2 = controlador_save.path_save_folder + "/Dados_programa/instrucoes_de_seguranca_2.dat" ;
                         
 
                 
-                        if( ! ( File.Exists( path_instrucoes_de_seguranca ) ) )
+                        if( ! ( File.Exists( path_instrucoes_de_seguranca_1 ) ) )
                                 {  throw new Exception( "nao era para vir aqui" );  }
+
+                        if( ! ( File.Exists( path_instrucoes_de_seguranca_2 ) ) )
+                                {  throw new Exception( "nao era para vir aqui" );  }
+
+                                
                                         
                         FileMode file_mode = FileMode.Open;
                         FileAccess file_accees = FileAccess.ReadWrite;
                         FileShare file_share = FileShare.Read;
                         FileOptions file_options = FileOptions.WriteThrough;
                 
-                        stream_instrucoes_de_seguranca_1 = new FileStream( path_instrucoes_de_seguranca_1, file_mode, file_accees , file_share, length_arquivo_instrucoes_de_seguranca , file_options );
-                        stream_instrucoes_de_seguranca_2 = new FileStream( path_instrucoes_de_seguranca_2, file_mode, file_accees , file_share, length_arquivo_instrucoes_de_seguranca , file_options );
+                        strems_stacks[ 0 ] = new FileStream( path_instrucoes_de_seguranca_1, file_mode, file_accees , file_share, length_arquivo_instrucoes_de_seguranca , file_options );
+                        strems_stacks[ 1 ] = new FileStream( path_instrucoes_de_seguranca_2, file_mode, file_accees , file_share, length_arquivo_instrucoes_de_seguranca , file_options );
 
                 }
 
 
                 public Controlador_save controlador_save;
 
-                public int index_byte_instrucoes_de_seguranca_1 = 0;
-                public FileStream stream_instrucoes_de_seguranca_1;
+                public int[] indexes_instrucoes_de_seguranca = new int[]{ 0 , 0 }
+                public FileStream[] strems_stacks = new FileStream[ 2 ];
+
+
+                public int length_arquivo_instrucoes_de_seguranca = 500_000;
+                public int length
+                public int length_arquivo_segurancao = 0;
+
+                public string path_instrucoes_de_seguranca_1;
+                public string path_instrucoes_de_seguranca_2;
+
+                public byte byte_segurancao_iniciar_jogo = ( byte ) 7;
+
+                public int id_stack = 1; // sempre aponta para a primeira
+
+
+
+
+
+                public void Update( Modo_save _modo ){
 
                 
-                public int index_byte_instrucoes_de_seguranca_2 = 0;
-                public FileStream stream_instrucoes_de_seguranca_2;
-
-
-                int length_arquivo_instrucoes_de_seguranca = 500_000;
-                int length_arquivo_segurancao = 0;
-
-                string path_instrucoes_de_seguranca_1;
-                string path_instrucoes_de_seguranca_2;
-
-                public int arquivo_main = 0; // arquivo que vai ser colocados os aqrquivos novos 
-
-
-                public void Update( Modo_save_atual _modo ){
-
-
-                        // esse update sempre vai ser  chamado independete se o sistema esta salvando algo ou não 
-                        Update_primario( _modo );
-                        Update_secundario( _modo );
-
-
-                }
-
-
-                public void Update_primario( Modo_save_atual _modo ){
-
-                        // --- PEGAR INSTRUCOES DE TODOS OS DADOS
-
-                        // 0 => primario, 1 => priumario_2 , 1 => secundario_1, secundario_2
-                        byte[][][] dados_personagens_seguranca = controlador_save.controlador_save_personagens.Compactar_intrucoes_de_seguranca( _modo );
-                        byte[][][] dados_personagens_seguranca = controlador_save.controlador_save_personagens.Pegar_instrucoes_de_seguranca( _modo );
-
-                        byte[][][] dados_cidades_seguranca = controlador_save.controlador_save_cidades.Pegar_instrucoes_de_seguranca( _modo );
-
-
-
-
-                        //byte[] dados_woirld = controlador_save_world.Pegar_dados_em_espera();
-
-                        int length_dados_para_adicionar = 0;
-
-                        length_dados_para_adicionar += 2; // 1 no inicio e no final
-                        length_dados_para_adicionar += 2; // length dos dados
-                        length_dados_para_adicionar += dados_personagens_seguranca.Length; // length personagens
-
-
-
-                        byte[] dados_para_adicionar = new byte[ length_dados_para_adicionar ];
-
-                        // se byte[ length - 1 ] for 0 => nao foi salvo corretamente;
+                        // --- PEGAR DADOS
                         
+                        byte[][][][] arquivos_instrucoes_personagens_completos =  Controlador_personagens.Pegar_instancia().gerenciador_save_personagens.Pegar_instrucoes_de_seguranca( _modo );
+                        byte[][][][] instrucoes_de_seguranca_cidades_completos = controlador_save.controlador_save_cidades.Pegar_instrucoes_de_seguranca( _modo );
 
-                        dados_para_adicionar[ 0 ] = 1 ;
-                        dados_para_adicionar[ 1 ] = ( byte ) ( length_dados_para_adicionar >> 8 ) ;
-                        dados_para_adicionar[ 2 ] = ( byte ) ( length_dados_para_adicionar >> 0 ) ;
-                        dados_para_adicionar[ ( dados_para_adicionar.Length - 1 ) ] = 1 ;
+                        byte[][] buffers_stacks = new byte[ 2 ][];
 
-                        int index_acumulador = 3; // comeca realmente no 3
+                        int numero_stacks_maximo = 2;
 
-                        int index = 0;
+                        for( int stack_index = 0 ; stack_index < numero_stacks_maximo ;  stack_index++ ){
 
-                        for(  index = 0;  index < dados_personagens_seguranca.Length ; index++ ){
 
-                                dados_para_adicionar[ index_acumulador +  index ] = dados_personagens_seguranca[ index ];
+                                byte[][][]  personagens_instrucoes  =  arquivos_instrucoes_personagens_completos[ stack_index ] ;
+                                byte[][][]  cidades_instrucoes =  instrucoes_de_seguranca_cidades_completos[ stack_index ] ;
+
+                                int tamanho_final_buffer = 0;
+
+                                tamanho_final_buffer += BYTE.Pegar_quantidade_de_bytes_arr_3d( personagens_instrucoes );
+                                tamanho_final_buffer += BYTE.Pegar_quantidade_de_bytes_arr_3d( cidades_instrucoes );
+
+                                if( tamanho_final_buffer > 0 )
+                                        {
+                                                // tem algo para salvar 
+
+                                                tamanho_final_buffer += 2; // 1 no inicio e no final
+                                                tamanho_final_buffer += 2; // length dos dados
+
+                                        }
+
+                                buffers_stacks[ stack_index ] = new byte[ tamanho_final_buffer ];
+                                byte[] buffer_atual = buffers_stacks[ stack_index ];
+
+                                buffer_atual[ 0 ] = ( byte ) 1 ;
+                                buffer_atual[ 1 ] = ( byte ) ( tamanho_final_buffer >> 8 ) ;
+                                buffer_atual[ 2 ] = ( byte ) ( tamanho_final_buffer >> 0 ) ;
+                                buffer_atual[ tamanho_final_buffer - 1 ] = ( byte ) 1 ;
+
+        
+                                int index_buffer = 3; // comeca no 3 por conta do 1 no inicio + lgn 
+
+                                byte[][][][] containers_genericos = new byte[][][][]{
+
+                                                // --- TEM QUE TER TODOS OS OBJETOS
+                                                personagens_instrucoes ,
+                                                cidades_instrucoes 
+                                };
+
+
+                                for( int generico_container_index = 0 ; generico_container_index < containers_genericos.Length; generico_container_index++ ){
+
+                                        byte[][][] container = containers_genericos[  generico_container_index ];
+ 
+                                        for( int generico_index = 0 ; generico_index < container.Length ; generico_index++ ){
+
+                                                byte[][] instrucoes = container[ generico_index ];
+
+                                                for(  int instrucao_id = 0 ; instrucao_id  < instrucoes.Length ; instrucao_id ++  ){
+
+                                                        byte[] instrucao = instrucoes[ instrucao_id ];
+
+                                                        for( int byte_index = 0 ; byte_index < instrucao.Length ; byte_index++ ){
+
+                                                                index_buffer++ ;
+                                                                buffer_atual[ index_buffer ] = instrucao[ byte_index ] ;
+
+                                                        }
+
+                                                }
+
+                                        }
+
+                                }
+
+                                indexes_instrucoes_de_seguranca[ stack_index ] += buffer_atual.Length;
+                                strems_stacks[ stack_index ].Write( buffer_atual, 0, buffer_atual.Length );
+                                strems_stacks[ stack_index ].Flush();
+
+                                continue;
+
 
                         }
 
-                        //length_arquivo_segurancao += 
-                        index_byte_instrucoes_de_seguranca_1 += dados_personagens_seguranca.Length;
-                        stream_instrucoes_de_seguranca_1.Write( dados_personagens_seguranca, 0, dados_personagens_seguranca.Length );
-                        stream_instrucoes_de_seguranca_1.Flush();
+                        return;
+
+                                        
 
                 }
-
-
-                public void Update_secundario(){
-
-                }
-
 
 
 
@@ -122,38 +189,57 @@ public class Controlador_instrucoes_de_seguranca {
             public void Verificar_arquivo_das_instrucoes_de_seguranca(){
 
 
-                    int numero_inicial_seguranca = stream_instrucoes_de_seguranca_1.ReadByte();
-                    stream_instrucoes_de_seguranca_1.Seek( 0 ,  SeekOrigin.End );
-                    int numero_final_seguranca = stream_instrucoes_de_seguranca_1.ReadByte();
+                        // --- VERIFICAR SE O PROGRAMA FOI ENCERRADO CORRETAMENTE 
+
+                        strems_stacks[ 0 ].Seek( 0 ,  SeekOrigin.Begin );
+                        int numero_inicial_seguranca = strems_stacks[ 0 ].ReadByte();
+
+                        strems_stacks[ 1 ].Seek( 0 ,  SeekOrigin.End );
+                        int numero_final_seguranca = strems_stacks[ 1 ].ReadByte();
 
 
-                    if(  numero_inicial_seguranca != numero_final_seguranca  )
+                        if(  numero_inicial_seguranca != byte_segurancao_iniciar_jogo ||  numero_final_seguranca != byte_segurancao_iniciar_jogo )
                         {
 
-                            // ** se o arquivo existir mostrar uma mensagem para o player falando que o programa esta arrumando.
-                            // vai demorar um pouco
+                                // ** se o arquivo existir mostrar uma mensagem para o player falando que o programa esta arrumando.
+                                // vai demorar um pouco
+
+                                throw new Exception();
 
                         }
 
 
             }
 
-            public void Renovar_arquivo_das_instrucoes(){
+            public void Renovar_stacks_instrucoes( int _stack ){
 
-                            
-                    // seta novas insrucoes vazias
-                    stream_instrucoes_de_seguranca_1.Seek( 0 ,  SeekOrigin.Begin );
-                    byte[] novo_buffer_instrucoes = new byte[ length_arquivo_instrucoes_de_seguranca ];
+                        // 0  => 1 main 
+                        // 1  => 2 secundaria
+                        // 2  =>  as 2
 
-                    novo_buffer_instrucoes[ 0 ] = ( byte ) 1;
-                    novo_buffer_instrucoes[ novo_buffer_instrucoes.Length - 1 ] = ( byte ) 1;
+                        // seta novas insrucoes vazias
+                        strems_stacks[ 0 ].Seek( 0 ,  SeekOrigin.Begin );
+                        byte[] novo_buffer_instrucoes = new byte[ length_arquivo_instrucoes_de_seguranca ];
 
-                    stream_instrucoes_de_seguranca_1.Write( novo_buffer_instrucoes , 0 ,novo_buffer_instrucoes.Length );
-                    stream_instrucoes_de_seguranca_1.Flush();
+                        novo_buffer_instrucoes[ 0 ] = ( byte ) 1; // seguranca
+                        novo_buffer_instrucoes[ 1 ] = ( byte ) 1; // id stack
 
-                    stream_instrucoes_de_seguranca_1.Seek( 0 ,  SeekOrigin.Begin );
+                        novo_buffer_instrucoes[ length_arquivo_instrucoes_de_seguranca - 1 ] = ( byte ) 1;
 
-                    return;
+                        strems_stacks[ 0 ].Write( novo_buffer_instrucoes , 0 ,novo_buffer_instrucoes.Length );
+                        strems_stacks[ 0 ].Flush();
+
+                        int index_para_comecar = 2; // seguranca + id
+                        indexes_instrucoes_de_seguranca = new int[] {
+                                
+                                index_para_comecar, 
+                                index_para_comecar,
+
+                        };
+
+                        strems_stacks[ 0 ].Seek( index_para_comecar ,  SeekOrigin.Begin );
+
+                        return;
                   
 
 

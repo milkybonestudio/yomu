@@ -2,7 +2,23 @@
 
 
 public static class INT {
+        
 
+
+
+    public static int Length_elementos_maiores_que_0 (  int[] _arr  ){
+
+                int length = 0 ;
+                for( int i = 0 ; i < _arr.Length ; i++ ){
+                        if( _arr[ i ] > 0 )
+                                { length++; }
+                        continue;
+                }
+
+                return length;
+                
+
+    }
 
 
     public static bool Tem_valor_no_array( int[] _arr , int _valor ){
@@ -16,6 +32,22 @@ public static class INT {
             return false;
 
     }
+
+
+    public static int Pegar_index_valor( int[] _arr , int _valor ){
+
+            for(  int i = 0 ;  i < _arr.Length ; i++ ){
+
+                if( _arr[ i ] == _valor ) 
+                        {return i;}
+
+            }
+
+            return -1;
+
+    }
+
+
 
     public static void Trocar_valor ( int[] _arr , int _valor_para_trocar , int _novo_valor ){
 
@@ -50,6 +82,46 @@ public static class INT {
 
     }
 
+
+public static void Acrescentar_valor_COMPLETO_GARANTIDO( ref int[] arr , int _valor ){
+
+        int[] novo_arr = new int[ arr.Length + 1 ];
+
+        for( int index = 0 ; index < arr.Length ; index++ ){
+
+                novo_arr[ index ] = arr[ index ];
+
+        }
+
+        novo_arr[ arr.Length ] = _valor;
+        arr = novo_arr;
+
+        return;
+
+
+
+}
+
+public static void Tirar_valor_COMPLETO_GARANTIDO( ref int[] arr , int _valor ){
+
+        int[] novo_arr = new int[ arr.Length - 1  ];
+
+        for( int index = 0 ; index < arr.Length ; index++ ){
+
+                if( arr[ index ] == _valor)
+                        { continue; }
+                novo_arr[ index ] = arr[ index ];
+
+        }
+
+        novo_arr[ arr.Length ] = _valor;
+        arr = novo_arr;
+        
+        return;
+
+
+
+}
 
 
 

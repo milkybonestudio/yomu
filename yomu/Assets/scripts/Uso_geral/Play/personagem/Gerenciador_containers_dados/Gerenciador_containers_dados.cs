@@ -15,6 +15,13 @@ public class Gerenciador_containers_dados {
 
         public bool containers_alterados = false;
 
+        public byte[] Compilar_dados(){ 
+
+                // só vai ser chamado quando o personagem estiver pronto para ser salvo
+                return null;
+
+         }
+
         public byte[] Pegar_buffer( Container_dados_personagem _container ){    
 
                 // vai ser usado para ver quais personagens precisam ser salvos 

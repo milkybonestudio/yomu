@@ -38,18 +38,22 @@ public enum Continente_nome : byte {
 // talvez Ponto_nome nao faça sentido pois ponto depende de local que depende de regiao [ ... ] 
 // posicao pode ter somente coisas genericas. 
 
-public struct Posicao {
-
-    public  short  ponto;  // LILY_quarto
-    public  byte   local; // dormitorio 
-    public  byte   regiao; // catedral 
-    public  byte   cidade; // cidade da catedral
-    public  byte   estado; // conjunto de cidades 
-    public  byte   reino;  // conjuntod e estados 
-    public  byte   continenete; // conjunto de reinos
 
 
-}
+// public struct Posicao {
+
+//     public  short  ponto;  // LILY_quarto
+//     public  byte   local; // dormitorio 
+//     public  byte   regiao; // catedral 
+//     public  byte   cidade; // cidade da catedral
+//     public  byte   estado; // conjunto de cidades 
+//     public  byte   reino;  // conjuntod e estados 
+//     public  byte   continenete; // conjunto de reinos
+
+
+// }
+
+
 
 
 
@@ -76,12 +80,6 @@ public struct Posicao_cidade {
 }
 
 
-public class Posicao {
-
-    public Posicao_longe posicao_longe = new Posicao_longe();
-    public Posicao_perto posicao_perto = new Posicao_perto();
-
-}
 
 
 

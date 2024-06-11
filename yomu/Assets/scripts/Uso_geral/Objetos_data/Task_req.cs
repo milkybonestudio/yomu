@@ -89,6 +89,7 @@ public class Task_req {
         
         public System.Object dados = null ;
         public System.Object dados_suporte_1 = null;
+        public System.Object[] dados_array_suporte = null;
         public Chave_cache chave_cache = new Chave_cache() ;
         public bool pode_executar = true ;
         public bool finalizado = false;

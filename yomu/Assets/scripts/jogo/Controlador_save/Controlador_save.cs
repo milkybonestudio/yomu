@@ -5,18 +5,13 @@ using System.Threading;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 
 
 
-public enum Modo_save_atual {
 
 
-      nada,
-      salvando_primeiro_plano,
-      salvando_segundo_plano
-
-}
 
 public class Controlador_save {
 
@@ -25,14 +20,9 @@ public class Controlador_save {
             public static Controlador_save instancia;
             public static Controlador_save Pegar_instancia(){ return instancia; }
 
-            
             public static bool esta_em_teste = false;
-
             
             public System.Text.UTF8Encoding encoder = new System.Text.UTF8Encoding( true );
-
-
-
 
 
 
@@ -40,14 +30,16 @@ public class Controlador_save {
             public string path_dados_sistema;
             public string path_dados_personagens;
 
-            public Modo_save_atual modo_save_atual = Modo_save_atual.nada;
+            public Modo_save modo_save_atual = Modo_save.DEFAULT;
 
             public int tamanho_dados_sistema = 10_000; // numero de personagens * 
 
             public byte[][] dados_para_salvar;
 
-            public Controlador_save_personagens controlador_save_personagens;
+            public Controlador_save_cidades controlador_save_cidades;
+
             public Controlador_instrucoes_de_seguranca controlador_instrucoes_de_seguranca;
+
 
 
 
@@ -105,11 +97,9 @@ public class Controlador_save {
 
                               }
 
-                        // ** nao faz sentido eu pensar em salvar sem ter o formato dos arquivos 
-
-                        
+      
                         // tudo aqui vai ser instanciado na multithread 
-                        // nao consomem tempo
+                        
 
                         Dados_blocos.Construir();
                         Controlador_timer.Construir();
@@ -119,68 +109,51 @@ public class Controlador_save {
                         Controlador_UI.Construir();
                         Controlador_transicao.Construir();
 
+                        Controlador_dados_sistema.Construir( _save );
+
+
 
                         // ---- USO SAVE
-
-                        controlador.path_save_folder = Paths_gerais.Pegar_path_folder_dados_save( _save );
-                        controlador.path_dados_sistema = controlador.path_save_folder + "/Dados_programa/dados_programa.dat";
-                        controlador.path_dados_personagens = controlador.path_save_folder + "/Personagens/";
                         
-
-                        controlador.controlador_save_personagens = new Controlador_save_personagens(); 
-
-                        controlador.controlador_instrucoes_de_seguranca = new Controlador_instrucoes_de_seguranca();
-                        controlador.controlador_instrucoes_de_seguranca.Verificar_arquivo_das_instrucoes_de_seguranca();
-                        controlador.controlador_instrucoes_de_seguranca.Renovar_arquivo_das_instrucoes();
-
                   
+                        controlador.controlador_save_cidades = new Controlador_save_cidades(); 
+                        controlador.controlador_instrucoes_de_seguranca = new Controlador_instrucoes_de_seguranca();
 
+                        controlador.controlador_instrucoes_de_seguranca.Verificar_arquivo_das_instrucoes_de_seguranca();
+                        controlador.controlador_instrucoes_de_seguranca.Renovar_stacks_instrucoes();
 
-
+            
 
                         // ----- SISTEMA
 
                         if( System.IO.File.Exists( controlador.path_dados_sistema ) )
-                              { throw new Exception( $"dados_programa.dat nao foi encontrado no path{ path_dados_sistema }"); }
+                              { throw new Exception( $"dados_programa.dat nao foi encontrado no path{ controlador.path_dados_sistema }"); }
 
 
-                        byte[] dados_sistema = System.IO.File.ReadAllBytes( path_dados_personagens.path_dados_sistema );
+                        byte[] dados_sistema = System.IO.File.ReadAllBytes( controlador.path_dados_sistema );
 
+                        Dados_sistema_personagem_essenciais[] dados_sistema_personagens_essenciais = Tradutor_dados_sistema.Descompactar_dados_sistema_personagens_essenciais( dados_sistema );
+                        Dados_sistema_cidade_essenciais[] dados_sistema_cidade_essenciais = Tradutor_dados_sistema.Descompactar_dados_sistema_cidades_essenciais( dados_sistema );
+                        Dados_sistema_estado_atual dados_sistema_estado_atual = Tradutor_dados_sistema.Descompactar_dados_sistema_estado_atual( dados_sistema );
+                        Dados_sistema_player  dados_sistema_player = Tradutor_dados_sistema.Descompactar_dados_sistema_player( dados_sistema );
 
-                        // esses dados vão ser colocados nos lugares mais adequados
-                        Dados_sistema_personagem_essenciais[] dados_sistema_personagens_necessario = Tradutor_dados_sistema.Descompactar_dados_sistema_personagens_necessarios( dados_sistema );
-                        Dados_sistema_cidade_essenciais[] dados_sistema_cidade_essenciais = Tradutor_dados_sistema.Descompactar_dados_sistema_cidades_necessarios( dados_sistema );
-                        Dados_sistema_estado_atual dados_sistema_estado_atual = Tradutor_dados_sistema.Descompactar_dados_sistema_atual( dados_sistema );
-                        // Coisa_2[] coisa_2 = Tradutor_save.Descompactar_dados_sistema_Coisa_2( dados_sistema );
-                        // Coisa_3[] coisa_3 = Tradutor_save.Descompactar_dados_sistema_Coisa_3( dados_sistema );
-                        // Coisa_4[] coisa_4 = Tradutor_save.Descompactar_dados_sistema_Coisa_4( dados_sistema );
-                        // ....
-
-
+        
 
                         // ----- PLAYER  
                         
 
-
-
                         // ---- PERSONAGENS
 
 
-                        
+                        Controlador_personagens.Construir( _save, dados_sistema_personagens_essenciais, dados_sistema_cidade_essenciais, dados_sistema_player, dados_sistema_estado_atual  ); 
 
-                        Controlador_personagens.Construir( dados_sistema_personagens_necessario, _save ); 
+                        // ----- CIDADES
 
 
 
-                        // personagem.Mudar_valores( thing, novo_valor ); => ativa Controlador_personagem => entrega_valores_para_update 
+                        // ----- PLOTS
 
-                        // thing_1()
-                        // thing_2()
-                        // ...
 
-                        // Controlador_save.Update() => pega dados Controlador_personagens
-
-                        // Player_estado_atual.Construir(  ); ** talvez eu tenha que passar o save também 
 
 
 
@@ -196,7 +169,7 @@ public class Controlador_save {
 
 
             public int frame = 0;
-            public int espacamento = 10;
+            public int espacamento = 60;
             public void Update(){
 
 
@@ -205,193 +178,127 @@ public class Controlador_save {
                         { return ;}
 
 
-                  // ** vai ser chamado a cada 10 frames 
-
+                  // ** vai ser chamado a cada 1 vez por segundo 
                   frame = ( frame + 1 ) % espacamento ;
                   if( frame  == 0 )
                         {
                               // Main thread
                               // garante que todos os arquivos das instrucoes de seguranca esstao atualizados 
-                              Controlador_instrucoes_de_seguranca.Pegar_instancia().Update(); 
+                              controlador_instrucoes_de_seguranca.Update( modo_save_atual ); 
                               return;
                         } 
 
-                                    
 
-                  if( modo_save_atual == Modo_save_atual.nada ) 
-                        { 
-                              if( frame == 5 )
-                                    {
-                                          Verificar_arquivos_para_salvar();
-                                    }
+
+                  if( task_salvar != null )
+                        {
+                              if( ! ( task_salvar.finalizado ) )
+                                    { return; }
+
+                              task_salvar = null;
                               return;
                         }
 
+                  
 
-                        
-                  if( ! ( task_salvar.finalizado ) ) 
+                  if( frame != 30 )
                         { return; }
-
 
                   switch( modo_save_atual ){
 
-                        case Modo_save_atual.salvando_primeiro_plano: Salvar_primeiro_plano_update(); break;
-                        case Modo_save_atual.salvando_primeiro_plano: Salvar_segundo_plano_update();  break;
+                        case Modo_save.DEFAULT :  Verificar_dados_para_salvar(); break;
+                        case Modo_save.salvando_stack :  Salvar_stack(); break;
 
                   }
 
+                  Verificar_dados_para_salvar();
 
-
-
-
-
-
-
-
-                  // #if UNITY_EDITOR
-
-                  //       if( Config.salvar_arquivos_instrucoes_de_segurança )
-                  //             {
-                  //                   string path_folder_para_analisar = Application.dataPath + "/colocar_depois";
-
-                  //             }
-
-
-                  // #endif
+                  return;
 
                   
+            }
+
+
+            public void Salvar_stack(){
+
+                  // ** tem que criar o pedido
+
 
 
             }
 
 
-            public void Verificar_arquivos_para_salvar(){
 
-                  // verificar primario
 
-                  if( controlador_instrucoes_de_seguranca.index_byte_instrucoes_de_seguranca_1 > 200_000 )
-                        {
-                              // vai iniciar salvar primario
+            public void Verificar_dados_para_salvar(){
 
-                              modo_save_atual = Modo_save_atual.salvando_segundo_plano;
-                              controlador_save_personagens.Iniciar_salvar_primeiro_plano();
-                              return;
 
+                  // --- LIXEIRA PERSONAGENS
+
+
+
+                  bool tem_personagens_liexeira = false;
+                  Dados_para_salvar dados_entidade_para_salvar = null; 
+
+                  
+                  if( tem_personagens_liexeira )
+                        { 
+                              dados_entidade_para_salvar =  Controlador_personagens.Pegar_instancia().gerenciador_save_personagens.Pegar_personagem_para_salvar( modo_save_atual );
+                              if( dados_entidade_para_salvar != null )
+                                    { Criar_task_salvar_dados( dados_entidade_para_salvar ); }
+                              
+      
                         }
 
 
-                  // salva segundo plano 
-                  // ** segundo plano sempre vai ter algo para salvar, mas ele vai ser salvo mais lentamente 
-
-                  if( controlador_ )
-
-                  modo_save_atual = Modo_save_atual.salvando_segundo_plano;
-                  return;
-
-                  
-            }
-
-
-            
-            public bool Salvar_primeiro_plano_update(){
-
-                  // quando for iniciar o salvar sempre tem que criar a task 
-
-
-                  bool dados_para_salvar = false;
-
-                  
-                  tem_dados_para_salvar = controlador_save_personagens.Verificar_se_tem_personagens_para_salvar();
-                  if( tem_dados_para_salvar ) 
-                        { return ; }
-
-
-
-
-                  esta_salvando_container = false;
                   return;
 
 
-
             }
 
 
 
-            
-            public bool Salvar_segundo_plano_update(){
-
-                  // o segundo plano vai ser um pouco diferente 
-                  // ele sempre tem uma quantidade de cidades na ram com uma em foco
-                  // as cidades vizinhas 
+ 
 
 
-                  bool dados_para_salvar = false;
+
+
+            public void Criar_task_salvar_dados( Dados_para_salvar _dados_pedido ){
+
 
                   
-                  tem_dados_para_salvar = controlador_save_personagens.Verificar_se_tem_personagens_para_salvar();
-                  if( tem_dados_para_salvar ) 
-                        { return ; }
-
-
-
-
-                  esta_salvando_container = false;
-                  return;
-
-
-
-            }
-
-
-
             
+                  string path = _dados_pedido.path;
+                  byte[] dados = _dados_pedido.dados;
 
-
-
-            public void Iniciar_salvar(){
-
-                  // só vai ser chamada quando a quantidade de dados no buffer passar de 200kb
-
-                  int[] personagens_ids =  controlador_save_personagens.Iniciar_salvar();
-
-            }
-
-
-            public void Salvar_multithread( Action fn ){
-
-
-            }
-
-
-            public void Criar_task_salvar_dados( string _path , byte[] _dados ){
 
                   
                   task_salvar = new Task_req( new Chave_cache() , "salvando arquivos" );
 
-                  task_salvar.fn_iniciar =  () => {
+                  task_salvar.fn_iniciar =  ( Task_req _req ) => {
 
-                        string path_temp = ( _path + ".temp" ) ;
-                        string path_temp_save = ( _path + ".2.temp" );
+                        string path_temp = ( path + ".temp" ) ;
+                        string path_temp_save = ( path + ".2.temp" );
 
-                        //System.IO.File.Create(  path_temp , _dados.Length, FileOptions.WriteThrough );
-                        System.IO.File.WriteAllBytes( path_temp , _dados  );
+                        //System.IO.File.Create(  path_temp , dados.Length, FileOptions.WriteThrough );
+                        System.IO.File.WriteAllBytes( path_temp , dados  );
 
                         FileMode file_mode = FileMode.Open;
                         FileAccess file_accees = FileAccess.ReadWrite;
                         FileShare file_share = FileShare.Read;
                         FileOptions file_options = FileOptions.WriteThrough;
 
-                        FileStream str = new FileStream(  path_temp,  file_mode, file_accees , file_share, _dados.Length , file_options );
+                        FileStream str = new FileStream(  path_temp,  file_mode, file_accees , file_share, dados.Length , file_options );
 
                         str.Flush();
                         str.Close();
 
 
                         // muda o nome do antigo
-                        System.IO.File.Move(  _path , path_temp_save );
+                        System.IO.File.Move(  path , path_temp_save );
 
                         // coloca o nome correto 
-                        System.IO.File.Move(  _path_temp , _path  );
+                        System.IO.File.Move(  path_temp , path  );
 
                         // deleta o save
                         System.IO.File.Delete( path_temp_save );
