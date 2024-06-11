@@ -22,7 +22,7 @@ public class Controlador_personagens {
 		public static Controlador_personagens Pegar_instancia(){ return instancia;}
 
 		public Personagem[] personagens;
-		public Gerenciador_save_personagens gerenciador_save_personagens;
+		public Gerenciador_save_personagens gerenciador_save;
 
 
 		// ** lembrar que quando mudar de plano 1 para 2 tem que criar uma instrucao
@@ -59,7 +59,8 @@ public class Controlador_personagens {
 					// ---- DADOS
 					controlador.dados_sistema_personagens_essencias = _dados_sistema_personagens_essenciais;
 					controlador.personagens = new Personagem[ _dados_sistema_personagens_essenciais.Length ];
-					controlador.gerenciador_save_personagens = new Gerenciador_save_personagens();
+					controlador.gerenciador_save = new Gerenciador_save_personagens();
+					controlador.gerenciador_dados_dinamicos = new Gerenciador_dados_dinamicos_personagens();
 
 					controlador.personagens_pentendes_para_adicionar =  _dados_sistema_estado_atual.personagens_pentendes_para_adicionar;
 					controlador.personagens_pentendes_para_adicionar_local =  _dados_sistema_estado_atual.personagens_pentendes_para_adicionar_local;
@@ -86,18 +87,15 @@ public class Controlador_personagens {
 
 
 
-
-
-
 		public void Construir_personagem(  Plano _plano_para_adicionar,  int _personagem_id ){
 
+				// ** quando iniciar vai pegar tudo na main thread 
 
 
 				// ** para um personagem entrar na cidade do player ele precisa primeiro ser carregado em segundo plano => ele já vai estar carregado 
 				// mas essa funcao garante que o personagem vai ser criado e define um plano
 				// 
 				// nao vai ser chamado com frequencia
-
 
 	
 				int personagem_slot = gerenciador_dados_dinamicos.Pegar_slot_personagem( _personagem_id );
@@ -106,23 +104,16 @@ public class Controlador_personagens {
 				Dados_containers_personagem dados_containers_personagens = gerenciador_dados_dinamicos.Pegar_containers_personagem( personagem_slot );
 				Dados_sistema_personagem_essenciais dados_sistema_personagem_essenciais = dados_sistema_personagens_essencias[ _personagem_id ];
 
-
 				Personagem novo_personagem =  Construtor_personagem.Construir( _personagem_id, _plano_para_adicionar, dados_sistema_personagem_essenciais,  dados_containers_personagens, personagem_AI );
 				
 				personagens [ _personagem_id ] = novo_personagem; 
 
-
-
 				// --- COLOCA PERSONAGEM NO PLANO
-
-
 				INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref personagens_ativos , _personagem_id );
 
 
 				// ---- CRIA SLOT INSTRUCOES
-
-				gerenciador_save_personagens.instrucoes_personagens[ _personagem_id ]  = new byte[ 50 ][];
-
+				gerenciador_save.instrucoes_personagens[ _personagem_id ]  = new byte[ 50 ][];
 
 	
 				return;
@@ -155,7 +146,7 @@ public class Controlador_personagens {
 					}
 
 				
-				gerenciador_save_personagens.Colocar_personagem_na_lixeira( personagem );
+				gerenciador_save.Colocar_personagem_na_lixeira( personagem );
 
 				INT.Tirar_valor_COMPLETO_GARANTIDO( ref personagens_ativos , _personagem_id );
 				personagens[ _personagem_id ] = null;
@@ -167,29 +158,30 @@ public class Controlador_personagens {
 
 
 
-
-
-
-		// ---- CRIAR PERSONAGENS NORMAIS 
-
-
-
 		public void Carregar_dados_personagem( int _personagem_id , int _periodos_para_iniciar, int _local_para_colocar ){
 
 
-			Personagem personagem_na_lixeira = gerenciador_save_personagens.Retirar_personagem_da_lixeira( _personagem_id );
+			Personagem personagem_na_lixeira = gerenciador_save.Retirar_personagem_da_lixeira( _personagem_id );
 
 			if( personagem_na_lixeira != null )
 				{
 					Debug.Log( $"Personagem <color=red> { ((Personagem_nome ) _personagem_id).ToString()  } </color> foi tirado da lixeira e vai ser colocado em dados dinamicos" );
 					int slot =  gerenciador_dados_dinamicos.Criar_slot_personagem( _personagem_id );
-					gerenciador_dados_dinamicos.personagens_AIs[ slot ] = personagem_na_lixeira.personagem_AI;
+					gerenciador_dados_dinamicos.personagens_AIs[ slot ] = personagem_na_lixeira.gerenciador_AI_personagem.personagem_AI;
+					gerenciador_dados_dinamicos.dados_containers_personagens[ slot ] = personagem_na_lixeira.gerenciador_containers_dados.dados_containers;
+				}
+				else
+				{
+					gerenciador_dados_dinamicos.Carregar_dados_personagem_MULTITHREAD( _personagem_id );
 				}
 
-			gerenciador_dados_dinamicos.Carregar_dados_personagem_MULTITHREAD( _personagem_id );
+
+
 			INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref personagens_pentendes_para_adicionar , _personagem_id );
 			INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref personagens_pentendes_para_adicionar_local , _local_para_colocar );
 			INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref personagens_pentendes_para_adicionar_tempo , _periodos_para_iniciar );
+
+			return;
 
 
 		}

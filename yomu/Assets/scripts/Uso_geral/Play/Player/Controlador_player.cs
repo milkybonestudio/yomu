@@ -18,8 +18,6 @@ public class Controlador_player {
             return instancia;
 
 
-
-
         }
 
         public Dados_sistema_player dados_sistema_player;

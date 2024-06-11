@@ -257,7 +257,7 @@ public class Gerenciador_estado_mental {
                         
                 }
 
-                Controlador_personagens.Pegar_instancia().gerenciador_save_personagens.Colocar_instrucoes_de_seguranca(  personagem_nome ,  instrucoes_de_seguranca );
+                Controlador_personagens.Pegar_instancia().gerenciador_save.Colocar_instrucoes_de_seguranca(  personagem_nome ,  instrucoes_de_seguranca );
 
 
 

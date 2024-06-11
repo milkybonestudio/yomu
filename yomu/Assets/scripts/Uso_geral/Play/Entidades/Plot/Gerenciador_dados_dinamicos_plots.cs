@@ -208,7 +208,7 @@ public class Gerenciador_dados_dinamicos_plots {
                 }
 
                 Debug.Log( "------------ ERRO -------------" );
-                Debug.LogError( $"Pediu o slot do plots { ((plots_nome) _plots_id).ToString() } mas ninguem pediu ele"  );
+                Debug.LogError( $"Pediu o slot do plots { ((Plot_nome) _plots_id).ToString() } mas ninguem pediu ele"  );
                 Debug.Log( "-------------------------------" );
                 throw new Exception();
                 

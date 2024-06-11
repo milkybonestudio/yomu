@@ -8,6 +8,7 @@ public class Gerenciador_containers_dados {
 
         public Gerenciador_containers_dados( Personagem _personagem ){ personagem = _personagem; }
         public Personagem personagem;
+        public Dados_containers_personagem dados_containers;
 
 
         public byte[][] containers;

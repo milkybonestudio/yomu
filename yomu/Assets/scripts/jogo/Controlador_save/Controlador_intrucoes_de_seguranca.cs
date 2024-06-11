@@ -47,46 +47,44 @@ public class Controlador_instrucoes_de_seguranca {
                 public static Controlador_instrucoes_de_seguranca instancia;
                 public static Controlador_instrucoes_de_seguranca Pegar_instancia(){ return instancia; }
 
-                public Controlador_instrucoes_de_seguranca(){
+                public static Controlador_instrucoes_de_seguranca Construir (){
+
+                        Controlador_instrucoes_de_seguranca controlador = new Controlador_instrucoes_de_seguranca();
 
 
-                        controlador_save = Controlador_save.Pegar_instancia();
-                        path_instrucoes_de_seguranca_1 = controlador_save.path_save_folder + "/Dados_programa/instrucoes_de_seguranca_1.dat" ;
-                        path_instrucoes_de_seguranca_2 = controlador_save.path_save_folder + "/Dados_programa/instrucoes_de_seguranca_2.dat" ;
+                                controlador.controlador_save = Controlador_save.Pegar_instancia();
                         
+                        
+                                if( ! ( File.Exists( Paths_sistema.path_stack_1 ) ) )
+                                        {  throw new Exception( $"stack_1 nao foi encontrada no path { Paths_sistema.path_stack_1 }" );  }
 
-                
-                        if( ! ( File.Exists( path_instrucoes_de_seguranca_1 ) ) )
-                                {  throw new Exception( "nao era para vir aqui" );  }
+                                if( ! ( File.Exists( Paths_sistema.path_stack_2 ) ) )
+                                        {  throw new Exception( $"stack_2 nao foi encontrada no path { Paths_sistema.path_stack_2 }" );  }
 
-                        if( ! ( File.Exists( path_instrucoes_de_seguranca_2 ) ) )
-                                {  throw new Exception( "nao era para vir aqui" );  }
-
-                                
                                         
-                        FileMode file_mode = FileMode.Open;
-                        FileAccess file_accees = FileAccess.ReadWrite;
-                        FileShare file_share = FileShare.Read;
-                        FileOptions file_options = FileOptions.WriteThrough;
-                
-                        strems_stacks[ 0 ] = new FileStream( path_instrucoes_de_seguranca_1, file_mode, file_accees , file_share, length_arquivo_instrucoes_de_seguranca , file_options );
-                        strems_stacks[ 1 ] = new FileStream( path_instrucoes_de_seguranca_2, file_mode, file_accees , file_share, length_arquivo_instrucoes_de_seguranca , file_options );
+                                FileMode file_mode = FileMode.Open;
+                                FileAccess file_accees = FileAccess.ReadWrite;
+                                FileShare file_share = FileShare.Read;
+                                FileOptions file_options = FileOptions.WriteThrough;
+                        
+                                controlador.strems_stacks[ 0 ] = new FileStream( Paths_sistema.path_stack_1, file_mode, file_accees , file_share, controlador.length_arquivo_instrucoes_de_seguranca , file_options );
+                                controlador.strems_stacks[ 1 ] = new FileStream( Paths_sistema.path_stack_2, file_mode, file_accees , file_share, controlador.length_arquivo_instrucoes_de_seguranca , file_options );
+
+                        instancia = controlador;
+                        return controlador;
 
                 }
 
 
                 public Controlador_save controlador_save;
 
-                public int[] indexes_instrucoes_de_seguranca = new int[]{ 0 , 0 }
+                public int[] indexes_instrucoes_de_seguranca = new int[]{ 0 , 0 };
                 public FileStream[] strems_stacks = new FileStream[ 2 ];
 
 
                 public int length_arquivo_instrucoes_de_seguranca = 500_000;
                 public int length_para_iniciar_troca = 200_000;
                 public int length_arquivo_segurancao = 0;
-
-                public string path_instrucoes_de_seguranca_1;
-                public string path_instrucoes_de_seguranca_2;
 
         
                 public int id_stack = 1; // sempre aponta para a primeira
@@ -100,8 +98,8 @@ public class Controlador_instrucoes_de_seguranca {
                 
                         // --- PEGAR DADOS
                         
-                        byte[][][][] arquivos_instrucoes_personagens_completos =  Controlador_personagens.Pegar_instancia().gerenciador_save_personagens.Pegar_instrucoes_de_seguranca( _modo );
-                        byte[][][][] instrucoes_de_seguranca_cidades_completos = controlador_save.controlador_save_cidades.Pegar_instrucoes_de_seguranca( _modo );
+                        byte[][][][] arquivos_instrucoes_personagens_completos =  Controlador_personagens.Pegar_instancia().gerenciador_save.Pegar_instrucoes_de_seguranca( _modo );
+                        byte[][][][] instrucoes_de_seguranca_cidades_completos = Controlador_cidades.Pegar_instancia().gerenciador_save.Pegar_instrucoes_de_seguranca( _modo );
 
                         byte[][] buffers_stacks = new byte[ 2 ][];
 

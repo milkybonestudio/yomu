@@ -1,94 +1,39 @@
-using System.Collections;
 using System;
-using System.Windows;
-
-using UnityEngine.Experimental.Rendering;
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
-using System.IO;
-
-using Unity.Collections;
-using System.Security.Cryptography;
-using System.Reflection;
-
-
-
-
-public enum Controlador_modo {
-
-      nada,
-
-      login,
-      menu,
-      jogo,
-      transicao,
-
-      desenvolvimento,
-
-}
 
 
 
 public class Controlador : MonoBehaviour {  
 
 
-      public static Controlador Pegar_instancia() {return instancia;}
-      public static Controlador instancia;
-
-      
-
-      public Controlador_modo modo_controlador_atual;
-      public static bool jogo_ativo = true;
-
-      public Player_estado_atual player_estado_atual;
-      public GameObject canvas;
+            public static Controlador Pegar_instancia() {return instancia;}
+            public static Controlador instancia;
 
 
-      public Task_req task_reconstruir;
-      public bool esta_reconstruindo = false;
-    
+            public Controlador_modo modo_controlador_atual;
+            public static bool jogo_ativo = true;
+
+            public Player_estado_atual player_estado_atual;
+            public GameObject canvas;
 
 
-    //----------------------------------------------------------
-    // ----------BLOCOS
+            public Task_req task_reconstruir;
+            public bool esta_reconstruindo = false;
+
+
+            // --- BLOCOS
 
             public Login login;
             public Menu menu;
-
-            // menu vai iniciar o jogo e instanciar o objeto
             public Jogo jogo;
 
-    //----------------------------------------------------------
-    // ----------USO GERAL
+            // --- USO CONTROLADOR
 
-
-            public  Controlador_configuracoes controlador_configuracoes;
-            public  Controlador_audio controlador_audio;
-            public  Controlador_cursor controlador_cursor;
-            public  Controlador_cache controlador_cache;
-            public Controlador_multithread controlador_multithread;
-            
-
-    //----------------------------------------------------------
-
-    // ----------USO CONTROLADOR
-
-            //public  Controlador_save controlador_save;
             public Controlador_transicao controlador_transicao;
-            public  Desenvolvimento desenvolvimento;
+            public Desenvolvimento desenvolvimento;
             public Controlador_UI controlador_UI;
 
-
-    //----------------------------------------------------------
-
-    // ----------DATA
-
-            
-            public  Controlador_dados_dinamicos controlador_dados_dinamicos;
-            //public  Controlador_personagens controlador_personagens;
-            
-      
 
             [NonSerialized]  public  Dados_blocos  dados_blocos = null;
             [NonSerialized]  public  int   posicao_anterior  = 0;
@@ -96,89 +41,103 @@ public class Controlador : MonoBehaviour {
             [NonSerialized]  public  int   script_inicial = 0;
 
 
-            public  void  Awake(){
+            public void Start(){
 
 
-                  
-
-            }
-
-
-
-            void Start(){
-
-
-
-                  #if UNITY_EDITOR 
-
-                        Teste_geral.Testar();
-
-                  #endif
-                  
-
-
-
+                  return;
 
                   canvas = GameObject.Find( "Tela/Canvas" );
 
-
-                  // Esse arquivo vai ser responsavel por dizer se o sistema foi desligado de forma brusca 
-
-                  
-
-                  // o controlador não vai mais iniciar nada referente ao jogo, somente menu e login 
-
-                  #if UNITY_EDITOR
-
-                        // verifica se tem que alterar algum dado
-
-                        Controlador_development.Verificar();
-
-                  #endif
-
-                  Texture.allowThreadedTextureCreation = true;
-
+            
                   Controlador_multithread.jogo_ativo = true;
 
                   instancia = this;      
                   QualitySettings.vSyncCount = 0;
                   Application.targetFrameRate = 60;
                   Application.runInBackground = true;
-                  
-                  // construir vai colocar as imagens no cache, entao não tem porque 
 
-
-                  
-      
 
                   Controlador_cache.Construir();
-
-                  
                   Controlador_multithread.Construir();
-
-                  
-                  
-                  controlador_audio = Controlador_audio.Construir();
-                  
-                  controlador_cursor = Controlador_cursor.Construir();
-                  //controlador_save = Controlador_save.Construir();
-                  
+                  Controlador_audio.Construir();
+                  Controlador_cursor.Construir();
                   Controlador_dados.Construir();
+                  Controlador_configuracoes.Construir();
+
+                  #if UNITY_EDITOR 
+
+                        Teste_geral.Testar();
+                        Controlador_development.Verificar();
+                        Desenvolvimento.Construir();  
+
+                        bool em_teste = Desenvolvimento.Pegar_instancia().Verificar_teste();
+
+                        if( em_teste ) 
+                              { return ; }
+
+
+                  #endif
                   
-                  controlador_configuracoes = Controlador_configuracoes.Construir();
-                  
-
-                  // ---- EM TESTE
-                  // assumir que depois daqui esta tudo blz 
-                  Verificar_pane_sistema();
-
-                  
-                  desenvolvimento = Desenvolvimento.Construir();  
-
-
-                  if( desenvolvimento.Verificar_teste()  ) {return;}
 
                   // --- VERIFICAR ARQUIVO DE SEGURANCA
+                  bool arquivo_foi_encerrado_corretamente = Garantir_arquivo_de_seguranca();
+                  if( !( arquivo_foi_encerrado_corretamente ) )
+                        { return; }
+
+
+                  login = Login.Construir();
+
+            }
+
+
+            public void Update() {
+
+                  Console.Log( "aa" );
+                  Console.Update();
+
+                  return;
+                  
+                  if( esta_reconstruindo )
+                        { return ; }  
+
+
+                  if( Input.GetKey( KeyCode.F1 ) && Input.GetKey(KeyCode.Escape ) ) { Application.Quit(); } 
+
+                  Controlador_audio.Pegar_instancia().Update();
+
+                  Controlador_input.Update_mouse();
+                  Controlador_dados.Pegar_instancia().Atualizar_mouse_atual(); 
+
+
+                  switch (  modo_controlador_atual ) {
+                        
+                        case Controlador_modo.jogo :  jogo.Update(); break;
+                        case Controlador_modo.login :  login.Update() ; break;
+                        case Controlador_modo.menu : menu.Update() ; break;
+                        case Controlador_modo.desenvolvimento: desenvolvimento.Update(); break;
+                        case Controlador_modo.transicao: console.log("esta no modo_tela transicao"); break;
+                        case Controlador_modo.nada: console.log("esta no modo_tela NADA"); break;
+
+                  }
+
+
+                  Controlador_input.Update();
+                  Controlador_multithread.Pegar_instancia().Update();
+      
+            }
+
+
+            public IEnumerator C_reconstruindo_save (){
+
+                  // colocar video algo deu errado, um momento
+
+                  while( esta_reconstruindo ){ yield return null; }
+                  yield break;
+
+            }
+
+
+            public bool Garantir_arquivo_de_seguranca(){
 
                   byte[] dados = Verificador_arquivo_de_seguranca.Pegar_dados();
                   bool arquivo_foi_encerrado_corretamente = Verificador_arquivo_de_seguranca.Programa_foi_encerrado_corretamente( dados );
@@ -192,8 +151,8 @@ public class Controlador : MonoBehaviour {
 
                               task_reconstruir.fn_iniciar = ( Task_req _req ) => {
 
-
                                     Reestruturador_save.Reconstruir_save( save );
+                                    return;
 
                               };
 
@@ -201,107 +160,41 @@ public class Controlador : MonoBehaviour {
 
                                     esta_reconstruindo = false;
                                     login = Login.Construir();
+                                    return;
 
                               };
-
                               
-                              controlador_multithread.Adicionar_task( task_reconstruir );
+                              Controlador_multithread.Pegar_instancia().Adicionar_task( task_reconstruir );
                               esta_reconstruindo = true;
                               StartCoroutine( C_reconstruindo_save() );
-                              return;
+                              return false;
                               
-                        };
-
-
-                  login = Login.Construir();
-
-            }
-
-
-
-
-            public void Update() {
-                  
-                        if( esta_reconstruindo )
-                              { return ; }  
-
-
-
-                        if( Teste_escopo.ativado ){ Teste_escopo.Update(); return;}
-                        
-                        if( Input.GetKey( KeyCode.F1 ) && Input.GetKey(KeyCode.Escape ) ) { Application.Quit(); } 
-
-                        Controlador_audio.Pegar_instancia().Update();
-
-
-
-                        Controlador_input.Update_mouse();
-                        Controlador_dados.Pegar_instancia().Atualizar_mouse_atual(); 
-
-
-                        switch (  modo_controlador_atual ) {
-                              
-
-                              case Controlador_modo.jogo :  jogo.Update(); break;
-                              case Controlador_modo.login :  login.Update() ; break;
-                              case Controlador_modo.menu : menu.Update() ; break;
-
-                              case Controlador_modo.desenvolvimento: desenvolvimento.Update(); break;
-
-                              case Controlador_modo.transicao: console.log("esta no modo_tela transicao"); break;
-                              
-                              case Controlador_modo.nada: console.log("esta no modo_tela NADA"); break;
-
                         }
 
 
-
-                        Controlador_input.Update();
-                        Controlador_multithread.Pegar_instancia().Update();
-
-            
-
-        }
-
-
-
-
-            public IEnumerator C_reconstruindo_save (){
-
-                  // colocar video algo deu errado, um momento
-
-                  while( esta_reconstruindo ){ return null; }
-                  yield break;
-
+                  return true;
             }
 
 
 
-      
-      
 
-        public void OnApplicationQuit(){
-              
-              #if !UNITY_EDITOR
+            public void OnApplicationQuit(){
+                  
+                  #if !UNITY_EDITOR
 
-              controlador_configuracoes.Salvar_configurations();
+                  Controlador_multithread.jogo_ativo = false;
+                  controlador_configuracoes.Salvar_configurations();
 
-              #endif
-            
-        }
-
+                  #endif
+                  
+            }
 
 
 
+            public void OnDisable(){
 
-      
-      
-
-      public void OnDisable(){
-
-            Controlador_multithread.jogo_ativo = false;
-            
-
-     }
+                  Controlador_multithread.jogo_ativo = false;
+                  
+            }
 
 }

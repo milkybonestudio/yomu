@@ -90,7 +90,7 @@ public static class Tradutor_dados_sistema {
 
                 int path_index = 0;
 
-                string path_save_folder = Controlador_save.Pegar_instancia().path_save_folder;
+                string path_save_folder = Paths_sistema.path_save;
 
                 System.Text.UTF8Encoding encoder = new System.Text.UTF8Encoding( true );
 

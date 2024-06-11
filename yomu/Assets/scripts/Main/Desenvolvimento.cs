@@ -99,6 +99,8 @@ public class Desenvolvimento {
 
           public void Update(){
 
+               if( Teste_escopo.ativado ){ Teste_escopo.Update(); return;}
+
                // quando mais suporte Desenvolvimento dar ao desenvolvimento (uou) melhor 
                // o jeito mais eficiente vai ser criar ferramentas que podem ser criadas aqui para manipular, testar e ver dados com mais precisao 
                // as ferramentas vao estar em cada Teste_bloco

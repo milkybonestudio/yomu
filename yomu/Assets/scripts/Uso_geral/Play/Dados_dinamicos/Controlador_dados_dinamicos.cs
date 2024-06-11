@@ -17,13 +17,7 @@ public class Controlador_dados_dinamicos{
 
 
                         controlador.lista_navegacao = new Lista_navegacao();
-                        controlador.tradutor_save_dinamico = new Tradutor_save_dinamico();
-
-                        //controlador.dados_dinamicos_personagens = new Dados_dinamicos_personagens();
-                        // controlador.dados_dinamicos_cidades = new Dados_dinamicos_cidades();
-                        // controlador.dados_dinamicos_plots = new Dados_dinamicos_plots();
-
-
+                        
                 instancia = controlador; 
                 return instancia;
                 
@@ -32,7 +26,7 @@ public class Controlador_dados_dinamicos{
 
 
         public Lista_navegacao lista_navegacao;
-        public Tradutor_save_dinamico tradutor_save_dinamico ;
+        
 
 
         //public Dados_dinamicos_personagens dados_dinamicos_personagens;

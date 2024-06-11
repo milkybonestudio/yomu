@@ -167,6 +167,9 @@ public class Gerenciador_dados_sistema {
 public class Gerenciador_updates {
 
 
+        // talvez fique melhor ter osmente gerenciador_AI
+
+
         public enum Dados_bool {
 
 
@@ -219,7 +222,12 @@ public class Gerenciador_memorias_outros_personagens {
 }
 
 
+public class Gerenciador_AI_personagem {
 
+        public System.Object personagem_AI;
+
+
+}
 
 
 public class Personagem {
@@ -267,8 +275,9 @@ public class Personagem {
         public Gerenciador_acontecimentos gerenciador_acontecimentos;
         public Gerenciador_dados_sistema gerenciador_dados_sistema;
         public Gerenciador_containers_dados gerenciador_containers_dados; 
+        public Gerenciador_AI_personagem gerenciador_AI_personagem;
 
-        public System.Object personagem_AI;
+        
 
 
 

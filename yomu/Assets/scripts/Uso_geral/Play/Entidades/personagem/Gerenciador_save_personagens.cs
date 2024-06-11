@@ -98,7 +98,6 @@ public class Gerenciador_save_personagens {
 
 
 
-
                 if( _modo == Modo_save.salvando_stack )
                         {
                                 // o foco quando a stack estiver sendo trocada vai ser sempre 
@@ -112,6 +111,8 @@ public class Gerenciador_save_personagens {
                                         
                                 }
 
+                                // --- SE ESTA SALVANDO A STACK NAO VAI PARA A LIXEIRA 
+                                // ** tudo que estava na lixeira e agora nao esta na lista já foi salvo e agora aquele persoangem esta sendo salvo na stack 2 
                                 return null;
                         }
 
@@ -136,6 +137,9 @@ public class Gerenciador_save_personagens {
                 
                         // isso talvez possa demorar 
                         dados_retorno.dados = personagens_esperando_para_serem_excluidos[ _personagem_id ].gerenciador_containers_dados.Compilar_dados();
+
+                        // dados agora vai para a segunda stack
+                        personagens_esperando_para_serem_excluidos[ _personagem_id ] = 0;
 
                         string personagem_nome = ( ( Personagem_nome ) _personagem_id ).ToString() ;
                         string path = Paths_sistema.path_dados_personagens + "/" + personagem_nome + "_dados.dat";

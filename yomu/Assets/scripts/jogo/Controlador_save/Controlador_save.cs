@@ -25,22 +25,12 @@ public class Controlador_save {
             public System.Text.UTF8Encoding encoder = new System.Text.UTF8Encoding( true );
 
 
-
-            public string path_save_folder; 
-            public string path_dados_sistema;
-            public string path_dados_personagens;
-
             public Modo_save modo_save_atual = Modo_save.DEFAULT;
 
             public int tamanho_dados_sistema = 10_000; // numero de personagens * 
-
             public byte[][] dados_para_salvar;
 
-            public Controlador_save_cidades controlador_save_cidades;
-
             public Controlador_instrucoes_de_seguranca controlador_instrucoes_de_seguranca;
-
-
 
 
 
@@ -79,10 +69,16 @@ public class Controlador_save {
 
             public static Controlador_save Construir( int _save, bool _novo_jogo ){
 
+                  // ** TUDO NA MULTITHREAD
+
 
                   throw new Exception( "ainda nao esta pronto" );
 
+
                   Controlador_save controlador = new Controlador_save(); 
+
+
+                        Paths_sistema.Colocar_save( _save );
                   
 
                         if( _save > 5 ) 
@@ -98,8 +94,6 @@ public class Controlador_save {
                               }
 
       
-                        // tudo aqui vai ser instanciado na multithread 
-                        
 
                         Dados_blocos.Construir();
                         Controlador_timer.Construir();
@@ -109,28 +103,19 @@ public class Controlador_save {
                         Controlador_UI.Construir();
                         Controlador_transicao.Construir();
 
-                        Controlador_dados_sistema.Construir( _save );
+                        Controlador_dados_sistema.Construir( );
+
+                        Controlador_instrucoes_de_seguranca.Construir();
 
 
-
-                        // ---- USO SAVE
-                        
-                  
-                        controlador.controlador_save_cidades = new Controlador_save_cidades(); 
-                        controlador.controlador_instrucoes_de_seguranca = new Controlador_instrucoes_de_seguranca();
-
-                        controlador.controlador_instrucoes_de_seguranca.Verificar_arquivo_das_instrucoes_de_seguranca();
-                        controlador.controlador_instrucoes_de_seguranca.Renovar_stacks_instrucoes();
-
-            
 
                         // ----- SISTEMA
 
-                        if( System.IO.File.Exists( controlador.path_dados_sistema ) )
-                              { throw new Exception( $"dados_programa.dat nao foi encontrado no path{ controlador.path_dados_sistema }"); }
+                        if( System.IO.File.Exists( Paths_sistema.path_dados_sistema ) )
+                              { throw new Exception( $"dados_programa.dat nao foi encontrado no path{ Paths_sistema.path_dados_sistema }"); }
 
 
-                        byte[] dados_sistema = System.IO.File.ReadAllBytes( controlador.path_dados_sistema );
+                        byte[] dados_sistema = System.IO.File.ReadAllBytes( Paths_sistema.path_dados_sistema );
 
                         Dados_sistema_personagem_essenciais[] dados_sistema_personagens_essenciais = Tradutor_dados_sistema.Descompactar_dados_sistema_personagens_essenciais( dados_sistema );
                         Dados_sistema_cidade_essenciais[] dados_sistema_cidade_essenciais = Tradutor_dados_sistema.Descompactar_dados_sistema_cidades_essenciais( dados_sistema );
@@ -140,15 +125,19 @@ public class Controlador_save {
         
 
                         // ----- PLAYER  
+
+
+
                         
 
                         // ---- PERSONAGENS
 
 
-                        Controlador_personagens.Construir( _save, dados_sistema_personagens_essenciais, dados_sistema_cidade_essenciais, dados_sistema_player, dados_sistema_estado_atual  ); 
+                        Controlador_personagens.Construir( dados_sistema_personagens_essenciais, dados_sistema_estado_atual ); 
 
                         // ----- CIDADES
 
+                        Controlador_cidades.Construir( dados_sistema_cidade_essenciais, dados_sistema_estado_atual ); 
 
 
                         // ----- PLOTS
@@ -166,10 +155,9 @@ public class Controlador_save {
             }
 
 
-
-
             public int frame = 0;
             public int espacamento = 60;
+
             public void Update(){
 
 
@@ -178,8 +166,9 @@ public class Controlador_save {
                         { return ;}
 
 
-                  // ** vai ser chamado a cada 1 vez por segundo 
                   frame = ( frame + 1 ) % espacamento ;
+
+                  // ** vai ser chamado a cada 1 vez por segundo 
                   if( frame  == 0 )
                         {
                               // Main thread
@@ -192,10 +181,9 @@ public class Controlador_save {
 
                   if( task_salvar != null )
                         {
-                              if( ! ( task_salvar.finalizado ) )
-                                    { return; }
+                              if(  task_salvar.finalizado  )
+                                    { task_salvar = null; }
 
-                              task_salvar = null;
                               return;
                         }
 
@@ -204,27 +192,11 @@ public class Controlador_save {
                   if( frame != 30 )
                         { return; }
 
-                  switch( modo_save_atual ){
-
-                        case Modo_save.DEFAULT :  Verificar_dados_para_salvar(); break;
-                        case Modo_save.salvando_stack :  Salvar_stack(); break;
-
-                  }
-
                   Verificar_dados_para_salvar();
-
                   return;
 
+               
                   
-            }
-
-
-            public void Salvar_stack(){
-
-                  // ** tem que criar o pedido
-
-
-
             }
 
 
@@ -233,33 +205,35 @@ public class Controlador_save {
             public void Verificar_dados_para_salvar(){
 
 
-                  // --- LIXEIRA PERSONAGENS
-
-
-
+                  // --- PERSONAGENS
                   bool tem_personagens_liexeira = false;
                   Dados_para_salvar dados_entidade_para_salvar = null; 
 
-                  
-                  if( tem_personagens_liexeira )
+                  dados_entidade_para_salvar =  Controlador_personagens.Pegar_instancia().gerenciador_save.Pegar_personagem_para_salvar( modo_save_atual );
+                  if( dados_entidade_para_salvar != null )
                         { 
-                              dados_entidade_para_salvar =  Controlador_personagens.Pegar_instancia().gerenciador_save_personagens.Pegar_personagem_para_salvar( modo_save_atual );
-                              if( dados_entidade_para_salvar != null )
-                                    { Criar_task_salvar_dados( dados_entidade_para_salvar ); }
-                              
-      
+                              Criar_task_salvar_dados( dados_entidade_para_salvar ); 
+                              return;
                         }
 
+                  // --- CIDADES
 
+                  dados_entidade_para_salvar =  Controlador_cidades.Pegar_instancia().gerenciador_save.Pegar_cidade_para_salvar( modo_save_atual );
+                  if( dados_entidade_para_salvar != null )
+                        { 
+                              Criar_task_salvar_dados( dados_entidade_para_salvar ); 
+                              return;
+                        }
+
+                  // --- PLOTS
+
+                  // --- SISTEMA 
+                  
+                  
                   return;
 
 
             }
-
-
-
- 
-
 
 
 
