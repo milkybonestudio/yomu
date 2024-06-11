@@ -9,10 +9,12 @@ using UnityEngine;
 public class Gerenciador_save_personagens {
 
 
+        public Gerenciador_save_personagens(){
+                controlador_personagens = Controlador_personagens.Pegar_instancia();
+        }
+
 
         public Controlador_personagens controlador_personagens;
-
-
 
         // ---- PERSONAGENS LIXEIRA
 
@@ -28,12 +30,10 @@ public class Gerenciador_save_personagens {
         public int[] personagens_com_dados_nao_salvos_na_stack ;// personagens que estao na lixeira também esta aqui 
         public int personagem_sendo_salvo; // dados vao para a segunda stack. se ja esta na segunda precisa disso?
 
-
         
         public byte[][][] instrucoes_personagens; // length = numero de personagens
         public int[] index_instrucao_atual; // length = numero de personagens
-        public Modo_save modo_save;
-
+        
 
         public void Colocar_personagem_na_lixeira( Personagem _personagem ){
 
@@ -139,7 +139,7 @@ public class Gerenciador_save_personagens {
                         dados_retorno.dados = personagens_esperando_para_serem_excluidos[ _personagem_id ].gerenciador_containers_dados.Compilar_dados();
 
                         // dados agora vai para a segunda stack
-                        personagens_esperando_para_serem_excluidos[ _personagem_id ] = 0;
+                        personagens_esperando_para_serem_excluidos_ids[ _personagem_id ] = 0;
 
                         string personagem_nome = ( ( Personagem_nome ) _personagem_id ).ToString() ;
                         string path = Paths_sistema.path_dados_personagens + "/" + personagem_nome + "_dados.dat";
@@ -152,7 +152,7 @@ public class Gerenciador_save_personagens {
 
         
 
-        public void Colocar_instrucoes_de_seguranca(  int _personagem_id,  byte[] _dados_seguranca  ){
+        public void Colocar_instrucoes_de_seguranca_personagem(  int _personagem_id,  byte[] _dados_seguranca  ){
 
 
                 int index = index_instrucao_atual[ _personagem_id ];
@@ -174,19 +174,18 @@ public class Gerenciador_save_personagens {
 
 
 
-        public void Declarar_que_personagem_foi_salvo( int _personagem_id ){
+        public void Declarar_que_personagem_foi_salvo( int _personagem_id , Modo_save _modo ){
 
 
                 // ---- VERIFICAR LIXEIRA
-                
+
                 for( int personagens_lixeira_index = 0 ; personagens_lixeira_index < personagens_esperando_para_serem_excluidos_ids.Length ; personagens_lixeira_index++ ){
 
                         if( personagens_esperando_para_serem_excluidos_ids[ personagens_lixeira_index ] == _personagem_id  )
                                 { 
-                                        personagens_esperando_para_serem_excluidos_ids[ personagens_lixeira_index ] = 0;
-
                                         // agora todas as referencias foram perdidas, tem que reimportar todo o personagem
                                         personagens_esperando_para_serem_excluidos[ personagens_lixeira_index ] = null;
+                                        personagens_esperando_para_serem_excluidos_ids[ personagens_lixeira_index ] = 0;
                                         return;
                                 }
                         
@@ -195,7 +194,7 @@ public class Gerenciador_save_personagens {
                 }
 
  
-                if( modo_save != Modo_save.salvando_stack )
+                if( _modo != Modo_save.salvando_stack )
                         {
 
                                 Debug.Log( "-------------------------------------------------------------------------" );
@@ -240,18 +239,12 @@ public class Gerenciador_save_personagens {
 
                 }
 
-                        
-
-
-
-
-
 
         }
 
 
         
-        public byte[][][][] Pegar_instrucoes_de_seguranca( Modo_save _modo_save ){
+        public byte[][][][] Pegar_instrucoes_de_seguranca_personagens( Modo_save _modo_save ){
 
 
                 // [ stack ][ personagem ][ instrucoes ][ bytes_instucoes ]
@@ -307,6 +300,11 @@ public class Gerenciador_save_personagens {
 
   
         }
+        
+
+
+
+
 
 
 }

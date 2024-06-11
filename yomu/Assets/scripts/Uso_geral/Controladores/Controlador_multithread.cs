@@ -37,6 +37,7 @@ public class Controlador_multithread  {
 
                     finalizar_thread = false;
                     thread = new Thread( Thread_secundaria_update ); 
+                    thread.Name = "Multithread";
                     thread.Start();
 
                 }

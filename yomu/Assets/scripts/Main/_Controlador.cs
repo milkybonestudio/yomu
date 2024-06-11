@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Threading;
 using UnityEngine;
 
 
@@ -43,6 +44,7 @@ public class Controlador : MonoBehaviour {
 
             public void Start(){
 
+                  Debug.Log(Thread.CurrentThread.Name);
 
                   return;
 

@@ -4,9 +4,9 @@ using UnityEngine;
 
 
 
-public class Gerenciador_containers_dados {
+public class Gerenciador_containers_dados_personagem {
 
-        public Gerenciador_containers_dados( Personagem _personagem ){ personagem = _personagem; }
+        public Gerenciador_containers_dados_personagem( Personagem _personagem ){ personagem = _personagem; }
         public Personagem personagem;
         public Dados_containers_personagem dados_containers;
 

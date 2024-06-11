@@ -8,7 +8,7 @@ public class Controlador_player {
         public static Controlador_player instancia;
         public static Controlador_player Pegar_instancia(){ return instancia; }
 
-        public static Controlador_player Construir( Dados_sistema_player _dados ){
+        public static Controlador_player Construir( Dados_sistema_player _dados , Dados_sistema_estado_atual _dados_estado_atual ){
 
             Controlador_player controlador = new Controlador_player();
 

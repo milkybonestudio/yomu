@@ -274,7 +274,7 @@ public class Personagem {
         public Gerenciador_updates gerenciador_updates;
         public Gerenciador_acontecimentos gerenciador_acontecimentos;
         public Gerenciador_dados_sistema gerenciador_dados_sistema;
-        public Gerenciador_containers_dados gerenciador_containers_dados; 
+        public Gerenciador_containers_dados_personagem gerenciador_containers_dados; 
         public Gerenciador_AI_personagem gerenciador_AI_personagem;
 
         

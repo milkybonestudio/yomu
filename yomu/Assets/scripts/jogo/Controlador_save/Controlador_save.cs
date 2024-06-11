@@ -104,7 +104,6 @@ public class Controlador_save {
                         Controlador_transicao.Construir();
 
                         Controlador_dados_sistema.Construir( );
-
                         Controlador_instrucoes_de_seguranca.Construir();
 
 
@@ -122,13 +121,13 @@ public class Controlador_save {
                         Dados_sistema_estado_atual dados_sistema_estado_atual = Tradutor_dados_sistema.Descompactar_dados_sistema_estado_atual( dados_sistema );
                         Dados_sistema_player  dados_sistema_player = Tradutor_dados_sistema.Descompactar_dados_sistema_player( dados_sistema );
 
-        
+                        // ** talvez player e sistema possa estar no primario?
 
+        
                         // ----- PLAYER  
 
+                        Controlador_player.Construir(  dados_sistema_personagem, dados_sistema_estado_atual );
 
-
-                        
 
                         // ---- PERSONAGENS
 
@@ -225,9 +224,13 @@ public class Controlador_save {
                               return;
                         }
 
+                  
+
                   // --- PLOTS
 
                   // --- SISTEMA 
+
+                  
                   
                   
                   return;
@@ -240,7 +243,6 @@ public class Controlador_save {
             public void Criar_task_salvar_dados( Dados_para_salvar _dados_pedido ){
 
 
-                  
             
                   string path = _dados_pedido.path;
                   byte[] dados = _dados_pedido.dados;
@@ -289,31 +291,6 @@ public class Controlador_save {
                   return;
 
             }
-
-
-
-
-                        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

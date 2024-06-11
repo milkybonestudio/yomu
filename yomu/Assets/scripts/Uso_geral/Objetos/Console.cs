@@ -1,22 +1,50 @@
+using System.Threading;
 using UnityEngine;
 
+
+
+// ** tem que direcionar referentes ao nomes das threads 
+
+
+
+
 public static class Console {
+
 
 
         public static int index_atual = 0;
         public static string[] logs = new string[ 50 ];
         public static int[] logs_tipos = new int[ 50 ];
 
+        public static int index_atual_m = 0;
+        public static string[] logs_m = new string[ 50 ];
+        public static int[] logs_tipos_m = new int[ 50 ];
+
         public static void Log( string _txt  ){
 
+                
+                string thread_name = Thread.CurrentThread.Name;
 
-                if( index_atual == logs.Length )
-                    { Aumentar_length_arr(); }
+                if( thread_name == "Main" ){
 
-                logs[ index_atual ] = _txt;
-                logs_tipos[ index_atual ] = 1;
-                index_atual++;
+                        if( index_atual == logs.Length )
+                        { Aumentar_length_arr(); }
 
+                        logs[ index_atual ] = _txt;
+                        logs_tipos[ index_atual ] = 1;
+                        index_atual++;
+                        return;
+
+                }
+
+                // mult
+                if( index_atual_m == logs_m.Length )
+                { Aumentar_length_arr_m(); }
+
+                logs_m[ index_atual ] = _txt;
+                logs_tipos_m[ index_atual ] = 1;
+                index_atual_m++;
+                
                 return;
 
 
@@ -66,6 +94,31 @@ public static class Console {
                 return;
             
         }
+
+
+
+        
+
+        public static void Aumentar_length_arr_m(){
+
+
+                string[] novo_arr_m = new string [ logs_m.Length + 10 ];
+                int[] novo_arr_tipos_m = new int [ logs_m.Length + 10 ];
+
+                for( int str = 0 ; str < logs_m.Length ; str ++ ){
+
+                    novo_arr_m[ str ] = logs_m[ str ];
+                    novo_arr_tipos_m[ str ] = logs_tipos_m[ str ];
+
+                }
+
+                logs_m = novo_arr_m;
+                logs_tipos_m = novo_arr_tipos_m;
+
+                return;
+
+        }
+
 
 
         public static void Aumentar_length_arr(){

@@ -98,8 +98,8 @@ public class Controlador_instrucoes_de_seguranca {
                 
                         // --- PEGAR DADOS
                         
-                        byte[][][][] arquivos_instrucoes_personagens_completos =  Controlador_personagens.Pegar_instancia().gerenciador_save.Pegar_instrucoes_de_seguranca( _modo );
-                        byte[][][][] instrucoes_de_seguranca_cidades_completos = Controlador_cidades.Pegar_instancia().gerenciador_save.Pegar_instrucoes_de_seguranca( _modo );
+                        byte[][][][] arquivos_instrucoes_personagens_completos =  Controlador_personagens.Pegar_instancia().gerenciador_save.Pegar_instrucoes_de_seguranca_personagens( _modo );
+                        byte[][][][] instrucoes_de_seguranca_cidades_completos = Controlador_cidades.Pegar_instancia().gerenciador_save.Pegar_instrucoes_de_seguranca_cidades( _modo );
 
                         byte[][] buffers_stacks = new byte[ 2 ][];
 
