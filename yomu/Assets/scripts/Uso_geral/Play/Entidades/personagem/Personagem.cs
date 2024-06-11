@@ -233,6 +233,7 @@ public class Personagem {
 
         }
 
+
         public int personagem_id;
         public Posicao_geral posicao;
         public Atividade atividade;
@@ -267,8 +268,7 @@ public class Personagem {
         public Gerenciador_dados_sistema gerenciador_dados_sistema;
         public Gerenciador_containers_dados gerenciador_containers_dados; 
 
-
-        public System.Object dados_personagem_run_time;
+        public System.Object personagem_AI;
 
 
 

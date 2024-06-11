@@ -25,6 +25,10 @@ public class Controlador_instrucoes_de_seguranca {
                 //                              [   intrucoa 2   ]
                 //                              [   intrucoa 3   ]
                 //                              [      ....      ]
+
+
+                // formato [ id stack ][ bloco ]
+                // bloco : [ 1 seguranca ]  [  length 2 bytes  ]  [ dados ]  [ 1 seguanca ]
                  
 
 
@@ -78,14 +82,13 @@ public class Controlador_instrucoes_de_seguranca {
 
 
                 public int length_arquivo_instrucoes_de_seguranca = 500_000;
-                public int length
+                public int length_para_iniciar_troca = 200_000;
                 public int length_arquivo_segurancao = 0;
 
                 public string path_instrucoes_de_seguranca_1;
                 public string path_instrucoes_de_seguranca_2;
 
-                public byte byte_segurancao_iniciar_jogo = ( byte ) 7;
-
+        
                 public int id_stack = 1; // sempre aponta para a primeira
 
 
@@ -186,32 +189,36 @@ public class Controlador_instrucoes_de_seguranca {
 
 
 
-            public void Verificar_arquivo_das_instrucoes_de_seguranca(){
+        //     public void Verificar_arquivo_das_instrucoes_de_seguranca(){
 
 
-                        // --- VERIFICAR SE O PROGRAMA FOI ENCERRADO CORRETAMENTE 
+        //                 // --- VERIFICAR SE O PROGRAMA FOI ENCERRADO CORRETAMENTE 
 
-                        strems_stacks[ 0 ].Seek( 0 ,  SeekOrigin.Begin );
-                        int numero_inicial_seguranca = strems_stacks[ 0 ].ReadByte();
+        //                 strems_stacks[ 0 ].Seek( 0 ,  SeekOrigin.Begin );
+        //                 int numero_inicial_seguranca = strems_stacks[ 0 ].ReadByte();
 
-                        strems_stacks[ 1 ].Seek( 0 ,  SeekOrigin.End );
-                        int numero_final_seguranca = strems_stacks[ 1 ].ReadByte();
-
-
-                        if(  numero_inicial_seguranca != byte_segurancao_iniciar_jogo ||  numero_final_seguranca != byte_segurancao_iniciar_jogo )
-                        {
-
-                                // ** se o arquivo existir mostrar uma mensagem para o player falando que o programa esta arrumando.
-                                // vai demorar um pouco
-
-                                throw new Exception();
-
-                        }
+        //                 strems_stacks[ 1 ].Seek( 0 ,  SeekOrigin.End );
+        //                 int numero_final_seguranca = strems_stacks[ 1 ].ReadByte();
 
 
-            }
+        //                 if(  numero_inicial_seguranca != byte_segurancao_iniciar_jogo ||  numero_final_seguranca != byte_segurancao_iniciar_jogo )
+        //                 {
+
+        //                         // ** se o arquivo existir mostrar uma mensagem para o player falando que o programa esta arrumando.
+        //                         // vai demorar um pouco
+
+        //                         throw new Exception();
+
+        //                 }
+
+
+        //     }
+
+
 
             public void Renovar_stacks_instrucoes( int _stack ){
+
+                        // vai ser chamado sempre quando o save for finalizado 
 
                         // 0  => 1 main 
                         // 1  => 2 secundaria

@@ -43,6 +43,10 @@ public class Controlador : MonoBehaviour {
 
       public Player_estado_atual player_estado_atual;
       public GameObject canvas;
+
+
+      public Task_req task_reconstruir;
+      public bool esta_reconstruindo = false;
     
 
 
@@ -174,6 +178,41 @@ public class Controlador : MonoBehaviour {
 
                   if( desenvolvimento.Verificar_teste()  ) {return;}
 
+                  // --- VERIFICAR ARQUIVO DE SEGURANCA
+
+                  byte[] dados = Verificador_arquivo_de_seguranca.Pegar_dados();
+                  bool arquivo_foi_encerrado_corretamente = Verificador_arquivo_de_seguranca.Programa_foi_encerrado_corretamente( dados );
+
+                  if( !( arquivo_foi_encerrado_corretamente ) )
+                        {
+                              // --- PRECISA ARRUMAR DADOS
+                              int save = Verificador_arquivo_de_seguranca.Pegar_save( dados );
+
+                              task_reconstruir = new Task_req( new Chave_cache() , "reconstruindo_save" );
+
+                              task_reconstruir.fn_iniciar = ( Task_req _req ) => {
+
+
+                                    Reestruturador_save.Reconstruir_save( save );
+
+                              };
+
+                              task_reconstruir.fn_finalizar = ( Task_req _req ) => {
+
+                                    esta_reconstruindo = false;
+                                    login = Login.Construir();
+
+                              };
+
+                              
+                              controlador_multithread.Adicionar_task( task_reconstruir );
+                              esta_reconstruindo = true;
+                              StartCoroutine( C_reconstruindo_save() );
+                              return;
+                              
+                        };
+
+
                   login = Login.Construir();
 
             }
@@ -181,7 +220,10 @@ public class Controlador : MonoBehaviour {
 
 
 
-            public void Update() { 
+            public void Update() {
+                  
+                        if( esta_reconstruindo )
+                              { return ; }  
 
 
 
@@ -214,73 +256,28 @@ public class Controlador : MonoBehaviour {
 
 
 
+                        Controlador_input.Update();
+                        Controlador_multithread.Pegar_instancia().Update();
 
-
-              Controlador_input.Update();
-              Controlador_multithread.Pegar_instancia().Update();
-              
+            
 
         }
 
 
 
-            public void Verificar_pane_sistema(){
 
+            public IEnumerator C_reconstruindo_save (){
 
-                  return;
+                  // colocar video algo deu errado, um momento
 
-                        
-                        string path = Paths_gerais.Pegar_path_folder_usuario() + "/dados_sistema.dat";
-
-
-                        FileStream stream = new FileStream ( 
-
-                                    path, 
-                                    FileMode.Open, 
-                                    FileAccess.ReadWrite, 
-                                    FileShare.Read, 
-                                    4096, 
-                                    FileOptions.WriteThrough 
-
-                        );
-
-                        
-                        // byte == 0 significa que o sistema foi encerrado corretamente 
-                        // byte == 1 significa que o sistema foi encerrado bruscamente 
-                        bool pane_sistema = ( stream.ReadByte() == ( byte ) 1 );
-                        
-                        if( pane_sistema ){
-
-                              // Tem que verificar os saves para refazeros dados que estão em run.dat
-                              
-                              int numero_saves_slots = Controlador_configuracoes.Pegar_instancia().numero_saves_slots;
-                              bool[] saves_ativos =  Controlador_configuracoes.Pegar_instancia().saves_ativados;
-
-                              for( int save_slot = 0 ; save_slot < numero_saves_slots  ; save_slot++ ){
-
-                                          bool save_esta_ativo = saves_ativos[ save_slot ];
-                                          if( save_esta_ativo ){
-
-                                                // fazer a verificacao
-                                                
-
-                                          }
-
-                              }
-
-                        }
-
-                        // fala qeu esta ativado 
-                        stream.Seek( 0, SeekOrigin.Begin );
-                        byte b = 1;
-                        stream.WriteByte( b );
-                        stream.Flush();
-
-                        // talvez fazer mais coisas aqui
-
-
+                  while( esta_reconstruindo ){ return null; }
+                  yield break;
 
             }
+
+
+
+      
       
 
         public void OnApplicationQuit(){

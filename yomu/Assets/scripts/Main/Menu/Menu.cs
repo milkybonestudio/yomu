@@ -36,6 +36,8 @@ public class Menu {
           dados_blocos = Dados_blocos.Pegar_instancia();
 
           Iniciar_menu();
+
+          
           
           return;
         

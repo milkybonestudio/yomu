@@ -35,6 +35,63 @@ public class Gerenciador_save_personagens {
         public Modo_save modo_save;
 
 
+        public void Colocar_personagem_na_lixeira( Personagem _personagem ){
+
+
+                for( int slot_teste = 0 ; slot_teste < personagens_esperando_para_serem_excluidos.Length ;slot_teste++ ){
+
+                        if( personagens_esperando_para_serem_excluidos_ids[ slot_teste ] == 0)
+                                {
+                                        personagens_esperando_para_serem_excluidos_ids[ slot_teste ] = _personagem.personagem_id;
+                                        personagens_esperando_para_serem_excluidos[ slot_teste ] = _personagem;
+                                        return;
+                                }
+
+                }
+
+
+                Personagem[] novo_personagens = new Personagem[ personagens_esperando_para_serem_excluidos_ids.Length + 5 ];
+                int[] novo_personagens_ids = new int[ personagens_esperando_para_serem_excluidos_ids.Length + 5 ];
+
+                int index_para_acrescentar = personagens_esperando_para_serem_excluidos_ids.Length;
+
+                for( int novo_arr_index = 0; novo_arr_index < personagens_esperando_para_serem_excluidos_ids.Length; novo_arr_index++ ){
+
+                        novo_personagens_ids[ novo_arr_index ]  =  personagens_esperando_para_serem_excluidos_ids[ novo_arr_index ];
+                        novo_personagens[ novo_arr_index ]  =  personagens_esperando_para_serem_excluidos[ novo_arr_index ];
+                        
+                }
+
+                personagens_esperando_para_serem_excluidos_ids[ index_para_acrescentar ] = _personagem.personagem_id;
+                personagens_esperando_para_serem_excluidos[ index_para_acrescentar ] = _personagem;
+
+                return;
+
+        
+        }
+
+        public Personagem Retirar_personagem_da_lixeira( int _personagem_id ){
+
+                for( int personagem_slot_index = 0; personagem_slot_index  < personagens_esperando_para_serem_excluidos_ids.Length; personagem_slot_index ++ ){
+
+                        if( personagens_esperando_para_serem_excluidos_ids[ personagem_slot_index ] == _personagem_id )
+                                { 
+                                        Personagem personagem = personagens_esperando_para_serem_excluidos[ personagem_slot_index ];
+                                        personagens_esperando_para_serem_excluidos[ personagem_slot_index ] = null;
+                                        personagens_esperando_para_serem_excluidos_ids[ personagem_slot_index ] = 0;
+                                        return personagem; 
+
+                                }
+                        continue;
+
+                        
+                }
+
+                return null;
+
+        }
+
+
 
 
         public Dados_para_salvar Pegar_personagem_para_salvar( Modo_save _modo ){
@@ -81,7 +138,7 @@ public class Gerenciador_save_personagens {
                         dados_retorno.dados = personagens_esperando_para_serem_excluidos[ _personagem_id ].gerenciador_containers_dados.Compilar_dados();
 
                         string personagem_nome = ( ( Personagem_nome ) _personagem_id ).ToString() ;
-                        string path = Controlador_dados_sistema.Pegar_instancia().path_save + "/Personagens/" + personagem_nome + "_dados.dat";
+                        string path = Paths_sistema.path_dados_personagens + "/" + personagem_nome + "_dados.dat";
 
                         dados_retorno.path = path;
 

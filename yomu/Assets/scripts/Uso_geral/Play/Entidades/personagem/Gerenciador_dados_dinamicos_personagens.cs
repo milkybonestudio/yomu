@@ -6,15 +6,12 @@ using UnityEngine;
 
 
 
-
-public class Dados_dinamicos_personagens {
-
-
-        public static Dados_dinamicos_personagens instancia;
-        public static Dados_dinamicos_personagens Pegar_instancia(){ return instancia; }
+public class Gerenciador_dados_dinamicos_personagens {
 
 
-        public Dados_dinamicos_personagens(){ 
+        public Gerenciador_dados_dinamicos_personagens(){ 
+
+                
 
                 #if UNITY_EDITOR
                         // o editor consegue pegar eles normalmente
@@ -26,12 +23,13 @@ public class Dados_dinamicos_personagens {
 
         }
 
+        
 
         public Assembly asm_personagens;
         
         public int[] personagens_ids = new int[ 50 ];
         public System.Object[] personagens_AIs = new System.Object[ 50 ];
-        public Dados_containers_personagem[] Dados_containers_personagem = new Dados_containers_personagem[ 50 ];
+        public Dados_containers_personagem[] dados_containers_personagens = new Dados_containers_personagem[ 50 ];
         public Task_req[] requisicoes_personagens = new Task_req[ 50 ];
 
 
@@ -77,13 +75,13 @@ public class Dados_dinamicos_personagens {
                                 requisicoes_personagens[ _index_slot_personagem] = null;
                         }
                 
-                Dados_containers_personagem personagem_containers =  Dados_containers_personagem[ _index_slot_personagem ];
+                Dados_containers_personagem personagem_containers =  dados_containers_personagens[ _index_slot_personagem ];
 
                 if( personagem_containers == null )
                         {
-                                string save_path = Controlador_dados_sistema.Pegar_instancia().path_save;
+                                
                                 string personagem_nome = ( ( Personagem_nome ) personagens_ids[ _index_slot_personagem ] ).ToString() ;
-                                string path_dados = save_path + "/Personagens/" + personagem_nome + "_dados.dat" ;
+                                string path_dados = Paths_sistema.path_dados_personagens + "/" + personagem_nome + "_dados.dat" ;
                                 byte[] dados_bytes = System.IO.File.ReadAllBytes( path_dados );
                                 personagem_containers = Construtor_containers_personagens.Construir( dados_bytes );
                                 
@@ -98,7 +96,6 @@ public class Dados_dinamicos_personagens {
 
         public void Carregar_dados_personagem_MULTITHREAD( int _personagem_id ){
 
-                // carrega AI + Containers 
                 
 
                 // verifica se já foi pedido
@@ -120,12 +117,10 @@ public class Dados_dinamicos_personagens {
                 int slot_personagem = Criar_slot_personagem( _personagem_id );
 
 
-
-
                 string personagem_nome = ( ( Personagem_nome ) personagens_ids[ slot_personagem ] ).ToString() ;
                 string nome_clase_personagem =  personagem_nome + "_dados";
-                string save_path = Controlador_dados_sistema.Pegar_instancia().path_save;
-                string path_dados = save_path + "/Personagens/" + personagem_nome + "_dados.dat" ;
+                
+                string path_dados = Paths_sistema.path_dados_personagens + "/" + personagem_nome + "_dados.dat" ;
 
         
                 Task_req task = new Task_req( new Chave_cache() , ( "pegar_personagem " + personagem_nome)  );
@@ -180,7 +175,7 @@ public class Dados_dinamicos_personagens {
                         }
 
                         personagens_AIs[ slot_personagem ] = personagem_AI;
-                        Dados_containers_personagem[ slot_personagem ] = containers_personagem;
+                        dados_containers_personagens[ slot_personagem ] = containers_personagem;
 
                         return;
 
@@ -202,11 +197,7 @@ public class Dados_dinamicos_personagens {
 
         }
 
-
-
-
-
-
+        // ---- funcoes suporte
 
 
         public int Pegar_slot_personagem( int _personagem_id ){
@@ -254,7 +245,7 @@ public class Dados_dinamicos_personagens {
                 for( int index_antigo = 0 ; index_antigo < personagens_ids.Length ; index_antigo++ ){
 
                         novo_inds[ index_antigo ] = personagens_ids[ index_antigo ];
-                        novo_containers[ index_antigo ] = Dados_containers_personagem[ index_antigo ];
+                        novo_containers[ index_antigo ] = dados_containers_personagens[ index_antigo ];
                         novo_AI[ index_antigo ] = personagens_AIs[ index_antigo ];
 
                 }
@@ -263,7 +254,7 @@ public class Dados_dinamicos_personagens {
 
                 personagens_AIs = novo_AI;
                 personagens_ids = novo_inds;
-                Dados_containers_personagem = novo_containers;
+                dados_containers_personagens = novo_containers;
 
 
                 return index_final_livre;
@@ -279,7 +270,7 @@ public class Dados_dinamicos_personagens {
                 
                 personagens_AIs[ slot_personagem ] = null;
                 personagens_ids[ slot_personagem ] = 0;
-                Dados_containers_personagem[ slot_personagem ] = null;
+                dados_containers_personagens[ slot_personagem ] = null;
 
                 if( requisicoes_personagens[ slot_personagem ] != null )
                         {
@@ -293,7 +284,6 @@ public class Dados_dinamicos_personagens {
                 return;
 
         }
-
 
 
 
