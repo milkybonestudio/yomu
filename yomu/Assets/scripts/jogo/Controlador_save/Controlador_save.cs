@@ -58,14 +58,15 @@ public class Controlador_save {
 
                   // ** TUDO NA MULTITHREAD
 
-
                   throw new Exception( "ainda nao esta pronto" );
 
 
                   Controlador_save controlador = new Controlador_save(); 
 
+                        // --- USO GERAL 
 
                         Paths_sistema.Colocar_save( _save );
+
 
                         // --- VERIFICACOES DE SEGURANCA
                   
@@ -75,37 +76,40 @@ public class Controlador_save {
                         if( _novo_jogo )
                               { controlador.Criar_arquivos_novo_jogo( _save ); }
 
-                        if( System.IO.File.Exists( Paths_sistema.path_dados_sistema ) )
+                        if( ! ( System.IO.File.Exists( Paths_sistema.path_dados_sistema ) ) )
                               { throw new Exception( $"dados_programa.dat nao foi encontrado no path { Paths_sistema.path_dados_sistema }"); }
 
                         
                         
 
-                        // dados_sistema => dados essencias entidades, estado atual 
-                        byte[] dados_sistema = System.IO.File.ReadAllBytes( Paths_sistema.path_dados_sistema );
-
-
                         // --- USAO EXCLUSIVO SAVE
                         Controlador_instrucoes_de_seguranca.Construir();
 
 
-                        // --- SISTEMA
+                        // --- DADOS SISTEMA
+
+                        // dados_sistema => dados essencias entidades, estado atual 
+                        byte[] dados_sistema = System.IO.File.ReadAllBytes( Paths_sistema.path_dados_sistema );
                         Dados_sistema_estado_atual dados_sistema_estado_atual = Tradutor_dados_sistema.Descompactar_dados_sistema_estado_atual( dados_sistema );
+
+
+                        // --- ENTIDADES
+
+                              // --- personagens
+                              Dados_sistema_personagem_essenciais[] dados_sistema_personagens_essenciais = Tradutor_dados_sistema.Descompactar_dados_sistema_personagens_essenciais( dados_sistema );
+                              Controlador_personagens.Construir( dados_sistema_personagens_essenciais, dados_sistema_estado_atual ); 
+
+                              // --- cidades
+                              Dados_sistema_cidade_essenciais[] dados_sistema_cidades_essenciais = Tradutor_dados_sistema.Descompactar_dados_sistema_cidades_essenciais( dados_sistema );
+                              Controlador_cidades.Construir( dados_sistema_cidades_essenciais, dados_sistema_estado_atual ); 
+
+                              // --- plots
+                              Dados_sistema_plot_essenciais[] dados_sistema_plots_essenciais = Tradutor_dados_sistema.Descompactar_dados_sistema_plots_essenciais( dados_sistema );
+                              Controlador_plots.Construir( dados_sistema_plots_essenciais, dados_sistema_estado_atual ); 
+
+
+                        // --- SISTEMA
                         Controlador_dados_sistema.Construir( dados_sistema_estado_atual ); // constroi player
-                        
-
-                        // --- PERSONAGENS
-                        Dados_sistema_personagem_essenciais[] dados_sistema_personagens_essenciais = Tradutor_dados_sistema.Descompactar_dados_sistema_personagens_essenciais( dados_sistema );
-                        Controlador_personagens.Construir( dados_sistema_personagens_essenciais, dados_sistema_estado_atual ); 
-
-                        // --- CIDADES
-                        Dados_sistema_cidade_essenciais[] dados_sistema_cidades_essenciais = Tradutor_dados_sistema.Descompactar_dados_sistema_cidades_essenciais( dados_sistema );
-                        Controlador_cidades.Construir( dados_sistema_cidades_essenciais, dados_sistema_estado_atual ); 
-
-                        // --- PLOTS
-                        Dados_sistema_plot_essenciais[] dados_sistema_plots_essenciais = Tradutor_dados_sistema.Descompactar_dados_sistema_plots_essenciais( dados_sistema );
-                        Controlador_plots.Construir( dados_sistema_plots_essenciais, dados_sistema_estado_atual ); 
-
 
 
                         Controlador_timer.Construir( dados_sistema_estado_atual );

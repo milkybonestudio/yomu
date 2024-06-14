@@ -13,6 +13,7 @@ public class Controlador_plots {
         public Gerenciador_save_plots gerenciador_save;
 
         public Dados_sistema_plot_essenciais[] dados_sistema_plots_essenciais;
+        public Dados_sistema_plot[] dados_sistema_plots;
                                                
 
         public Plot[] plots;
@@ -39,12 +40,102 @@ public class Controlador_plots {
                         controlador.plots_pentendes_para_adicionar = _dados_sistema_estado_atual.plots_pentendes_para_adicionar;
                         controlador.plots_pentendes_para_adicionar_tempo = _dados_sistema_estado_atual.plots_pentendes_para_adicionar_tempo;
 
+                        controlador.dados_sistema_plots = new Dados_sistema_plot[ controlador.plots_ativos_ids.Length ] ;
+
+
+                        for( int index_plot_ativo = 0 ; index_plot_ativo < plots_ativos_planos.Length ; index_plot_ativo++){
+
+                                // --- PEGAR IDS
+                                int plano_id = plots_ativos_planos[ index_plot_ativo ];
+                                int plot_id = controlador.plots_ativos[ index_plot_ativo ]; 
+
+                                // --- CONSTRUIR
+                                Plot plot_para_adicionar = Criar_plot( plano_id, plot_id );
+                                controlador.gerenciador_save.instrucoes_plots[ plot_id ]  = new byte[ 50 ][];
+                                controlador.plots [ plot_id ] = novo_plot; 
+                                controlador.dados_sistema_plots[ index_plot_ativo ] = plot_para_adicionar.gerenciador_dados_sistema.Pegar_dados();
+
+                                continue;
+
+                        }
             
                 instancia = controlador;
                 return controlador;
 
 
         }
+
+
+
+
+
+
+        public void Adicionar_plot( int _plano_para_adicionar_id,  int _plot_id )  {
+
+                Plot plot_para_adicionar = Criar_plot(  _plano_para_adicionar_id,  _plot_id );
+
+                plots [ _plot_id ] = plot_para_adicionar; 
+                INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref plots_ativos , _plot_id );
+
+                // ---- CRIA SLOT INSTRUCOES
+                gerenciador_save.instrucoes_plots[ _plot_id ]  = new byte[ 50 ][];
+
+                return;
+
+        }
+
+
+
+        public Plot Criar_plot (  int _plano_para_adicionar_id,  int _plot_id ){
+
+
+                int plot_slot = gerenciador_dados_dinamicos.Pegar_slot_plot( _plot_id );
+
+                System.Object plot_AI =   gerenciador_dados_dinamicos.Pegar_AI_plot( plot_slot );
+                Dados_containers_plot dados_containers_plots = gerenciador_dados_dinamicos.Pegar_containers_plot( plot_slot );
+                Dados_sistema_plot_essenciais dados_sistema_plot_essenciais = dados_sistema_plots_essenciais[ _plot_id ];
+
+                plot novo_plot =  Construtor_plot.Construir( _plot_id, _plano_para_adicionar, dados_sistema_plot_essenciais,  dados_containers_plots, plot_AI );
+                
+                return;
+
+
+        }
+
+
+
+        public void Carregar_dados_plot( int _plot_id , int _periodos_para_iniciar, int _local_para_colocar ){
+
+
+                Plot plot_na_lixeira = gerenciador_save.Retirar_plot_da_lixeira( _plot_id );
+
+                if( plot_na_lixeira != null )
+                        {
+                                #if UNITY_EDITOR
+                                        Debug.Log( $"plot <color=red> { ((plot_nome ) _plot_id).ToString()  } </color> foi tirado da lixeira e vai ser colocado em dados dinamicos" );
+                                #endif
+                                int slot =  gerenciador_dados_dinamicos.Criar_slot_plot( _plot_id );
+                                gerenciador_dados_dinamicos.plots_AIs[ slot ] = plot_na_lixeira.gerenciador_AI_plot.plot_AI;
+                                gerenciador_dados_dinamicos.dados_containers_plots[ slot ] = plot_na_lixeira.gerenciador_containers_dados.dados_containers;
+                        }
+                        else
+                        {
+                                gerenciador_dados_dinamicos.Carregar_dados_plot_MULTITHREAD( _plot_id );
+                        }
+
+                INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref plots_pentendes_para_adicionar , _plot_id );
+                INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref plots_pentendes_para_adicionar_local , _local_para_colocar );
+                INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref plots_pentendes_para_adicionar_tempo , _periodos_para_iniciar );
+
+                return;
+
+
+        }
+
+
+
+
+
 
         public static Controlador_plots Construir_teste() {
 
@@ -68,42 +159,11 @@ public class Controlador_plots {
 
 
 
-        public void Iniciar_plot(  int _plot_id ){
-
-
-
-                int plot_slot = gerenciador_dados_dinamicos.Pegar_slot_plots( _plot_id );
-
-                System.Object plot_AI =   gerenciador_dados_dinamicos.Pegar_AI_plots( plot_slot );
-                Dados_containers_plot dados_containers_plot = gerenciador_dados_dinamicos.Pegar_containers_plot( plot_slot );
-                Dados_sistema_plot_essenciais dados_sistema_plot_essenciais = dados_sistema_plots_essenciais[ _plot_id ];
-
-                Plot novo_plot =  Construtor_plot.Construir( _plot_id, dados_sistema_plot_essenciais,  dados_containers_plot, plot_AI );
-                
-                plots [ _plot_id ] = novo_plot; 
-
-                // --- COLOCA plot NO PLANO
-                INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref plots_ativos_ids , _plot_id );
-
-
-                // ---- CRIA SLOT INSTRUCOES
-                gerenciador_save.instrucoes_plots[ _plot_id ]  = new byte[ 50 ][];
-
-                byte[] intrucao_colocar = Instrucoes_plots.Pegar_instrucao( ( int ) Instrucao_plot.iniciar );
-                gerenciador_save.Colocar_instrucoes_de_seguranca_plot( _plot_id ,intrucao_colocar );
-
-
-
-                return;
-
-
-        }
 
 
 
 
-
-        // diferente de personagem quando um plot é descartado ele nao pode voltar 
+        // diferente de plot quando um plot é descartado ele nao pode voltar 
         // alguns plots podem executar alguma funcao quando o plot nao puder ser executado
         public void Terminar_plot( int _plot_id ){
 

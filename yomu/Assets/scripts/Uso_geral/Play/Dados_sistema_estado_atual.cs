@@ -31,7 +31,7 @@ public class Dados_sistema_estado_atual {
 
 		// --- PERSONAGENS
 
-		public int[] personagens_ativos;
+		public int[] personagens_ativos_ids;
 		public int[] personagens_ativos_planos;
 
 		public int[] personagens_pentendes_para_adicionar;

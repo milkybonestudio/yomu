@@ -128,7 +128,7 @@ public struct Posicao_mundial {
 
 
 
-public class Dados_sistema_personagem_ {
+public class Dados_sistema_personagem {
 
 
             // essa logica vai ficar em Player_dados_sistema
