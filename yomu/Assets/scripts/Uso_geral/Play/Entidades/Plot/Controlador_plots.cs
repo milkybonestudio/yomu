@@ -70,37 +70,55 @@ public class Controlador_plots {
 
 
 
+        public void Adicionar_plot_INICIO_JOGO( int _plano_para_adicionar_id,  int _plot_id, int _index_dados_sistema ){
+
+                        // --- CRIA plot 
+                        Dados_sistema_plot_essenciais dados_sistema_plot_essenciais = dados_sistema_plots_essenciais[ _plot_id ];
+                        System.Object plot_AI =   gerenciador_dados_dinamicos.Pegar_AI_plot_NAO_CARREGADO( _plot_id );
+                        Dados_containers_plot dados_containers_plots = gerenciador_dados_dinamicos.Pegar_AI_plot_NAO_CARREGADO( _plot_id );
+
+                        Plot plot_para_adicionar =  Construtor_plot.Construir( _plot_id, _plano_para_adicionar, dados_sistema_plot_essenciais,  dados_containers_plots, plot_AI );
+
+                        // --- COLOCA DADOS CONTAINERS 
+                        plots [ _plot_id ] = plot_para_adicionar; 
+                        dados_sistema_plots[ _index_dados_sistema ] = plot_para_adicionar.gerenciador_dados_sistema.Pegar_dados();
+
+                        // ---- CRIA SLOT INSTRUCOES
+                        gerenciador_save.instrucoes_plots[ _plot_id ]  = new byte[ 50 ][];
+
+                        return;
+
+        }
+
+
+        
+
         public void Adicionar_plot( int _plano_para_adicionar_id,  int _plot_id )  {
 
-                Plot plot_para_adicionar = Criar_plot(  _plano_para_adicionar_id,  _plot_id );
+                        // --- CRIA plot
+                        
+                        int plot_slot = gerenciador_dados_dinamicos.Pegar_slot_plot( _plot_id );
 
-                plots [ _plot_id ] = plot_para_adicionar; 
-                INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref plots_ativos , _plot_id );
+                        System.Object plot_AI =   gerenciador_dados_dinamicos.Pegar_AI_plot( plot_slot );
+                        Dados_containers_plot dados_containers_plots = gerenciador_dados_dinamicos.Pegar_containers_plot( plot_slot );
+                        Dados_sistema_plot_essenciais dados_sistema_plot_essenciais = dados_sistema_plots_essenciais[ _plot_id ];
 
-                // ---- CRIA SLOT INSTRUCOES
-                gerenciador_save.instrucoes_plots[ _plot_id ]  = new byte[ 50 ][];
+                        plot plot_para_adicionar =  Construtor_plot.Construir( _plot_id, _plano_para_adicionar, dados_sistema_plot_essenciais,  dados_containers_plots, plot_AI );
 
-                return;
+                        // --- COLOCA DADOS CONTAINERS 
 
-        }
+                        plots [ _plot_id ] = plot_para_adicionar; 
+                        int index_slot_plot = INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref plots_ativos , _plot_id );
+                        dados_sistema_plots[ index_slot_plot ] = plot_para_adicionar.gerenciador_dados_sistema.Pegar_dados();
 
+                        // ---- CRIA SLOT INSTRUCOES
+                        gerenciador_save.instrucoes_plots[ _plot_id ]  = new byte[ 50 ][];
 
-
-        public Plot Criar_plot (  int _plano_para_adicionar_id,  int _plot_id ){
-
-
-                int plot_slot = gerenciador_dados_dinamicos.Pegar_slot_plot( _plot_id );
-
-                System.Object plot_AI =   gerenciador_dados_dinamicos.Pegar_AI_plot( plot_slot );
-                Dados_containers_plot dados_containers_plots = gerenciador_dados_dinamicos.Pegar_containers_plot( plot_slot );
-                Dados_sistema_plot_essenciais dados_sistema_plot_essenciais = dados_sistema_plots_essenciais[ _plot_id ];
-
-                plot novo_plot =  Construtor_plot.Construir( _plot_id, _plano_para_adicionar, dados_sistema_plot_essenciais,  dados_containers_plots, plot_AI );
-                
-                return;
-
+                        return;
 
         }
+
+
 
 
 
@@ -134,26 +152,6 @@ public class Controlador_plots {
 
 
 
-
-
-
-        public static Controlador_plots Construir_teste() {
-
-                Controlador_plots controlador = new Controlador_plots();
-
-
-                        controlador.gerenciador_dados_dinamicos = new Gerenciador_dados_dinamicos_plots();
-                        controlador.gerenciador_save = new Gerenciador_save_plots( controlador );
-
-                        controlador.dados_sistema_plots_essenciais = new Dados_sistema_plot_essenciais[ Enum.GetNames( typeof( Plot_nome ) ).Length ];
-                        controlador.plots_ativos_ids = new int[ 0 ];
-
-            
-                instancia = controlador;
-                return controlador;
-
-
-        }
 
 
 
@@ -193,6 +191,10 @@ public class Controlador_plots {
 
 
         }
+
+
+
+        // --- SUPORTE
 
 
         public Plot Pegar_plot ( int _plot_id ){

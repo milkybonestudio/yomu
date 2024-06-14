@@ -5,8 +5,6 @@ using UnityEngine;
 
 
 
-
-
 public class Controlador_personagens {
 
 		// ** REQUISICAO PARA ADICIONAR PERSONAGEM É SOMENTE TEMPO
@@ -82,12 +80,7 @@ public class Controlador_personagens {
 							int plano_id = personagens_ativos_planos[ index_personagem_ativo ];
 							int personagem_id = controlador.personagens_ativos[ index_personagem_ativo ]; 
 
-							// --- CONSTRUIR
-							Personagem personagem_para_adicionar = Criar_personagem( plano_id, personagem_id );
-							controlador.gerenciador_save.instrucoes_personagens[ personagem_id ]  = new byte[ 50 ][];
-							controlador.personagens [ personagem_id ] = novo_personagem; 
-							controlador.dados_sistema_personagens[ index_personagem_ativo ] = personagem_para_adicionar.gerenciador_dados_sistema.Pegar_dados();
-
+							Adicionar_personagem_INICIO_JOGO( plano_id , personagem_id, index_personagem_ativo );
 							continue;
 
 					}
@@ -100,43 +93,51 @@ public class Controlador_personagens {
 		}
 
 
-		public void Adicionar_personagem( int _plano_para_adicionar_id,  int _personagem_id )  {
+		public void Adicionar_personagem_INICIO_JOGO( int _plano_para_adicionar_id,  int _personagem_id, int _index_dados_sistema ){
 
-			Personagem personagem_para_adicionar = Criar_personagem(  _plano_para_adicionar_id,  _personagem_id );
+				// --- CRIA PERSONAGEM 
+				Dados_sistema_personagem_essenciais dados_sistema_personagem_essenciais = dados_sistema_personagens_essenciais[ _personagem_id ];
+				System.Object personagem_AI =   gerenciador_dados_dinamicos.Pegar_AI_personagem_NAO_CARREGADO( _personagem_id );
+				Dados_containers_personagem dados_containers_personagens = gerenciador_dados_dinamicos.Pegar_AI_personagem_NAO_CARREGADO( _personagem_id );
 
-			personagens [ _personagem_id ] = personagem_para_adicionar; 
-			INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref personagens_ativos , _personagem_id );
+				Personagem personagem_para_adicionar =  Construtor_personagem.Construir( _personagem_id, _plano_para_adicionar, dados_sistema_personagem_essenciais,  dados_containers_personagens, personagem_AI );
 
-			// ---- CRIA SLOT INSTRUCOES
-			gerenciador_save.instrucoes_personagens[ _personagem_id ]  = new byte[ 50 ][];
+				// --- COLOCA DADOS CONTAINERS 
+				personagens [ _personagem_id ] = personagem_para_adicionar; 
+				dados_sistema_personagens[ _index_dados_sistema ] = personagem_para_adicionar.gerenciador_dados_sistema.Pegar_dados();
 
-			return;
+				// ---- CRIA SLOT INSTRUCOES
+				gerenciador_save.instrucoes_personagens[ _personagem_id ]  = new byte[ 50 ][];
+
+				return;
 
 		}
 
 
+		
 
-		public Personagem Criar_personagem (  int _plano_para_adicionar_id,  int _personagem_id ){
+		public void Adicionar_personagem( int _plano_para_adicionar_id,  int _personagem_id )  {
 
-				// ** quando iniciar vai pegar tudo na main thread 
-
-
-				// ** para um personagem entrar na cidade do player ele precisa primeiro ser carregado em segundo plano => ele já vai estar carregado 
-				// mas essa funcao garante que o personagem vai ser criado e define um plano
-				// 
-				// nao vai ser chamado com frequencia
-
-	
+				// --- CRIA PERSONAGEM
+				
 				int personagem_slot = gerenciador_dados_dinamicos.Pegar_slot_personagem( _personagem_id );
 
 				System.Object personagem_AI =   gerenciador_dados_dinamicos.Pegar_AI_personagem( personagem_slot );
 				Dados_containers_personagem dados_containers_personagens = gerenciador_dados_dinamicos.Pegar_containers_personagem( personagem_slot );
 				Dados_sistema_personagem_essenciais dados_sistema_personagem_essenciais = dados_sistema_personagens_essenciais[ _personagem_id ];
 
-				Personagem novo_personagem =  Construtor_personagem.Construir( _personagem_id, _plano_para_adicionar, dados_sistema_personagem_essenciais,  dados_containers_personagens, personagem_AI );
-				
-				return;
+				Personagem personagem_para_adicionar =  Construtor_personagem.Construir( _personagem_id, _plano_para_adicionar, dados_sistema_personagem_essenciais,  dados_containers_personagens, personagem_AI );
 
+				// --- COLOCA DADOS CONTAINERS 
+
+				personagens [ _personagem_id ] = personagem_para_adicionar; 
+				int index_slot_personagem = INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref personagens_ativos , _personagem_id );
+				dados_sistema_personagens[ index_slot_personagem ] = personagem_para_adicionar.gerenciador_dados_sistema.Pegar_dados();
+
+				// ---- CRIA SLOT INSTRUCOES
+				gerenciador_save.instrucoes_personagens[ _personagem_id ]  = new byte[ 50 ][];
+
+				return;
 
 		}
 
@@ -176,13 +177,17 @@ public class Controlador_personagens {
 
 
 
+
+
+
 		public void Desativar_personagem( int _personagem_id ){
 
 				// ** tem que fazer uma instrucao falando que o personagem foi excluido. 
 				// se o sistema precisar reconstuir ele altera os dados mas não coloca ele nos ativos 
+				// **se ele nao tiver sido construido tem que retirar a task para pegar os dados dos dados dinamicos
 
 
-				// MOVO PARA A LIXEIRA
+				// MOVE PARA A LIXEIRA
 
 				Personagem personagem = personagens[ _personagem_id ];
 
@@ -240,65 +245,6 @@ public class Controlador_personagens {
 		}
 
 
-
-
-
-
-
-
-
-
-		// aqui todos os personagens exceto a nara vão ser instanciados como null
-		public static Controlador_personagens Construir_teste (){
-
-				// precisa cuidadar para quando for por teste. 
-				// quando o sitema pedir para carregar um personagem ele nao pode ir para o normal
-
-				Controlador_personagens controlador = new Controlador_personagens();
-
-						// inicia somente com o player ativo
-						string[] personagens_nomes = Enum.GetNames( typeof( Personagem_nome ) );
-						controlador.dados_sistema_personagens_essenciais = new Dados_sistema_personagem_essenciais[ personagens_nomes.Length ];
-						Personagem[] personagens = new Personagem[ personagens_nomes.Length ];
-
-						//controlador.personagens_ativos = new int [ 20 ];
-
-
-						for( int per = 0 ; per < personagens_nomes.Length ; per++ ){ 
-
-								controlador.dados_sistema_personagens_essenciais[ per ] = new Dados_sistema_personagem_essenciais();
-								
-						}
-
-						int nara_id = ( int ) Personagem_nome.Nara;
-						
-					
-						controlador.personagens = personagens;
-						personagens[ nara_id ] = new Personagem( nara_id, new Posicao_geral(), Atividade.nada );
-
-
-				instancia = controlador;				
-				return instancia;
-			
-		}
-
-
-		public void Carregar_personagem_teste ( Personagem_nome personagem_nome, Atividade _atividade, Posicao_geral _posicao  , Dados_containers_personagem _dados_para_construir_personagem ){
-
-				Debug.Log( "vai carregar personagem : " + personagem_nome );
-
-				Personagem novo_personagem = Construtor_personagem.Construir_personagem_teste(  ( int ) personagem_nome,  _atividade, _posicao, _dados_para_construir_personagem );				
-				personagens[ ( int ) personagem_nome ] = novo_personagem; 
-				return;
-
-		}
-
-
-
-
-
-
-
 		public Personagem Pegar_personagem ( int _personagem_id ){
 
 			
@@ -315,17 +261,8 @@ public class Controlador_personagens {
 
 
 
-
-
-
-
   
 }
-
-
-
-
-
 
 
 

@@ -40,7 +40,6 @@ public class Controlador_dados_sistema {
                         controlador.gerenciador_save = new Gerenciador_save_dados_sistema( controlador );
 
 
-
                         // --- PEGAR DADOS
 
                         controlador.dados_personagens_essenciais = Controlador_personagens.Pegar_instancia().dados_sistema_personagens_essenciais;
@@ -57,12 +56,12 @@ public class Controlador_dados_sistema {
 
         }
 
-        
+
 
         public byte[] Compilar_dados_sistema_atual(){
                         
 
-                        Dados_sistema_estado_atual dados_estado_atual = gerenciador_sistema_estado_atual.Pegar_dados()
+                        Dados_sistema_estado_atual dados_estado_atual = gerenciador_sistema_estado_atual.Pegar_dados();
                         
                         byte[] dados = Compilador_dados_sistema.Compilar();
                         return dados;

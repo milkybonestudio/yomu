@@ -83,11 +83,12 @@ public static class INT {
     }
 
 
-public static void Acrescentar_valor_COMPLETO_GARANTIDO( ref int[] arr , int _valor ){
+public static int Acrescentar_valor_COMPLETO_GARANTIDO( ref int[] arr , int _valor ){
 
         int[] novo_arr = new int[ arr.Length + 1 ];
+        int index = 0;
 
-        for( int index = 0 ; index < arr.Length ; index++ ){
+        for( index = 0 ; index < arr.Length ; index++ ){
 
                 novo_arr[ index ] = arr[ index ];
 
@@ -96,7 +97,7 @@ public static void Acrescentar_valor_COMPLETO_GARANTIDO( ref int[] arr , int _va
         novo_arr[ arr.Length ] = _valor;
         arr = novo_arr;
 
-        return;
+        return index;
 
 
 

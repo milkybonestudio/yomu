@@ -48,20 +48,27 @@ public class Gerenciador_dados_dinamicos_personagens {
 
                 System.Object personagem_AI =  personagens_AIs[ _index_slot_personagem ];
                 
-                if( personagem_AI == null )
-                        {       
-                                // nao nao conseguiu pegar na multithread, vai forçar na main 
-                                
-                                string personagem_class_nome =  ( ( Personagem_nome ) personagens_ids[ _index_slot_personagem ] ).ToString() + "_dados";
-                                personagem_AI =  asm_personagens.CreateInstance( personagem_class_nome );
-                                personagens_AIs[ _index_slot_personagem ] = personagem_AI;
+                if( personagem_AI != null )
+                        { return personagem_AI; }
+                
+                int personagem_id =  personagens_ids[ _index_slot_personagem ] ;
 
-                        }
-
-                return personagem_AI;
+                return Pegar_AI_personagem_NAO_CARREGADO( personagem_id );
+                
 
         }
+        
+        public System.Object Pegar_AI_personagem_NAO_CARREGADO ( int _personagem_id ){
 
+                string personagem_class_nome =  ( ( Personagem_nome ) _personagem_id  ).ToString() + "_dados";
+                System.Object personagem_AI =  asm_personagens.CreateInstance( personagem_class_nome );
+                personagens_AIs[ _index_slot_personagem ] = personagem_AI;
+
+                return personagem_AI;
+        }
+
+
+        
 
         public Dados_containers_personagem Pegar_containers_personagem ( int _index_slot_personagem ){
 
@@ -77,15 +84,21 @@ public class Gerenciador_dados_dinamicos_personagens {
                 
                 Dados_containers_personagem personagem_containers =  dados_containers_personagens[ _index_slot_personagem ];
 
-                if( personagem_containers == null )
-                        {
-                                
-                                string personagem_nome = ( ( Personagem_nome ) personagens_ids[ _index_slot_personagem ] ).ToString() ;
-                                string path_dados = Paths_sistema.path_dados_personagens + "/" + personagem_nome + "_dados.dat" ;
-                                byte[] dados_bytes = System.IO.File.ReadAllBytes( path_dados );
-                                personagem_containers = Construtor_containers_personagens.Construir( dados_bytes );
-                                
-                        }
+                if( personagem_containers != null )
+                        { return personagem_containers; }
+
+                int personagem_id = personagens_ids[ _index_slot_personagem ]
+                return Pegar_containers_personagem_NAO_CARREGADO( personagem_id );
+
+        }
+
+        public Dados_containers_personagem Pegar_containers_personagem_NAO_CARREGADO ( int _personagem_id ){
+
+
+                string personagem_nome = ( ( Personagem_nome ) personagens_ids[ _index_slot_personagem ] ).ToString() ;
+                string path_dados = Paths_sistema.path_dados_personagens + "/" + personagem_nome + "_dados.dat" ;
+                byte[] dados_bytes = System.IO.File.ReadAllBytes( path_dados );
+                personagem_containers = Construtor_containers_personagens.Construir( dados_bytes );
 
                 return personagem_containers;
 
@@ -196,6 +209,11 @@ public class Gerenciador_dados_dinamicos_personagens {
 
 
         }
+
+
+
+
+        
 
         // ---- funcoes suporte
 

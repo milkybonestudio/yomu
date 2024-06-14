@@ -45,7 +45,9 @@ public class Controlador_save {
 
                               
                               // nao vai construir nenhum personagem além da nara
-                              Controlador_personagens.Construir_teste();
+                              TESTE_controlador_personagens.Construir_controlador();
+                              TESTE_controlador_cidades.Construir_controlador();
+                              TESTE_controlador_plots.Construir_controlador();
 
                         instancia = controlador;
                         return controlador;
