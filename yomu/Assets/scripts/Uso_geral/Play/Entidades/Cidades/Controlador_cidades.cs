@@ -9,8 +9,8 @@ public class Controlador_cidades {
     public static Controlador_cidades Pegar_instancia(){ return instancia; }
 
 
-    public Gerenciador_dados_dinamicos_cidades gerenciador_dados_dinamicos = new Gerenciador_dados_dinamicos_cidades();
-    public Gerenciador_save_cidades gerenciador_save = new Gerenciador_save_cidades();
+    public Gerenciador_dados_dinamicos_cidades gerenciador_dados_dinamicos;
+    public Gerenciador_save_cidades gerenciador_save;
 
     public Dados_sistema_cidade_essenciais[] dados_sistema_cidades_essenciais;
 
@@ -29,8 +29,8 @@ public class Controlador_cidades {
             Controlador_cidades controlador = new Controlador_cidades();
 
 
+                controlador.gerenciador_save = new Gerenciador_save_cidades( controlador );
                 controlador.gerenciador_dados_dinamicos = new Gerenciador_dados_dinamicos_cidades();
-                controlador.gerenciador_save = new Gerenciador_save_cidades();
 
                 controlador.dados_sistema_cidades_essenciais = _dados_sistema_cidades_essenciais;
 

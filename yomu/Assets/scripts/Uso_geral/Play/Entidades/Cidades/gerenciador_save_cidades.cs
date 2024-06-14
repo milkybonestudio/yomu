@@ -5,8 +5,8 @@
 public class Gerenciador_save_cidades {
 
         
-        public Gerenciador_save_cidades(){
-                controlador_cidades = Controlador_cidades.Pegar_instancia();
+        public Gerenciador_save_cidades( Controlador_cidades _controlador_cidades ){
+                controlador_cidades = _controlador_cidades;
         }
 
 
@@ -59,6 +59,10 @@ public class Gerenciador_save_cidades {
                         novo_cidades[ novo_arr_index ]  =  cidades_esperando_para_serem_excluidos[ novo_arr_index ];
                         
                 }
+
+                
+                cidades_esperando_para_serem_excluidos_ids  =  novo_cidades_ids;
+                cidades_esperando_para_serem_excluidos      =  novo_cidades;
 
                 cidades_esperando_para_serem_excluidos_ids[ index_para_acrescentar ] = _cidade.cidade_id;
                 cidades_esperando_para_serem_excluidos[ index_para_acrescentar ] = _cidade;

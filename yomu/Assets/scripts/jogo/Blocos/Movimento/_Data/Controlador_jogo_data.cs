@@ -46,7 +46,7 @@ public class Controlador_jogo_data{
         int _id  = (int) _ponto_nome;
 
         
-        Periodo_tempo periodo = Controlador_timer.Pegar_instancia().periodo_atual;
+        Periodo_tempo periodo = ( Periodo_tempo ) Controlador_timer.Pegar_instancia().periodo_atual_id;
 
         int periodo_int = (int) periodo;
 

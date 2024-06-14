@@ -26,6 +26,12 @@ public static class Tradutor_dados_sistema {
 
         }
 
+        public static Dados_sistema_plot_essenciais[] Descompactar_dados_sistema_plots_essenciais( byte[] _dados_sistema ){
+
+                return null;
+
+        }
+
         public static byte[] Compactar_dados_sistema_cidades_essenciais( Dados_sistema_cidade_essenciais[] _dados_sistema ){
                 
                 return null;
@@ -40,12 +46,6 @@ public static class Tradutor_dados_sistema {
         }
 
         
-        public static Dados_sistema_player Descompactar_dados_sistema_player(  byte[]  _dados_sistema ){
-                
-                return null;
-
-        }
-
 
 
         

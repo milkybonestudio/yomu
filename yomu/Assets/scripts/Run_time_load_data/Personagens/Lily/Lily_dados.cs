@@ -36,7 +36,7 @@ public class Lily_dados {
                 // esse metodo vai ser responsavel por pegar todos os dados
 
                 
-                Personagem lily = Controlador_personagens.Pegar_instancia().Pegar_personagem( Personagem_nome.Lily );
+                Personagem lily = Controlador_personagens.Pegar_instancia().Pegar_personagem( ( int ) Personagem_nome.Lily );
 
                 // pensar depois : lily.dados_updates
 

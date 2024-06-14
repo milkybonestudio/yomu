@@ -87,7 +87,7 @@ public class Controlador_interativos {
         
         int numero_interativos = interativos_nomes.Length;
         string path =  "images/in_game/" +  _ponto.folder_path;
-        int periodo =   (int) ( Controlador_timer.Pegar_instancia().periodo_atual);
+        int periodo =    ( Controlador_timer.Pegar_instancia().periodo_atual_id);
 
         
 

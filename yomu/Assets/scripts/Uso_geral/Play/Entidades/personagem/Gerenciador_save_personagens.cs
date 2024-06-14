@@ -9,8 +9,8 @@ using UnityEngine;
 public class Gerenciador_save_personagens {
 
 
-        public Gerenciador_save_personagens(){
-                controlador_personagens = Controlador_personagens.Pegar_instancia();
+        public Gerenciador_save_personagens( Controlador_personagens _controlador_personagens ){
+                controlador_personagens = _controlador_personagens;
         }
 
 
@@ -61,6 +61,9 @@ public class Gerenciador_save_personagens {
                         novo_personagens[ novo_arr_index ]  =  personagens_esperando_para_serem_excluidos[ novo_arr_index ];
                         
                 }
+
+                personagens_esperando_para_serem_excluidos = novo_personagens;
+                personagens_esperando_para_serem_excluidos_ids = novo_personagens_ids;
 
                 personagens_esperando_para_serem_excluidos_ids[ index_para_acrescentar ] = _personagem.personagem_id;
                 personagens_esperando_para_serem_excluidos[ index_para_acrescentar ] = _personagem;

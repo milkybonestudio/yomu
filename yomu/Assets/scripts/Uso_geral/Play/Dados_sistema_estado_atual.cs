@@ -7,6 +7,28 @@ public class Dados_sistema_estado_atual {
 
 		// ** pensar sobre como os planos vao ter algum funcao aqui 
 
+
+		// --- TEMPO
+		public int tempo_atual_em_periodos;
+
+		// principal 
+		// ** todo mes tem 28 dias 
+		public int periodo_atual_id ;
+		public int dia_semana_atual_id ;
+		public int semana_mes_atual_id ;
+		public int mes_ano_atual_id ;
+		public int ano_atual_id ;
+
+
+
+
+		// --- PLAYER
+
+		public int personagem_atual_id;
+		public int segundo_plano_cidade_id;
+
+
+
 		// --- PERSONAGENS
 
 		public int[] personagens_ativos;
@@ -29,6 +51,10 @@ public class Dados_sistema_estado_atual {
 
 
 		// --- PLOTS
+
+		public int[] plots_ativos_ids;
+		public int[] plots_pentendes_para_adicionar;
+		public int[] plots_pentendes_para_adicionar_tempo;
 		
 
 

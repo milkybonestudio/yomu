@@ -4,18 +4,12 @@ using UnityEngine;
  
 
 
-
-
 public class Dados_blocos {
 
 
         public static Dados_blocos instancia;
         public static Dados_blocos Pegar_instancia(){ return instancia; }
         public static Dados_blocos Construir(){ instancia = new Dados_blocos(); return instancia;}
-
-
-
-        public void Iniciar(){}
 
 
         public Req_transicao req_transicao = null ;
@@ -37,10 +31,17 @@ public class Dados_blocos {
 
 
 
-        public void Colocar_nova_req( Req_transicao _req_transicao){
+        public void Colocar_nova_req( Req_transicao _req_transicao ){
 
-            if(this.req_transicao != null) throw new ArgumentException("foi colocado 2 reqs ao mesmo tempo. req 1 estava indo para: " + Convert.ToString(this.req_transicao.novo_bloco) + ", req 2 estava querendo ir para: " + Convert.ToString(_req_transicao.novo_bloco));
-            this.req_transicao = _req_transicao;
+            if( req_transicao != null) 
+                {
+                    string req_1  =  req_transicao.novo_bloco.ToString();
+                    string req_2  = _req_transicao.novo_bloco.ToString();
+                    throw new ArgumentException("foi colocado 2 reqs ao mesmo tempo. req 1 estava indo para: " + req_1 + ", req 2 estava querendo ir para: " +  req_2 );
+
+                }
+            
+            req_transicao = _req_transicao;
             return;
 
 

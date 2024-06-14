@@ -21,8 +21,12 @@ public class Controlador_personagens {
 		public static Controlador_personagens instancia;
 		public static Controlador_personagens Pegar_instancia(){ return instancia;}
 
-		public Personagem[] personagens;
+
 		public Gerenciador_save_personagens gerenciador_save;
+		public Gerenciador_dados_dinamicos_personagens gerenciador_dados_dinamicos;
+
+		public Personagem[] personagens;
+		public Dados_sistema_personagem_essenciais[] dados_sistema_personagens_essenciais;
 
 
 		// ** lembrar que quando mudar de plano 1 para 2 tem que criar uma instrucao
@@ -38,14 +42,10 @@ public class Controlador_personagens {
 		public int[] personagens_pentendes_para_adicionar;
 		public int[] personagens_pentendes_para_adicionar_local;
 		public int[] personagens_pentendes_para_adicionar_tempo;
+		// talvez adicionar scripts_entrada[] ?
 		
 
-
-		public Dados_sistema_personagem_essenciais[] dados_sistema_personagens_essencias;
-		public Gerenciador_dados_dinamicos_personagens gerenciador_dados_dinamicos;
 		
-
-
 
 
 		public static Controlador_personagens Construir (  Dados_sistema_personagem_essenciais[] _dados_sistema_personagens_essenciais, Dados_sistema_estado_atual _dados_sistema_estado_atual ) {
@@ -57,9 +57,9 @@ public class Controlador_personagens {
 
 
 					// ---- DADOS
-					controlador.dados_sistema_personagens_essencias = _dados_sistema_personagens_essenciais;
+					controlador.dados_sistema_personagens_essenciais = _dados_sistema_personagens_essenciais;
 					controlador.personagens = new Personagem[ _dados_sistema_personagens_essenciais.Length ];
-					controlador.gerenciador_save = new Gerenciador_save_personagens();
+					controlador.gerenciador_save = new Gerenciador_save_personagens( controlador );
 					controlador.gerenciador_dados_dinamicos = new Gerenciador_dados_dinamicos_personagens();
 
 					controlador.personagens_pentendes_para_adicionar =  _dados_sistema_estado_atual.personagens_pentendes_para_adicionar;
@@ -102,7 +102,7 @@ public class Controlador_personagens {
 
 				System.Object personagem_AI =   gerenciador_dados_dinamicos.Pegar_AI_personagem( personagem_slot );
 				Dados_containers_personagem dados_containers_personagens = gerenciador_dados_dinamicos.Pegar_containers_personagem( personagem_slot );
-				Dados_sistema_personagem_essenciais dados_sistema_personagem_essenciais = dados_sistema_personagens_essencias[ _personagem_id ];
+				Dados_sistema_personagem_essenciais dados_sistema_personagem_essenciais = dados_sistema_personagens_essenciais[ _personagem_id ];
 
 				Personagem novo_personagem =  Construtor_personagem.Construir( _personagem_id, _plano_para_adicionar, dados_sistema_personagem_essenciais,  dados_containers_personagens, personagem_AI );
 				
@@ -232,7 +232,7 @@ public class Controlador_personagens {
 
 						// inicia somente com o player ativo
 						string[] personagens_nomes = Enum.GetNames( typeof( Personagem_nome ) );
-						controlador.dados_sistema_personagens_essencias = new Dados_sistema_personagem_essenciais[ personagens_nomes.Length ];
+						controlador.dados_sistema_personagens_essenciais = new Dados_sistema_personagem_essenciais[ personagens_nomes.Length ];
 						Personagem[] personagens = new Personagem[ personagens_nomes.Length ];
 
 						//controlador.personagens_ativos = new int [ 20 ];
@@ -240,7 +240,7 @@ public class Controlador_personagens {
 
 						for( int per = 0 ; per < personagens_nomes.Length ; per++ ){ 
 
-								controlador.dados_sistema_personagens_essencias[ per ] = new Dados_sistema_personagem_essenciais();
+								controlador.dados_sistema_personagens_essenciais[ per ] = new Dados_sistema_personagem_essenciais();
 								
 						}
 
@@ -273,19 +273,18 @@ public class Controlador_personagens {
 
 
 
-		public Personagem Pegar_personagem ( Personagem_nome _personagem_nome ){
-
-			int personagem_id = ( int ) _personagem_nome ;
+		public Personagem Pegar_personagem ( int _personagem_id ){
 
 			
-			if( personagens[ personagem_id ] == null  )
+			if( personagens[ _personagem_id ] == null  )
 					{ 
-						Debug.LogError( $"Sistema pediu o personagem { _personagem_nome } mas ele nao foi criado" );
-						throw new Exception( "" ); 
-
+						Personagem_nome personagem = ( Personagem_nome ) _personagem_id;
+						Debug.LogError( $"Sistema pediu o personagem { personagem } mas ele nao foi criado" );
+						throw new Exception( "" );
 					}
 
-			return personagens[ personagem_id ];
+			return personagens[ _personagem_id ];
+
 		}
 
 

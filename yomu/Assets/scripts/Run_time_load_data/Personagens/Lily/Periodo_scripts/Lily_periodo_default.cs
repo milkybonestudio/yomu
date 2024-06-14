@@ -10,8 +10,8 @@ public class Lily_periodo_DEFAULT {
     public void fn() {
 
                 // aqui vai estar a logica em si
-                Personagem lily = Controlador_personagens.Pegar_instancia().Pegar_personagem( Personagem_nome.Lily );
-                Periodo_tempo periodo = Controlador_timer.Pegar_instancia().periodo_atual;
+                Personagem lily = Controlador_personagens.Pegar_instancia().Pegar_personagem( ( int ) Personagem_nome.Lily );
+                Periodo_tempo periodo = ( Periodo_tempo ) Controlador_timer.Pegar_instancia().periodo_atual_id;
                 Dia_semana semana = Controlador_timer.Pegar_instancia().dia_semana;
 
                 Semana_periodo semana_periodo = ( Semana_periodo )   (  (( int ) semana + 1 )  *  ( int ) periodo  );

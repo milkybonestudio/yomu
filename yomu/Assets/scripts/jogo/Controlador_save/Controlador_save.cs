@@ -10,58 +10,45 @@ using System.Linq;
 
 
 
-
-
-
 public class Controlador_save {
-
 
             
             public static Controlador_save instancia;
             public static Controlador_save Pegar_instancia(){ return instancia; }
 
-            public static bool esta_em_teste = false;
             
+            public Controlador_instrucoes_de_seguranca controlador_instrucoes_de_seguranca;
             public System.Text.UTF8Encoding encoder = new System.Text.UTF8Encoding( true );
 
 
             public Modo_save modo_save_atual = Modo_save.DEFAULT;
-
-            public int tamanho_dados_sistema = 10_000; // numero de personagens * 
-            public byte[][] dados_para_salvar;
-
-            public Controlador_instrucoes_de_seguranca controlador_instrucoes_de_seguranca;
-
-
+            public static bool esta_em_teste = false;
 
             public Task_req task_salvar;
-            public bool esta_salvando_container = false ;  
-            public bool esta_esperando_multithread = false ;
-
 
 
             public static Controlador_save Construir_teste (){
 
-                  // vai ser executado na main thread
-                  esta_em_teste = true;
+                        // vai ser executado na main thread
+                        esta_em_teste = true;
 
-                  instancia = new Controlador_save(); 
-                  
-                  Dados_blocos.Construir();
-                  Controlador_timer.Construir();
+                        Controlador_save controlador = new Controlador_save(); 
+                              
+                              Dados_blocos.Construir();
+                              Controlador_timer.Construir_teste( null );
+                              Controlador_dados_dinamicos.Construir_teste( null );
 
-                  Controlador_dados_dinamicos.Construir();
-                  
-                  Controlador_UI.Construir();
-                  Controlador_transicao.Construir();
+                              Controlador_UI.Construir();
+                              Controlador_transicao.Construir();
 
-                  Player_estado_atual.Construir();
+                              Player_estado_atual.Construir();
 
-                  
-                  // nao vai construir nenhum personagem além da nara
-                  Controlador_personagens.Construir_teste();
-            
-                  return instancia;
+                              
+                              // nao vai construir nenhum personagem além da nara
+                              Controlador_personagens.Construir_teste();
+
+                        instancia = controlador;
+                        return controlador;
 
             }
 
@@ -79,71 +66,51 @@ public class Controlador_save {
 
 
                         Paths_sistema.Colocar_save( _save );
-                  
 
+                        // --- VERIFICACOES DE SEGURANCA
+                  
                         if( _save > 5 ) 
                               { throw new Exception( "tentou carregar save " + _save.ToString() ); }
 
-
                         if( _novo_jogo )
-                              { 
+                              { controlador.Criar_arquivos_novo_jogo( _save ); }
 
-                                    // copiar arquivos que vão estar em path_mutaveis ** definir
-                                    controlador.Copiar_arquvios_do_novo_jogo( _save );
+                        if( System.IO.File.Exists( Paths_sistema.path_dados_sistema ) )
+                              { throw new Exception( $"dados_programa.dat nao foi encontrado no path { Paths_sistema.path_dados_sistema }"); }
 
-                              }
-
-      
-
-                        Dados_blocos.Construir();
-                        Controlador_timer.Construir();
-
-                        Controlador_dados_dinamicos.Construir();
                         
-                        Controlador_UI.Construir();
-                        Controlador_transicao.Construir();
+                        
 
-                        Controlador_dados_sistema.Construir( );
+                        // dados_sistema => dados essencias entidades, estado atual 
+                        byte[] dados_sistema = System.IO.File.ReadAllBytes( Paths_sistema.path_dados_sistema );
+
+
+                        // --- USAO EXCLUSIVO SAVE
                         Controlador_instrucoes_de_seguranca.Construir();
 
 
-
-                        // ----- SISTEMA
-
-                        if( System.IO.File.Exists( Paths_sistema.path_dados_sistema ) )
-                              { throw new Exception( $"dados_programa.dat nao foi encontrado no path{ Paths_sistema.path_dados_sistema }"); }
-
-
-                        byte[] dados_sistema = System.IO.File.ReadAllBytes( Paths_sistema.path_dados_sistema );
-
-                        Dados_sistema_personagem_essenciais[] dados_sistema_personagens_essenciais = Tradutor_dados_sistema.Descompactar_dados_sistema_personagens_essenciais( dados_sistema );
-                        Dados_sistema_cidade_essenciais[] dados_sistema_cidade_essenciais = Tradutor_dados_sistema.Descompactar_dados_sistema_cidades_essenciais( dados_sistema );
+                        // --- SISTEMA
                         Dados_sistema_estado_atual dados_sistema_estado_atual = Tradutor_dados_sistema.Descompactar_dados_sistema_estado_atual( dados_sistema );
-                        Dados_sistema_player  dados_sistema_player = Tradutor_dados_sistema.Descompactar_dados_sistema_player( dados_sistema );
+                        Controlador_dados_sistema.Construir( dados_sistema_estado_atual ); // constroi player
+                        
 
-                        // ** talvez player e sistema possa estar no primario?
-
-        
-                        // ----- PLAYER  
-
-                        Controlador_player.Construir(  dados_sistema_personagem, dados_sistema_estado_atual );
-
-
-                        // ---- PERSONAGENS
-
-
+                        // --- PERSONAGENS
+                        Dados_sistema_personagem_essenciais[] dados_sistema_personagens_essenciais = Tradutor_dados_sistema.Descompactar_dados_sistema_personagens_essenciais( dados_sistema );
                         Controlador_personagens.Construir( dados_sistema_personagens_essenciais, dados_sistema_estado_atual ); 
 
-                        // ----- CIDADES
+                        // --- CIDADES
+                        Dados_sistema_cidade_essenciais[] dados_sistema_cidades_essenciais = Tradutor_dados_sistema.Descompactar_dados_sistema_cidades_essenciais( dados_sistema );
+                        Controlador_cidades.Construir( dados_sistema_cidades_essenciais, dados_sistema_estado_atual ); 
 
-                        Controlador_cidades.Construir( dados_sistema_cidade_essenciais, dados_sistema_estado_atual ); 
-
-
-                        // ----- PLOTS
-
+                        // --- PLOTS
+                        Dados_sistema_plot_essenciais[] dados_sistema_plots_essenciais = Tradutor_dados_sistema.Descompactar_dados_sistema_plots_essenciais( dados_sistema );
+                        Controlador_plots.Construir( dados_sistema_plots_essenciais, dados_sistema_estado_atual ); 
 
 
 
+                        Controlador_timer.Construir( dados_sistema_estado_atual );
+                        Controlador_dados_dinamicos.Construir( dados_sistema_estado_atual );
+                        
 
 
                   instancia = controlador;
@@ -160,41 +127,39 @@ public class Controlador_save {
             public void Update(){
 
 
-                  // quando estiver em teste nao vai deixar salvar      
-                  if( esta_em_teste ) 
-                        { return ;}
+                        // quando estiver em teste nao vai deixar salvar      
+                        if( esta_em_teste ) 
+                              { return ;}
 
 
-                  frame = ( frame + 1 ) % espacamento ;
+                        frame = ( frame + 1 ) % espacamento ;
 
-                  // ** vai ser chamado a cada 1 vez por segundo 
-                  if( frame  == 0 )
-                        {
-                              // Main thread
-                              // garante que todos os arquivos das instrucoes de seguranca esstao atualizados 
-                              controlador_instrucoes_de_seguranca.Update( modo_save_atual ); 
-                              return;
-                        } 
+                        // ** vai ser chamado a cada 1 vez por segundo 
+                        if( frame  == 0 )
+                              {
+                                    // Main thread
+                                    // garante que todos os arquivos das instrucoes de seguranca esstao atualizados 
+                                    controlador_instrucoes_de_seguranca.Update( modo_save_atual ); 
+                                    return;
+                              } 
 
 
+                        if( task_salvar != null )
+                              {
+                                    if(  task_salvar.finalizado  )
+                                          { task_salvar = null; }
 
-                  if( task_salvar != null )
-                        {
-                              if(  task_salvar.finalizado  )
-                                    { task_salvar = null; }
+                                    return;
+                              }
 
-                              return;
-                        }
+                        
+                        if( frame != 30 )
+                              { return; }
 
-                  
+                        Verificar_dados_para_salvar();
 
-                  if( frame != 30 )
-                        { return; }
+                        return;
 
-                  Verificar_dados_para_salvar();
-                  return;
-
-               
                   
             }
 
@@ -204,37 +169,59 @@ public class Controlador_save {
             public void Verificar_dados_para_salvar(){
 
 
-                  // --- PERSONAGENS
-                  bool tem_personagens_liexeira = false;
-                  Dados_para_salvar dados_entidade_para_salvar = null; 
+                        Dados_para_salvar dados_entidade_para_salvar = null; 
 
-                  dados_entidade_para_salvar =  Controlador_personagens.Pegar_instancia().gerenciador_save.Pegar_personagem_para_salvar( modo_save_atual );
-                  if( dados_entidade_para_salvar != null )
-                        { 
-                              Criar_task_salvar_dados( dados_entidade_para_salvar ); 
-                              return;
-                        }
+                        // --- PERSONAGENS
+                        dados_entidade_para_salvar =  Controlador_personagens.Pegar_instancia().gerenciador_save.Pegar_personagem_para_salvar( modo_save_atual );
+                        if( dados_entidade_para_salvar != null )
+                              { 
+                                    Criar_task_salvar_dados( dados_entidade_para_salvar ); 
+                                    return;
+                              }
 
-                  // --- CIDADES
+                        // --- CIDADES
 
-                  dados_entidade_para_salvar =  Controlador_cidades.Pegar_instancia().gerenciador_save.Pegar_cidade_para_salvar( modo_save_atual );
-                  if( dados_entidade_para_salvar != null )
-                        { 
-                              Criar_task_salvar_dados( dados_entidade_para_salvar ); 
-                              return;
-                        }
-
-                  
-
-                  // --- PLOTS
-
-                  // --- SISTEMA 
+                        dados_entidade_para_salvar =  Controlador_cidades.Pegar_instancia().gerenciador_save.Pegar_cidade_para_salvar( modo_save_atual );
+                        if( dados_entidade_para_salvar != null )
+                              { 
+                                    Criar_task_salvar_dados( dados_entidade_para_salvar ); 
+                                    return;
+                              }
 
                   
+                        // --- PLOTS
+
+                        dados_entidade_para_salvar =  Controlador_plots.Pegar_instancia().gerenciador_save.Pegar_plot_para_salvar( modo_save_atual );
+                        if( dados_entidade_para_salvar != null )
+                              { 
+                                    Criar_task_salvar_dados( dados_entidade_para_salvar ); 
+                                    return;
+                              }
+
+
+                        // --- SISTEMA 
+
+                        dados_entidade_para_salvar =  Controlador_dados_sistema.Pegar_instancia().gerenciador_save.Pegar_dados_sistema_para_salvar( modo_save_atual );
+                        if( dados_entidade_para_salvar != null )
+                              { 
+                                    Criar_task_salvar_dados( dados_entidade_para_salvar ); 
+                                    return;
+                              }
+
+
                   
-                  
+                        return;
+
+
+            }
+
+
+            public void Criar_arquivos_novo_jogo( int _save ){
+
+                  // ** fazer depois
+                  throw new Exception( "nao era para vir aqui" );
+
                   return;
-
 
             }
 

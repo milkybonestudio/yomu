@@ -61,7 +61,7 @@ public class Gerenciador_dados_dinamicos_plots {
         }
 
 
-        public Dados_containers_plot Pegar_containers_plots ( int _index_slot_plots ){
+        public Dados_containers_plot Pegar_containers_plot ( int _index_slot_plots ){
 
                 // ** tem que pegar slot antes
                 // se nao foi carregado vai forçar para carregar 

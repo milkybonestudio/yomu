@@ -62,12 +62,49 @@ public class Controlador_timer {
 
         public static Controlador_timer instancia;
         public static Controlador_timer Pegar_instancia(){ return instancia; }
-        public static Controlador_timer Construir(){ instancia = new Controlador_timer(); return instancia;}
 
 
 
+		// principal 
+		// ** todo mes tem 28 dias 
+		public int periodo_atual_id;
+		public int dia_semana_atual_id;
+		public int semana_mes_atual_id;
+		public int mes_ano_atual_id;
+		public int ano_atual_id;
 
 
+
+        public static Controlador_timer Construir( Dados_sistema_estado_atual _dados_sistema_estado_atual ){ 
+
+            Controlador_timer controlador = new Controlador_timer(); 
+
+                controlador.periodo_atual_id = _dados_sistema_estado_atual.periodo_atual_id;
+                controlador.dia_semana_atual_id = _dados_sistema_estado_atual.dia_semana_atual_id;
+                controlador.semana_mes_atual_id = _dados_sistema_estado_atual.semana_mes_atual_id;
+                controlador.mes_ano_atual_id = _dados_sistema_estado_atual.mes_ano_atual_id;
+                controlador.ano_atual_id = _dados_sistema_estado_atual.ano_atual_id;
+
+
+            instancia = controlador; 
+            return controlador;
+            
+        }
+
+        
+        public static Controlador_timer Construir_teste( Dados_sistema_estado_atual _dados_sistema_estado_atual = null ){ 
+
+
+            //** pode ser chamado mais de uma vez
+
+            if( _dados_sistema_estado_atual != null )
+                { return Construir( _dados_sistema_estado_atual ); }
+
+        
+            instancia = new Controlador_timer(); 
+            return instancia;
+            
+        }
     
 
 
@@ -100,8 +137,6 @@ public class Controlador_timer {
 
     */
   
-
-    public Periodo_tempo periodo_atual = Periodo_tempo.noite;
 
 
 

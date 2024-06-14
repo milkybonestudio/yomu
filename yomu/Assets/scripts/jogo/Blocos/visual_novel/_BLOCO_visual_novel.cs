@@ -155,28 +155,28 @@ public class BLOCO_visual_novel {
 
 
 
-            instancia = new BLOCO_visual_novel(); 
+            BLOCO_visual_novel bloco = new BLOCO_visual_novel(); 
 
 
-                instancia.leitor_visual_novel  = Leitor_visual_novel.Construir();
-                instancia.controlador_personagens_visual_novel = Controlador_personagens_visual_novel.Construir();
-                instancia.controlador_tela_visual_novel = Controlador_tela_visual_novel.Construir();
+                bloco.leitor_visual_novel  = Leitor_visual_novel.Construir();
+                bloco.controlador_personagens_visual_novel = Controlador_personagens_visual_novel.Construir();
+                bloco.controlador_tela_visual_novel = Controlador_tela_visual_novel.Construir();
 
 
-                instancia.controlador_UI_visual_novel = new Controlador_UI_visual_novel();
+                bloco.controlador_UI_visual_novel = new Controlador_UI_visual_novel();
                 
-                instancia.Mudar_UI = Visual_novel_mudar_UI.Default ; 
-                instancia.Mudar_input = Visual_novel_mudar_input.Default ; 
+                bloco.Mudar_UI = Visual_novel_mudar_UI.Default ; 
+                bloco.Mudar_input = Visual_novel_mudar_input.Default ; 
 
-                instancia.Lidar_retorno = Visual_novel_lidar_retorno.Default;
+                bloco.Lidar_retorno = Visual_novel_lidar_retorno.Default;
 
-                instancia.dados_blocos = Dados_blocos.Pegar_instancia();
+                bloco.dados_blocos = Dados_blocos.Pegar_instancia();
 
-                instancia.container_visual_novel = new GameObject( "Visual_novel" );
-                instancia.container_visual_novel.transform.SetParent( GameObject.Find( "Tela/Canvas/Jogo" ).transform , false);
+                bloco.container_visual_novel = new GameObject( "Visual_novel" );
+                bloco.container_visual_novel.transform.SetParent( GameObject.Find( "Tela/Canvas/Jogo" ).transform , false);
 
-
-            return instancia;
+            instancia = bloco;
+            return bloco;
 
     }
 

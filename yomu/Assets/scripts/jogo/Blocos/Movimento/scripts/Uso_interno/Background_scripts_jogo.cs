@@ -28,7 +28,7 @@ public static class Background_scripts_jogo {
 
         float sadismo = Player_estado_atual.Pegar_instancia().sadismo;
 
-        int  periodo =  (int) Controlador_timer.Pegar_instancia().periodo_atual;
+        int  periodo =   Controlador_timer.Pegar_instancia().periodo_atual_id;
 
         string dia_ou_noite = "_d";
 
