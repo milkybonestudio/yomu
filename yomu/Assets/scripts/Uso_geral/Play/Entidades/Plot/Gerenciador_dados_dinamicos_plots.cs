@@ -31,7 +31,7 @@ public class Gerenciador_dados_dinamicos_plots {
         public Task_req[] requisicoes_plots = new Task_req[ 50 ];
 
 
-        public System.Object Pegar_AI_plots ( int _index_slot_plots ){
+        public System.Object Pegar_AI_plots  ( int _index_slot_plots ){
 
                 // ** tem que pegar slot antes
                 // se nao foi carregado vai forçar para carregar na main
@@ -46,19 +46,29 @@ public class Gerenciador_dados_dinamicos_plots {
 
                 System.Object plots_AI =  plots_AIs[ _index_slot_plots ];
                 
-                if( plots_AI == null )
-                        {       
-                                // nao nao conseguiu pegar na multithread, vai forçar na main 
-                                
-                                string plots_class_nome =  ( ( Plot_nome ) plots_ids[ _index_slot_plots ] ).ToString() + "_dados";
-                                plots_AI =  asm_plots.CreateInstance( plots_class_nome );
-                                plots_AIs[ _index_slot_plots ] = plots_AI;
+                if( plots_AI != null )
+                        {  return plots_AI ;}
 
-                        }
 
+                int plot_id = plots_ids[ _index_slot_plots ];
+                return Pegar_AI_plots_NAO_CARREGADO( plot_id );
+
+
+        }
+
+
+        public System.Object Pegar_AI_plots_NAO_CARREGADO ( int _index_slot_plots ){
+
+                string plots_class_nome =  ( ( Plot_nome ) plots_ids[ _index_slot_plots ] ).ToString() + "_dados";
+                plots_AI =  asm_plots.CreateInstance( plots_class_nome );
+                plots_AIs[ _index_slot_plots ] = plots_AI;
+                System.Object plots_AI =  plots_AIs[ _index_slot_plots ];
+                
                 return plots_AI;
 
         }
+        
+
 
 
         public Dados_containers_plot Pegar_containers_plot ( int _index_slot_plots ){
@@ -75,19 +85,32 @@ public class Gerenciador_dados_dinamicos_plots {
                 
                 Dados_containers_plot plots_containers =  dados_containers_plot[ _index_slot_plots ];
 
-                if( plots_containers == null )
-                        {
-                                
-                                string plots_nome = ( ( Plot_nome ) plots_ids[ _index_slot_plots ] ).ToString() ;
-                                string path_dados = Paths_sistema.path_dados_plots + plots_nome + "_dados.dat" ;
-                                byte[] dados_bytes = System.IO.File.ReadAllBytes( path_dados );
-                                plots_containers = Construtor_containers_plots.Construir( dados_bytes );
-                                
-                        }
+                if( plots_containers != null )
+                        {  return plots_containers; }
 
+                int personagem_id = plots_ids[ _index_slot_plots ];
+                return Pegar_containers_plot_NAO_CARREGADO( personagem_id ) ;
+
+        }
+
+
+        public Dados_containers_plot Pegar_containers_plot_NAO_CARREGADO( int _personagem_id ){
+
+                string plots_nome = ( ( Plot_nome ) _personagem_id ).ToString() ;
+                string path_dados = Paths_sistema.path_dados_plots + plots_nome + "_dados.dat" ;
+                byte[] dados_bytes = System.IO.File.ReadAllBytes( path_dados );
+                Dados_containers_plot plots_containers = Construtor_containers_plots.Construir( dados_bytes );
                 return plots_containers;
 
         }
+
+
+
+
+
+
+
+
 
 
 

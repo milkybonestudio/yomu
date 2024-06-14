@@ -107,6 +107,11 @@ public class Gerenciador_dados_dinamicos_personagens {
 
 
 
+        
+
+
+
+
         public void Carregar_dados_personagem_MULTITHREAD( int _personagem_id ){
 
                 

@@ -59,10 +59,12 @@ public class Controlador_personagens {
 
 
 					// ---- DADOS
-					controlador.dados_sistema_personagens_essenciais = _dados_sistema_personagens_essenciais;
-					controlador.personagens = new Personagem[ _dados_sistema_personagens_essenciais.Length ];
+					
 					controlador.gerenciador_save = new Gerenciador_save_personagens( controlador );
 					controlador.gerenciador_dados_dinamicos = new Gerenciador_dados_dinamicos_personagens();
+
+					controlador.dados_sistema_personagens_essenciais = _dados_sistema_personagens_essenciais;
+					controlador.personagens = new Personagem[ _dados_sistema_personagens_essenciais.Length ];
 
 					controlador.personagens_pentendes_para_adicionar =  _dados_sistema_estado_atual.personagens_pentendes_para_adicionar;
 					controlador.personagens_pentendes_para_adicionar_local =  _dados_sistema_estado_atual.personagens_pentendes_para_adicionar_local;

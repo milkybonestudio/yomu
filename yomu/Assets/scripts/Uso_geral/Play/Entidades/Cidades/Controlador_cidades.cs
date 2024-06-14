@@ -36,10 +36,14 @@ public class Controlador_cidades {
                 controlador.gerenciador_dados_dinamicos = new Gerenciador_dados_dinamicos_cidades();
 
                 controlador.dados_sistema_cidades_essenciais = _dados_sistema_cidades_essenciais;
+				controlador.cidades = new Cidade[ _dados_sistema_cidades_essenciais.Length ];
 
                 controlador.player_cidade_id = _dados_sistema_estado_atual.cidade_player_id;
                 controlador.cidades_adjacentes_cidade_player = _dados_sistema_estado_atual.cidades_adjacentes_cidade_player_ids;
-                controlador.cidades_relacionadas_cidade_player = _dados_sistema_estado_atual.cidades_relacionadas_cidade_player_ids;
+                controla
+
+
+    }dor.cidades_relacionadas_cidade_player = _dados_sistema_estado_atual.cidades_relacionadas_cidade_player_ids;
 
                 controlador.cidade_segundo_plano_foco_id = _dados_sistema_estado_atual.segundo_plano_cidade_foco_id;
                 controlador.segundo_plano_cidades_relacionadas_ids = _dados_sistema_estado_atual.segundo_plano_cidades_relacionadas_ids;
@@ -53,67 +57,70 @@ public class Controlador_cidades {
                         int cidade_id = controlador.cidades_ativas[ index_cidade_ativa ]; 
 
                         // --- CONSTRUIR
-                        Cidade cidade_para_adicionar = Criar_cidade( plano_id, cidade_id );
-                        controlador.gerenciador_save.instrucoes_cidades[ cidade_id ]  = new byte[ 50 ][];
-                        controlador.cidades [ cidade_id ] = nova_cidade; 
-                        controlador.dados_sistema_cidades[ index_cidade_ativa ] = cidade_para_adicionar.gerenciador_dados_sistema.Pegar_dados();
+                       	Adicionar_cidade_INICIO_JOGO( plano_id, cidade_id , index_cidade_ativa );
 
                         continue;
 
                 }
 				 
                 
-                
+            
 
             instancia = controlador;
             return controlador;
 
 
-    }
 
 
+        public void Adicionar_cidade_INICIO_JOGO( int _plano_para_adicionar_id,  int _cidade_id, int _index_dados_sistema ){
+
+                        // --- CRIA cidade 
+                        Dados_sistema_cidade_essenciais dados_sistema_cidade_essenciais = dados_sistema_cidades_essenciais[ _cidade_id ];
+                        System.Object cidade_AI =   gerenciador_dados_dinamicos.Pegar_AI_cidade_NAO_CARREGADO( _cidade_id );
+                        Dados_containers_cidade dados_containers_cidades = gerenciador_dados_dinamicos.Pegar_AI_cidade_NAO_CARREGADO( _cidade_id );
+
+                        Cidade cidade_para_adicionar =  Construtor_cidade.Construir( _cidade_id, _plano_para_adicionar_id, dados_sistema_cidade_essenciais,  dados_containers_cidades, cidade_AI );
+
+                        // --- COLOCA DADOS CONTAINERS 
+                        cidades [ _cidade_id ] = cidade_para_adicionar; 
+                        dados_sistema_cidades[ _index_dados_sistema ] = cidade_para_adicionar.gerenciador_dados_sistema.Pegar_dados();
+
+                        // ---- CRIA SLOT INSTRUCOES
+                        gerenciador_save.instrucoes_cidades[ _cidade_id ]  = new byte[ 50 ][];
+
+                        return;
+
+        }
 
 
+        
 
-		public void Adicionar_cidade( int _plano_para_adicionar_id,  int _cidade_id )  {
+        public void Adicionar_cidade( int _plano_para_adicionar_id,  int _cidade_id )  {
 
-			Cidade cidade_para_adicionar = Criar_cidade(  _plano_para_adicionar_id,  _cidade_id );
+                        // --- CRIA cidade
+                        
+                        int cidade_slot = gerenciador_dados_dinamicos.Pegar_slot_cidade( _cidade_id );
 
-			cidades [ _cidade_id ] = cidade_para_adicionar; 
-			INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref cidades_ativas , _cidade_id );
+                        System.Object cidade_AI =   gerenciador_dados_dinamicos.Pegar_AI_cidade( cidade_slot );
+                        Dados_containers_cidade dados_containers_cidades = gerenciador_dados_dinamicos.Pegar_containers_cidade( cidade_slot );
+                        Dados_sistema_cidade_essenciais dados_sistema_cidade_essenciais = dados_sistema_cidades_essenciais[ _cidade_id ];
 
-			// ---- CRIA SLOT INSTRUCOES
-			gerenciador_save.instrucoes_cidades[ _cidade_id ]  = new byte[ 50 ][];
+                        cidade cidade_para_adicionar =  Construtor_cidade.Construir( _cidade_id, _plano_para_adicionar, dados_sistema_cidade_essenciais,  dados_containers_cidades, cidade_AI );
 
-			return;
+                        // --- COLOCA DADOS CONTAINERS 
 
-		}
+                        cidades [ _cidade_id ] = cidade_para_adicionar; 
+                        int index_slot_cidade = INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref cidades_ativos , _cidade_id );
+                        dados_sistema_cidades[ index_slot_cidade ] = cidade_para_adicionar.gerenciador_dados_sistema.Pegar_dados();
 
+                        // ---- CRIA SLOT INSTRUCOES
+                        gerenciador_save.instrucoes_cidades[ _cidade_id ]  = new byte[ 50 ][];
 
+                        return;
 
-		public cidade Criar_cidade (  int _plano_para_adicionar_id,  int _cidade_id ){
-
-				// ** quando iniciar vai pegar tudo na main thread 
-
-
-				// ** para um cidade entrar na cidade do player ele precisa primeiro ser carregado em segundo plano => ele já vai estar carregado 
-				// mas essa funcao garante que o cidade vai ser criado e define um plano
-				// 
-				// nao vai ser chamado com frequencia
-
-	
-				int cidade_slot = gerenciador_dados_dinamicos.Pegar_slot_cidade( _cidade_id );
-
-				System.Object cidade_AI =   gerenciador_dados_dinamicos.Pegar_AI_cidade( cidade_slot );
-				Dados_containers_cidade dados_containers_cidades = gerenciador_dados_dinamicos.Pegar_containers_cidade( cidade_slot );
-				Dados_sistema_cidade_essenciais dados_sistema_cidade_essenciais = dados_sistema_cidades_essenciais[ _cidade_id ];
-
-				cidade nova_cidade =  Construtor_cidade.Construir( _cidade_id, _plano_para_adicionar, dados_sistema_cidade_essenciais,  dados_containers_cidades, cidade_AI );
-				
-				return;
+        }
 
 
-		}
 
 
 
@@ -145,6 +152,48 @@ public class Controlador_cidades {
 
 
 		}
+
+
+
+	
+
+
+
+
+			public void Desativar_cidade( int _personagem_id ){
+
+				// ** tem que fazer os calculos la 
+
+				// MOVE PARA A LIXEIRA
+
+				Personagem personagem = personagens[ _personagem_id ];
+
+				if( personagem == null )
+					{ throw new Exception( "nao tinha personagem para excluir" ); }
+
+				
+
+
+				if ( ! ( INT.Tem_valor_no_array( personagens_ativos, _personagem_id ) ) )
+					{ 
+						// -- PERSONAGEM NAO ESTAVA ATIVO
+						throw new Exception(  $" Foi excluir o personagem <color=red>{ (( Personagem_nome )_personagem_id ).ToString() } </color>"  );
+					}
+
+				
+				gerenciador_save.Colocar_personagem_na_lixeira( personagem );
+
+				INT.Tirar_valor_COMPLETO_GARANTIDO( ref personagens_ativos , _personagem_id );
+				personagens[ _personagem_id ] = null;
+				return;
+
+
+		}
+
+
+
+
+
 
 
 

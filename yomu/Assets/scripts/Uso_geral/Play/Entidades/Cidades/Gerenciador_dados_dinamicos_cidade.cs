@@ -43,22 +43,30 @@ public class Gerenciador_dados_dinamicos_cidades {
                                 requisicoes_cidades[ _index_slot_cidades] = null; 
                         }
                 
-
                 System.Object cidades_AI =  cidades_AIs[ _index_slot_cidades ];
                 
-                if( cidades_AI == null )
-                        {       
-                                // nao nao conseguiu pegar na multithread, vai forçar na main 
-                                
-                                string cidades_class_nome =  ( ( Cidade_nome ) cidades_ids[ _index_slot_cidades ] ).ToString() + "_dados";
-                                cidades_AI =  asm_cidades.CreateInstance( cidades_class_nome );
-                                cidades_AIs[ _index_slot_cidades ] = cidades_AI;
+                if( cidades_AI != null )
+                        {  return cidades_AI ; }
 
-                        }
+                int cidade_id = cidades_ids[ _index_slot_cidades ];
+                return Pegar_AI_cidades_NAO_CARREGADO( cidade_id );
 
+        }
+
+        public System.Object Pegar_AI_cidades_NAO_CARREGADO ( int _personagem_id ){
+
+                
+                string cidades_class_nome =  ( ( Cidade_nome ) _personagem_id ).ToString() + "_dados";
+                cidades_AI =  asm_cidades.CreateInstance( cidades_class_nome );
+                cidades_AIs[ _index_slot_cidades ] = cidades_AI;
+                System.Object cidades_AI =  cidades_AIs[ _index_slot_cidades ];
+                
                 return cidades_AI;
 
         }
+
+
+
 
 
         public Dados_containers_cidade Pegar_containers_cidades ( int _index_slot_cidades ){
@@ -88,6 +96,24 @@ public class Gerenciador_dados_dinamicos_cidades {
                 return cidades_containers;
 
         }
+
+
+
+        public Dados_containers_cidade Pegar_containers_cidades_NAO_CARREGADO ( int _personagem_id ){
+
+ 
+                string cidades_nome = Paths_sistema.path_save ( ( Cidade_nome ) cidades_ids[ _index_slot_cidades ] ).ToString() ;
+                string path_dados = Paths_sistema.path_dados_cidades + cidades_nome + "_dados.dat" ;
+                byte[] dados_bytes = System.IO.File.ReadAllBytes( path_dados );
+                cidades_containers = Construtor_containers_cidades.Construir( dados_bytes );
+                
+                Dados_containers_cidade cidades_containers =  dados_containers_cidades[ _index_slot_cidades ];
+                return cidades_containers;
+
+
+        }
+
+
 
 
 

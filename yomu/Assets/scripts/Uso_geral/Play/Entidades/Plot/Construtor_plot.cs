@@ -13,8 +13,6 @@ public static class Construtor_plot {
 
 				Plot plot = new Plot( _plot_id );
 
-
-
 				return plot;
 
 		}

@@ -50,10 +50,7 @@ public class Controlador_plots {
                                 int plot_id = controlador.plots_ativos[ index_plot_ativo ]; 
 
                                 // --- CONSTRUIR
-                                Plot plot_para_adicionar = Criar_plot( plano_id, plot_id );
-                                controlador.gerenciador_save.instrucoes_plots[ plot_id ]  = new byte[ 50 ][];
-                                controlador.plots [ plot_id ] = novo_plot; 
-                                controlador.dados_sistema_plots[ index_plot_ativo ] = plot_para_adicionar.gerenciador_dados_sistema.Pegar_dados();
+                                Adicionar_plot_INICIO_JOGO( plano_id, plano_id , index_plot_ativo, index_plot_ativo );
 
                                 continue;
 
@@ -64,8 +61,6 @@ public class Controlador_plots {
 
 
         }
-
-
 
 
 
