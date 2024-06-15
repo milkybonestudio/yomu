@@ -87,7 +87,7 @@ public class Gerenciador_dados_dinamicos_personagens {
                 if( personagem_containers != null )
                         { return personagem_containers; }
 
-                int personagem_id = personagens_ids[ _index_slot_personagem ]
+                int personagem_id = personagens_ids[ _index_slot_personagem ];
                 return Pegar_containers_personagem_NAO_CARREGADO( personagem_id );
 
         }

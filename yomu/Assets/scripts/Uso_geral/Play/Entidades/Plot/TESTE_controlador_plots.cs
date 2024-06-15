@@ -17,7 +17,7 @@ public static class TESTE_controlador_plots {
 
             
                 Controlador_plots.instancia = controlador;
-                return controlador;     
+                return;     
 
     }
 

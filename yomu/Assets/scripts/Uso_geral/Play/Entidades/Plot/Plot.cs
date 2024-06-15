@@ -12,6 +12,7 @@ public class Plot {
     }
 
     public Gerenciador_personagens_indeividuais_plots gerenciador_personagens_indeividuais_plosts;
+    public Gerenciador_AI_plot gerenciador_AI_plot;
     public Gerenciador_containers_dados_plot gerenciador_containers_dados_plot;
     public Gerenciador_dados_sistema_plot gerenciador_dados_sistema;
     public int plot_id;

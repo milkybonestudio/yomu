@@ -31,7 +31,7 @@ public class Gerenciador_dados_dinamicos_plots {
         public Task_req[] requisicoes_plots = new Task_req[ 50 ];
 
 
-        public System.Object Pegar_AI_plots  ( int _index_slot_plots ){
+        public System.Object Pegar_AI_plot  ( int _index_slot_plots ){
 
                 // ** tem que pegar slot antes
                 // se nao foi carregado vai forçar para carregar na main
@@ -51,13 +51,13 @@ public class Gerenciador_dados_dinamicos_plots {
 
 
                 int plot_id = plots_ids[ _index_slot_plots ];
-                return Pegar_AI_plots_NAO_CARREGADO( plot_id );
+                return Pegar_AI_plot_NAO_CARREGADO( plot_id );
 
 
         }
 
 
-        public System.Object Pegar_AI_plots_NAO_CARREGADO ( int _index_slot_plots ){
+        public System.Object Pegar_AI_plot_NAO_CARREGADO ( int _index_slot_plots ){
 
                 string plots_class_nome =  ( ( Plot_nome ) plots_ids[ _index_slot_plots ] ).ToString() + "_dados";
                 plots_AI =  asm_plots.CreateInstance( plots_class_nome );
@@ -97,7 +97,7 @@ public class Gerenciador_dados_dinamicos_plots {
         public Dados_containers_plot Pegar_containers_plot_NAO_CARREGADO( int _personagem_id ){
 
                 string plots_nome = ( ( Plot_nome ) _personagem_id ).ToString() ;
-                string path_dados = Paths_sistema.path_dados_plots + plots_nome + "_dados.dat" ;
+                string path_dados = Paths_sistema.path_dados_plots + "/" + plots_nome + "_dados.dat" ;
                 byte[] dados_bytes = System.IO.File.ReadAllBytes( path_dados );
                 Dados_containers_plot plots_containers = Construtor_containers_plots.Construir( dados_bytes );
                 return plots_containers;
@@ -221,7 +221,7 @@ public class Gerenciador_dados_dinamicos_plots {
         // ---- funcoes suporte
 
 
-        public int Pegar_slot_plots( int _plots_id ){
+        public int Pegar_slot_plot( int _plots_id ){
         
                 for( int plots_slot_index = 0 ; plots_slot_index < plots_ids.Length ; plots_slot_index++ ){
 

@@ -42,17 +42,22 @@ public class Dados_sistema_estado_atual {
 		// --- CIDADES
 
 		public int cidade_player_id;
-		public int[] cidades_adjacentes_cidade_player_ids;
-		public int[] cidades_relacionadas_cidade_player_ids;
+		// public int[] cidades_adjacentes_cidade_player_ids;
+		// public int[] cidades_relacionadas_cidade_player_ids;
 
 		public int segundo_plano_cidade_foco_id;
-		public int[] segundo_plano_cidades_adjacentes_ids;
-		public int[] segundo_plano_cidades_relacionadas_ids;
+		// public int[] segundo_plano_cidades_adjacentes_ids;
+		// public int[] segundo_plano_cidades_relacionadas_ids;
+
+		public int[] cidades_segundo_plano_ativas_adjacentes;
+		public int[] cidades_segundo_plano_pentendes_para_adicionar;
+		public int[] cidades_segundo_plano_pentendes_para_adicionar_tempo;
 
 
 		// --- PLOTS
 
 		public int[] plots_ativos_ids;
+		public int[] plots_ativos_planos;
 		public int[] plots_pentendes_para_adicionar;
 		public int[] plots_pentendes_para_adicionar_tempo;
 		

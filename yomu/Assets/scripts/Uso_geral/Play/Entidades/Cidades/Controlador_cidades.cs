@@ -18,56 +18,73 @@ public class Controlador_cidades {
     public Cidade[] cidades;
 
     // ** talvez elas se cruzem cruzem 
-    public int player_cidade_id;
-    public int[] cidades_adjacentes_cidade_player;
-    public int[] cidades_relacionadas_cidade_player;
+    public int player_cidade_id; // sempre primeiro plano
+    public int cidade_segundo_plano_foco_id; // sempre segundo_plano
 
 
-    public int cidade_segundo_plano_foco_id;
-    public int[] segundo_plano_cidades_adjacentes_ids;
-    public int[] segundo_plano_cidades_relacionadas_ids;
+	public int[] cidades_segundo_plano_ativas_adjacentes; // sempre segundo_plano // adjacentes podem ser gograficas ou de importancia
+
+
+    // public int[] cidades_adjacentes_cidade_player;
+    // public int[] cidades_relacionadas_cidade_player;
+    // public int[] segundo_plano_cidades_adjacentes_ids;
+    // public int[] segundo_plano_cidades_relacionadas_ids;
+
+
+	public int[] cidades_segundo_plano_pentendes_para_adicionar;
+	public int[] cidades_segundo_plano_pentendes_para_adicionar_tempo;
+
 
     public static Controlador_cidades Construir( Dados_sistema_cidade_essenciais[] _dados_sistema_cidades_essenciais , Dados_sistema_estado_atual _dados_sistema_estado_atual ) {
 
+
             Controlador_cidades controlador = new Controlador_cidades();
 
+					controlador.gerenciador_save = new Gerenciador_save_cidades( controlador );
+					controlador.gerenciador_dados_dinamicos = new Gerenciador_dados_dinamicos_cidades();
 
-                controlador.gerenciador_save = new Gerenciador_save_cidades( controlador );
-                controlador.gerenciador_dados_dinamicos = new Gerenciador_dados_dinamicos_cidades();
+					controlador.dados_sistema_cidades_essenciais = _dados_sistema_cidades_essenciais;
+					controlador.cidades = new Cidade[ _dados_sistema_cidades_essenciais.Length ];
 
-                controlador.dados_sistema_cidades_essenciais = _dados_sistema_cidades_essenciais;
-				controlador.cidades = new Cidade[ _dados_sistema_cidades_essenciais.Length ];
+					controlador.player_cidade_id = _dados_sistema_estado_atual.cidade_player_id;
+					//controlador.cidades_adjacentes_cidade_player = _dados_sistema_estado_atual.cidades_adjacentes_cidade_player_ids;
+				
+					//controlador.cidades_relacionadas_cidade_player = _dados_sistema_estado_atual.cidades_relacionadas_cidade_player_ids;
 
-                controlador.player_cidade_id = _dados_sistema_estado_atual.cidade_player_id;
-                controlador.cidades_adjacentes_cidade_player = _dados_sistema_estado_atual.cidades_adjacentes_cidade_player_ids;
-                controla
+					controlador.cidade_segundo_plano_foco_id = _dados_sistema_estado_atual.segundo_plano_cidade_foco_id;
+					// controlador.segundo_plano_cidades_relacionadas_ids = _dados_sistema_estado_atual.segundo_plano_cidades_relacionadas_ids;
+					// controlador.segundo_plano_cidades_adjacentes_ids = _dados_sistema_estado_atual.segundo_plano_cidades_adjacentes_ids;
 
+					controlador.cidades_segundo_plano_pentendes_para_adicionar = _dados_sistema_estado_atual.cidades_segundo_plano_pentendes_para_adicionar;
+					controlador.cidades_segundo_plano_pentendes_para_adicionar_tempo = _dados_sistema_estado_atual.cidades_segundo_plano_pentendes_para_adicionar_tempo;
+					controlador.cidades_segundo_plano_ativas_adjacentes = _dados_sistema_estado_atual.cidades_segundo_plano_ativas_adjacentes;
+					
+					controlador.Adicionar_cidade_INICIO_JOGO( ( int ) Plano.primeiro, controlador.player_cidade_id , 0 );
+					controlador.Adicionar_cidade_INICIO_JOGO( ( int ) Plano.segundo, controlador.cidade_segundo_plano_foco_id , 1 );
+					int index_inicial = 2;
 
-    }dor.cidades_relacionadas_cidade_player = _dados_sistema_estado_atual.cidades_relacionadas_cidade_player_ids;
+					for( int cidade_ativa_index = ( 0 + index_inicial ) ; cidade_ativa_index < controlador.cidades_ativas_adjacentes.Length ; cidade_ativa_index++ ){
 
-                controlador.cidade_segundo_plano_foco_id = _dados_sistema_estado_atual.segundo_plano_cidade_foco_id;
-                controlador.segundo_plano_cidades_relacionadas_ids = _dados_sistema_estado_atual.segundo_plano_cidades_relacionadas_ids;
-                controlador.segundo_plano_cidades_adjacentes_ids = _dados_sistema_estado_atual.segundo_plano_cidades_adjacentes_ids;
+								// --- todas segundo plano 
+								// --- PEGAR ID
+								int cidade_id = controlador.cidades_ativas_adjacentes[ index_cidade_ativa ]; 
 
-               
-                for( int index_cidade_ativa = 0 ; index_cidade_ativa < cidades_ativas_planos.Length ; index_cidade_ativa++){
+								// --- CONSTRUIR
+								controlador.Adicionar_cidade_INICIO_JOGO( Plano.segundo, cidade_id , cidade_ativa_index );
+							
+								continue;
 
-                        // --- PEGAR IDS
-                        int plano_id = cidades_ativas_planos[ index_cidade_ativa ];
-                        int cidade_id = controlador.cidades_ativas[ index_cidade_ativa ]; 
+					}
 
-                        // --- CONSTRUIR
-                       	Adicionar_cidade_INICIO_JOGO( plano_id, cidade_id , index_cidade_ativa );
-
-                        continue;
-
-                }
-				 
-                
-            
-
+				
+					
             instancia = controlador;
             return controlador;
+
+		}
+
+
+		add cidade (      )
 
 
 
@@ -77,7 +94,7 @@ public class Controlador_cidades {
                         // --- CRIA cidade 
                         Dados_sistema_cidade_essenciais dados_sistema_cidade_essenciais = dados_sistema_cidades_essenciais[ _cidade_id ];
                         System.Object cidade_AI =   gerenciador_dados_dinamicos.Pegar_AI_cidade_NAO_CARREGADO( _cidade_id );
-                        Dados_containers_cidade dados_containers_cidades = gerenciador_dados_dinamicos.Pegar_AI_cidade_NAO_CARREGADO( _cidade_id );
+                        Dados_containers_cidade dados_containers_cidades = gerenciador_dados_dinamicos.Pegar_containers_cidade_NAO_CARREGADO( _cidade_id );
 
                         Cidade cidade_para_adicionar =  Construtor_cidade.Construir( _cidade_id, _plano_para_adicionar_id, dados_sistema_cidade_essenciais,  dados_containers_cidades, cidade_AI );
 
@@ -93,30 +110,34 @@ public class Controlador_cidades {
         }
 
 
+		
         
 
         public void Adicionar_cidade( int _plano_para_adicionar_id,  int _cidade_id )  {
 
-                        // --- CRIA cidade
-                        
-                        int cidade_slot = gerenciador_dados_dinamicos.Pegar_slot_cidade( _cidade_id );
+					// sempre adiciona uma cidade como segundo plano?
+					// nao, o player pode fazer uma viagem longa que pula cidades 
 
-                        System.Object cidade_AI =   gerenciador_dados_dinamicos.Pegar_AI_cidade( cidade_slot );
-                        Dados_containers_cidade dados_containers_cidades = gerenciador_dados_dinamicos.Pegar_containers_cidade( cidade_slot );
-                        Dados_sistema_cidade_essenciais dados_sistema_cidade_essenciais = dados_sistema_cidades_essenciais[ _cidade_id ];
+					// --- CRIA cidade
+					
+					int cidade_slot = gerenciador_dados_dinamicos.Pegar_slot_cidade( _cidade_id );
 
-                        cidade cidade_para_adicionar =  Construtor_cidade.Construir( _cidade_id, _plano_para_adicionar, dados_sistema_cidade_essenciais,  dados_containers_cidades, cidade_AI );
+					System.Object cidade_AI =   gerenciador_dados_dinamicos.Pegar_AI_cidade( cidade_slot );
+					Dados_containers_cidade dados_containers_cidades = gerenciador_dados_dinamicos.Pegar_containers_cidade( cidade_slot );
+					Dados_sistema_cidade_essenciais dados_sistema_cidade_essenciais = dados_sistema_cidades_essenciais[ _cidade_id ];
 
-                        // --- COLOCA DADOS CONTAINERS 
+					Cidade cidade_para_adicionar =  Construtor_cidade.Construir( _cidade_id, _plano_para_adicionar_id, dados_sistema_cidade_essenciais,  dados_containers_cidades, cidade_AI );
 
-                        cidades [ _cidade_id ] = cidade_para_adicionar; 
-                        int index_slot_cidade = INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref cidades_ativos , _cidade_id );
-                        dados_sistema_cidades[ index_slot_cidade ] = cidade_para_adicionar.gerenciador_dados_sistema.Pegar_dados();
+					// --- COLOCA DADOS CONTAINERS 
 
-                        // ---- CRIA SLOT INSTRUCOES
-                        gerenciador_save.instrucoes_cidades[ _cidade_id ]  = new byte[ 50 ][];
+					cidades [ _cidade_id ] = cidade_para_adicionar; 
+					int index_slot_cidade = INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref cidades_ativos_adjacentes , _cidade_id );
+					dados_sistema_cidades[ index_slot_cidade ] = cidade_para_adicionar.gerenciador_dados_sistema.Pegar_dados();
 
-                        return;
+					// ---- CRIA SLOT INSTRUCOES
+					gerenciador_save.instrucoes_cidades[ _cidade_id ]  = new byte[ 50 ][];
+
+					return;
 
         }
 
@@ -127,13 +148,15 @@ public class Controlador_cidades {
 
 		public void Carregar_dados_cidade( int _cidade_id , int _periodos_para_iniciar, int _local_para_colocar ){
 
+			
 
-			cidade cidade_na_lixeira = gerenciador_save.Retirar_cidade_da_lixeira( _cidade_id );
+
+			Cidade cidade_na_lixeira = gerenciador_save.Retirar_cidade_da_lixeira( _cidade_id );
 
 			if( cidade_na_lixeira != null )
 				{
 					#if UNITY_EDITOR
-						Debug.Log( $"cidade <color=red> { ((cidade_nome ) _cidade_id).ToString()  } </color> foi tirado da lixeira e vai ser colocado em dados dinamicos" );
+						Console.Log( $"cidade <color=red> { ((cidade_nome ) _cidade_id).ToString()  } </color> foi tirado da lixeira e vai ser colocado em dados dinamicos" );
 					#endif
 					int slot =  gerenciador_dados_dinamicos.Criar_slot_cidade( _cidade_id );
 					gerenciador_dados_dinamicos.cidades_AIs[ slot ] = cidade_na_lixeira.gerenciador_AI_cidade.cidade_AI;
@@ -145,7 +168,6 @@ public class Controlador_cidades {
 				}
 
 			INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref cidades_pentendes_para_adicionar , _cidade_id );
-			INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref cidades_pentendes_para_adicionar_local , _local_para_colocar );
 			INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref cidades_pentendes_para_adicionar_tempo , _periodos_para_iniciar );
 
 			return;
@@ -166,26 +188,28 @@ public class Controlador_cidades {
 
 				// MOVE PARA A LIXEIRA
 
-				Personagem personagem = personagens[ _personagem_id ];
+				// ** PENSAR DEPOIS
 
-				if( personagem == null )
-					{ throw new Exception( "nao tinha personagem para excluir" ); }
+				// Personagem personagem = personagens[ _personagem_id ];
 
-				
-
-
-				if ( ! ( INT.Tem_valor_no_array( personagens_ativos, _personagem_id ) ) )
-					{ 
-						// -- PERSONAGEM NAO ESTAVA ATIVO
-						throw new Exception(  $" Foi excluir o personagem <color=red>{ (( Personagem_nome )_personagem_id ).ToString() } </color>"  );
-					}
+				// if( personagem == null )
+				// 	{ throw new Exception( "nao tinha personagem para excluir" ); }
 
 				
-				gerenciador_save.Colocar_personagem_na_lixeira( personagem );
 
-				INT.Tirar_valor_COMPLETO_GARANTIDO( ref personagens_ativos , _personagem_id );
-				personagens[ _personagem_id ] = null;
-				return;
+
+				// if ( ! ( INT.Tem_valor_no_array( cidade_ativas, _personagem_id ) ) )
+				// 	{ 
+				// 		// -- PERSONAGEM NAO ESTAVA ATIVO
+				// 		throw new Exception(  $" Foi excluir o personagem <color=red>{ (( Personagem_nome )_personagem_id ).ToString() } </color>"  );
+				// 	}
+
+				
+				// gerenciador_save.Colocar_personagem_na_lixeira( personagem );
+
+				// INT.Tirar_valor_COMPLETO_GARANTIDO( ref personagens_ativos , _personagem_id );
+				// personagens[ _personagem_id ] = null;
+				// return;
 
 
 		}

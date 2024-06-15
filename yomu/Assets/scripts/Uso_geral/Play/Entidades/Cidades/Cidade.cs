@@ -22,6 +22,11 @@ public class Gerenciador_dados_sistema_cidade{
 
 public class Cidade {
 
+    public Cidade( int _cidade_id ){
+        cidade_id = _cidade_id;
+
+    }
+
     public int cidade_id;
     public Gerenciador_containers_dados_cidade gerenciador_containers_dados_cidade;
     public Gerenciador_dados_sistema_cidade gerenciador_dados_sistema;

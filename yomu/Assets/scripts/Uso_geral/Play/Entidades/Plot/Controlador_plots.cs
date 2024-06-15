@@ -19,6 +19,7 @@ public class Controlador_plots {
         public Plot[] plots;
 
         public int[] plots_ativos_ids;
+        public int[] plots_ativos_planos;
 
         // plot nao tem lugar ou plano. 
         // eles geralmente sao menores e precisam ser excluidos rapidamente para nao gastar muita memoria
@@ -37,13 +38,14 @@ public class Controlador_plots {
 
                         controlador.dados_sistema_plots_essenciais = _dados_sistema_plots_essenciais;
                         controlador.plots_ativos_ids = _dados_sistema_estado_atual.plots_ativos_ids;
+                        controlador.plots_ativos_ids = _dados_sistema_estado_atual.plots_ativos_planos;
                         controlador.plots_pentendes_para_adicionar = _dados_sistema_estado_atual.plots_pentendes_para_adicionar;
                         controlador.plots_pentendes_para_adicionar_tempo = _dados_sistema_estado_atual.plots_pentendes_para_adicionar_tempo;
 
                         controlador.dados_sistema_plots = new Dados_sistema_plot[ controlador.plots_ativos_ids.Length ] ;
 
 
-                        for( int index_plot_ativo = 0 ; index_plot_ativo < plots_ativos_planos.Length ; index_plot_ativo++){
+                        for( int index_plot_ativo = 0 ; index_plot_ativo < controlador.plots_ativos_planos.Length ; index_plot_ativo++){
 
                                 // --- PEGAR IDS
                                 int plano_id = plots_ativos_planos[ index_plot_ativo ];
@@ -72,7 +74,7 @@ public class Controlador_plots {
                         System.Object plot_AI =   gerenciador_dados_dinamicos.Pegar_AI_plot_NAO_CARREGADO( _plot_id );
                         Dados_containers_plot dados_containers_plots = gerenciador_dados_dinamicos.Pegar_AI_plot_NAO_CARREGADO( _plot_id );
 
-                        Plot plot_para_adicionar =  Construtor_plot.Construir( _plot_id, _plano_para_adicionar, dados_sistema_plot_essenciais,  dados_containers_plots, plot_AI );
+                        Plot plot_para_adicionar =  Construtor_plot.Construir( _plano_para_adicionar_id, _plano_para_adicionar, dados_sistema_plot_essenciais,  dados_containers_plots, plot_AI );
 
                         // --- COLOCA DADOS CONTAINERS 
                         plots [ _plot_id ] = plot_para_adicionar; 
@@ -98,7 +100,7 @@ public class Controlador_plots {
                         Dados_containers_plot dados_containers_plots = gerenciador_dados_dinamicos.Pegar_containers_plot( plot_slot );
                         Dados_sistema_plot_essenciais dados_sistema_plot_essenciais = dados_sistema_plots_essenciais[ _plot_id ];
 
-                        plot plot_para_adicionar =  Construtor_plot.Construir( _plot_id, _plano_para_adicionar, dados_sistema_plot_essenciais,  dados_containers_plots, plot_AI );
+                        plot plot_para_adicionar =  Construtor_plot.Construir( _plano_para_adicionar_id, _plano_para_adicionar, dados_sistema_plot_essenciais,  dados_containers_plots, plot_AI );
 
                         // --- COLOCA DADOS CONTAINERS 
 
@@ -125,7 +127,7 @@ public class Controlador_plots {
                 if( plot_na_lixeira != null )
                         {
                                 #if UNITY_EDITOR
-                                        Debug.Log( $"plot <color=red> { ((plot_nome ) _plot_id).ToString()  } </color> foi tirado da lixeira e vai ser colocado em dados dinamicos" );
+                                        Console.Log( $"plot <color=red> { (( Plot_nome ) _plot_id).ToString()  } </color> foi tirado da lixeira e vai ser colocado em dados dinamicos" );
                                 #endif
                                 int slot =  gerenciador_dados_dinamicos.Criar_slot_plot( _plot_id );
                                 gerenciador_dados_dinamicos.plots_AIs[ slot ] = plot_na_lixeira.gerenciador_AI_plot.plot_AI;

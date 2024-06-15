@@ -31,7 +31,7 @@ public class Gerenciador_dados_dinamicos_cidades {
         public Task_req[] requisicoes_cidades = new Task_req[ 50 ];
 
 
-        public System.Object Pegar_AI_cidades ( int _index_slot_cidades ){
+        public System.Object Pegar_AI_cidade ( int _index_slot_cidades ){
 
                 // ** tem que pegar slot antes
                 // se nao foi carregado vai forçar para carregar na main
@@ -49,19 +49,15 @@ public class Gerenciador_dados_dinamicos_cidades {
                         {  return cidades_AI ; }
 
                 int cidade_id = cidades_ids[ _index_slot_cidades ];
-                return Pegar_AI_cidades_NAO_CARREGADO( cidade_id );
+                return Pegar_AI_cidade_NAO_CARREGADO( cidade_id );
 
         }
 
-        public System.Object Pegar_AI_cidades_NAO_CARREGADO ( int _personagem_id ){
+        public System.Object Pegar_AI_cidade_NAO_CARREGADO ( int _personagem_id ){
 
-                
                 string cidades_class_nome =  ( ( Cidade_nome ) _personagem_id ).ToString() + "_dados";
-                cidades_AI =  asm_cidades.CreateInstance( cidades_class_nome );
-                cidades_AIs[ _index_slot_cidades ] = cidades_AI;
-                System.Object cidades_AI =  cidades_AIs[ _index_slot_cidades ];
-                
-                return cidades_AI;
+                System.Object cidade_AI =  asm_cidades.CreateInstance( cidades_class_nome );
+                return cidade_AI;
 
         }
 
@@ -69,7 +65,7 @@ public class Gerenciador_dados_dinamicos_cidades {
 
 
 
-        public Dados_containers_cidade Pegar_containers_cidades ( int _index_slot_cidades ){
+        public Dados_containers_cidade Pegar_containers_cidade ( int _index_slot_cidades ){
 
                 // ** tem que pegar slot antes
                 // se nao foi carregado vai forçar para carregar 
@@ -99,15 +95,13 @@ public class Gerenciador_dados_dinamicos_cidades {
 
 
 
-        public Dados_containers_cidade Pegar_containers_cidades_NAO_CARREGADO ( int _personagem_id ){
+        public Dados_containers_cidade Pegar_containers_cidade_NAO_CARREGADO ( int _personagem_id ){
 
  
-                string cidades_nome = Paths_sistema.path_save ( ( Cidade_nome ) cidades_ids[ _index_slot_cidades ] ).ToString() ;
-                string path_dados = Paths_sistema.path_dados_cidades + cidades_nome + "_dados.dat" ;
+                string cidades_nome =  ( ( Cidade_nome ) cidades_ids[ _index_slot_cidades ] ).ToString() ;
+                string path_dados = Paths_sistema.path_dados_cidades  + "/" + cidades_nome + "_dados.dat" ;
                 byte[] dados_bytes = System.IO.File.ReadAllBytes( path_dados );
-                cidades_containers = Construtor_containers_cidades.Construir( dados_bytes );
-                
-                Dados_containers_cidade cidades_containers =  dados_containers_cidades[ _index_slot_cidades ];
+                Dados_containers_cidade cidades_containers = Construtor_containers_cidades.Construir( dados_bytes );
                 return cidades_containers;
 
 
@@ -118,7 +112,7 @@ public class Gerenciador_dados_dinamicos_cidades {
 
 
 
-        public void Carregar_dados_cidades_MULTITHREAD( int _cidades_id ){
+        public void Carregar_dados_cidade_MULTITHREAD( int _cidades_id ){
 
                 
 
@@ -138,7 +132,7 @@ public class Gerenciador_dados_dinamicos_cidades {
                 }
 
 
-                int slot_cidades = Criar_slot_cidades( _cidades_id );
+                int slot_cidades = Criar_slot_cidade( _cidades_id );
 
 
                 string cidades_nome = ( ( Cidade_nome ) cidades_ids[ slot_cidades ] ).ToString() ;
@@ -224,7 +218,7 @@ public class Gerenciador_dados_dinamicos_cidades {
         // ---- funcoes suporte
 
 
-        public int Pegar_slot_cidades( int _cidades_id ){
+        public int Pegar_slot_cidade( int _cidades_id ){
         
                 for( int cidades_slot_index = 0 ; cidades_slot_index < cidades_ids.Length ; cidades_slot_index++ ){
 
@@ -242,7 +236,7 @@ public class Gerenciador_dados_dinamicos_cidades {
 
 
 
-        public int Criar_slot_cidades( int _cidades_id ){
+        public int Criar_slot_cidade( int _cidades_id ){
 
 
         
@@ -287,7 +281,7 @@ public class Gerenciador_dados_dinamicos_cidades {
 
 
 
-        public void Remover_dados_cidades ( int _cidades_id ){
+        public void Remover_dados_cidade ( int _cidades_id ){
 
                 int slot_cidades = Pegar_slot_cidades( _cidades_id);
 
