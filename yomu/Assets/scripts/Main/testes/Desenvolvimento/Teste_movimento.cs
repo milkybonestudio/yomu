@@ -70,7 +70,7 @@ public static class Teste_movimento {
                 Posicao_geral posicao_geral = new Posicao_geral();
                 Atividade atividade = Atividade.nada;
 
-                Personagem lily = new Personagem( ( int ) Personagem_nome.Lily , posicao_geral, atividade );
+                Personagem lily = new Personagem( ( int ) Personagem_nome.Lily , posicao_geral, ( int ) atividade );
 
                 Dados_containers_personagem dados_para_construir_personagem = new Dados_containers_personagem();
                 

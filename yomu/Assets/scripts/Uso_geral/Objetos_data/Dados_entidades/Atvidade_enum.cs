@@ -1,0 +1,11 @@
+
+
+public enum Atividade {
+
+    nada
+
+}
+
+
+
+

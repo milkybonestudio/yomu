@@ -13,13 +13,16 @@ public static class Console {
 
 
         public static int index_atual = 0;
-        public static string[] logs = new string[ 50 ];
-        public static int[] logs_tipos = new int[ 50 ];
+        public static int pointer_run_time = 0;
+        public static string[] logs = new string[ 5 ];
+        public static int[] logs_tipos = new int[ 5 ];
 
         public static int index_atual_m = 0;
-        public static string[] logs_m = new string[ 50 ];
-        public static int[] logs_tipos_m = new int[ 50 ];
+        public static int pointer_run_time_m = 0;
+        public static string[] logs_m = new string[ 5 ];
+        public static int[] logs_tipos_m = new int[ 5 ];
 
+        
         public static void Log( string _txt  ){
 
                 
@@ -53,6 +56,7 @@ public static class Console {
         public static void LogError( string _txt ){
 
 
+
                 if( index_atual == logs.Length )
                     { Aumentar_length_arr(); }
 
@@ -65,17 +69,30 @@ public static class Console {
 
         }
 
+        
+
+
+
         public static void Update(){
 
-                for( int log_index = 0 ; log_index < logs.Length ; log_index++ ){
-                    
+                if( pointer_run_time == index_atual && pointer_run_time_m == index_atual_m )
+                        { return; }
+
+
+                int logs_length = logs.Length;
+                int logs_m_length = logs_m.Length;
+
+
+                Debug.Log( "length: " + ( logs_length + logs_m_length ) );
+
+                Debug.Log( "---------- MAIN -------------" );
+
+                for( int log_index = pointer_run_time ; log_index < logs_length ; log_index++ ){
+                        
                         string texto = logs[ log_index ];
                         int tipo = logs_tipos[ log_index ];
                         if( texto == null )
                             { break; }
-
-                        logs[ log_index ] = null;
-                        logs_tipos[ log_index ] = 0;
                         if(tipo == 1 )
                                 {
                                         Debug.Log( texto );
@@ -89,8 +106,37 @@ public static class Console {
 
                 }
 
-                index_atual = 0;
+                pointer_run_time += logs_length;
 
+                Debug.Log( "------------------------------" );
+                Debug.Log( "" );
+                Debug.Log( "" );
+                Debug.Log( "---------- MULTI -------------" );
+
+
+                for( int log_m_index = index_atual_m ; log_m_index < logs_m_length ; log_m_index++ ){
+                    
+                        string texto = logs[ log_m_index ];
+                        int tipo = logs_tipos[ log_m_index ];
+                        if( texto == null )
+                            { break; }
+                        if(tipo == 1 )
+                                {
+                                        Debug.Log( texto );
+                                }
+                                else
+                                {
+                                        Debug.LogError( texto );
+                                }
+                        
+                        continue;
+
+                }
+
+                pointer_run_time_m += logs_m_length;
+                Debug.Log( "------------------------------" );
+
+                
                 return;
             
         }

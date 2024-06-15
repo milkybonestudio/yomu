@@ -19,12 +19,23 @@ public class Dados_sistema_personagem_essenciais {
         // public Personagem_nome nome_personagem;
 
 
-        public Posicao_geral posicao_atual_personagem;
-        public Atividade atividade_atual;
+        public long posicao_atual_personagem_long;
+
+        // Posicao 
+        public byte continente;
+        public byte reino;
+        public byte estado;
+        public short posicao_cidade_id;
+        public short regiao;
+        public short area;
+        public short ponto;
+
+
+        public int atividade_atual_id;
 
 
         public bool personagem_bloqueado = false;
-        public bool personagem_ja_foi_apresentado_ao_player;
+        public bool personagem_ja_foi_apresentado_ao_player = false;
 
     
 	

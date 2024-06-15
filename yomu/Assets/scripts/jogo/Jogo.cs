@@ -49,7 +49,7 @@ public class Jogo {
 
                         Controlador_save.Construir_teste(); 
                         Controlador_AI.Construir_teste(); 
-                        instancia.bloco_atual = Bloco.nada;
+                        jogo.bloco_atual = Bloco.nada;
 
                 instancia = jogo;
                 return jogo;

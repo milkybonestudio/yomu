@@ -33,7 +33,9 @@ public class Controlador_save {
                         esta_em_teste = true;
 
                         Controlador_save controlador = new Controlador_save(); 
-                              
+
+
+                              Paths_sistema.Colocar_save( 0 );      
                               Dados_blocos.Construir();
                               Controlador_timer.Construir_teste( null );
                               Controlador_dados_dinamicos.Construir_teste( null );
@@ -58,10 +60,7 @@ public class Controlador_save {
 
             public static Controlador_save Construir( int _save, bool _novo_jogo ){
 
-                  // ** TUDO NA MULTITHREAD
-
-                  throw new Exception( "ainda nao esta pronto" );
-
+                  return null ;
 
                   Controlador_save controlador = new Controlador_save(); 
 

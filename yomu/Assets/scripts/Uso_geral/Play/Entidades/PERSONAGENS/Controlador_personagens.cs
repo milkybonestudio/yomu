@@ -152,7 +152,7 @@ public class Controlador_personagens {
 			if( personagem_na_lixeira != null )
 				{
 					#if UNITY_EDITOR
-						Debug.Log( $"Personagem <color=red> { ((Personagem_nome ) _personagem_id).ToString()  } </color> foi tirado da lixeira e vai ser colocado em dados dinamicos" );
+						Console.Log( $"Personagem <color=red> { ((Personagem_nome ) _personagem_id).ToString()  } </color> foi tirado da lixeira e vai ser colocado em dados dinamicos" );
 					#endif
 					int slot =  gerenciador_dados_dinamicos.Criar_slot_personagem( _personagem_id );
 					gerenciador_dados_dinamicos.personagens_AIs[ slot ] = personagem_na_lixeira.gerenciador_AI.personagem_AI;
@@ -223,16 +223,16 @@ public class Controlador_personagens {
 
 
 
-		public void Mudar_plano_personagem( Plano _novo_plano_personagem , int _personagem_id ){
+		public void Mudar_plano_personagem( int _novo_plano_personagem_id , int _personagem_id ){
 
 				Personagem personagem = personagens[ _personagem_id ] ;
 
 				if( personagem == null)
 					{ throw new Exception( $"tentou mudar o plano do personagem { (( Personagem_nome )personagem.personagem_id).ToString() } mas ele nao esta iniciado"); }
 
-				if( _novo_plano_personagem == personagem.plano )
+				if( _novo_plano_personagem_id == personagem.plano_id )
 					{
-						Debug.LogError( $"tentou mudar o personagem {  (( Personagem_nome )personagem.personagem_id).ToString() } do plano { personagem.plano.ToString() } para o plano { _novo_plano_personagem.ToString() }" );
+						Console.LogError( $"tentou mudar o personagem {  (( Personagem_nome )personagem.personagem_id).ToString() } do plano { ( ( Plano ) personagem.plano_id).ToString() } para o plano { ( ( Plano ) _novo_plano_personagem_id).ToString() }" );
 						throw new Exception();
 					}
 
@@ -240,7 +240,7 @@ public class Controlador_personagens {
 				// ** ver oque precisa depois 
 				// precisa talvez instanciar os updates
 				
-				personagem.plano = _novo_plano_personagem;
+				personagem.plano_id = _novo_plano_personagem_id;
 				return;
 
 			
@@ -254,7 +254,7 @@ public class Controlador_personagens {
 			if( personagens[ _personagem_id ] == null  )
 					{ 
 						Personagem_nome personagem = ( Personagem_nome ) _personagem_id;
-						Debug.LogError( $"Sistema pediu o personagem { personagem } mas ele nao foi criado" );
+						Console.LogError( $"Sistema pediu o personagem { personagem } mas ele nao foi criado" );
 						throw new Exception( "" );
 					}
 

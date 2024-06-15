@@ -20,7 +20,7 @@ public class Controlador : MonoBehaviour {
 
 
             public Task_req task_reconstruir;
-            public bool esta_reconstruindo = false;
+            public bool esta_reconstruindo_save = false;
 
 
             // --- BLOCOS
@@ -44,9 +44,10 @@ public class Controlador : MonoBehaviour {
 
             public void Start(){
 
+                  if( Thread.CurrentThread.Name == null )
+                        { Thread.CurrentThread.Name = "Main"; }
                   Debug.Log(Thread.CurrentThread.Name);
-
-                  return;
+                  
 
                   canvas = GameObject.Find( "Tela/Canvas" );
 
@@ -94,12 +95,13 @@ public class Controlador : MonoBehaviour {
 
             public void Update() {
 
-                  Console.Log( "aa" );
+
+                  //Console.Log( "aa" );
                   Console.Update();
 
                   return;
                   
-                  if( esta_reconstruindo )
+                  if( esta_reconstruindo_save )
                         { return ; }  
 
 
@@ -133,7 +135,7 @@ public class Controlador : MonoBehaviour {
 
                   // colocar video algo deu errado, um momento
 
-                  while( esta_reconstruindo ){ yield return null; }
+                  while( esta_reconstruindo_save ){ yield return null; }
                   yield break;
 
             }
@@ -160,14 +162,14 @@ public class Controlador : MonoBehaviour {
 
                               task_reconstruir.fn_finalizar = ( Task_req _req ) => {
 
-                                    esta_reconstruindo = false;
+                                    esta_reconstruindo_save = false;
                                     login = Login.Construir();
                                     return;
 
                               };
                               
                               Controlador_multithread.Pegar_instancia().Adicionar_task( task_reconstruir );
-                              esta_reconstruindo = true;
+                              esta_reconstruindo_save = true;
                               StartCoroutine( C_reconstruindo_save() );
                               return false;
                               
