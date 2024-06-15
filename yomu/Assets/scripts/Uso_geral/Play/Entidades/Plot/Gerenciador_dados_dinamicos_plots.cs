@@ -27,7 +27,7 @@ public class Gerenciador_dados_dinamicos_plots {
         
         public int[] plots_ids = new int[ 50 ];
         public System.Object[] plots_AIs = new System.Object[ 50 ];
-        public Dados_containers_plot[] dados_containers_plot = new Dados_containers_plot[ 50 ];
+        public Dados_containers_plot[] dados_containers_plots = new Dados_containers_plot[ 50 ];
         public Task_req[] requisicoes_plots = new Task_req[ 50 ];
 
 
@@ -60,10 +60,9 @@ public class Gerenciador_dados_dinamicos_plots {
         public System.Object Pegar_AI_plot_NAO_CARREGADO ( int _index_slot_plots ){
 
                 string plots_class_nome =  ( ( Plot_nome ) plots_ids[ _index_slot_plots ] ).ToString() + "_dados";
-                plots_AI =  asm_plots.CreateInstance( plots_class_nome );
+                System.Object plots_AI =  asm_plots.CreateInstance( plots_class_nome );
                 plots_AIs[ _index_slot_plots ] = plots_AI;
-                System.Object plots_AI =  plots_AIs[ _index_slot_plots ];
-                
+
                 return plots_AI;
 
         }
@@ -83,7 +82,7 @@ public class Gerenciador_dados_dinamicos_plots {
                                 requisicoes_plots[ _index_slot_plots] = null;
                         }
                 
-                Dados_containers_plot plots_containers =  dados_containers_plot[ _index_slot_plots ];
+                Dados_containers_plot plots_containers =  dados_containers_plots[ _index_slot_plots ];
 
                 if( plots_containers != null )
                         {  return plots_containers; }
@@ -115,7 +114,7 @@ public class Gerenciador_dados_dinamicos_plots {
 
 
 
-        public void Carregar_dados_plots_MULTITHREAD( int _plots_id ){
+        public void Carregar_dados_plot_MULTITHREAD( int _plots_id ){
 
                 
 
@@ -135,7 +134,7 @@ public class Gerenciador_dados_dinamicos_plots {
                 }
 
 
-                int slot_plots = Criar_slot_plots( _plots_id );
+                int slot_plots = Criar_slot_plot( _plots_id );
 
 
                 string plots_nome = ( ( Plot_nome ) plots_ids[ slot_plots ] ).ToString() ;
@@ -196,7 +195,7 @@ public class Gerenciador_dados_dinamicos_plots {
                         }
 
                         plots_AIs[ slot_plots ] = plots_AI;
-                        dados_containers_plot[ slot_plots ] = containers_plots;
+                        dados_containers_plots[ slot_plots ] = containers_plots;
 
                         return;
 
@@ -239,7 +238,7 @@ public class Gerenciador_dados_dinamicos_plots {
 
 
 
-        public int Criar_slot_plots( int _plots_id ){
+        public int Criar_slot_plot( int _plots_id ){
 
 
         
@@ -266,7 +265,7 @@ public class Gerenciador_dados_dinamicos_plots {
                 for( int index_antigo = 0 ; index_antigo < plots_ids.Length ; index_antigo++ ){
 
                         novo_inds[ index_antigo ] = plots_ids[ index_antigo ];
-                        novo_containers[ index_antigo ] = dados_containers_plot[ index_antigo ];
+                        novo_containers[ index_antigo ] = dados_containers_plots[ index_antigo ];
                         novo_AI[ index_antigo ] = plots_AIs[ index_antigo ];
 
                 }
@@ -275,7 +274,7 @@ public class Gerenciador_dados_dinamicos_plots {
 
                 plots_AIs = novo_AI;
                 plots_ids = novo_inds;
-                dados_containers_plot = novo_containers;
+                dados_containers_plots = novo_containers;
 
 
                 return index_final_livre;
@@ -284,14 +283,14 @@ public class Gerenciador_dados_dinamicos_plots {
 
 
 
-        public void Remover_dados_plots ( int _plots_id ){
+        public void Remover_dados_plot ( int _plots_id ){
 
-                int slot_plots = Pegar_slot_plots( _plots_id);
+                int slot_plots = Pegar_slot_plot( _plots_id);
 
                 
                 plots_AIs[ slot_plots ] = null;
                 plots_ids[ slot_plots ] = 0;
-                dados_containers_plot[ slot_plots ] = null;
+                dados_containers_plots[ slot_plots ] = null;
 
                 if( requisicoes_plots[ slot_plots ] != null )
                         {

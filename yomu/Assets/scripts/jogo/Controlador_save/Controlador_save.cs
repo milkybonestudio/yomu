@@ -111,7 +111,7 @@ public class Controlador_save {
 
 
                         // --- SISTEMA
-                        Controlador_dados_sistema.Construir( dados_sistema_estado_atual ); // constroi player
+                        Controlador_sistema.Construir( dados_sistema_estado_atual ); // constroi player
 
 
                         Controlador_timer.Construir( dados_sistema_estado_atual );
@@ -207,7 +207,7 @@ public class Controlador_save {
 
                         // --- SISTEMA 
 
-                        dados_entidade_para_salvar =  Controlador_dados_sistema.Pegar_instancia().gerenciador_save.Pegar_dados_sistema_para_salvar( modo_save_atual );
+                        dados_entidade_para_salvar =  Controlador_sistema.Pegar_instancia().gerenciador_save.Pegar_dados_sistema_para_salvar( modo_save_atual );
                         if( dados_entidade_para_salvar != null )
                               { 
                                     Criar_task_salvar_dados( dados_entidade_para_salvar ); 

@@ -32,7 +32,7 @@ public class Dados_sistema_estado_atual {
 		// --- PERSONAGENS
 
 		public int[] personagens_ativos_ids;
-		public int[] personagens_ativos_planos;
+		public int[] personagens_ativos_planos_ids;
 
 		public int[] personagens_pentendes_para_adicionar;
 		public int[] personagens_pentendes_para_adicionar_local;
@@ -49,7 +49,8 @@ public class Dados_sistema_estado_atual {
 		// public int[] segundo_plano_cidades_adjacentes_ids;
 		// public int[] segundo_plano_cidades_relacionadas_ids;
 
-		public int[] cidades_segundo_plano_ativas_adjacentes;
+		public int[] cidades_segundo_plano_ativas;
+
 		public int[] cidades_segundo_plano_pentendes_para_adicionar;
 		public int[] cidades_segundo_plano_pentendes_para_adicionar_tempo;
 

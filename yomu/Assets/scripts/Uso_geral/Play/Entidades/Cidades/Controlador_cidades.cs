@@ -3,6 +3,8 @@
 
 
 
+using UnityEditor;
+
 public class Controlador_cidades {
 
     public static Controlador_cidades instancia;
@@ -22,7 +24,7 @@ public class Controlador_cidades {
     public int cidade_segundo_plano_foco_id; // sempre segundo_plano
 
 
-	public int[] cidades_segundo_plano_ativas_adjacentes; // sempre segundo_plano // adjacentes podem ser gograficas ou de importancia
+	public int[] cidades_segundo_plano_ativas; // sempre segundo_plano // adjacentes podem ser gograficas ou de importancia
 
 
     // public int[] cidades_adjacentes_cidade_player;
@@ -30,9 +32,6 @@ public class Controlador_cidades {
     // public int[] segundo_plano_cidades_adjacentes_ids;
     // public int[] segundo_plano_cidades_relacionadas_ids;
 
-
-	public int[] cidades_segundo_plano_pentendes_para_adicionar;
-	public int[] cidades_segundo_plano_pentendes_para_adicionar_tempo;
 
 
     public static Controlador_cidades Construir( Dados_sistema_cidade_essenciais[] _dados_sistema_cidades_essenciais , Dados_sistema_estado_atual _dados_sistema_estado_atual ) {
@@ -55,22 +54,20 @@ public class Controlador_cidades {
 					// controlador.segundo_plano_cidades_relacionadas_ids = _dados_sistema_estado_atual.segundo_plano_cidades_relacionadas_ids;
 					// controlador.segundo_plano_cidades_adjacentes_ids = _dados_sistema_estado_atual.segundo_plano_cidades_adjacentes_ids;
 
-					controlador.cidades_segundo_plano_pentendes_para_adicionar = _dados_sistema_estado_atual.cidades_segundo_plano_pentendes_para_adicionar;
-					controlador.cidades_segundo_plano_pentendes_para_adicionar_tempo = _dados_sistema_estado_atual.cidades_segundo_plano_pentendes_para_adicionar_tempo;
-					controlador.cidades_segundo_plano_ativas_adjacentes = _dados_sistema_estado_atual.cidades_segundo_plano_ativas_adjacentes;
+					controlador.cidades_segundo_plano_ativas = _dados_sistema_estado_atual.cidades_segundo_plano_ativas;
 					
 					controlador.Adicionar_cidade_INICIO_JOGO( ( int ) Plano.primeiro, controlador.player_cidade_id , 0 );
 					controlador.Adicionar_cidade_INICIO_JOGO( ( int ) Plano.segundo, controlador.cidade_segundo_plano_foco_id , 1 );
 					int index_inicial = 2;
 
-					for( int cidade_ativa_index = ( 0 + index_inicial ) ; cidade_ativa_index < controlador.cidades_ativas_adjacentes.Length ; cidade_ativa_index++ ){
+					for( int cidade_ativa_index = ( 0 + index_inicial ) ; cidade_ativa_index < controlador.cidades_segundo_plano_ativas.Length ; cidade_ativa_index++ ){
 
 								// --- todas segundo plano 
 								// --- PEGAR ID
-								int cidade_id = controlador.cidades_ativas_adjacentes[ index_cidade_ativa ]; 
+								int cidade_id = controlador.cidades_segundo_plano_ativas[ cidade_ativa_index ]; 
 
 								// --- CONSTRUIR
-								controlador.Adicionar_cidade_INICIO_JOGO( Plano.segundo, cidade_id , cidade_ativa_index );
+								controlador.Adicionar_cidade_INICIO_JOGO( ( int ) Plano.segundo, cidade_id , cidade_ativa_index );
 							
 								continue;
 
@@ -83,8 +80,6 @@ public class Controlador_cidades {
 
 		}
 
-
-		add cidade (      )
 
 
 
@@ -110,6 +105,9 @@ public class Controlador_cidades {
         }
 
 
+
+
+		
 		
         
 
@@ -117,6 +115,8 @@ public class Controlador_cidades {
 
 					// sempre adiciona uma cidade como segundo plano?
 					// nao, o player pode fazer uma viagem longa que pula cidades 
+
+					// se primeiro plano => 
 
 					// --- CRIA cidade
 					
@@ -131,7 +131,7 @@ public class Controlador_cidades {
 					// --- COLOCA DADOS CONTAINERS 
 
 					cidades [ _cidade_id ] = cidade_para_adicionar; 
-					int index_slot_cidade = INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref cidades_ativos_adjacentes , _cidade_id );
+					int index_slot_cidade = INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref cidades_segundo_plano_ativas , _cidade_id );
 					dados_sistema_cidades[ index_slot_cidade ] = cidade_para_adicionar.gerenciador_dados_sistema.Pegar_dados();
 
 					// ---- CRIA SLOT INSTRUCOES
@@ -146,7 +146,7 @@ public class Controlador_cidades {
 
 
 
-		public void Carregar_dados_cidade( int _cidade_id , int _periodos_para_iniciar, int _local_para_colocar ){
+		public void Carregar_dados_cidade( int _cidade_id , int _periodos_para_iniciar  ){
 
 			
 
@@ -156,10 +156,10 @@ public class Controlador_cidades {
 			if( cidade_na_lixeira != null )
 				{
 					#if UNITY_EDITOR
-						Console.Log( $"cidade <color=red> { ((cidade_nome ) _cidade_id).ToString()  } </color> foi tirado da lixeira e vai ser colocado em dados dinamicos" );
+						Console.Log( $"cidade <color=red> { (( Cidade_nome ) _cidade_id ).ToString()  } </color> foi tirado da lixeira e vai ser colocado em dados dinamicos" );
 					#endif
 					int slot =  gerenciador_dados_dinamicos.Criar_slot_cidade( _cidade_id );
-					gerenciador_dados_dinamicos.cidades_AIs[ slot ] = cidade_na_lixeira.gerenciador_AI_cidade.cidade_AI;
+					gerenciador_dados_dinamicos.cidades_AIs[ slot ] = cidade_na_lixeira.gerenciador_AI.cidade_AI;
 					gerenciador_dados_dinamicos.dados_containers_cidades[ slot ] = cidade_na_lixeira.gerenciador_containers_dados.dados_containers;
 				}
 				else
@@ -167,8 +167,10 @@ public class Controlador_cidades {
 					gerenciador_dados_dinamicos.Carregar_dados_cidade_MULTITHREAD( _cidade_id );
 				}
 
-			INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref cidades_pentendes_para_adicionar , _cidade_id );
-			INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref cidades_pentendes_para_adicionar_tempo , _periodos_para_iniciar );
+			// agora vai ser feito no Controlador_sistema
+
+			// INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref cidades_segundo_plano_pentendes_para_adicionar , _cidade_id );
+			// INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref cidades_segundo_plano_pentendes_para_adicionar_tempo , _periodos_para_iniciar );
 
 			return;
 

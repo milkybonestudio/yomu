@@ -5,7 +5,7 @@
 public static class Construtor_personagem {
 
 
-	    public static  Personagem Construir(  int _personagem_id, Plano _plano, Dados_sistema_personagem_essenciais _dados_sistema_personagens_essenciais , Dados_containers_personagem _dados,  System.Object _personagem_AI ){
+	    public static  Personagem Construir(  int _personagem_id, int _plano_id, Dados_sistema_personagem_essenciais _dados_sistema_personagens_essenciais , Dados_containers_personagem _dados,  System.Object _personagem_AI ){
 
 				// ** responsavel por passar os bytes[] e instanciar os Gerenciadores 
 				

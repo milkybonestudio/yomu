@@ -95,10 +95,10 @@ public class Gerenciador_dados_dinamicos_cidades {
 
 
 
-        public Dados_containers_cidade Pegar_containers_cidade_NAO_CARREGADO ( int _personagem_id ){
+        public Dados_containers_cidade Pegar_containers_cidade_NAO_CARREGADO ( int _cidade_id ){
 
  
-                string cidades_nome =  ( ( Cidade_nome ) cidades_ids[ _index_slot_cidades ] ).ToString() ;
+                string cidades_nome =  ( ( Cidade_nome ) _cidade_id ).ToString() ;
                 string path_dados = Paths_sistema.path_dados_cidades  + "/" + cidades_nome + "_dados.dat" ;
                 byte[] dados_bytes = System.IO.File.ReadAllBytes( path_dados );
                 Dados_containers_cidade cidades_containers = Construtor_containers_cidades.Construir( dados_bytes );
@@ -283,7 +283,7 @@ public class Gerenciador_dados_dinamicos_cidades {
 
         public void Remover_dados_cidade ( int _cidades_id ){
 
-                int slot_cidades = Pegar_slot_cidades( _cidades_id);
+                int slot_cidades = Pegar_slot_cidade( _cidades_id);
 
                 
                 cidades_AIs[ slot_cidades ] = null;

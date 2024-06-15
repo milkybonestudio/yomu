@@ -3,16 +3,12 @@ using UnityEngine;
 
 
 
-
-
 public class Controlador_personagens {
 
 		// ** REQUISICAO PARA ADICIONAR PERSONAGEM É SOMENTE TEMPO
 
 		// Controlador personagens nao tem porque ter conhecimento de como que os dados estao salvos. Ele simeplesmente executa logica e pede dados a um outro sistema.
-		  
 		// se um personagem precisa ter update mensal ele pede um certo bloco de dados para algum sistema 
-
 		// personagens nao salva nada, ou seja nao tem porque ele saber sobre como vao ficar os container.dat
 
 
@@ -25,35 +21,27 @@ public class Controlador_personagens {
 
 		public Personagem[] personagens;
 		public Dados_sistema_personagem_essenciais[] dados_sistema_personagens_essenciais;
-	
-		// ** somente dos personagens ativos + margem
-		public Dados_sistema_personagem[] dados_sistema_personagens;
+		public Dados_sistema_personagem[] dados_sistema_personagens; 		// ** somente dos personagens ativos + margem
 
 
 		// ** lembrar que quando mudar de plano 1 para 2 tem que criar uma instrucao
 		public int[] personagens_ativos_ids = new int[ 0 ]; // tanto primario quanto secundario 
 		
 
-
 		// primeiro => personagem tem controle ativo 
 		// segundo personagem tem controle passivo
-
 		// controlador sistema que precisa ter refs, nao os controladores normais 
 	
 
-		public int[] personagens_pentendes_para_adicionar;
-		public int[] personagens_pentendes_para_adicionar_local;
-		public int[] personagens_pentendes_para_adicionar_tempo;
 		// talvez adicionar scripts_entrada[] ?
 		
 
 		
 
-
 		public static Controlador_personagens Construir (  Dados_sistema_personagem_essenciais[] _dados_sistema_personagens_essenciais, Dados_sistema_estado_atual _dados_sistema_estado_atual ) {
 
-				throw new Exception( "aind anao pode vir aqui porque eu nao defini como pegar os dados do save ainda " );
 
+				throw new Exception( "aind anao pode vir aqui porque eu nao defini como pegar os dados do save ainda " );
 
 				Controlador_personagens controlador = new Controlador_personagens();
 
@@ -66,23 +54,21 @@ public class Controlador_personagens {
 					controlador.dados_sistema_personagens_essenciais = _dados_sistema_personagens_essenciais;
 					controlador.personagens = new Personagem[ _dados_sistema_personagens_essenciais.Length ];
 
-					controlador.personagens_pentendes_para_adicionar =  _dados_sistema_estado_atual.personagens_pentendes_para_adicionar;
-					controlador.personagens_pentendes_para_adicionar_local =  _dados_sistema_estado_atual.personagens_pentendes_para_adicionar_local;
-					controlador.personagens_pentendes_para_adicionar_tempo = _dados_sistema_estado_atual.personagens_pentendes_para_adicionar_tempo;
+
 
 					controlador.personagens_ativos_ids = _dados_sistema_estado_atual.personagens_ativos_ids ;
-					int[] personagens_ativos_planos = _dados_sistema_estado_atual.personagens_ativos_planos ;
+					int[] personagens_ativos_planos_ids = _dados_sistema_estado_atual.personagens_ativos_planos_ids ;
 
-					controlador.dados_sistema_personagens = new Dados_sistema_personagem[ controlador.personagens_ativos.Length ];
+					controlador.dados_sistema_personagens = new Dados_sistema_personagem[ controlador.personagens_ativos_ids.Length ];
 
 
-					for( int index_personagem_ativo = 0 ; index_personagem_ativo < personagens_ativos_planos.Length ; index_personagem_ativo++){
+					for( int index_personagem_ativo = 0 ; index_personagem_ativo < personagens_ativos_planos_ids.Length ; index_personagem_ativo++){
 
 							// --- PEGAR IDS
-							int plano_id = personagens_ativos_planos[ index_personagem_ativo ];
-							int personagem_id = controlador.personagens_ativos[ index_personagem_ativo ]; 
+							int plano_id = personagens_ativos_planos_ids[ index_personagem_ativo ];
+							int personagem_id = controlador.personagens_ativos_ids[ index_personagem_ativo ]; 
 
-							Adicionar_personagem_INICIO_JOGO( plano_id , personagem_id, index_personagem_ativo );
+							controlador.Adicionar_personagem_INICIO_JOGO( plano_id , personagem_id, index_personagem_ativo );
 							continue;
 
 					}
@@ -100,9 +86,9 @@ public class Controlador_personagens {
 				// --- CRIA PERSONAGEM 
 				Dados_sistema_personagem_essenciais dados_sistema_personagem_essenciais = dados_sistema_personagens_essenciais[ _personagem_id ];
 				System.Object personagem_AI =   gerenciador_dados_dinamicos.Pegar_AI_personagem_NAO_CARREGADO( _personagem_id );
-				Dados_containers_personagem dados_containers_personagens = gerenciador_dados_dinamicos.Pegar_AI_personagem_NAO_CARREGADO( _personagem_id );
+				Dados_containers_personagem dados_containers_personagens = gerenciador_dados_dinamicos.Pegar_containers_personagem_NAO_CARREGADO( _personagem_id );
 
-				Personagem personagem_para_adicionar =  Construtor_personagem.Construir( _personagem_id, _plano_para_adicionar, dados_sistema_personagem_essenciais,  dados_containers_personagens, personagem_AI );
+				Personagem personagem_para_adicionar =  Construtor_personagem.Construir( _personagem_id,  _plano_para_adicionar_id, dados_sistema_personagem_essenciais,  dados_containers_personagens, personagem_AI );
 
 				// --- COLOCA DADOS CONTAINERS 
 				personagens [ _personagem_id ] = personagem_para_adicionar; 
@@ -128,12 +114,12 @@ public class Controlador_personagens {
 				Dados_containers_personagem dados_containers_personagens = gerenciador_dados_dinamicos.Pegar_containers_personagem( personagem_slot );
 				Dados_sistema_personagem_essenciais dados_sistema_personagem_essenciais = dados_sistema_personagens_essenciais[ _personagem_id ];
 
-				Personagem personagem_para_adicionar =  Construtor_personagem.Construir( _personagem_id, _plano_para_adicionar, dados_sistema_personagem_essenciais,  dados_containers_personagens, personagem_AI );
+				Personagem personagem_para_adicionar =  Construtor_personagem.Construir( _personagem_id, _plano_para_adicionar_id, dados_sistema_personagem_essenciais,  dados_containers_personagens, personagem_AI );
 
 				// --- COLOCA DADOS CONTAINERS 
 
 				personagens [ _personagem_id ] = personagem_para_adicionar; 
-				int index_slot_personagem = INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref personagens_ativos , _personagem_id );
+				int index_slot_personagem = INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref personagens_ativos_ids , _personagem_id );
 				dados_sistema_personagens[ index_slot_personagem ] = personagem_para_adicionar.gerenciador_dados_sistema.Pegar_dados();
 
 				// ---- CRIA SLOT INSTRUCOES
@@ -165,9 +151,12 @@ public class Controlador_personagens {
 					gerenciador_dados_dinamicos.Carregar_dados_personagem_MULTITHREAD( _personagem_id );
 				}
 
-			INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref personagens_pentendes_para_adicionar , _personagem_id );
-			INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref personagens_pentendes_para_adicionar_local , _local_para_colocar );
-			INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref personagens_pentendes_para_adicionar_tempo , _periodos_para_iniciar );
+
+			// Agora vai fazer parte do Controlador_sistema
+
+			// INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref personagens_pentendes_para_adicionar , _personagem_id );
+			// INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref personagens_pentendes_para_adicionar_local , _local_para_colocar );
+			// INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref personagens_pentendes_para_adicionar_tempo , _periodos_para_iniciar );
 
 			return;
 
@@ -199,7 +188,7 @@ public class Controlador_personagens {
 				
 
 
-				if ( ! ( INT.Tem_valor_no_array( personagens_ativos, _personagem_id ) ) )
+				if ( ! ( INT.Tem_valor_no_array( personagens_ativos_ids, _personagem_id ) ) )
 					{ 
 						// -- PERSONAGEM NAO ESTAVA ATIVO
 						throw new Exception(  $" Foi excluir o personagem <color=red>{ (( Personagem_nome )_personagem_id ).ToString() } </color>"  );
@@ -208,7 +197,7 @@ public class Controlador_personagens {
 				
 				gerenciador_save.Colocar_personagem_na_lixeira( personagem );
 
-				INT.Tirar_valor_COMPLETO_GARANTIDO( ref personagens_ativos , _personagem_id );
+				INT.Tirar_valor_COMPLETO_GARANTIDO( ref personagens_ativos_ids , _personagem_id );
 				personagens[ _personagem_id ] = null;
 				return;
 

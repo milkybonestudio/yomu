@@ -5,13 +5,13 @@ using System;
 public class Gerenciador_save_dados_sistema {
 
         
-        public Gerenciador_save_dados_sistema( Controlador_dados_sistema _controlador_dados_sistema ){
+        public Gerenciador_save_dados_sistema( Controlador_sistema _controlador_sistema ){
 
-                controlador_dados_sistema = _controlador_dados_sistema;
+                controlador_sistema = _controlador_sistema;
         }
 
 
-        public Controlador_dados_sistema controlador_dados_sistema;
+        public Controlador_sistema controlador_sistema;
 
 
         // ---- plots LIXEIRA

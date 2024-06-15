@@ -62,8 +62,6 @@ public class Gerenciador_dados_dinamicos_personagens {
 
                 string personagem_class_nome =  ( ( Personagem_nome ) _personagem_id  ).ToString() + "_dados";
                 System.Object personagem_AI =  asm_personagens.CreateInstance( personagem_class_nome );
-                personagens_AIs[ _index_slot_personagem ] = personagem_AI;
-
                 return personagem_AI;
         }
 
@@ -95,10 +93,10 @@ public class Gerenciador_dados_dinamicos_personagens {
         public Dados_containers_personagem Pegar_containers_personagem_NAO_CARREGADO ( int _personagem_id ){
 
 
-                string personagem_nome = ( ( Personagem_nome ) personagens_ids[ _index_slot_personagem ] ).ToString() ;
+                string personagem_nome = ( ( Personagem_nome ) _personagem_id ).ToString() ;
                 string path_dados = Paths_sistema.path_dados_personagens + "/" + personagem_nome + "_dados.dat" ;
                 byte[] dados_bytes = System.IO.File.ReadAllBytes( path_dados );
-                personagem_containers = Construtor_containers_personagens.Construir( dados_bytes );
+                Dados_containers_personagem personagem_containers = Construtor_containers_personagens.Construir( dados_bytes );
 
                 return personagem_containers;
 

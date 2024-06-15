@@ -5,11 +5,11 @@
 public class Gerenciador_sistema_estado_atual {
 
 
-        public Controlador_dados_sistema  controlador_dados_sistema;
+        public Controlador_sistema  controlador_sistema;
 
-        public Gerenciador_sistema_estado_atual( Controlador_dados_sistema _controlador_dados_sistema ){
+        public Gerenciador_sistema_estado_atual( Controlador_sistema _controlador_sistema ){
 
-            controlador_dados_sistema = _controlador_dados_sistema;
+            controlador_sistema = _controlador_sistema;
 
         }
 

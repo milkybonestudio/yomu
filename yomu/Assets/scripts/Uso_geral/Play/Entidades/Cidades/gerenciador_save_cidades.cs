@@ -144,7 +144,7 @@ public class Gerenciador_save_cidades {
                         Dados_para_salvar dados_retorno = new Dados_para_salvar();
                 
                         // isso talvez possa demorar 
-                        dados_retorno.dados = cidades_esperando_para_serem_excluidos[ _cidade_id ].gerenciador_containers_dados_cidade.Compilar_dados();
+                        dados_retorno.dados = cidades_esperando_para_serem_excluidos[ _cidade_id ].gerenciador_containers_dados.Compilar_dados();
 
                         // dados agora vai para a segunda stack
                         cidades_esperando_para_serem_excluidos_ids[ _cidade_id ] = 0;

@@ -8,7 +8,7 @@
 public static class Construtor_plot {
 
 
-	    public static  Plot Construir(  int _plot_id, Dados_sistema_plot_essenciais _dados_sistema_plot_essenciais , Dados_containers_plot _dados,  System.Object _plot_AI ){
+	    public static  Plot Construir(  int _plot_id,  int _plano_id, Dados_sistema_plot_essenciais _dados_sistema_plot_essenciais , Dados_containers_plot _dados,  System.Object _plot_AI ){
 
 
 				Plot plot = new Plot( _plot_id );

@@ -148,7 +148,7 @@ public class Gerenciador_save_plots {
                         Dados_para_salvar dados_retorno = new Dados_para_salvar();
                 
                         // isso talvez possa demorar 
-                        dados_retorno.dados = plots_esperando_para_serem_excluidos[ _plot_id ].gerenciador_containers_dados_plot.Compilar_dados();
+                        dados_retorno.dados = plots_esperando_para_serem_excluidos[ _plot_id ].gerenciador_containers_dados.Compilar_dados();
 
                         // dados agora vai para a segunda stack
                         plots_esperando_para_serem_excluidos_ids[ _plot_id ] = 0;

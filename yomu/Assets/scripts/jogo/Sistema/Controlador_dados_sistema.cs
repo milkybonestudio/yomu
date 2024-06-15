@@ -4,10 +4,17 @@ using UnityEngine;
 
 
 
-public class Controlador_dados_sistema {
+public class Controlador_sistema {
 
-        public static Controlador_dados_sistema instancia;
-        public static Controlador_dados_sistema Pegar_instancia(){ return instancia; }
+        public static Controlador_sistema instancia;
+        public static Controlador_sistema Pegar_instancia(){ return instancia; }
+
+
+        // --- CONTROLADORES
+
+        public Controlador_personagens controlador_personagens;
+        public Controlador_cidades controlador_cidades;
+        public Controlador_plots controlador_plots;
 
 
         // --- GERENCIADORES 
@@ -19,6 +26,7 @@ public class Controlador_dados_sistema {
 
         // --- DADOS 
 
+        // ** pega de todos
         public Dados_sistema_personagem_essenciais[] dados_personagens_essenciais;
         public Dados_sistema_cidade_essenciais[] dados_cidades_essenciais;
         public Dados_sistema_plot_essenciais[] dados_plots_essenciais;
@@ -29,9 +37,34 @@ public class Controlador_dados_sistema {
         public Dados_sistema_plot[] dados_plots;
 
 
-        public static Controlador_dados_sistema Construir( Dados_sistema_estado_atual _dados_sistema_estado_atual ){
 
-                Controlador_dados_sistema controlador  = new Controlador_dados_sistema();
+        // --- ENTIDADES_PARA_ADICIONAR
+
+
+                // ** personagem
+		public int[] personagens_pentendes_para_adicionar;
+		public int[] personagens_pentendes_para_adicionar_local;
+		public int[] personagens_pentendes_para_adicionar_tempo;
+
+                // ** cidades        
+                public int[] cidades_segundo_plano_pentendes_para_adicionar;
+                public int[] cidades_segundo_plano_pentendes_para_adicionar_tempo;
+
+
+                // ** plots 
+                public int[] plots_pentendes_para_adicionar;
+                public int[] plots_pentendes_para_adicionar_tempo;
+
+
+
+        public static Controlador_sistema Construir( Dados_sistema_estado_atual _dados_sistema_estado_atual ){
+
+                Controlador_sistema controlador  = new Controlador_sistema();
+
+                        // --- CRIR CONTROLADORES 
+                        controlador.controlador_personagens = Controlador_personagens.Pegar_instancia();
+                        controlador.controlador_cidades = Controlador_cidades.Pegar_instancia();
+                        controlador.controlador_plots = Controlador_plots.Pegar_instancia();
 
                         // --- CRIAR GERENCIADORES 
 
@@ -50,6 +83,18 @@ public class Controlador_dados_sistema {
                         controlador.dados_cidades = Controlador_cidades.Pegar_instancia().dados_sistema_cidades;
                         controlador.dados_plots = Controlador_plots.Pegar_instancia().dados_sistema_plots;
 
+                	controlador.personagens_pentendes_para_adicionar =  _dados_sistema_estado_atual.personagens_pentendes_para_adicionar;
+			controlador.personagens_pentendes_para_adicionar_local =  _dados_sistema_estado_atual.personagens_pentendes_para_adicionar_local;
+			controlador.personagens_pentendes_para_adicionar_tempo = _dados_sistema_estado_atual.personagens_pentendes_para_adicionar_tempo;
+
+
+                        controlador.cidades_segundo_plano_pentendes_para_adicionar = _dados_sistema_estado_atual.cidades_segundo_plano_pentendes_para_adicionar;
+                        controlador.cidades_segundo_plano_pentendes_para_adicionar_tempo = _dados_sistema_estado_atual.cidades_segundo_plano_pentendes_para_adicionar_tempo;
+
+                        controlador.plots_pentendes_para_adicionar = _dados_sistema_estado_atual.plots_pentendes_para_adicionar;
+                        controlador.plots_pentendes_para_adicionar_tempo = _dados_sistema_estado_atual.plots_pentendes_para_adicionar_tempo;
+
+
 
                 instancia = controlador; 
                 return controlador;
@@ -62,8 +107,7 @@ public class Controlador_dados_sistema {
                         
 
                         Dados_sistema_estado_atual dados_estado_atual = gerenciador_sistema_estado_atual.Pegar_dados();
-                        
-                        byte[] dados = Compilador_dados_sistema.Compilar();
+                        byte[] dados = Compilador_dados_sistema.Compilar( dados_estado_atual );
                         return dados;
         }
 
@@ -72,6 +116,45 @@ public class Controlador_dados_sistema {
 
                 // ** fazer 
                 return null;
+
+        }
+
+
+
+        public void Preparar_plot_para_adicionar (  int _plano_id, int _plot_id , int _periodos_para_adicionar  ){
+
+                controlador_plots.Carregar_dados_plot(  _plano_id,  _plot_id  );
+        
+                INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref plots_pentendes_para_adicionar , _plot_id );
+                INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref plots_pentendes_para_adicionar_tempo , _periodos_para_adicionar );
+                return;
+
+        }
+     
+
+
+        public void Preparar_cidade_para_adicionar (  int _plano_id, int _cidade_id , int _periodos_para_adicionar  ){
+
+                controlador_cidades.Carregar_dados_cidade(  _plano_id,  _cidade_id  );
+        
+                INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref cidades_segundo_plano_pentendes_para_adicionar , _cidade_id );
+                INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref cidades_segundo_plano_pentendes_para_adicionar_tempo , _periodos_para_adicionar );
+                return;
+
+        }
+
+
+
+        public void Preparar_personagem_para_adicionar (  int _plano_id, int _personagem_id, int _periodos_para_adicionar,  int _cidade_para_colocar ){
+
+                controlador_personagens.Carregar_dados_personagem(  _plano_id,  _personagem_id,  _cidade_para_colocar );
+        
+
+                INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref personagens_pentendes_para_adicionar , _personagem_id );
+                INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref personagens_pentendes_para_adicionar_local , _cidade_para_colocar );
+                INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref personagens_pentendes_para_adicionar_tempo , _periodos_para_adicionar );
+                
+                return;
 
         }
 		
