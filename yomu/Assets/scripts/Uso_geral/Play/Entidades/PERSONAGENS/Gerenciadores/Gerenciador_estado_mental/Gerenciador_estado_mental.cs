@@ -9,8 +9,6 @@ public class Gerenciador_estado_mental {
         public Gerenciador_estado_mental( Personagem _personagem ){ personagem = _personagem; }
         public Personagem personagem;
 
-
-
         public Estado_mental estado_mental;
         public Action< Estado_mental, float >[] modificadores; 
 
@@ -200,6 +198,15 @@ public class Gerenciador_estado_mental {
 
                 modificar_estado_mental,
                 
+        }
+
+
+
+        public void Adicionar_modificadores_emocionais( float[] _emocoes_modificadores ){
+
+                // ** fazer
+                return;
+
         }
 
 

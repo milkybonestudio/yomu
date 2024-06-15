@@ -148,14 +148,7 @@ public class Controlador_plots {
 
 
 
-
-
-
-
-
-
-
-        // diferente de plot quando um plot é descartado ele nao pode voltar 
+        // diferente de plot quando um plot é descartado ele nao pode voltar e ser alterado, mas ele pode ser pego de volta para ler => nao precisa carregar AI 
         // alguns plots podem executar alguma funcao quando o plot nao puder ser executado
         public void Terminar_plot( int _plot_id ){
 
@@ -185,6 +178,7 @@ public class Controlador_plots {
 
 
         }
+
 
 
 

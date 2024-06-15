@@ -1,11 +1,8 @@
-
-
-
-
-
-using UnityEditor;
+using System;
 
 public class Controlador_cidades {
+
+	//** !! controlador_entidade nao se comunica com outros controladores entidades. Ele tem ferramentas para fazer a interacao fn( entidade_1, entidade_2 ) 
 
     public static Controlador_cidades instancia;
     public static Controlador_cidades Pegar_instancia(){ return instancia; }
@@ -149,7 +146,6 @@ public class Controlador_cidades {
 		public void Carregar_dados_cidade( int _cidade_id , int _periodos_para_iniciar  ){
 
 			
-
 
 			Cidade cidade_na_lixeira = gerenciador_save.Retirar_cidade_da_lixeira( _cidade_id );
 

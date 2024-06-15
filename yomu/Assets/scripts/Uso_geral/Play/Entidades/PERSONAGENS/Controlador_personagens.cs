@@ -3,6 +3,11 @@ using UnityEngine;
 
 
 
+
+
+
+
+
 public class Controlador_personagens {
 
 		// ** REQUISICAO PARA ADICIONAR PERSONAGEM É SOMENTE TEMPO
@@ -15,9 +20,14 @@ public class Controlador_personagens {
 		public static Controlador_personagens instancia;
 		public static Controlador_personagens Pegar_instancia(){ return instancia;}
 
-
+		// --- USAO INTERNO
 		public Gerenciador_save_personagens gerenciador_save;
 		public Gerenciador_dados_dinamicos_personagens gerenciador_dados_dinamicos;
+
+		// --- MODIFICADORES
+
+		public Modificador_personagem_conversa modificador_personagem_conversa ;
+
 
 		public Personagem[] personagens;
 		public Dados_sistema_personagem_essenciais[] dados_sistema_personagens_essenciais;
@@ -53,6 +63,8 @@ public class Controlador_personagens {
 
 					controlador.dados_sistema_personagens_essenciais = _dados_sistema_personagens_essenciais;
 					controlador.personagens = new Personagem[ _dados_sistema_personagens_essenciais.Length ];
+
+					controlador.modificador_personagem_conversa = new Modificador_personagem_conversa();
 
 
 
@@ -143,7 +155,7 @@ public class Controlador_personagens {
 						Debug.Log( $"Personagem <color=red> { ((Personagem_nome ) _personagem_id).ToString()  } </color> foi tirado da lixeira e vai ser colocado em dados dinamicos" );
 					#endif
 					int slot =  gerenciador_dados_dinamicos.Criar_slot_personagem( _personagem_id );
-					gerenciador_dados_dinamicos.personagens_AIs[ slot ] = personagem_na_lixeira.gerenciador_AI_personagem.personagem_AI;
+					gerenciador_dados_dinamicos.personagens_AIs[ slot ] = personagem_na_lixeira.gerenciador_AI.personagem_AI;
 					gerenciador_dados_dinamicos.dados_containers_personagens[ slot ] = personagem_na_lixeira.gerenciador_containers_dados.dados_containers;
 				}
 				else
