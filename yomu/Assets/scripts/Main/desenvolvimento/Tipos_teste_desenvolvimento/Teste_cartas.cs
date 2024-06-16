@@ -1,7 +1,7 @@
 
 
 
-public static class Teste_visual_novel {
+public static class Teste_cartas {
 
 
 
@@ -12,19 +12,18 @@ public static class Teste_visual_novel {
                 // ** definir os dados do teste 
                 
 
-                Jogo.Pegar_instancia().bloco_atual = Bloco.visual_novel;
+                Jogo.Pegar_instancia().bloco_atual = Bloco.cartas;
 
                 switch( _chave ){
 
-                        case "lily_quarto" : Visual_novel_estado_generico.Ativar(); return;
+                        case "generico" : Cartas_estado_generico.Ativar(); return;
 
                 }
 
-                // --- DEFAULT
+                // --- DEAULT
                 
-
-
-
+                return;
+         
 
         }
 

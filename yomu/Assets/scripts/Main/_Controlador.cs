@@ -67,7 +67,7 @@ public class Controlador : MonoBehaviour {
 
                         Teste_geral.Testar();
                         Controlador_development.Verificar();
-                        Desenvolvimento.Construir();  
+                        desenvolvimento = Desenvolvimento.Construir();  
 
                         bool em_teste = ( Desenvolvimento.Pegar_instancia().desenvolvimento_atual != Desenvolvimento_atual.nada );
                         

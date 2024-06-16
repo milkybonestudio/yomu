@@ -21,7 +21,7 @@ public static class Teste_movimento {
 
                 switch( _chave ){
 
-                        case "lily_quarto" : Movimento_estado_lily_biscoito.Ativar(); return;
+                        case "lily_quarto" : Movimento_estado_generico.Ativar(); return;
 
                 }
 

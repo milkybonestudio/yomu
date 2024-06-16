@@ -1,7 +1,10 @@
 
 
 
-public static class Movimento_estado_generico {
+
+
+
+public static class Conversa_estado_generico {
 
 
         public static void Ativar(){

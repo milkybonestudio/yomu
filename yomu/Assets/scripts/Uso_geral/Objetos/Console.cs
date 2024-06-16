@@ -85,7 +85,7 @@ public static class Console {
 
                 Debug.Log( "length: " + ( logs_length + logs_m_length ) );
 
-                Debug.Log( "---------- MAIN -------------" );
+                Debug.Log( "<b><color=lime>---------- MAIN -------------</color></b>" );
 
                 for( int log_index = pointer_run_time ; log_index < logs_length ; log_index++ ){
 
@@ -97,7 +97,7 @@ public static class Console {
 
                         pointer_run_time++;
 
-                        if(tipo == 1 )
+                        if( tipo == 1 )
                                 {
                                         Debug.Log( texto );
                                 }
@@ -111,10 +111,10 @@ public static class Console {
                 }
 
 
-                Debug.Log( "------------------------------" );
+                Debug.Log( "<b><color=lime>------------------------------</color></b>" );
                 Debug.Log( "--" );
-                Debug.Log( "--" );
-                Debug.Log( "---------- MULTI -------------" );
+                //Debug.Log( "--" );
+                Debug.Log( "<b><color=#EF7979>---------- MULTI -------------</color></b>" );
 
 
                 for( int log_m_index = index_atual_m ; log_m_index < logs_m_length ; log_m_index++ ){
@@ -141,9 +141,9 @@ public static class Console {
                 }
 
                 
-                Debug.Log( "------------------------------" );
+                Debug.Log( "<b><color=#EF7979>------------------------------</color></b>" );
                 Debug.Log( "--" );
-                Debug.Log( "--" );
+                //Debug.Log( "--" );
 
                 
                 return;

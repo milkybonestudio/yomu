@@ -1,22 +1,6 @@
-using System.Collections;
 using System;
-using System.IO;
-using System.Collections.Generic;
-using UnityEngine.UI;
+using System.Collections;
 using UnityEngine;
-using System.Reflection;
-using Png_decoder;
-using Unity.Collections;
-using System.Drawing;
-using UnityEngine.SceneManagement;
-using System.Runtime.InteropServices;
-using System.Text;
-using UnityEngine.Rendering.VirtualTexturing;
-using System.Linq;
-
-
-
-
 
 
 
@@ -51,16 +35,10 @@ public class Desenvolvimento {
           }
 
 
-          // nada,
-
-          // movimento,
-          // visual_novel,
-          // conversa,
-          // cartas,
-          // minigame,
-
-
           public void Iniciar_jogo_teste(){
+
+                    Console.Log( "veio em iniciar jogo teste" );
+                    Console.Log( $"modo atual: {Desenvolvimento_atual.movimento}" );
 
                     // cria espaço para as ferramentas
                     GameObject desenvolvimento_ferramentas = new GameObject( "desenvolvimento_ferramentas");
@@ -77,8 +55,8 @@ public class Desenvolvimento {
                          case Desenvolvimento_atual.visual_novel : Teste_visual_novel.Criar( chave_teste ); break;
                          case Desenvolvimento_atual.conversa : Teste_conversa.Criar( chave_teste ); break;
                          case Desenvolvimento_atual.cartas : Teste_cartas.Criar( chave_teste ); break;
-                         case Desenvolvimento_atual.minigame : Teste_minigame.Criar( chave_teste ); break;
-                         default Desenvolvimento_atual.nada : Console.Log( "wtf?" ); break;
+                         case Desenvolvimento_atual.minigame : Teste_minigames.Criar( chave_teste ); break;
+                         default : Console.Log( "wtf?" ); break;
                          
                     }
 
