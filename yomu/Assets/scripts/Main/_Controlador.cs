@@ -44,6 +44,8 @@ public class Controlador : MonoBehaviour {
 
             public void Start(){
 
+                  Console.Log( "aa" );
+
                   if( Thread.CurrentThread.Name == null )
                         { Thread.CurrentThread.Name = "Main"; }
                   Debug.Log(Thread.CurrentThread.Name);
@@ -96,7 +98,7 @@ public class Controlador : MonoBehaviour {
             public void Update() {
 
 
-                  //Console.Log( "aa" );
+                  
                   Console.Update();
 
                   return;

@@ -17,6 +17,23 @@ public class Jogo {
         public static Jogo instancia;
         public static Jogo Pegar_instancia(){ return instancia; }
 
+        public Bloco bloco_atual = Bloco.nada;
+
+
+        // --- BLOCOS 
+
+        public BLOCO_visual_novel bloco_visual_novel;
+        public BLOCO_conversas bloco_conversas;
+        public BLOCO_movimento bloco_movimento;
+        public BLOCO_cartas bloco_cartas;
+        public BLOCO_minigames bloco_minigames;
+
+        // --- CONTROLADORES
+        public Controlador_save controlador_save;
+        public Controlador_AI controlador_AI;
+
+        public GameObject canvas;
+        
 
         public Jogo(){
 
@@ -73,50 +90,24 @@ public class Jogo {
 
 
 
-        public Bloco bloco_atual = Bloco.nada;
-
-
-        // --- BLOCOS 
-
-        public BLOCO_visual_novel bloco_visual_novel;
-        public BLOCO_conversas bloco_conversas;
-        public BLOCO_movimento bloco_movimento;
-        public BLOCO_cartas bloco_cartas;
-        public BLOCO_minigames bloco_minigames;
-
-        // --- CONTROLADORES
-        public Controlador_save controlador_save;
-        public Controlador_AI controlador_AI;
-
-        public GameObject canvas;
-        
-
         public void Update(){
-
-
-
-                // if( controlador_save.esta_salvando )
-                //         {
-                //                 controlador_save.Update_salvando();
-                //                 return;
-
-                //         }
 
             
                 // if(  Controlador_UI.Pegar_instancia().Update() ) { return; }
 
                 //if( Controlador_transicao.Pegar_instancia().em_transicao ) { return; }
 
-                
-
                 switch (  bloco_atual ) {
                     
+
                         case Bloco.visual_novel :  bloco_visual_novel.Update() ;  break;
                         case Bloco.movimento: bloco_movimento.Update(); break;
+                        case Bloco.minigame: bloco_minigames.Update(); break;
+                        case Bloco.conversa: bloco_conversas.Update(); break;
+                        case Bloco.cartas: bloco_conversas.Update(); break;
 
-                        // case Bloco.jogo :  bloco_jogo.Update(); break;
-                        // case Bloco.NADA: console.log("esta no modo_tela NADA"); break;
-
+                        case Bloco.salvando: console.log( "esta em modo jogo salvando" ); break;
+                        case Bloco.nada: console.log( "esta em modo jogo nada" ); break;
                         case Bloco.transicao :    return;
                 }
 

@@ -35,6 +35,83 @@ public class Configuration_container : MonoBehaviour {
 
 
 
+
+        public void Awake () {
+
+            /*
+
+                    As imagens estão no folder que não vao estar presentes na build.
+
+                    Ainda tem que fazer um modelo de carregar no login 
+                    As iamgens do login podem ser carregadas no login, mas as imagens do menu são muito grandes. vai levar uns 3/5 frames 
+
+                    Mas menu vai preciasar Liberar esses assets quando entrar em algum jogo;
+                    
+            */
+
+
+            game_object = gameObject;
+
+            configuration_container_rect = game_object.GetComponent<RectTransform>();
+
+            // volume
+            volume_transform = game_object.transform.GetChild( 0 );                
+            
+            volume_cor_inativa_rect = volume_transform.GetChild( 0 ).gameObject.GetComponent<RectTransform>();
+            volume_cor_ativa_rect   = volume_transform.GetChild( 1 ).gameObject.GetComponent<RectTransform>();
+            volume_base_rect        = volume_transform.GetChild( 2 ).gameObject.GetComponent<RectTransform>();
+            volume_botao_rect        = volume_transform.GetChild( 3 ).gameObject.GetComponent<RectTransform>();
+
+                    
+            //  texto
+
+            texto_transform = game_object.transform.GetChild( 1 );
+
+            text_fade_rect      = texto_transform.GetChild( 0 ).gameObject.GetComponent<RectTransform>();
+            text_instant_rect   = texto_transform.GetChild( 1 ).gameObject.GetComponent<RectTransform>();
+            text_typewrite_rect = texto_transform.GetChild( 2 ).gameObject.GetComponent<RectTransform>();
+            text_active_rect    = texto_transform.GetChild( 3 ).gameObject.GetComponent<RectTransform>();
+
+
+            // tela cheia
+
+            full_screen = game_object.transform.GetChild( 2 ).gameObject.GetComponent<RectTransform>();
+
+            full_screen_ativa    = full_screen.GetChild( 0 ).gameObject.GetComponent<RectTransform>();
+            tela_cheia_YES_image = full_screen.GetChild( 0 ).gameObject.GetComponent<Image>();
+
+            // nao muda a logica, somente a imagem
+            Trocar_volume_ativo(   (float)  Controlador_configuracoes.Pegar_instancia().volume   );
+
+        
+        }
+
+
+
+
+
+        public void _Update(){
+
+                if( Verificar_volume() ) 
+                        { return; }
+
+                if( Verificar_texto() ) 
+                        { return; }
+                        
+                if( Verificar_tela_cheia() ) 
+                        { return; }
+
+                Controlador_cursor.Pegar_instancia().Mudar_cursor( Cor_cursor.off );
+                
+                return;
+
+        }
+
+
+
+
+
+
         public void Trocar_modo_texto( Tipo_construcao_texto _tipo ){
 
                 Controlador_configuracoes.Pegar_instancia().Mudar_tipo_texto( _tipo );
@@ -48,7 +125,8 @@ public class Configuration_container : MonoBehaviour {
 
                 }
 
-                if( nova_posicao != null ) { text_active_rect.localPosition = nova_posicao; }
+                if( nova_posicao != null ) 
+                        { text_active_rect.localPosition = nova_posicao; }
 
                 return;
 
@@ -224,68 +302,7 @@ public class Configuration_container : MonoBehaviour {
         }
 
 
-        public void _Update(){
 
-                if( Verificar_volume() ) { return; }
-                if( Verificar_texto() ) { return; }
-                if( Verificar_tela_cheia() ) { return; }
-
-                Controlador_cursor.Pegar_instancia().Mudar_cursor( Cor_cursor.off );
-                
-                return;
-
-        }
-
-
-        public void Awake () {
-
-            /*
-
-                    As imagens estão no folder que não vao estar presentes na build.
-
-                    Ainda tem que fazer um modelo de carregar no login 
-                    As iamgens do login podem ser carregadas no login, mas as imagens do menu são muito grandes. vai levar uns 3/5 frames 
-
-                    Mas menu vai preciasar Liberar esses assets quando entrar em algum jogo;
-                    
-            */
-
-
-            game_object = gameObject;
-
-            configuration_container_rect = game_object.GetComponent<RectTransform>();
-
-            // volume
-            volume_transform = game_object.transform.GetChild( 0 );                
-            
-            volume_cor_inativa_rect = volume_transform.GetChild( 0 ).gameObject.GetComponent<RectTransform>();
-            volume_cor_ativa_rect   = volume_transform.GetChild( 1 ).gameObject.GetComponent<RectTransform>();
-            volume_base_rect        = volume_transform.GetChild( 2 ).gameObject.GetComponent<RectTransform>();
-            volume_botao_rect        = volume_transform.GetChild( 3 ).gameObject.GetComponent<RectTransform>();
-
-                    
-            //  texto
-
-            texto_transform = game_object.transform.GetChild( 1 );
-
-            text_fade_rect      = texto_transform.GetChild( 0 ).gameObject.GetComponent<RectTransform>();
-            text_instant_rect   = texto_transform.GetChild( 1 ).gameObject.GetComponent<RectTransform>();
-            text_typewrite_rect = texto_transform.GetChild( 2 ).gameObject.GetComponent<RectTransform>();
-            text_active_rect    = texto_transform.GetChild( 3 ).gameObject.GetComponent<RectTransform>();
-
-
-            // tela cheia
-
-            full_screen = game_object.transform.GetChild( 2 ).gameObject.GetComponent<RectTransform>();
-
-            full_screen_ativa    = full_screen.GetChild( 0 ).gameObject.GetComponent<RectTransform>();
-            tela_cheia_YES_image = full_screen.GetChild( 0 ).gameObject.GetComponent<Image>();
-
-            // nao muda a logica, somente a imagem
-            Trocar_volume_ativo(   (float)  Controlador_configuracoes.Pegar_instancia().volume   );
-
-        
-        }
 
 
 }

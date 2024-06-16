@@ -27,8 +27,15 @@ public class Gerenciador_save_dados_sistema {
 
         public Dados_para_salvar Pegar_dados_sistema_para_salvar( Modo_save _modo ){
 
+                if( _modo != Modo_save.salvando_stack )
+                        { return null; }
 
-                if( _modo == Modo_save.salvando_stack )
+                // tem que pegar tudo 
+
+                byte[][] Compilador_dados_sistema.Compilar()
+
+
+                if(  )
                         {
                                 
                                 // o foco quando a stack estiver sendo trocada vai ser sempre 
@@ -36,11 +43,11 @@ public class Gerenciador_save_dados_sistema {
                                 // ** loop em coisas para salvar
 
                                 // --- SE ESTA SALVANDO A STACK NAO VAI PARA A LIXEIRA 
+                                
                                 return null;
                         }
 
                 
-                // --- VERIFICAR LIXEIRA 
                 return null ;
 
         }

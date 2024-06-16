@@ -29,39 +29,6 @@ public static class Teste_movimento {
 
         
 
-        public static void Ferramenta_1(){
-
-
-                // Ferramenta do update 
-
-
-        
-        // var b =   s.GetType("teste_dll.Math_teste").GetMethod("Somar");
-        // Action action = DelegateBuilder.BuildDelegate<Action<float, float>>( b );
-        // flow d = new flow( b );
-        // b c = new b();
-        // float g =  (float) b.Invoke(   null , new System.Object[] {  1f,1f  }   );
-        // float x  = 0f;
-
-
-
-
-
-        }
-
-
-
-        public static void Ferramenta_1_update(){
-
-
-                // vai ser chamado no bloco de desenvolvimento
-
-                Debug.Log( "esta atualizando as ferramentas" );
-
-
-        }
-
-
 
         public static void Definir_estado_jogo_1(){
 

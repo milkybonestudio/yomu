@@ -4,7 +4,6 @@ public enum Bloco {
 
     nada,
     transicao,
-teste,
     salvando,
 
 
@@ -12,10 +11,10 @@ teste,
     conversa,
     movimento,
     cartas,
+    minigame,
 
 
 
-    minigame_colheita,
 
 
 

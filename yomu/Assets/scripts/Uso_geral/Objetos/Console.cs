@@ -78,7 +78,7 @@ public static class Console {
                 if( pointer_run_time == index_atual && pointer_run_time_m == index_atual_m )
                         { return; }
 
-
+                
                 int logs_length = logs.Length;
                 int logs_m_length = logs_m.Length;
 
@@ -88,11 +88,15 @@ public static class Console {
                 Debug.Log( "---------- MAIN -------------" );
 
                 for( int log_index = pointer_run_time ; log_index < logs_length ; log_index++ ){
+
                         
                         string texto = logs[ log_index ];
                         int tipo = logs_tipos[ log_index ];
                         if( texto == null )
                             { break; }
+
+                        pointer_run_time++;
+
                         if(tipo == 1 )
                                 {
                                         Debug.Log( texto );
@@ -106,20 +110,23 @@ public static class Console {
 
                 }
 
-                pointer_run_time += logs_length;
 
                 Debug.Log( "------------------------------" );
-                Debug.Log( "" );
-                Debug.Log( "" );
+                Debug.Log( "--" );
+                Debug.Log( "--" );
                 Debug.Log( "---------- MULTI -------------" );
 
 
                 for( int log_m_index = index_atual_m ; log_m_index < logs_m_length ; log_m_index++ ){
+
                     
-                        string texto = logs[ log_m_index ];
-                        int tipo = logs_tipos[ log_m_index ];
+                        string texto = logs_m[ log_m_index ];
+                        int tipo = logs_tipos_m[ log_m_index ];
                         if( texto == null )
                             { break; }
+
+                        pointer_run_time_m++;
+
                         if(tipo == 1 )
                                 {
                                         Debug.Log( texto );
@@ -133,8 +140,10 @@ public static class Console {
 
                 }
 
-                pointer_run_time_m += logs_m_length;
+                
                 Debug.Log( "------------------------------" );
+                Debug.Log( "--" );
+                Debug.Log( "--" );
 
                 
                 return;

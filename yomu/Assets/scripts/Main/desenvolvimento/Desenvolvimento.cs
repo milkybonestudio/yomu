@@ -7,49 +7,15 @@ using UnityEngine;
 using System.Reflection;
 using Png_decoder;
 using Unity.Collections;
-
-
-
 using System.Drawing;
-
-
-
-
-//using UnityEditor.Animations;
-
 using UnityEngine.SceneManagement;
- 
-
 using System.Runtime.InteropServices;
-
 using System.Text;
 using UnityEngine.Rendering.VirtualTexturing;
 using System.Linq;
 
 
 
-
-public class Test_dll : MonoBehaviour{
-
-
-     [DllImport("a")] public static extern float Somar(float a, float b);
-
-
-
-
-}
-
-
-
-
-public enum Desenvolvimento_atual {
-
-     nada,
-
-     movimento,
-
-
-}
 
 
 
@@ -61,7 +27,7 @@ public class Desenvolvimento {
           public static Desenvolvimento Pegar_instancia(){ return instancia; }
           public static Desenvolvimento Construir(){ instancia = new Desenvolvimento(); return instancia;}
 
-
+          //  --- MODO TESTE ATUAL
           public Desenvolvimento_atual desenvolvimento_atual = Desenvolvimento_atual.movimento;
 
           public bool Verificar_teste(){
@@ -146,40 +112,6 @@ public class Desenvolvimento {
 
 
           }
-
-
-
-
-
-
-
-     // public bool bloquear_testes = false ;
-
-
-
-     // public bool teste_generico = true ;
-
-     // public bool testar_login = false;
-     // public bool testar_menu = false ;
-
-
-
-     // public bool testar_plataform = false ;
-     // public string teste_fase = "";
-
-
-
-
-     // public bool testar_jogo = false ;
-     // public Ponto_nome ponto_nome =   Ponto_nome.UP_quarto_nara ; 
-
-     // public int[] interativos = new int[]{};
-     // public int testar_save = 0;
-
-
-
-     // public bool testar_visual_novel = false ;
-     // public Nome_screen_play screen_play_teste =  Nome_screen_play.NARA_INTRODUCAO_dia_introducao_carruagem ;        //"cenas_obrigatorias/1/sara_wake_up/rota_final"; 
 
 
 
