@@ -35,25 +35,16 @@ public class Controlador : MonoBehaviour {
             public Desenvolvimento desenvolvimento;
             public Controlador_UI controlador_UI;
 
-
-            [NonSerialized]  public  Dados_blocos  dados_blocos = null;
-            [NonSerialized]  public  int   posicao_anterior  = 0;
             [NonSerialized]  public  Bloco   bloco_atual  = Bloco.nada;
-            [NonSerialized]  public  int   script_inicial = 0;
-
+            
 
             public void Start(){
 
-                  Console.Log( "aa" );
-
                   if( Thread.CurrentThread.Name == null )
                         { Thread.CurrentThread.Name = "Main"; }
-                  Debug.Log(Thread.CurrentThread.Name);
-                  
+                        
 
                   canvas = GameObject.Find( "Tela/Canvas" );
-
-            
                   Controlador_multithread.jogo_ativo = true;
 
                   instancia = this;      
@@ -62,6 +53,8 @@ public class Controlador : MonoBehaviour {
                   Application.runInBackground = true;
 
 
+                  // --- CONSTRUIR CONTROLADORES GERAIS
+
                   Controlador_cache.Construir();
                   Controlador_multithread.Construir();
                   Controlador_audio.Construir();
@@ -69,25 +62,36 @@ public class Controlador : MonoBehaviour {
                   Controlador_dados.Construir();
                   Controlador_configuracoes.Construir();
 
+
                   #if UNITY_EDITOR 
 
                         Teste_geral.Testar();
                         Controlador_development.Verificar();
                         Desenvolvimento.Construir();  
 
-                        bool em_teste = Desenvolvimento.Pegar_instancia().Verificar_teste();
-
+                        bool em_teste = ( Desenvolvimento.Pegar_instancia().desenvolvimento_atual != Desenvolvimento_atual.nada );
+                        
                         if( em_teste ) 
-                              { return ; }
+                              { 
+                                    // --- VAI TESTAR
+
+                                    modo_controlador_atual = Controlador_modo.desenvolvimento;
+                                    Desenvolvimento.Pegar_instancia().Iniciar_jogo_teste();
+                                    return;
+                              }
 
 
                   #endif
-                  
 
-                  // --- VERIFICAR ARQUIVO DE SEGURANCA
-                  bool arquivo_foi_encerrado_corretamente = Garantir_arquivo_de_seguranca();
-                  if( !( arquivo_foi_encerrado_corretamente ) )
-                        { return; }
+                  #if !UNITY_EDITOR
+
+                        // --- VERIFICAR ARQUIVO DE SEGURANCA
+                        bool arquivo_foi_encerrado_corretamente = Garantir_arquivo_de_seguranca();
+                        if( !( arquivo_foi_encerrado_corretamente ) )
+                              { return; }
+
+                  #endif
+                  
 
 
                   login = Login.Construir();
@@ -97,30 +101,29 @@ public class Controlador : MonoBehaviour {
 
             public void Update() {
 
-
                   
                   Console.Update();
-
-                  return;
                   
                   if( esta_reconstruindo_save )
                         { return ; }  
 
 
-                  if( Input.GetKey( KeyCode.F1 ) && Input.GetKey(KeyCode.Escape ) ) { Application.Quit(); } 
+                  if( Input.GetKey( KeyCode.F1 ) && Input.GetKey(KeyCode.Escape ) ) 
+                        { Application.Quit(); } 
 
                   Controlador_audio.Pegar_instancia().Update();
-
                   Controlador_input.Update_mouse();
                   Controlador_dados.Pegar_instancia().Atualizar_mouse_atual(); 
 
 
                   switch (  modo_controlador_atual ) {
                         
+                        // --- SE EM DESENVOLVIMENTO : DESENVOLVIMENTO.UPDATE => MODO ESPECIFICO UPDATE
+                        case Controlador_modo.desenvolvimento: desenvolvimento.Update(); break;
+
                         case Controlador_modo.jogo :  jogo.Update(); break;
                         case Controlador_modo.login :  login.Update() ; break;
                         case Controlador_modo.menu : menu.Update() ; break;
-                        case Controlador_modo.desenvolvimento: desenvolvimento.Update(); break;
                         case Controlador_modo.transicao: console.log("esta no modo_tela transicao"); break;
                         case Controlador_modo.nada: console.log("esta no modo_tela NADA"); break;
 

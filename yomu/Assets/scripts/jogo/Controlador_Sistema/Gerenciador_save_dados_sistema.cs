@@ -32,21 +32,16 @@ public class Gerenciador_save_dados_sistema {
 
                 // tem que pegar tudo 
 
-                byte[][] Compilador_dados_sistema.Compilar()
+                byte[] retorno =  Compilador_dados_sistema.Compilar( null );
 
+                
+                // o foco quando a stack estiver sendo trocada vai ser sempre 
 
-                if(  )
-                        {
-                                
-                                // o foco quando a stack estiver sendo trocada vai ser sempre 
+                // ** loop em coisas para salvar
 
-                                // ** loop em coisas para salvar
-
-                                // --- SE ESTA SALVANDO A STACK NAO VAI PARA A LIXEIRA 
-                                
-                                return null;
-                        }
-
+                // --- SE ESTA SALVANDO A STACK NAO VAI PARA A LIXEIRA 
+                
+                
                 
                 return null ;
 

@@ -123,11 +123,11 @@ public static class Controlador_input {
             float direcao_v = Input.GetAxis( "Left_analog Vertical" );
             float direcao_h = Input.GetAxis( "Left_analog Horizontal" );
             
-            if( Input.GetKey(KeyCode.RightArrow) ) direcao_h += '' 1f;
+            if( Input.GetKey(KeyCode.RightArrow) ) direcao_h +=  1f;
             if( Input.GetKey(KeyCode.LeftArrow) ) direcao_h -= 1f;
 
             if( Input.GetKey(KeyCode.UpArrow) ) direcao_v -= 1f;
-            if( Input.GetKey(KeyCode.DownArrow) ) direcao_v += '' 1f;
+            if( Input.GetKey(KeyCode.DownArrow) ) direcao_v +=  1f;
 
 
         

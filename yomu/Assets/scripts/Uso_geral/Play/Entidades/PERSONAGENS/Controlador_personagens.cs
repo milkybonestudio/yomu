@@ -147,27 +147,28 @@ public class Controlador_personagens {
 		public void Carregar_dados_personagem( int _personagem_id , int _periodos_para_iniciar, int _local_para_colocar ){
 
 
-			int slot_personagem_lizeira = INT.Tem_valor_no_array( gerenciador_save.personagens_esperando_para_serem_excluidos_ids, _personagem_id );
-			if( slot_personagem_lizeira != -1 )
+			Personagem personagem_na_lixeira = gerenciador_save.Retirar_personagem_da_lixeira( _personagem_id );
+
+			if( personagem_na_lixeira != null )
 				{
-					// personagem estava na lixeira 
-
-					gerenciador_save.personagens_esperando_para_serem_excluidos_ids = INT.Tirar_valor_do_array( gerenciador_save.personagens_esperando_para_serem_excluidos_ids , _personagem_id );
-
-					Personagem personagem_da_lixeira = personagens[ _personagem_id ];
 					#if UNITY_EDITOR
 						Console.Log( $"Personagem <color=red> { ((Personagem_nome ) _personagem_id).ToString()  } </color> foi tirado da lixeira e vai ser colocado em dados dinamicos" );
 					#endif
 					int slot =  gerenciador_dados_dinamicos.Criar_slot_personagem( _personagem_id );
 					gerenciador_dados_dinamicos.personagens_AIs[ slot ] = personagem_na_lixeira.gerenciador_AI.personagem_AI;
 					gerenciador_dados_dinamicos.dados_containers_personagens[ slot ] = personagem_na_lixeira.gerenciador_containers_dados.dados_containers;
-
-					return;
-
 				}
-			
-			
-			gerenciador_dados_dinamicos.Carregar_dados_personagem_MULTITHREAD( _personagem_id );
+				else
+				{
+					gerenciador_dados_dinamicos.Carregar_dados_personagem_MULTITHREAD( _personagem_id );
+				}
+
+
+			// Agora vai fazer parte do Controlador_sistema
+
+			// INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref personagens_pentendes_para_adicionar , _personagem_id );
+			// INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref personagens_pentendes_para_adicionar_local , _local_para_colocar );
+			// INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref personagens_pentendes_para_adicionar_tempo , _periodos_para_iniciar );
 
 			return;
 

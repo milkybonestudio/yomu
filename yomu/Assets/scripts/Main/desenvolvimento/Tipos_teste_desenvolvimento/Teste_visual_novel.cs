@@ -1,14 +1,9 @@
-using UnityEngine;
-using System;
-using System.Reflection;
-
 
 
 
 public static class Teste_movimento {
 
 
-        // ** criar ferramentas de suporte 
 
         public static void Criar( string _chave ){
                 
@@ -17,11 +12,11 @@ public static class Teste_movimento {
                 // ** definir os dados do teste 
                 
 
-                Jogo.Pegar_instancia().bloco_atual = Bloco.movimento;
+                Jogo.Pegar_instancia().bloco_atual = Bloco.visual_novel;
 
                 switch( _chave ){
 
-                        case "lily_quarto" : Movimento_estado_lily_biscoito.Ativar(); return;
+                        case "lily_quarto" : Definir_estado_jogo_1(); return;
 
                 }
 
@@ -35,15 +30,8 @@ public static class Teste_movimento {
 
         }
 
-        
 
 
-        public static void Definir_estado_jogo_1(){
-
-
-
-
-        }
 
 
 }

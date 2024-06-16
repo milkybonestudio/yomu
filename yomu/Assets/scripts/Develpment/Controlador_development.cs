@@ -10,14 +10,15 @@ public static class Controlador_development {
    public static bool bloquear_development_tests = true;
 
 
-    // vai controlador coisas relaciondo com o desenvolvimento
+    // --- CONTROLADORES
 
     public static bool atualizar_dados_sistema_personagens = false;
     public static bool atualizar_imagens_personagens = false;
     public static bool atualizar_imagens_personagens_especificos = true;
 
-    // vai ser um pouco demorado
+    // --- ALTO CUSTO
     public static bool atualizar_cenas = false;
+
 
     public static string[] personagens_para_atualizar_imagens = new string[]{
 

@@ -35,23 +35,41 @@ public class Gerenciador_save_personagens {
         public int[] index_instrucao_atual; // length = numero de personagens
         
 
-        public void Colocar_personagem_na_lixeira( int _personagem_id ){
+        public void Colocar_personagem_na_lixeira( Personagem _personagem ){
 
 
-                for( int slot_teste = 0 ; slot_teste < personagens_esperando_para_serem_excluidos_ids.Length ;slot_teste++ ){
+                for( int slot_teste = 0 ; slot_teste < personagens_esperando_para_serem_excluidos.Length ;slot_teste++ ){
 
-                        if( personagens_esperando_para_serem_excluidos_ids[ slot_teste ] != 0)
-                                { continue; }
-                                
-                        personagens_esperando_para_serem_excluidos_ids[ slot_teste ] = _personagem.personagem_id;
-                        return;
-                
+                        if( personagens_esperando_para_serem_excluidos_ids[ slot_teste ] == 0)
+                                {
+                                        personagens_esperando_para_serem_excluidos_ids[ slot_teste ] = _personagem.personagem_id;
+                                        personagens_esperando_para_serem_excluidos[ slot_teste ] = _personagem;
+                                        return;
+                                }
+
                 }
 
+
+                Personagem[] novo_personagens = new Personagem[ personagens_esperando_para_serem_excluidos_ids.Length + 5 ];
+                int[] novo_personagens_ids = new int[ personagens_esperando_para_serem_excluidos_ids.Length + 5 ];
+
                 int index_para_acrescentar = personagens_esperando_para_serem_excluidos_ids.Length;
-                personagens_esperando_para_serem_excluidos_ids = INT.Aumentar_length_array( personagens_esperando_para_serem_excluidos_ids, 5 );
-                
+
+                for( int novo_arr_index = 0; novo_arr_index < personagens_esperando_para_serem_excluidos_ids.Length; novo_arr_index++ ){
+
+                        novo_personagens_ids[ novo_arr_index ]  =  personagens_esperando_para_serem_excluidos_ids[ novo_arr_index ];
+                        novo_personagens[ novo_arr_index ]  =  personagens_esperando_para_serem_excluidos[ novo_arr_index ];
+                        
+                }
+
+                personagens_esperando_para_serem_excluidos = novo_personagens;
+                personagens_esperando_para_serem_excluidos_ids = novo_personagens_ids;
+
+                personagens_esperando_para_serem_excluidos_ids[ index_para_acrescentar ] = _personagem.personagem_id;
+                personagens_esperando_para_serem_excluidos[ index_para_acrescentar ] = _personagem;
+
                 return;
+
         
         }
 
@@ -92,7 +110,7 @@ public class Gerenciador_save_personagens {
                                         if ( personagens_com_dados_nao_salvos_na_stack[ personagem_primeira_stack_index ] == 0 )
                                                 { continue; }
                                                 
-                                        return Criar_dados_para_salvar_personagem_USO_INTERNO( personagens_esperando_para_serem_excluidos_ids[ personagem_primeira_stack_index ] ); 
+                                        return Criar_dados_para_salvar_personagem( personagens_esperando_para_serem_excluidos_ids[ personagem_primeira_stack_index ] ); 
                                         
                                 }
 
@@ -105,13 +123,8 @@ public class Gerenciador_save_personagens {
                 // --- VERIFICAR LIXEIRA
                 for( int personagem_lixeira_index = 0 ; personagem_lixeira_index < personagens_esperando_para_serem_excluidos_ids.Length ; personagem_lixeira_index++ ){
 
-                        if( personagens_esperando_para_serem_excluidos_ids[ personagem_lixeira_index ] == 0 )
-                                { continue; }
-
-                        Personagem personagem_da_lixeira = personagens_esperando_para_serem_excluidos_ids[ personagem_lixeira_index ]
-
-                        return Criar_dados_para_salvar_personagem_USO_INTERNO( personagens_esperando_para_serem_excluidos_ids[ personagem_lixeira_index ] ); 
-                
+                        if( personagens_esperando_para_serem_excluidos_ids[ personagem_lixeira_index ] != 0 )
+                                { return Criar_dados_para_salvar_personagem( personagens_esperando_para_serem_excluidos_ids[ personagem_lixeira_index ] ); }
 
                 }
  
@@ -119,10 +132,8 @@ public class Gerenciador_save_personagens {
 
         }
 
-        
 
-
-        public Dados_para_salvar Criar_dados_para_salvar_personagem_USO_INTERNO( int _personagem_id ) {
+        public Dados_para_salvar Criar_dados_para_salvar_personagem( int _personagem_id ) {
 
 
                         Dados_para_salvar dados_retorno = new Dados_para_salvar();

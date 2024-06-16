@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 
@@ -38,9 +39,13 @@ public static class Localizador_personagens {
 
             }
 
+        return true;
+
+        
 
 
-    };
+
+    }
 
      
     public static IEnumerator Pegar_novos_personagens() {
@@ -49,7 +54,7 @@ public static class Localizador_personagens {
 
         while( true ){
 
-            if(   Input.GetKey( KeyCode.Enter )   )
+            if(   Input.GetKey( KeyCode.KeypadEnter )   )
                 {
                     // FINALIZXAR
                     // trim texto e pegar personagens 

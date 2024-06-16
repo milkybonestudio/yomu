@@ -123,9 +123,19 @@ public static class INT {
         }
 
 
-        public static void Trocar_valor_no_array( int[] _array, int _valor_para_trocart, int _novo_valor ){
+        public static void Trocar_valor_no_array( int[] _arr , int _valor_para_trocar, int _novo_valor ){
 
-                
+                for( int index = 0 ; index < _arr.Length ;index++){
+
+                        if( _arr[ index ] != _valor_para_trocar )
+                                { continue; } 
+
+                        _arr[ index ] = _novo_valor;
+                        return;
+                        
+                }
+
+                return;
 
         }
 
