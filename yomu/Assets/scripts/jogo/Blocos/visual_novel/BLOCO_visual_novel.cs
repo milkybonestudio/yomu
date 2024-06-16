@@ -103,58 +103,7 @@ public class BLOCO_visual_novel {
 
         public static  BLOCO_visual_novel Construir(){
             
-            
-
-            /*
-
-                Leitor_visual_novel.Construir();
-                Controlador_personagens_visual_novel.Construir();
-                Controlador_tela_visual_novel.Construir();
-
-                ** dados_blocos vai ser criado no jogo
-
-                ** porque mudar_ui é uma action? 
-                poderia ser uma function normal que pegar um byte[] com dados sobre o estado da UI 
-                qual seria a ui? => pergaminho + opcoes [ nao tem porque mudar ] 
-                     tipo pergaminho             
-                [        1 byte                                   ]
-
-
-                ** faz sentido ter controle sobre como a ui vai mudar 
-
-                        => na barra superior tem coisas opcionais 
-                        => na barra superior os icones podem mudar 
-
-
-                fn(){
-
-
-                    voltar vs: 
-
-                        mudar_ui() => 
-                        mudar_input() 
-
-
-                }
-
-
-                a pergunta é: onde que o update da ui vai ficar? 
-                acho que fazria sentido ela ficar em cada bloco
-
-                blocos: 
-
-                - vs            
-                - mmovimento   =>  barra superior 
-                - conversa     =>  barra superior ( talvez diferente? )
-                - cartas       =>  ui cartas 
-                - minigames    =>  proprio
-                - lojas        =>  barra superior ( nao pega ) + ui propria 
-
-
-            */
-
-
-
+        
             BLOCO_visual_novel bloco = new BLOCO_visual_novel(); 
 
 

@@ -15,9 +15,13 @@ public static class Teste_movimento {
 
                 // mudar update jogo para movimento
                 // ** definir os dados do teste 
+
+                Jogo jogo = Jogo.Pegar_instancia();
                 
 
-                Jogo.Pegar_instancia().bloco_atual = Bloco.movimento;
+                jogo.bloco_atual = Bloco.movimento;
+                // jogo.
+
 
                 switch( _chave ){
 

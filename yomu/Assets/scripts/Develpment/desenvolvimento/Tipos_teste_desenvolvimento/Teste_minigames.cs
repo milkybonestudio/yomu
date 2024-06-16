@@ -12,6 +12,10 @@ public static class Teste_minigames {
                 // ** definir os dados do teste 
 
                 string[] k_v = _chave.Split( ":" );
+
+                if( k_v.Length != 2 )
+                        { throw new System.Exception( " chave minigame nao veio no formato => minigame : chave" ) ;}
+
                 string minigame = k_v[ 0 ].Trim();
                 string chave_minigame_especifico = k_v[ 1 ].Trim();
                 

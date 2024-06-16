@@ -20,8 +20,10 @@ public class Desenvolvimento {
 
 
           //  --- MODO TESTE ATUAL
-          public Desenvolvimento_atual desenvolvimento_atual = Desenvolvimento_atual.movimento;
-          public string chave_teste = "";
+
+          public Desenvolvimento_atual desenvolvimento_atual = Desenvolvimento_atual.visual_novel;
+          public string chave_teste = "colheita:";
+
 
 
           public bool Verificar_teste(){
@@ -38,16 +40,15 @@ public class Desenvolvimento {
           public void Iniciar_jogo_teste(){
 
                     Console.Log( "veio em iniciar jogo teste" );
-                    Console.Log( $"modo atual: {Desenvolvimento_atual.movimento}" );
-
+                    Console.Log( $"modo atual: {desenvolvimento_atual}" );
+                    
                     // cria espaço para as ferramentas
                     GameObject desenvolvimento_ferramentas = new GameObject( "desenvolvimento_ferramentas");
                     desenvolvimento_ferramentas.transform.SetParent( GameObject.Find( "Tela" ).transform , false );
 
 
                     // Inicia o save zerado
-                    Controlador.Pegar_instancia().modo_controlador_atual = Controlador_modo.desenvolvimento;
-                    Controlador.Pegar_instancia().jogo =  Jogo.Construir_teste();
+
 
                     switch( desenvolvimento_atual ){
 

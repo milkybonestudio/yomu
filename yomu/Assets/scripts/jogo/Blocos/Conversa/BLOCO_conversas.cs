@@ -136,20 +136,20 @@ public class BLOCO_conversas {
         public void Update(){
 
 
-                    if( Controlador_input.Get_down( Key_code.esc ) ){ 
+                if( Controlador_input.Get_down( Key_code.esc ) ){ 
 
-                            Encerrar_conversa(); 
-                            return;
-                            
-                    }
+                        Encerrar_conversa(); 
+                        return;
+                        
+                }
 
-                    if( blocos_info.esta_mostrando_blocos ){ return; }
+                if( blocos_info.esta_mostrando_blocos ){ return; }
 
-                    if(   Controlador_input.Get_down( Key_code.space ) ||  Controlador_input.Get_down( Key_code.mouse_left ) ) {
+                if(   Controlador_input.Get_down( Key_code.space ) ||  Controlador_input.Get_down( Key_code.mouse_left ) ) {
 
-                            Ler(); 
-                            return;                    
-                    }
+                        Ler(); 
+                        return;                    
+                }
 
         }
 

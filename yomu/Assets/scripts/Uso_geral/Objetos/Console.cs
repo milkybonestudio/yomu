@@ -6,8 +6,6 @@ using UnityEngine;
 // ** tem que direcionar referentes ao nomes das threads 
 
 
-
-
 public static class Console {
 
 
@@ -83,9 +81,21 @@ public static class Console {
                 int logs_m_length = logs_m.Length;
 
 
-                Debug.Log( "length: " + ( logs_length + logs_m_length ) );
+                bool tem_2 =    (
+                                        ( index_atual != 0 ) 
+                                        && 
+                                        ( index_atual_m != 0 ) 
+                                );
+                                  
 
-                Debug.Log( "<b><color=lime>---------- MAIN -------------</color></b>" );
+                if( tem_2 )
+                        {
+
+                                Debug.Log( "length: " + ( logs_length + logs_m_length ) );
+                                Debug.Log( "<b><color=lime>---------- MAIN -------------</color></b>" );
+
+                        }
+
 
                 for( int log_index = pointer_run_time ; log_index < logs_length ; log_index++ ){
 
@@ -110,11 +120,15 @@ public static class Console {
 
                 }
 
+                if( tem_2 )
+                        {
 
-                Debug.Log( "<b><color=lime>------------------------------</color></b>" );
-                Debug.Log( "--" );
-                //Debug.Log( "--" );
-                Debug.Log( "<b><color=#EF7979>---------- MULTI -------------</color></b>" );
+                                Debug.Log( "<b><color=lime>------------------------------</color></b>" );
+                                Debug.Log( "--" );
+                                Debug.Log( "<b><color=FF4747 >---------- MULTI -------------</color></b>" );
+
+                        }
+
 
 
                 for( int log_m_index = index_atual_m ; log_m_index < logs_m_length ; log_m_index++ ){
@@ -140,10 +154,15 @@ public static class Console {
 
                 }
 
-                
-                Debug.Log( "<b><color=#EF7979>------------------------------</color></b>" );
-                Debug.Log( "--" );
-                //Debug.Log( "--" );
+                if( tem_2 )
+                        {
+                                
+                                Debug.Log( "<b><color=FF4747 >------------------------------</color></b>" );
+                                Debug.Log( "--" );
+                                //Debug.Log( "--" );
+
+                        }
+
 
                 
                 return;

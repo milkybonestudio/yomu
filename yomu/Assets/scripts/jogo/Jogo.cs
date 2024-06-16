@@ -97,6 +97,9 @@ public class Jogo {
 
                 //if( Controlador_transicao.Pegar_instancia().em_transicao ) { return; }
 
+
+                console.log( "bloco atual jogo: " + bloco_atual );
+
                 switch (  bloco_atual ) {
                     
 

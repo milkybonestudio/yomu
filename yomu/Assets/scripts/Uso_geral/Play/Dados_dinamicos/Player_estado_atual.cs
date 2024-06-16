@@ -162,6 +162,9 @@ public class Player_estado_atual {
     public string Pegar_path_imagem_background(){
 
 
+            return "images/in_game/black";
+
+
             return   "images/in_game/" + ponto_atual.folder_path + ponto_atual.background_name;
 
 

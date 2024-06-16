@@ -76,6 +76,7 @@ public class Controlador : MonoBehaviour {
                                     // --- VAI TESTAR
 
                                     modo_controlador_atual = Controlador_modo.desenvolvimento;
+                                    Controlador.Pegar_instancia().jogo =  Jogo.Construir_teste();
                                     Desenvolvimento.Pegar_instancia().Iniciar_jogo_teste();
                                     return;
                               }
@@ -101,19 +102,17 @@ public class Controlador : MonoBehaviour {
 
             public void Update() {
 
-                  
-                  Console.Update();
-                  
-                  if( esta_reconstruindo_save )
-                        { return ; }  
-
 
                   if( Input.GetKey( KeyCode.F1 ) && Input.GetKey(KeyCode.Escape ) ) 
                         { Application.Quit(); } 
 
+                  Console.Update();
                   Controlador_audio.Pegar_instancia().Update();
                   Controlador_input.Update_mouse();
                   Controlador_dados.Pegar_instancia().Atualizar_mouse_atual(); 
+                  
+                  if( esta_reconstruindo_save )
+                        { return ; }  
 
 
                   switch (  modo_controlador_atual ) {
@@ -132,6 +131,7 @@ public class Controlador : MonoBehaviour {
 
                   Controlador_input.Update();
                   Controlador_multithread.Pegar_instancia().Update();
+                  
       
             }
 

@@ -108,7 +108,7 @@ public class Controlador_tela_visual_novel {
         public void Criar_tela(){
 
      
-                canvas_visual_novel = GameObject.Find("Tela/Canvas/Visual_novel");
+                canvas_visual_novel = GameObject.Find("Tela/Canvas/Jogo/Visual_novel");
 
 
                 GameObject background = new GameObject("Background");
