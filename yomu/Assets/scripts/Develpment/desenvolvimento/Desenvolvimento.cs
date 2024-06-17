@@ -22,7 +22,7 @@ public class Desenvolvimento {
           //  --- MODO TESTE ATUAL
 
           public Desenvolvimento_atual desenvolvimento_atual = Desenvolvimento_atual.visual_novel;
-          public string chave_teste = "colheita:";
+          public string chave_teste = "generico";
 
 
 

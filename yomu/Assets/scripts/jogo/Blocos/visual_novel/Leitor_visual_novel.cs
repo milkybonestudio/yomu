@@ -10,26 +10,33 @@ public class Leitor_visual_novel{
   
         public static Leitor_visual_novel instancia;
         public static Leitor_visual_novel Pegar_instancia(){ return instancia; }
-        public static Leitor_visual_novel Construir(){ instancia = new Leitor_visual_novel(); return instancia;}
 
- 
-    public BLOCO_visual_novel bloco_visual_novel;
+
+        public static Leitor_visual_novel Construir( BLOCO_visual_novel _bloco ){ 
+
+            Leitor_visual_novel leitor = new Leitor_visual_novel(); 
+
+                leitor.bloco_visual_novel = _bloco;
+                
+            instancia = leitor;
+            return instancia;
+            
+        }
 
     
+        public BLOCO_visual_novel bloco_visual_novel;
 
-    public Controlador_tela_visual_novel controlador_tela_visual_novel;
+        
 
-    public Controlador_personagens_visual_novel controlador_personagens_visual_novel;
+        public Cena[] cenas;
 
-    public Cena[] cenas;
+        public Screen_play screen_play;
 
-    public Screen_play screen_play;
+        // public Visual_novel_dados visual_novel_dados; 
 
-    // public Visual_novel_dados visual_novel_dados; 
+        //public string[] personagens_atuais = new string[10];
 
-    //public string[] personagens_atuais = new string[10];
-
-  
+    
 
 
        // nome ruim 
@@ -50,20 +57,6 @@ public class Leitor_visual_novel{
 
     }
 
-
-  
-    public void Iniciar(){
-
-
-        bloco_visual_novel = BLOCO_visual_novel.Pegar_instancia();
-
-        controlador_tela_visual_novel = Controlador_tela_visual_novel.Pegar_instancia();
-
-        controlador_personagens_visual_novel = Controlador_personagens_visual_novel.Pegar_instancia();
-
-        
-         
-    }
 
 
 
@@ -644,7 +637,7 @@ public class Leitor_visual_novel{
 
                             float Y_atual = personagem.posicao[ 1 ];
                             
-                            controlador_personagens_visual_novel.Mover_char(  personagem ,  novo_X ,  Y_atual ); continue;
+                            bloco_visual_novel.controlador_personagens_visual_novel.Mover_char(  personagem ,  novo_X ,  Y_atual ); continue;
 
                 }
 
@@ -701,7 +694,7 @@ public class Leitor_visual_novel{
                 if( ignorar_Y ) { novo_Y = personagem.posicao[ 1 ]; }
 
             
-                controlador_personagens_visual_novel.Mover_char(  personagem ,  novo_X ,  novo_Y ); continue;
+                bloco_visual_novel.controlador_personagens_visual_novel.Mover_char(  personagem ,  novo_X ,  novo_Y ); continue;
 
         }
 
@@ -740,7 +733,7 @@ public class Leitor_visual_novel{
 
 
 
-       bool verificacao_texto_pergaminho = controlador_tela_visual_novel.pergaminho.Aceita_clicks();
+       bool verificacao_texto_pergaminho = bloco_visual_novel.controlador_tela_visual_novel.pergaminho.Aceita_clicks();
 
         if(  !verificacao_texto_pergaminho  ){
 
@@ -749,9 +742,9 @@ public class Leitor_visual_novel{
 
         }
 
-        controlador_tela_visual_novel.pergaminho.pergaminho_texto.SetActive(true);
+        bloco_visual_novel.controlador_tela_visual_novel.pergaminho.pergaminho_texto.SetActive(true);
 
-        if(controlador_tela_visual_novel.pergaminho.pergaminho_is_abaixado) controlador_tela_visual_novel.pergaminho.Levantar_pergaminho();
+        if(bloco_visual_novel.controlador_tela_visual_novel.pergaminho.pergaminho_is_abaixado) bloco_visual_novel.controlador_tela_visual_novel.pergaminho.Levantar_pergaminho();
 
 
         int tipo_texto =   ( ( int ) _cena [ 2 ]  - 48 ) ; 
@@ -810,11 +803,11 @@ public class Leitor_visual_novel{
 
         if( personagem_index > 49 ){
 
-            personagem = controlador_personagens_visual_novel.extras_dados[ ( personagem_index - 50 ) ];
+            personagem = bloco_visual_novel.controlador_personagens_visual_novel.extras_dados[ ( personagem_index - 50 ) ];
 
         } else {
 
-            personagem =  controlador_personagens_visual_novel.personagens_dados[ personagem_index ];
+            personagem =  bloco_visual_novel.controlador_personagens_visual_novel.personagens_dados[ personagem_index ];
              
         }
 
@@ -848,7 +841,7 @@ public class Leitor_visual_novel{
 
 
 
-        controlador_tela_visual_novel.pergaminho.Escrever(  _texto: texto,  _personagem: nome_display , _cor: cor ,  _tipo: tipo_texto, _tipo_construcao: tipo_construcao );
+        bloco_visual_novel.controlador_tela_visual_novel.pergaminho.Escrever(  _texto: texto,  _personagem: nome_display , _cor: cor ,  _tipo: tipo_texto, _tipo_construcao: tipo_construcao );
 
         return;
     
@@ -970,7 +963,7 @@ public class Leitor_visual_novel{
                 case Nome_fn.transicao_final: Fn_methods.Transicao ( "final" , _cena ); break;
 
 
-                case Nome_fn.encerrar_transicao: Controlador_tela_visual_novel.Pegar_instancia().Encerrar_transicao(); break;
+                case Nome_fn.encerrar_transicao: bloco_visual_novel.controlador_tela_visual_novel.Encerrar_transicao(); break;
 
 
                 /// referentes backgrounds 
@@ -1143,67 +1136,59 @@ public class Leitor_visual_novel{
         public void Ler_end ( string _cena){
 
 
-            screen_play.esta_ativo = false;
+                screen_play.esta_ativo = false;
 
 
-            Controlador_tela_visual_novel.Pegar_instancia().pergaminho.Resetar();
+                bloco_visual_novel.controlador_tela_visual_novel.pergaminho.Resetar();
 
-        
-            //    set sempre é responavel por resetar os valores                
             
-            /*
+                //    set sempre é responavel por resetar os valores                
+                
+                /*
 
-                        tipo_cena , 
-                        auto ,
-                        script_end_id ,
-                        nome_cena_sequencia_id ,
-                        tem_transicao_char  
-            
-            */
-
-
-
-
-
-
-            bool tem_screen_play_sequencia =  ( _cena [ 2 ] == 't' ) ;
-
-            bool screen_play_sequencia_tem_transicao =  ( _cena [ 3 ] == 't' ) ;
-
-            Nome_script_visual_novel_end script_end =   ( Nome_script_visual_novel_end )  ( (int) _cena[ 2 ] - 48 ) ;
-            Nome_screen_play nome_screen_play_sequencia =     ( Nome_screen_play )   ( (int) _cena [ 3 ] - 48 ) ;
-
-
-            if( script_end  != Nome_script_visual_novel_end.nada ) {
-
-                Scripts_visual_novel_end.Ativar_script( script_end , bloco_visual_novel.screen_play );
-
-
-            }
+                            tipo_cena , 
+                            auto ,
+                            script_end_id ,
+                            nome_cena_sequencia_id ,
+                            tem_transicao_char  
+                
+                */
 
 
 
-            if( nome_screen_play_sequencia != Nome_screen_play.nada ){
+                bool tem_screen_play_sequencia =  ( _cena [ 2 ] == 't' );
+
+                bool screen_play_sequencia_tem_transicao =  ( _cena [ 3 ] == 't' ) ;
+
+                Nome_script_visual_novel_end script_end =   ( Nome_script_visual_novel_end )  ( ( int ) _cena[ 2 ] - 48 ) ;
+                Nome_screen_play nome_screen_play_sequencia =     ( Nome_screen_play )   ( ( int ) _cena [ 3 ] - 48 ) ;
 
 
-                    bloco_visual_novel.dados_blocos.visual_novel_RETURN = new Visual_novel_RETURN() ;
+                if( script_end  != Nome_script_visual_novel_end.nada ) {
 
-                    Visual_novel_START dados = new Visual_novel_START( nome_screen_play_sequencia ) ;
-                    bloco_visual_novel.dados_blocos.visual_novel_START = dados ;
-                    bloco_visual_novel.Iniciar_screen_play ( dados ) ;
+                    // isso poder ser ou pego por reflection ou criar um formato unico para usar somente strings 
+                    Scripts_visual_novel_end.Ativar_script( script_end , bloco_visual_novel.screen_play );
 
-                    return;
-                                                
-            }
-
-
-            Req_transicao req_transicao = new Req_transicao( Tipo_troca_bloco.OUT  ) ;
-            req_transicao.tipo_transicao = Tipo_transicao.instantaneo;
-            bloco_visual_novel.dados_blocos.req_transicao = req_transicao;
+                }
 
 
 
-            return;
+                // ** nao existe mais 
+                // if( nome_screen_play_sequencia != Nome_screen_play.nada )
+                //     {    
+                //         bloco_visual_novel.Iniciar_screen_play_por_end( nome_screen_play_sequencia ); 
+                //         return; 
+                //     }
+
+                    
+
+                Req_transicao req_transicao = new Req_transicao( Tipo_troca_bloco.OUT  ) ;
+                req_transicao.tipo_transicao = Tipo_transicao.instantaneo;
+                bloco_visual_novel.dados_blocos.req_transicao = req_transicao;
+
+
+
+                return;
 
 
         }

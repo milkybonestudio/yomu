@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 
 /*
-        Contruir() => cria o objeto 
+        Contruir() => cria o objeto
+        Destruir() => ?
         Iniciar() => junto com os dados de Dados_blocos inicia o bloco sempre na transicao 
         Finalizar() => destroi os objetos que precisam ser destruido no BLOCO 
 */

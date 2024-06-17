@@ -6,19 +6,12 @@ using UnityEngine.UI;
 using System.Text.RegularExpressions;
 
 
-
-
 /*
-
-
 
         Controlador_UI => geral 
         mas iniciar vai ser pelo bloco 
 
-
-
         Controlador_UI {
-
 
                 // so vai ser chamado uma vez 
                 // vai passar todos os possiveis Actions que essa parte de UI pode ter 
@@ -26,16 +19,9 @@ using System.Text.RegularExpressions;
                                         //  ja vai estar em player
                 public Colocar_dados(    Bloco  ,  byte[] , Action[]  ){
 
-
-
                 }
 
-
-
-
         }
-
-
 
 */
 
@@ -92,14 +78,49 @@ public enum Tipo_mudanca {
 
 
 
-
-
 public class BLOCO_visual_novel {
+
+       // ** UPDATE DE LOGICA :
+       // um plot sempre tem que ser encerrado, VN nao pode iniciar outra VN
 
       
         public static BLOCO_visual_novel instancia;
         public static BLOCO_visual_novel Pegar_instancia(){ return instancia; }
 
+        public Action  Lidar_retorno ;
+        public Action  Mudar_UI ;
+        public Action  Mudar_input ;
+
+        public Controlador_UI_visual_novel controlador_UI_visual_novel;
+
+
+        public GameObject container_visual_novel;
+
+
+
+
+        public Leitor_visual_novel leitor_visual_novel;
+        public Controlador_tela_visual_novel controlador_tela_visual_novel;
+        public Controlador_personagens_visual_novel controlador_personagens_visual_novel;
+
+        public Dados_blocos dados_blocos;
+
+
+//public Action fn_click_espera = null;
+
+        public Screen_play screen_play = null;
+
+        //public Visual_novel_dados visual_novel_dados;
+
+        public Modo_visual_novel modo_visual_novel_atual = Modo_visual_novel.normal;
+
+        public Bloqueador bloqueador = null;
+
+        public Dados_figure_personagem[] dados;
+
+            
+        public  int  space_skip_scene  = 1;
+        public  bool space_skip_scene_trava  = false;
 
         public static  BLOCO_visual_novel Construir(){
             
@@ -107,9 +128,9 @@ public class BLOCO_visual_novel {
             BLOCO_visual_novel bloco = new BLOCO_visual_novel(); 
 
 
-                bloco.leitor_visual_novel  = Leitor_visual_novel.Construir();
-                bloco.controlador_personagens_visual_novel = Controlador_personagens_visual_novel.Construir();
-                bloco.controlador_tela_visual_novel = Controlador_tela_visual_novel.Construir();
+                bloco.leitor_visual_novel  = Leitor_visual_novel.Construir( bloco );
+                bloco.controlador_personagens_visual_novel = Controlador_personagens_visual_novel.Construir( bloco );
+                bloco.controlador_tela_visual_novel = Controlador_tela_visual_novel.Construir( bloco );
 
 
                 bloco.controlador_UI_visual_novel = new Controlador_UI_visual_novel();
@@ -131,6 +152,9 @@ public class BLOCO_visual_novel {
 
 
 
+
+
+
     public void Finalizar(){
 
 
@@ -142,41 +166,57 @@ public class BLOCO_visual_novel {
     }
 
 
+    // talvez mudar o nome para Iniciar_bloco_visual_novel ou so Iniciar_bloco
+    public void Iniciar_bloco_visual_novel() {
+
+            
+            Visual_novel_START data_visual_novel_start = Dados_blocos.Pegar_instancia().visual_novel_START;
+
+            if( data_visual_novel_start == null)
+                { throw new Exception( "nao veio os dados para iniciar visual novel" ); }
+
+            string  path_background_inicial =   data_visual_novel_start.path_background_inicial;
+            Nome_screen_play nome = data_visual_novel_start.nome_screen_play;
 
 
-    public Action  Lidar_retorno ;
-    public Action  Mudar_UI ;
-    public Action  Mudar_input ;
+            bloqueador = new Bloqueador();
 
-    public Controlador_UI_visual_novel controlador_UI_visual_novel;
+            Debug.Log("controlaodr: " + bloqueador);
 
+            Controlador_cursor.Pegar_instancia().Mudar_cursor( Cor_cursor.off ) ;
 
-    public GameObject container_visual_novel;
+            Mudar_UI();
+            Mudar_input();
 
-
-
-
-    public Leitor_visual_novel leitor_visual_novel;
-    public Controlador_tela_visual_novel controlador_tela_visual_novel;
-    public Controlador_personagens_visual_novel controlador_personagens_visual_novel;
-
-    public Dados_blocos dados_blocos;
+            controlador_tela_visual_novel.Criar_tela();
     
 
-    
-    public Action fn_click_espera = null;
 
-    public Screen_play screen_play = null;
-    
-    //public Visual_novel_dados visual_novel_dados;
- 
-    public Modo_visual_novel modo_visual_novel_atual = Modo_visual_novel.normal;
+            // porque ele esta mudando aqui? 
+            if( path_background_inicial == null )
+                {
+                    path_background_inicial = Player_estado_atual.Pegar_instancia().Pegar_path_imagem_background();
+                    controlador_tela_visual_novel.Mudar_background( _path: path_background_inicial , _tem_transicao:false , _foco: 0 , _id_cor: ( int ) Nome_cor.white ); 
+                }
 
-    public Bloqueador bloqueador = null;
 
-        
-    public  int  space_skip_scene  = 1;
-    public  bool space_skip_scene_trava  = false;
+
+            Screen_play novo_screen_play = Interpretador.Pegar_screen_play ( nome );
+
+
+            novo_screen_play.path_background_atual = path_background_inicial;
+
+            novo_screen_play.esta_ativo = true;
+
+            screen_play = novo_screen_play;
+            
+            leitor_visual_novel.Colocar_dados( screen_play );
+            
+            return;
+
+
+    }
+
 
 
 
@@ -192,38 +232,7 @@ public class BLOCO_visual_novel {
 
 
 
-
-
-
-    // talvez mudar o nome para Iniciar_bloco_visual_novel ou so Iniciar_bloco
-    public void Iniciar_visual_novel() {
-
-            bloqueador = new Bloqueador();
-
-            Controlador_cursor.Pegar_instancia().Mudar_cursor( Cor_cursor.off ) ;
-
-            Mudar_UI();
-            Mudar_input();
-
-            controlador_tela_visual_novel.Criar_tela();
     
-            Visual_novel_START data_start = Dados_blocos.Pegar_instancia().visual_novel_START;
-
-            Iniciar_screen_play( data_start );
-
-            return;
-
-    }
-
-
-
-
-
-
-    public Dados_figure_personagem[] dados;
-
-
-
 
     public Dados_figure_personagem Pegar_dados_figure (){
         return null;
@@ -255,74 +264,12 @@ public class BLOCO_visual_novel {
 
 
 
-
-    public void Iniciar_screen_play ( Visual_novel_START _data_visual_novel_start ){
-
-
-            string  path_background_inicial =   _data_visual_novel_start.path_background_inicial;
-
-            // porque ele esta mudando aqui? 
-            if( path_background_inicial == null ){
-
-                
-                    path_background_inicial = Player_estado_atual.Pegar_instancia().Pegar_path_imagem_background();
-                    controlador_tela_visual_novel.Mudar_background( _path: path_background_inicial , _tem_transicao:false , _foco: 0 , _id_cor: ( int ) Nome_cor.white ); 
-
-            }
-
-
-            Nome_screen_play nome = _data_visual_novel_start.nome_screen_play;
-
-            Screen_play novo_screen_play = null;
-
-            if( Application.isEditor ){ novo_screen_play = Interpretador.Construir_screen_play ( nome );} else { novo_screen_play= Interpretador.Pegar_screen_play ( nome );}
-
-
-            #if UNITY_EDITOR
-
-            novo_screen_play = Interpretador.Construir_screen_play ( nome );
-
-            #else 
-
-            novo_screen_play= Interpretador.Pegar_screen_play ( nome );
-
-            #endif
-
-
-
-
-            novo_screen_play.path_background_atual = path_background_inicial;
-
-            novo_screen_play.esta_ativo = true;
-
-            this.screen_play = novo_screen_play;
-            
-
-            leitor_visual_novel.Colocar_dados( screen_play );
-            
-            return;
-
-    }
-    
-
-
-
-
-
-
-
-
-
-
-
         public void Update(){
 
                 
                 Controlador_cursor.Pegar_instancia().Mudar_cursor( Cor_cursor.off );
 
                     
-
-
                     if(  bloqueador.Esta_bloqueado() ){ 
 
 
@@ -415,108 +362,6 @@ public class BLOCO_visual_novel {
 
 
 
-    public void Iniciar_plataforma(  string[] _args ){
-
-
-
-    
-        // string args = Regex.Replace(_args[0], @"(\r\n)+", "\r\n");
-
-        // string[] chaves_e_fechaduras = args.Split("\r\n");
-
-        // string[] personagens_to_load = chaves_e_fechaduras[1].Split(":")[1].Split(",");
-
-        // for(int personagem = 0;  personagem < personagens_to_load.Length  ; personagem++){
-
-        //     personagens_to_load[personagem] = personagens_to_load[personagem].Trim();
-
-        // }
-
-    
-        // string fase_to_load = chaves_e_fechaduras[2].Split(":")[1].Trim();
-        // string objetivo_fase = chaves_e_fechaduras[3].Split(":")[1].Trim();
-        
-        // string tempo_fase_str = chaves_e_fechaduras[4].Split(":")[1].Trim();
-    
-        // float tempo_fase = -1f;
-
-        
-
-        // if(tempo_fase_str != "p"){
-
-        //     tempo_fase = Convert.ToSingle( tempo_fase_str );
-        
-        // } 
-
-
-        // Plataforma_START plataforma_data_START = new Plataforma_START();
-
-        // plataforma_data_START.fase_to_load = fase_to_load;
-        // plataforma_data_START.personagens_to_load = personagens_to_load;
-        // plataforma_data_START.objetivo_fase = objetivo_fase;
-
-
-
-
-    }
-
-
-
-
-
-  
-
-    //   public void Ativar_cenas( Screen_play _cenas , bool _is_jump = false){
-
-
-    //         if(!_is_jump) { 
-
-    //                 string background_path = Player_estado_atual.Pegar_instancia().Pegar_path_imagem_background();
-    //                 controlador_tela_visual_novel.Mudar_background( background_path , false , 0 , 0); 
-                        
-    //         } else {
-
-    //                 fn_click_espera = () => {
-
-                            
-    //                         fn_click_espera = null;
-
-    //                 };
-
-    //         }
-    //             return;
-
-    // }
-
-
-
-
-
-    
-
-
-
-
-    public void _Voltar_cena(string _origem = ""){
-
-        // if(visual_novel_dados.bloqueio_transicao) return;
-
-         
-        // visual_novel_dados.auto_ativado = false;
-
-        // screen_play.Diminuir_contador_cena();
-
-        //   // if tipo == choice diminuir de novo
-
-        // visual_novel_dados.auto_ativado = false;
-
-    }
-
-
-
-
-
- 
 
 
 }

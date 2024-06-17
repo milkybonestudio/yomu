@@ -11,26 +11,17 @@ sempreque passar int para char tem que  somar 48. nos caracteres anteriores tem 
 
 
 
-
-
-
-
-
 public static class Interpretador {
 
 
-
-    public static Screen_play Construir_screen_play( Nome_screen_play _nome ){
-
+        public static Screen_play Construir_screen_play( Nome_screen_play _nome ){
 
 
-        
                 System.Diagnostics.Stopwatch timePerParse = System.Diagnostics.Stopwatch.StartNew();
-        
+
                 Garantir_backup( _nome ) ;
 
                 string[] cenas_compiladas  =  Compilar( _nome );
-
 
                 Salvar_texto_compilado( _nome , cenas_compiladas );
 
@@ -46,28 +37,36 @@ public static class Interpretador {
                 return screen_play;
 
 
-    }
+        }
 
 
 
-    public static Screen_play Pegar_screen_play( Nome_screen_play _nome ){
+        public static Screen_play Pegar_screen_play( Nome_screen_play _nome ){
 
-            string nome_path = Visual_novel_paths.Pegar_nome_path_screen_play( _nome );
+                #if UNITY_EDITOR
 
-            string path_completo =  "files/cenas/" +  nome_path;
+                        return Construir_screen_play( _nome );
 
-            TextAsset text_asset = Resources.Load<TextAsset>( path_completo );
-
-            if(text_asset == null ){ throw new ArgumentException("nao foi achado screen_play no path: " + path_completo );}
-
-            string[] cenas_compiladas = text_asset.text.Split("\r\n");
-
-            Screen_play screen_play_retorno = new Screen_play( cenas_compiladas );
-
-            return screen_play_retorno;
+                #endif
 
 
-    }
+
+                string nome_path = Visual_novel_paths.Pegar_nome_path_screen_play( _nome );
+                string path_completo =  "files/cenas/" +  nome_path;
+
+                TextAsset text_asset = Resources.Load<TextAsset>( path_completo );
+
+                if( text_asset == null )
+                        { throw new ArgumentException("nao foi achado screen_play no path: " + path_completo ); }
+
+                string[] cenas_compiladas = text_asset.text.Split("\r\n");
+
+                Screen_play screen_play_retorno = new Screen_play( cenas_compiladas );
+
+                return screen_play_retorno;
+
+
+        }
 
 
     public static void Garantir_backup( Nome_screen_play _nome ){

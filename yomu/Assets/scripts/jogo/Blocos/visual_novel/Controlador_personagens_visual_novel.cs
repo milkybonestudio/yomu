@@ -74,12 +74,23 @@ public class Controlador_personagens_visual_novel{
 
         public static Controlador_personagens_visual_novel instancia;
         public static Controlador_personagens_visual_novel Pegar_instancia(){ return instancia; }
-        public static Controlador_personagens_visual_novel Construir(){ instancia = new Controlador_personagens_visual_novel(); return instancia;}
+
+        public static Controlador_personagens_visual_novel Construir( BLOCO_visual_novel _bloco ){ 
+            
+            Controlador_personagens_visual_novel controlador = new Controlador_personagens_visual_novel(); 
+            
+                controlador.bloco_visual_novel = _bloco;
+
+            instancia = controlador;
+            return instancia;
+            
+        }
 
 
     public Coroutine_objeto foco_camera_personagens_coroutine_objeto = new Coroutine_objeto( 2 + 1 );
 
     public GameObject personagens_container;
+    public BLOCO_visual_novel bloco_visual_novel;
 
     public Personagem_dados_visual_novel[] personagens_dados = null;
     public Personagem_dados_visual_novel[] extras_dados = null;

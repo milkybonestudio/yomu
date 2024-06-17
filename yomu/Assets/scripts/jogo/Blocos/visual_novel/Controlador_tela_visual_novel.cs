@@ -39,16 +39,20 @@ public class Controlador_tela_visual_novel {
 
         public static Controlador_tela_visual_novel instancia;
         public static Controlador_tela_visual_novel Pegar_instancia(){ return instancia; }
-        public static Controlador_tela_visual_novel Construir(){ instancia = new Controlador_tela_visual_novel(); return instancia;}
 
 
+        public static Controlador_tela_visual_novel Construir( BLOCO_visual_novel _bloco ){ 
 
-        public void  Iniciar(){
+                Controlador_tela_visual_novel controlador = new Controlador_tela_visual_novel(); 
 
-                bloco_visual_novel = BLOCO_visual_novel.Pegar_instancia();
-                desfoco_opacidade = Resources.Load<Material>("materials/desfoco_opacidade");/// *tem que pegar desfoco
-
+                        controlador.bloco_visual_novel = _bloco;
+                        controlador.desfoco_opacidade = Resources.Load<Material>("materials/desfoco_opacidade");
+                
+                instancia = controlador;
+                return controlador;
+                
         }
+
 
 
         public BLOCO_visual_novel bloco_visual_novel;
@@ -155,7 +159,8 @@ public class Controlador_tela_visual_novel {
 
                 // "Tela/Canvas/Visual_novel"
 
-                // pergaminho = new Pergaminho_modelo_1();
+                // tem que trocar
+                pergaminho = new Pergaminho_modelo_1( canvas_visual_novel.transform );
 
 
                 posicao_mouse = Controlador_dados.Pegar_instancia().posicao_mouse;
@@ -164,6 +169,24 @@ public class Controlador_tela_visual_novel {
 
 
         }
+
+
+        public static void Remover_tela(){
+
+                for( int game_object_index = 0 ;game_object_index< instancia.canvas_visual_novel.transform.childCount ; game_object_index++ ){
+
+                        GameObject game_object_para_destruir = instancia.canvas_visual_novel.transform.GetChild( game_object_index ).gameObject;
+                        GameObject.Destroy( game_object_para_destruir );
+                        continue;
+
+                }
+
+
+                instancia = null;
+
+
+        }
+
 
 
 

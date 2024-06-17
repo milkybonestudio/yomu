@@ -10,22 +10,25 @@ public static class Teste_visual_novel {
 
                 // mudar update jogo para movimento
                 // ** definir os dados do teste 
-                
 
-                Jogo.Pegar_instancia().bloco_atual = Bloco.visual_novel;
 
-                BLOCO_visual_novel.Pegar_instancia().Iniciar_visual_novel();
+
 
                 switch( _chave ){
 
-                        case "lily_quarto" : Visual_novel_estado_generico.Ativar(); return;
+                        case "generico" : Visual_novel_estado_generico.Ativar(); break;
 
                 }
+
 
                 // --- DEFAULT
                 
 
-
+                // --- INICIA VN
+                Jogo.Pegar_instancia().bloco_atual = Bloco.visual_novel;
+                BLOCO_visual_novel.Pegar_instancia().Iniciar_bloco_visual_novel();
+                
+                return;
 
 
         }

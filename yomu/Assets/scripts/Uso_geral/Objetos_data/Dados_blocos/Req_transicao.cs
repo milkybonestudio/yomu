@@ -3,6 +3,8 @@ using System;
 
 public class Req_transicao {
 
+
+        // tem que tirar os defaults 
     public Req_transicao(  Tipo_troca_bloco _tipo_troca_bloco ,  Bloco _novo_bloco = Bloco.nada,  Tipo_transicao _tipo_transicao = Tipo_transicao.cor , bool _pega_ui = false ){
 
 

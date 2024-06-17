@@ -11,23 +11,23 @@ public class Controlador : MonoBehaviour {
             public static Controlador Pegar_instancia() {return instancia;}
             public static Controlador instancia;
 
-
             public Controlador_modo modo_controlador_atual;
             public static bool jogo_ativo = true;
 
             public Player_estado_atual player_estado_atual;
             public GameObject canvas;
 
+            // --- SEGURANCA 
 
-            public Task_req task_reconstruir;
             public bool esta_reconstruindo_save = false;
 
 
-            // --- BLOCOS
+            // --- MODOS
 
             public Login login;
             public Menu menu;
             public Jogo jogo;
+
 
             // --- USO CONTROLADOR
 
@@ -35,7 +35,6 @@ public class Controlador : MonoBehaviour {
             public Desenvolvimento desenvolvimento;
             public Controlador_UI controlador_UI;
 
-            [NonSerialized]  public  Bloco   bloco_atual  = Bloco.nada;
             
 
             public void Start(){
@@ -82,13 +81,12 @@ public class Controlador : MonoBehaviour {
                               }
 
 
-                  #endif
+                  #else
 
-                  #if !UNITY_EDITOR
-
+                  
                         // --- VERIFICAR ARQUIVO DE SEGURANCA
-                        bool arquivo_foi_encerrado_corretamente = Garantir_arquivo_de_seguranca();
-                        if( !( arquivo_foi_encerrado_corretamente ) )
+                        bool arquivo_foi_encerrado_corretamente = Gerenciador_seguranca_main.Garantir_arquivo_de_seguranca();
+                        if( !( arquivo_foi_ncerrado_corretamente ) )
                               { return; }
 
                   #endif
@@ -133,55 +131,6 @@ public class Controlador : MonoBehaviour {
                   Controlador_multithread.Pegar_instancia().Update();
                   
       
-            }
-
-
-            public IEnumerator C_reconstruindo_save (){
-
-                  // colocar video algo deu errado, um momento
-
-                  while( esta_reconstruindo_save ){ yield return null; }
-                  yield break;
-
-            }
-
-
-            public bool Garantir_arquivo_de_seguranca(){
-
-                  byte[] dados = Verificador_arquivo_de_seguranca.Pegar_dados();
-                  bool arquivo_foi_encerrado_corretamente = Verificador_arquivo_de_seguranca.Programa_foi_encerrado_corretamente( dados );
-
-                  if( !( arquivo_foi_encerrado_corretamente ) )
-                        {
-                              // --- PRECISA ARRUMAR DADOS
-                              int save = Verificador_arquivo_de_seguranca.Pegar_save( dados );
-
-                              task_reconstruir = new Task_req( new Chave_cache() , "reconstruindo_save" );
-
-                              task_reconstruir.fn_iniciar = ( Task_req _req ) => {
-
-                                    Reestruturador_save.Reconstruir_save( save );
-                                    return;
-
-                              };
-
-                              task_reconstruir.fn_finalizar = ( Task_req _req ) => {
-
-                                    esta_reconstruindo_save = false;
-                                    login = Login.Construir();
-                                    return;
-
-                              };
-                              
-                              Controlador_multithread.Pegar_instancia().Adicionar_task( task_reconstruir );
-                              esta_reconstruindo_save = true;
-                              StartCoroutine( C_reconstruindo_save() );
-                              return false;
-                              
-                        }
-
-
-                  return true;
             }
 
 

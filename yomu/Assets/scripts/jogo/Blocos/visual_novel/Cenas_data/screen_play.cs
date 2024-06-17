@@ -45,6 +45,7 @@ public class Screen_play {
 
 
         public bool set_foi_ativado = false;
+        // precisa?
         public bool esta_ativo = false;
 
 

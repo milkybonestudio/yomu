@@ -288,51 +288,51 @@ using System;
 
 
 
-                if(   _tipo == Tipo_troca_bloco.OUT   ){
-
-
-                        Player_estado_atual.Pegar_instancia().Voltar_modo_tela(); 
-
-                        Action lidar_retorno = null;
-
-                        switch( _novo_bloco ) {
-
-                                case Bloco.visual_novel: lidar_retorno = jogo.bloco_visual_novel.Lidar_retorno ; break ;
-                                
-
-                        }
-
-
-
-                        lidar_retorno() ;
-
-                        
-                } else {
-
-                        if(   _tipo == Tipo_troca_bloco.SWAP   ){
+                if(   _tipo == Tipo_troca_bloco.OUT   )
+                
+                        {
 
 
                                 Player_estado_atual.Pegar_instancia().Voltar_modo_tela(); 
 
-                        }
+                                Action lidar_retorno = null;
+
+                                switch( _novo_bloco ) {
+
+                                        case Bloco.visual_novel: lidar_retorno = jogo.bloco_visual_novel.Lidar_retorno ; break ;
+                                        
+
+                                }
 
 
-                        Bloco novo_bloco = modo_tela_em_transicao;
-                        Player_estado_atual.Pegar_instancia().Adicionar_modo_tela( novo_bloco ); 
 
+                                lidar_retorno() ;
 
                         
+                        } 
+                        else
+                        {
 
-                        switch( _novo_bloco ){
+                                if(   _tipo == Tipo_troca_bloco.SWAP   )
+                                        {Player_estado_atual.Pegar_instancia().Voltar_modo_tela(); }
+
+
+                                Bloco novo_bloco = modo_tela_em_transicao;
+                                Player_estado_atual.Pegar_instancia().Adicionar_modo_tela( novo_bloco ); 
+
 
                                 
-                                case Bloco.visual_novel: jogo.bloco_visual_novel.Iniciar_visual_novel(); break;
 
-                        }
+                                switch( _novo_bloco ){
+
+                                        
+                                        case Bloco.visual_novel: jogo.bloco_visual_novel.Iniciar_bloco_visual_novel(); break;
+
+                                }
 
                         
 
-                }
+                        }
 
                 
                 

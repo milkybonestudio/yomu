@@ -22,8 +22,10 @@ public static class Verificador_arquivo_de_seguranca {
 
     public static bool Programa_foi_encerrado_corretamente( byte[] _dados ){
 
+        byte estado_em_jogo = 1;
 
-        if( _dados[ 0 ] ==  ( byte ) Estado.em_jogo )
+
+        if( _dados[ 0 ] ==  estado_em_jogo )
             {
                 // sistea foi interrompido e precisa ser restaurado 
                 return false;
@@ -42,12 +44,7 @@ public static class Verificador_arquivo_de_seguranca {
 
     }
 
-    public enum Estado : byte {
 
-        em_jogo = 1, 
-
-
-    }
 
 
 
