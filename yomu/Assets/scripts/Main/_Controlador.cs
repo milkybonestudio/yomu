@@ -64,19 +64,30 @@ public class Controlador : MonoBehaviour {
 
                   #if UNITY_EDITOR 
 
+                        // --- VERIFICAR DESENVOLVIMENTO
+
+                        desenvolvimento = Desenvolvimento.Construir();  
                         Teste_geral.Testar();
                         Controlador_development.Verificar();
-                        desenvolvimento = Desenvolvimento.Construir();  
 
-                        bool em_teste = ( Desenvolvimento.Pegar_instancia().desenvolvimento_atual != Desenvolvimento_atual.nada );
+
+                        bool em_teste = ( desenvolvimento.desenvolvimento_atual != Desenvolvimento_atual.nada );
                         
                         if( em_teste ) 
                               { 
                                     // --- VAI TESTAR
 
+                                    Console.Log( "veio em iniciar jogo teste" );
+                                    Console.Log( $"modo atual: { desenvolvimento.desenvolvimento_atual }" );
                                     modo_controlador_atual = Controlador_modo.desenvolvimento;
-                                    Controlador.Pegar_instancia().jogo =  Jogo.Construir_teste();
-                                    Desenvolvimento.Pegar_instancia().Iniciar_jogo_teste();
+
+                                    // --- SETA TUDO COMO DEFAULT
+                                    jogo =  Jogo.Construir();
+                                    
+                                    // --- DESENVOLVIMENTO UTILIDADES
+                                    desenvolvimento.Colocar_estado_teste();
+                                    desenvolvimento.Iniciar_ferramentas();
+
                                     return;
                               }
 
@@ -90,7 +101,7 @@ public class Controlador : MonoBehaviour {
                               { return; }
 
                   #endif
-                  
+
 
 
                   login = Login.Construir();

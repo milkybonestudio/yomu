@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 /*
         Contruir() => cria o objeto
-        Destruir() => ?
         Iniciar() => junto com os dados de Dados_blocos inicia o bloco sempre na transicao 
         Finalizar() => destroi os objetos que precisam ser destruido no BLOCO 
 */
@@ -36,56 +35,51 @@ public class Jogo {
         public GameObject canvas;
         
 
-        public Jogo(){
+        public static Jogo Construir(){
 
                 // ** coisas que interagem com o canvas nao podem ser usados na multitrhead 
                 //    entao tem que ser criados aqui
                 
                 // jogo vai criar o canvas do jogo e os objetos necessarios
-                canvas = GameObject.Find( "Tela/Canvas" );
-                GameObject jogo_canvas = new GameObject( "Jogo" );
-                jogo_canvas.transform.SetParent( canvas.transform, false );
-
-                Controlador_transicao.Construir();
-                Dados_blocos.Construir();
-                Controlador_UI.Construir();
-                
-
-                bloco_visual_novel = BLOCO_visual_novel.Construir();
-                bloco_movimento =  BLOCO_movimento.Construir();
-                bloco_conversas = BLOCO_conversas.Construir();
-                bloco_cartas = BLOCO_cartas.Construir();
-                bloco_minigames = BLOCO_minigames.Construir();
-        
-
-        }
-
-
-        public static Jogo Construir_teste(){ 
 
                 Jogo jogo = new Jogo(); 
+                        
+                        jogo.canvas = GameObject.Find( "Tela/Canvas" );
+                        GameObject jogo_canvas = new GameObject( "Jogo" );
+                        jogo_canvas.transform.SetParent( jogo.canvas.transform, false );
 
-                        Controlador_save.Construir_teste(); 
-                        Controlador_AI.Construir_teste(); 
-                        jogo.bloco_atual = Bloco.nada;
+                        Controlador_transicao.Construir();
+                        Dados_blocos.Construir();
+                        Controlador_UI.Construir();
+                        
+
+                        jogo.bloco_visual_novel = BLOCO_visual_novel.Construir();
+                        jogo.bloco_movimento =  BLOCO_movimento.Construir();
+                        jogo.bloco_conversas = BLOCO_conversas.Construir();
+                        jogo.bloco_cartas = BLOCO_cartas.Construir();
+                        jogo.bloco_minigames = BLOCO_minigames.Construir();
 
                 instancia = jogo;
                 return jogo;
                 
+
         }
 
         
-        public static Jogo Construir( int _save, bool _novo_jogo  ){
+        public Task_req Iniciar_jogo( int _save, bool _novo_jogo  ){
 
-                throw new Exception( "tentou contruir jogo normal. Por hora somente forma de teste" );
 
-                Jogo jogo = new Jogo() ; 
 
-                        // Iniciar nao muda 
-                        Mono_instancia.Start_coroutine( Iniciador_jogo.Iniciar( jogo, _save , _novo_jogo ) );
+                Task_req req_iniciar_jogo = new Task_req ( new Chave_cache(), "Iniciar_jogo");
 
-                instancia = jogo;
-                return jogo;
+                req_iniciar_jogo.fn_iniciar = ( Task_req _req )  =>     { 
+                                                                                controlador_save = Controlador_save.Construir( _save, _novo_jogo );
+                                                                                controlador_AI = Controlador_AI.Construir();
+                                                                        };
+
+                Controlador_multithread.Pegar_instancia().Adicionar_task( req_iniciar_jogo );
+
+                return req_iniciar_jogo;
 
         }
 

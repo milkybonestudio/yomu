@@ -24,30 +24,28 @@ public class Desenvolvimento {
           public Desenvolvimento_atual desenvolvimento_atual = Desenvolvimento_atual.movimento;
           public string chave_teste = "generico";
 
+          public void Iniciar_ferramentas(){
 
+                    
+                    // --- CRIA ESPACO
+                    GameObject desenvolvimento_ferramentas = new GameObject( "desenvolvimento_ferramentas");
+                    desenvolvimento_ferramentas.transform.SetParent( GameObject.Find( "Tela" ).transform , false );
+                    // ** se tiver ferramentas especificas colocar aqui
+                    return;
 
-          public bool Verificar_teste(){
-
-                    if( desenvolvimento_atual == Desenvolvimento_atual.nada ){ return false;}
-
-                    // TEM TESTE
-                    Iniciar_jogo_teste();
-                    return true;
 
           }
 
 
-          public void Iniciar_jogo_teste(){
 
-                    Console.Log( "veio em iniciar jogo teste" );
-                    Console.Log( $"modo atual: {desenvolvimento_atual}" );
-                    
-                    // cria espaço para as ferramentas
-                    GameObject desenvolvimento_ferramentas = new GameObject( "desenvolvimento_ferramentas");
-                    desenvolvimento_ferramentas.transform.SetParent( GameObject.Find( "Tela" ).transform , false );
-
+          public void Colocar_estado_teste(){
 
                     // Inicia o save zerado
+                    // Quando o jogo for iniciado na build ele na realidade vai ler o estado do save default 
+                    // no editor ele vai começar em um local "0" sem nenhum contexto
+                    // se um teste especifico precisar de contexto como "mover player para POSICAO" => iniciar VN => "mover player dependendo de VN" 
+
+                    Controlador_save.Construir_teste();
 
 
                     switch( desenvolvimento_atual ){
@@ -76,19 +74,18 @@ public class Desenvolvimento {
 
                Controlador_ferramentas.Atualizar_ferramentas_desenvolvimento();
                
-               if( ferramenta_update != null ){
-
-                    bool pode_atualizar_o_jogo = ferramenta_update();
-                    
-
-                    if( !( pode_atualizar_o_jogo ))
-                         { return; }
-                    // nao atualiza jogo
-                    
-               }
+          
+               if( ferramenta_update != null )
+                    {
+                         bool pode_atualizar_o_jogo = ferramenta_update();
+                         	if( !( pode_atualizar_o_jogo ))
+                                   { return; }
+                    }
 
                // --- VAI PARA O JOGO
                Jogo.Pegar_instancia().Update();
+
+               return;
                
           }
 

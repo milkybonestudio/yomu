@@ -604,8 +604,10 @@ public class Menu {
 
 
             // 
+            Jogo jogo = Jogo.Construir();
+            Controlador.Pegar_instancia().jogo = jogo;
 
-            Controlador.Pegar_instancia().jogo = Jogo.Construir( _save: save , _novo_jogo: true );
+            Task_req task_para_carregar = jogo.Iniciar_jogo( _save: save , _novo_jogo: true  );
 
 
             Mono_instancia.Start_coroutine( New_game_start_c() );
@@ -613,7 +615,7 @@ public class Menu {
             IEnumerator New_game_start_c(){
 
                     
-                    Geral.Criar_imagem(
+                    Geral.Criar_imagem (
 
                         _nome: "canvas_menu_transicao", 
                         _pai: Controlador.Pegar_instancia().canvas,
@@ -628,6 +630,15 @@ public class Menu {
                         float novo_alp = imagem.color[ 3 ] + (Time.deltaTime * 0.75f);
                         imagem.color = new Color( 0f,0f,0f , novo_alp );
                         yield return null;
+
+                    }
+
+                    while( true ){
+
+                        if( task_para_carregar.finalizado )
+                            { break; }
+                            
+                        continue;
 
                     }
 
