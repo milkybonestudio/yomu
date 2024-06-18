@@ -20,16 +20,19 @@ public static class Teste_minigames {
                 string chave_minigame_especifico = k_v[ 1 ].Trim();
                 
 
-                Jogo.Pegar_instancia().bloco_atual = Bloco.minigame;
 
                 switch( minigame ){
 
-                        case "colheita" : Teste_minigame_colheita.Ativar( chave_minigame_especifico ); return;
+                        case "colheita" : Teste_minigame_colheita.Ativar( chave_minigame_especifico ); break;
 
                 }
 
                 // --- DEAULT
 
+
+                // --- INICIAR
+                Jogo.Pegar_instancia().bloco_atual = Bloco.minigame;
+                BLOCO_minigames.Pegar_instancia().Iniciar_bloco_minigames();
                 return;
          
 

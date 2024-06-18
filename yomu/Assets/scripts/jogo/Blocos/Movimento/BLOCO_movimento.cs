@@ -22,8 +22,8 @@ public class BLOCO_movimento {
                 movimento.container_movimento.transform.SetParent( GameObject.Find( "Tela/Canvas/Jogo" ).transform , false);
                 
 
-                movimento.controlador_interativos = Controlador_interativos.Construir();
-                movimento.controlador_tela_movimento = Controlador_tela_movimento.Pegar_instancia();
+                movimento.controlador_interativos = Controlador_interativos.Construir( movimento );
+                movimento.controlador_tela_movimento = Controlador_tela_movimento.Construir( movimento );
                 
                 movimento.controlador_utilidades = Controlador_utilidades.Pegar_instancia();
 
@@ -94,7 +94,10 @@ public class BLOCO_movimento {
         public void Iniciar_bloco_movimento(){
 
 
-                Jogo_START dados = Dados_blocos.Pegar_instancia().jogo_START;
+                Movimento_START dados = Dados_blocos.Pegar_instancia().movimento_START;
+
+                if( dados == null )
+                        { throw new Exception( "nao veio os dados para iniciar_movimento" ); }
 
                         
                 controlador_tela_movimento.Trocar_tela( player_estado_atual.Pegar_path_imagem_background() );

@@ -1,7 +1,7 @@
 
 
 
-public static class Visual_novel_estado_generico {
+public static class Visual_novel_teste_estado_generico {
 
 
         public static void Ativar(){

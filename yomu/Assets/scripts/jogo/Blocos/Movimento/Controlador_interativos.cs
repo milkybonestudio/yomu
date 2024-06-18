@@ -15,122 +15,108 @@ public class Controlador_interativos {
 
 
 
-      
-
-      public static Controlador_interativos instancia;
-      public static Controlador_interativos Pegar_instancia(){ return instancia; }
+            public static Controlador_interativos instancia;
+            public static Controlador_interativos Pegar_instancia(){ return instancia; }
 
 
-      public static Controlador_interativos Construir(){ 
+            public static Controlador_interativos Construir( BLOCO_movimento _bloco ){ 
 
 
-            instancia = new Controlador_interativos(); 
+                  instancia = new Controlador_interativos(); 
+
+                        
+                        instancia.interativos_canvas = new GameObject( "Interativos" );
+                        instancia.interativos_canvas.transform.SetParent( GameObject.Find( "Tela/Canvas/Jogo/Movimento" ).transform , false );            
+                        instancia.bloco_movimento = _bloco;
 
                   
-                 instancia.interativos_canvas = new GameObject( "Interativos" );
-                 instancia.interativos_canvas.transform.SetParent( GameObject.Find( "Tela/Canvas/Jogo/Movimento" ).transform , false );            
-            
-            return instancia;
-            
-      }
+                  return instancia;
+                  
+            }
 
 
 
+            public GameObject interativos_container;
+            public  GameObject interativos_canvas;
+            public BLOCO_movimento bloco_movimento;
+
+            public Interativo[] interativos_arr = new Interativo[ 0 ];
+
+            public GameObject[] interativos_game_objects_arr;
+
+            public int interativo_atual_hover = -1;
 
 
-    public GameObject interativos_container;
-    public  GameObject interativos_canvas;
+            public void Esconder_interativos( bool _valor ){
 
-    public Interativo[] interativos_arr = new Interativo[ 0 ];
+                        interativos_container.SetActive(!_valor);
 
-    public GameObject[] interativos_game_objects_arr;
+                        return;
 
-    public int interativo_atual_hover = -1;
-     
-    public void  Iniciar(){}
-
-
-  public void Esconder_interativos(bool _valor){
-
-      interativos_container.SetActive(!_valor);
-
-      return;
-
-  }
+            }
 
     
 
-  /*
-  *
-  *   tem que colocar Limpar_sprites() em algum lugar
-  
-  */
+
+            public void Criar_interativos( Ponto _ponto ){
+
+                        interativo_atual_hover = -1;
+                        
+                        if(interativos_container != null){ Mono_instancia.DestroyImmediate(interativos_container);}
+
+
+                        interativos_container = new GameObject("Container");
+                        interativos_container.transform.SetParent(interativos_canvas.transform, false);
+
+                        Controlador_jogo_data jogo_data = Controlador_jogo_data.Pegar_instancia();
+                        Interativo_nome[] interativos_nomes = _ponto.interativos_nomes;
+                        
+                        int numero_interativos = interativos_nomes.Length;
+                        string path =  "images/in_game/" +  _ponto.folder_path;
+                        int periodo =    ( Controlador_timer.Pegar_instancia().periodo_atual_id);
+
+                        
+
+
+                        interativos_game_objects_arr = new GameObject[numero_interativos];
+                        interativos_arr = new Interativo[interativos_nomes.Length];
 
 
 
-    public void Criar_interativos(Ponto _ponto){
+                        
+                        for( int i= 0; i < numero_interativos  ;i++){
 
-        interativo_atual_hover = -1;
-        
-        if(interativos_container != null){ Mono_instancia.DestroyImmediate(interativos_container);}
+                              
+                                    string name  = "Interativo_" + Convert.ToString( interativos_nomes[ i ] );
 
-
-        interativos_container = new GameObject("Container");
-        interativos_container.transform.SetParent(interativos_canvas.transform, false);
-
+                                    GameObject interativo_game_object = new GameObject(name);
+                                    interativos_game_objects_arr[i] = interativo_game_object;
 
 
-        Controlador_jogo_data jogo_data = Controlador_jogo_data.Pegar_instancia();
-        Interativo_nome[] interativos_nomes = _ponto.interativos_nomes;
+                                    Interativo interativo = Lista_interativos.Pegar_interativo( interativos_nomes[i] );
+                                    interativos_arr[i] = interativo;
 
-
-        
-        int numero_interativos = interativos_nomes.Length;
-        string path =  "images/in_game/" +  _ponto.folder_path;
-        int periodo =    ( Controlador_timer.Pegar_instancia().periodo_atual_id);
-
-        
-
-
-        interativos_game_objects_arr = new GameObject[numero_interativos];
-        interativos_arr = new Interativo[interativos_nomes.Length];
-
-
-
-         
-        for( int i= 0; i < numero_interativos  ;i++){
-
-                  
-                  string name  = "Interativo_" + Convert.ToString(interativos_nomes[i]);
-
-                  GameObject interativo_game_object = new GameObject(name);
-                  interativos_game_objects_arr[i] = interativo_game_object;
-
-
-                  Interativo interativo = Lista_interativos.Pegar_interativo( interativos_nomes[i] );
-                  interativos_arr[i] = interativo;
-
-                 // interativos_arr[i] = jogo_data.lista_interativos[  (int) interativos_nomes[i] ];
+                                    // interativos_arr[i] = jogo_data.lista_interativos[  (int) interativos_nomes[i] ];
 
 
 
 
 
-                  interativos_arr[i].image_slot =  interativo_game_object.AddComponent<Image>();
+                                    interativos_arr[i].image_slot =  interativo_game_object.AddComponent<Image>();
 
-                  RectTransform rect = interativo_game_object.GetComponent<RectTransform>();
-                  rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical ,  1080f );
-                  rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal ,  1920f );
+                                    RectTransform rect = interativo_game_object.GetComponent<RectTransform>();
+                                    rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical ,  1080f );
+                                    rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal ,  1920f );
 
-                  interativo_game_object.transform.SetParent( interativos_container.transform , false );
-
-
-                  Carregar_imagens_interativo(  interativos_arr[i] ,  path , periodo);
+                                    interativo_game_object.transform.SetParent( interativos_container.transform , false );
 
 
-        }
+                                    Carregar_imagens_interativo(  interativos_arr[ i ] ,  path , periodo);
 
-    }
+
+                        }
+
+            }
 
 
 

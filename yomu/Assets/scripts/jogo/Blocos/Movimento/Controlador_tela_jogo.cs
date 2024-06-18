@@ -10,60 +10,71 @@ using System.Collections;
 public class Controlador_tela_movimento{
 
 
-        public static Controlador_tela_movimento instancia;
-        public static Controlador_tela_movimento Pegar_instancia(){ return instancia; }
-        public static Controlador_tela_movimento Construir(){ instancia = new Controlador_tela_movimento(); return instancia;}
+            public static Controlador_tela_movimento instancia;
+            public static Controlador_tela_movimento Pegar_instancia(){ return instancia; }
 
 
-        
+            public static Controlador_tela_movimento Construir( BLOCO_movimento _bloco ){ 
+                        
+                        instancia = new Controlador_tela_movimento(); 
 
-        public float[] posicao_mouse;
+                        instancia.bloco_movimento = _bloco;
+                        
+                        return instancia;
+                        
+            }
 
-        public GameObject game_object_para_outros_modos;
+            
 
-        public Controlador_cursor controlador_cursor;
+            public float[] posicao_mouse;
+
+            public GameObject game_object_para_outros_modos;
+
+            public BLOCO_movimento bloco_movimento;
+
+            public Controlador_cursor controlador_cursor;
 
       //  public int interativo_atual_hover = -1;
 
-        public Controlador_interativos controlador_interativos;
+            public Controlador_interativos controlador_interativos;
 
-        public Coroutine background_coroutine = null;
+            public Coroutine background_coroutine = null;
 
-        public Player_estado_atual player_estado_atual;
+            public Player_estado_atual player_estado_atual;
 
-        public Pergaminho_modelo_1 pergaminho;
-        
+            public Pergaminho_modelo_1 pergaminho;
+            
 
-        public GameObject background_1;
-        public GameObject background_2;
-
-
-
-        public Image background_1_image;
-        public Image background_2_image;
-        
+            public GameObject background_1;
+            public GameObject background_2;
 
 
 
-        public void Iniciar(){
+            public Image background_1_image;
+            public Image background_2_image;
+            
 
 
-                  
-                  posicao_mouse = Controlador_dados.Pegar_instancia().posicao_mouse;
-                  controlador_interativos = Controlador_interativos.Pegar_instancia();
-                  controlador_cursor = Controlador_cursor.Pegar_instancia();
-                  player_estado_atual = Player_estado_atual.Pegar_instancia();
 
-                  background_1 = GameObject.Find("Tela/Canvas/Jogo/Background/Background_1");
-                  background_1_image = background_1.GetComponent<Image>();
-
-                  background_2 = GameObject.Find("Tela/Canvas/Jogo/Background/Background_2");
-                  background_2_image = background_2.GetComponent<Image>();
-
-                  game_object_para_outros_modos = GameObject.Find("Tela/Canvas/Jogo/Outros" );
+            public void Iniciar(){
 
 
-        }
+                        
+                        posicao_mouse = Controlador_dados.Pegar_instancia().posicao_mouse;
+                        controlador_interativos = Controlador_interativos.Pegar_instancia();
+                        controlador_cursor = Controlador_cursor.Pegar_instancia();
+                        player_estado_atual = Player_estado_atual.Pegar_instancia();
+
+                        background_1 = GameObject.Find("Tela/Canvas/Jogo/Background/Background_1");
+                        background_1_image = background_1.GetComponent<Image>();
+
+                        background_2 = GameObject.Find("Tela/Canvas/Jogo/Background/Background_2");
+                        background_2_image = background_2.GetComponent<Image>();
+
+                        game_object_para_outros_modos = GameObject.Find("Tela/Canvas/Jogo/Outros" );
+
+
+            }
 
 
 

@@ -27,7 +27,7 @@ public class BLOCO_cartas {
         public GameObject container_cartas;
 
 
-        public void Iniciar(){}
+        public void Iniciar_bloco_cartas(){}
         public void Finalizar(){}
 
         public void Lidar_retorno(){}

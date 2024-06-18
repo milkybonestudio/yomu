@@ -2,10 +2,7 @@
 
 
 
-public class Jogo_START {
-
-        public bool eh_novo_jogo = false;
-
+public class Movimento_START {
 
 
       //  Os dados de player_estado_atual vão estar aqui, BLOCO_jogo.Iniciar() vai criar o primeiro ponto. esse objeto sempre vai existir se o jogo 
@@ -23,16 +20,10 @@ public class Jogo_START {
 
         public int ponto_id;
         public int[] possicao_arr;
-
         public float sadismo;
 
-        /*
-        * colocar info sobre timer depois
-        */
 
 
-
-  
         public string background_path;
         public string audio_atual;
         public int script_inicial;

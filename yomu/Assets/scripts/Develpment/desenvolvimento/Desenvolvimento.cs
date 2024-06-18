@@ -21,7 +21,7 @@ public class Desenvolvimento {
 
           //  --- MODO TESTE ATUAL
 
-          public Desenvolvimento_atual desenvolvimento_atual = Desenvolvimento_atual.visual_novel;
+          public Desenvolvimento_atual desenvolvimento_atual = Desenvolvimento_atual.movimento;
           public string chave_teste = "generico";
 
 

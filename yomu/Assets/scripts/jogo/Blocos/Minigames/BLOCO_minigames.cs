@@ -24,7 +24,20 @@ public class BLOCO_minigames {
         public GameObject container_minigame;
 
 
-        public void Iniciar(){}
+        public void Iniciar_bloco_minigames(){
+
+                Minigame_START dados = Dados_blocos.Pegar_instancia().minigame_START;
+
+                if( dados == null )
+                        { throw new Exception( "nao veio dados para iniciar minigame" ); }
+
+                // ** fazer
+
+                return;
+
+
+        }
+
         public void Finalizar(){}
         public void Update(){}
 

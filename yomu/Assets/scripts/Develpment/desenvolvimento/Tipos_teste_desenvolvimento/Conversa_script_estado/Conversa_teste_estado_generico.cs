@@ -4,7 +4,7 @@
 
 
 
-public static class Conversa_estado_generico {
+public static class Conversa_teste_estado_generico {
 
 
         public static void Ativar(){

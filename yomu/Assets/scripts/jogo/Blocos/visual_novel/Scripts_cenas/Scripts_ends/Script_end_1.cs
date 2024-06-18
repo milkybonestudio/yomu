@@ -63,11 +63,11 @@ public static class Script_end_1 {
             lista.Adicionar_script_interativo_em_espera( Interativo_nome.BURACO_back_quarto_nara , Script_jogo_nome.NARA_INTRODUCAO_buraco );
 
           
-            Jogo_RETURN jogo_return = new Jogo_RETURN();
+            //Jogo_RETURN jogo_return = new Jogo_RETURN();
 
-            jogo_return.ponto_para_mover = Ponto_nome.FRONT_quarto_nara;
+            //jogo_return.ponto_para_mover = Ponto_nome.FRONT_quarto_nara;
 
-            Dados_blocos.Pegar_instancia().jogo_RETURN = jogo_return;
+            //Dados_blocos.Pegar_instancia().jogo_RETURN = jogo_return;
 
           
 
@@ -99,7 +99,7 @@ public static class Script_end_1 {
 
             Dados_blocos dados = Dados_blocos.Pegar_instancia();
 
-            Jogo_RETURN  jogo_return = new Jogo_RETURN();
+            //Jogo_RETURN  jogo_return = new Jogo_RETURN();
 
             Player_estado_atual.Pegar_instancia().posicao_arr = new Ponto_nome[ 20 ];
 
@@ -121,10 +121,10 @@ public static class Script_end_1 {
 
 
                         
-            Jogo_RETURN jogo_return = new Jogo_RETURN() ;
-            //jogo_return.ponto_para_mover = Ponto_nome.UP_quarto_nara ;
-            jogo_return.script_jogo = Script_jogo_nome.NARA_INTRODUCAO_finalizar ;
-            Dados_blocos.Pegar_instancia().jogo_RETURN = jogo_return ;
+            //Jogo_RETURN jogo_return = new Jogo_RETURN() ;
+            ////jogo_return.ponto_para_mover = Ponto_nome.UP_quarto_nara ;
+            //jogo_return.script_jogo = Script_jogo_nome.NARA_INTRODUCAO_finalizar ;
+            //Dados_blocos.Pegar_instancia().jogo_RETURN = jogo_return ;
             
 
 

@@ -13,41 +13,24 @@ public static class Teste_movimento {
         public static void Criar( string _chave ){
                 
 
-                // mudar update jogo para movimento
-                // ** definir os dados do teste 
-
-                Jogo jogo = Jogo.Pegar_instancia();
-                
-
-                jogo.bloco_atual = Bloco.movimento;
-                // jogo.
-
 
                 switch( _chave ){
 
-                        case "lily_quarto" : Movimento_estado_generico.Ativar(); return;
+                        case "generico" : Movimento_teste_estado_generico.Ativar(); break;
 
                 }
 
-                // --- 
+                // --- DEFAULT
                 
-                Definir_estado_jogo_1();
+                // --- Iniciar
 
-
-
-
-
-        }
-
-        
-
-
-        public static void Definir_estado_jogo_1(){
-
-
-
+                Jogo.Pegar_instancia().bloco_atual = Bloco.movimento;
+                BLOCO_movimento.Pegar_instancia().Iniciar_bloco_movimento();
+                return;
+                
 
         }
+
 
 
 }

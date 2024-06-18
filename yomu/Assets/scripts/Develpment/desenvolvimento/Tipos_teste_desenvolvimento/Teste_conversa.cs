@@ -12,16 +12,21 @@ public static class Teste_conversa {
                 // ** definir os dados do teste 
                 
 
-                Jogo.Pegar_instancia().bloco_atual = Bloco.conversa;
 
                 switch( _chave ){
 
-                        case "generico" : Conversa_estado_generico.Ativar(); return;
+                        case "generico" : Conversa_teste_estado_generico.Ativar(); break;
 
                 }
 
                 // --- DEFAULT
+
+
+                // --- INICIA 
                 
+                Jogo.Pegar_instancia().bloco_atual = Bloco.conversa;
+                BLOCO_conversas.Pegar_instancia().Iniciar_bloco_conversa();
+                return;
 
 
         }

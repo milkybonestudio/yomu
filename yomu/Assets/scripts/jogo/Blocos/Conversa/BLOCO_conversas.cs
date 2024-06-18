@@ -3,14 +3,9 @@ using System;
 using UnityEngine.UI;
 
 
-
 /*
-
     conversas nao trocam background, sempre flipam foco, o personagem fica sempre no mesmo zoom, sempre fica no centro, e sempre só tem 1
-
 */
-
-
 
 
 public class Bloco_conversa {
@@ -95,14 +90,22 @@ public class BLOCO_conversas {
 
 
 
-        public void Iniciar ( string _personagem_nome , string _nome_conversa  ){
+        public void Iniciar_bloco_conversa (){
 
+                Conversa_START dados = Dados_blocos.Pegar_instancia().conversa_START;
+
+                if( dados == null )
+                        { throw new Exception( "nao veio dados para iniciar conversa" ); }
 
 
 
               //  bloco_jogo.update_tipo_atual = Jogo_update_tipo.conversas;
 
                 //this.pergaminho  = Controlador_tela_jogo.Pegar_instancia().pergaminho;
+
+                // REFAZER
+                string _personagem_nome = "";
+                string _nome_conversa = "";
 
                 string[] cenas_atuais_raw = Pegar_cenas_raw ( _personagem_nome , _nome_conversa  );
 
@@ -488,11 +491,9 @@ public class BLOCO_conversas {
 
 
                 // if( Application.isEditor ){
-
                 //         string cenas_texto = Conversas_compilador.Compilar( _personagem_nome , _nome_conversa );
                 //         string[] cenas = cenas_texto.Split("&");
                 //         return cenas;
-
                 // }
 
                 string cenas_compiladas_texto = Resources.Load<TextAsset>( "files/conversas/" + _personagem_nome + "/" + _nome_conversa ).text;
@@ -506,6 +507,8 @@ public class BLOCO_conversas {
 
 
         public Blocos_conversa_info Pegar_blocos( string[] _blocos_raw ){
+
+                Debug.Log( _blocos_raw );
 
                 Blocos_conversa_info retorno = new Blocos_conversa_info ();
 

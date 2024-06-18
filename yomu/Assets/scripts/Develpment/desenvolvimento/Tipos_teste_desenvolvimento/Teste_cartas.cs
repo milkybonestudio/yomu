@@ -12,16 +12,20 @@ public static class Teste_cartas {
                 // ** definir os dados do teste 
                 
 
-                Jogo.Pegar_instancia().bloco_atual = Bloco.cartas;
 
                 switch( _chave ){
 
-                        case "generico" : Cartas_estado_generico.Ativar(); return;
+                        case "generico" : Cartas_teste_estado_generico.Ativar(); break;
 
                 }
 
                 // --- DEAULT
                 
+
+                // --- INICIAR 
+
+                Jogo.Pegar_instancia().bloco_atual = Bloco.cartas;
+                BLOCO_cartas.Pegar_instancia().Iniciar_bloco_cartas();
                 return;
          
 
