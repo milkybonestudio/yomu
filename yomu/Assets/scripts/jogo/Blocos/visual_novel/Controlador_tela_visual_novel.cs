@@ -198,7 +198,8 @@ public class Controlador_tela_visual_novel {
                 if(background_coroutine_shadow != null ) { Mono_instancia.Stop_coroutine(background_coroutine_shadow); background_coroutine_shadow = null;}
                 if(transicao_coroutine != null ) { Mono_instancia.Stop_coroutine(transicao_coroutine); transicao_coroutine = null;}
 
-
+                
+                GAME_OBJECT.Deletar_todos_os_filhos( canvas_visual_novel );
 
                 canvas_visual_novel = null;
 

@@ -163,6 +163,8 @@ public class BLOCO_visual_novel {
             controlador_tela_visual_novel.Resetar_variaveis();
 
 
+
+
     }
 
 

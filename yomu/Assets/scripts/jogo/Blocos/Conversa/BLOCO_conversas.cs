@@ -24,7 +24,6 @@ public class Bloco_conversa {
 
 public class Blocos_conversa_info {
 
-
         public Bloco_conversa[] blocos;
 
         public Bloco_conversa bloco_atual;
@@ -86,6 +85,8 @@ public class BLOCO_conversas {
         public Blocos_conversa_info blocos_info = null;
 
         public GameObject container_conversa;
+
+        public Action Lidar_retorno;
 
 
 

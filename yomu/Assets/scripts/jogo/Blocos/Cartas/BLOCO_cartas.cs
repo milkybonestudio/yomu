@@ -30,7 +30,7 @@ public class BLOCO_cartas {
         public void Iniciar_bloco_cartas(){}
         public void Finalizar(){}
 
-        public void Lidar_retorno(){}
-        public void Lidar_saida(){}
+        public Action Lidar_retorno;
+        public Action Lidar_saida;
 
 }

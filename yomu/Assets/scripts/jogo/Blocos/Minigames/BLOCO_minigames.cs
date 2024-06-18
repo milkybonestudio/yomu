@@ -41,7 +41,7 @@ public class BLOCO_minigames {
         public void Finalizar(){}
         public void Update(){}
 
-        public void Lidar_retorno(){}
-        public void Lidar_saida(){}
+        public Action Lidar_retorno;
+        
 
 }

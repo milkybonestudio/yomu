@@ -31,6 +31,7 @@ using System;
         public Jogo jogo;
 
         public Dados_blocos dados_blocos ;
+        public Transform[] blocos_transform;
 
         
         public GameObject canvas_jogo; // 
@@ -66,6 +67,21 @@ using System;
 
                         controlador.dados_blocos = Dados_blocos.Pegar_instancia();
 
+                        string[] blocos_nomes = Enum.GetNames( typeof( Bloco ) );
+
+                        controlador.blocos_transform = new Transform[ blocos_nomes.Length ];
+
+                        for( int bloco_game_object_index = 1 ; bloco_game_object_index < blocos_nomes.Length  ; bloco_game_object_index++ ){
+
+                                        char[] nome_char = blocos_nomes[ bloco_game_object_index ].ToCharArray();
+                                        nome_char[ 0 ] = char.ToUpper( nome_char[ 0 ] );
+                                        string nome = new string ( nome_char );
+
+                                        controlador.blocos_transform[ bloco_game_object_index ] = GameObject.Find( "Tela/Canvas/Jogo/" + nome ).transform;
+                                        continue;
+
+                        }
+
                 instancia = controlador;
                 return instancia;
                 
@@ -85,7 +101,7 @@ using System;
 
                 jogo.bloco_atual =  Bloco.transicao;
 
-                modo_tela_em_transicao = req.novo_bloco;
+                // modo_tela_em_transicao = req.novo_bloco;
 
                 if( coroutine_tela != null )
                         {
@@ -111,19 +127,14 @@ using System;
 
         public void Trocar_blocos ( Bloco _bloco , Tipo_troca_bloco _tipo){
 
-                // em blocos conectados tem que esconder 
-                Deixar_visivel_somente_bloco_atual( _bloco ) ;
-                
 
-                em_transicao = false;
-                dados_blocos.req_transicao = null; 
-                jogo.bloco_atual = _bloco;
-
+                // quem pediu a req fica responsavel de criar os dados_START ou dados_RETURN
 
                 if( _tipo == Tipo_troca_bloco.START )
                         {
 
                                 Bloco bloco_para_ir = _bloco;
+
 
                                 Player_estado_atual.Pegar_instancia().Adicionar_modo_tela( bloco_para_ir ); 
 
@@ -136,8 +147,7 @@ using System;
                                         case Bloco.cartas: jogo.bloco_cartas.Iniciar_bloco_cartas(); break;
                                 }
 
-                                return;
-
+                                
                         }
 
     
@@ -161,6 +171,13 @@ using System;
 
                                 }
 
+                                // --- DELETAR GAME OVJECTS
+
+                                Deletar_game_objects_bloco(  bloco_para_excluir );
+
+
+                                // --- LIDAR RETORNO
+
                                 switch( bloco_para_voltar ) {
 
                                         case Bloco.visual_novel: jogo.bloco_visual_novel.Lidar_retorno() ; return ;
@@ -171,10 +188,19 @@ using System;
 
                                 }
 
-                                return;
+                                
 
                         }
-                            
+
+                
+                // em blocos conectados tem que esconder 
+                Deixar_visivel_somente_bloco_atual( _bloco ) ;
+                
+
+                em_transicao = false;
+                dados_blocos.req_transicao = null; 
+                jogo.bloco_atual = _bloco;
+                    
 
                 return;  
 
@@ -182,19 +208,7 @@ using System;
         }
 
 
-        public void Lidar_START( Bloco _novo_bloco ){
-        
 
-
-        }
-
-
-        public void Lidar_OUT( Bloco _novo_bloco ){
-
-
-
-
-        }
 
 
 
@@ -230,85 +244,56 @@ using System;
 
 
 
-        public void Finalizar_bloco( Bloco _bloco_para_finalizar ){
+  
+        public void Deletar_game_objects_bloco( Bloco _bloco_para_excluir ){
 
-                switch( _bloco_para_finalizar ){
+                Console.Log( "veio em Deletar_game_objects_bloco. Se funcionar remover essa mensagem" );
 
-                        case Bloco.visual_novel: jogo.bloco_visual_novel.Finalizar(); break;
-                        
+
+                Transform transform_bloco_para_excluir = blocos_transform[ ( int ) _bloco_para_excluir ];
+
+                for( int game_object_index = 0 ; game_object_index < transform_bloco_para_excluir.childCount ; game_object_index++ ){
+
+                        GameObject obj_para_destruir = transform_bloco_para_excluir.GetChild( game_object_index ).gameObject;
+                        GameObject.Destroy( obj_para_destruir );
+                        continue;
+
                 }
 
                 return;
 
         }
-  
-        public void Deletar_game_objects_bloco( Bloco _bloco_para_excluir ){
-
-                
-                int numero_blocos = canvas_jogo.transform.childCount;
-                string modo_tela_nome = Convert.ToString( _bloco_para_excluir );
-                
-                for(int i = 0 ;  i < numero_blocos ; i++){
-
-
-                        string modo_tela_para_comparar = canvas_jogo.transform.GetChild( i ).name.ToLower();
-                        
-                        if(  modo_tela_para_comparar != modo_tela_nome  ) 
-                                { continue; }
-
-                        // --- ACHOU BLOCO
-
-                        Transform bloco_para_excluir_componentes_transform = canvas_jogo.transform.GetChild( i );
-
-                        int numero_objs = bloco_para_excluir_componentes_transform.childCount;
-
-                        for( int game_object_index = 0 ; game_object_index < numero_objs ; game_object_index++ ){
-
-                                GameObject obj_para_destruir = bloco_para_excluir_componentes_transform.GetChild( game_object_index ).gameObject;
-                                GameObject.Destroy( obj_para_destruir );
-
-                        }
-
-                        
-                        return;
-
-                }
-
-
-                throw new ArgumentException("nao foi achado modo tela para excluir, veio: " + modo_tela_nome);
-       
-        }
 
 
 
 
 
 
+        // ** onde vai ficar?
+
+        // public void Mudar_UI_OUT(){
+
+        //         Bloco bloco_que_vai_voltar = Player_estado_atual.Pegar_instancia().Pegar_bloco_anterior();
+        //         Bloco bloco_atual = Player_estado_atual.Pegar_instancia().Pegar_bloco_atual();
 
 
-        public void Mudar_UI_OUT(){
-
-                Bloco bloco_que_vai_voltar = Player_estado_atual.Pegar_instancia().Pegar_bloco_anterior();
-                Bloco bloco_atual = Player_estado_atual.Pegar_instancia().Pegar_bloco_atual();
+        //         // aqui vai ter algo especifico
+        //         switch( bloco_atual ){
 
 
-                // aqui vai ter algo especifico
-                switch( bloco_atual ){
+        //                 case Bloco.movimento: throw new Exception( "" );
+        //                 case Bloco.visual_novel: {
 
 
-                        case Bloco.movimento: throw new Exception( "" );
-                        case Bloco.visual_novel: {
-
-
-                        } break;
+        //                 } break;
 
                         
 
-                }
+        //         }
 
 
 
-        }
+        // }
 
 
 
