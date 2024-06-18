@@ -44,9 +44,7 @@ public class Controlador_save {
                               Controlador_timer.Construir_teste( null );
                               Controlador_dados_dinamicos.Construir_teste( null );
 
-                              Controlador_UI.Construir();
-                              Controlador_transicao.Construir();
-
+                        
                               Player_estado_atual.Construir();
 
                               

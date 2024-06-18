@@ -637,10 +637,12 @@ public class Menu {
 
                         if( task_para_carregar.finalizado )
                             { break; }
-                            
+
                         continue;
 
                     }
+
+                    
 
                     GameObject.Destroy( canvas_menu );
                     Controlador.Pegar_instancia().menu = null;

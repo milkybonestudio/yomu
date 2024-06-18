@@ -8,10 +8,10 @@ public enum Bloco {
 
 
     visual_novel,
-    conversa,
+    conversas,
     movimento,
     cartas,
-    minigame,
+    minigames,
 
 
 

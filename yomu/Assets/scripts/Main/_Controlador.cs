@@ -31,7 +31,6 @@ public class Controlador : MonoBehaviour {
 
             // --- USO CONTROLADOR
 
-            public Controlador_transicao controlador_transicao;
             public Desenvolvimento desenvolvimento;
             public Controlador_UI controlador_UI;
 

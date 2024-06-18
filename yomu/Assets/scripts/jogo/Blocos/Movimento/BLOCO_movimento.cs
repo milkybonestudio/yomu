@@ -110,10 +110,7 @@ public class BLOCO_movimento {
 
         }
 
-
-
-
-        
+        public void Finalizar(){}
 
 
 

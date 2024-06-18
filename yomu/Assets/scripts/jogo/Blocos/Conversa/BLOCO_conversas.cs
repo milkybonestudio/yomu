@@ -90,7 +90,7 @@ public class BLOCO_conversas {
 
 
 
-        public void Iniciar_bloco_conversa (){
+        public void Iniciar_bloco_conversas (){
 
                 Conversa_START dados = Dados_blocos.Pegar_instancia().conversa_START;
 

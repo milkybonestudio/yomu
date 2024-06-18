@@ -48,7 +48,7 @@ public class Jogo {
                         GameObject jogo_canvas = new GameObject( "Jogo" );
                         jogo_canvas.transform.SetParent( jogo.canvas.transform, false );
 
-                        Controlador_transicao.Construir();
+                        Controlador_transicao_jogo.Construir( jogo );
                         Dados_blocos.Construir();
                         Controlador_UI.Construir();
                         
@@ -100,8 +100,8 @@ public class Jogo {
 
                         case Bloco.visual_novel :  bloco_visual_novel.Update() ;  break;
                         case Bloco.movimento: bloco_movimento.Update(); break;
-                        case Bloco.minigame: bloco_minigames.Update(); break;
-                        case Bloco.conversa: bloco_conversas.Update(); break;
+                        case Bloco.minigames: bloco_minigames.Update(); break;
+                        case Bloco.conversas: bloco_conversas.Update(); break;
                         case Bloco.cartas: bloco_conversas.Update(); break;
 
                         case Bloco.salvando: console.log( "esta em modo jogo salvando" ); break;
