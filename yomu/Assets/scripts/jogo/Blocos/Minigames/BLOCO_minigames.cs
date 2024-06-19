@@ -8,23 +8,24 @@ public class BLOCO_minigames {
 
         public static BLOCO_minigames instancia;
         public static BLOCO_minigames Pegar_instancia(){ return instancia; }
-        public static BLOCO_minigames Construir(){ 
-                
-                instancia = new BLOCO_minigames(); 
 
-
-                        instancia.container_minigame = new GameObject( "Minigame" );
-                        instancia.container_minigame.transform.SetParent( GameObject.Find( "Tela/Canvas/Jogo" ).transform , false);
-
-
-                return instancia;
-                
-        }
 
         public GameObject container_minigame;
 
+        public static void Iniciar_bloco_minigames(){ 
+                
+                if( instancia != null )
+                        { throw new Exception( "tentou iniciar o bloco: <color=red>CONECTOR</color> mas a instancia nao estava null" ); }
+                
+                instancia = new BLOCO_minigames(); 
+                instancia.Iniciar();
+                return;
+                
+        }
 
-        public void Iniciar_bloco_minigames(){
+
+
+        public void Iniciar(){
 
                 Minigame_START dados = Dados_blocos.minigame_START;
 
@@ -38,7 +39,14 @@ public class BLOCO_minigames {
 
         }
 
-        public void Finalizar(){}
+        public void Finalizar(){
+
+                instancia = null;
+                return;
+
+        }
+
+
         public void Update(){}
 
         public Action Lidar_retorno;

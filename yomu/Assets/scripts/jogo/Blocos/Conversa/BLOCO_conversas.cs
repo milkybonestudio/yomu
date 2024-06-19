@@ -90,8 +90,20 @@ public class BLOCO_conversas {
 
 
 
+        public static void Iniciar_bloco_conversas(){
 
-        public void Iniciar_bloco_conversas (){
+            
+                if( instancia != null )
+                        { throw new Exception( "tenteou criar BLOCO_conversas mas a instancia nao estava null" ); }
+
+                instancia = new BLOCO_conversas(); 
+                instancia.Iniciar();
+                return;
+
+        }    
+        
+
+        public void Iniciar(){
 
                 Conversa_START dados = Dados_blocos.conversa_START;
 

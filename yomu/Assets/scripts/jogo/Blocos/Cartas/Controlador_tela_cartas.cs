@@ -7,11 +7,11 @@ public class Controlador_tela_cartas {
         public static Controlador_tela_cartas instancia;
         public static Controlador_tela_cartas Pegar_instancia(){ return instancia; }
 
-        public static Controlador_tela_cartas Construir( BLOCO_cartas _bloco ){
+        public static Controlador_tela_cartas Construir(){
 
             Controlador_tela_cartas controlador = new Controlador_tela_cartas();
 
-                controlador.bloco_cartas = _bloco;
+                controlador.bloco_cartas = BLOCO_cartas.Pegar_instancia();
 
 
             instancia = controlador;
@@ -31,8 +31,8 @@ public class Controlador_tela_cartas {
 
                 canvas_3d = new GameObject( "Cartas_3d" );
                 canvas_3d.transform.SetParent( canvas_jogo_3d.transform, false );
+                return;
                 
-
 
         }
 

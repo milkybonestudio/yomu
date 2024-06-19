@@ -25,7 +25,7 @@ public static class Teste_cartas {
                 // --- INICIAR 
 
                 Jogo.Pegar_instancia().bloco_atual = Bloco.cartas;
-                BLOCO_cartas.Pegar_instancia().Iniciar_bloco_cartas();
+                BLOCO_cartas.Iniciar_bloco_cartas();
                 return;
          
 

@@ -41,18 +41,15 @@ public class Controlador_tela_visual_novel {
         public static Controlador_tela_visual_novel Pegar_instancia(){ return instancia; }
 
 
-        public static Controlador_tela_visual_novel Construir( BLOCO_visual_novel _bloco ){ 
+        public static Controlador_tela_visual_novel Construir(){ 
 
                 Controlador_tela_visual_novel controlador = new Controlador_tela_visual_novel(); 
 
-                        controlador.bloco_visual_novel = _bloco;
+                        controlador.bloco_visual_novel = BLOCO_visual_novel.Pegar_instancia();
                         controlador.desfoco_opacidade = Resources.Load<Material>("materials/desfoco_opacidade");
                         controlador.Criar_tela();
 
-                        // --- TELA DEFAULT
-
-                        string path_background_inicial = Player_estado_atual.Pegar_instancia().Pegar_path_imagem_background();
-                        controlador.Mudar_background( _path: path_background_inicial , _tem_transicao:false , _foco: 0 , _id_cor: ( int ) Nome_cor.white ); 
+                        
 
                 
                 instancia = controlador;
@@ -119,8 +116,6 @@ public class Controlador_tela_visual_novel {
         public void Criar_tela(){
 
                 
-
-     
                 canvas_visual_novel = GameObject.Find("Tela/Canvas/Jogo/Visual_novel");
 
 

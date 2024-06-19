@@ -14,11 +14,13 @@ public class Controlador_tela_conector {
             public static Controlador_tela_conector Pegar_instancia(){ return instancia; }
 
 
-            public static Controlador_tela_conector Construir( BLOCO_conector _bloco ){ 
+            public static Controlador_tela_conector Construir(){ 
                         
                         instancia = new Controlador_tela_conector(); 
 
-                        instancia.bloco_conectoBLOCO_conector = _bloco;
+                              instancia.Criar_tela();
+
+                        instancia.bloco_conectoBLOCO_conector = BLOCO_conector.Pegar_instancia();
                         
                         return instancia;
                         
@@ -58,8 +60,8 @@ public class Controlador_tela_conector {
 
             public void Iniciar(){
 
-
                         
+
                         posicao_mouse = Controlador_dados.Pegar_instancia().posicao_mouse;
                         controlador_interativos = Controlador_interativos.Pegar_instancia();
                         controlador_cursor = Controlador_cursor.Pegar_instancia();
@@ -73,6 +75,13 @@ public class Controlador_tela_conector {
 
                         game_object_para_outros_modos = GameObject.Find("Tela/Canvas/Jogo/Outros" );
 
+
+            }
+
+
+            public void Criar_tela(){
+
+                  throw new Exception("fazer");
 
             }
 

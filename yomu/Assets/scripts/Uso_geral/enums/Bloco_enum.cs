@@ -8,6 +8,7 @@ public enum Bloco {
 
 
     conector,
+    
     visual_novel,
     conversas,
     cartas,

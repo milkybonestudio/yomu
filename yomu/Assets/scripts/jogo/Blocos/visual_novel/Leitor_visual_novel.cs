@@ -12,11 +12,11 @@ public class Leitor_visual_novel{
         public static Leitor_visual_novel Pegar_instancia(){ return instancia; }
 
 
-        public static Leitor_visual_novel Construir( BLOCO_visual_novel _bloco ){ 
+        public static Leitor_visual_novel Construir(){ 
 
             Leitor_visual_novel leitor = new Leitor_visual_novel(); 
 
-                leitor.bloco_visual_novel = _bloco;
+                leitor.bloco_visual_novel = BLOCO_visual_novel.Pegar_instancia();
                 
             instancia = leitor;
             return instancia;
@@ -40,7 +40,7 @@ public class Leitor_visual_novel{
 
 
        // nome ruim 
-    public void Colocar_dados( Screen_play _screen_play ){
+    public void Ativar( Screen_play _screen_play ){
 
 
             //  this.visual_novel_dados = _visual_novel_dados;

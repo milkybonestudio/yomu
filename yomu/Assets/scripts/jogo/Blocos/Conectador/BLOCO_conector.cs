@@ -18,31 +18,6 @@ public class BLOCO_conector {
 
                 BLOCO_conector conector = new BLOCO_conector(); 
 
-                conector.container_conector = new GameObject( "Conector" );
-                conector.container_conector.transform.SetParent( GameObject.Find( "Tela/Canvas/Jogo" ).transform , false);
-                
-
-                conector.controlador_interativos = Controlador_interativos.Construir( conector );
-                conector.controlador_tela_conector = Controlador_tela_conector.Construir( conector );
-                
-                conector.controlador_utilidades = Controlador_utilidades.Pegar_instancia();
-
-                conector.controlador_cursor = Controlador_cursor.Pegar_instancia();
-
-                conector.controlador_dados = Controlador_dados.Pegar_instancia();
-                conector.posicao_mouse = conector.controlador_dados.posicao_mouse;
-
-
-                conector.player_estado_atual = Player_estado_atual.Pegar_instancia();
-                
-
-                conector.Colocar_UI_atual = Colocar_UI_bloco_conector.Default ;
-                conector.Colocar_input_atual  = Colocar_input_bloco_conector.Default ;
-
-                
-                
-                conector.Lidar_retorno = Lidar_retorno_bloco_conector.Default;
-
                 
                 instancia = conector;
                 return instancia;
@@ -50,13 +25,71 @@ public class BLOCO_conector {
                 
         }
 
+      public static void Iniciar_bloco_conector(){
+
+                if( instancia != null )
+                        { throw new Exception( "tentou iniciar o bloco: <color=red>CONECTOR</color> mas a instancia nao estava null" ); }
+
+                instancia = new BLOCO_conector();
+                instancia.Iniciar();
+                return;
+
+        }
+
+        public void Iniciar(){
+
+                // --- TELA
+
+                container_conector = GameObject.Find( "Tela/Canvas/Jogo/Conector" );
+
+
+
+                // -- CONTROLADORES
+
+                controlador_interativos = Controlador_interativos.Construir();
+                controlador_tela_conector = Controlador_tela_conector.Construir();
+                controlador_utilidades = Controlador_utilidades.Pegar_instancia();
+                controlador_cursor = Controlador_cursor.Pegar_instancia();
+                controlador_dados = Controlador_dados.Pegar_instancia();
+
+
+                // --- COISAS
+                posicao_mouse = controlador_dados.posicao_mouse;
+                player_estado_atual = Player_estado_atual.Pegar_instancia();
+
+
+                // --- UI / INPUT / RETORNO
+
+                Colocar_UI_atual = Colocar_UI_bloco_conector.Default ;
+                Colocar_input_atual  = Colocar_input_bloco_conector.Default ;
+                Lidar_retorno = Lidar_retorno_bloco_conector.Default;
+                // ** talves colocar na req
+                Colocar_UI_atual();
+                Colocar_input_atual();
+
+                // INICIAR 
+
+                Conector_START dados = Dados_blocos.conector_START;
+
+                if( dados == null )
+                        { throw new Exception( "nao veio os dados para iniciar conector" ); }
+
+                        
+                controlador_tela_conector.Trocar_tela( player_estado_atual.Pegar_path_imagem_background() );
+                controlador_interativos.Criar_interativos( player_estado_atual.ponto_atual );
+
+
+                return;
+
+        }
+
+
+
 
         public Controlador_dados_dinamicos dados;
 
         public Controlador_cursor controlador_cursor;
-
         public Controlador_tela_conector controlador_tela_conector;
-
         public Controlador_interativos controlador_interativos;
 
         ///public Controlador_movimento controlador_movimento;
@@ -65,6 +98,7 @@ public class BLOCO_conector {
 
         //public Controlador_conversas controlador_conversas;
 
+        // ** talvez mudar o nome 
         public GameObject container_conector; 
 
 
@@ -90,24 +124,7 @@ public class BLOCO_conector {
 
 
 
-        public void Iniciar_bloco_conector(){
-
-
-                Conector_START dados = Dados_blocos.conector_START;
-
-                if( dados == null )
-                        { throw new Exception( "nao veio os dados para iniciar_movimento" ); }
-
-                        
-                controlador_tela_conector.Trocar_tela( player_estado_atual.Pegar_path_imagem_background() );
-                controlador_interativos.Criar_interativos( player_estado_atual.ponto_atual );
-
-                Colocar_UI_atual();
-                Colocar_input_atual();
-
-                return;
-
-        }
+  
 
         public void Finalizar(){}
 

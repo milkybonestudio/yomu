@@ -104,13 +104,10 @@ public class BLOCO_visual_novel {
         public Controlador_personagens_visual_novel controlador_personagens_visual_novel;
 
 
-
+        public Modo_visual_novel modo_visual_novel_atual = Modo_visual_novel.normal;
 
         public Screen_play screen_play = null;
 
-        //public Visual_novel_dados visual_novel_dados;
-
-        public Modo_visual_novel modo_visual_novel_atual = Modo_visual_novel.normal;
 
         public Bloqueador bloqueador = null;
 
@@ -124,66 +121,67 @@ public class BLOCO_visual_novel {
             
             if( instancia != null )
                 { throw new Exception( "tenteou criar BLOCO_VN mas a instancia nao estava null" ); }
-        
 
-            BLOCO_visual_novel instancia = new BLOCO_visual_novel(); 
+            instancia = new BLOCO_visual_novel(); 
             instancia.Iniciar();
             return instancia;
 
-    }
+        }
 
-    public void Iniciar(){
+        public void Iniciar(){
+
+                    
+                // --- FERRAMENTAS
+
+                leitor_visual_novel  = Leitor_visual_novel.Construir();
+                controlador_personagens_visual_novel = Controlador_personagens_visual_novel.Construir();
+                controlador_tela_visual_novel = Controlador_tela_visual_novel.Construir();
+                controlador_UI_visual_novel = new Controlador_UI_visual_novel();
+                bloqueador = new Bloqueador();
 
                 
-            // --- FERRAMENTAS
+                // --- ACTIONS 
 
-            leitor_visual_novel  = Leitor_visual_novel.Construir( bloco );
-            controlador_personagens_visual_novel = Controlador_personagens_visual_novel.Construir( bloco );
-            controlador_tela_visual_novel = Controlador_tela_visual_novel.Construir( bloco );
-            controlador_UI_visual_novel = new Controlador_UI_visual_novel();
-            bloqueador = new Bloqueador();
+                Mudar_UI = Visual_novel_mudar_UI.Default ; 
+                Mudar_input = Visual_novel_mudar_input.Default ; 
+                Lidar_retorno = Visual_novel_lidar_retorno.Default;
 
-            
-            // --- ACTIONS 
-
-            Mudar_UI = Visual_novel_mudar_UI.Default ; 
-            Mudar_input = Visual_novel_mudar_input.Default ; 
-            Lidar_retorno = Visual_novel_lidar_retorno.Default;
-
-            // *** isso deveria vir da req também 
-            Mudar_UI();
-            Mudar_input();
-
-
-            // --- TELA
-
-            controlador_tela_visual_novel.Criar_tela();
-
-
-            // --- INICIAR SCREEN PLAY
-
-            Visual_novel_START data_visual_novel_start = Dados_blocos.visual_novel_START;
-
-            if( data_visual_novel_start == null)
-                { throw new Exception( "nao veio os dados para iniciar visual novel" ); }
-
-            string  path_background_inicial =   data_visual_novel_start.path_background_inicial;
-            Nome_screen_play nome = data_visual_novel_start.nome_screen_play;
-
-    
-    
-            screen_play = Interpretador.Pegar_screen_play ( nome );
-            leitor_visual_novel.Colocar_dados( screen_play );
-
-            screen_play.path_background_atual = data_visual_novel_start.path_background_inicial;
-            screen_play.esta_ativo = true;
-
-            
-            return;
+                // *** isso deveria vir da req também 
+                Mudar_UI();
+                Mudar_input();
 
 
 
-    }
+
+                // --- INICIAR SCREEN PLAY
+
+                Visual_novel_START data_visual_novel_start = Dados_blocos.visual_novel_START;
+
+                if( data_visual_novel_start == null)
+                    { throw new Exception( "nao veio os dados para iniciar visual novel" ); }
+
+                string  path_background_inicial =   data_visual_novel_start.path_background_inicial;
+                Nome_screen_play nome = data_visual_novel_start.nome_screen_play;
+
+        
+                // --- TELA
+                
+                controlador_tela_visual_novel.Criar_tela();
+                controlador_tela_visual_novel.Mudar_background( _path: path_background_inicial , _tem_transicao:false , _foco: 0 , _id_cor: ( int ) Nome_cor.white ); 
+
+                
+                screen_play = Interpretador.Pegar_screen_play ( nome );
+
+                screen_play.path_background_atual = path_background_inicial;
+                screen_play.esta_ativo = true;
+
+                leitor_visual_novel.Ativar( screen_play );
+                
+                return;
+
+
+
+        }
 
 
 

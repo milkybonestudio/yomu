@@ -54,11 +54,11 @@ public class Jogo {
                         Controlador_UI.Construir();
 
                         
-                        jogo.bloco_conector =  BLOCO_conector.Construir();
-                        jogo.bloco_visual_novel = BLOCO_visual_novel.Construir();
-                        jogo.bloco_conversas = BLOCO_conversas.Construir();
-                        jogo.bloco_cartas = BLOCO_cartas.Construir();
-                        jogo.bloco_minigames = BLOCO_minigames.Construir();
+                        // jogo.bloco_conector =  BLOCO_conector.Construir();
+                        // jogo.bloco_visual_novel = BLOCO_visual_novel.Construir();
+                        // jogo.bloco_conversas = BLOCO_conversas.Construir();
+                        // jogo.bloco_cartas = BLOCO_cartas.Construir();
+                        // jogo.bloco_minigames = BLOCO_minigames.Construir();
 
                         // --- TRANSICAO TEM QUE FICAR NA FRENTE
                         Controlador_transicao_jogo.Construir( jogo );

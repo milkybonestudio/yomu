@@ -50,30 +50,24 @@ using System;
                         controlador.canvas_jogo =  GameObject.Find("Tela/Canvas/Jogo");
 
 
-                        controlador.coberta_canvas = new GameObject( "Coberta" );
-                        controlador.coberta_canvas_imagem     =    IMAGE.Criar_imagem( 
-                                                                                                _game_object : controlador.coberta_canvas, 
-                                                                                                _pai : controlador.canvas_jogo,
-                                                                                                _width: 1920f,
-                                                                                                _height: 1080f,
-                                                                                                _path : null,
-                                                                                                _sprite : null,
-                                                                                                _alpha : 1f
-                                                                                                
-                                                                                        );
+                        controlador.coberta_canvas = GameObject.Find( "Tela/Canvas/Jogo/Coberta" );
+                        controlador.coberta_canvas_imagem     = controlador.coberta_canvas.GetComponent< Image >();
                         
                                         
 
                         string[] blocos_nomes = Enum.GetNames( typeof( Bloco ) );
 
+
                         controlador.blocos_transform = new Transform[ blocos_nomes.Length ];
 
-                        for( int bloco_game_object_index = 1 ; bloco_game_object_index < blocos_nomes.Length  ; bloco_game_object_index++ ){
+                        int ponto_inicial = ( int ) Bloco.conector ;
+                        
+                        for( int bloco_game_object_index = ponto_inicial ; bloco_game_object_index < blocos_nomes.Length  ; bloco_game_object_index++ ){
 
                                 char[] nome_char = blocos_nomes[ bloco_game_object_index ].ToCharArray();
                                 nome_char[ 0 ] = char.ToUpper( nome_char[ 0 ] );
                                 string nome = new string ( nome_char );
-
+                                
                                 controlador.blocos_transform[ bloco_game_object_index ] = GameObject.Find( "Tela/Canvas/Jogo/" + nome ).transform;
                                 continue;
 
@@ -138,11 +132,11 @@ using System;
 
                                 switch( bloco_para_ir ){
 
-                                        case Bloco.visual_novel: jogo.bloco_visual_novel.Iniciar_bloco_visual_novel(); break;
-                                        case Bloco.conector: jogo.bloco_conector.Iniciar_bloco_conector(); break;
-                                        case Bloco.conversas: jogo.bloco_conversas.Iniciar_bloco_conversas(); break;
-                                        case Bloco.minigames: jogo.bloco_minigames.Iniciar_bloco_minigames(); break;
-                                        case Bloco.cartas: jogo.bloco_cartas.Iniciar_bloco_cartas(); break;
+                                        case Bloco.visual_novel: BLOCO_visual_novel.Iniciar_bloco_visual_novel(); break;
+                                        case Bloco.conector: BLOCO_conector.Iniciar_bloco_conector(); break;
+                                        case Bloco.conversas: BLOCO_conversas.Iniciar_bloco_conversas(); break;
+                                        case Bloco.minigames: BLOCO_minigames.Iniciar_bloco_minigames(); break;
+                                        case Bloco.cartas: BLOCO_cartas.Iniciar_bloco_cartas(); break;
                                 }
                                 
                         }

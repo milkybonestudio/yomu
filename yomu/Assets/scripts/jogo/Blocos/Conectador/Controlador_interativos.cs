@@ -19,15 +19,16 @@ public class Controlador_interativos {
             public static Controlador_interativos Pegar_instancia(){ return instancia; }
 
 
-            public static Controlador_interativos Construir( BLOCO_conector _bloco ){ 
+            public static Controlador_interativos Construir(){ 
 
 
                   instancia = new Controlador_interativos(); 
 
                         
                         instancia.interativos_canvas = new GameObject( "Interativos" );
-                        instancia.interativos_canvas.transform.SetParent( _bloco.container_conector.transform , false );            
-                        instancia.bloco_conector = _bloco;
+                        instancia.bloco_conector = BLOCO_conector.Pegar_instancia();
+
+                        instancia.interativos_canvas.transform.SetParent( instancia.bloco_conector.container_conector.transform , false );            
 
                   
                   return instancia;

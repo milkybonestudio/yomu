@@ -75,11 +75,11 @@ public class Controlador_personagens_visual_novel{
         public static Controlador_personagens_visual_novel instancia;
         public static Controlador_personagens_visual_novel Pegar_instancia(){ return instancia; }
 
-        public static Controlador_personagens_visual_novel Construir( BLOCO_visual_novel _bloco ){ 
+        public static Controlador_personagens_visual_novel Construir(){ 
             
             Controlador_personagens_visual_novel controlador = new Controlador_personagens_visual_novel(); 
             
-                controlador.bloco_visual_novel = _bloco;
+                controlador.bloco_visual_novel = BLOCO_visual_novel.Pegar_instancia();;
 
             instancia = controlador;
             return instancia;

@@ -25,7 +25,7 @@ public static class Teste_conversa {
                 // --- INICIA 
                 
                 Jogo.Pegar_instancia().bloco_atual = Bloco.conversas;
-                BLOCO_conversas.Pegar_instancia().Iniciar_bloco_conversas();
+                BLOCO_conversas.Iniciar_bloco_conversas();
                 return;
 
 
