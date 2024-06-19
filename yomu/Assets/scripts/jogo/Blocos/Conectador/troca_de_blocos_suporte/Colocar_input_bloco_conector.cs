@@ -14,7 +14,7 @@ public static class Colocar_input_bloco_conector {
 
 
 
-            Dados_blocos.Pegar_instancia().req_mudar_input = novo_input ;
+            Dados_blocos.req_mudar_input = novo_input ;
 
 
 

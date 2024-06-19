@@ -12,25 +12,21 @@ public static class Primeiro_jogo {
              // tem que estar no main 
 
 
-                    Dados_blocos dados_blocos = Dados_blocos.Pegar_instancia();
-
-
-
                     Req_transicao req  = new Req_transicao( Tipo_troca_bloco.START , Bloco.visual_novel , Tipo_transicao.instantaneo );
                     
                     Visual_novel_START visual_novel_START = new Visual_novel_START( Nome_screen_play.NARA_INTRODUCAO_riku_introducao );
 
-                    dados_blocos.req_transicao = req;
-                    dados_blocos.visual_novel_START = visual_novel_START;
+                    Dados_blocos.req_transicao = req;
+                    Dados_blocos.visual_novel_START = visual_novel_START;
 
 
-  //                  Debug.Log("ERA PARA MOVER");
+                    // Debug.Log("ERA PARA MOVER");
 
                     ///controlador_movimento.Mover_player( _ponto_nome  :  Ponto_nome.BACK_quarto_nara,  _reset: true ,  _instantaneo : true )  ;                    
                     ///controlador_movimento.Mover_player( _ponto_nome  :  Ponto_nome.FRONT_quarto_nara ,  _reset: false , _instantaneo : true ) ; 
 
 
-//                    Debug.Log("novo_ponto: " + Player_estado_atual.Pegar_instancia().ponto_atual.ponto_nome  );
+                    //Debug.Log("novo_ponto: " + Player_estado_atual.Pegar_instancia().ponto_atual.ponto_nome  );
 
 
       

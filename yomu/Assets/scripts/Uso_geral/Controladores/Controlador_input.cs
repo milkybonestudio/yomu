@@ -76,7 +76,7 @@ public static class Controlador_input {
 
     public static void Mudar_input ( ){
 
-        Req_mudar_input _req_input = Dados_blocos.Pegar_instancia().req_mudar_input;
+        Req_mudar_input _req_input = Dados_blocos.req_mudar_input;
         if(  _req_input == null ) { return ; }
 
 
@@ -92,7 +92,7 @@ public static class Controlador_input {
         Controlador_cursor.Pegar_instancia().Mudar_cursor( cor_cursor ) ;
 
 
-        Dados_blocos.Pegar_instancia().req_mudar_input = null;
+        Dados_blocos.req_mudar_input = null;
 
 
     }

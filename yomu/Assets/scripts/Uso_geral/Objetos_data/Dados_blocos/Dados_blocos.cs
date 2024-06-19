@@ -4,52 +4,40 @@ using UnityEngine;
  
 
 
-public class Dados_blocos {
-
-
-        public static Dados_blocos instancia;
-        public static Dados_blocos Pegar_instancia(){ return instancia; }
-        public static Dados_blocos Construir(){ instancia = new Dados_blocos(); return instancia;}
-
-
-        public Req_transicao req_transicao = null ;
-        public Req_mudar_UI req_mudar_UI = null ;
-        public Req_mudar_input req_mudar_input= null ;
-
-
-
-        public Plataforma_START plataforma_START ;
-        public Plataforma_RETURN plataforma_RETURN ;
+public static class Dados_blocos {
 
 
 
 
+        public static Req_transicao req_transicao ;
+        public static Req_mudar_UI req_mudar_UI ;
+        public static Req_mudar_input req_mudar_input;
 
-        public Visual_novel_START visual_novel_START ;
-        public Visual_novel_RETURN visual_novel_RETURN ;
+
+        public static Plataforma_START plataforma_START ;
+        public static Plataforma_RETURN plataforma_RETURN ;
 
 
-        // public Jogo_START jogo_START ;
-        // public Jogo_RETURN jogo_RETURN ;
+        public static Visual_novel_START visual_novel_START ;
+        public static Visual_novel_RETURN visual_novel_RETURN ;
 
-        public Movimento_START movimento_START ;
-        public Movimento_RETURN movimento_RETURN ;
+
+        public static Conector_START conector_START ;
+        public static Conector_RETURN conector_RETURN ;
 
         
-        public Cartas_START cartas_START ;
-        public Cartas_RETURN cartas_RETURN ;
+        public static Cartas_START cartas_START ;
+        public static Cartas_RETURN cartas_RETURN ;
         
-        public Conversa_START conversa_START ;
-        public Conversa_RETURN conversa_RETURN ;
+        public static Conversa_START conversa_START ;
+        public static Conversa_RETURN conversa_RETURN ;
 
-        public Minigame_START minigame_START ;
-        public Minigame_RETURN minigame_RETURN ;
-
-
+        public static Minigame_START minigame_START ;
+        public static Minigame_RETURN minigame_RETURN ;
 
 
 
-        public void Colocar_nova_req( Req_transicao _req_transicao ){
+        public static void Colocar_nova_req( Req_transicao _req_transicao ){
 
             if( req_transicao != null) 
                 {
@@ -65,6 +53,38 @@ public class Dados_blocos {
 
         }
 
+        public static void Resetar(){ 
+            
+
+                req_transicao  = null ;
+                req_mudar_UI  = null ;
+                req_mudar_input = null ;
+
+                plataforma_START  = null ;
+                plataforma_RETURN  = null ;
+
+
+                visual_novel_START  = null ;
+                visual_novel_RETURN  = null ;
+
+
+                conector_START  = null ;
+                conector_RETURN  = null ;
+
+        
+                cartas_START  = null ;
+                cartas_RETURN  = null ;
+        
+                conversa_START  = null ;
+                conversa_RETURN  = null ;
+
+                minigame_START  = null ;
+                minigame_RETURN  = null ;
+
+
+
+
+        }
 
 
 }

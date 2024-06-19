@@ -18,7 +18,7 @@ public static class Visual_novel_mudar_UI {
             novo_UI.novo_tipo_UI = Tipo_UI.in_game;
             novo_UI.instantaneo = false;
 
-            Dados_blocos.Pegar_instancia().req_mudar_UI = novo_UI ;
+            Dados_blocos.req_mudar_UI = novo_UI ;
 
 
     }

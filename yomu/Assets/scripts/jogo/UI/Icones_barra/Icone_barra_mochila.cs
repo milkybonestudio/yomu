@@ -38,11 +38,20 @@ using System;
             public float[] posicao = new float[ 2 ] ;
 
 
-            public Slot_generico(   string _nome,  GameObject _pai, float _height , float _width  , string _path_imagem , float[] _posicao , Cor_cursor _cor ) {
+            public Slot_generico(   string _nome,  GameObject _pai, float _height , float _width  , string _path , float[] _posicao , Cor_cursor _cor ) {
 
+        
+                        this.game_object = new GameObject( _nome );
+                        this.imagem =IMAGE.Criar_imagem(
+                                                                _game_object: this.game_object,
+                                                                _pai : _pai,
+                                                                _width: _width,
+                                                                _height: _height,
+                                                                _path : _path,
+                                                                _sprite: null,
+                                                                _alpha: 0f
 
-                        this.game_object = Geral.Criar_imagem(   _nome,  _pai,  _width,  _height,  _path_imagem , 1f  ) ;
-                        this.imagem = Geral.ultima_imagem ;
+                                                        );
 
                         posicao = _posicao ;
                     
@@ -246,9 +255,6 @@ public static class Icone_barra_mochila {
 
 
 
-
-
-
     public static GameObject game_object = null;
 
 
@@ -256,7 +262,19 @@ public static class Icone_barra_mochila {
 
 
 
-        game_object = Geral.Criar_imagem("mochila", _game_object , 550f, 725f, null, 1f );
+        game_object = new GameObject( "mochila" );
+        IMAGE.Criar_imagem     (
+                                        _game_object: game_object,
+                                        _pai : _game_object,
+                                        _width: 550f,
+                                        _height: 725f,
+                                        _path : null,
+                                        _sprite: null,
+                                        _alpha: 1f
+
+                                );
+
+
         
         Player_estado_atual p  =  Player_estado_atual.Pegar_instancia() ; 
 

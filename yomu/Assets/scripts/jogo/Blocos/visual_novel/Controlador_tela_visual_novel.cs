@@ -118,15 +118,34 @@ public class Controlador_tela_visual_novel {
                 GameObject background = new GameObject("Background");
                 background.transform.SetParent( canvas_visual_novel.transform , false );
 
-                background_1 = Geral.Criar_imagem( "Background_1",background);
-                background_1_image = Geral.ultima_imagem;
+                background_1 = new GameObject( "Background_1");
+                background_1_image  = IMAGE.Criar_imagem(
+                                                                _game_object: background_1,
+                                                                _pai : background,
+                                                                _width: 1920f,
+                                                                _height: 1080f,
+                                                                _path : null,
+                                                                _sprite: null,
+                                                                _alpha: 0f
 
-                background_2 = Geral.Criar_imagem( "Background_2",background );
-                background_2_image = Geral.ultima_imagem;
+                                                        );
+
+
+                background_2 = new GameObject( "Background_2");
+                background_2_image  = IMAGE.Criar_imagem(
+                                                                _game_object: background_2,
+                                                                _pai : background,
+                                                                _width: 1920f,
+                                                                _height: 1080f,
+                                                                _path : null,
+                                                                _sprite: null,
+                                                                _alpha: 0f
+
+                                                        );
+                                                        
 
                 
-
-
+                // é usado em algum lugar?
                 objetos_background = new GameObject("Objetos_background");
                 objetos_background.transform.SetParent(   canvas_visual_novel.transform,   false ) ;
 
@@ -683,8 +702,21 @@ public class Controlador_tela_visual_novel {
 
 
                 vai_ser_escondido = true;
-                GameObject transicao_cor_game_object =  Geral.Criar_imagem(  "transicao_cor" , transicao_game_object , 1920f , 1080f );
-                Image transicao_cor_image = Geral.ultima_imagem;
+        
+                GameObject transicao_cor_game_object = new GameObject( "transicao_cor" );
+                Image transicao_cor_image  = IMAGE.Criar_imagem(
+                                                                        _game_object: transicao_cor_game_object,
+                                                                        _pai : transicao_game_object,
+                                                                        _width: 1920f,
+                                                                        _height: 1080f,
+                                                                        _path : null,
+                                                                        _sprite: null,
+                                                                        _alpha: 0f
+
+                                                                );
+                                                        
+
+
 
                 float tempo_ms_float = Convert.ToSingle( _tempo_ms )  ;
 
@@ -714,8 +746,21 @@ public class Controlador_tela_visual_novel {
 
                 vai_ser_escondido = false;
 
-                GameObject transicao_cor_game_object =  Geral.Criar_imagem(  "transicao_cor" , transicao_game_object , 1920f , 1080f );
-                Image transicao_cor_image = Geral.ultima_imagem;
+        
+                GameObject transicao_cor_game_object = new GameObject( "transicao_cor" );
+                Image transicao_cor_image  = IMAGE.Criar_imagem(
+                                                                        _game_object: transicao_cor_game_object,
+                                                                        _pai : transicao_game_object,
+                                                                        _width: 1920f,
+                                                                        _height: 1080f,
+                                                                        _path : null,
+                                                                        _sprite: null,
+                                                                        _alpha: 0f
+
+                                                                );
+
+
+
 
                 float tempo_ms_float = Convert.ToSingle( _tempo_ms )  ;
 

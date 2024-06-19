@@ -3,7 +3,7 @@ public enum Desenvolvimento_atual {
 
     nada,
 
-    movimento,
+    conector,
     visual_novel,
     conversa,
     cartas,

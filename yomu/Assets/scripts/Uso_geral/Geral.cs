@@ -50,39 +50,6 @@ public static class Geral {
 
 
 
-    public static Image ultima_imagem;
-
-    public static GameObject Criar_imagem(  string _nome,  GameObject _pai , float _width = 1920f, float _height = 1080f , string _path_imagem = null, float _alpha = 0f  ){
-
-
-        GameObject novo_game_object = new GameObject(_nome);
-        novo_game_object.transform.SetParent( _pai.transform , false);
-        
-
-        Image imagem = novo_game_object.AddComponent<Image>();
-        imagem.color = new Color(1f,1f,1f, _alpha );
-
-        if(_path_imagem != null){
-            
-            Sprite sprite = Resources.Load<Sprite>(_path_imagem);
-            if(sprite == null) throw new ArgumentException("nao foi achado imagem no path : " + _path_imagem );
-            imagem.sprite = sprite;
-
-        }
-
-        ultima_imagem = imagem;
-
-        RectTransform rect = novo_game_object.GetComponent<RectTransform>();
-
-        rect.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, _width);
-        rect.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, _height);
-
-        return novo_game_object;
-
-
-    }
-
-
     public static void Resize(GameObject _game_object, float _width = 1920f, float _height = 1080f){
 
         RectTransform rect = _game_object.GetComponent<RectTransform>();

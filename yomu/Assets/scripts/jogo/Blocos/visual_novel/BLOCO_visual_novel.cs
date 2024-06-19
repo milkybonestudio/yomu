@@ -103,10 +103,8 @@ public class BLOCO_visual_novel {
         public Controlador_tela_visual_novel controlador_tela_visual_novel;
         public Controlador_personagens_visual_novel controlador_personagens_visual_novel;
 
-        public Dados_blocos dados_blocos;
 
 
-//public Action fn_click_espera = null;
 
         public Screen_play screen_play = null;
 
@@ -140,8 +138,7 @@ public class BLOCO_visual_novel {
 
                 bloco.Lidar_retorno = Visual_novel_lidar_retorno.Default;
 
-                bloco.dados_blocos = Dados_blocos.Pegar_instancia();
-
+                
                 bloco.container_visual_novel = new GameObject( "Visual_novel" );
                 bloco.container_visual_novel.transform.SetParent( GameObject.Find( "Tela/Canvas/Jogo" ).transform , false);
 
@@ -172,7 +169,7 @@ public class BLOCO_visual_novel {
     public void Iniciar_bloco_visual_novel() {
 
             
-            Visual_novel_START data_visual_novel_start = Dados_blocos.Pegar_instancia().visual_novel_START;
+            Visual_novel_START data_visual_novel_start = Dados_blocos.visual_novel_START;
 
             if( data_visual_novel_start == null)
                 { throw new Exception( "nao veio os dados para iniciar visual novel" ); }
@@ -192,7 +189,6 @@ public class BLOCO_visual_novel {
 
             controlador_tela_visual_novel.Criar_tela();
     
-
 
             // porque ele esta mudando aqui? 
             if( path_background_inicial == null )

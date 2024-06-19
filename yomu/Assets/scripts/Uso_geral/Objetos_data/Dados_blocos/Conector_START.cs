@@ -2,7 +2,7 @@
 
 
 
-public class Movimento_START {
+public class Conector_START {
 
 
       //  Os dados de player_estado_atual vão estar aqui, BLOCO_jogo.Iniciar() vai criar o primeiro ponto. esse objeto sempre vai existir se o jogo 

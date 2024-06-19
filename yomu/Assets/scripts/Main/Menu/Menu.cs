@@ -33,8 +33,7 @@ public class Menu {
 
           controlador_configuracoes = Controlador_configuracoes.Pegar_instancia();
           controlador_dados = Controlador_dados.Pegar_instancia();
-          dados_blocos = Dados_blocos.Pegar_instancia();
-
+          
           Iniciar_menu();
 
           
@@ -110,8 +109,6 @@ public class Menu {
       public Controlador_dados controlador_dados;
 
     
-      public Dados_blocos dados_blocos;
-
       
       // vai destruir tudo quando iniciar o jogo
       
@@ -602,8 +599,6 @@ public class Menu {
             }
 
 
-
-            // 
             Jogo jogo = Jogo.Construir();
             Controlador.Pegar_instancia().jogo = jogo;
 
@@ -615,14 +610,19 @@ public class Menu {
             IEnumerator New_game_start_c(){
 
                     
-                    Geral.Criar_imagem (
+                    GameObject game_object = new GameObject( "canvas_menu_transicao" );
+                    Image imagem = IMAGE.Criar_imagem  (
+                        
+                                                            _game_object: game_object,
+                                                            _pai : ( Controlador.Pegar_instancia().canvas ),
+                                                            _width: 1920f,
+                                                            _height: 1080f,
+                                                            _path : null,
+                                                            _sprite: null,
+                                                            _alpha: 0f
 
-                        _nome: "canvas_menu_transicao", 
-                        _pai: Controlador.Pegar_instancia().canvas,
-                        _width: 1920f
-                    );
+                                                        );
 
-                    Image imagem = Geral.ultima_imagem;
 
 
                     while( imagem.color[ 3 ] < 1f ){

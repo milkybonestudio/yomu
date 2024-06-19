@@ -1,7 +1,7 @@
 
 
 
-public static class Movimento_teste_estado_generico {
+public static class Conector_teste_estado_generico {
 
 
         public static void Ativar(){
@@ -16,7 +16,7 @@ public static class Movimento_teste_estado_generico {
 
                 Dados_containers_personagem dados_para_construir_personagem = new Dados_containers_personagem();
 
-                Dados_blocos.Pegar_instancia().movimento_START = new Movimento_START();
+                Dados_blocos.conector_START = new Conector_START();
                 
                 // Controlador_dados_dinamicos.Pegar_instancia().perso.Carregar_personagem( lily );
                 //Controlador_personagens.Pegar_instancia().personagens[ ( int ) Personagem_nome.Lily ] = lily;

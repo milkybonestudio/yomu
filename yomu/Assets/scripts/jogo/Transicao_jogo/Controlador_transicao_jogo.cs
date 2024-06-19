@@ -21,15 +21,12 @@ using System;
 
         public Jogo jogo;
 
-        public Dados_blocos dados_blocos ;
         public Transform[] blocos_transform;
 
         
         public GameObject canvas_jogo; // 
-        public GameObject  transicao_tela; // pega ui
-        public GameObject  transicao_canvas; // nao pega ui
-        public Image  transicao_tela_imagem;
-        public Image  transicao_canvas_imagem; 
+        public GameObject  coberta_canvas; // nao pega ui
+        public Image  coberta_canvas_imagem; 
 
         public Coroutine coroutine_tela;
         public Action start_transition_rise;
@@ -49,14 +46,23 @@ using System;
                 Controlador_transicao_jogo controlador = new Controlador_transicao_jogo(); 
 
                         controlador.jogo = _jogo;
+                        // ** talves eu nao use
                         controlador.canvas_jogo =  GameObject.Find("Tela/Canvas/Jogo");
-                        controlador.transicao_tela = GameObject.Find("Tela/UI/Transicao");
-                        controlador.transicao_canvas = GameObject.Find("Tela/Canvas/Transicao");
-                                
-                        controlador.transicao_tela_imagem = controlador.transicao_tela.GetComponent<Image>();
-                        controlador.transicao_canvas_imagem = controlador.transicao_canvas.GetComponent<Image>();
 
-                        controlador.dados_blocos = Dados_blocos.Pegar_instancia();
+
+                        controlador.coberta_canvas = new GameObject( "Coberta" );
+                        controlador.coberta_canvas_imagem     =    IMAGE.Criar_imagem( 
+                                                                                                _game_object : controlador.coberta_canvas, 
+                                                                                                _pai : controlador.canvas_jogo,
+                                                                                                _width: 1920f,
+                                                                                                _height: 1080f,
+                                                                                                _path : null,
+                                                                                                _sprite : null,
+                                                                                                _alpha : 1f
+                                                                                                
+                                                                                        );
+                        
+                                        
 
                         string[] blocos_nomes = Enum.GetNames( typeof( Bloco ) );
 
@@ -83,7 +89,7 @@ using System;
 
         public void Mudar_bloco(){
 
-                Req_transicao req = dados_blocos.req_transicao;
+                Req_transicao req = Dados_blocos.req_transicao;
                 if( req == null )
                         { throw new Exception("req em mudar bloco veio null"); }
                 
@@ -120,7 +126,7 @@ using System;
                 
 
                 em_transicao = false;
-                dados_blocos.req_transicao = null; 
+                Dados_blocos.req_transicao = null; 
                 jogo.bloco_atual = _bloco;
 
                 if( _tipo == Tipo_troca_bloco.START )

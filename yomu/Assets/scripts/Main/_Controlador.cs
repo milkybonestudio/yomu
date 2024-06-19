@@ -81,7 +81,7 @@ public class Controlador : MonoBehaviour {
                                     modo_controlador_atual = Controlador_modo.desenvolvimento;
 
                                     // --- SETA TUDO COMO DEFAULT
-                                    jogo =  Jogo.Construir();
+                                    this.jogo =  Jogo.Construir();
                                     
                                     // --- DESENVOLVIMENTO UTILIDADES
                                     desenvolvimento.Colocar_estado_teste();
@@ -100,7 +100,6 @@ public class Controlador : MonoBehaviour {
                               { return; }
 
                   #endif
-
 
 
                   login = Login.Construir();

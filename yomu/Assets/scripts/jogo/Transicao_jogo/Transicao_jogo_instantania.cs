@@ -10,8 +10,8 @@ public static class Transicao_jogo_instantania {
 
 
                 Controlador_transicao_jogo controlador = Controlador_transicao_jogo.Pegar_instancia();
-                GameObject game_object = controlador.transicao_canvas;
-                Image game_object_imagem = controlador.transicao_canvas_imagem;
+                GameObject game_object = controlador.coberta_canvas;
+                Image game_object_imagem = controlador.coberta_canvas_imagem;
                 
                 game_object_imagem.color = new Color( 0f, 0f, 0f, 1f );
                 game_object.SetActive( false );

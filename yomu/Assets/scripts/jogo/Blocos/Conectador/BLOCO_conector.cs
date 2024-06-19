@@ -71,7 +71,6 @@ public class BLOCO_conector {
         public Player_estado_atual player_estado_atual;
 
 
-        public Dados_blocos dados_blocos;
 
         public float[] posicao_mouse;
         public Controlador_dados controlador_dados;
@@ -94,7 +93,7 @@ public class BLOCO_conector {
         public void Iniciar_bloco_conector(){
 
 
-                Movimento_START dados = Dados_blocos.Pegar_instancia().movimento_START;
+                Conector_START dados = Dados_blocos.conector_START;
 
                 if( dados == null )
                         { throw new Exception( "nao veio os dados para iniciar_movimento" ); }

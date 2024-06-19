@@ -93,7 +93,7 @@ public class BLOCO_conversas {
 
         public void Iniciar_bloco_conversas (){
 
-                Conversa_START dados = Dados_blocos.Pegar_instancia().conversa_START;
+                Conversa_START dados = Dados_blocos.conversa_START;
 
                 if( dados == null )
                         { throw new Exception( "nao veio dados para iniciar conversa" ); }
@@ -125,7 +125,7 @@ public class BLOCO_conversas {
 
                 Ler_bloco( 0 ); // sempre le start
 
-                Dados_blocos.Pegar_instancia().req_mudar_UI = new Req_mudar_UI(
+                Dados_blocos.req_mudar_UI = new Req_mudar_UI(
                         _novo_tipo : Tipo_UI.in_game,
                         _UI_partes : new bool []{ false , false , true  }
                 );
@@ -411,7 +411,7 @@ public class BLOCO_conversas {
 
                 //BLOCO_jogo.Pegar_instancia().update_tipo_atual = Jogo_update_tipo.movimento;
 
-                Dados_blocos.Pegar_instancia().req_mudar_UI = new Req_mudar_UI(
+                Dados_blocos.req_mudar_UI = new Req_mudar_UI(
 
                         _novo_tipo : Tipo_UI.in_game,
                         _UI_partes : new bool []{ false , true , false  }
@@ -477,10 +477,17 @@ public class BLOCO_conversas {
                 this.container_conversa = new GameObject("Conversas") ;
                 container_conversa.transform.SetParent(  container.transform   , false ) ;
 
+                blocos_info.personagem = new GameObject( "Personagem");
+                blocos_info.personagem_imagem    =   IMAGE.Criar_imagem(
+                                                                                _game_object: blocos_info.personagem,
+                                                                                _pai : container_conversa,
+                                                                                _width: 2160f,
+                                                                                _height: 2160f,
+                                                                                _path : null,
+                                                                                _sprite: null,
+                                                                                _alpha: 1f
 
-                blocos_info.personagem = Geral.Criar_imagem( "Personagem" , container_conversa, 2160f, 2160f,  null , 1f ) ;
-              //  blocos_info.personagem.transform.localPosition = new Vector3( 0f , -540f , 0f );
-                blocos_info.personagem_imagem = Geral.ultima_imagem ;
+                                                                        );
 
     
 

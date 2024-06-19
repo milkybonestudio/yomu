@@ -90,18 +90,21 @@ public class Icone_barra {
             this.imagem_nao_focada = Resources.Load< Sprite >( path_NAO_focado );
 
             this.icone_nome = _nome;
-            this.game_object =  Geral.Criar_imagem(
 
-                _nome: _nome.ToString() ,
+            this.game_object = new GameObject( _nome.ToString() );
+            this.imagem =  IMAGE.Criar_imagem(
+
+                _game_object: this.game_object ,
                 _pai: _pai ,
                 _width: 50f ,
                 _height: 50f ,
-                _path_imagem: path_NAO_focado,
+                _path : path_NAO_focado,
+                _sprite: null,
                 _alpha: 1f
 
             );
-            this.imagem = Geral.ultima_imagem;
 
+            
             this.game_object.transform.localPosition = new Vector3( _x, _y , 0f );
 
             
@@ -178,51 +181,51 @@ public class Barra_superior_modelo_1 {
             string barra_parte_2_path = path_folder + "barra_superior_parte_2";
             string seta_path = path_folder + "seta";
 
+            barra_superior_parte_1 = new GameObject( "barra_superior_1" );
+            barra_superior_parte_1_imagem = IMAGE.Criar_imagem(
 
-            barra_superior_parte_1 = Geral.Criar_imagem(
-
-                _nome: "barra_superior_1" ,
+                _game_object: barra_superior_parte_1,
                 _pai: game_object ,
                 _width: 1920f ,
                 _height: 1080f ,
-                _path_imagem: barra_parte_1_path,
+                _path: barra_parte_1_path,
+                _sprite: null,
                 _alpha: 1f
 
             );
-            barra_superior_parte_1_imagem = Geral.ultima_imagem;
+            
 
+            seta = new GameObject( "seta" );
+            seta_imagem = IMAGE.Criar_imagem(
 
-            seta = Geral.Criar_imagem(
-
-                _nome: "seta" ,
+                _game_object: seta,
                 _pai: game_object ,
                 _width: 150f ,
                 _height: 30f ,
-                _path_imagem: seta_path,
+                _path: seta_path,
+                _sprite: null,
                 _alpha: 1f
 
             );
-            seta_imagem = Geral.ultima_imagem;
+            
 
             seta.transform.localPosition += new Vector3(  0f  ,   488.9f   , 0f   );
 
 
+            barra_superior_parte_2 = new GameObject( "barra_superior_2" );
+            barra_superior_parte_2_imagem = IMAGE.Criar_imagem(
 
-            barra_superior_parte_2 = Geral.Criar_imagem(
-
-                _nome: "barra_superior_2" ,
+                _game_object: barra_superior_parte_2 ,
                 _pai: game_object ,
                 _width: 1920 ,
                 _height: 1080f ,
-                _path_imagem: barra_parte_2_path,
+                _path : barra_parte_2_path,
+                _sprite: null,
                 _alpha: 1f
 
             );
-            barra_superior_parte_2_imagem = Geral.ultima_imagem;
             
-
-
-
+            
 
 
 

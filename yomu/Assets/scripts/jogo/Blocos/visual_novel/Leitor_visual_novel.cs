@@ -1184,7 +1184,7 @@ public class Leitor_visual_novel{
 
                 Req_transicao req_transicao = new Req_transicao( Tipo_troca_bloco.OUT  ) ;
                 req_transicao.tipo_transicao = Tipo_transicao.instantaneo;
-                bloco_visual_novel.dados_blocos.req_transicao = req_transicao;
+                Dados_blocos.req_transicao = req_transicao;
 
 
 

@@ -11,16 +11,8 @@ public static class Transicao_jogo_cor {
 
                 Controlador_transicao_jogo controlador_transicao_jogo = Controlador_transicao_jogo.Pegar_instancia();
 
-                bool vai_esconder_ui  =  _req.pega_ui; // ??
-
-                GameObject game_object = controlador_transicao_jogo.transicao_canvas;
-                Image game_object_imagem = controlador_transicao_jogo.transicao_canvas_imagem;
-
-                if( vai_esconder_ui ) 
-                        { 
-                                game_object = controlador_transicao_jogo.transicao_tela; 
-                                game_object_imagem = controlador_transicao_jogo.transicao_tela_imagem;
-                        }
+                GameObject game_object = controlador_transicao_jogo.coberta_canvas;
+                Image game_object_imagem = controlador_transicao_jogo.coberta_canvas_imagem;
 
 
                 game_object.SetActive( true );

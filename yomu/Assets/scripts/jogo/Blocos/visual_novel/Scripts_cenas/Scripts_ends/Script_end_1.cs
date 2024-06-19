@@ -97,8 +97,6 @@ public static class Script_end_1 {
     public static  void NARA_INTRODUCAO_alkatroz( Screen_play _screen_play ){
 
 
-            Dados_blocos dados = Dados_blocos.Pegar_instancia();
-
             //Jogo_RETURN  jogo_return = new Jogo_RETURN();
 
             Player_estado_atual.Pegar_instancia().posicao_arr = new Ponto_nome[ 20 ];

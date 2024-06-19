@@ -113,8 +113,17 @@ public static class Icone_barra_mapa {
 
     public static void  Criar( GameObject _game_object ){
 
+        game_object = new GameObject( "mapa" );
+        IMAGE.Criar_imagem (
+                                _game_object: game_object,
+                                _pai : _game_object,
+                                _width: 800f,
+                                _height: 600f,
+                                _path : null,
+                                _sprite: null,
+                                _alpha: 1f
 
-        game_object = Geral.Criar_imagem("mapa", _game_object , 800f, 600f, null, 1f );
+                            );
         
 
         Player_estado_atual p  =  Player_estado_atual.Pegar_instancia() ; 
@@ -132,19 +141,30 @@ public static class Icone_barra_mapa {
 
         for( int i = 0 ; i < numero_pontos ; i++ ){
 
-            float[] posicao = pontos_mapa_posicoes[ i ] ;
+                float[] posicao = pontos_mapa_posicoes[ i ] ;
 
-            Mapa_ponto mapa_ponto = new Mapa_ponto() ;
-            pontos[ i ] =  mapa_ponto ;
+                Mapa_ponto mapa_ponto = new Mapa_ponto() ;
+                pontos[ i ] =  mapa_ponto ;
 
-            string path_ponto_sprite = mapa_path + pontos_mapa[ i ] ;
-            
-            mapa_ponto.game_object = Geral.Criar_imagem(  _nome : ("ponto_mapa_" + pontos_mapa[ i ].ToString() ) , _pai : game_object  ,  _width:  50f ,   _height: 50f , _path_imagem : path_ponto_sprite, _alpha : 1f );
-            mapa_ponto.ponto_imagem = Geral.ultima_imagem;
+                string path_ponto_sprite = mapa_path + pontos_mapa[ i ] ;
+                
+                mapa_ponto.game_object = new GameObject( "ponto_mapa_" + pontos_mapa[ i ].ToString() );
+                mapa_ponto.ponto_imagem =IMAGE.Criar_imagem (
+                                                                _game_object: mapa_ponto.game_object,
+                                                                _pai : game_object,
+                                                                _width: 50f,
+                                                                _height: 50f,
+                                                                _path : path_ponto_sprite,
+                                                                _sprite: null,
+                                                                _alpha: 1f
 
-            mapa_ponto.Colocar_posicao( posicao );
+                                                            );
 
-            mapa_ponto.ponto_destino = pontos_mapa[ i ];
+        
+
+                mapa_ponto.Colocar_posicao( posicao );
+
+                mapa_ponto.ponto_destino = pontos_mapa[ i ];
 
 
 

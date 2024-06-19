@@ -116,7 +116,7 @@ public class Controlador_UI {
     public void Mudar_UI() {
 
 
-        Req_mudar_UI _req_ui = Dados_blocos.Pegar_instancia().req_mudar_UI;
+        Req_mudar_UI _req_ui = Dados_blocos.req_mudar_UI;
 
         if( _req_ui == null  ){  return ; }
 
@@ -154,7 +154,7 @@ public class Controlador_UI {
 
         }
 
-        Dados_blocos.Pegar_instancia().req_mudar_UI = null;
+        Dados_blocos.req_mudar_UI = null;
 
     
 

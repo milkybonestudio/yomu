@@ -89,9 +89,8 @@ public static class Scripts_jogo {
             );
 
             
-            Dados_blocos dados = Dados_blocos.Pegar_instancia();
-            dados.visual_novel_START = new Visual_novel_START(   _nome_screen_play   );
-            dados.Colocar_nova_req(req);
+            Dados_blocos.visual_novel_START = new Visual_novel_START(   _nome_screen_play   );
+            Dados_blocos.Colocar_nova_req( req );
       
 
             return;

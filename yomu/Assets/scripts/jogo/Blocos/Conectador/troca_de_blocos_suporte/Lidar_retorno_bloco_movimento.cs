@@ -11,16 +11,15 @@ public static class Lidar_retorno_bloco_conector{
 
 
         BLOCO_conector bloco_conector = BLOCO_conector.Pegar_instancia();
-        Dados_blocos dados_blocos  = Dados_blocos.Pegar_instancia();
+        
+
+        Conector_RETURN conector_return = Dados_blocos.conector_RETURN;
+
+        if( conector_return != null  ){
 
 
-        Movimento_RETURN movimento_return = dados_blocos.movimento_RETURN;
-
-        if( movimento_return != null  ){
-
-
-                Script_jogo_nome script_retorno = movimento_return.script_jogo;
-                Ponto_nome ponto_para_mover = movimento_return.ponto_para_mover ;
+                Script_jogo_nome script_retorno = conector_return.script_jogo;
+                Ponto_nome ponto_para_mover = conector_return.ponto_para_mover ;
 
 
 
@@ -57,7 +56,7 @@ public static class Lidar_retorno_bloco_conector{
         bloco_conector.Colocar_input_atual();
         bloco_conector.Colocar_UI_atual();
 
-        dados_blocos.movimento_RETURN = null;
+        Dados_blocos.conector_RETURN = null;
 
 
         return;

@@ -191,15 +191,27 @@ public class Controlador_personagens_visual_novel{
                 personagem.cor_texto_atual_id    =  ( int ) personagem_nome_cor;
 
 
-
             
                 string nome = "Personagem_" + _personagens_nomes[ i ] ;
                 GameObject personagem_game_object = new GameObject( nome ) ;
                 personagem_game_object.transform.SetParent(personagens_container.transform, false);
                 personagem.game_object = personagem_game_object;
 
-                personagem.imagem_game_object = Geral.Criar_imagem( ("IMAGEM_" + nome) , personagem_game_object, 1080f , 1080f , null );
-                personagem.image = Geral.ultima_imagem;
+                personagem.imagem_game_object = new GameObject( "IMAGEM_" + nome );
+                personagem.image  = IMAGE.Criar_imagem(
+                                                                _game_object: personagem.imagem_game_object,
+                                                                _pai : personagem_game_object,
+                                                                _width: 1080f,
+                                                                _height: 1080f,
+                                                                _path : null,
+                                                                _sprite: null,
+                                                                _alpha: 0f
+
+                                                        );
+                                                        
+
+
+
                 personagem.image.color = Color.clear;
                 personagem.rect_transform = personagem.imagem_game_object.GetComponent<RectTransform>();
                                      

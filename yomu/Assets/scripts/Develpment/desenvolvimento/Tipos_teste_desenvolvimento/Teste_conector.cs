@@ -5,7 +5,7 @@ using System.Reflection;
 
 
 
-public static class Teste_movimento {
+public static class Teste_conector {
 
 
         // ** criar ferramentas de suporte 
@@ -16,7 +16,7 @@ public static class Teste_movimento {
 
                 switch( _chave ){
 
-                        case "generico" : Movimento_teste_estado_generico.Ativar(); break;
+                        case "generico" : Conector_teste_estado_generico.Ativar(); break;
 
                 }
 

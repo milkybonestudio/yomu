@@ -21,7 +21,7 @@ public class Desenvolvimento {
 
           //  --- MODO TESTE ATUAL
 
-          public Desenvolvimento_atual desenvolvimento_atual = Desenvolvimento_atual.movimento;
+          public Desenvolvimento_atual desenvolvimento_atual = Desenvolvimento_atual.conector;
           public string chave_teste = "generico";
 
           public void Iniciar_ferramentas(){
@@ -45,12 +45,15 @@ public class Desenvolvimento {
                     // no editor ele vai começar em um local "0" sem nenhum contexto
                     // se um teste especifico precisar de contexto como "mover player para POSICAO" => iniciar VN => "mover player dependendo de VN" 
 
+
+                    // --- COLOCA DADOS DEFAULT
+
                     Controlador_save.Construir_teste();
 
 
                     switch( desenvolvimento_atual ){
 
-                         case Desenvolvimento_atual.movimento : Teste_movimento.Criar( chave_teste ); break;
+                         case Desenvolvimento_atual.conector : Teste_conector.Criar( chave_teste ); break;
                          case Desenvolvimento_atual.visual_novel : Teste_visual_novel.Criar( chave_teste ); break;
                          case Desenvolvimento_atual.conversa : Teste_conversa.Criar( chave_teste ); break;
                          case Desenvolvimento_atual.cartas : Teste_cartas.Criar( chave_teste ); break;
