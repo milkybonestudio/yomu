@@ -1,7 +1,7 @@
 
 
 
-public static class Colocar_input_bloco_movimento {
+public static class Colocar_input_bloco_conector {
 
     public static void Default(){
 

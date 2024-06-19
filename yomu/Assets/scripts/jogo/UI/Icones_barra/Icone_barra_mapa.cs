@@ -75,7 +75,7 @@ public static class Icone_barra_mapa {
 
                                     //BLOCO_jogo.Pegar_instancia().update_tipo_atual = Jogo_update_tipo.movimento;
 
-                                    BLOCO_movimento.Pegar_instancia().Mover_player( ponto.ponto_destino , true  );
+                                    BLOCO_conector.Pegar_instancia().Mover_player( ponto.ponto_destino , true  );
 
                                     Encerrar();
                                     return true;

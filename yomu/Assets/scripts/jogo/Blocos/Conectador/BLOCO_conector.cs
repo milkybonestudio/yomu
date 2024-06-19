@@ -4,47 +4,47 @@ using System;
 
 
 
-public class BLOCO_movimento {
+public class BLOCO_conector {
 
 
       
-        public static BLOCO_movimento instancia;
-        public static BLOCO_movimento Pegar_instancia(){ return instancia; }
+        public static BLOCO_conector instancia;
+        public static BLOCO_conector Pegar_instancia(){ return instancia; }
 
 
 
-        public static BLOCO_movimento Construir(){ 
+        public static BLOCO_conector Construir(){ 
 
 
-                BLOCO_movimento movimento = new BLOCO_movimento(); 
+                BLOCO_conector conector = new BLOCO_conector(); 
 
-                movimento.container_movimento = new GameObject( "Movimento" );
-                movimento.container_movimento.transform.SetParent( GameObject.Find( "Tela/Canvas/Jogo" ).transform , false);
+                conector.container_conector = new GameObject( "Conector" );
+                conector.container_conector.transform.SetParent( GameObject.Find( "Tela/Canvas/Jogo" ).transform , false);
                 
 
-                movimento.controlador_interativos = Controlador_interativos.Construir( movimento );
-                movimento.controlador_tela_movimento = Controlador_tela_movimento.Construir( movimento );
+                conector.controlador_interativos = Controlador_interativos.Construir( conector );
+                conector.controlador_tela_conector = Controlador_tela_conector.Construir( conector );
                 
-                movimento.controlador_utilidades = Controlador_utilidades.Pegar_instancia();
+                conector.controlador_utilidades = Controlador_utilidades.Pegar_instancia();
 
-                movimento.controlador_cursor = Controlador_cursor.Pegar_instancia();
+                conector.controlador_cursor = Controlador_cursor.Pegar_instancia();
 
-                movimento.controlador_dados = Controlador_dados.Pegar_instancia();
-                movimento.posicao_mouse = movimento.controlador_dados.posicao_mouse;
+                conector.controlador_dados = Controlador_dados.Pegar_instancia();
+                conector.posicao_mouse = conector.controlador_dados.posicao_mouse;
 
 
-                movimento.player_estado_atual = Player_estado_atual.Pegar_instancia();
+                conector.player_estado_atual = Player_estado_atual.Pegar_instancia();
                 
 
-                movimento.Colocar_UI_atual = Colocar_UI_bloco_movimento.Default ;
-                movimento.Colocar_input_atual  = Colocar_input_bloco_movimento.Default ;
-
-                
-                
-                movimento.Lidar_retorno = Lidar_retorno_bloco_movimento.Default;
+                conector.Colocar_UI_atual = Colocar_UI_bloco_conector.Default ;
+                conector.Colocar_input_atual  = Colocar_input_bloco_conector.Default ;
 
                 
-                instancia = movimento;
+                
+                conector.Lidar_retorno = Lidar_retorno_bloco_conector.Default;
+
+                
+                instancia = conector;
                 return instancia;
 
                 
@@ -55,7 +55,7 @@ public class BLOCO_movimento {
 
         public Controlador_cursor controlador_cursor;
 
-        public Controlador_tela_movimento controlador_tela_movimento;
+        public Controlador_tela_conector controlador_tela_conector;
 
         public Controlador_interativos controlador_interativos;
 
@@ -65,7 +65,7 @@ public class BLOCO_movimento {
 
         //public Controlador_conversas controlador_conversas;
 
-        public GameObject container_movimento; 
+        public GameObject container_conector; 
 
 
         public Player_estado_atual player_estado_atual;
@@ -91,7 +91,7 @@ public class BLOCO_movimento {
 
 
 
-        public void Iniciar_bloco_movimento(){
+        public void Iniciar_bloco_conector(){
 
 
                 Movimento_START dados = Dados_blocos.Pegar_instancia().movimento_START;
@@ -100,7 +100,7 @@ public class BLOCO_movimento {
                         { throw new Exception( "nao veio os dados para iniciar_movimento" ); }
 
                         
-                controlador_tela_movimento.Trocar_tela( player_estado_atual.Pegar_path_imagem_background() );
+                controlador_tela_conector.Trocar_tela( player_estado_atual.Pegar_path_imagem_background() );
                 controlador_interativos.Criar_interativos( player_estado_atual.ponto_atual );
 
                 Colocar_UI_atual();
@@ -248,7 +248,7 @@ public class BLOCO_movimento {
                 
                 //  usa player_estado_atual
 
-                controlador_tela_movimento.Trocar_tela( player_estado_atual.Pegar_path_imagem_background() , _instantaneo);
+                controlador_tela_conector.Trocar_tela( player_estado_atual.Pegar_path_imagem_background() , _instantaneo);
 
                 return;
 
@@ -288,7 +288,7 @@ public class BLOCO_movimento {
                 
 
                 Controlador_cursor.Pegar_instancia().Mudar_cursor(Cor_cursor.off);
-                controlador_tela_movimento.Trocar_tela(player_estado_atual.Pegar_path_imagem_background());
+                controlador_tela_conector.Trocar_tela(player_estado_atual.Pegar_path_imagem_background());
                 controlador_interativos.Criar_interativos(novo_ponto);
 
                 

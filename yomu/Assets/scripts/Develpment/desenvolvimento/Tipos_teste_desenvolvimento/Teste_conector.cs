@@ -24,8 +24,8 @@ public static class Teste_movimento {
                 
                 // --- Iniciar
 
-                Jogo.Pegar_instancia().bloco_atual = Bloco.movimento;
-                BLOCO_movimento.Pegar_instancia().Iniciar_bloco_movimento();
+                Jogo.Pegar_instancia().bloco_atual = Bloco.conector;
+                BLOCO_conector.Pegar_instancia().Iniciar_bloco_conector();
                 return;
                 
 

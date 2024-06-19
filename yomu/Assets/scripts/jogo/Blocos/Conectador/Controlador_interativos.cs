@@ -19,7 +19,7 @@ public class Controlador_interativos {
             public static Controlador_interativos Pegar_instancia(){ return instancia; }
 
 
-            public static Controlador_interativos Construir( BLOCO_movimento _bloco ){ 
+            public static Controlador_interativos Construir( BLOCO_conector _bloco ){ 
 
 
                   instancia = new Controlador_interativos(); 
@@ -27,7 +27,7 @@ public class Controlador_interativos {
                         
                         instancia.interativos_canvas = new GameObject( "Interativos" );
                         instancia.interativos_canvas.transform.SetParent( GameObject.Find( "Tela/Canvas/Jogo/Movimento" ).transform , false );            
-                        instancia.bloco_movimento = _bloco;
+                        instancia.bloco_conector = _bloco;
 
                   
                   return instancia;
@@ -38,7 +38,7 @@ public class Controlador_interativos {
 
             public GameObject interativos_container;
             public  GameObject interativos_canvas;
-            public BLOCO_movimento bloco_movimento;
+            public BLOCO_conector bloco_conector;
 
             public Interativo[] interativos_arr = new Interativo[ 0 ];
 

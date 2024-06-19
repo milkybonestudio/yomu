@@ -4,21 +4,12 @@ using UnityEngine.Audio;
 using System.Collections;
 using System;
 
-
 /*
-
         blocos podem fazer 2 coisas: OUT ou START.     out sempre exclui o atual e vai para o bloco anterior        
                                                        start preserva o bloco atual e cria um proximo bloco
         movimento é o unico que nao pode dar out.
-
         dados_blocos vao ter 2 objetos por bloco, START e RETURN
-
-        return tem os dados de retorno do bloco em um out
-        start tem os dados para iniciar algum bloco
-
 */
-
-
 
 
  public class Controlador_transicao_jogo {
@@ -73,12 +64,12 @@ using System;
 
                         for( int bloco_game_object_index = 1 ; bloco_game_object_index < blocos_nomes.Length  ; bloco_game_object_index++ ){
 
-                                        char[] nome_char = blocos_nomes[ bloco_game_object_index ].ToCharArray();
-                                        nome_char[ 0 ] = char.ToUpper( nome_char[ 0 ] );
-                                        string nome = new string ( nome_char );
+                                char[] nome_char = blocos_nomes[ bloco_game_object_index ].ToCharArray();
+                                nome_char[ 0 ] = char.ToUpper( nome_char[ 0 ] );
+                                string nome = new string ( nome_char );
 
-                                        controlador.blocos_transform[ bloco_game_object_index ] = GameObject.Find( "Tela/Canvas/Jogo/" + nome ).transform;
-                                        continue;
+                                controlador.blocos_transform[ bloco_game_object_index ] = GameObject.Find( "Tela/Canvas/Jogo/" + nome ).transform;
+                                continue;
 
                         }
 
@@ -98,10 +89,7 @@ using System;
                 
 
                 em_transicao = true;
-
                 jogo.bloco_atual =  Bloco.transicao;
-
-                // modo_tela_em_transicao = req.novo_bloco;
 
                 if( coroutine_tela != null )
                         {
@@ -122,31 +110,34 @@ using System;
         }
 
 
-
-
-
         public void Trocar_blocos ( Bloco _bloco , Tipo_troca_bloco _tipo){
 
+                // **quem pediu a req fica responsavel de criar os dados_START ou dados_RETURN
 
-                // quem pediu a req fica responsavel de criar os dados_START ou dados_RETURN
+                
+                // em blocos conectados tem que esconder 
+                Deixar_visivel_somente_bloco_atual( _bloco ) ;
+                
+
+                em_transicao = false;
+                dados_blocos.req_transicao = null; 
+                jogo.bloco_atual = _bloco;
 
                 if( _tipo == Tipo_troca_bloco.START )
                         {
 
                                 Bloco bloco_para_ir = _bloco;
 
-
                                 Player_estado_atual.Pegar_instancia().Adicionar_modo_tela( bloco_para_ir ); 
 
                                 switch( bloco_para_ir ){
 
                                         case Bloco.visual_novel: jogo.bloco_visual_novel.Iniciar_bloco_visual_novel(); break;
-                                        case Bloco.movimento: jogo.bloco_movimento.Iniciar_bloco_movimento(); break;
+                                        case Bloco.conector: jogo.bloco_conector.Iniciar_bloco_conector(); break;
                                         case Bloco.conversas: jogo.bloco_conversas.Iniciar_bloco_conversas(); break;
                                         case Bloco.minigames: jogo.bloco_minigames.Iniciar_bloco_minigames(); break;
                                         case Bloco.cartas: jogo.bloco_cartas.Iniciar_bloco_cartas(); break;
                                 }
-
                                 
                         }
 
@@ -164,7 +155,7 @@ using System;
                                 switch( bloco_para_excluir ) {
 
                                         case Bloco.visual_novel: jogo.bloco_visual_novel.Finalizar() ; return ;
-                                        case Bloco.movimento: jogo.bloco_movimento.Finalizar() ; return ;
+                                        case Bloco.conector: jogo.bloco_conector.Finalizar() ; return ;
                                         case Bloco.conversas: jogo.bloco_conversas.Finalizar() ; return ;
                                         case Bloco.cartas: jogo.bloco_cartas.Finalizar() ; return ;
                                         case Bloco.minigames: jogo.bloco_minigames.Finalizar() ; return ;
@@ -181,66 +172,43 @@ using System;
                                 switch( bloco_para_voltar ) {
 
                                         case Bloco.visual_novel: jogo.bloco_visual_novel.Lidar_retorno() ; return ;
-                                        case Bloco.movimento: jogo.bloco_movimento.Lidar_retorno() ; return ;
+                                        case Bloco.conector: jogo.bloco_conector.Lidar_retorno() ; return ;
                                         case Bloco.conversas: jogo.bloco_conversas.Lidar_retorno() ; return ;
                                         case Bloco.cartas: jogo.bloco_cartas.Lidar_retorno() ; return ;
                                         case Bloco.minigames: jogo.bloco_minigames.Lidar_retorno() ; return ;
 
                                 }
-
                                 
 
                         }
 
-                
-                // em blocos conectados tem que esconder 
-                Deixar_visivel_somente_bloco_atual( _bloco ) ;
-                
-
-                em_transicao = false;
-                dados_blocos.req_transicao = null; 
-                jogo.bloco_atual = _bloco;
                     
-
                 return;  
 
 
         }
 
 
-
-
-
-
-
         public void Deixar_visivel_somente_bloco_atual ( Bloco _bloco_atual ){
 
-                GameObject canvas = GameObject.Find("Tela/Canvas");
-                int numero_blocos = canvas.transform.childCount;
-
+                
                         //    transicao nunca entra
-                for(int i = 0 ;  i < numero_blocos - 1 ; i++){
+                for(int bloco_index = 1 ;  bloco_index < blocos_transform.Length ; bloco_index++){
 
-                        string name_1 = canvas.transform.GetChild( i ).name.ToLower();
-                        string name_2 = Convert.ToString( _bloco_atual );
+                        if( bloco_index == ( int ) _bloco_atual )
+                                { 
+                                        blocos_transform[ bloco_index ].gameObject.SetActive( true );
+                                        continue;
+                                }
 
-                        if(  name_1 == name_2  ) {
-
-                                canvas.transform.GetChild( i ).gameObject.SetActive( true );        
-                                continue;
-                        }
-                        
-                        canvas.transform.GetChild( i ).gameObject.SetActive( false );
+                        blocos_transform[ bloco_index ].gameObject.SetActive( false );
+                        continue;
 
                 }
 
+                return;
+
         }
-
-
-
-
-
-
 
 
 
@@ -263,40 +231,6 @@ using System;
                 return;
 
         }
-
-
-
-
-
-
-        // ** onde vai ficar?
-
-        // public void Mudar_UI_OUT(){
-
-        //         Bloco bloco_que_vai_voltar = Player_estado_atual.Pegar_instancia().Pegar_bloco_anterior();
-        //         Bloco bloco_atual = Player_estado_atual.Pegar_instancia().Pegar_bloco_atual();
-
-
-        //         // aqui vai ter algo especifico
-        //         switch( bloco_atual ){
-
-
-        //                 case Bloco.movimento: throw new Exception( "" );
-        //                 case Bloco.visual_novel: {
-
-
-        //                 } break;
-
-                        
-
-        //         }
-
-
-
-        // }
-
-
-
 
 
 

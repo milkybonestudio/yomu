@@ -7,18 +7,18 @@ using System.Collections;
 
 
 
-public class Controlador_tela_movimento{
+public class Controlador_tela_conector {
 
 
-            public static Controlador_tela_movimento instancia;
-            public static Controlador_tela_movimento Pegar_instancia(){ return instancia; }
+            public static Controlador_tela_conector instancia;
+            public static Controlador_tela_conector Pegar_instancia(){ return instancia; }
 
 
-            public static Controlador_tela_movimento Construir( BLOCO_movimento _bloco ){ 
+            public static Controlador_tela_conector Construir( BLOCO_conector _bloco ){ 
                         
-                        instancia = new Controlador_tela_movimento(); 
+                        instancia = new Controlador_tela_conector(); 
 
-                        instancia.bloco_movimento = _bloco;
+                        instancia.bloco_conectoBLOCO_conector = _bloco;
                         
                         return instancia;
                         
@@ -30,7 +30,7 @@ public class Controlador_tela_movimento{
 
             public GameObject game_object_para_outros_modos;
 
-            public BLOCO_movimento bloco_movimento;
+            public BLOCO_conector bloco_conectoBLOCO_conector;
 
             public Controlador_cursor controlador_cursor;
 

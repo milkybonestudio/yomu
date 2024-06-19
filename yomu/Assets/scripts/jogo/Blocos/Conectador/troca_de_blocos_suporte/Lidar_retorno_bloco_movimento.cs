@@ -3,14 +3,14 @@
 
 
 
-public static class Lidar_retorno_bloco_movimento{
+public static class Lidar_retorno_bloco_conector{
 
 
     public static void Default(){
 
 
 
-        BLOCO_movimento bloco_movimento = BLOCO_movimento.Pegar_instancia();
+        BLOCO_conector bloco_conector = BLOCO_conector.Pegar_instancia();
         Dados_blocos dados_blocos  = Dados_blocos.Pegar_instancia();
 
 
@@ -54,8 +54,8 @@ public static class Lidar_retorno_bloco_movimento{
 
 
            
-        bloco_movimento.Colocar_input_atual();
-        bloco_movimento.Colocar_UI_atual();
+        bloco_conector.Colocar_input_atual();
+        bloco_conector.Colocar_UI_atual();
 
         dados_blocos.movimento_RETURN = null;
 

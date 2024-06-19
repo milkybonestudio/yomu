@@ -7,9 +7,9 @@ public enum Bloco {
     salvando,
 
 
+    conector,
     visual_novel,
     conversas,
-    movimento,
     cartas,
     minigames,
 

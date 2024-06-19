@@ -24,7 +24,7 @@ public class Jogo {
 
         public BLOCO_visual_novel bloco_visual_novel;
         public BLOCO_conversas bloco_conversas;
-        public BLOCO_movimento bloco_movimento;
+        public BLOCO_conector bloco_conector;
         public BLOCO_cartas bloco_cartas;
         public BLOCO_minigames bloco_minigames;
 
@@ -54,7 +54,7 @@ public class Jogo {
                         
 
                         jogo.bloco_visual_novel = BLOCO_visual_novel.Construir();
-                        jogo.bloco_movimento =  BLOCO_movimento.Construir();
+                        jogo.bloco_conector =  BLOCO_conector.Construir();
                         jogo.bloco_conversas = BLOCO_conversas.Construir();
                         jogo.bloco_cartas = BLOCO_cartas.Construir();
                         jogo.bloco_minigames = BLOCO_minigames.Construir();
@@ -99,7 +99,7 @@ public class Jogo {
                     
 
                         case Bloco.visual_novel :  bloco_visual_novel.Update() ;  break;
-                        case Bloco.movimento: bloco_movimento.Update(); break;
+                        case Bloco.conector: bloco_conector.Update(); break;
                         case Bloco.minigames: bloco_minigames.Update(); break;
                         case Bloco.conversas: bloco_conversas.Update(); break;
                         case Bloco.cartas: bloco_conversas.Update(); break;
