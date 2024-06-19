@@ -525,7 +525,7 @@ public class Leitor_visual_novel{
 
                     if(   ( rect_antigo.width != rect_novo.width ) ||  ( rect_antigo.height != rect_novo.height )  ){
 
-                        Geral.Resize( personagem.imagem_game_object ,  rect_novo.width, rect_novo.height );
+                        IMAGE.Resize( personagem.imagem_game_object ,  rect_novo.width, rect_novo.height );
                     }
 
 

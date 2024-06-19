@@ -15,7 +15,8 @@ public class Visual_novel_START {
 
     public bool is_screen_play_sequencia = false;
 
-    public string path_background_inicial = null;
+    // ** o background do plot precisa ser definido no script. Se nao definir vai sempre usar o do jogo
+    public string path_background_inicial = Player_estado_atual.Pegar_instancia().Pegar_path_imagem_background();
 
     // public int tipo_cena;
 

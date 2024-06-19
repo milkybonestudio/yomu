@@ -12,25 +12,33 @@ public class BLOCO_cartas {
 
         public static BLOCO_cartas Construir(){ 
                 
-                instancia = new BLOCO_cartas(); 
+                BLOCO_cartas bloco = new BLOCO_cartas(); 
 
+                        bloco.controlador_tela_cartas = Controlador_tela_cartas.Construir( bloco );
 
-                instancia.container_cartas = new GameObject( "Cartas" );
-                instancia.container_cartas.transform.SetParent( GameObject.Find( "Tela_3d" ).transform , false);
-                
-                return instancia;
+                instancia = bloco;
+                return bloco;
                 
         }
 
         // nao é UI, vai star no espaço 3d 
         // ** lembrar que Tela senpre vai estar na frente por ser canvas/UI
-        public GameObject container_cartas;
+
+        public GameObject canvas;
+        public GameObject canvas_3d;
+
+        public Controlador_tela_cartas controlador_tela_cartas;
 
 
         public void Iniciar_bloco_cartas(){}
-        public void Finalizar(){}
+        public void Finalizar(){
+
+                controlador_tela_cartas.Finalizar();
+
+        }
 
         public Action Lidar_retorno;
         public Action Lidar_saida;
+
 
 }

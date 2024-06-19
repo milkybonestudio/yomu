@@ -32,7 +32,9 @@ public class Jogo {
         public Controlador_save controlador_save;
         public Controlador_AI controlador_AI;
 
+        // TELA 
         public GameObject canvas;
+        public GameObject canvas_3d;
         
 
         public static Jogo Construir(){
@@ -45,13 +47,15 @@ public class Jogo {
                 Jogo jogo = new Jogo(); 
                         
                         jogo.canvas = GameObject.Find( "Tela/Canvas" );
+                        jogo.canvas_3d = GameObject.Find( "Canvas_3d" );
                         GameObject jogo_canvas = new GameObject( "Jogo" );
                         jogo_canvas.transform.SetParent( jogo.canvas.transform, false );
 
                         Controlador_UI.Construir();
+
                         
-                        jogo.bloco_visual_novel = BLOCO_visual_novel.Construir();
                         jogo.bloco_conector =  BLOCO_conector.Construir();
+                        jogo.bloco_visual_novel = BLOCO_visual_novel.Construir();
                         jogo.bloco_conversas = BLOCO_conversas.Construir();
                         jogo.bloco_cartas = BLOCO_cartas.Construir();
                         jogo.bloco_minigames = BLOCO_minigames.Construir();
@@ -98,7 +102,7 @@ public class Jogo {
                 switch (  bloco_atual ) {
                     
 
-                        case Bloco.visual_novel :  bloco_visual_novel.Update() ;  break;
+                        case Bloco.visual_novel : bloco_visual_novel.Update(); break;
                         case Bloco.conector: bloco_conector.Update(); break;
                         case Bloco.minigames: bloco_minigames.Update(); break;
                         case Bloco.conversas: bloco_conversas.Update(); break;

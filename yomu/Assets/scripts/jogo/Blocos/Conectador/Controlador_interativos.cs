@@ -26,7 +26,7 @@ public class Controlador_interativos {
 
                         
                         instancia.interativos_canvas = new GameObject( "Interativos" );
-                        instancia.interativos_canvas.transform.SetParent( GameObject.Find( "Tela/Canvas/Jogo/Movimento" ).transform , false );            
+                        instancia.interativos_canvas.transform.SetParent( _bloco.container_conector.transform , false );            
                         instancia.bloco_conector = _bloco;
 
                   

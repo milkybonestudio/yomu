@@ -38,12 +38,17 @@ public class Controlador : MonoBehaviour {
 
             public void Start(){
 
+                  // --- SET THREAD
+
                   if( Thread.CurrentThread.Name == null )
                         { Thread.CurrentThread.Name = "Main"; }
-                        
 
-                  canvas = GameObject.Find( "Tela/Canvas" );
                   Controlador_multithread.jogo_ativo = true;
+                        
+                  
+                  canvas = GameObject.Find( "Tela/Canvas" );
+
+                  // --- SETTINGS
 
                   instancia = this;      
                   QualitySettings.vSyncCount = 0;

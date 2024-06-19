@@ -6,87 +6,8 @@ using UnityEditor;
 using System.Reflection;
 
 
-
-
-
-
 public static class Geral {
-
-
-
-
-            public static void Ler_todos( string[] _str_arr){
-
-                for(  int i = 0 ;  i < _str_arr.Length  ;i++ ){
-
-                    Debug.Log("item " + i + ": " + _str_arr[ i ]);
-
-                }
-
-            }
-
-            public static void Ler_todos( char[] _char_arr){
-
-                for(  int i = 0 ;  i < _char_arr.Length  ;i++ ){
-
-                    Debug.Log("item " + i + ": " + ( ( int ) _char_arr[ i ]));
-
-                }
-
-            }
-
-
-
-
     
-
-    public static string  Transformar_path_em_nome( string _path){
-
-        string nome_com_ponto = System.IO.Path.GetFileName(_path);
-        string nome_sem_ponto = nome_com_ponto.Split(".")[0];
-        return nome_sem_ponto;
-
-    }
-
-
-
-    public static void Resize(GameObject _game_object, float _width = 1920f, float _height = 1080f){
-
-        RectTransform rect = _game_object.GetComponent<RectTransform>();
-        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, _width);
-        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _height);
-
-
-    }
-
-
-
-
-
-
-    public static string  Int_arr_to_string(  int[] _arr ){
-
-
-                    string[] a = new string[ ( _arr.Length * 2 ) - 1 ];
-
-                    for( int  i = 0 ;  i < _arr.Length  ;i++ ){
-
-                            a[ (i * 2 ) ] = Convert.ToString( _arr[ i ] );
-
-                            if( (i * 2 ) == (a.Length - 1) )  break;
-
-                            a[ (i * 2 ) + 1 ] = ",";
-
-                    }
-
-                    string retorno = string.Concat(a);
-                    Debug.Log("A: " + retorno);
-
-                    return retorno;
-
-
-
-                }
 
 
 
