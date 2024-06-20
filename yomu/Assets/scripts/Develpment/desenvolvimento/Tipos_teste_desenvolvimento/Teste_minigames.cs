@@ -11,23 +11,22 @@ public static class Teste_minigames {
                 // mudar update jogo para movimento
                 // ** definir os dados do teste 
 
-                string[] k_v = _chave.Split( ":" );
+                string[] minigame_E_teste = _chave.Split( ":" );
 
-                if( k_v.Length != 2 )
+                if( minigame_E_teste.Length != 2 )
                         { throw new System.Exception( " chave minigame nao veio no formato => minigame : chave" ) ;}
 
-                string minigame = k_v[ 0 ].Trim();
-                string chave_minigame_especifico = k_v[ 1 ].Trim();
+                string minigame = minigame_E_teste[ 0 ].Trim();
+                string chave_minigame_especifico = minigame_E_teste[ 1 ].Trim();
                 
 
 
                 switch( minigame ){
 
                         case "colheita" : Teste_minigame_colheita.Ativar( chave_minigame_especifico ); break;
+                        default : throw new System.Exception( $"nao foi achado o <b><color=white>minigame: \"{ minigame }\"</color></b> em testar <b><color=lime>minigame</color></b>");
 
                 }
-
-                // --- DEAULT
 
 
                 // --- INICIAR

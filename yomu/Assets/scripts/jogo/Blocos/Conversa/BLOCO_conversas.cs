@@ -100,11 +100,10 @@ public class BLOCO_conversas {
 
               //  bloco_jogo.update_tipo_atual = Jogo_update_tipo.conversas;
 
-                //this.pergaminho  = Controlador_tela_jogo.Pegar_instancia().pergaminho;
 
                 // REFAZER
-                string _personagem_nome = "";
-                string _nome_conversa = "";
+                string _personagem_nome = dados.nome_personagem;
+                string _nome_conversa = dados.conversa_nome;
 
                 string[] cenas_atuais_raw = Pegar_cenas_raw ( _personagem_nome , _nome_conversa  );
 
@@ -118,6 +117,7 @@ public class BLOCO_conversas {
 
 
                 Criar_tela_conversas();
+                
 
                 this.pergaminho.Levantar_pergaminho();
 
@@ -462,23 +462,14 @@ public class BLOCO_conversas {
 
 
 
-
+        // ??
         public void Criar_tela_conversas(){
-
+                
             
                 //GameObject container = Controlador_tela_jogo.Pegar_instancia().game_object_para_outros_modos;
-                GameObject container = null;
+                container_conversa = GameObject.Find( "Tela/Canvas/Jogo/Conversas" );
+                
                             
-                if( container.transform.childCount > 0 ){
-
-                        Mono_instancia.Destroy(  container.transform.GetChild( 0 ).gameObject );
-
-                }
-
-
-                this.container_conversa = new GameObject("Conversas") ;
-                container_conversa.transform.SetParent(  container.transform   , false ) ;
-
                 blocos_info.personagem = new GameObject( "Personagem");
                 blocos_info.personagem_imagem    =   IMAGE.Criar_imagem(
                                                                                 _game_object: blocos_info.personagem,
@@ -491,7 +482,7 @@ public class BLOCO_conversas {
 
                                                                         );
 
-    
+                this.pergaminho  = new Pergaminho_modelo_1( container_conversa.transform );
 
         }
 
@@ -518,7 +509,6 @@ public class BLOCO_conversas {
 
         public Blocos_conversa_info Pegar_blocos( string[] _blocos_raw ){
 
-                Debug.Log( _blocos_raw );
 
                 Blocos_conversa_info retorno = new Blocos_conversa_info ();
 

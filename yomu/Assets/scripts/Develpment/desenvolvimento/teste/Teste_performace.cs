@@ -17,25 +17,14 @@ public static class Teste_performace {
 
                 if( ! ( ativado ) ){ return; }
 
+                Debug.Log( "teste performace <b><color=lime>ATIVADO</color></b>" );
 
-                int y = 0;
                 int _i = 0;
-                int n_1 = 100;
+                int n_1 = 100_000;
 
-                string path_para_salvar = "C:\\Users\\User\\Desktop\\yomu_things\\yomu\\dados_de_producao\\folder_para_teste_EXCLUIR_BUILD";
+                int p = 1;
 
-                int buffer_size = 4096;
-                    
-
-                if( !System.IO.Directory.Exists( path_para_salvar ) ){ System.IO.Directory.CreateDirectory( path_para_salvar ); }
-
-                //Assembly s = Assembly.LoadFrom(Application.dataPath + "/Plugins/a.dll" );
-                // var b =   s.GetType("teste_dll.Math_teste").GetMethod("Somar");
-                // Action action = DelegateBuilder.BuildDelegate<Action<float, float>>( b );
-                //flow d = new flow( b );
-                // b c = new b();
-                //float g =  (float) b.Invoke(   null , new System.Object[] {  1f,1f  }   );
-                // float x  = 0f;
+                int ac = 15;
 
                 System.Diagnostics.Stopwatch timePerParse = System.Diagnostics.Stopwatch.StartNew();
 
@@ -43,10 +32,30 @@ public static class Teste_performace {
 
                         _i++;
 
+                        // --- ESCOPO 1
+                        
+
+
+                        try {
+
+                                ac /= p;
+                                ac /= p;
+
+
+                        } catch( Exception e ){
+                                ac++;
+
+                        }
+
+                        // ac /= p;
+                        // ac /= p;
+
+
+
+
                 }
 
                 timePerParse.Stop();
-
 
 
                 long ticksThisTime = timePerParse.ElapsedMilliseconds;
@@ -59,9 +68,13 @@ public static class Teste_performace {
 
 
 
-                while( _i < n_1 ){
+                while( _i < n_1 * 0 ){
 
                         _i++;
+
+                        // --- ESCOPO 2
+                        ac++;
+             
 
 
                 }
@@ -72,12 +85,20 @@ public static class Teste_performace {
 
                 Debug.Log("tempo dif: " + (ticksThisTime - ticksThisTime_2) + "ms");
 
-                if( ticksThisTime_2 > 0l ){
+                if( ticksThisTime_2 > 0l )
+                        {
 
-                        float dif_percentual = ((  ((ticksThisTime - ticksThisTime_2) * 100l ) / ticksThisTime_2 )  ) ;
-                        Debug.Log("tempo dif_percent: " + dif_percentual + "%");
-                }
+                                float dif_percentual = ((  ((ticksThisTime - ticksThisTime_2) * 100l ) / ticksThisTime_2 )  ) ;
+                                Debug.Log("tempo dif_percent: " + dif_percentual + "%");
+                        }
 
+                        else 
+                        {
+                                Debug.Log("tempo 1: " + (ticksThisTime) + "ms");
+                                return;
+
+                        }
+                        
                 Debug.Log("tempo 1: " + (ticksThisTime) + "ms");
                 Debug.Log("tempo 2: " + ( ticksThisTime_2) + "ms");
 

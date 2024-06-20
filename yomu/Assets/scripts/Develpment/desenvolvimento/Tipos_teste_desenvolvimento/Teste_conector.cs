@@ -17,11 +17,10 @@ public static class Teste_conector {
                 switch( _chave ){
 
                         case "generico" : Conector_teste_estado_generico.Ativar(); break;
+                        default : throw new System.Exception( $"nao foi achado a <b><color=white>chave: \"{ _chave }\"</color></b> em testar <b><color=lime>conector</color></b>");
 
                 }
 
-                // --- DEFAULT
-                
                 // --- Iniciar
 
                 Jogo.Pegar_instancia().bloco_atual = Bloco.conector;

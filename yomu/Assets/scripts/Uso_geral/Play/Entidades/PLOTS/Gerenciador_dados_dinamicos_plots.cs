@@ -125,8 +125,8 @@ public class Gerenciador_dados_dinamicos_plots {
                                 // já foi dado a ordem para carregar
                                 // tem que garantir que vai excluir o plots aqui também 
                                 { 
-                                        #if !UNITY_EDITOR
-                                          Teste_play.Verificar_se_plots_realmente_foi_pedido( slot_teste, requisicoes_plots, containers_dados_plots, plots_AIs );
+                                        #if UNITY_EDITOR
+                                          Teste_play.Verificar_se_plot_realmente_foi_pedido( slot_teste, _plots_id, requisicoes_plots, dados_containers_plots, plots_AIs );
                                         #endif
                                         return; 
                                 }

@@ -16,11 +16,9 @@ public static class Teste_cartas {
                 switch( _chave ){
 
                         case "generico" : Cartas_teste_estado_generico.Ativar(); break;
+                        default : throw new System.Exception( $"nao foi achado a <b><color=white>chave: \"{ _chave }\"</color></b> em testar <b><color=lime>cartas</color></b>");
 
                 }
-
-                // --- DEAULT
-                
 
                 // --- INICIAR 
 

@@ -2,10 +2,31 @@
 
 
 
-public static class Primeiro_jogo {
+public static class Primeiro_jogo_suporte {
 
 
 
+
+    public static Task_req Pegar_task_criar_primeiro_jogo_default( int _save, bool _novo_jogo  ){
+
+                if( Jogo.instancia == null )
+                    {  throw new System.Exception( "Pediu a req para criar o primeiro jogo como default mas a instancia de jogo estava null" );}
+
+                Task_req req_iniciar_jogo = new Task_req ( new Chave_cache(), "Iniciar_jogo");
+
+                req_iniciar_jogo.fn_iniciar = ( Task_req _req )  =>     { 
+                                                                                Jogo.instancia.controlador_save = Controlador_save.Construir( _save, _novo_jogo );
+                                                                                Jogo.instancia.controlador_AI = Controlador_AI.Construir();
+                                                                        };
+
+                //Controlador_multithread.Pegar_instancia().Adicionar_task( req_iniciar_jogo );
+
+                return req_iniciar_jogo;
+
+        }
+
+
+    // ** isso aqui nao vai mais ser usado 
     public static void  Iniciar(){
 
 

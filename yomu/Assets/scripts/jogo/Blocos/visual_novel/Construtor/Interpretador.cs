@@ -362,7 +362,6 @@ public static class Interpretador {
                 string nome_screen_play =  Visual_novel_paths.Pegar_nome_path_screen_play( _nome ) ;
                 string path_para_salvar =  Visual_novel_paths.Pegar_path_file_compilado( nome_screen_play ) ;
 
-                Debug.Log( path_para_salvar );
 
               //  Geral.Salvar_string( _texto_compilado );
 

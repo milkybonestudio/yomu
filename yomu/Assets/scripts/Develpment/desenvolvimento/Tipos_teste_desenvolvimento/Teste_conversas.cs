@@ -1,7 +1,7 @@
 
 
 
-public static class Teste_conversa {
+public static class Teste_conversas {
 
 
 
@@ -15,7 +15,8 @@ public static class Teste_conversa {
 
                 switch( _chave ){
 
-                        case "generico" : Conversa_teste_estado_generico.Ativar(); break;
+                        case "generico" : Conversas_teste_estado_generico.Ativar(); break;
+                        default : throw new System.Exception( $"nao foi achado a <b><color=white>chave: \"{ _chave }\"</color></b> em testar <b><color=lime>conversas</color></b>");
 
                 }
 

@@ -21,7 +21,7 @@ public class Desenvolvimento {
 
           //  --- MODO TESTE ATUAL
 
-          public Desenvolvimento_atual desenvolvimento_atual = Desenvolvimento_atual.cartas;
+          public Desenvolvimento_atual desenvolvimento_atual = Desenvolvimento_atual.visual_novel;
           public string chave_teste = "generico";
 
           public void Iniciar_ferramentas(){
@@ -55,9 +55,9 @@ public class Desenvolvimento {
 
                          case Desenvolvimento_atual.conector : Teste_conector.Criar( chave_teste ); break;
                          case Desenvolvimento_atual.visual_novel : Teste_visual_novel.Criar( chave_teste ); break;
-                         case Desenvolvimento_atual.conversa : Teste_conversa.Criar( chave_teste ); break;
+                         case Desenvolvimento_atual.conversas : Teste_conversas.Criar( chave_teste ); break;
                          case Desenvolvimento_atual.cartas : Teste_cartas.Criar( chave_teste ); break;
-                         case Desenvolvimento_atual.minigame : Teste_minigames.Criar( chave_teste ); break;
+                         case Desenvolvimento_atual.minigames : Teste_minigames.Criar( chave_teste ); break;
                          default : Console.Log( "wtf?" ); break;
                          
                     }

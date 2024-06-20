@@ -23,6 +23,8 @@ public static class Console {
         
         public static void Log( string _txt  ){
 
+                if( _txt == "a" ){Debug.Log("aqiui");}
+
                 
                 string thread_name = Thread.CurrentThread.Name;
 

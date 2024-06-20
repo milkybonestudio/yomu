@@ -599,10 +599,9 @@ public class Menu {
             }
 
 
-            Jogo jogo = Jogo.Construir();
-            Controlador.Pegar_instancia().jogo = jogo;
-
-            Task_req task_para_carregar = jogo.Iniciar_jogo( _save: save , _novo_jogo: true  );
+            Controlador.Pegar_instancia().jogo = Jogo.Construir();
+            Task_req task_para_carregar = Primeiro_jogo_suporte.Pegar_task_criar_primeiro_jogo_default( _save: save , _novo_jogo: true  );
+            Controlador_multithread.Pegar_instancia().Adicionar_task( task_para_carregar );
 
 
             Mono_instancia.Start_coroutine( New_game_start_c() );

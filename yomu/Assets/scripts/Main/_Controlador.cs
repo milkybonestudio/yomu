@@ -70,6 +70,8 @@ public class Controlador : MonoBehaviour {
 
                         // --- VERIFICAR DESENVOLVIMENTO
 
+
+
                         desenvolvimento = Desenvolvimento.Construir();  
                         Teste_geral.Testar();
                         Controlador_development.Verificar();
@@ -81,8 +83,6 @@ public class Controlador : MonoBehaviour {
                               { 
                                     // --- VAI TESTAR
 
-                                    Console.Log( "veio em iniciar jogo teste" );
-                                    Console.Log( $"modo atual: { desenvolvimento.desenvolvimento_atual }" );
                                     modo_controlador_atual = Controlador_modo.desenvolvimento;
 
                                     // --- SETA TUDO COMO DEFAULT
@@ -91,6 +91,9 @@ public class Controlador : MonoBehaviour {
                                     // --- DESENVOLVIMENTO UTILIDADES
                                     desenvolvimento.Colocar_estado_teste();
                                     desenvolvimento.Iniciar_ferramentas();
+                                    
+                                    Console.Log( "veio em iniciar jogo teste" );
+                                    Console.Log( $"modo atual: <b><color=white>{ desenvolvimento.desenvolvimento_atual }</color></b>" );
 
                                     return;
                               }
@@ -115,6 +118,9 @@ public class Controlador : MonoBehaviour {
             public void Update() {
 
 
+                  
+
+
                   if( Input.GetKey( KeyCode.F1 ) && Input.GetKey(KeyCode.Escape ) ) 
                         { Application.Quit(); } 
 
@@ -126,19 +132,31 @@ public class Controlador : MonoBehaviour {
                   if( esta_reconstruindo_save )
                         { return ; }  
 
+                  try
+                        {
 
-                  switch (  modo_controlador_atual ) {
-                        
-                        // --- SE EM DESENVOLVIMENTO : DESENVOLVIMENTO.UPDATE => MODO ESPECIFICO UPDATE
-                        case Controlador_modo.desenvolvimento: desenvolvimento.Update(); break;
 
-                        case Controlador_modo.jogo :  jogo.Update(); break;
-                        case Controlador_modo.login :  login.Update() ; break;
-                        case Controlador_modo.menu : menu.Update() ; break;
-                        case Controlador_modo.transicao: console.log("esta no modo_tela transicao"); break;
-                        case Controlador_modo.nada: console.log("esta no modo_tela NADA"); break;
+                              switch (  modo_controlador_atual ) {
+                                    
+                                    // --- SE EM DESENVOLVIMENTO : DESENVOLVIMENTO.UPDATE => MODO ESPECIFICO UPDATE
+                                    case Controlador_modo.desenvolvimento: desenvolvimento.Update(); break;
 
-                  }
+                                    case Controlador_modo.jogo :  jogo.Update(); break;
+                                    case Controlador_modo.login :  login.Update() ; break;
+                                    case Controlador_modo.menu : menu.Update() ; break;
+                                    case Controlador_modo.transicao: console.log("esta no modo_tela transicao"); break;
+                                    case Controlador_modo.nada: console.log("esta no modo_tela NADA"); break;
+
+                              }
+
+                        } 
+                        catch( Exception e )
+                        {
+
+                              Debug.LogError( "Tem que fazer um modo para mandar mensagem " );
+
+                        }
+
 
 
                   Controlador_input.Update();

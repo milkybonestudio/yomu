@@ -5,9 +5,9 @@ public enum Desenvolvimento_atual {
 
     conector,
     visual_novel,
-    conversa,
+    conversas,
     cartas,
-    minigame,
+    minigames,
 
 
 }

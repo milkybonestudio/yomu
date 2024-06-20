@@ -123,8 +123,8 @@ public class Gerenciador_dados_dinamicos_cidades {
                                 // já foi dado a ordem para carregar
                                 // tem que garantir que vai excluir o cidades aqui também 
                                 { 
-                                        #if !UNITY_EDITOR
-                                          Teste_play.Verificar_se_cidades_realmente_foi_pedido( slot_teste, requisicoes_cidades, containers_dados_cidades, cidades_AIs );
+                                        #if UNITY_EDITOR
+                                          Teste_play.Verificar_se_cidade_realmente_foi_pedida( slot_teste, _cidades_id,requisicoes_cidades, dados_containers_cidades, cidades_AIs );
                                         #endif
                                         return; 
                                 }

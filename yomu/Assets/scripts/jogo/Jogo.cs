@@ -63,22 +63,6 @@ public class Jogo {
         }
 
         
-        public Task_req Iniciar_jogo( int _save, bool _novo_jogo  ){
-
-
-
-                Task_req req_iniciar_jogo = new Task_req ( new Chave_cache(), "Iniciar_jogo");
-
-                req_iniciar_jogo.fn_iniciar = ( Task_req _req )  =>     { 
-                                                                                controlador_save = Controlador_save.Construir( _save, _novo_jogo );
-                                                                                controlador_AI = Controlador_AI.Construir();
-                                                                        };
-
-                Controlador_multithread.Pegar_instancia().Adicionar_task( req_iniciar_jogo );
-
-                return req_iniciar_jogo;
-
-        }
 
 
 
@@ -89,8 +73,6 @@ public class Jogo {
 
                 //if( Controlador_transicao.Pegar_instancia().em_transicao ) { return; }
 
-
-                console.log( "bloco atual jogo: " + bloco_atual );
 
                 switch (  bloco_atual ) {
                     
