@@ -188,14 +188,16 @@ public class BLOCO_visual_novel {
 
 
 
-    public void Finalizar(){
+    public static void Finalizar(){
 
 
-            screen_play = null;
-            controlador_personagens_visual_novel.Resetar_variaveis();
-            controlador_tela_visual_novel.Resetar_variaveis();
+            instancia = null;
 
-
+            Controlador_personagens_visual_novel.instancia = null;
+            Controlador_tela_visual_novel.instancia = null;
+            Leitor_visual_novel.instancia = null;
+            
+            return;
 
 
     }

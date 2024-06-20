@@ -10,14 +10,14 @@ public class BLOCO_cartas {
 
 
 
-        public static void Iniciar_bloco_cartas(){ 
+        public static BLOCO_cartas Iniciar_bloco_cartas(){ 
 
                 if( instancia != null )
                         { throw new Exception( "tentou iniciar o bloco: <color=red>CARTAS</color> mas a instancia nao estava null" ); }
                 
                 instancia = new BLOCO_cartas(); 
                 instancia.Iniciar();
-                return;
+                return instancia;
                 
         }
 
@@ -35,11 +35,17 @@ public class BLOCO_cartas {
                 controlador_tela_cartas = Controlador_tela_cartas.Construir();
         }
 
-        public void Finalizar(){
+        public static void Finalizar(){
 
-                controlador_tela_cartas.Finalizar();
+                instancia = null;
+
+                Controlador_tela_cartas.instancia = null;
+
+                return;
 
         }
+
+        public void Update(){}
 
         public Action Lidar_retorno;
         public Action Lidar_saida;

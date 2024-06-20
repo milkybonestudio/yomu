@@ -12,14 +12,14 @@ public class BLOCO_minigames {
 
         public GameObject container_minigame;
 
-        public static void Iniciar_bloco_minigames(){ 
+        public static BLOCO_minigames Iniciar_bloco_minigames(){ 
                 
                 if( instancia != null )
                         { throw new Exception( "tentou iniciar o bloco: <color=red>CONECTOR</color> mas a instancia nao estava null" ); }
                 
                 instancia = new BLOCO_minigames(); 
                 instancia.Iniciar();
-                return;
+                return instancia;
                 
         }
 
@@ -39,7 +39,9 @@ public class BLOCO_minigames {
 
         }
 
-        public void Finalizar(){
+        public static void Finalizar(){
+
+                // ** deletar os controladores
 
                 instancia = null;
                 return;

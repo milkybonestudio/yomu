@@ -12,27 +12,14 @@ public class BLOCO_conector {
         public static BLOCO_conector Pegar_instancia(){ return instancia; }
 
 
+        public static BLOCO_conector Iniciar_bloco_conector(){
 
-        public static BLOCO_conector Construir(){ 
+                        if( instancia != null )
+                                { throw new Exception( "tentou iniciar o bloco: <color=red>CONECTOR</color> mas a instancia nao estava null" ); }
 
-
-                BLOCO_conector conector = new BLOCO_conector(); 
-
-                
-                instancia = conector;
-                return instancia;
-
-                
-        }
-
-      public static void Iniciar_bloco_conector(){
-
-                if( instancia != null )
-                        { throw new Exception( "tentou iniciar o bloco: <color=red>CONECTOR</color> mas a instancia nao estava null" ); }
-
-                instancia = new BLOCO_conector();
-                instancia.Iniciar();
-                return;
+                        instancia = new BLOCO_conector();
+                        instancia.Iniciar();
+                        return instancia;
 
         }
 
@@ -76,7 +63,9 @@ public class BLOCO_conector {
 
                         
                 controlador_tela_conector.Trocar_tela( player_estado_atual.Pegar_path_imagem_background() );
-                controlador_interativos.Criar_interativos( player_estado_atual.ponto_atual );
+                // ** trocar depois
+                controlador_interativos.Criar_interativos( new Ponto() );
+                //controlador_interativos.Criar_interativos( player_estado_atual.ponto_atual );
 
 
                 return;
@@ -126,7 +115,19 @@ public class BLOCO_conector {
 
   
 
-        public void Finalizar(){}
+        public static void Finalizar(){
+
+                instancia = null;
+
+                Controlador_interativos.instancia = null;
+                Controlador_tela_conector.instancia = null;
+                Controlador_utilidades.instancia = null;
+                Controlador_cursor.instancia = null;
+                Controlador_dados.instancia = null;
+                
+                return;
+
+        }
 
 
 

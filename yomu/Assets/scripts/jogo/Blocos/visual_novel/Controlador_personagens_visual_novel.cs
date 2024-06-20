@@ -126,6 +126,13 @@ public class Controlador_personagens_visual_novel{
     }
 
 
+    public static void Zerar_dados(){
+
+        instancia = null;
+
+    }
+
+
 
     public void Resetar_variaveis(){
 

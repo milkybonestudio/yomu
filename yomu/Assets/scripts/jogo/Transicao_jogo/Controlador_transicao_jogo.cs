@@ -132,13 +132,14 @@ using System;
 
                                 switch( bloco_para_ir ){
 
-                                        case Bloco.visual_novel: BLOCO_visual_novel.Iniciar_bloco_visual_novel(); break;
-                                        case Bloco.conector: BLOCO_conector.Iniciar_bloco_conector(); break;
-                                        case Bloco.conversas: BLOCO_conversas.Iniciar_bloco_conversas(); break;
-                                        case Bloco.minigames: BLOCO_minigames.Iniciar_bloco_minigames(); break;
-                                        case Bloco.cartas: BLOCO_cartas.Iniciar_bloco_cartas(); break;
+                                        case Bloco.visual_novel: jogo.bloco_visual_novel = BLOCO_visual_novel.Iniciar_bloco_visual_novel();  break;
+                                        case Bloco.conector: jogo.bloco_conector = BLOCO_conector.Iniciar_bloco_conector();  break;
+                                        case Bloco.conversas: jogo.bloco_conversas = BLOCO_conversas.Iniciar_bloco_conversas();  break;
+                                        case Bloco.minigames: jogo.bloco_minigames = BLOCO_minigames.Iniciar_bloco_minigames();  break;
+                                        case Bloco.cartas: jogo.bloco_cartas = BLOCO_cartas.Iniciar_bloco_cartas();  break;
                                 }
-                                
+
+
                         }
 
     
@@ -154,13 +155,15 @@ using System;
 
                                 switch( bloco_para_excluir ) {
 
-                                        case Bloco.visual_novel: jogo.bloco_visual_novel.Finalizar() ; return ;
-                                        case Bloco.conector: jogo.bloco_conector.Finalizar() ; return ;
-                                        case Bloco.conversas: jogo.bloco_conversas.Finalizar() ; return ;
-                                        case Bloco.cartas: jogo.bloco_cartas.Finalizar() ; return ;
-                                        case Bloco.minigames: jogo.bloco_minigames.Finalizar() ; return ;
-
+                                        case Bloco.visual_novel: jogo.bloco_visual_novel = null; BLOCO_visual_novel.Finalizar(); return;
+                                        case Bloco.conector: jogo.bloco_conector = null; BLOCO_conector.Finalizar(); return ;
+                                        case Bloco.conversas: jogo.bloco_conversas = null; BLOCO_conversas.Finalizar(); return ;
+                                        case Bloco.cartas: jogo.bloco_cartas = null; BLOCO_cartas.Finalizar(); return ;
+                                        case Bloco.minigames: jogo.bloco_minigames = null; BLOCO_minigames.Finalizar(); return ;
+                                        
                                 }
+
+                                
 
                                 // --- DELETAR GAME OVJECTS
 

@@ -25,7 +25,7 @@ public static class Teste_conector {
                 // --- Iniciar
 
                 Jogo.Pegar_instancia().bloco_atual = Bloco.conector;
-                BLOCO_conector.Iniciar_bloco_conector();
+                Jogo.Pegar_instancia().bloco_conector =  BLOCO_conector.Iniciar_bloco_conector();
                 return;
                 
 

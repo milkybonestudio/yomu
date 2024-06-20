@@ -53,13 +53,6 @@ public class Jogo {
 
                         Controlador_UI.Construir();
 
-                        
-                        // jogo.bloco_conector =  BLOCO_conector.Construir();
-                        // jogo.bloco_visual_novel = BLOCO_visual_novel.Construir();
-                        // jogo.bloco_conversas = BLOCO_conversas.Construir();
-                        // jogo.bloco_cartas = BLOCO_cartas.Construir();
-                        // jogo.bloco_minigames = BLOCO_minigames.Construir();
-
                         // --- TRANSICAO TEM QUE FICAR NA FRENTE
                         Controlador_transicao_jogo.Construir( jogo );
 
@@ -106,12 +99,29 @@ public class Jogo {
                         case Bloco.conector: bloco_conector.Update(); break;
                         case Bloco.minigames: bloco_minigames.Update(); break;
                         case Bloco.conversas: bloco_conversas.Update(); break;
-                        case Bloco.cartas: bloco_conversas.Update(); break;
+                        case Bloco.cartas: bloco_cartas.Update(); break;
 
                         case Bloco.salvando: console.log( "esta em modo jogo salvando" ); break;
                         case Bloco.nada: console.log( "esta em modo jogo nada" ); break;
                         case Bloco.transicao :    return;
                 }
+
+
+        }
+
+
+        public static void Zerar_dados(){
+
+
+                instancia = null;
+
+                // --- ZERAR BLOCOS
+
+                BLOCO_conector.Finalizar();
+                BLOCO_visual_novel.Finalizar();
+                BLOCO_conversas.Finalizar();
+                BLOCO_cartas.Finalizar();
+                BLOCO_minigames.Finalizar();
 
 
         }

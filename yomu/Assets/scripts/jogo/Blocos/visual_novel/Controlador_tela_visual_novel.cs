@@ -193,7 +193,6 @@ public class Controlador_tela_visual_novel {
 
         }
 
-
         public static void Remover_tela(){
 
                 for( int game_object_index = 0 ;game_object_index< instancia.canvas_visual_novel.transform.childCount ; game_object_index++ ){

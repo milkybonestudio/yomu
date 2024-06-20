@@ -56,22 +56,6 @@ public class BLOCO_conversas {
         public static BLOCO_conversas Pegar_instancia(){ return instancia; }
 
 
-        public static BLOCO_conversas Construir(){ 
-                
-                instancia = new BLOCO_conversas(); 
-                                
-                        //  bloco_jogo = BLOCO_jogo.Pegar_instancia( true );
-                        instancia.conversas_leitor = Conversas_leitor.Pegar_instancia();
-
-                        instancia.container_conversa = new GameObject( "Conversa" );
-                        instancia.container_conversa.transform.SetParent( GameObject.Find( "Tela/Canvas/Jogo" ).transform , false);
-
-
-                
-                return instancia;
-                
-        }
- 
         public bool tem_opcoes = false;
 
         public Pergaminho_modelo_1 pergaminho;
@@ -90,7 +74,7 @@ public class BLOCO_conversas {
 
 
 
-        public static void Iniciar_bloco_conversas(){
+        public static BLOCO_conversas Iniciar_bloco_conversas(){
 
             
                 if( instancia != null )
@@ -98,12 +82,14 @@ public class BLOCO_conversas {
 
                 instancia = new BLOCO_conversas(); 
                 instancia.Iniciar();
-                return;
+                return instancia;
 
         }    
         
 
         public void Iniciar(){
+
+                conversas_leitor = Conversas_leitor.Pegar_instancia();
 
                 Conversa_START dados = Dados_blocos.conversa_START;
 
@@ -407,9 +393,13 @@ public class BLOCO_conversas {
 
 
 
-        public void Finalizar(){
+        public static void Finalizar(){
 
-                // passar encerrar para ca
+                instancia = null;
+
+                Conversas_leitor.instancia = null;
+
+                return;
 
         }
 

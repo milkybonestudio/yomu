@@ -32,7 +32,7 @@ public static class Teste_minigames {
 
                 // --- INICIAR
                 Jogo.Pegar_instancia().bloco_atual = Bloco.minigames;
-                BLOCO_minigames.Iniciar_bloco_minigames();
+                Jogo.Pegar_instancia().bloco_minigames = BLOCO_minigames.Iniciar_bloco_minigames();
                 return;
          
 
