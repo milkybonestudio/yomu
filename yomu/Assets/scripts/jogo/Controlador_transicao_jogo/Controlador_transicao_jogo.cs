@@ -181,6 +181,7 @@ using System;
                                         case Bloco.conversas: jogo.bloco_conversas.Lidar_retorno() ; return ;
                                         case Bloco.cartas: jogo.bloco_cartas.Lidar_retorno() ; return ;
                                         case Bloco.minigames: jogo.bloco_minigames.Lidar_retorno() ; return ;
+                                        case Bloco.utilidades: jogo.bloco_utilidades.Lidar_retorno();  break;
 
                                 }
                                 

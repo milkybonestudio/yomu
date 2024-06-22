@@ -305,7 +305,8 @@ public class Controlador_interativos {
 
             if(  script_interativo_em_espera != Script_jogo_nome.nada  ){
 
-                        Scripts_jogo.Ativar_script( script_interativo_em_espera );  
+
+                        //Scripts_jogo.Ativar_script( script_interativo_em_espera );  
                         return;
 
             }
@@ -356,10 +357,11 @@ public class Controlador_interativos {
 
           //bool ponto_is_bloqueado =  Controlador_dados_dinamicos.Pegar_instancia().lista_navegacao.lista_pontos_bloqueados[ponto_destino];
 
-          Script_jogo_nome script_espera = Controlador_dados_dinamicos.Pegar_instancia().lista_navegacao.lista_scripts_por_pontos_bloqueados[ (int) ponto_destino ];
 
-          Scripts_jogo.Ativar_script( script_espera );  
-          Scripts_jogo.Ativar_script( _interativo.script_jogo_nome );  
+      // *** FAZER INTERNO
+      //     Script_jogo_nome script_espera = Controlador_dados_dinamicos.Pegar_instancia().lista_navegacao.lista_scripts_por_pontos_bloqueados[ (int) ponto_destino ];
+      //     Scripts_jogo.Ativar_script( script_espera );  
+      //     Scripts_jogo.Ativar_script( _interativo.script_jogo_nome );  
 
 
           //Controlador_movimento.Pegar_instancia().Mover_player(ponto_destino);
@@ -412,7 +414,7 @@ public class Controlador_interativos {
 
             Script_jogo_nome script_id = _interativo.script_jogo_nome;
             
-            Scripts_jogo.Ativar_script(  script_id );
+            //Scripts_jogo.Ativar_script(  script_id );
 
             Req_transicao req = new Req_transicao(
 
@@ -423,8 +425,8 @@ public class Controlador_interativos {
             );
 
             
-            Dados_blocos.visual_novel_START = new Visual_novel_START(   _interativo.nome_screen_play   );
-            Dados_blocos.Colocar_nova_req(req);
+            Dados_blocos.visual_novel_START = new Visual_novel_START(  _interativo.nome_screen_play );
+            Dados_blocos.Colocar_nova_req( req );
       
 
             return;

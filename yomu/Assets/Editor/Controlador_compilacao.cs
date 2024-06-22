@@ -8,6 +8,8 @@ using UnityEngine;
 
 
 
+
+
 class Controlador_compilacao_post:IPostprocessBuildWithReport {
 
 

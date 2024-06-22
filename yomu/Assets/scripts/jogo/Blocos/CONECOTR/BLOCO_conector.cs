@@ -226,10 +226,9 @@ public class BLOCO_conector {
 
 
 
-                                //   trocar para ponto_nome
+        //   trocar para ponto_nome
 
         public void Mover_player( Ponto_nome _ponto_nome , bool _reset = false , bool _instantaneo = false ){
-
 
 
 
@@ -239,24 +238,20 @@ public class BLOCO_conector {
 
 
                 controlador_interativos.Criar_interativos(  ponto );
-
                 controlador_interativos.Limpar_sprite_interativos( player_estado_atual.interativos );
-
                 player_estado_atual.Acrecentar_posicao( ponto , _reset );
 
                 
+                // ** TEM QUE SER DENTO DO BLOCO MOVIMENTO 
+                // Script_jogo_nome script_entrada = Controlador_dados_dinamicos.Pegar_instancia().lista_navegacao.lista_scripts_por_entrar_ponto[_ponto_id];
+                // Scripts_jogo.Ativar_script( script_entrada );
 
-                
-                Script_jogo_nome script_entrada = Controlador_dados_dinamicos.Pegar_instancia().lista_navegacao.lista_scripts_por_entrar_ponto[_ponto_id];
-
-                Scripts_jogo.Ativar_script( script_entrada );
 
                 controlador_interativos.interativo_atual_hover = -1;
                 Controlador_cursor.Pegar_instancia().Mudar_cursor( Cor_cursor.off );
 
                 
                 //  usa player_estado_atual
-
                 controlador_tela_conector.Trocar_tela( player_estado_atual.Pegar_path_imagem_background() , _instantaneo);
 
                 return;
@@ -312,11 +307,6 @@ public class BLOCO_conector {
 
 
         }
-
-
-
-
-
 
 
 

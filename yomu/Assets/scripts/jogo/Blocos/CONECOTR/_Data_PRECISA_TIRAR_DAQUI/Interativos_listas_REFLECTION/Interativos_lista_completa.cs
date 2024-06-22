@@ -1,7 +1,5 @@
-
-
-
 using UnityEngine;
+
 
 public static class Interativos_lista_completa {
 
@@ -16,10 +14,6 @@ public static class Interativos_lista_completa {
         Interativos_lista_0.Colocar_interativos( lista_completa );
 
         return lista_completa;
-
-
-
-
 
 
 

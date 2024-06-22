@@ -25,7 +25,7 @@ public static class Lidar_retorno_bloco_conector{
 
                 if ( script_retorno != Script_jogo_nome.nada  ) {
 
-                    Scripts_jogo.Ativar_script( script_retorno );
+                    //Scripts_jogo.Ativar_script( script_retorno );
                     //dados_blocos.jogo_RETURN.script_jogo = Script_jogo_nome.nada ;
 
                 }

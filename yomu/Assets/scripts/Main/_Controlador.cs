@@ -181,6 +181,7 @@ public class Controlador : MonoBehaviour {
 
 
 
+
             public void OnDisable(){
 
                   Controlador_multithread.jogo_ativo = false;
