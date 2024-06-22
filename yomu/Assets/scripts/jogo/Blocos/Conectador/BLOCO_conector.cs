@@ -6,20 +6,54 @@ using System;
 
 public class BLOCO_conector {
 
-
-      
+        // --- INSTANCIA
         public static BLOCO_conector instancia;
         public static BLOCO_conector Pegar_instancia(){ return instancia; }
 
 
+        // --- CONTROLADORES
+        public Controlador_dados_dinamicos dados;
+        public Controlador_cursor controlador_cursor;
+        public Controlador_tela_conector controlador_tela_conector;
+        public Controlador_interativos controlador_interativos;
+        public Controlador_dados controlador_dados;
+
+
+
+        ///public Controlador_movimento controlador_movimento;
+        public Controlador_utilidades controlador_utilidades;
+
+        //public Controlador_conversas controlador_conversas;
+
+
+        // --- DADOS
+        
+        public GameObject container_conector; // ** talvez mudar o nome 
+        public Player_estado_atual player_estado_atual;
+        public float[] posicao_mouse;
+        public Jogo_update_tipo update_tipo_atual = Jogo_update_tipo.movimento;
+        public string audio_path = "audio/geral_sfx/botoes/click_4"; // ** mudar
+
+
+
+
+
+        public Action Lidar_retorno;
+        public Action Colocar_UI_atual; 
+        public Action Colocar_input_atual; 
+
+
+
+
+
         public static BLOCO_conector Iniciar_bloco_conector(){
 
-                        if( instancia != null )
-                                { throw new Exception( "tentou iniciar o bloco: <color=red>CONECTOR</color> mas a instancia nao estava null" ); }
+                if( instancia != null )
+                        { throw new Exception( "tentou iniciar o bloco: <color=red>CONECTOR</color> mas a instancia nao estava null" ); }
 
-                        instancia = new BLOCO_conector();
-                        instancia.Iniciar();
-                        return instancia;
+                instancia = new BLOCO_conector();
+                instancia.Iniciar();
+                return instancia;
 
         }
 
@@ -28,7 +62,6 @@ public class BLOCO_conector {
                 // --- TELA
 
                 container_conector = GameObject.Find( "Tela/Canvas/Jogo/Conector" );
-
 
 
                 // -- CONTROLADORES
@@ -71,47 +104,6 @@ public class BLOCO_conector {
                 return;
 
         }
-
-
-
-
-        public Controlador_dados_dinamicos dados;
-
-        public Controlador_cursor controlador_cursor;
-        public Controlador_tela_conector controlador_tela_conector;
-        public Controlador_interativos controlador_interativos;
-
-        ///public Controlador_movimento controlador_movimento;
-
-        public Controlador_utilidades controlador_utilidades;
-
-        //public Controlador_conversas controlador_conversas;
-
-        // ** talvez mudar o nome 
-        public GameObject container_conector; 
-
-
-        public Player_estado_atual player_estado_atual;
-
-
-
-        public float[] posicao_mouse;
-        public Controlador_dados controlador_dados;
-
-
-
-
-        public Jogo_update_tipo update_tipo_atual = Jogo_update_tipo.movimento;
-
-        public Action Lidar_retorno;
-        public Action Colocar_UI_atual; 
-        public Action Colocar_input_atual; 
-
-
-        public string audio_path = "audio/geral_sfx/botoes/click_4";
-
-
-
 
   
 

@@ -17,7 +17,7 @@ public static class Teste_conector {
                 switch( _chave ){
 
                         case "generico" : Conector_teste_estado_generico.Ativar(); break;
-                        default : throw new System.Exception( $"nao foi achado a <b><color=white>chave: \"{ _chave }\"</color></b> em testar <b><color=lime>conector</color></b>");
+                        default : throw new System.Exception( $"<b><coler=red>nao</color></b> foi achado a <b><color=white>chave: \"{ _chave }\"</color></b> em testar <b><color=lime>conector</color></b>");
 
                 }
 

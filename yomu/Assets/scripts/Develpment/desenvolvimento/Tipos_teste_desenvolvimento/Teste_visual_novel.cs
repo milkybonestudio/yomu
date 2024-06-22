@@ -15,7 +15,7 @@ public static class Teste_visual_novel {
                 switch( _chave ){
 
                         case "generico" : Visual_novel_teste_estado_generico.Ativar(); break;
-                        default : throw new System.Exception( $"nao foi achado a <b><color=white>CHAVE: \"{ _chave }\"</color></b> em testar <b><color=lime>VISUAL NOVEL</color></b>");
+                        default : throw new System.Exception( $"<b><coler=red>nao</color></b> foi achado a <b><color=white>CHAVE: \"{ _chave }\"</color></b> em testar <b><color=lime>VISUAL NOVEL</color></b>");
 
                 }
 

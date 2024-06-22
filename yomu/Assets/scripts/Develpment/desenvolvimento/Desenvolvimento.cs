@@ -9,7 +9,7 @@ public class Desenvolvimento {
 
           public static Desenvolvimento instancia;
           public static Desenvolvimento Pegar_instancia(){ return instancia; }
-          public static Desenvolvimento Construir(){ instancia = new Desenvolvimento(); return instancia;}
+          public static Desenvolvimento Construir(){ instancia = new Desenvolvimento(); return instancia; }
 
      
           // --- FERRAMENTAS 
@@ -21,8 +21,8 @@ public class Desenvolvimento {
 
           //  --- MODO TESTE ATUAL
 
-          public Desenvolvimento_atual desenvolvimento_atual = Desenvolvimento_atual.visual_novel;
-          public string chave_teste = "generico";
+          public Desenvolvimento_atual desenvolvimento_atual = Desenvolvimento_atual.conector;
+          public string chave_teste = "colheita:generico";
 
           public void Iniciar_ferramentas(){
 

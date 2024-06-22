@@ -31,8 +31,8 @@ public static class Interpretador {
                 Screen_play screen_play = new Screen_play( cenas_compiladas );
 
                 timePerParse.Stop();
-                long ticksThisTime_2 = timePerParse.ElapsedMilliseconds;
-                Debug.Log("tempo para construir screen play: " + ticksThisTime_2);
+                long tempo = timePerParse.ElapsedMilliseconds;
+                Debug.Log( $"tempo para construir screen play: { tempo } ms");
 
                 return screen_play;
 

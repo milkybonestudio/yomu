@@ -16,7 +16,7 @@ public static class Teste_conversas {
                 switch( _chave ){
 
                         case "generico" : Conversas_teste_estado_generico.Ativar(); break;
-                        default : throw new System.Exception( $"nao foi achado a <b><color=white>chave: \"{ _chave }\"</color></b> em testar <b><color=lime>conversas</color></b>");
+                        default : throw new System.Exception( $"<b><coler=red>nao</color></b> foi achado a <b><color=white>chave: \"{ _chave }\"</color></b> em testar <b><color=lime>conversas</color></b>");
 
                 }
 

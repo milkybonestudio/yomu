@@ -114,20 +114,6 @@ public class Ponto_data {
 
 
 
-
-// public enum Utilidade_localizador{
-
-//     bilhete_dia,
-    
-
-// }
-
-
-
-
-
-
-
 public class Utilidade_data {
 
 
