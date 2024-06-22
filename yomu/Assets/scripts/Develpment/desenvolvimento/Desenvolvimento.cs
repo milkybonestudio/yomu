@@ -22,7 +22,7 @@ public class Desenvolvimento {
           //  --- MODO TESTE ATUAL
 
           public Desenvolvimento_atual desenvolvimento_atual = Desenvolvimento_atual.conector;
-          public string chave_teste = "colheita:generico";
+          public string chave_teste = "generico";
 
           public void Iniciar_ferramentas(){
 

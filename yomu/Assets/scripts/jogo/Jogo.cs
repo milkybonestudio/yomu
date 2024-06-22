@@ -27,6 +27,7 @@ public class Jogo {
         public BLOCO_conector bloco_conector;
         public BLOCO_cartas bloco_cartas;
         public BLOCO_minigames bloco_minigames;
+        public BLOCO_utilidades bloco_utilidades;
 
         // --- CONTROLADORES
         public Controlador_save controlador_save;

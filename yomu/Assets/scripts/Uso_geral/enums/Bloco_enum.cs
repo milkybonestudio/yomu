@@ -8,15 +8,11 @@ public enum Bloco {
 
 
     conector,
-    
+    utilidades,
     visual_novel,
     conversas,
     cartas,
     minigames,
-
-
-
-
 
 
 

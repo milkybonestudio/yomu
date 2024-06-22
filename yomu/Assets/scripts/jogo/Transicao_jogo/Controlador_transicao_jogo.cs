@@ -137,6 +137,7 @@ using System;
                                         case Bloco.conversas: jogo.bloco_conversas = BLOCO_conversas.Iniciar_bloco_conversas();  break;
                                         case Bloco.minigames: jogo.bloco_minigames = BLOCO_minigames.Iniciar_bloco_minigames();  break;
                                         case Bloco.cartas: jogo.bloco_cartas = BLOCO_cartas.Iniciar_bloco_cartas();  break;
+                                        case Bloco.utilidades: jogo.bloco_utilidades = BLOCO_utilidades.Iniciar_bloco_utilidades();  break;
                                 }
 
 
@@ -160,6 +161,7 @@ using System;
                                         case Bloco.conversas: jogo.bloco_conversas = null; BLOCO_conversas.Finalizar(); return ;
                                         case Bloco.cartas: jogo.bloco_cartas = null; BLOCO_cartas.Finalizar(); return ;
                                         case Bloco.minigames: jogo.bloco_minigames = null; BLOCO_minigames.Finalizar(); return ;
+                                        case Bloco.utilidades: jogo.bloco_utilidades = null; BLOCO_utilidades.Finalizar();  break;
                                         
                                 }
 
