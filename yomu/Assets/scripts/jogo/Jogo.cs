@@ -10,6 +10,34 @@ using UnityEngine.UI;
         Finalizar() => destroi os objetos que precisam ser destruido no BLOCO 
 */
 
+/*
+
+        logica :
+
+        interativos: o funcionamento sempre esta nos proprios dados, nao tem scripts 
+        
+        de onde vem os dados? => 
+
+                build : os dados vao ser amazenados em um byte_arr e o programa reconstroi os dados quando precisar do interativo
+                desenvolvimento : os dados vao ser armazenados em classes estaticas no modelo "Interativos_lista_N" que vão ser acessados por reflection. 
+
+        os scripts tinham o proposito de ser um jeito para eu poder mudar dados do jogo, de encapsular logica. Se nao tem como é feito?
+
+        essa parte quem vai ficar responsavel é a AI, ela consegue criar scripts. Antes de algum interativo ser iniciado ele primeiro precisa verificar se tem algum scrip rolando. 
+        provavelmente vai ser na mesma ideia, de na build ser um formato e no desenvolvimento ser outro. 
+
+        controlador interativos nao vai saber oque cada script faz, ele so sabe 2 coisas e só são importantes no processo de ATIVAR o intrativo: 
+        1 - esse interativo esta bloqueado? => obvio
+        1 - esse interativo tem algum Hook? => vai falar "olha so, o player clicou nesse. Faz as tuas paradas ai AI"
+
+        Mas controlador_interativos vai poder 1 - ver quais interativos tem scripts 
+                                              2 - ativar os scripts?? nao 
+
+
+
+
+*/
+
 
 public class Jogo {
 

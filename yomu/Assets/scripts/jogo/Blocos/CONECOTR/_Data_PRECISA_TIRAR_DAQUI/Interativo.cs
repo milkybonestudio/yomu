@@ -14,7 +14,6 @@ using System;
  public class Interativo {
 
 
-
         public Interativo( int _index_int ){
 
                 this.interativo_nome = (  Interativo_nome ) _index_int ;
