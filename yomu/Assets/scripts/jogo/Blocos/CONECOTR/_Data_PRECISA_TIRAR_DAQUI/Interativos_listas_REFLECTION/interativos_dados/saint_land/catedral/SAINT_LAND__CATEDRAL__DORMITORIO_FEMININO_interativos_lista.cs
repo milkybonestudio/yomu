@@ -15,7 +15,7 @@ using System;
 
         public static Interativo[] interativos;
 
-        public static Interativo Pegar_interativo( int _interativo_id_no_slot ){
+        public static Interativo Pegar_interativo( int _interativo_id ){
 
             if( interativos == null )
                 { Colocar_interativos(); }
