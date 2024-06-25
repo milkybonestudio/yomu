@@ -1,14 +1,12 @@
 using System;
-using System.Reflection
+using System.Reflection;
 
 public class Gerenciador_interativos {
 
+    	
+        public byte[] interativos_comprimidos;
 
-    #if !UNITY_EDITOR
-
-        public Interativo Pegar_interativo_DESENVOLVIMENTO( int _interativo_id ){
-
-            // ** vai ser diferente em desenvolvimento e no final 
+        public Interativo Pegar_interativo(  Posicao_local _posicao_local, int _interativo_id ){
 
             int slot = ( _interativo_id / 100 );
 
@@ -23,8 +21,6 @@ public class Gerenciador_interativos {
             }
 
         }
-
-    #endif
 
 
 

@@ -1,21 +1,4 @@
 
-public enum Local_nome {
-
-    Dormitorio,
-
-}
-
-public enum Regiao_nome {
-
-    Cathedral,
-
-}
-
-public enum Cidade_nome {
-
-    New_ground, 
-
-}
 
 public enum Estado_nome : short {
 
