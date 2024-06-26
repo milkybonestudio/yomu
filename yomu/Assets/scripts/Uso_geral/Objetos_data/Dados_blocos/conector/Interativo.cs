@@ -11,6 +11,14 @@ using System;
 
 */
 
+/*
+
+        interativo_tela 
+        interativo_personagem
+        interativo_item
+
+*/
+
  public class Interativo {
 
 
@@ -31,9 +39,13 @@ using System;
 
  
 
+
+
+
+
+
         //   default 
         
-
         public float[] posicao; // tem que cuidar pois é novo. Agora a imagem nao vai ser full hd
 
         public Interativo_tipo_mouse_hover tipo_mouse_hover;

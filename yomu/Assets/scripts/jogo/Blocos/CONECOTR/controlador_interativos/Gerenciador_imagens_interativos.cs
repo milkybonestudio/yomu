@@ -7,8 +7,6 @@ public class Gerenciador_imagens_interativos {
 
         public Gerenciador_imagens_interativos( byte[] _localizador  ){
 
-            // precisa? isso sempre vai ser o mesmo, 
-
             #if !UNITY_EDITOR
 
                 string path_lista_localizador = Paths_sistema.path_localizador_interativos;
@@ -16,16 +14,12 @@ public class Gerenciador_imagens_interativos {
 
             #endif
 
-
-
         }
 
         
         // SO VAI SER UUSADO NA BUILD  
         // com 5000 * 4 = 20kb. se ficar muito grande pode separar por continenete ou reino ou cidade
         public byte[] localizador;
-
-        public byte[] sprites_pngs_bytes;
 
         public Sprite[] sprites_atuais;
         public int[] sprite_ids;
@@ -47,16 +41,7 @@ public class Gerenciador_imagens_interativos {
             
         }
 
-        /*
-
-            pegar  => verifica
-            carregar => pede 
-
-            internal 
-            criar  => main thread 
-        */
-
-
+    
     
         public Sprite Pegar_sprite(  int _sprite_id ){
 
@@ -111,28 +96,71 @@ public class Gerenciador_imagens_interativos {
 
         }
 
-        public Sprite Pegar_sprite_DESENVOLVIMENTO( string _interativo_enum_nome_DESENVOLVIMENTO, string _interativo_nome_DESENVOLVIMENTO ){
+        #if UNITY_EDITOR || true
+        
 
-                // _interativo_enum_nome_DESENVOLVIMENTO => SAINT_LAND__CATHEDRAL__DORMITORIO_FEMININO_interativo 
-                // _interativo_nome_DESENVOLVIMENTO => NARA_ROOM_up__janela
-                // transformar em: saint_land/cathedral/dormitorio_feminino/nara_room/up__janela.png
-                // folder nao pode estar no folder do editor
+            public Sprite Pegar_sprite_DESENVOLVIMENTO( string _interativo_enum_nome_DESENVOLVIMENTO, string _interativo_nome_DESENVOLVIMENTO, string _sufixo ){
 
-                
+                    throw new Exception( "testar aqui" );
+
+                    // _interativo_enum_nome_DESENVOLVIMENTO => SAINT_LAND__CATHEDRAL__DORMITORIO_FEMININO_interativo 
+
+                    // _interativo_nome_DESENVOLVIMENTO => NARA_ROOM__up__janela
+
+                    // transformar em: saint_land/cathedral/dormitorio_feminino/nara_room/up__janela.png
+                    // folder nao pode estar no folder do editor
+
+                    // sufixo = _d, _n, "",  _0, _1, _2, _3, _4,  
+
+                    string[] folders_ate_interativos = _interativo_enum_nome_DESENVOLVIMENTO.Split( "__" );
+
+                    if( folders_ate_interativos.Length != 3 )
+                        { throw new Exception( $"formato de _interativo_enum_nome_DESENVOLVIMENTO nao aceito. Veio: { _interativo_enum_nome_DESENVOLVIMENTO }" ); }
+                    
+                    
+                    string path_imagens = Paths_gerais.Pegar_path_imagens_DESENVOLVIMENTO();
 
 
+                    string cidade = folders_ate_interativos[ 0 ].ToLower();
+                    string regiao = folders_ate_interativos[ 1 ].ToLower();
+                    string area = folders_ate_interativos[ 2 ].Split( "_" )[ 0 ].ToLower();
 
-        }
+
+                    string folder_final__E__imagem = _interativo_nome_DESENVOLVIMENTO.Split( "__" );
+
+                    string folder_final = folder_final__E__imagem[ 0 ].ToLower();
+                    string imagem = folder_final__E__imagem[ 1 ].ToLower() ;
+
+                    string path_imagem = System.IO.Path.Combine(   
+                        
+                            new string[]{
+
+                                path_imagens,
+                                "interativos",
+                                cidade, 
+                                regiao,
+                                area,
+                                folder_final, 
+                                ( imagem + _sufixo + ".png" )
+                            
+                            }
+
+                    );
+
+                    byte[] png = System.IO.File.ReadAlllBytes( path_imagem );
+
+                    sprite = SPRITE.Pegar_imagem( png );
+
+                    return sprite;
+
+
+            }
+
+        #endif
 
 
 
         public Sprite Criar_sprite( int _sprite_id ){
-
-                #if UNITY_EDITOR
-
-                    Carregador_imagens_interativos_DESENVOLVIMENTO.Pegar_sprite(  );
-
-                #endif
 
 
                 // PEGAR RUN TIME
@@ -164,9 +192,6 @@ public class Gerenciador_imagens_interativos {
                 throw new Exception( "fazer depois" );
 
         }
-
-
-        public Sprite Pegar_sprite_DEVELOPMENT( string _ )
 
 
         protected void Pegar_dia_E_noite(){

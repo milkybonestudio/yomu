@@ -5,10 +5,10 @@
 
 
 
-        NARA_ROOM_up,
-        NARA_ROOM_frente,
-        NARA_ROOM_traseira,
-        NARA_ROOM_corredor,
+        NARA_ROOM__up,
+        NARA_ROOM__frente,
+        NARA_ROOM__traseira,
+        NARA_ROOM__corredor,
 
 
 

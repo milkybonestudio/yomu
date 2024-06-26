@@ -3,10 +3,10 @@
 
     public enum SAINT_LAND__VILLAGE__CENTER_ponto {
 
-        TAVERN_up,
-        TAVERN_frente,
-        TAVERN_trazeira,
-        TAVERN_escadas,
+        TAVERN__up,
+        TAVERN__frente,
+        TAVERN__trazeira,
+        TAVERN__escadas,
 
 
     }

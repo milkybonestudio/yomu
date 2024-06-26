@@ -13,8 +13,12 @@ using UnityEngine;
                 string path_folder_jogo = System.IO.Directory.GetCurrentDirectory();
                 string pai = System.IO.Directory.GetParent( path_folder_jogo );
 
+                string retorno = pai + System.IO.Path.Combine( pai, "imagens" );
 
+                if( ! ( System.IO.Directory.Exists( retorno ) ) )
+                    { throw new Exception( $" path para imagens nao foi encontrado, path: { retorno } " ); }
 
+                return retorno;
 
             }
 
