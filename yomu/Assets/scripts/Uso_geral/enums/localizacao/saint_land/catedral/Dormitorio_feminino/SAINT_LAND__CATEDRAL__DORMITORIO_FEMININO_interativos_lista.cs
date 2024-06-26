@@ -9,6 +9,8 @@ using System;
     sempre deixar a ram o .dat com a cidade inteira. se ficar muito grande pode trocar para regiao
 
 */
+#if UNITY_EDITOR 
+
 
 
     public static class SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_interativos_lista {
@@ -21,44 +23,10 @@ using System;
                 { Colocar_interativos(); }
 
             if( interativos[ _interativo_id ] == null )
-                { throw new Exception( $"nao foi achado o interativo{ (_interativo_id + ( 0 * 100 )) } na lista 0" ); }
+                                                           
+                { throw new Exception( $" o interativo { ( SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_interativo ) _interativo_id } na nao foi criado" ); }
 
             return interativos[ _interativo_id ];
-
-        }
-
-        public static byte[] Compilar(){
-
-            Colocar_interativos();
-
-            byte[] buffer = new byte[  ( 100 * 500 )];
-
-            int pointer_atual = 0;
-            for( int i = 0; i < interativos.Length ;  i++ ){
-
-                Adicionar_dados_no_container( interativos[ i ] , buffer , ref pointer_atual );
-
-            }
-
-            int numero_de_bytes = pointer_atual;
-
-            byte[] retorno = new byte[ numero_de_bytes ];
-
-            for( int b = 0; b < numero_de_bytes ;b++ ){
-
-                retorno[ b ] = buffer[ b ];
-
-            }
-
-            return retorno;
-
-        }
-
-        // ** PASSAR PARA UMA CLASSE ESPECIAL
-        public static void Adicionar_dados_no_container( Interativo _interativo , byte[] _buffer, ref int _index_inicial ){
-
-            // fazer
-            return;
 
         }
 
@@ -989,13 +957,6 @@ using System;
 
 
 
-
-
-
-
-
-
-
                     index =  ( int ) Interativo_nome.CARTA_DIA_mesa_quarto_nara;
 
             interativos[ index ] = new Interativo( index );
@@ -1043,6 +1004,6 @@ using System;
 
 
     }
-#if UNITY_EDITOR
+
 
 #endif

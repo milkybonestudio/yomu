@@ -1,4 +1,4 @@
-#if !UNITY_EDITOR
+#if UNITY_EDITOR
 
 
     public enum SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_interativo {

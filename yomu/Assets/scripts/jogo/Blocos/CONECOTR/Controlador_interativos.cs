@@ -94,12 +94,11 @@ public class Controlador_interativos {
                                     interativos_game_objects_arr[i] = interativo_game_object;
 
 
-                                    Interativo interativo = Lista_interativos.Pegar_interativo( interativos_nomes[i] );
+                                    Interativo interativo = null;
+                                    //Lista_interativos.Pegar_interativo( interativos_nomes[i] );
                                     interativos_arr[i] = interativo;
 
                                     // interativos_arr[i] = jogo_data.lista_interativos[  (int) interativos_nomes[i] ];
-
-
 
 
 

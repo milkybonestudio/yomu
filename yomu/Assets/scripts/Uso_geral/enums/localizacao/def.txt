@@ -1,0 +1,13 @@
+
+
+
+esses arquivos só vão existir no editor:
+
+
+CIDADE__REGIAO__AREA__ponto ( enum )
+CIDADE__REGIAO__AREA__interativo ( enum )
+CIDADE__REGIAO__AREA__interativos_lista ( class )
+
+
+
+
