@@ -535,10 +535,6 @@ public  class Lista_navegacao {
 
 
 
-
-
-
-
 public void Zerar(){
 
         lista_interativos_para_subtrair = new Interativo_nome[2000][][] ;

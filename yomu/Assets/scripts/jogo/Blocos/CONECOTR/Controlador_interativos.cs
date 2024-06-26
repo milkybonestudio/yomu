@@ -41,6 +41,10 @@ public class Controlador_interativos {
             public  GameObject interativos_canvas;
             public BLOCO_conector bloco_conector;
 
+            // faz mais sentido ficar aqui
+            public int[][][][] interativos_para_subtrair_ids;
+            public int[][][][] interativos_para_acrescentar_ids;
+
             public Interativo[] interativos_arr = new Interativo[ 0 ];
 
             public GameObject[] interativos_game_objects_arr;

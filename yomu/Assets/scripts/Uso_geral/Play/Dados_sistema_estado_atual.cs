@@ -61,6 +61,12 @@ public class Dados_sistema_estado_atual {
 		public int[] plots_ativos_planos;
 		public int[] plots_pentendes_para_adicionar;
 		public int[] plots_pentendes_para_adicionar_tempo;
+
+
+		// --- 
+
+		public int[][][][] interativos_para_adicionar_ids;
+		public int[][][][] interativos_para_subtrair_ids;
 		
 
 
