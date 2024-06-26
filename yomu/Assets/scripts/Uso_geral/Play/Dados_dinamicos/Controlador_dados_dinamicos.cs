@@ -43,7 +43,6 @@ public class Controlador_dados_dinamicos {
 
 
 
-        public Lista_navegacao lista_navegacao;
         
     
 

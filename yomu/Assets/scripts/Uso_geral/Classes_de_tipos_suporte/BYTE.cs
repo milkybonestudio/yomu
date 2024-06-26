@@ -10,7 +10,18 @@ public static class BYTE {
 
 
 
+        public static int Pegar_int_em_byte_array(  byte[] _array, int _ponto_inicial ){
 
+
+                int acumulador = 0;
+                acumulador += ( (  ( int ) _array[ _ponto_inicial + 0 ] ) << 24 );
+                acumulador += ( (  ( int ) _array[ _ponto_inicial + 1 ] ) << 16 );
+                acumulador += ( (  ( int ) _array[ _ponto_inicial + 2 ] ) <<  8 );
+                acumulador += ( (  ( int ) _array[ _ponto_inicial + 3 ] ) <<  0 );
+
+                return acumulador;
+
+        }
 
         
 

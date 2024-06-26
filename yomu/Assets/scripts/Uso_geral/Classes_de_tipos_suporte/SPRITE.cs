@@ -7,6 +7,14 @@ using System;
 
 public static class SPRITE {
 
+        public static Sprite Pegar_imagem(  string _path_png_byte_array  ){
+
+                throw new Exception( "ainda tem que fazer" );
+
+                return null;
+
+        }
+
 
 
         public static int Pegar_index_null ( Sprite[] _arr ){

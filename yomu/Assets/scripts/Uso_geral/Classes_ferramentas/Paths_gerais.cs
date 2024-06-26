@@ -8,6 +8,15 @@ using UnityEngine;
 
 
 
+            public static string Pegar_path_imagens_DESENVOLVIMENTO(){
+
+                string path_folder_jogo = System.IO.Directory.GetCurrentDirectory();
+                string pai = System.IO.Directory.GetParent( path_folder_jogo );
+
+
+
+
+            }
 
 
             public static string Pegar_path_folder_dados_save( int _save ){
