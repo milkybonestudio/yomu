@@ -2,7 +2,7 @@
 public enum Cor_cursor{
 
 
-
+    nada,
     off,
     invisivel,
     blue,

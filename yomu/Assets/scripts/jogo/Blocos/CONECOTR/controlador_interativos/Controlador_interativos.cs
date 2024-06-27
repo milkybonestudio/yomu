@@ -106,14 +106,14 @@ public class Controlador_interativos {
                               { throw new Exception( "interativos_tipo_tela_container estava null" ); }
 
 
-                        int[] interativos_tipo_tela_ids = null; // ver 
-                        Interativo_tela[] novos_interativos_tipo_tela = construtor_interativos.Criar_interativos_tipo_tela( interativos_tipo_tela_ids );
+                        // int[] interativos_tipo_tela_ids = null; // ver 
+                        // Interativo_tela[] novos_interativos_tipo_tela = construtor_interativos.Criar_interativos_tipo_tela( interativos_tipo_tela_ids );
 
-                        int[] interativos_tipo_item_ids = null; // ver 
-                        Interativo_item[] novos_interativos_tipo_item = construtor_interativos.Criar_interativos_tipo_item( interativos_tipo_item_ids );
+                        // int[] interativos_tipo_item_ids = null; // ver 
+                        // Interativo_item[] novos_interativos_tipo_item = construtor_interativos.Criar_interativos_tipo_item( interativos_tipo_item_ids );
 
-                        int[] interativos_tipo_personagem_ids = null; // ver 
-                        Interativo_personagem[] novos_interativos_tipo_personagem = construtor_interativos.Criar_interativos_tipo_personagem( interativos_tipo_personagem_ids );
+                        // int[] interativos_tipo_personagem_ids = null; // ver 
+                        // Interativo_personagem[] novos_interativos_tipo_personagem = construtor_interativos.Criar_interativos_tipo_personagem( interativos_tipo_personagem_ids );
 
 
 

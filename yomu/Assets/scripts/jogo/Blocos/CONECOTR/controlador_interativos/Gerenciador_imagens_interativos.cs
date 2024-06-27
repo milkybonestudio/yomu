@@ -23,7 +23,7 @@ public class Gerenciador_imagens_interativos {
         public byte[] localizador;
 
         public Sprite[] sprites_atuais;
-        public int[] sprite_ids;
+        public int[] sprite_ids_unicos;
         public Task_req[] requisicoes_imagens;
 
         public int total_bytes_imagens = 0;
@@ -36,7 +36,7 @@ public class Gerenciador_imagens_interativos {
         public Gerenciador_imagens_interativos(){
 
             sprites_atuais = new Sprite[ 50 ];
-            sprite_ids = new int[ 50 ];
+            sprite_ids_unicos = new int[ 50 ];
             requisicoes_imagens = new Task_req[ 50 ];
 
             
@@ -55,7 +55,7 @@ public class Gerenciador_imagens_interativos {
 
                 throw  new Exception( "ainda nao esta pronto" );
 
-                int slot_sprite = INT.Pegar_index_valor( sprite_ids , _sprite_id );
+                int slot_sprite = INT.Pegar_index_valor( sprite_ids_unicos , _sprite_id );
 
 
                 // --- NAO FOI PEDIDO PARA CARREGAR
@@ -63,17 +63,17 @@ public class Gerenciador_imagens_interativos {
                 if( slot_sprite == -1 )
                     {
                         Sprite sprite = Criar_sprite( _sprite_id );
-                        int slot_vazio = INT.Pegar_index_valor( sprite_ids , 0 );
+                        int slot_vazio = INT.Pegar_index_valor( sprite_ids_unicos , 0 );
                         if( slot_vazio == -1 )
                             { 
-                                slot_vazio = sprite_ids.Length;
-                                sprite_ids = INT.Aumentar_length_array( sprite_ids , 10 ); 
+                                slot_vazio = sprite_ids_unicos.Length;
+                                sprite_ids_unicos = INT.Aumentar_length_array( sprite_ids_unicos , 10 ); 
                                 sprites_atuais = SPRITE.Aumentar_length_array( sprites_atuais , 10 );
                             }
 
                         slot_sprite = slot_vazio;
 
-                        sprite_ids[ slot_sprite ] = _sprite_id;
+                        sprite_ids_unicos[ slot_sprite ] = _sprite_id;
                         sprites_atuais[ slot_sprite ] = sprite;   
                         return sprite;
 
@@ -150,17 +150,17 @@ public class Gerenciador_imagens_interativos {
 
                 Task_req req = new Task_req( new Chave_cache(), ("pedindo_imagem_" + Convert.ToString( _sprite_id_unico ) ) );
 
-                int slot_vazio = INT.Pegar_index_valor( sprite_ids , 0 );
+                int slot_vazio = INT.Pegar_index_valor( sprite_ids_unicos , 0 );
                 if( slot_vazio == -1 )
                     { 
-                        slot_vazio = sprite_ids.Length;
-                        sprite_ids = INT.Aumentar_length_array( sprite_ids , 10 ); 
+                        slot_vazio = sprite_ids_unicos.Length;
+                        sprite_ids_unicos = INT.Aumentar_length_array( sprite_ids_unicos , 10 ); 
                         sprites_atuais = SPRITE.Aumentar_length_array( sprites_atuais , 10 );
                     }
 
                 
                 requisicoes_imagens[ slot_vazio ] = req;
-                sprite_ids[ slot_vazio ] = _sprite_id_unico;
+                sprite_ids_unicos[ slot_vazio ] = _sprite_id_unico;
                 
 
 
@@ -208,13 +208,16 @@ public class Gerenciador_imagens_interativos {
         #if UNITY_EDITOR 
         
 
-            public Sprite Pegar_sprite_DESENVOLVIMENTO( Interativo_tela _interativo ){
+            public Sprite Pegar_sprites_DESENVOLVIMENTO( Interativo_tela _interativo ){
 
+                    // coloca as imagens aqui
 
                     
                     string interativo_enum_nome_DESENVOLVIMENTO = _interativo.enum_nome_interativo_DESENVOLVIMENTO;
                     string interativo_nome_DESENVOLVIMENTO =  _interativo.nome_insterativo_DESENVOLVIMENTO;
                     string _sufixo = Pegar_sufixo_interativo_DESENVOLVIMENTO( _interativo );
+
+                    //if( _interativo. )
 
                     // tem que pegar o nome em outro lugar 
 
@@ -274,15 +277,17 @@ public class Gerenciador_imagens_interativos {
 
         public string Pegar_sufixo_interativo_DESENVOLVIMENTO( Interativo_tela _interativo ){
 
+                // 
+
 
                 Periodo_tempo periodo_atual = ( ( Periodo_tempo ) Controlador_timer.Pegar_instancia().periodo_atual_id ) ;
 
-                switch(  ( Tipo_sufixo_para_pegar_imagem ) _interativo.tipo_sufixo_para_pegar_imagem_id ){
+                switch( _interativo.metodo_que_as_imagens_estao_salvas ){
 
 
 
 
-                        case Tipo_sufixo_para_pegar_imagem.dia_E_noite:         {
+                        case Metodo_que_as_imagens_estao_salvas.dia_E_noite:         {
                                                                                     bool esta_claro  =  (
                                                                                                             ( periodo_atual  ==  Periodo_tempo.manha )
                                                                                                             ||
@@ -303,9 +308,9 @@ public class Gerenciador_imagens_interativos {
                                                                                 }
 
 
-                        case Tipo_sufixo_para_pegar_imagem.todos_os_periodos:   {
+                        case Metodo_que_as_imagens_estao_salvas.todos_os_periodos:   {
 
-                                                                                    _interativo.nomes_imagens_espoecificas_periodos
+                                                                                    //_interativo.nomes_imagens_espoecificas_periodos
                                                                                     switch( periodo_atual ){
 
                                                                                         // talvez mudar para _periodo?

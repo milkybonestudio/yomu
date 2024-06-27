@@ -5,7 +5,7 @@ using System;
 
     public static class Letor_interativos_SAINT_LAND {
 
-        public static Interativo_tela Pegar( int _regiao_id ,  int _area_id , int _interativo_id ){
+        public static Interativo_tela Pegar( int _regiao_id ,  int _area_id , int _ponto_id, int _interativo_id ){
 
             SAINT_LAND__regiao regiao = ( SAINT_LAND__regiao ) _regiao_id;
             
@@ -18,7 +18,7 @@ using System;
 
                                                             switch( area ){
 
-                                                                case SAINT_LAND__CATEDRAL__area.dormitorio_feminino : return SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_interativos_lista.Pegar_interativo( _interativo_id );
+                                                                case SAINT_LAND__CATEDRAL__area.dormitorio_feminino : return SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_interativos_lista.Pegar_interativo( _interativo_id, _ponto_id );
                                                             
                                                             }
 
@@ -33,7 +33,7 @@ using System;
 
                                                             switch( area ){
 
-                                                                case SAINT_LAND__villege__area.center : return SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_interativos_lista.Pegar_interativo( _interativo_id );
+                                                                case SAINT_LAND__villege__area.center : return SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_interativos_lista.Pegar_interativo( _interativo_id, _ponto_id ); // ??????
                                                             
                                                             }
 

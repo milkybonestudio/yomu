@@ -18,8 +18,11 @@ public class Interativo_tela {
         }
 
 
+        public string nome = ""; // excluir depois
+
+
         public int interativo_id;
-        public int tipo_interativo;
+        public int tipo_interativo_id;
         public int ponto_id;
 
 
@@ -28,13 +31,39 @@ public class Interativo_tela {
 
         #if UNITY_EDITOR
 
+
                 /* <--- USADO SOMENTE NO EDITOR ---> */
 
+                public Tipo_interativo tipo_interativo;
                 public Interativo_tipo_mouse_hover tipo_mouse_hover;
 
+                public Cor_cursor cor_cursor;
 
-                // --- SUPORTE PARA ( IMAGEM / VISUAL )
-                public Tipo_sufixo_para_pegar_imagem tipo_sufixo_para_pegar_imagem;
+
+                // --- SUPORTE PARA A IMAGEM DO INTERATIVO
+
+                public Metodo_que_as_imagens_estao_salvas metodo_que_as_imagens_estao_salvas;
+
+                public Imagens_disponiveis_no_mouse_hover imagens_disponiveis_no_mouse_hover;
+                public Metodo_das_cores_imagens_disponiveis_no_mouse_hover metodo_das_cores_imagens_disponiveis_no_mouse_hover;
+
+                // so vai ser usado dependendo do Metodo_que_as_imagens_lidam_com_mouse_hover
+                public Nome_cor cor_primeira_imagem;
+                public Nome_cor cor_segunda_imagem;
+
+
+                // --- SUPORTE PARA O CURSOR
+                
+                public Metodo_para_mudar_cursor metodo_para_mudar_cursor;
+
+                public Cor_cursor[] cores_cursor;
+
+                // --- SUPORTE PARA SOM
+
+                // public Me
+
+
+
                 public string[] nomes_imagens_especificas_periodos;
                 
 
@@ -44,12 +73,9 @@ public class Interativo_tela {
                 public string enum_nome_interativo_DESENVOLVIMENTO; // SAINT_LAND___CATHEDRAL__DORMITORIO_FEMININO__interativo
                 public string nome_insterativo_DESENVOLVIMENTO; // NARA_ROOM__up__janela
 
-                // vai acompanhar como as imagens funcionam:
-                // todos_os_periodos => 5
-                // dia_e_noite => 2 
-                // nao_altera => 1
+                public string nome_unico_para_imagem_DESENVOLVIMENTO;
 
-                public Cor_cursor[] cores_cursor;
+
 
 
         #endif
@@ -96,6 +122,7 @@ public class Interativo_tela {
 
         public int cor_cursor_id;
 
+        
         public Sprite interativo_image_1;
         public Color cor_image_1;
         
@@ -103,7 +130,7 @@ public class Interativo_tela {
         public Color cor_image_2;
 
         public float[] posicao; // tem que cuidar pois é novo. Agora a imagem nao vai ser full hd
-        public float[] area;
+        public float[] area = new float[]{ 0f,0f } ;
 
 
 

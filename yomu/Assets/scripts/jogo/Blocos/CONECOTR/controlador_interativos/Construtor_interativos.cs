@@ -18,9 +18,11 @@ public class Construtor_interativos {
 
 
 
-        public Interativo_tela Criar_interativo_tela_DEVELOPMENT( int _cidade_id  Posicao_local _posicao_local, int interativo_slot ){
+        public Interativo_tela Criar_interativo_tela_DEVELOPMENT( int _cidade_id , Posicao_local _posicao_local, int interativo_slot ){
 
-                pegar_interativo = Letor_interativos_SAINT_LAND_
+
+                // pegar_interativo = Letor_interativos_SAINT_LAND_.Pegar()
+                return null;
 
 
 
@@ -34,18 +36,20 @@ public class Construtor_interativos {
                   
                 string variante_periodo = "";
 
-                if(_interativo.tipo_get  == Tipo_get_interativo.dia_E_noite)
+                if(_interativo.metodo_que_as_imagens_estao_salvas  == Metodo_que_as_imagens_estao_salvas.dia_E_noite)
                         {
 
-                                if(_periodo < 3)
+                                if( Controlador_timer.Pegar_instancia().periodo_atual_id < 3 )
                                         { variante_periodo = "_d"; } 
                                         else
                                         { variante_periodo = "_n"; }
 
                         } 
+
+                string _path = "";
         
         
-                if(_interativo.tipo_mouse_hover == Interativo_tipo_mouse_hover.nada_E_nada)
+                if(_interativo.tipo_mouse_hover == Interativo_tipo_mouse_hover.nada_E_nada )
                         {
                                         
                                 _interativo.interativo_image_1 = null;
@@ -125,7 +129,7 @@ public class Construtor_interativos {
                 _interativo.image_slot.sprite = _interativo.interativo_image_1;
                 _interativo.image_slot.color = _interativo.cor_image_1;
 
-                return;
+                return null;
 
 
         }
