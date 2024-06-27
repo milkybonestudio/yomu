@@ -10,10 +10,9 @@ public class Controlador_navegacao {
         public int[][][][] interativos_para_subtrair_ids;
         public int[][][][] interativos_para_acrescentar_ids;
 
-        public int[][] posicoes_personagens 
+        public int[][] posicoes_personagens; 
 
-        public int
-
+        
         public static Controlador_navegacao Construir( Dados_sistema_estado_atual _dados_sistema_estado_atual ){
 
             Controlador_navegacao controlador = new Controlador_navegacao();

@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using UnityEngine;
 
 // personagens e icones nao precisam de tanto trabalho. talvez?
@@ -73,7 +74,7 @@ public class Gerenciador_imagens_interativos {
                         slot_sprite = slot_vazio;
 
                         sprite_ids[ slot_sprite ] = _sprite_id;
-                        sprites_atuais[ slot_sprite ] = nova_sprite;   
+                        sprites_atuais[ slot_sprite ] = sprite;   
                         return sprite;
 
                     }
@@ -96,10 +97,118 @@ public class Gerenciador_imagens_interativos {
 
         }
 
+
+        public byte[] Pegar_png( int _sprite_id_unico ){
+
+
+                // PEGAR RUN TIME
+
+                int pointer_1 = BYTE.Pegar_int_em_byte_array( localizador , ( _sprite_id_unico * 4 ) + 0 );
+                int pointer_2 = BYTE.Pegar_int_em_byte_array( localizador , ( _sprite_id_unico * 4 ) + 4 );
+
+                
+                int length = ( pointer_2 - pointer_1 - 1 ) ;
+
+                string path_imagens_interativos = Paths_sistema.path_imagens_interativos;
+                FileStream leitor = new FileStream( path_imagens_interativos, FileMode.Open );
+                leitor.Seek(  pointer_1  , SeekOrigin.Begin  );
+
+                byte[] buffer = new byte[ length ];
+
+                leitor.Read(  buffer, 0, length  );
+                leitor.Close();
+
+                return buffer;
+
+
+        }
+
+
+        public Sprite Criar_sprite( int _sprite_id_unico ){
+
+                byte[] dados = Pegar_png( _sprite_id_unico );
+                Sprite nova_sprite = SPRITE.Transformar_png_TO_sprite( dados );
+
+                return nova_sprite;
+
+        }
+
+
+
+
+
+
+
+        public void Carregar_sprite( int _sprite_id_unico ){
+                // começa a carregar na multitheread 
+
+                throw new Exception( "fazer depois" );
+
+                // pegar slot
+
+
+
+                Task_req req = new Task_req( new Chave_cache(), ("pedindo_imagem_" + Convert.ToString( _sprite_id_unico ) ) );
+
+                int slot_vazio = INT.Pegar_index_valor( sprite_ids , 0 );
+                if( slot_vazio == -1 )
+                    { 
+                        slot_vazio = sprite_ids.Length;
+                        sprite_ids = INT.Aumentar_length_array( sprite_ids , 10 ); 
+                        sprites_atuais = SPRITE.Aumentar_length_array( sprites_atuais , 10 );
+                    }
+
+                
+                requisicoes_imagens[ slot_vazio ] = req;
+                sprite_ids[ slot_vazio ] = _sprite_id_unico;
+                
+
+
+                req.fn_iniciar = ( Task_req _req )  =>  {
+                                                            // 
+
+                                                            byte[] png = Pegar_png( _sprite_id_unico );
+                                                            Color32[] pixels_containers =  PNG.Descomprimir( png );
+                                                            _req.dados = ( System.Object ) pixels_containers;
+                                                            _req.dados_suporte_1 =  ( System.Object ) PNG.Pegar_width_e_height( png );
+
+                                                            return;
+
+                                                        };
+
+                req.fn_finalizar = ( Task_req _req )  =>  {
+                                                            // 
+
+                                                            Color32[] container =  ( Color32[] ) _req.dados;
+                                                            int[] width__E__height  = ( int[] ) _req.dados_suporte_1;
+                                                            Sprite sprite = SPRITE.Transformar_colors_container_TO_sprite( container, width__E__height[ 0 ], width__E__height[ 1 ] );
+
+                                                            sprites_atuais[ slot_vazio ]  = sprite;
+
+                                                            
+                                                            return;
+
+                                                        };
+            
+
+                return;
+
+
+        }
+
+
+
+
+
+
+
+
+
+
         #if UNITY_EDITOR || true
         
 
-            public Sprite Pegar_sprite_DESENVOLVIMENTO( string _interativo_enum_nome_DESENVOLVIMENTO, string _interativo_nome_DESENVOLVIMENTO, string _sufixo ){
+            public Sprite Pegar_sprite_DESENVOLVIMENTO( Interativo_tela _interativo, string _interativo_enum_nome_DESENVOLVIMENTO, string _interativo_nome_DESENVOLVIMENTO, string _sufixo ){
 
                     throw new Exception( "testar aqui" );
 
@@ -126,7 +235,7 @@ public class Gerenciador_imagens_interativos {
                     string area = folders_ate_interativos[ 2 ].Split( "_" )[ 0 ].ToLower();
 
 
-                    string folder_final__E__imagem = _interativo_nome_DESENVOLVIMENTO.Split( "__" );
+                    string[] folder_final__E__imagem = _interativo_nome_DESENVOLVIMENTO.Split( "__" );
 
                     string folder_final = folder_final__E__imagem[ 0 ].ToLower();
                     string imagem = folder_final__E__imagem[ 1 ].ToLower() ;
@@ -147,9 +256,9 @@ public class Gerenciador_imagens_interativos {
 
                     );
 
-                    byte[] png = System.IO.File.ReadAlllBytes( path_imagem );
+                    byte[] png = System.IO.File.ReadAllBytes( path_imagem );
 
-                    sprite = SPRITE.Pegar_imagem( png );
+                    Sprite sprite = SPRITE.Transformar_png_TO_sprite( png );
 
                     return sprite;
 
@@ -160,49 +269,17 @@ public class Gerenciador_imagens_interativos {
 
 
 
-        public Sprite Criar_sprite( int _sprite_id ){
-
-
-                // PEGAR RUN TIME
-
-                int pointer_1 = BYTE.Pegar_int_em_byte_array( localizador , ( _sprite_id * 4 ) + 0 );
-                int pointer_2 = BYTE.Pegar_int_em_byte_array( localizador , ( _sprite_id * 4 ) + 4 );
-
-                
-                int length = ( pointer_2 - pointer_1 - 1 ) ;
-
-                string path = Paths_sistem.path_imagens_interativos;
-                FileStream leitor = new FileStream( path_imagens_interativos );
-                leitor.Seek(  pointer_1  , SeekOrigin.begin  );
-
-                byte[] buffer = new byte[ length ];
-
-                leitor.Read(  buffer, 0, length  );
-
-
-                Sprite nova_sprite = SPRITE.Transformar_byte_in_sprite( buffer );
-
-                return nova_sprite;
-
-        }
-
-        public void Carregar_sprite( int _interativo_imagem_id ){
-                // começa a carregar na multitheread 
-
-                throw new Exception( "fazer depois" );
-
-        }
 
 
         protected void Pegar_dia_E_noite(){
 
 
-            if( _periodo < 3 )
-                { 
-                    variante_periodo = "_d"; 
-                } 
-                else 
-                { variante_periodo = "_n";}
+            // if( _periodo < 3 )
+            //     { 
+            //         variante_periodo = "_d"; 
+            //     } 
+            //     else 
+            //     { variante_periodo = "_n";}
 
 
         }

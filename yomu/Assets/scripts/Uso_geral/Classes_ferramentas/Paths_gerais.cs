@@ -11,7 +11,9 @@ using UnityEngine;
             public static string Pegar_path_imagens_DESENVOLVIMENTO(){
 
                 string path_folder_jogo = System.IO.Directory.GetCurrentDirectory();
-                string pai = System.IO.Directory.GetParent( path_folder_jogo );
+
+
+                string pai = System.IO.Directory.GetParent( path_folder_jogo ).FullName;
 
                 string retorno = pai + System.IO.Path.Combine( pai, "imagens" );
 

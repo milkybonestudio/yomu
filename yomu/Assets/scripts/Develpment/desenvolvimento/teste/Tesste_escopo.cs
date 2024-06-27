@@ -163,6 +163,7 @@ public static class Teste_escopo {
                     
 
                     var stream = File.OpenRead( path );
+                    
                     Png image = Png.Open(stream);
 
                     int width = ( int )image.Width;

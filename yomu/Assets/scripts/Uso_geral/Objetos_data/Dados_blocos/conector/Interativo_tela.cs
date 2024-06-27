@@ -1,4 +1,5 @@
-
+using UnityEngine;
+using UnityEngine.UI;
 
 
 
@@ -6,7 +7,7 @@
 public class Interativo_tela {
 
 
-        public Interativo( int _index_id ){
+        public Interativo_tela( int _index_id ){
 
                 interativo_nome = (  Interativo_nome ) _index_id ;
         }
@@ -15,8 +16,11 @@ public class Interativo_tela {
         public int interativo_id;
 
         #if UNITY_EDITOR
+
             // ** quando for criar colocar o nome 
-            public string nome_insterativo_DESENVOLVIMENTO;
+            public string nome_insterativo_DESENVOLVIMENTO; // NARA_ROOM__up__janela
+            public string enum_nome_interativo; // SAINT_LAND___CATHEDRAL__DORMITORIO_FEMININO__interativo;
+
         #endif
 
         public Tipo_interativo tipo;

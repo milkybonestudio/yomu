@@ -1,30 +1,49 @@
 using System;
 using UnityEngine;
-
-
+using Png_decoder;
 
 
 public static class PNG {
 
 
+        public static Color32[] Descomprimir( byte[] _png ){
 
-                public static int pequena = 1500;
-                public static int media = 5000;
-                public static int grande  = 50_000;
+                int[] width_E_height = Pegar_width_e_height( _png );
+                int width = width_E_height[ 0 ] ;
+                int height = _png[ 0 ] ;
 
+                Png image = Png.Open( _png );
 
-                public static Tamanho_png Pegar_tipo(  int _tamanho ){
+                Color32[] container_cores = new Color32[  ( width *  height )  ];
 
-                        if( _tamanho < 1500 ) { return Tamanho_png.pequena; }
-                        if( _tamanho < 5_000 ) { return Tamanho_png.media; }
-                        if( _tamanho < 50_000 ) { return Tamanho_png.grande; }
+                int p = 0;
 
-                        return Tamanho_png.muito_grande;
+                for( int h = 0 ; h < height ; h++ ){
+
+                        for(  int w = 0 ; w < width ; w++ ){
+
+                            Pixel pixel = image.GetPixel( w, ( height - 1 -  h ) );
+
+                            // int p = ( w ) + ( h  * width );
+
+                            container_cores[ p ].r =  pixel.R;
+                            container_cores[ p ].g =  pixel.G; 
+                            container_cores[ p ].b =  pixel.B; 
+                            container_cores[ p ].a =  pixel.A; 
+                            p++;
+
+                        }
 
                 }
 
 
-                public static int[] Pegar_width_e_height( byte[]  _png_byte_arr ){
+                return container_cores;
+
+        }
+
+
+
+        public static int[] Pegar_width_e_height( byte[]  _png_byte_arr ){
 
 
                 /*
@@ -66,10 +85,10 @@ public static class PNG {
                 for( index = 3 ; index != -1 ; index--  ){
 
 
-                width +=   multiplicador  *  _png_byte_arr[ ponto_inicial + index ]  ;
-                height +=   multiplicador  *  _png_byte_arr[ ponto_inicial + index + 4 ]  ;
+                        width +=   multiplicador  *  _png_byte_arr[ ponto_inicial + index ]  ;
+                        height +=   multiplicador  *  _png_byte_arr[ ponto_inicial + index + 4 ]  ;
 
-                multiplicador *= 256;
+                        multiplicador *= 256;
 
                 }
 
@@ -78,6 +97,7 @@ public static class PNG {
 
                 retorno[ 0 ] = width ;
                 retorno[ 1 ] = height ;
+
                 return retorno;
 
 
@@ -88,8 +108,4 @@ public static class PNG {
 
 
 
-
-
 }
-
-

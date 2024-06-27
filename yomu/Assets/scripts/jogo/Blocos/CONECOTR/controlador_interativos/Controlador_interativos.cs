@@ -60,8 +60,8 @@ public class Controlador_interativos {
             // testar
 
             public Interativo_personagem[] interativos_tipo_personagem;
-            public Interativo_itens[] interativos_tipo_item;
-            public Interativos_tela[] interativos_tipo_tela;
+            public Interativo_item[] interativos_tipo_item;
+            public Interativo_tela[] interativos_tipo_tela;
 
 
             // --- CANVAS
@@ -89,6 +89,9 @@ public class Controlador_interativos {
 
             }
 
+
+            public Interativo[] Criar_interativos( Ponto _p  ){  return null; } // excluirt
+
     
 
 
@@ -105,10 +108,10 @@ public class Controlador_interativos {
                         Interativo_tela[] novos_interativos_tipo_tela = construtor_interativos.Criar_interativos_tipo_tela( interativos_tipo_tela_ids );
 
                         int[] interativos_tipo_item_ids = null; // ver 
-                        Interativo_tela[] novos_interativos_tipo_item = construtor_interativos.Criar_interativos_tipo_item( interativos_tipo_item_ids );
+                        Interativo_item[] novos_interativos_tipo_item = construtor_interativos.Criar_interativos_tipo_item( interativos_tipo_item_ids );
 
                         int[] interativos_tipo_personagem_ids = null; // ver 
-                        Interativo_tela[] novos_interativos_tipo_personagem = construtor_interativos.Criar_interativos_tipo_personagem( interativos_tipo_personagem_ids );
+                        Interativo_personagem[] novos_interativos_tipo_personagem = construtor_interativos.Criar_interativos_tipo_personagem( interativos_tipo_personagem_ids );
 
 
 
@@ -267,10 +270,10 @@ public class Controlador_interativos {
       public void Trocar (int _id){
 
 
-                  Interativo interativo = interativos_arr[_id];
+                  // Interativo interativo = interativos_arr[_id];
 
-                  interativo.image_slot.sprite = interativo.interativo_image_2;
-                  interativo.image_slot.color = interativo.cor_image_2;
+                  // interativo.image_slot.sprite = interativo.interativo_image_2;
+                  // interativo.image_slot.color = interativo.cor_image_2;
 
                   
 
@@ -330,39 +333,36 @@ public class Controlador_interativos {
 
 
 
+    public void Ativar_interativo( int _interativo_index ){
+
+            // ** pensar depois
 
 
-  
-    public void Ativar_interativo(int _interativo_index){
+            // Interativo interativo = interativos_arr[_interativo_index];
+            // Interativo_nome interativo_nome = interativo.interativo_nome ;
 
 
+            // Script_jogo_nome script_interativo_em_espera = Controlador_dados_dinamicos.Pegar_instancia().lista_navegacao.Pegar_script_interativo_em_espera(  interativo_nome  );
+
+            // if(  script_interativo_em_espera != Script_jogo_nome.nada  ){
 
 
-            Interativo interativo = interativos_arr[_interativo_index];
-            Interativo_nome interativo_nome = interativo.interativo_nome ;
+            //             //Scripts_jogo.Ativar_script( script_interativo_em_espera );  
+            //             return;
 
-
-            Script_jogo_nome script_interativo_em_espera = Controlador_dados_dinamicos.Pegar_instancia().lista_navegacao.Pegar_script_interativo_em_espera(  interativo_nome  );
-
-            if(  script_interativo_em_espera != Script_jogo_nome.nada  ){
-
-
-                        //Scripts_jogo.Ativar_script( script_interativo_em_espera );  
-                        return;
-
-            }
+            // }
 
 
       
-            switch(interativo.tipo){
+            // switch(interativo.tipo){
 
-                  case Tipo_interativo.movimento: Receber_movimento( interativo ); return;
-                  case Tipo_interativo.personagem: Receber_personagem( interativo ); return;
-                  case Tipo_interativo.item: Receber_item( interativo ); return;
-                  case Tipo_interativo.cenas: Receber_visual_novel( interativo ); return;
-                  case Tipo_interativo.utilidade: Receber_utilidade( interativo ); return;
+            //       case Tipo_interativo.movimento: Receber_movimento( interativo ); return;
+            //       case Tipo_interativo.personagem: Receber_personagem( interativo ); return;
+            //       case Tipo_interativo.item: Receber_item( interativo ); return;
+            //       case Tipo_interativo.cenas: Receber_visual_novel( interativo ); return;
+            //       case Tipo_interativo.utilidade: Receber_utilidade( interativo ); return;
 
-            }
+            // }
 
     }
 
@@ -485,10 +485,10 @@ public class Controlador_interativos {
    public  void Ativar_hover_interativo( int _id ){
 
     
-            Interativo interativo = interativos_arr[_id];
+            // Interativo interativo = interativos_arr[_id];
 
-            interativo.image_slot.sprite = interativo.interativo_image_2;
-            interativo.image_slot.color = interativo.cor_image_2;
+            // interativo.image_slot.sprite = interativo.interativo_image_2;
+            // interativo.image_slot.color = interativo.cor_image_2;
 
 
        
@@ -503,10 +503,10 @@ public class Controlador_interativos {
    public void Tirar_hover_interativo( int _id ){
 
             
-            Interativo interativo = interativos_arr[_id];
+            // Interativo interativo = interativos_arr[_id];
 
-            interativo.image_slot.sprite = interativo.interativo_image_1;
-            interativo.image_slot.color = interativo.cor_image_1;
+            // interativo.image_slot.sprite = interativo.interativo_image_1;
+            // interativo.image_slot.color = interativo.cor_image_1;
 
 
 

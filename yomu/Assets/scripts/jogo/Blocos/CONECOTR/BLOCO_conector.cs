@@ -96,6 +96,8 @@ public class BLOCO_conector {
 
                         
                 controlador_tela_conector.Trocar_tela( player_estado_atual.Pegar_path_imagem_background() );
+
+                
                 // ** trocar depois
                 controlador_interativos.Criar_interativos( new Ponto() );
                 //controlador_interativos.Criar_interativos( player_estado_atual.ponto_atual );
@@ -152,12 +154,14 @@ public class BLOCO_conector {
 
         }
 
+        public Interativo[] Criar_interativos( Ponto _p ){ return null; } // deletar
+
 
 
         public void Verificar_mouse(bool _is_click){
 
 
-                Interativo[] interativos_arr = controlador_interativos.interativos_arr;
+                Interativo[] interativos_arr =  new Interativo[ 0 ] ; //controlador_interativos.interativos_arr;
                 int numero_interativos = interativos_arr.Length;
 
                 
@@ -232,29 +236,29 @@ public class BLOCO_conector {
 
 
 
-                int _ponto_id  = (int) _ponto_nome;
+                // int _ponto_id  = (int) _ponto_nome;
                 
-                Ponto ponto = Controlador_jogo_data.Criar_ponto( _ponto_nome );
+                // Ponto ponto = Controlador_jogo_data.Criar_ponto( _ponto_nome );
 
 
-                controlador_interativos.Criar_interativos(  ponto );
-                controlador_interativos.Limpar_sprite_interativos( player_estado_atual.interativos );
-                player_estado_atual.Acrecentar_posicao( ponto , _reset );
-
-                
-                // ** TEM QUE SER DENTO DO BLOCO MOVIMENTO 
-                // Script_jogo_nome script_entrada = Controlador_dados_dinamicos.Pegar_instancia().lista_navegacao.lista_scripts_por_entrar_ponto[_ponto_id];
-                // Scripts_jogo.Ativar_script( script_entrada );
-
-
-                controlador_interativos.interativo_atual_hover = -1;
-                Controlador_cursor.Pegar_instancia().Mudar_cursor( Cor_cursor.off );
+                // controlador_interativos.Criar_interativos(  ponto );
+                // controlador_interativos.Limpar_sprite_interativos( player_estado_atual.interativos );
+                // player_estado_atual.Acrecentar_posicao( ponto , _reset );
 
                 
-                //  usa player_estado_atual
-                controlador_tela_conector.Trocar_tela( player_estado_atual.Pegar_path_imagem_background() , _instantaneo);
+                // // ** TEM QUE SER DENTO DO BLOCO MOVIMENTO 
+                // // Script_jogo_nome script_entrada = Controlador_dados_dinamicos.Pegar_instancia().lista_navegacao.lista_scripts_por_entrar_ponto[_ponto_id];
+                // // Scripts_jogo.Ativar_script( script_entrada );
 
-                return;
+
+                // controlador_interativos.interativo_atual_hover = -1;
+                // Controlador_cursor.Pegar_instancia().Mudar_cursor( Cor_cursor.off );
+
+                
+                // //  usa player_estado_atual
+                // controlador_tela_conector.Trocar_tela( player_estado_atual.Pegar_path_imagem_background() , _instantaneo);
+
+                // return;
 
         }
 
@@ -277,23 +281,23 @@ public class BLOCO_conector {
 
 
 
-                Ponto_nome novo_ponto_id =  player_estado_atual.Pegar_posicao_anterior();
-                Ponto_nome ponto_atual_id = player_estado_atual.Pegar_posicao_atual();
+                // Ponto_nome novo_ponto_id =  player_estado_atual.Pegar_posicao_anterior();
+                // Ponto_nome ponto_atual_id = player_estado_atual.Pegar_posicao_atual();
 
-                // Debug.Log("posicao atual: " + ponto_atual_id);
+                // // Debug.Log("posicao atual: " + ponto_atual_id);
 
-                if( novo_ponto_id == ponto_atual_id ) { return;}
+                // if( novo_ponto_id == ponto_atual_id ) { return;}
 
 
-                Ponto novo_ponto = Controlador_jogo_data.Criar_ponto( (Ponto_nome) novo_ponto_id);
+                // Ponto novo_ponto = Controlador_jogo_data.Criar_ponto( (Ponto_nome) novo_ponto_id);
                 
                 
-                player_estado_atual.Acrecentar_posicao( novo_ponto );
+                // player_estado_atual.Acrecentar_posicao( novo_ponto );
                 
 
-                Controlador_cursor.Pegar_instancia().Mudar_cursor(Cor_cursor.off);
-                controlador_tela_conector.Trocar_tela(player_estado_atual.Pegar_path_imagem_background());
-                controlador_interativos.Criar_interativos(novo_ponto);
+                // Controlador_cursor.Pegar_instancia().Mudar_cursor(Cor_cursor.off);
+                // controlador_tela_conector.Trocar_tela(player_estado_atual.Pegar_path_imagem_background());
+                // controlador_interativos.Criar_interativos(novo_ponto);
 
                 
                 // Debug.Log("===============");
