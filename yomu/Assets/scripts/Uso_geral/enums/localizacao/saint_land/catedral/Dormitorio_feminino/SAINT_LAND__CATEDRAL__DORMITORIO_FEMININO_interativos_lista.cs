@@ -55,10 +55,10 @@ using System;
                                 index = (int) SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_interativo.NARA_ROOM__up__espelho;
 
                         interativos[ index ] = new Interativo_tela( index );
+                        interativos[ index ].ponto_id = ( int ) SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_ponto.NARA_ROOM__up;
                         interativos[ index ].tipo_interativo =  Tipo_interativo.movimento;
                         
-
-                        interativos[ index ].ponto_id = ( int ) SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_ponto.NARA_ROOM__up;
+                        // --- dev
                         interativos[ index ].metodo_para_mudar_cursor = Metodo_para_mudar_cursor.cor_unica;
                         interativos[ index ].metodo_que_as_imagens_estao_salvas =   Metodo_que_as_imagens_estao_salvas.dia_E_noite;
                         interativos[ index ].imagens_disponiveis_no_mouse_hover = Imagens_disponiveis_no_mouse_hover.one_E_two;
@@ -81,6 +81,36 @@ using System;
                             1189f,36f,
                             
                         };
+
+
+
+
+
+
+
+
+                        for( int interativo_teste_index = 0 ; interativo_teste_index< interativos.Length ; interativo_teste_index++ ){
+
+                                if( interativos[ interativo_teste_index ] == null )
+                                    { continue; }
+                                
+                                interativos[ interativo_teste_index ].nome_insterativo_DESENVOLVIMENTO = (( SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_interativo ) interativo_teste_index ).ToString();
+                                interativos[ interativo_teste_index ].enum_nome_interativo_DESENVOLVIMENTO = "SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_interativo";
+
+                                Verificador_interativos_tela_DESENVOLVIMENTO.Checar_interativo_tela( interativos[ interativo_teste_index ] );
+
+                                continue;
+
+                        }
+
+
+                }
+
+
+        }
+
+
+#endif
 
 
 
@@ -959,27 +989,3 @@ using System;
 
 
                         // };
-
-
-                        for( int interativo_teste_index = 0 ; interativo_teste_index< interativos.Length ; interativo_teste_index++ ){
-
-                                if( interativos[ interativo_teste_index ] == null )
-                                    { continue; }
-                                
-                                interativos[ interativo_teste_index ].nome_insterativo_DESENVOLVIMENTO = (( SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_interativo ) interativo_teste_index ).ToString();
-                                interativos[ interativo_teste_index ].enum_nome_interativo_DESENVOLVIMENTO = "SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_interativo";
-
-                                Verificador_interativos_tela_DESENVOLVIMENTO.Checar_interativo_tela( interativos[ interativo_teste_index ] );
-
-                                continue;
-
-                        }
-
-
-                }
-
-
-        }
-
-
-#endif

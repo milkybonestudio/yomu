@@ -9,6 +9,8 @@ public static class Conector_teste_estado_generico {
 
                 // --- construir personagem
 
+                SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_interativos_lista.Pegar_interativo( 0 , 0);
+
                 Posicao_geral posicao_geral = new Posicao_geral();
                 Atividade atividade = Atividade.nada;
 

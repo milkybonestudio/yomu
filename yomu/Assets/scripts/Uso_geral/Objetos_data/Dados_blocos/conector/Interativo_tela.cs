@@ -50,6 +50,7 @@ public class Interativo_tela {
                 // so vai ser usado dependendo do Metodo_que_as_imagens_lidam_com_mouse_hover
                 public Nome_cor cor_primeira_imagem;
                 public Nome_cor cor_segunda_imagem;
+                public Nome_cor cor_imagens;
 
 
                 // --- SUPORTE PARA O CURSOR

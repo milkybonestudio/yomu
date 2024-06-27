@@ -248,19 +248,19 @@ public class Controlador_interativos {
 
                   } else 
 
-                  if(_interativo.tipo_mouse_hover  ==  Interativo_tipo_mouse_hover.one_80_E_one_100  ){
+                  // if(_interativo.tipo_mouse_hover  ==  Interativo_tipo_mouse_hover.one_80_E_one_100  ){
 
-                        _interativo.interativo_image_1 = Resources.Load<Sprite>( _path  + _interativo.nome  + variante_periodo);
-                        _interativo.cor_image_1 = new Color(0.8f,0.8f,0.8f,1f);
+                  //       _interativo.interativo_image_1 = Resources.Load<Sprite>( _path  + _interativo.nome  + variante_periodo);
+                  //       _interativo.cor_image_1 = new Color(0.8f,0.8f,0.8f,1f);
                         
-                        if(_interativo.interativo_image_1 == null){ throw new ArgumentException("nao foi achado imagem no path: " + _path + _interativo.nome +  variante_periodo + ". Modelo: one_80_E_one_100");}
+                  //       if(_interativo.interativo_image_1 == null){ throw new ArgumentException("nao foi achado imagem no path: " + _path + _interativo.nome +  variante_periodo + ". Modelo: one_80_E_one_100");}
 
-                        _interativo.interativo_image_2 = _interativo.interativo_image_1;
-                        _interativo.cor_image_2 = Color.white;
+                  //       _interativo.interativo_image_2 = _interativo.interativo_image_1;
+                  //       _interativo.cor_image_2 = Color.white;
 
                         
 
-                  }
+                  // }
 
                   _interativo.image_slot.sprite = _interativo.interativo_image_1;
                   _interativo.image_slot.color = _interativo.cor_image_1;

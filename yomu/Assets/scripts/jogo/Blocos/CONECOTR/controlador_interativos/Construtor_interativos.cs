@@ -18,11 +18,19 @@ public class Construtor_interativos {
 
 
 
-        public Interativo_tela Criar_interativo_tela_DEVELOPMENT( int _cidade_id , Posicao_local _posicao_local, int interativo_slot ){
+        public Interativo_tela Criar_interativo_tela_DEVELOPMENT( int _cidade_id , Posicao_local _posicao_local, int _interativo_id ){
 
 
+
+                int  regiao = _posicao_local.regiao;
+                int  area = _posicao_local.area;
+                int  ponto = _posicao_local.ponto;
                 // pegar_interativo = Letor_interativos_SAINT_LAND_.Pegar()
-                return null;
+
+                Interativo_tela interativo_tela = Leitor_interativos_tela_DESENVOLVIMENTO.Pegar( _cidade_id , regiao, area, ponto,_interativo_id );
+
+
+                return interativo_tela;
 
 
 
@@ -107,22 +115,22 @@ public class Construtor_interativos {
                                 
 
                         } 
-                        else  if(_interativo.tipo_mouse_hover  ==  Interativo_tipo_mouse_hover.one_80_E_one_100  )
-                        {
+                        // else  if(_interativo.tipo_mouse_hover  ==  Interativo_tipo_mouse_hover.one_80_E_one_100  )
+                        // {
 
-                                _interativo.interativo_image_1 = Resources.Load<Sprite>( _path  + _interativo.nome  + variante_periodo);
-                                _interativo.cor_image_1 = new Color(0.8f,0.8f,0.8f,1f);
+                        //         _interativo.interativo_image_1 = Resources.Load<Sprite>( _path  + _interativo.nome  + variante_periodo);
+                        //         _interativo.cor_image_1 = new Color(0.8f,0.8f,0.8f,1f);
 
-                                _interativo.interativo_image_2 = _interativo.interativo_image_1;
-                                _interativo.cor_image_2 = Color.white;
+                        //         _interativo.interativo_image_2 = _interativo.interativo_image_1;
+                        //         _interativo.cor_image_2 = Color.white;
                                 
-                                if( _interativo.interativo_image_1 == null )
-                                        { throw new ArgumentException( "nao foi achado imagem no path: " + _path + _interativo.nome +  variante_periodo + ". Modelo: one_80_E_one_100" ) ; }
+                        //         if( _interativo.interativo_image_1 == null )
+                        //                 { throw new ArgumentException( "nao foi achado imagem no path: " + _path + _interativo.nome +  variante_periodo + ". Modelo: one_80_E_one_100" ) ; }
 
                                 
 
 
-                        }
+                        // }
 
                 
 
