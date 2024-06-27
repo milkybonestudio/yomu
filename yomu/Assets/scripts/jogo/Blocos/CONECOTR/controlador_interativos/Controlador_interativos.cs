@@ -13,40 +13,6 @@ public class Controlador_interativos {
             public static Controlador_interativos Pegar_instancia(){ return instancia; }
 
 
-            public static Controlador_interativos Construir(){ 
-
-
-                  Controlador_interativos controlador = new Controlador_interativos(); 
-                        
-
-                        // --- CONTROLADORES
-
-                        controlador.bloco_conector = BLOCO_conector.Pegar_instancia();
-                        controlador.construtor_interativos = new Construtor_interativos( controlador );
-
-                        // --- CRIAR CANVAS 
-
-                        controlador.interativos_container = new GameObject( "Interativos_container" );
-                        controlador.interativos_container.transform.SetParent( controlador.bloco_conector.container_conector.transform, false );
-
-
-                        controlador.interativos_tipo_tela_container = new GameObject( "Interativos_tipo_tela_container" );
-                        controlador.interativos_tipo_tela_container.transform.SetParent( controlador.interativos_container.transform, false );
-
-                        controlador.interativos_tipo_personagem_container = new GameObject( "Interativos_tipo_personagem_container" );
-                        controlador.interativos_tipo_personagem_container.transform.SetParent( controlador.interativos_container.transform, false );
-
-                        controlador.interativos_tipo_item_container = new GameObject( "Interativos_tipo_item_container" );
-                        controlador.interativos_tipo_item_container.transform.SetParent( controlador.interativos_container.transform, false );
-
-
-
-                  instancia = controlador; 
-                  return instancia;
-                  
-            }
-
-
 
             public BLOCO_conector bloco_conector;
             public Construtor_interativos construtor_interativos;
@@ -81,6 +47,42 @@ public class Controlador_interativos {
 
             // nao faz mais sentido
             public int interativo_atual_hover = -1;
+
+
+
+            public static Controlador_interativos Construir(){ 
+
+
+                  Controlador_interativos controlador = new Controlador_interativos(); 
+                        
+
+                        // --- CONTROLADORES
+
+                        controlador.bloco_conector = BLOCO_conector.Pegar_instancia();
+                        controlador.construtor_interativos = new Construtor_interativos( controlador );
+
+                        // --- CRIAR CANVAS 
+
+                        controlador.interativos_container = new GameObject( "Interativos_container" );
+                        controlador.interativos_container.transform.SetParent( controlador.bloco_conector.container_conector.transform, false );
+
+
+                        controlador.interativos_tipo_tela_container = new GameObject( "Interativos_tipo_tela_container" );
+                        controlador.interativos_tipo_tela_container.transform.SetParent( controlador.interativos_container.transform, false );
+
+                        controlador.interativos_tipo_personagem_container = new GameObject( "Interativos_tipo_personagem_container" );
+                        controlador.interativos_tipo_personagem_container.transform.SetParent( controlador.interativos_container.transform, false );
+
+                        controlador.interativos_tipo_item_container = new GameObject( "Interativos_tipo_item_container" );
+                        controlador.interativos_tipo_item_container.transform.SetParent( controlador.interativos_container.transform, false );
+
+
+
+                  instancia = controlador; 
+                  return instancia;
+                  
+            }
+
 
             public void Esconder_interativos( bool _valor ){
 
@@ -179,6 +181,8 @@ public class Controlador_interativos {
       // MOVER 
       public void Carregar_imagens_interativo(  Interativo _interativo  , string _path , int _periodo){
 
+             
+                  // isso vai ser no development?
                   
                   string variante_periodo = "";
 

@@ -3,9 +3,9 @@ using System;
 
 #if UNITY_EDITOR
 
-    public static class Letor_interativos_SAINT_LAND_ {
+    public static class Letor_interativos_SAINT_LAND {
 
-        public static Interativo Pegar( int _regiao_id ,  int _area_id , int _interativo_id ){
+        public static Interativo_tela Pegar( int _regiao_id ,  int _area_id , int _interativo_id ){
 
             SAINT_LAND__regiao regiao = ( SAINT_LAND__regiao ) _regiao_id;
             

@@ -36,7 +36,7 @@ public static class SPRITE {
                 tex.Apply( false, false );
                 tex.filterMode = UnityEngine.FilterMode.Point;
 
-                Sprite sprite_retorno  =   Sprite.Create(tex  ,     new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f ,0, SpriteMeshType.FullRect   );
+                Sprite sprite_retorno  =   Sprite.Create(tex  ,     new Rect( 0.0f, 0.0f, tex.width, tex.height ), new Vector2( 0.5f, 0.5f), 100.0f ,0, SpriteMeshType.FullRect   );
 
                 return sprite_retorno;
 

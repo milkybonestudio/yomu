@@ -19,6 +19,16 @@ using System;
 
 */
 
+
+// excluir depois
+public enum Tipo_get_interativo {
+            nao_altera = 0, // ""
+    dia_E_noite = 1, // "_d" ou "_n"
+    todos_os_periodos, // "_0", "_1", "_2", "_3", "_4" 
+    nome = 3, // "_especifico"
+
+}
+
  public class Interativo {
 
 

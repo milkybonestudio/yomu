@@ -6,21 +6,35 @@ using UnityEngine;
 
 
 
-
-
             public static string Pegar_path_imagens_DESENVOLVIMENTO(){
 
-                string path_folder_jogo = System.IO.Directory.GetCurrentDirectory();
+                    string path_folder_jogo = System.IO.Directory.GetCurrentDirectory();
 
 
-                string pai = System.IO.Directory.GetParent( path_folder_jogo ).FullName;
+                    string pai = System.IO.Directory.GetParent( path_folder_jogo ).FullName;
 
-                string retorno = pai + System.IO.Path.Combine( pai, "imagens" );
+                    string retorno = pai + System.IO.Path.Combine( pai, "Imagens" );
 
-                if( ! ( System.IO.Directory.Exists( retorno ) ) )
-                    { throw new Exception( $" path para imagens nao foi encontrado, path: { retorno } " ); }
+                    if( ! ( System.IO.Directory.Exists( retorno ) ) )
+                        { throw new Exception( $" path para imagens nao foi encontrado, path: { retorno } " ); }
 
-                return retorno;
+                    return retorno;
+
+            }
+
+            public static string Pegar_path_imagens_personagens_DESENVOLVIMENTO(){
+
+                    string path_imagens = Pegar_path_imagens_DESENVOLVIMENTO();
+                    string path_personagens = System.IO.Path.Combine( path_imagens , "Personagens" );
+                    return path_personagens;
+
+            }
+
+            public static string Pegar_path_imagens_interativos_DESENVOLVIMENTO(){
+
+                    string path_imagens = Pegar_path_imagens_DESENVOLVIMENTO();
+                    string path_personagens = System.IO.Path.Combine( path_imagens , "Interativos" );
+                    return path_personagens;
 
             }
 

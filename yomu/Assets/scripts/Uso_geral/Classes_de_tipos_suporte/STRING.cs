@@ -4,10 +4,30 @@
 public static class  STRING {
 
 
+
+        public static string Deixar_somente_a_primeira_letra_maiuscula( string _string ){
+
+
+                char[] char_array = _string.ToCharArray();
+                char_array[ 0 ] = char.ToUpper( char_array[ 0 ] );
+
+                for( int i = 1 ; i < char_array.Length ; i++ ){
+
+                        char_array[ i ] = char.ToLower( char_array[ i ] );
+
+                }
+
+                string retorno = new string( char_array );
+
+                return retorno;
+
+        }
+
+
         public static int Pegar_index_null ( string[] _arr ){
 
 
-                for( int index =0 ; index < _arr.Length; index++ ){
+                for( int index = 0 ; index < _arr.Length; index++ ){
 
                         if( _arr[ index ] == null ) { return index; }
 

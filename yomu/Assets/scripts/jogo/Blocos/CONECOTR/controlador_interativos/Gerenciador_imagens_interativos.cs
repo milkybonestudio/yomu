@@ -205,56 +205,60 @@ public class Gerenciador_imagens_interativos {
 
 
 
-        #if UNITY_EDITOR || true
+        #if UNITY_EDITOR 
         
 
-            public Sprite Pegar_sprite_DESENVOLVIMENTO( Interativo_tela _interativo, string _interativo_enum_nome_DESENVOLVIMENTO, string _interativo_nome_DESENVOLVIMENTO, string _sufixo ){
+            public Sprite Pegar_sprite_DESENVOLVIMENTO( Interativo_tela _interativo ){
+
+
+                    
+                    string interativo_enum_nome_DESENVOLVIMENTO = _interativo.enum_nome_interativo_DESENVOLVIMENTO;
+                    string interativo_nome_DESENVOLVIMENTO =  _interativo.nome_insterativo_DESENVOLVIMENTO;
+                    string _sufixo = Pegar_sufixo_interativo_DESENVOLVIMENTO( _interativo );
+
+                    // tem que pegar o nome em outro lugar 
 
                     throw new Exception( "testar aqui" );
 
-                    // _interativo_enum_nome_DESENVOLVIMENTO => SAINT_LAND__CATHEDRAL__DORMITORIO_FEMININO_interativo 
+                    // interativo_enum_nome_DESENVOLVIMENTO => SAINT_LAND__CATHEDRAL__DORMITORIO_FEMININO_interativo 
 
-                    // _interativo_nome_DESENVOLVIMENTO => NARA_ROOM__up__janela
+                    // interativo_nome_DESENVOLVIMENTO => NARA_ROOM__up__janela
 
                     // transformar em: saint_land/cathedral/dormitorio_feminino/nara_room/up__janela.png
                     // folder nao pode estar no folder do editor
 
                     // sufixo = _d, _n, "",  _0, _1, _2, _3, _4,  
 
-                    string[] folders_ate_interativos = _interativo_enum_nome_DESENVOLVIMENTO.Split( "__" );
+                    string[] folders_ate_interativos = interativo_enum_nome_DESENVOLVIMENTO.Split( "__" );
 
                     if( folders_ate_interativos.Length != 3 )
-                        { throw new Exception( $"formato de _interativo_enum_nome_DESENVOLVIMENTO nao aceito. Veio: { _interativo_enum_nome_DESENVOLVIMENTO }" ); }
+                        { throw new Exception( $"formato de interativo_enum_nome_DESENVOLVIMENTO nao aceito. Veio: { interativo_enum_nome_DESENVOLVIMENTO }" ); }
                     
                     
-                    string path_imagens = Paths_gerais.Pegar_path_imagens_DESENVOLVIMENTO();
+                    string path_imagens_interativos = Paths_gerais.Pegar_path_imagens_interativos_DESENVOLVIMENTO();
 
 
-                    string cidade = folders_ate_interativos[ 0 ].ToLower();
-                    string regiao = folders_ate_interativos[ 1 ].ToLower();
-                    string area = folders_ate_interativos[ 2 ].Split( "_" )[ 0 ].ToLower();
+                    string cidade = STRING.Deixar_somente_a_primeira_letra_maiuscula( folders_ate_interativos[ 0 ] );
+                    string regiao = STRING.Deixar_somente_a_primeira_letra_maiuscula( folders_ate_interativos[ 1 ] );
+                    string area = STRING.Deixar_somente_a_primeira_letra_maiuscula( folders_ate_interativos[ 2 ] );
 
 
-                    string[] folder_final__E__imagem = _interativo_nome_DESENVOLVIMENTO.Split( "__" );
+                    string[] folder_final__E__imagem = interativo_nome_DESENVOLVIMENTO.Split( "__" );
 
                     string folder_final = folder_final__E__imagem[ 0 ].ToLower();
                     string imagem = folder_final__E__imagem[ 1 ].ToLower() ;
 
-                    string path_imagem = System.IO.Path.Combine(   
-                        
-                            new string[]{
+                    string[] nomes   =  new string[]{
+                                                        path_imagens_interativos,
+                                                        cidade, 
+                                                        regiao,
+                                                        area,
+                                                        folder_final, 
+                                                        ( imagem + _sufixo + ".png" )
+                                                
+                                                    };
 
-                                path_imagens,
-                                "interativos",
-                                cidade, 
-                                regiao,
-                                area,
-                                folder_final, 
-                                ( imagem + _sufixo + ".png" )
-                            
-                            }
-
-                    );
+                    string path_imagem = System.IO.Path.Combine( nomes );
 
                     byte[] png = System.IO.File.ReadAllBytes( path_imagem );
 
@@ -268,18 +272,75 @@ public class Gerenciador_imagens_interativos {
         #endif
 
 
+        public string Pegar_sufixo_interativo_DESENVOLVIMENTO( Interativo_tela _interativo ){
+
+
+                Periodo_tempo periodo_atual = ( ( Periodo_tempo ) Controlador_timer.Pegar_instancia().periodo_atual_id ) ;
+
+                switch(  ( Tipo_sufixo_para_pegar_imagem ) _interativo.tipo_sufixo_para_pegar_imagem_id ){
+
+
+
+
+                        case Tipo_sufixo_para_pegar_imagem.dia_E_noite:         {
+                                                                                    bool esta_claro  =  (
+                                                                                                            ( periodo_atual  ==  Periodo_tempo.manha )
+                                                                                                            ||
+                                                                                                            ( periodo_atual  ==  Periodo_tempo.dia )
+                                                                                                            ||
+                                                                                                            ( periodo_atual  ==  Periodo_tempo.tarde )
+
+                                                                                                        );
+
+
+                                                                                    if ( esta_claro )
+                                                                                            { return "_d"; }
+                                                                                            else 
+                                                                                            { return "_n"; }
+
+
+                                                                                    break;
+                                                                                }
+
+
+                        case Tipo_sufixo_para_pegar_imagem.todos_os_periodos:   {
+
+                                                                                    _interativo.nomes_imagens_espoecificas_periodos
+                                                                                    switch( periodo_atual ){
+
+                                                                                        // talvez mudar para _periodo?
+                                                                                        case Periodo_tempo.manha: return "_0";
+                                                                                        case Periodo_tempo.dia: return "_1";
+                                                                                        case Periodo_tempo.tarde: return "_2";
+                                                                                        case Periodo_tempo.noite: return "_3";
+                                                                                        case Periodo_tempo.madrugada: return "_4";
+
+                                                                                    }
+
+
+                                                                                    break;
+                                                                                }
+
+                        default: throw new Exception("");
+
+
+
+                }
+
+                return ( "_" + periodo_atual.ToString() );
+
+
+
+
+        }
+
+
 
 
 
         protected void Pegar_dia_E_noite(){
 
 
-            // if( _periodo < 3 )
-            //     { 
-            //         variante_periodo = "_d"; 
-            //     } 
-            //     else 
-            //     { variante_periodo = "_n";}
 
 
         }
