@@ -11,3 +11,15 @@ CIDADE__REGIAO__AREA__interativos_lista ( class )
 
 
 
+vai ter uma copia dos folder de localizador 
+
+em CIDADE__REGIAO__AREA.ponto => CIDADE__REGIAO__AREA_interativos.interativo
+
+CIDADE__REGIAO__AREA_interativos provavelmente vai ser maior 
+
+
+
+
+
+
+

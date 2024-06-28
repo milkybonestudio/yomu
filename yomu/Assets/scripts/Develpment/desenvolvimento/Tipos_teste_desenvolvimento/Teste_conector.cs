@@ -31,7 +31,7 @@ public static class Teste_conector {
                 switch( _chave ){
 
                         case "generico" : Conector_teste_estado_generico.Ativar( _modelo ); break;
-                        default : Console.LogError( $"<b><coler=red>nao</color></b> foi achado a <b><color=white>chave: \"{ _chave }\"</color></b> em testar <b><color=lime>conector</color></b>" ); throw new System.Exception();
+                        default : UnityEngine.Debug.LogError( $"<b><coler=red>nao</color></b> foi achado a <b><color=white>chave: \"{ _chave }\"</color></b> em testar <b><color=lime>conector</color></b>" ); throw new System.Exception();
 
                 }
 

@@ -1,7 +1,7 @@
 #if UNITY_EDITOR
 
 
-    public enum SAINT_LAND__CATEDRAL__FEMALE_DORMITORY_interativo {
+    public enum SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__interativo {
 
 
         NARA_ROOM__up__porta,

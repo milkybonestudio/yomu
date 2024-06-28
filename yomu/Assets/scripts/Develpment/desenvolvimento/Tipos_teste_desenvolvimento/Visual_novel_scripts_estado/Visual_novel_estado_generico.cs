@@ -4,12 +4,25 @@
 public static class Visual_novel_teste_estado_generico {
 
 
-        public static void Ativar(){
+
+        public static void Ativar( string _modelo ){
+
+
+                switch( _modelo ){
+
+                        case "estado": Ativar_estado(); return;
+                        case "script_inicial": Ativar_script_inicial(); return;
+                        default: throw new System.Exception( $"nao foi aceito o modelo { _modelo }" );
+                }
+
+
+        }
+
+        public static void Ativar_estado(){
 
 
                 // --- construir personagem
 
-                
                 Posicao posicao = new Posicao();
                 Atividade atividade = Atividade.nada;
 
@@ -17,16 +30,23 @@ public static class Visual_novel_teste_estado_generico {
 
                 Dados_containers_personagem dados_para_construir_personagem = new Dados_containers_personagem();
 
-                Dados_blocos.visual_novel_START = new Visual_novel_START( Nome_screen_play.NARA_INTRODUCAO_riku_introducao );
+                Dados_blocos.visual_novel_START = new Visual_novel_START();
                 
                 // Controlador_dados_dinamicos.Pegar_instancia().perso.Carregar_personagem( lily );
                 //Controlador_personagens.Pegar_instancia().personagens[ ( int ) Personagem_nome.Lily ] = lily;
                 return;
 
 
+        }
 
+
+        public static void Ativar_script_inicial(){
+
+
+                return;
 
         }
+
 
 
 }
