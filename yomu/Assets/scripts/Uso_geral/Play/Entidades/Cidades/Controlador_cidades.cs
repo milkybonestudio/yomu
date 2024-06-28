@@ -213,12 +213,20 @@ public class Controlador_cidades {
 		}
 
 
+		public Cidade Pegar_cidade_DESENVOLVIMENTO(  string _quem_esta_perdindo,  int _cidade_id ){
+
+			if( cidades[ _cidade_id ] == null  )
+					{ 
+						Cidade_nome cidade = ( Cidade_nome ) _cidade_id;
+						Console.LogError( $"{ _quem_esta_perdindo }pediu a cidade { cidade } mas ela nao foi criada" );
+						throw new Exception( "" );
+					}
 
 
 
+			return cidades[ _cidade_id ];
 
-
-
+		}
 
 
 

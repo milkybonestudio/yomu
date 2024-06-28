@@ -9,6 +9,8 @@ public static class Construtor_cidade {
 	    public static Cidade Construir(  int _cidade_id,  int _plano_id, Dados_sistema_cidade_essenciais _dados_sistema_cidades_essenciais , Dados_containers_cidade _dados,  System.Object _cidade_AI ){
 
 				// ** responsavel por passar os bytes[] e instanciar os Gerenciadores 
+
+				// *** tem que pegar os interativos para subtrair e adicionar 
 				
 				
 				Cidade cidade = new Cidade( _cidade_id );

@@ -8,7 +8,7 @@ public static class Lidar_retorno_bloco_conector{
 
     public static void Default(){
 
-
+        
 
         // BLOCO_conector bloco_conector = BLOCO_conector.Pegar_instancia();
         

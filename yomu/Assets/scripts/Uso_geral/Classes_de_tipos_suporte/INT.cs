@@ -139,6 +139,65 @@ public static class INT {
 
         }
 
+     public static int[] Aplicar_subtrair_e_adicionar_array(int[] _default, int[] _subtrair , int[] _acrescentar){
+            
+            int default_length = _default != null?_default.Length:0;
+
+            int subtrair_length = _subtrair != null ?   _subtrair.Length : 0;
+            int acrescentar_length = _acrescentar != null ?   _acrescentar.Length : 0;
+
+            int max_arr_length = default_length + acrescentar_length;
+
+            int[] max_arr = new int[default_length + acrescentar_length];
+
+            
+            int j = 0; 
+            int i , k ;
+
+
+            for( i = 0; i< default_length ;i++ ){
+
+                for( k = 0;  k<acrescentar_length ;k++){
+                  
+                  if(_acrescentar[k] == _default[i]){ max_arr[k] = -1; break;}
+                  
+                }
+
+            }  
+            for(i = 0, j = 0; i < acrescentar_length ;i++){if(max_arr[i] != -1)  {max_arr[j] = _acrescentar[i]; j++;}}
+
+            for(i = 0  ; i< default_length ;i++, j++){ max_arr[j] = _default[i];}
+
+
+
+            for(  i = 0; i < max_arr_length ;i++){
+                for( j = 0; j<subtrair_length ;j++){
+
+                  if(_subtrair[j] == max_arr[i])  max_arr[i] = 0;}
+
+                }
+            int t = 0;
+            for(i = 0 ; i < max_arr.Length ; i++ ){
+              if(max_arr[i] != 0 ) t++;
+            }
+
+            int[] retorno = new int[t];
+
+            for(  i = 0 , k = 0  ;  i<max_arr_length ;  i++){ 
+              
+                  if(max_arr[i] != 0) {
+              
+                       retorno[k] = max_arr[i]; k++;
+                       
+                  }
+              
+              }
+
+            return retorno;
+      
+  }
+
+
 
 
 

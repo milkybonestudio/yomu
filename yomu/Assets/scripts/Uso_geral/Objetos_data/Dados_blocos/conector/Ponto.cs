@@ -6,6 +6,10 @@
 public class Ponto {
 
 
+      // tem que ter os interativos 
+      // tem que ter as informacoes para construir um background imagem de background
+
+
       public Posicao_local posicao; // posicao.ponto_id => esse ponto
 
       

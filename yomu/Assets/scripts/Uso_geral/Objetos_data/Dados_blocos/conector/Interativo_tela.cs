@@ -18,6 +18,9 @@ public class Interativo_tela {
         }
 
 
+        
+
+
         public string nome = ""; // excluir depois
 
 
