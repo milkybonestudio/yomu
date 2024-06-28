@@ -13,13 +13,17 @@ public static class Pontos_data_lista {
 
         public static  Ponto_data Pegar_ponto_data(  Ponto_nome _nome ){
 
+            
+            // public static Controlador_interativos instancia;
+            // public static Controlador_interativos Pegar_instancia(){ return instancia; }
 
-            #if UNITY_EDITOR
 
-            if( pontos_data_lista == null ){ pontos_data_lista = Pontos_data_lista_completa.Pegar_lista(); }
-            return pontos_data_lista [ ( int ) _nome ];
+            // #if UNITY_EDITOR
 
-            #endif
+            //     if( pontos_data_lista == null ){ pontos_data_lista = Pontos_data_lista_completa.Pegar_lista(); }
+            //     return pontos_data_lista [ ( int ) _nome ];
+
+            // #endif
 
 
             throw new Exception("ainda tem que fazer");

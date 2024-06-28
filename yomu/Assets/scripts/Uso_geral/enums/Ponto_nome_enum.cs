@@ -1,3 +1,6 @@
+
+
+// tem que excluir
 public enum Ponto_nome {
     
     nada = 0,

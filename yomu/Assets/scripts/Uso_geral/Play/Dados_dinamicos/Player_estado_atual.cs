@@ -6,15 +6,13 @@ using UnityEngine;
 public class Player_estado_atual {
 
 
-        public static Player_estado_atual instancia;
-        public static Player_estado_atual Pegar_instancia(){ return instancia; }
-        public static Player_estado_atual Construir(){ instancia = new Player_estado_atual(); return instancia;}
+    public static Player_estado_atual instancia;
+    public static Player_estado_atual Pegar_instancia(){ return instancia; }
+    public static Player_estado_atual Construir(){ instancia = new Player_estado_atual(); return instancia;}
 
 
 
   
-
-
     public int posicao_atual = 0;
 
     public int[] interativos = new int[0]{};
@@ -74,85 +72,90 @@ public class Player_estado_atual {
     public void Iniciar(){
 
 
-        ponto_atual = new Ponto();
-        ponto_atual.ponto_flip = 0;
-        ponto_atual.folder_path = "background/catedral/nara_room/";
-        ponto_atual.background_name = "up_d";
-        ponto_atual.interativos_nomes = new Interativo_nome[] {  Interativo_nome.nada  };
-        ponto_atual.personagens_no_ponto = new Personagem_nome[0];
-        ponto_atual.script_entrada = 0;
+        // ponto_atual = new Ponto();
+        // ponto_atual.ponto_flip = 0;
+        // ponto_atual.folder_path = "background/catedral/nara_room/";
+        // ponto_atual.background_name = "up_d";
+        // ponto_atual.interativos_nomes = new Interativo_nome[] {  Interativo_nome.nada  };
+        // ponto_atual.personagens_no_ponto = new Personagem_nome[0];
+        // ponto_atual.script_entrada = 0;
 
 
     }
 
 
-    public void Zerar_dados(){
+public void Zerar_dados(){
 
 
-     interativos = new int[0];
+// interativos = new int[0];
 
-     dinheiro = 0;
+// dinheiro = 0;
 
-     mochila = new int[9];
+// mochila = new int[9];
 
-     bau = new int[24];
+// bau = new int[24];
 
-     posicao_atual = 0;
+// posicao_atual = 0;
 
-     posicao_arr = new Ponto_nome[20];
+// posicao_arr = new Ponto_nome[20];
 
-     sadismo = 0f;
+// sadismo = 0f;
 
-           
+    
 
-    }
+}
 
     public Ponto_nome Pegar_posicao_atual(){
 
-            int index = 0 ;
+            return Ponto_nome.BACK_quarto_nara;
 
-            for ( int i = 0; i < posicao_arr.Length ;i++){
+            // int index = 0 ;
 
-            if( posicao_arr[ i ] == Ponto_nome.nada ){
+            // for ( int i = 0; i < posicao_arr.Length ;i++){
 
-                index = i;
-                break;
+            // if( posicao_arr[ i ] == Ponto_nome.nada ){
 
-            }
+            //     index = i;
+            //     break;
 
-            }
+            // }
 
-            if(index == 0) { return 0; }
+            // }
 
-            return posicao_arr[  index-1 ];
+            // if(index == 0) { return 0; }
+
+            // return posicao_arr[  index-1 ];
 
 
     }
 
     public Ponto_nome Pegar_posicao_anterior(){
 
-            int index = 0 ;
+            return Ponto_nome.BACK_quarto_nara;
 
-            for ( int i = 0; i < posicao_arr.Length ;i++){
 
-                    if( posicao_arr[ i ] == Ponto_nome.nada ){
+            // int index = 0 ;
 
-                            index = i;
-                            break;
+            // for ( int i = 0; i < posicao_arr.Length ;i++){
 
-                    }
+            //         if( posicao_arr[ i ] == Ponto_nome.nada ){
+
+            //                 index = i;
+            //                 break;
+
+            //         }
                     
-            }
+            // }
 
 
-            if(index <  2){   
+            // if(index <  2){   
 
-                Debug.Log("VOLTAR PLAYER ERA PARA FLIP");
-                return posicao_arr[ 0 ];
+            //     Debug.Log("VOLTAR PLAYER ERA PARA FLIP");
+            //     return posicao_arr[ 0 ];
                 
-            }
+            // }
 
-            return posicao_arr[ index -2 ] ;
+            // return posicao_arr[ index -2 ] ;
 
 
     }
@@ -161,11 +164,13 @@ public class Player_estado_atual {
 
     public string Pegar_path_imagem_background(){
 
+            return null;
 
-            return "images/in_game/black";
+
+            // return "images/in_game/black";
 
 
-            return   "images/in_game/" + ponto_atual.folder_path + ponto_atual.background_name;
+            // return   "images/in_game/" + ponto_atual.folder_path + ponto_atual.background_name;
 
 
     }
@@ -185,82 +190,82 @@ public class Player_estado_atual {
       public void Acrecentar_posicao (    Ponto _ponto,  bool _resetar = false ) {
 
 
-            ponto_atual = _ponto;
-            Ponto_nome novo_ponto =   _ponto.ponto_nome;
+            // ponto_atual = _ponto;
+            // Ponto_nome novo_ponto =   _ponto.ponto_nome;
 
-            if(_resetar) {    posicao_arr = new Ponto_nome[20] ; posicao_arr[0] = novo_ponto ; return;} 
-
-
-            int posicao = 0;
+            // if(_resetar) {    posicao_arr = new Ponto_nome[20] ; posicao_arr[0] = novo_ponto ; return;} 
 
 
-            int index_livre = 1;
-            int index_novo_ponto_ja_tem = -1;
+            // int posicao = 0;
 
 
-
-            for ( posicao = 0 ; posicao < posicao_arr.Length ; posicao++){
-
-                    if( posicao_arr[ posicao ] == Ponto_nome.nada ){ index_livre = posicao ; break;}
-            }
-
-
-            for( posicao = 0 ; posicao < posicao_arr.Length; posicao++  ){
-
-                    if( posicao_arr[ posicao ] == novo_ponto ) { 
-
-                            index_novo_ponto_ja_tem = posicao ;
-                            break ;
-
-                    }
-
-            }
+            // int index_livre = 1;
+            // int index_novo_ponto_ja_tem = -1;
 
 
 
-            if( index_novo_ponto_ja_tem != -1 ){
+            // for ( posicao = 0 ; posicao < posicao_arr.Length ; posicao++){
 
-                    /* so tem que fazer flip se o mesmo ponto estiver no index 0, no 1 ele so pula*/
-
-                    if( index_novo_ponto_ja_tem == 0  ){
-
-                            /// flip
-                            Ponto_nome x = posicao_arr[ 1 ] ;
-
-                            posicao_arr[ 1 ] = posicao_arr[ 0 ] ; 
-                            posicao_arr[ 0 ] = x ;  
-                            return ;
+            //         if( posicao_arr[ posicao ] == Ponto_nome.nada ){ index_livre = posicao ; break;}
+            // }
 
 
-                    }
+            // for( posicao = 0 ; posicao < posicao_arr.Length; posicao++  ){
 
-                    for( posicao =( index_novo_ponto_ja_tem + 1 ) ; posicao < posicao_arr.Length; posicao++ ){
+            //         if( posicao_arr[ posicao ] == novo_ponto ) { 
 
-                            posicao_arr[ posicao ] = Ponto_nome.nada ;
+            //                 index_novo_ponto_ja_tem = posicao ;
+            //                 break ;
 
-                    }
+            //         }
 
-                    return;
-
-            }
-
-            // nao tem o ponto na lista
+            // }
 
 
-            if( index_livre == 0 ){ posicao_arr[ 0 ] = novo_ponto ; return ; }
+
+            // if( index_novo_ponto_ja_tem != -1 ){
+
+            //         /* so tem que fazer flip se o mesmo ponto estiver no index 0, no 1 ele so pula*/
+
+            //         if( index_novo_ponto_ja_tem == 0  ){
+
+            //                 /// flip
+            //                 Ponto_nome x = posicao_arr[ 1 ] ;
+
+            //                 posicao_arr[ 1 ] = posicao_arr[ 0 ] ; 
+            //                 posicao_arr[ 0 ] = x ;  
+            //                 return ;
 
 
-            int posicao_atual =  index_livre - 1 ;
-            Debug.Log("posicao_atual: " + posicao_atual);
-            Ponto_nome ponto_nome_atual = posicao_arr[ posicao_atual ];
+            //         }
+
+            //         for( posicao =( index_novo_ponto_ja_tem + 1 ) ; posicao < posicao_arr.Length; posicao++ ){
+
+            //                 posicao_arr[ posicao ] = Ponto_nome.nada ;
+
+            //         }
+
+            //         return;
+
+            // }
+
+            // // nao tem o ponto na lista
 
 
-            if( ponto_nome_atual == novo_ponto   ) { return; }
-
-            posicao_arr[ index_livre ] = novo_ponto;
+            // if( index_livre == 0 ){ posicao_arr[ 0 ] = novo_ponto ; return ; }
 
 
-            return;
+            // int posicao_atual =  index_livre - 1 ;
+            // Debug.Log("posicao_atual: " + posicao_atual);
+            // Ponto_nome ponto_nome_atual = posicao_arr[ posicao_atual ];
+
+
+            // if( ponto_nome_atual == novo_ponto   ) { return; }
+
+            // posicao_arr[ index_livre ] = novo_ponto;
+
+
+            // return;
 
 
 
@@ -275,7 +280,7 @@ public class Player_estado_atual {
 
 
 
-    public void Adicionar_modo_tela(Bloco _novo_bloco){
+    public void Adicionar_modo_tela( Bloco _novo_bloco ){
 
 
         for(int  i = 0 ;   i < blocos_anteriores.Length ; i++){

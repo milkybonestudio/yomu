@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Construtor_interativos {
 
+        
+
         public Construtor_interativos( Controlador_interativos _controlador ){
 
             controlador_interativos = _controlador;
@@ -23,6 +25,7 @@ public class Construtor_interativos {
                 // pegar_interativo = Letor_interativos_SAINT_LAND_.Pegar()
 
                 Interativo_tela interativo_tela = Leitor_interativos_tela_DESENVOLVIMENTO.Pegar( _posicao ,_interativo_id );
+
                 
 
                 return interativo_tela;
