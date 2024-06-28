@@ -18,17 +18,18 @@ public class Construtor_interativos {
 
 
 
-        public Interativo_tela Criar_interativo_tela_DEVELOPMENT( int _cidade_id , Posicao_local _posicao_local, int _interativo_id ){
+        public Interativo_tela Criar_interativo_tela_DEVELOPMENT( Posicao_local _posicao, int _interativo_id ){
 
 
+                int cidade = _posicao.cidade;
+                int  regiao = _posicao.regiao;
+                int  area = _posicao.area;
+                int  ponto = _posicao.ponto;
 
-                int  regiao = _posicao_local.regiao;
-                int  area = _posicao_local.area;
-                int  ponto = _posicao_local.ponto;
                 // pegar_interativo = Letor_interativos_SAINT_LAND_.Pegar()
 
-                Interativo_tela interativo_tela = Leitor_interativos_tela_DESENVOLVIMENTO.Pegar( _cidade_id , regiao, area, ponto,_interativo_id );
-
+                Interativo_tela interativo_tela = Leitor_interativos_tela_DESENVOLVIMENTO.Pegar( cidade , regiao, area, ponto,_interativo_id );
+                
 
                 return interativo_tela;
 

@@ -4,12 +4,28 @@
 public static class Conector_teste_estado_generico {
 
 
-        public static void Ativar(){
+        public static void Ativar( string _modelo ){
+
+                if( _modelo == "estado" )
+                        { 
+                                Ativar_estado();  
+                                return;
+                        }
+
+                Ativar_script_inicial();
+                return;
+
+
+
+
+
+
+        }
+
+        public static void Ativar_estado(){
 
 
                 // --- construir personagem
-
-                SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_interativos_lista.Pegar_interativo( 0 , 0);
 
                 Posicao_geral posicao_geral = new Posicao_geral();
                 Atividade atividade = Atividade.nada;
@@ -25,6 +41,14 @@ public static class Conector_teste_estado_generico {
                 return;
 
 
+        }
+
+
+        public static void Ativar_script_inicial(){
+
+
+                Interativo_tela interativo = Controlador_interativos.Pegar_instancia().construtor_interativos.Criar_interativo_tela_DEVELOPMENT( new Posicao_local() , 0 );
+                UnityEngine.Debug.Log( interativo );
 
 
         }

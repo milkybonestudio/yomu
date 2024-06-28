@@ -13,7 +13,7 @@ using System;
 
 
 
-        public static class SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_interativos_lista {
+        public static class SAINT_LAND__CATEDRAL__FEMALE_DORMITORY_interativos_lista {
 
                 public static Interativo_tela[] interativos;
 
@@ -23,10 +23,10 @@ using System;
                         { Colocar_interativos(); }
 
                     if( interativos[ _interativo_id ] == null )
-                        { throw new Exception( $" o interativo { ( SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_interativo ) _interativo_id } na nao foi criado" ); }
+                        { throw new Exception( $" o interativo { ( SAINT_LAND__CATEDRAL__FEMALE_DORMITORY_interativo ) _interativo_id } na nao foi criado" ); }
 
                     if( _ponto_id != interativos[ _interativo_id ].ponto_id )
-                        { throw new Exception( $" O ponto_id estava diferente em SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_interativos_lista.Pegar(). O id que veio foi: { _ponto_id } e oque tinha sido definido no interativo foi { interativos[ _interativo_id ].ponto_id } " ); }
+                        { throw new Exception( $" O ponto_id estava diferente em SAINT_LAND__CATEDRAL__FEMALE_DORMITORY_interativos_lista.Pegar(). O id que veio foi: { _ponto_id } e oque tinha sido definido no interativo foi { interativos[ _interativo_id ].ponto_id } " ); }
 
                     return interativos[ _interativo_id ];
 
@@ -41,32 +41,27 @@ using System;
 
                         int index = 0;
 
-                        interativos[ index ] = new Interativo_tela( index );
-                        interativos[ index ].tipo_interativo =  Tipo_interativo.movimento;
-                        interativos[ index ].ponto_id = 0 ;
-                        interativos[ index ].area = new float[]{0f,0f} ;
-                        interativos[ index ].cor_cursor = 0 ;
-
 
                         /// ------------------------ UP
 
 
 
-                                index = (int) SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_interativo.NARA_ROOM__up__espelho;
+                                index = (int) SAINT_LAND__CATEDRAL__FEMALE_DORMITORY_interativo.NARA_ROOM__up__espelho;
 
                         interativos[ index ] = new Interativo_tela( index );
-                        interativos[ index ].ponto_id = ( int ) SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_ponto.NARA_ROOM__up;
+                        interativos[ index ].ponto_id = ( int ) SAINT_LAND__CATEDRAL__FEMALE_DORMITORY_ponto.NARA_ROOM__up;
                         interativos[ index ].tipo_interativo =  Tipo_interativo.movimento;
                         
                         // --- dev
                         interativos[ index ].metodo_para_mudar_cursor = Metodo_para_mudar_cursor.cor_unica;
+                        interativos[ index ].imagens_disponiveis_no_mouse_hover = Imagens_disponiveis_no_mouse_hover.nada_E_nada;
                         interativos[ index ].metodo_que_as_imagens_estao_salvas =   Metodo_que_as_imagens_estao_salvas.dia_E_noite;
-                        interativos[ index ].imagens_disponiveis_no_mouse_hover = Imagens_disponiveis_no_mouse_hover.one_E_two;
 
 
-
-
+    
                         interativos[ index ].cor_cursor = Cor_cursor.red;
+                        interativos[ index ].cores_cursor = new Cor_cursor[ 0 ];
+
 
                         interativos[ index ].area = new float[]{
 
@@ -86,22 +81,32 @@ using System;
 
 
 
+                        try { 
 
 
+                                for( int interativo_teste_index = 0 ; interativo_teste_index< interativos.Length ; interativo_teste_index++ ){
 
-                        for( int interativo_teste_index = 0 ; interativo_teste_index< interativos.Length ; interativo_teste_index++ ){
+                                        if( interativos[ interativo_teste_index ] == null )
+                                            { continue; }
+                                        
+                                        interativos[ interativo_teste_index ].nome_insterativo_DESENVOLVIMENTO = (( SAINT_LAND__CATEDRAL__FEMALE_DORMITORY_interativo ) interativo_teste_index ).ToString();
+                                        interativos[ interativo_teste_index ].enum_nome_interativo_DESENVOLVIMENTO = "SAINT_LAND__CATEDRAL__FEMALE_DORMITORY_interativo";
 
-                                if( interativos[ interativo_teste_index ] == null )
-                                    { continue; }
-                                
-                                interativos[ interativo_teste_index ].nome_insterativo_DESENVOLVIMENTO = (( SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_interativo ) interativo_teste_index ).ToString();
-                                interativos[ interativo_teste_index ].enum_nome_interativo_DESENVOLVIMENTO = "SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_interativo";
+                                        Verificador_interativos_tela_DESENVOLVIMENTO.Checar_interativo_tela( interativos[ interativo_teste_index ] );
 
-                                Verificador_interativos_tela_DESENVOLVIMENTO.Checar_interativo_tela( interativos[ interativo_teste_index ] );
+                                        continue;
 
-                                continue;
+                                }
+
+                        } catch ( Exception e ){
+
+                            interativos = null;
+                            throw e;
 
                         }
+
+
+
 
 
                 }

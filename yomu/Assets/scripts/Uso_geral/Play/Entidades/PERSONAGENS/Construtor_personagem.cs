@@ -13,12 +13,14 @@ public static class Construtor_personagem {
 
 				Posicao_geral posicao_geral = new Posicao_geral();
 
-					posicao_geral.cidade_id = ( int ) _dados_sistema_personagens_essenciais.posicao_cidade_id;
 
 					posicao_geral.posicao_local.ponto = ( int ) _dados_sistema_personagens_essenciais.ponto;
 					posicao_geral.posicao_local.regiao = ( int ) _dados_sistema_personagens_essenciais.regiao;
 					posicao_geral.posicao_local.area = ( int ) _dados_sistema_personagens_essenciais.area;
+					posicao_geral.posicao_local.cidade = ( int ) _dados_sistema_personagens_essenciais.posicao_cidade_id;
 
+
+					posicao_geral.posicao_mundial.cidade = ( int ) _dados_sistema_personagens_essenciais.posicao_cidade_id;
 					posicao_geral.posicao_mundial.estado = ( int ) _dados_sistema_personagens_essenciais.estado;
 					posicao_geral.posicao_mundial.reino = ( int ) _dados_sistema_personagens_essenciais.reino;
 					posicao_geral.posicao_mundial.continente = ( int ) _dados_sistema_personagens_essenciais.continente;

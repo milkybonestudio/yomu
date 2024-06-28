@@ -18,7 +18,7 @@ using System;
 
                                                             switch( area ){
 
-                                                                case SAINT_LAND__CATEDRAL__area.dormitorio_feminino : return SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_interativos_lista.Pegar_interativo( _interativo_id, _ponto_id );
+                                                                case SAINT_LAND__CATEDRAL__area.dormitorio_feminino : return SAINT_LAND__CATEDRAL__FEMALE_DORMITORY_interativos_lista.Pegar_interativo( _interativo_id, _ponto_id );
                                                             
                                                             }
 
@@ -33,7 +33,7 @@ using System;
 
                                                             switch( area ){
 
-                                                                case SAINT_LAND__villege__area.center : return SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_interativos_lista.Pegar_interativo( _interativo_id, _ponto_id ); // ??????
+                                                                case SAINT_LAND__villege__area.center : return SAINT_LAND__CATEDRAL__FEMALE_DORMITORY_interativos_lista.Pegar_interativo( _interativo_id, _ponto_id ); // ??????
                                                             
                                                             }
 

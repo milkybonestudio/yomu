@@ -1,7 +1,7 @@
 #if UNITY_EDITOR
 
 
-    public enum SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO_ponto {
+    public enum SAINT_LAND__CATEDRAL__FEMALE_DORMITORY_ponto {
 
         nada,
 

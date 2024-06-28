@@ -2,6 +2,7 @@
 
 public struct Posicao_local {
 
+    public int cidade;
     public int regiao;
     public int area;
     public int ponto;
