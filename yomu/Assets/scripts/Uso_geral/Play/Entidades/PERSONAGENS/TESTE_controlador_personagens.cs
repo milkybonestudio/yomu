@@ -33,7 +33,7 @@ public class TESTE_controlador_personagens {
                     
                 
                     controlador.personagens = personagens;
-                    personagens[ nara_id ] = new Personagem( nara_id, new Posicao_geral(), ( int ) Atividade.nada );
+                    personagens[ nara_id ] = new Personagem( nara_id, new Posicao(), ( int ) Atividade.nada );
 
 
                 Controlador_personagens.instancia = controlador;				

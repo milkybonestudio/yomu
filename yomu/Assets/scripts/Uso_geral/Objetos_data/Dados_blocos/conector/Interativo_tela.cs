@@ -44,8 +44,8 @@ public class Interativo_tela {
 
                 public Metodo_que_as_imagens_estao_salvas metodo_que_as_imagens_estao_salvas;
 
-                public Imagens_disponiveis_no_mouse_hover imagens_disponiveis_no_mouse_hover;
-                public Metodo_das_cores_imagens_disponiveis_no_mouse_hover metodo_das_cores_imagens_disponiveis_no_mouse_hover;
+                public Metodo_IMAGENS_DISPONIVEIS_no_mouse_hover metodo_IMAGENS_DISPONIVEIS_no_mouse_hover;
+                public Metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover;
 
                 // so vai ser usado dependendo do Metodo_que_as_imagens_lidam_com_mouse_hover
                 public Nome_cor cor_primeira_imagem;

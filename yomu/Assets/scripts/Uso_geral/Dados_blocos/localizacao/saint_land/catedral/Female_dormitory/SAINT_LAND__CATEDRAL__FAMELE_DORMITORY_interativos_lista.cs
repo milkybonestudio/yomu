@@ -17,7 +17,9 @@ using System;
 
                 public static Interativo_tela[] interativos;
 
-                public static Interativo_tela Pegar_interativo( int _interativo_id, int _ponto_id ){
+                public static Interativo_tela Pegar_interativo(  Posicao_local _posicao_local,  int _interativo_id  ){
+
+                    int ponto_id = _posicao_local.ponto_id;
 
                     if( interativos == null )
                         { Colocar_interativos(); }
@@ -25,8 +27,8 @@ using System;
                     if( interativos[ _interativo_id ] == null )
                         { throw new Exception( $" o interativo { ( SAINT_LAND__CATEDRAL__FEMALE_DORMITORY_interativo ) _interativo_id } na nao foi criado" ); }
 
-                    if( _ponto_id != interativos[ _interativo_id ].ponto_id )
-                        { throw new Exception( $" O ponto_id estava diferente em SAINT_LAND__CATEDRAL__FEMALE_DORMITORY_interativos_lista.Pegar(). O id que veio foi: { _ponto_id } e oque tinha sido definido no interativo foi { interativos[ _interativo_id ].ponto_id } " ); }
+                    if( ponto_id != interativos[ _interativo_id ].ponto_id )
+                        { throw new Exception( $" O ponto_id estava diferente em SAINT_LAND__CATEDRAL__FEMALE_DORMITORY_interativos_lista.Pegar(). O id que veio foi: { ponto_id } e oque tinha sido definido no interativo foi { interativos[ _interativo_id ].ponto_id } " ); }
 
                     return interativos[ _interativo_id ];
 
@@ -41,26 +43,25 @@ using System;
 
                         int index = 0;
 
-
-                        /// ------------------------ UP
-
-
-
+                        // ------------------ 
+                        
                                 index = (int) SAINT_LAND__CATEDRAL__FEMALE_DORMITORY_interativo.NARA_ROOM__up__espelho;
 
                         interativos[ index ] = new Interativo_tela( index );
                         interativos[ index ].ponto_id = ( int ) SAINT_LAND__CATEDRAL__FEMALE_DORMITORY_ponto.NARA_ROOM__up;
+
+                        // funcao
                         interativos[ index ].tipo_interativo =  Tipo_interativo.movimento;
                         
-                        // --- dev
+                        // --- cursor
                         interativos[ index ].metodo_para_mudar_cursor = Metodo_para_mudar_cursor.cor_unica;
-                        interativos[ index ].imagens_disponiveis_no_mouse_hover = Imagens_disponiveis_no_mouse_hover.nada_E_nada;
-                        interativos[ index ].metodo_que_as_imagens_estao_salvas =   Metodo_que_as_imagens_estao_salvas.dia_E_noite;
-
-
-    
+                        interativos[ index ].cores_cursor = null;
                         interativos[ index ].cor_cursor = Cor_cursor.red;
-                        interativos[ index ].cores_cursor = new Cor_cursor[ 0 ];
+
+                        // imagem
+                        interativos[ index ].metodo_que_as_imagens_estao_salvas =   Metodo_que_as_imagens_estao_salvas.dia_E_noite;
+                        interativos[ index ].metodo_IMAGENS_DISPONIVEIS_no_mouse_hover = Metodo_IMAGENS_DISPONIVEIS_no_mouse_hover.one_E_one;
+                        interativos[ index ].metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover = Metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover.core_80_e_100;
 
 
                         interativos[ index ].area = new float[]{

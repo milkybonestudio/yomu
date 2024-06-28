@@ -12,10 +12,10 @@ public static class Conversas_teste_estado_generico {
 
                 // --- construir personagem
 
-                Posicao_geral posicao_geral = new Posicao_geral();
+                Posicao posicao = new Posicao();
                 Atividade atividade = Atividade.nada;
 
-                Personagem lily = new Personagem( ( int ) Personagem_nome.Lily , posicao_geral, ( int ) atividade );
+                Personagem lily = new Personagem( ( int ) Personagem_nome.Lily , posicao, ( int ) atividade );
 
                 Dados_containers_personagem dados_para_construir_personagem = new Dados_containers_personagem();
 

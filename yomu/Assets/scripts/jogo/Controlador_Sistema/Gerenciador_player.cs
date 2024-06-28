@@ -15,7 +15,7 @@ public class Gerenciador_player {
 
         }
 
-        public Posicao_geral posicao_player;
+        public Posicao posicao_player;
         public int personagem_sendo_controlado;
 
 

@@ -1,4 +1,4 @@
-
+using System;
 
 
 public static class Conector_teste_estado_generico {
@@ -6,18 +6,13 @@ public static class Conector_teste_estado_generico {
 
         public static void Ativar( string _modelo ){
 
-                if( _modelo == "estado" )
-                        { 
-                                Ativar_estado();  
-                                return;
-                        }
 
-                Ativar_script_inicial();
-                return;
+                switch( _modelo ){
 
-
-
-
+                        case "estado": Ativar_estado(); return;
+                        case "script_inicial": Ativar_script_inicial(); return;
+                        default: throw new Exception( $"nao foi aceito o modelo { _modelo }" );
+                }
 
 
         }
@@ -27,10 +22,10 @@ public static class Conector_teste_estado_generico {
 
                 // --- construir personagem
 
-                Posicao_geral posicao_geral = new Posicao_geral();
+                Posicao posicao = new Posicao();
                 Atividade atividade = Atividade.nada;
 
-                Personagem lily = new Personagem( ( int ) Personagem_nome.Lily , posicao_geral, ( int ) atividade );
+                Personagem lily = new Personagem( ( int ) Personagem_nome.Lily , posicao, ( int ) atividade );
 
                 Dados_containers_personagem dados_para_construir_personagem = new Dados_containers_personagem();
 
@@ -47,7 +42,15 @@ public static class Conector_teste_estado_generico {
         public static void Ativar_script_inicial(){
 
 
-                Interativo_tela interativo = Controlador_interativos.Pegar_instancia().construtor_interativos.Criar_interativo_tela_DEVELOPMENT( new Posicao_local() , 0 );
+                Posicao_local posicao_local = new Posicao_local();
+
+                posicao_local.cidade_id = ( int ) Cidade_nome.saint_land;
+                posicao_local.regiao_id = ( int ) SAINT_LAND__regiao.cathedral;
+                posicao_local.area_id = ( int ) SAINT_LAND__CATEDRAL__area.dormitorio_feminino;
+                posicao_local.ponto_id = ( int ) SAINT_LAND__CATEDRAL__FEMALE_DORMITORY_ponto.NARA_ROOM__up;
+
+
+                Interativo_tela interativo = Controlador_interativos.Pegar_instancia().construtor_interativos.Criar_interativo_tela_DEVELOPMENT( posicao_local , ( ( int ) SAINT_LAND__CATEDRAL__FEMALE_DORMITORY_interativo.NARA_ROOM__up__espelho) );
                 UnityEngine.Debug.Log( interativo );
 
 

@@ -1,137 +1,148 @@
 using System;
 
-public static class Verificador_interativos_tela_DESENVOLVIMENTO {
+#if UNITY_EDITOR 
+
+        public static class Verificador_interativos_tela_DESENVOLVIMENTO {
+
+                // ** Vai ser usado para verificar se os dados colocados em cada lista de interativos fazem sentido. 
+                //    Vai ser comum mudar o tipo de como as imagens vão se comportar então essa classe previne que eu mude somente 1 coisa em um contexto que precisa mudar 2 ou algo do tipo
 
 
-        public static void Checar_interativo_tela( Interativo_tela _interativo_tela ){
+                public static void Checar_interativo_tela( Interativo_tela _interativo_tela ){
 
-                string nome = _interativo_tela.nome_insterativo_DESENVOLVIMENTO;
-
-
-                // --- CURSOR
-
-                if( _interativo_tela.metodo_para_mudar_cursor == Metodo_para_mudar_cursor.uma_cor_para_cada_periodo )
-                        {
-                                if( _interativo_tela.cores_cursor == null )
-                                        { throw new Exception( $"No interativo { nome } a cor do cursor esta definida no metodo \"uma_cor_para_cada_periodo\" mas o array das cores estava fazio." ); }
-
-                                if( _interativo_tela.cores_cursor.Length != 5 )
-                                        { throw new Exception( $"No interativo { nome } a cor do cursor esta definida no metodo \"uma_cor_para_cada_periodo\" mas o array das cores nao tinha 5 elementos, um para cada periodo." ); }
-
-                                if(  _interativo_tela.cor_cursor != Cor_cursor.nada )
-                                        { throw new Exception( $"No interativo { nome } a cor do cursor esta definida no metodo \"uma_cor_para_cada_periodo\" mas mas foi definido uma cor unica. veio { _interativo_tela.cor_cursor }" ); }
-                        }
-
-                if( _interativo_tela.metodo_para_mudar_cursor == Metodo_para_mudar_cursor.cor_unica )
-                        {
-
-                                if( _interativo_tela.cores_cursor != null )
-                                        { throw new Exception( $"No interativo { nome } a cor do cursor esta definida no metodo \"cor_unica\" mas o array das cores nao estava fazio." ); }
-
-                                if(  _interativo_tela.cor_cursor == Cor_cursor.nada )
-                                        { throw new Exception( $"No interativo { nome } a cor do cursor esta definida no metodo \"cor_unica\" mas mas NAO foi definido uma cor unica" ); }
-                        }
+                        string nome = _interativo_tela.nome_insterativo_DESENVOLVIMENTO;
 
 
+                        // --- CURSOR
 
-                // --- IMAGEM   
+                        if( _interativo_tela.metodo_para_mudar_cursor == Metodo_para_mudar_cursor.uma_cor_para_cada_periodo )
+                                {
+                                        if( _interativo_tela.cores_cursor == null )
+                                                { throw new Exception( $"No interativo { nome } a cor do cursor esta definida no metodo \"uma_cor_para_cada_periodo\" mas o array das cores nao esta definido." ); }
 
-                // CHECAR: NADA
-                if( _interativo_tela.imagens_disponiveis_no_mouse_hover == Imagens_disponiveis_no_mouse_hover.nada_E_nada )
-                        {
+                                        if( _interativo_tela.cores_cursor.Length < 5 )
+                                                { throw new Exception( $"No interativo { nome } a cor do cursor esta definida no metodo \"uma_cor_para_cada_periodo\" mas o array das cores nao tinha 5 elementos, um para cada periodo." ); }
 
-                                // --- SE FAZ SENTIDO TER CORES ESPECIFICAS 
-                                if( _interativo_tela.metodo_das_cores_imagens_disponiveis_no_mouse_hover == Metodo_das_cores_imagens_disponiveis_no_mouse_hover.cores_especificas )
-                                        { throw new Exception( $"No interativo { nome } a cor das imagens esta definida no metodo \"cores_especificas\" mas o Imagens_disponiveis_no_mouse_hover esta como nada_E_nada. Se nao tem imagem nao tem sentido terrem cores especificas" ); }
+                                        if( _interativo_tela.cores_cursor.Length > 5 )
+                                                { throw new Exception( $"No interativo { nome } a cor do cursor esta definida no metodo \"uma_cor_para_cada_periodo\" mas o array das cores tinha mais do que os 5 elementos possiveis, um para cada periodo." ); }
 
-                                // --- SE FAZ SENTIDO TER COR 80/100
-                                if( _interativo_tela.metodo_das_cores_imagens_disponiveis_no_mouse_hover == Metodo_das_cores_imagens_disponiveis_no_mouse_hover.core_80_e_100 )
-                                        { throw new Exception( $"No interativo { nome } a cor das imagens esta definida no metodo \"core_80_e_100\" mas o Imagens_disponiveis_no_mouse_hover esta como nada_E_nada." ); }
-                            
-                        }
+                                        if(  _interativo_tela.cor_cursor != Cor_cursor.nada )
+                                                { throw new Exception( $"No interativo { nome } a cor do cursor esta definida no metodo \"uma_cor_para_cada_periodo\" mas mas foi definido uma cor unica e não deveria. veio { _interativo_tela.cor_cursor }" ); }
+                                }
 
+                        if( _interativo_tela.metodo_para_mudar_cursor == Metodo_para_mudar_cursor.cor_unica )
+                                {
 
-                // CEHCAR: TEM SOMENTE COM MOUSE HOVER
-                if( _interativo_tela.imagens_disponiveis_no_mouse_hover == Imagens_disponiveis_no_mouse_hover.nada_E_one )
-                        {
+                                        if( _interativo_tela.cores_cursor != null )
+                                                { throw new Exception( $"No interativo { nome } a cor do cursor esta definida no metodo \"cor_unica\" mas o array das cores foi definido e nao poderia." ); }
 
-                            if( _interativo_tela.metodo_das_cores_imagens_disponiveis_no_mouse_hover == Metodo_das_cores_imagens_disponiveis_no_mouse_hover.cores_especificas )
-                                    { 
-                                        if( _interativo_tela.cor_segunda_imagem == Nome_cor.nada )
-                                            { throw new Exception( $"No interativo { nome } a cor das imagens esta definida no metodo \"cores_especificas\" e as imagens_disponiveis_no_mouse_hover como nada_E_one. Mas o a cor da segunda imagem não foi definida" ); }
-                                            
-                                        if( _interativo_tela.cor_primeira_imagem != Nome_cor.nada )
-                                            { throw new Exception( $"No interativo { nome } a cor das imagens esta definida no metodo \"cores_especificas\" e as imagens_disponiveis_no_mouse_hover como nada_E_one. Mas o a cor da primeira imagem foi definida como { _interativo_tela.cor_primeira_imagem }. Nao pode ter nenhuma cor" ); }
-                                        
-                                    }
-
-                            // se faz sentido 
-                            if( _interativo_tela.metodo_das_cores_imagens_disponiveis_no_mouse_hover == Metodo_das_cores_imagens_disponiveis_no_mouse_hover.core_80_e_100 )
-                                    { throw new Exception( $"No interativo { nome } a cor das imagens esta definida no metodo \"core_80_e_100\" mas o Imagens_disponiveis_no_mouse_hover esta como nada_E_one. nao tem como porque precisa de 2 imagens" ); }
-                    
-                        }
+                                        if(  _interativo_tela.cor_cursor == Cor_cursor.nada )
+                                                { throw new Exception( $"No interativo { nome } a cor do cursor esta definida no metodo \"cor_unica\" mas mas NAO foi definido uma cor unica" ); }
+                                }
 
 
 
-                // --- CORES
+                        // --- IMAGEM   
 
-                if( _interativo_tela.metodo_das_cores_imagens_disponiveis_no_mouse_hover == Metodo_das_cores_imagens_disponiveis_no_mouse_hover.cores_especificas )
-                        {
+                        // CHECAR: NADA x NADA
+                        if( _interativo_tela.metodo_IMAGENS_DISPONIVEIS_no_mouse_hover == Metodo_IMAGENS_DISPONIVEIS_no_mouse_hover.nada_E_nada )
+                                {
 
-                                // --- TESTE COM CORES ESPECIFICAS
+                                        // --- NAO FAZ SENTIDO TER CORES ESPECIFICAS 
+                                        if( _interativo_tela.metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover == Metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover.cores_especificas )
+                                                { throw new Exception( $"No interativo { nome } a cor das imagens esta definida no metodo \"cores_especificas\" mas o Metodo_Imagens_disponiveis_no_mouse_hover esta como nada_E_nada. Se nao tem imagem nao tem sentido terem cores especificas" ); }
 
-                                bool precisa_ter_as_2_cores  =  (
-                                                                    ( _interativo_tela.imagens_disponiveis_no_mouse_hover == Imagens_disponiveis_no_mouse_hover.one_E_one )
-                                                                    ||
-                                                                    ( _interativo_tela.imagens_disponiveis_no_mouse_hover == Imagens_disponiveis_no_mouse_hover.one_E_two )
-                                                                );
-                                                            
+                                        // --- SE FAZ SENTIDO TER COR 80/100
+                                        if( _interativo_tela.metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover == Metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover.core_80_e_100 )
+                                                { throw new Exception( $"No interativo { nome } a cor das imagens esta definida no metodo \"core_80_e_100\" mas o Metodo_Imagens_disponiveis_no_mouse_hover esta como nada_E_nada." ); }
+                                
+                                }
 
-                                if( precisa_ter_as_2_cores )
-                                        {
-                                        
-                                            if( _interativo_tela.cor_primeira_imagem == Nome_cor.nada )
-                                                    { throw new Exception( $"No interativo { nome } a cor das imagens esta definida no metodo \"cores_especificas\" mas a cor_primeira_imagem nao foi declarada, veio como nada." ); }
 
-                                            if( _interativo_tela.cor_segunda_imagem == Nome_cor.nada )
-                                                    { throw new Exception( $"No interativo { nome } a cor das imagens esta definida no metodo \"cores_especificas\" mas a cor_segunda_imagem nao foi declarada, veio como nada." ); }
+                        // CHECAR: NADA x IMAGEM
+                        if( _interativo_tela.metodo_IMAGENS_DISPONIVEIS_no_mouse_hover == Metodo_IMAGENS_DISPONIVEIS_no_mouse_hover.nada_E_one )
+                                {
 
+                                if( _interativo_tela.metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover == Metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover.cores_especificas )
+                                        { 
+                                                if( _interativo_tela.cor_segunda_imagem == Nome_cor.nada )
+                                                { throw new Exception( $"No interativo { nome } a cor das imagens esta definida no metodo \"cores_especificas\" e as Metodo_imagens_disponiveis_no_mouse_hover como nada_E_one. Mas o a cor da imagem quando estiver hover não foi definida" ); }
+                                                
+                                                if( _interativo_tela.cor_primeira_imagem != Nome_cor.nada )
+                                                { throw new Exception( $"No interativo { nome } a cor das imagens esta definida no metodo \"cores_especificas\" e as Metodo_imagens_disponiveis_no_mouse_hover como nada_E_one. Mas o a cor da primeira imagem foi definida como { _interativo_tela.cor_primeira_imagem }. Nao pode ter nenhuma cor" ); }
+                                                
                                         }
 
-                            
-                        }
-                        else if( _interativo_tela.metodo_das_cores_imagens_disponiveis_no_mouse_hover == Metodo_das_cores_imagens_disponiveis_no_mouse_hover.core_80_e_100 )
-                        {
-                                // --- TESTE COR 80/100
-
-                                // --- VER SE FOI COLOCADO COR INDIVIDUAL POR ENGANO
-                                if( _interativo_tela.cor_primeira_imagem != Nome_cor.nada )
-                                        { throw new Exception( $"No interativo { nome } a cor das imagens esta definida no metodo \"core_80_e_100\" mas a cor_primeira_imagem o foi declarada, mas ela nao pode. Veio { _interativo_tela.cor_primeira_imagem }." ); }
-
-                                if( _interativo_tela.cor_segunda_imagem != Nome_cor.nada )
-                                        { throw new Exception( $"No interativo { nome } a cor das imagens esta definida no metodo \"core_80_e_100\" mas a cor_segunda_imagem foi declarada, mas ela nao pode. Veio { _interativo_tela.cor_segunda_imagem }." ); }
+                                // se faz sentido 
+                                if( _interativo_tela.metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover == Metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover.core_80_e_100 )
+                                        { throw new Exception( $"No interativo { nome } a cor das imagens esta definida no metodo \"core_80_e_100\" mas o Metodo_Imagens_disponiveis_no_mouse_hover esta como nada_E_one. nao tem como porque precisa de 2 imagens" ); }
+                        
+                                }
 
 
-                        }
-                        else if( _interativo_tela.metodo_das_cores_imagens_disponiveis_no_mouse_hover == Metodo_das_cores_imagens_disponiveis_no_mouse_hover.cor_especifica )
-                        {
-                            
-                                if( _interativo_tela.cor_imagens == Nome_cor.nada )
-                                        { throw new Exception( $"No interativo { nome } a cor das imagens esta definida no metodo \"cor_especifica\" mas a cor não foi definida" ); }
+
+                        // --- CORES
+
+                        if( _interativo_tela.metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover == Metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover.cores_especificas )
+                                {
+
+                                        // --- TESTE COM CORES ESPECIFICAS
+
+                                        bool precisa_ter_as_2_cores  =  (
+                                                                        ( _interativo_tela.metodo_IMAGENS_DISPONIVEIS_no_mouse_hover == Metodo_IMAGENS_DISPONIVEIS_no_mouse_hover.one_E_one )
+                                                                        ||
+                                                                        ( _interativo_tela.metodo_IMAGENS_DISPONIVEIS_no_mouse_hover == Metodo_IMAGENS_DISPONIVEIS_no_mouse_hover.one_E_two )
+                                                                        );
+                                                                
+
+                                        if( precisa_ter_as_2_cores )
+                                                {
+                                                
+                                                if( _interativo_tela.cor_primeira_imagem == Nome_cor.nada )
+                                                        { throw new Exception( $"No interativo { nome } a cor das imagens esta definida no metodo \"cores_especificas\" mas a cor_primeira_imagem nao foi declarada, veio como nada." ); }
+
+                                                if( _interativo_tela.cor_segunda_imagem == Nome_cor.nada )
+                                                        { throw new Exception( $"No interativo { nome } a cor das imagens esta definida no metodo \"cores_especificas\" mas a cor_segunda_imagem nao foi declarada, veio como nada." ); }
+
+                                                }
+
                                 
-                                if( _interativo_tela.cor_primeira_imagem != Nome_cor.nada )
-                                        { throw new Exception( $"No interativo { nome } a cor das imagens esta definida no metodo \"cor_especifica\" mas a cor da imagem_1 foi definida como {_interativo_tela.cor_primeira_imagem}" ); }
+                                }
+                                else if( _interativo_tela.metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover == Metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover.core_80_e_100 )
+                                {
+                                        // --- TESTE COR 80/100
 
-                                if( _interativo_tela.cor_segunda_imagem != Nome_cor.nada )
-                                        { throw new Exception( $"No interativo { nome } a cor das imagens esta definida no metodo \"cor_especifica\" mas a cor da imagem_2 foi definida como {_interativo_tela.cor_segunda_imagem}" ); }
-                                    
+                                        // --- VER SE FOI COLOCADO COR INDIVIDUAL POR ENGANO
+                                        if( _interativo_tela.cor_primeira_imagem != Nome_cor.nada )
+                                                { throw new Exception( $"No interativo { nome } a cor das imagens esta definida no metodo \"core_80_e_100\" mas a cor_primeira_imagem o foi declarada, mas ela nao pode. Veio { _interativo_tela.cor_primeira_imagem }." ); }
+
+                                        if( _interativo_tela.cor_segunda_imagem != Nome_cor.nada )
+                                                { throw new Exception( $"No interativo { nome } a cor das imagens esta definida no metodo \"core_80_e_100\" mas a cor_segunda_imagem foi declarada, mas ela nao pode. Veio { _interativo_tela.cor_segunda_imagem }." ); }
 
 
-                        }
+                                }
+                                else if( _interativo_tela.metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover == Metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover.cor_especifica )
+                                {
+                                
+                                        if( _interativo_tela.cor_imagens == Nome_cor.nada )
+                                                { throw new Exception( $"No interativo { nome } a cor das imagens esta definida no metodo \"cor_especifica\" mas a cor não foi definida" ); }
+                                        
+                                        if( _interativo_tela.cor_primeira_imagem != Nome_cor.nada )
+                                                { throw new Exception( $"No interativo { nome } a cor das imagens esta definida no metodo \"cor_especifica\" mas a cor da imagem_1 foi definida como {_interativo_tela.cor_primeira_imagem}" ); }
 
-                return;
+                                        if( _interativo_tela.cor_segunda_imagem != Nome_cor.nada )
+                                                { throw new Exception( $"No interativo { nome } a cor das imagens esta definida no metodo \"cor_especifica\" mas a cor da imagem_2 foi definida como {_interativo_tela.cor_segunda_imagem}" ); }
+                                        
+
+
+                                }
+
+                        return;
+
+                }
+
 
         }
 
 
-}
+#endif

@@ -2,10 +2,10 @@
 
 public struct Posicao_local {
 
-    public int cidade;
-    public int regiao;
-    public int area;
-    public int ponto;
+    public int cidade_id;
+    public int regiao_id;
+    public int area_id;
+    public int ponto_id;
 
 }
 

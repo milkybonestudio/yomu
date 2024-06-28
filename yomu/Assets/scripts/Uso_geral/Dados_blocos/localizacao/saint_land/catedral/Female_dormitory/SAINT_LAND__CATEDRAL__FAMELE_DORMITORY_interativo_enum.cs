@@ -4,7 +4,6 @@
     public enum SAINT_LAND__CATEDRAL__FEMALE_DORMITORY_interativo {
 
 
-
         NARA_ROOM__up__porta,
         NARA_ROOM__up__janela,
         NARA_ROOM__up__espelho,

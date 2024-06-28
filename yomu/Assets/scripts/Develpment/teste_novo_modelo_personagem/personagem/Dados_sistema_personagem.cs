@@ -100,49 +100,10 @@ public enum Nivel_de_interesse_player_no_personagem : byte {
 
 
 
-public enum Local_nome {
-
-    Cathedral,
-
-}
-
-public enum Cidade_nome {
-
-    New_ground, 
-
-}
-
-public enum Estado_nome : short {
-
-    San_sebastian,
-
-}
-
-public enum Reino_nome : byte {
-
-    Human
-
-}
-
-public enum Continente_nome : byte {
-
-    central,
-
-}
 
 
 
-public struct Posicao {
 
-    public Ponto_nome ponto; 
-    public Local_nome local; // catedral 
-    public Cidade_nome  cidade; // cidade da catedral
-    public Estado_nome estado; // conjunto de cidades 
-    public Reino_nome reino;  // conjuntod e estados 
-    public Continente_nome continenete; // conjunto de reinos
-
-
-}
 
 
 

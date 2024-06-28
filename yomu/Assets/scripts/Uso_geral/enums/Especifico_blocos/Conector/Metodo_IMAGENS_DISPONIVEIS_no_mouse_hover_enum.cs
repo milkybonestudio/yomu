@@ -1,7 +1,7 @@
 
 
 
-public enum Imagens_disponiveis_no_mouse_hover {
+public enum Metodo_IMAGENS_DISPONIVEIS_no_mouse_hover {
     
     nada_E_nada = -1,
     nada_E_one = 0, 

@@ -936,56 +936,58 @@ public static class Controlador_development {
 
                     // dados da posicao 
 
-                    string linha = linhas[ personagem_index ];
-                    string[] nome_E_dados = linha.Split( ":" );
-                    string nome = nome_E_dados[ 0 ].Trim();
-                    string[] dados_str = nome_E_dados[ 1 ].Split( "," ) ;
-                    Personagem_nome personagem_nome =  ( Personagem_nome ) Enum.Parse( typeof( Personagem_nome ) , nome ) ;
+                    // nao sei onde isso é usado ;-;
 
-                    string ponto_nome_str = dados_str[ 0 ].Trim();
-                    string local_nome_str = dados_str[ 1 ].Trim();
-                    string cidade_nome_str = dados_str[ 2 ].Trim();
-                    string estado_nome_str = dados_str[ 3 ].Trim();
-                    string reino_nome_str = dados_str[ 4 ].Trim();
-                    string continente_nome_str = dados_str[ 5 ].Trim();
+                //     string linha = linhas[ personagem_index ];
+                //     string[] nome_E_dados = linha.Split( ":" );
+                //     string nome = nome_E_dados[ 0 ].Trim();
+                //     string[] dados_str = nome_E_dados[ 1 ].Split( "," ) ;
+                //     Personagem_nome personagem_nome =  ( Personagem_nome ) Enum.Parse( typeof( Personagem_nome ) , nome ) ;
 
-
-                    int ponto_index =  ( int )  Enum.Parse( typeof( Ponto_nome ) , ponto_nome_str ) ;
-                    int local_index =  ( int )  Enum.Parse( typeof( Local_nome ) , local_nome_str ) ;
-                    int cidade_index =  ( int )  Enum.Parse( typeof( Cidade_nome ) , cidade_nome_str ) ;
-                    short estado_index =  ( short )  Enum.Parse( typeof( Estado_nome ) , estado_nome_str ) ;
-                    byte reino_index =  ( byte )  Enum.Parse( typeof( Reino_nome ) , reino_nome_str ) ;
-                    byte continente_index =  ( byte )  Enum.Parse( typeof( Continente_nome ) , continente_nome_str ) ;
+                //     string ponto_nome_str = dados_str[ 0 ].Trim();
+                //     string local_nome_str = dados_str[ 1 ].Trim();
+                //     string cidade_nome_str = dados_str[ 2 ].Trim();
+                //     string estado_nome_str = dados_str[ 3 ].Trim();
+                //     string reino_nome_str = dados_str[ 4 ].Trim();
+                //     string continente_nome_str = dados_str[ 5 ].Trim();
 
 
-                    unchecked {
+                //     int ponto_index =  ( int )  Enum.Parse( typeof( Ponto_nome ) , ponto_nome_str ) ;
+                //     int local_index =  ( int )  Enum.Parse( typeof( Local_nome ) , local_nome_str ) ;
+                //     int cidade_index =  ( int )  Enum.Parse( typeof( Cidade_nome ) , cidade_nome_str ) ;
+                //     short estado_index =  ( short )  Enum.Parse( typeof( Estado_nome ) , estado_nome_str ) ;
+                //     byte reino_index =  ( byte )  Enum.Parse( typeof( Reino_nome ) , reino_nome_str ) ;
+                //     byte continente_index =  ( byte )  Enum.Parse( typeof( Continente_nome ) , continente_nome_str ) ;
 
-                            container[ acumulador_posicao ]   =  ( byte )( ponto_index >> 24 ) ;
-                            container[ acumulador_posicao + 1 ]   =  ( byte )( ponto_index >> 16 ) ;
-                            container[ acumulador_posicao + 2 ]   =  ( byte )( ponto_index >> 8 ) ;
-                            container[ acumulador_posicao + 3 ]   =  ( byte )( ponto_index ) ;
+
+                //     unchecked {
+
+                //             container[ acumulador_posicao ]   =  ( byte )( ponto_index >> 24 ) ;
+                //             container[ acumulador_posicao + 1 ]   =  ( byte )( ponto_index >> 16 ) ;
+                //             container[ acumulador_posicao + 2 ]   =  ( byte )( ponto_index >> 8 ) ;
+                //             container[ acumulador_posicao + 3 ]   =  ( byte )( ponto_index ) ;
 
 
-                            container[ acumulador_posicao + 4 ]   =  ( byte )( local_index >> 24 ) ;
-                            container[ acumulador_posicao + 5 ]   =  ( byte )( local_index >> 16 ) ;
-                            container[ acumulador_posicao + 6 ]   =  ( byte )( local_index >> 8 ) ;
-                            container[ acumulador_posicao + 7 ]   =  ( byte )( local_index ) ;
+                //             container[ acumulador_posicao + 4 ]   =  ( byte )( local_index >> 24 ) ;
+                //             container[ acumulador_posicao + 5 ]   =  ( byte )( local_index >> 16 ) ;
+                //             container[ acumulador_posicao + 6 ]   =  ( byte )( local_index >> 8 ) ;
+                //             container[ acumulador_posicao + 7 ]   =  ( byte )( local_index ) ;
                             
 
-                            container[ acumulador_posicao + 8 ]   =  ( byte )( cidade_index >> 24 ) ;
-                            container[ acumulador_posicao + 9 ]   =  ( byte )( cidade_index >> 16 ) ;
-                            container[ acumulador_posicao + 10 ]   =  ( byte )( cidade_index >> 8 ) ;
-                            container[ acumulador_posicao + 11 ]   =  ( byte )( cidade_index ) ;
+                //             container[ acumulador_posicao + 8 ]   =  ( byte )( cidade_index >> 24 ) ;
+                //             container[ acumulador_posicao + 9 ]   =  ( byte )( cidade_index >> 16 ) ;
+                //             container[ acumulador_posicao + 10 ]   =  ( byte )( cidade_index >> 8 ) ;
+                //             container[ acumulador_posicao + 11 ]   =  ( byte )( cidade_index ) ;
 
-                            container[ acumulador_posicao + 12 ]   =  ( byte )( estado_index >> 8 ) ;
-                            container[ acumulador_posicao + 13 ]   =  ( byte )( estado_index  ) ;
+                //             container[ acumulador_posicao + 12 ]   =  ( byte )( estado_index >> 8 ) ;
+                //             container[ acumulador_posicao + 13 ]   =  ( byte )( estado_index  ) ;
 
-                            container[ acumulador_posicao + 14 ]   =  ( byte )( reino_index) ;
+                //             container[ acumulador_posicao + 14 ]   =  ( byte )( reino_index) ;
                             
-                            container[ acumulador_posicao + 15 ]   =  ( byte )( continente_index ) ;
+                //             container[ acumulador_posicao + 15 ]   =  ( byte )( continente_index ) ;
                             
 
-                    }
+                //     }
 
 
 

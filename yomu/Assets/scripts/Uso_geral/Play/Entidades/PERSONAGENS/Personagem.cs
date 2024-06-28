@@ -4,16 +4,16 @@ using System;
 
 public class Personagem {
 
-        public Personagem(  int _personagem_id,  Posicao_geral _posicao_geral, int _atividade_id ){
+        public Personagem(  int _personagem_id,  Posicao _posicao, int _atividade_id ){
 
-                posicao = _posicao_geral ;
+                posicao = _posicao ;
                 atividade_id = _atividade_id ;
                 personagem_id = _personagem_id ;
 
         }
 
 
-        public Posicao_geral posicao;
+        public Posicao posicao;
         public int personagem_id;
         public int atividade_id;
 

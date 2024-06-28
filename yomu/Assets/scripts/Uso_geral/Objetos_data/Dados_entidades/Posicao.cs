@@ -1,6 +1,6 @@
 
 
-public class Posicao_geral {
+public class Posicao {
 
 
         public Posicao_local posicao_local;
