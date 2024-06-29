@@ -63,7 +63,7 @@ public static  class Mat {
                     index++;
                }
 
-               int[] retorno_int = Calcular_array_int(DEFAULT, SUBTRAIR, ACRESCENTAR);
+               int[] retorno_int = INT.Aplicar_subtrair_e_adicionar_array(DEFAULT, SUBTRAIR, ACRESCENTAR);
 
                T[] arr_retorno = new T[  retorno_int.Length  ];
 

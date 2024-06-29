@@ -338,7 +338,7 @@ public class BLOCO_conversas {
 
                 }
 
-                blocos_info.blocos_atuais = Mat.Calcular_array_int ( blocos_info.blocos_atuais , sub_numero , add_numero ) ;
+                blocos_info.blocos_atuais = INT.Aplicar_subtrair_e_adicionar_array ( blocos_info.blocos_atuais , sub_numero , add_numero ) ;
 
 
 

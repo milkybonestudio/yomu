@@ -120,32 +120,32 @@ public class Controlador_interativos {
 
                         for( int interativo_tela_slot = 0 ; interativo_tela_slot < interativos_finais_ids.Length ; interativo_tela_slot++ ){
 
-                                    int interativo_tela_id =  interativos_finais_ids[ interativo_tela_slot ];
+                                    // int interativo_tela_id =  interativos_finais_ids[ interativo_tela_slot ];
 
-                                    long pointer_inicial_busca =( ( long )( &dados_interativos_da_cidade ) + pointer_container_da_area + ( interativo_tela_id << 2 ) ) ;
+                                    // long pointer_inicial_busca =( ( long )( &dados_interativos_da_cidade ) + pointer_container_da_area + ( interativo_tela_id << 2 ) ) ;
 
-                                    int ponto_1  =  *( int* ) ( pointer_inicial_busca  + 0l );
-                                    int ponto_2  =  *( int* ) ( pointer_inicial_busca  + 4l );
-
-
-
-                                    byte[] dados =   * ( byte[]* ) ( ( long ) &dados_interativos_da_cidade   + ( long ) ( ponto_1 << 2 ) );
+                                    // int ponto_1  =  *( int* ) ( pointer_inicial_busca  + 0l );
+                                    // int ponto_2  =  *( int* ) ( pointer_inicial_busca  + 4l );
 
 
-                                    // talvez?
-                                    // int ponto_1  =  *( int* ) (  ( long )( &dados_interativos_da_cidade ) + pointer_container_da_area + ( interativo_tela_id << 2 ) );
-                                    // int ponto_2  =  *( int* ) (  ( long )( &dados_interativos_da_cidade ) + pointer_container_da_area + ( interativo_tela_id << 2 ) );
+
+                                    // byte[] dados =   * ( byte* ) ( ( long ) &dados_interativos_da_cidade   + ( long ) ( ponto_1 << 2 ) );
 
 
-                                    byte[] dados_interativo_compactos  = new byte[ ( ponto_final_dados - ponto_inicial_dados ) ] ;
+                                    // // talvez?
+                                    // // int ponto_1  =  *( int* ) (  ( long )( &dados_interativos_da_cidade ) + pointer_container_da_area + ( interativo_tela_id << 2 ) );
+                                    // // int ponto_2  =  *( int* ) (  ( long )( &dados_interativos_da_cidade ) + pointer_container_da_area + ( interativo_tela_id << 2 ) );
 
-                                    for( int index_dados = 0 ; index_dados < dados_interativo_compactos.Length ; index_dados++ ){
 
-                                                dados_interativo_compactos[ index_dados ] = dados_interativos_da_cidade[ ( ponto_inicial_dados + index_dados ) ] ;
+                                    // byte[] dados_interativo_compactos  = new byte[ ( ponto_final_dados - ponto_inicial_dados ) ] ;
 
-                                    }
+                                    // for( int index_dados = 0 ; index_dados < dados_interativo_compactos.Length ; index_dados++ ){
 
-                                    interativos_retorno[ interativo_tela_slot ] = Criar_interativo_tela( dados_interativo_compactos , interativo_tela_id ) ;
+                                    //             dados_interativo_compactos[ index_dados ] = dados_interativos_da_cidade[ ( ponto_inicial_dados + index_dados ) ] ;
+
+                                    // }
+
+                                    // interativos_retorno[ interativo_tela_slot ] = Criar_interativo_tela( dados_interativo_compactos , interativo_tela_id ) ;
 
                                     continue;
 
@@ -160,16 +160,20 @@ public class Controlador_interativos {
 
             public Interativo_tela Criar_interativo_tela(  byte[] _dados, int _interativo_tela_id ){
 
+                        int periodo = Controlador_timer.instancia.periodo_atual_id;
+
                         Interativo_tela interativo_tela  = new Interativo_tela( _interativo_tela_id );
 
                         // interar sobre o container ... 
 
 
-                        int sprite_id_imagem_1 = interativo_tela.sprites_imagem_1_ids_unicos_por_periodo;
-                        int sprite_id_imagem_2 = interativo_tela.sprites_imagem_2_ids_unicos_por_periodo;
+                        int sprite_id_imagem_1 = interativo_tela.sprites_imagem_1_ids_unicos_por_periodo[ periodo ];
+                        int sprite_id_imagem_2 = interativo_tela.sprites_imagem_2_ids_unicos_por_periodo[ periodo ];
 
                         Sprite sprite_imagem_1 =  gerenciador_imagens_interativos.Pegar_sprite( sprite_id_imagem_1 );
                         Sprite sprite_imagem_2 =  gerenciador_imagens_interativos.Pegar_sprite( sprite_id_imagem_2 );
+
+                        return interativo_tela;
 
                         
 
@@ -178,36 +182,120 @@ public class Controlador_interativos {
 
             public Interativo_tela[] Criar_interativos_tela_DESENVOLVIMENTO( Posicao_local _posicao_local ){
 
-                  
 
-                  
                   Cidade cidade = Controlador_cidades.Pegar_instancia().Pegar_cidade_DESENVOLVIMENTO( "controlador_interativos", _posicao_local.cidade_id );
 
                   int[][][][] interativos_default_por_posicao  =  cidade.interativos_tela_por_posicao;
+                  int[][][][] interativos_para_subtrair_por_posicao  =  cidade.interativos_tela_para_subtrair_ids;
+                  int[][][][] interativos_para_adicionar_por_posicao  =  cidade.interativos_tela_para_adicionar_ids;
 
                   if( interativos_default_por_posicao == null )
                         { Console.LogError( "" ); throw new Exception(""); }
 
 
                   // --- VERIFICAR 
+                  // *** talvez passar para uma class especial de teste 
+
+                  // --- DEFAULT
                   
-                  int[][][] interativos_default_regiao = interativos_default_por_posicao[ _posicao_local.regiao_id ] ;
-                  if( interativos_default_regiao == null )
+                  if( interativos_default_por_posicao == null )
+                        { Console.LogError( "interativos_default_por_posicao estava null" ); throw new Exception(""); }
+                  
+                  if( interativos_default_por_posicao[ _posicao_local.regiao_id ]  == null )
                         { Console.LogError( "interativos_default_regiao estava null" ); throw new Exception(""); }
 
 
-                  int[][] interativos_default_area = interativos_default_regiao[ _posicao_local.area_id ];
-                  if( interativos_default_area == null )
+                  if( interativos_default_por_posicao[ _posicao_local.regiao_id ][ _posicao_local.area_id ] == null )
                         { Console.LogError( "interativos_default_area estava null" ); throw new Exception(""); }
 
 
-                  int[] interativos_default_ponto = interativos_default_area[ _posicao_local.ponto_id ] ;
-                  if( interativos_default_ponto == null )
+                  if( interativos_default_por_posicao[ _posicao_local.regiao_id ][ _posicao_local.area_id ][ _posicao_local.ponto_id ] == null )
                         { Console.LogError( "interativos_default_ponto estava null" ); throw new Exception(""); }
 
 
-                        
+                  // --- SUBTRAIR
 
+                  if( interativos_para_subtrair_por_posicao == null )
+                        { Console.LogError( "interativos_para_subtrair_por_posicao estava null" ); throw new Exception(""); }
+
+                  if( interativos_para_subtrair_por_posicao[ _posicao_local.regiao_id ]  == null )
+                        { Console.LogError( "interativos_para_subtrair_regiao estava null" ); throw new Exception(""); }
+
+
+                  
+                  if( interativos_para_subtrair_por_posicao[ _posicao_local.regiao_id ][ _posicao_local.area_id ] == null )
+                        { Console.LogError( "interativos_para_subtrair_area estava null" ); throw new Exception(""); }
+
+
+                  
+                  if( interativos_para_subtrair_por_posicao[ _posicao_local.regiao_id ][ _posicao_local.area_id ][ _posicao_local.ponto_id ] == null )
+                        { Console.LogError( "interativos_para_subtrair_ponto estava null" ); throw new Exception(""); }
+
+
+
+                  // --- ADICIONAR
+
+
+                  if( interativos_para_adicionar_por_posicao == null )
+                        { Console.LogError( "interativos_para_adicionar_por_posicao estava null" ); throw new Exception(""); }
+
+
+                  if( interativos_para_adicionar_por_posicao[ _posicao_local.regiao_id ]  == null )
+                        { Console.LogError( "interativos_para_adicionar_regiao estava null" ); throw new Exception(""); }
+
+
+                  
+                  if( interativos_para_adicionar_por_posicao[ _posicao_local.regiao_id ][ _posicao_local.area_id ] == null )
+                        { Console.LogError( "interativos_para_adicionar_area estava null" ); throw new Exception(""); }
+
+
+                  
+                  if( interativos_para_adicionar_por_posicao[ _posicao_local.regiao_id ][ _posicao_local.area_id ][ _posicao_local.ponto_id ] == null )
+                        { Console.LogError( "interativos_para_adicionar_ponto estava null" ); throw new Exception(""); }
+
+
+
+                  int[] interativos_default = interativos_default_por_posicao[ _posicao_local.regiao_id ][ _posicao_local.area_id ][ _posicao_local.ponto_id ];
+                  int[] interativos_para_subtrair = interativos_para_subtrair_por_posicao[ _posicao_local.regiao_id ][ _posicao_local.area_id ][ _posicao_local.ponto_id ];
+                  int[] interativos_para_adicionar = interativos_para_adicionar_por_posicao[ _posicao_local.regiao_id ][ _posicao_local.area_id ][ _posicao_local.ponto_id ];
+
+                  int[] interativos_finais_ids = INT.Aplicar_subtrair_e_adicionar_array( interativos_default , interativos_para_subtrair, interativos_para_adicionar );
+
+                  Interativo_tela[] interativos_tipo_tela_retorno = new Interativo_tela[ interativos_finais_ids.Length ] ;
+
+
+                  for( int interativo_slot = 0 ; interativo_slot < interativos_finais_ids.Length ; interativo_slot++ ){
+
+
+                              int interativo_id = interativos_finais_ids[ interativo_slot ];
+
+                              Interativo_tela_DADOS_DESENVOLVIMENTO interativo_tela_dados_desenvolvimento = Leitor_interativos_tela_DESENVOLVIMENTO.Pegar( _posicao_local , interativo_id );
+                              Interativo_tela interativo_tela = construtor_interativos.Criar_interativo_tela_DEVELOPMENT( interativo_tela_dados_desenvolvimento );
+                              gerenciador_imagens_interativos.Colocar_sprites_interativo_tela_DESENVOLVIMENTO( interativo_tela_dados_desenvolvimento , interativo_tela );
+
+                              interativos_tipo_tela_retorno[ interativo_slot ] = interativo_tela;
+
+                              continue;
+
+                  }
+
+
+      	      return interativos_tipo_tela_retorno;
+
+                  
+
+            }
+
+
+            public Interativo_tela Criar_interativo_tela_DEVELOPMENT( Posicao_local _posicao_local , int  _interativo_id ){
+
+
+                        Interativo_tela_DADOS_DESENVOLVIMENTO interativo_tela_dados_desenvolvimento = Leitor_interativos_tela_DESENVOLVIMENTO.Pegar( _posicao_local , _interativo_id );
+                        Interativo_tela interativo_tela = construtor_interativos.Criar_interativo_tela_DEVELOPMENT( interativo_tela_dados_desenvolvimento );
+
+                        gerenciador_imagens_interativos.Colocar_sprites_interativo_tela_DESENVOLVIMENTO( interativo_tela_dados_desenvolvimento , interativo_tela );
+                        
+                        return interativo_tela;
 
             }
 

@@ -5,7 +5,7 @@ using System;
 
     public static class Leitor_interativos__SAINT_LAND {
 
-            public static Interativo_tela Pegar( Posicao_local _posicao_local, int _interativo_id ){
+            public static Interativo_tela_DADOS_DESENVOLVIMENTO Pegar( Posicao_local _posicao_local, int _interativo_id ){
 
                     SAINT_LAND__regiao regiao = ( SAINT_LAND__regiao ) _posicao_local.regiao_id;
                     

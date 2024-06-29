@@ -3,12 +3,17 @@ public enum Nome_cor{
 
 
             nada = 0,
+            transparente,
             _default = 1,
             white = 2,
             red,
             green,
             blue,
             black,
+
+
+            white_080,
+            white_100,
 
 
             green_light,
@@ -50,6 +55,8 @@ public enum Nome_cor{
             dia_default_text_color,
             takeru_default_text_color,
             nadia_default_text_color,
+
+
 
 
 

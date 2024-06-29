@@ -199,83 +199,131 @@ public class Gerenciador_imagens_interativos {
 
 
 
-
-
-
-
-
-
         #if UNITY_EDITOR 
         
 
-            public Sprite Pegar_sprites_DESENVOLVIMENTO( Interativo_tela _interativo ){
+            public void Colocar_sprites_interativo_tela_DESENVOLVIMENTO(  Interativo_tela_DADOS_DESENVOLVIMENTO _interativo_dados , Interativo_tela _interativo ){
 
-                    // coloca as imagens aqui
 
+                    // // **como vai lidar com imagens especiais? 
+
+
+                    int periodo_id = Controlador_timer.Pegar_instancia().periodo_atual_id;
+
+
+                    string path_imagem = _interativo_dados.path_imagem;
+                    string sufixo_modelo = Pegar_sufixo_interativo_modelos_DESENVOLVIMENTO( _interativo_dados );
+                    string sufixo_numero = "";
+
+
+                    string path_imagem_1 = null;
+                    string path_imagem_2 = null;
+
+
+                    if     ( _interativo_dados.metodo_IMAGENS_DISPONIVEIS_no_mouse_hover == Metodo_IMAGENS_DISPONIVEIS_no_mouse_hover.nada_E_nada )
+                            {
+
+                                    // --- NAO TEM NENHUMA IMAGEM 
+
+                                    _interativo.cores_imagem_1_ids_unicos_por_periodo[ periodo_id ] = ( int ) Nome_cor.transparente;
+                                    _interativo.cores_imagem_2_ids_unicos_por_periodo[ periodo_id ] = ( int ) Nome_cor.transparente;
+
+                                    _interativo.cor_image_1 = Cores.Pegar_cor( Nome_cor.transparente ) ;
+                                    _interativo.cor_image_2 = Cores.Pegar_cor( Nome_cor.transparente ) ;
+
+                                    _interativo.interativo_sprite_1 = null;
+                                    _interativo.interativo_sprite_2 = null;
+
+
+                            }                        
+                    else if( _interativo_dados.metodo_IMAGENS_DISPONIVEIS_no_mouse_hover == Metodo_IMAGENS_DISPONIVEIS_no_mouse_hover.one_E_two )
+                            {
+
+                                    // --- TEM AS 2 IMAGENS
+
+                                    // PEGA PRIMEIRA
+                                    sufixo_numero = "_1";
+                                    path_imagem_1 = System.IO.Path.Combine( path_imagem, sufixo_modelo, sufixo_numero, ".png" );
+
+                                    // PEGA SEGUNDA IMAGEM
+                                    sufixo_numero = "_2";
+                                    path_imagem_2 = System.IO.Path.Combine( path_imagem, sufixo_modelo, sufixo_numero, ".png" );
+
+
+                            }
+                    else if( _interativo_dados.metodo_IMAGENS_DISPONIVEIS_no_mouse_hover == Metodo_IMAGENS_DISPONIVEIS_no_mouse_hover.nada_E_one )
+                            {
+                                    // SO TEM 1 IMAGEM
+
+                                    // PEGA PRIMEIRA
+                                    sufixo_numero = "";
+                                    path_imagem_1 = null;
+
+
+                                    // PEGA SEGUNDA IMAGEM
+                                    sufixo_numero = "";
+                                    path_imagem_2 = System.IO.Path.Combine( path_imagem, sufixo_modelo, sufixo_numero, ".png" );;
+
+                                    _interativo.cores_imagem_2_ids_unicos_por_periodo[ periodo_id ] = ( int ) Nome_cor.transparente;
+                                    _interativo.cor_image_2 = Cores.Pegar_cor( Nome_cor.transparente ) ;
+
+
+                            }
+                    else if( _interativo_dados.metodo_IMAGENS_DISPONIVEIS_no_mouse_hover == Metodo_IMAGENS_DISPONIVEIS_no_mouse_hover.one_E_one )
+                            {
+                                    // SO TEM 1 IMAGEM
+
+                                    // PEGA PRIMEIRA
+                                    sufixo_numero = "";
+                                    path_imagem_1 = System.IO.Path.Combine( path_imagem, sufixo_modelo, sufixo_numero, ".png" );
+
+
+                                    // PEGA SEGUNDA IMAGEM
+                                    sufixo_numero = "";
+                                    path_imagem_2 = System.IO.Path.Combine( path_imagem, sufixo_modelo, sufixo_numero, ".png" );
+
+                            }
+
+
+    
+
+                    if( path_imagem_1 != null  )
+                            {
+                                if( ! ( System.IO.File.Exists( path_imagem_1 ) ))  
+                                    { throw new Exception( $"pediu o path { path_imagem_1 } mas não tinha nenhum arquivo no local" ); }
+
+                                byte[] png_imagem_1 = System.IO.File.ReadAllBytes( path_imagem_1 );
+                                _interativo.interativo_sprite_1 = SPRITE.Transformar_png_TO_sprite( png_imagem_1 );
+
+                            }
+
+                    if( path_imagem_2 != null  )
+                            {
+                                if( ! ( System.IO.File.Exists( path_imagem_2 ) ))  
+                                    { throw new Exception( $"pediu o path { path_imagem_2 } mas não tinha nenhum arquivo no local" ); }                                
+                                    
+                                byte[] png_imagem_2 = System.IO.File.ReadAllBytes( path_imagem_2 );
+                                _interativo.interativo_sprite_1 = SPRITE.Transformar_png_TO_sprite( png_imagem_2 );
+
+                            }
+
+                    return;
                     
-                    string interativo_enum_nome_DESENVOLVIMENTO = _interativo.enum_nome_interativo_DESENVOLVIMENTO;
-                    string interativo_nome_DESENVOLVIMENTO =  _interativo.nome_insterativo_DESENVOLVIMENTO;
-                    string _sufixo = Pegar_sufixo_interativo_DESENVOLVIMENTO( _interativo );
-
-                    //if( _interativo. )
-
-                    // tem que pegar o nome em outro lugar 
-
-                    throw new Exception( "testar aqui" );
-
-                    // interativo_enum_nome_DESENVOLVIMENTO => SAINT_LAND__CATHEDRAL__DORMITORIO_FEMININO_interativo 
-
-                    // interativo_nome_DESENVOLVIMENTO => NARA_ROOM__up__janela
-
-                    // transformar em: saint_land/cathedral/dormitorio_feminino/nara_room/up__janela.png
-                    // folder nao pode estar no folder do editor
-
-                    // sufixo = _d, _n, "",  _0, _1, _2, _3, _4,  
-
-                    string[] folders_ate_interativos = interativo_enum_nome_DESENVOLVIMENTO.Split( "__" );
-
-                    if( folders_ate_interativos.Length != 3 )
-                        { throw new Exception( $"formato de interativo_enum_nome_DESENVOLVIMENTO nao aceito. Veio: { interativo_enum_nome_DESENVOLVIMENTO }" ); }
-                    
-                    
-                    string path_imagens_interativos = Paths_gerais.Pegar_path_imagens_interativos_DESENVOLVIMENTO();
-
-
-                    string cidade = STRING.Deixar_somente_a_primeira_letra_maiuscula( folders_ate_interativos[ 0 ] );
-                    string regiao = STRING.Deixar_somente_a_primeira_letra_maiuscula( folders_ate_interativos[ 1 ] );
-                    string area = STRING.Deixar_somente_a_primeira_letra_maiuscula( folders_ate_interativos[ 2 ] );
-
-
-                    string[] folder_final__E__imagem = interativo_nome_DESENVOLVIMENTO.Split( "__" );
-
-                    string folder_final = folder_final__E__imagem[ 0 ].ToLower();
-                    string imagem = folder_final__E__imagem[ 1 ].ToLower() ;
-
-                    string[] nomes   =  new string[]{
-                                                        path_imagens_interativos,
-                                                        cidade, 
-                                                        regiao,
-                                                        area,
-                                                        folder_final, 
-                                                        ( imagem + _sufixo + ".png" )
-                                                
-                                                    };
-
-                    string path_imagem = System.IO.Path.Combine( nomes );
-
-                    byte[] png = System.IO.File.ReadAllBytes( path_imagem );
-
-                    Sprite sprite = SPRITE.Transformar_png_TO_sprite( png );
-
-                    return sprite;
-
 
             }
 
         #endif
 
 
-        public string Pegar_sufixo_interativo_DESENVOLVIMENTO( Interativo_tela _interativo ){
+
+
+
+
+
+
+
+
+        public string Pegar_sufixo_interativo_modelos_DESENVOLVIMENTO( Interativo_tela_DADOS_DESENVOLVIMENTO _interativo ){
 
                 // 
 
@@ -338,19 +386,6 @@ public class Gerenciador_imagens_interativos {
 
 
         }
-
-
-
-
-
-        protected void Pegar_dia_E_noite(){
-
-
-
-
-        }
-
-
 
 
 }

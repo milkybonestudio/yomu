@@ -50,7 +50,9 @@ public static class Conector_teste_estado_generico {
                 posicao_local.ponto_id  = ( int ) SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__ponto.NARA_ROOM__up;
 
 
-                Interativo_tela interativo = Controlador_interativos.Pegar_instancia().construtor_interativos.Criar_interativo_tela_DEVELOPMENT( posicao_local , ( ( int ) SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__interativo.NARA_ROOM__up__espelho) );
+
+
+                Interativo_tela interativo = Controlador_interativos.Pegar_instancia().Criar_interativo_tela_DEVELOPMENT( posicao_local , ( ( int ) SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__interativo.NARA_ROOM__up__espelho) );
                 UnityEngine.Debug.Log( interativo );
 
 

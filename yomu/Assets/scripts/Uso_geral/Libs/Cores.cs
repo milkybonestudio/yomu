@@ -82,6 +82,11 @@ public static class Cores {
 
 
 
+            case Nome_cor.white_080: return new Color( 0.8f, 0.8f, 0.8f, 1f);
+            case Nome_cor.white_100: return new Color( 1f, 1f, 1f, 1f);
+
+
+
             default: throw new System.ArgumentException("cor nao foi encontrada. veio: " +   _nome.ToString() );
 
 

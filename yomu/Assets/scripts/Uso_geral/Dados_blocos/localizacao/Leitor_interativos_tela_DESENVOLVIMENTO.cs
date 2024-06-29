@@ -5,7 +5,7 @@ public static class Leitor_interativos_tela_DESENVOLVIMENTO {
 
 
 
-    public static Interativo_tela Pegar( Posicao_local _posicao, int _interativo_id ){
+    public static Interativo_tela_DADOS_DESENVOLVIMENTO Pegar( Posicao_local _posicao, int _interativo_id ){
 
 
         Cidade_nome cidade =  ( Cidade_nome ) _posicao.cidade_id;

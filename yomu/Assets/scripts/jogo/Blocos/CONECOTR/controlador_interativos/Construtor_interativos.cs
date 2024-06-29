@@ -20,125 +20,122 @@ public class Construtor_interativos {
 
 
 
-        public Interativo_tela Criar_interativo_tela_DEVELOPMENT( Posicao_local _posicao, int _interativo_id ){
+        public Interativo_tela Criar_interativo_tela_DEVELOPMENT( Interativo_tela_DADOS_DESENVOLVIMENTO _interativo_tela_dados ){
 
-                // pegar_interativo = Letor_interativos_SAINT_LAND_.Pegar()
+                int interativo_id = _interativo_tela_dados.interativo_id;
 
-                Interativo_tela interativo_tela = Leitor_interativos_tela_DESENVOLVIMENTO.Pegar( _posicao ,_interativo_id );
+                Interativo_tela interativo_retorno = new Interativo_tela( interativo_id );
 
+                interativo_retorno.ponto_id = _interativo_tela_dados.posicao_local.ponto_id;
+                interativo_retorno.tipo_interativo_id = ( int ) _interativo_tela_dados.tipo_interativo;
+                interativo_retorno.area = _interativo_tela_dados.area;
+
+                 // **como vai lidar com imagens especiais? 
+
+
+                int periodo_id = Controlador_timer.Pegar_instancia().periodo_atual_id;
+
+        
+                string interativo_enum_nome_DESENVOLVIMENTO = _interativo_tela_dados.enum_nome_interativo_DESENVOLVIMENTO; // interativo_enum_nome_DESENVOLVIMENTO => SAINT_LAND__CATHEDRAL__DORMITORIO_FEMININO_interativo 
+                string interativo_nome_DESENVOLVIMENTO =  _interativo_tela_dados.nome_insterativo_DESENVOLVIMENTO; // interativo_nome_DESENVOLVIMENTO => NARA_ROOM__up__janela
+
+
+                // --- Pegar_path
+
+
+                string[] folders_ate_interativos = interativo_enum_nome_DESENVOLVIMENTO.Split( "__" );
+
+                if( folders_ate_interativos.Length != 3 )
+                        { throw new Exception( $"formato de interativo_enum_nome_DESENVOLVIMENTO nao aceito. Veio: { interativo_enum_nome_DESENVOLVIMENTO }" ); }
                 
-
-                return interativo_tela;
-
-
-
-        }
-
-        public Interativo_tela Criar_interativo_tela_DEVELOPMENT( Interativo_tela _interativo ){
+                
+                string path_imagens_interativos = Paths_gerais.Pegar_path_imagens_interativos_DESENVOLVIMENTO();
 
 
+                string cidade = STRING.Deixar_somente_a_primeira_letra_maiuscula( folders_ate_interativos[ 0 ] );
+                string regiao = STRING.Deixar_somente_a_primeira_letra_maiuscula( folders_ate_interativos[ 1 ] );
+                string area = STRING.Deixar_somente_a_primeira_letra_maiuscula( folders_ate_interativos[ 2 ] );
+
+
+                string[] folder_final__E__imagem = interativo_nome_DESENVOLVIMENTO.Split( "__" );
+
+                string folder_final = folder_final__E__imagem[ 0 ].ToLower();
+                string imagem = folder_final__E__imagem[ 1 ].ToLower();
+                
         
-                // isso vai ser no development?
-                  
-                string variante_periodo = "";
+                string[] path_imagem_array    =   new  string[] { 
 
-                if(_interativo.metodo_que_as_imagens_estao_salvas  == Metodo_que_as_imagens_estao_salvas.dia_E_noite)
+                                                                path_imagens_interativos, 
+                                                                cidade, 
+                                                                regiao, 
+                                                                area, 
+                                                                folder_final, 
+                                                                imagem 
+                                                        };
+
+                _interativo_tela_dados.path_imagem = System.IO.Path.Combine( path_imagem_array );
+
+                // COLOCAR COR CURSOR
+
+
+
+                // COLOCAR COR IMAGEM
+
+                Nome_cor cor_imagem_1 = Nome_cor.nada;
+                Nome_cor cor_imagem_2 = Nome_cor.nada; 
+
+
+                if     ( _interativo_tela_dados.metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover == Metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover.cores_especificas )
                         {
+                                // PEGAR CORES ESPECIFICAS 
 
-                                if( Controlador_timer.Pegar_instancia().periodo_atual_id < 3 )
-                                        { variante_periodo = "_d"; } 
-                                        else
-                                        { variante_periodo = "_n"; }
-
-                        } 
-
-                string _path = "";
-        
-        
-                if(_interativo.tipo_mouse_hover == Interativo_tipo_mouse_hover.nada_E_nada )
-                        {
-                                        
-                                _interativo.interativo_image_1 = null;
-                                _interativo.cor_image_1 = Color.clear;
-                                
-                                _interativo.interativo_image_2 = null;
-                                _interativo.cor_image_2 = Color.clear;
-                                
-                        
-                        } 
-                        else if(  _interativo.tipo_mouse_hover == Interativo_tipo_mouse_hover.nada_E_one)                
-                        {
-
-                                _interativo.interativo_image_1 = null;
-                                _interativo.cor_image_1 = Color.clear;
-
-                                _interativo.interativo_image_2 = Resources.Load<Sprite>( _path + _interativo.nome +  variante_periodo);
-
-                                
-                                if(_interativo.interativo_image_2 == null)
-                                        { throw new ArgumentException("nao foia chado imagem no path: " + _path + _interativo.nome +  variante_periodo + ". Modelo: nada_E_one");}
-                                _interativo.cor_image_2 = Color.white;
-                                
+                                cor_imagem_1 =  _interativo_tela_dados.cor_primeira_imagem ;
+                                cor_imagem_2 =  _interativo_tela_dados.cor_segunda_imagem ;
 
                         }
-                        else  if(_interativo.tipo_mouse_hover == Interativo_tipo_mouse_hover.one_E_one) 
+                else if( _interativo_tela_dados.metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover == Metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover.cor_especifica )
                         {
+                                // PEGAR COR ESPECIFICA
 
-                                _interativo.interativo_image_1 = Resources.Load<Sprite>( _path + _interativo.nome +  variante_periodo);
+                                cor_imagem_1 =  _interativo_tela_dados.cor_imagens ;
+                                cor_imagem_2 =  _interativo_tela_dados.cor_imagens ;
 
-                                if(_interativo.interativo_image_1 == null)
-                                        { throw new ArgumentException("nao foia chado imagem no path: " + _path + _interativo.nome +  variante_periodo + ". Modelo: one_E_one" );}
-                                
-                                _interativo.cor_image_1 = Color.white;
-                                _interativo.interativo_image_2 = _interativo.interativo_image_1;
-                                _interativo.cor_image_2 = Color.white;
-                
-
-                        } 
-                        else if(_interativo.tipo_mouse_hover == Interativo_tipo_mouse_hover.one_E_two)
+                        }
+                else if( _interativo_tela_dados.metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover == Metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover.core_80_e_100 )
                         {
+                                // PEGAR COR  80 / 100  
 
-                                _interativo.interativo_image_1 = Resources.Load<Sprite>( _path + _interativo.nome +  "_1" + variante_periodo);
-                                _interativo.cor_image_1 = Color.white;
-                                _interativo.interativo_image_2 = Resources.Load<Sprite>( _path + _interativo.nome +  "_2" + variante_periodo);
-                                _interativo.cor_image_1 = Color.white;
+                                cor_imagem_1 =  Nome_cor.white_080 ;
+                                cor_imagem_2 =  Nome_cor.white_100 ;
 
+                        }
+                else if( _interativo_tela_dados.metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover == Metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover.normal )
+                        {
+                                // DEFINE AS 2 COMO WHITE
 
-                                if( _interativo.interativo_image_1 == null )
-                                        {throw new ArgumentException("nao foia chado imagem no path: " + _path + _interativo.nome + "_1" +   variante_periodo + ". Modelo: one_E_two");}
-                                
-                                if( _interativo.interativo_image_2 == null )
-                                        {throw new ArgumentException("nao foia chado imagem no path: " + _path + _interativo.nome + "_2" +   variante_periodo +". Modelo: one_E_two");}
+                                cor_imagem_1 =  Nome_cor.white ;
+                                cor_imagem_2 =  Nome_cor.white ;
 
-                                
+                        }
 
-                        } 
-                        // else  if(_interativo.tipo_mouse_hover  ==  Interativo_tipo_mouse_hover.one_80_E_one_100  )
-                        // {
-
-                        //         _interativo.interativo_image_1 = Resources.Load<Sprite>( _path  + _interativo.nome  + variante_periodo);
-                        //         _interativo.cor_image_1 = new Color(0.8f,0.8f,0.8f,1f);
-
-                        //         _interativo.interativo_image_2 = _interativo.interativo_image_1;
-                        //         _interativo.cor_image_2 = Color.white;
-                                
-                        //         if( _interativo.interativo_image_1 == null )
-                        //                 { throw new ArgumentException( "nao foi achado imagem no path: " + _path + _interativo.nome +  variante_periodo + ". Modelo: one_80_E_one_100" ) ; }
-
-                                
+                interativo_retorno.cor_image_1 = Cores.Pegar_cor( cor_imagem_1 ) ;
+                interativo_retorno.cor_image_2 = Cores.Pegar_cor( cor_imagem_2 ) ;
 
 
-                        // }
+                interativo_retorno.cores_imagem_1_ids_unicos_por_periodo[ periodo_id ] = ( int ) cor_imagem_1;
+                interativo_retorno.cores_imagem_2_ids_unicos_por_periodo[ periodo_id ] = ( int ) cor_imagem_2;
 
-                
+                // COLOCAR SHADDER 
+                // fazer
+                // ...
 
-                _interativo.image_slot.sprite = _interativo.interativo_image_1;
-                _interativo.image_slot.color = _interativo.cor_image_1;
 
-                return null;
+                return interativo_retorno;
+
 
 
         }
+
 
 
         //** faz depois
@@ -151,38 +148,8 @@ public class Construtor_interativos {
 
 
                 
-                
-
+        
                 return null;
-
-                // logica + imagens 
-
-
-                // --- CHECKS DE SEGURANCA
-
-                // if( _lista_ids == null )
-                //     { throw new Exception( "lista ids veio null" ); }
-
-
-
-                // int numero_interativos_tipo_tela = _lista_ids.Length;
-                // int periodo =   Controlador_timer.Pegar_instancia().periodo_atual_id ;
-
-
-
-                // string path =  "images/in_game/" +  _ponto.folder_path;
-
-
-                // Interativo_tela[] interativos_retorno = new Interativo_tela[ numero_interativos_tipo_tela ];
-
-                
-                // for( int i = 0; i < numero_interativos  ;i++){
-
-                    
-                //         string name  = "Interativo_" + Convert.ToString( interativos_nomes[ i ] );
-
-
-                // }
 
         }
 
