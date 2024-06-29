@@ -1,0 +1,10 @@
+
+
+public enum SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__imagem {
+
+    DEFAULT_ROOM,
+
+
+}
+
+

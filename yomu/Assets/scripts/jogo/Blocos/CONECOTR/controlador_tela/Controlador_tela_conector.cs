@@ -70,7 +70,7 @@ public class Controlador_tela_conector {
 
                   Sprite background_sprite = Resources.Load<Sprite>(_background_path);
 
-                  if(background_sprite == null )  throw new ArgumentException("nao foi achado sprite do path: " + _background_path);
+                  if( background_sprite == null )  throw new ArgumentException("nao foi achado sprite do path: " + _background_path);
 
                   if( background_coroutine != null) {
 

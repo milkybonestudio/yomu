@@ -11,7 +11,7 @@ using System;
                 
                     switch( area ){
 
-                        case SAINT_LAND__CATEDRAL__area.dormitorio_feminino : return SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__interativos_dados.Pegar_interativo( _posicao_local , _interativo_id  );
+                        case SAINT_LAND__CATEDRAL__area.dormitorio_feminino : return SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__interativos_LISTA_DADOS.Pegar_interativo( _posicao_local , _interativo_id  );
                     
                     }
 

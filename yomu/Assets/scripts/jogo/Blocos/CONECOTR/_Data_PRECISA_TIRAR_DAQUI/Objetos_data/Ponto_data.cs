@@ -19,7 +19,6 @@ public class Ponto_data {
 
 
         // ??
-        //mark
         public static string Pegar_nome_background_por_script( Ponto_nome _ponto_nome ){ return null;}
         public static Interativo_nome[] Pegar_interativos_por_script (Ponto_nome _ponto_nome){  return null;  }
         

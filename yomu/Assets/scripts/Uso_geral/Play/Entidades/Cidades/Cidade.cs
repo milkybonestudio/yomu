@@ -16,6 +16,8 @@ public class Cidade {
     public Gerenciador_dados_sistema_cidade gerenciador_dados_sistema;
     public Gerenciador_AI_cidade gerenciador_AI;
 
+    
+
 
     public int[][][][] interativos_tela_para_adicionar_ids;
     public int[][][][] interativos_tela_para_subtrair_ids;
