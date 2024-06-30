@@ -15,8 +15,7 @@ public class Controlador_interativos {
 
 
             public BLOCO_conector bloco_conector;
-            public Construtor_interativos construtor_interativos;
-
+            
 
             // vai ser usado somente na build
             public byte[] dados_interativos_da_cidade;
@@ -63,7 +62,6 @@ public class Controlador_interativos {
                         // --- CONTROLADORES
 
                         controlador.bloco_conector = BLOCO_conector.Pegar_instancia();
-                        controlador.construtor_interativos = new Construtor_interativos( controlador );
 
                         // --- CRIAR CANVAS 
 
@@ -99,13 +97,13 @@ public class Controlador_interativos {
             public Interativo[] Criar_interativos( Ponto _p  ){  return null; } // excluirt
 
 
-            unsafe public Interativo_tela[] Criar_interativos_tela( Posicao_local _posicao_local ){
+            unsafe public Interativo_tela[] Criar_interativos_tela( Posicao _posicao ){
 
 
-                        Cidade cidade = Controlador_cidades.instancia.cidades[ _posicao_local.cidade_id ];
-                        int[] interativos_default  = cidade.interativos_tela_por_posicao[ _posicao_local.regiao_id ][ _posicao_local.area_id ][ _posicao_local.ponto_id ];
-                        int[] interativos_para_subtrair  = cidade.interativos_tela_para_subtrair_ids[ _posicao_local.regiao_id ][ _posicao_local.area_id ][ _posicao_local.ponto_id ];
-                        int[] interativos_para_adicionar  = cidade.interativos_tela_para_adicionar_ids[ _posicao_local.regiao_id ][ _posicao_local.area_id ][ _posicao_local.ponto_id ];
+                        Cidade cidade = Controlador_cidades.instancia.cidades[ _posicao.cidade_id ];
+                        int[] interativos_default  = cidade.interativos_tela_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ];
+                        int[] interativos_para_subtrair  = cidade.interativos_tela_para_subtrair_ids[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ];
+                        int[] interativos_para_adicionar  = cidade.interativos_tela_para_adicionar_ids[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ];
 
                         int[] interativos_finais_ids = INT.Aplicar_subtrair_e_adicionar_array( interativos_default , interativos_para_subtrair, interativos_para_adicionar );
 
@@ -180,10 +178,10 @@ public class Controlador_interativos {
 
             }
 
-            public Interativo_tela[] Criar_interativos_tela_DESENVOLVIMENTO( Posicao_local _posicao_local ){
+            public Interativo_tela[] Criar_interativos_tela_DESENVOLVIMENTO( Posicao _posicao ){
 
 
-                  Cidade cidade = Controlador_cidades.Pegar_instancia().Pegar_cidade_DESENVOLVIMENTO( "controlador_interativos", _posicao_local.cidade_id );
+                  Cidade cidade = Controlador_cidades.Pegar_instancia().Pegar_cidade_DESENVOLVIMENTO( "controlador_interativos", _posicao.cidade_id );
 
                   int[][][][] interativos_default_por_posicao  =  cidade.interativos_tela_por_posicao;
                   int[][][][] interativos_para_subtrair_por_posicao  =  cidade.interativos_tela_para_subtrair_ids;
@@ -201,15 +199,15 @@ public class Controlador_interativos {
                   if( interativos_default_por_posicao == null )
                         { Console.LogError( "interativos_default_por_posicao estava null" ); throw new Exception(""); }
                   
-                  if( interativos_default_por_posicao[ _posicao_local.regiao_id ]  == null )
+                  if( interativos_default_por_posicao[ _posicao.regiao_id ]  == null )
                         { Console.LogError( "interativos_default_regiao estava null" ); throw new Exception(""); }
 
 
-                  if( interativos_default_por_posicao[ _posicao_local.regiao_id ][ _posicao_local.area_id ] == null )
+                  if( interativos_default_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ] == null )
                         { Console.LogError( "interativos_default_area estava null" ); throw new Exception(""); }
 
 
-                  if( interativos_default_por_posicao[ _posicao_local.regiao_id ][ _posicao_local.area_id ][ _posicao_local.ponto_id ] == null )
+                  if( interativos_default_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ] == null )
                         { Console.LogError( "interativos_default_ponto estava null" ); throw new Exception(""); }
 
 
@@ -218,17 +216,17 @@ public class Controlador_interativos {
                   if( interativos_para_subtrair_por_posicao == null )
                         { Console.LogError( "interativos_para_subtrair_por_posicao estava null" ); throw new Exception(""); }
 
-                  if( interativos_para_subtrair_por_posicao[ _posicao_local.regiao_id ]  == null )
+                  if( interativos_para_subtrair_por_posicao[ _posicao.regiao_id ]  == null )
                         { Console.LogError( "interativos_para_subtrair_regiao estava null" ); throw new Exception(""); }
 
 
                   
-                  if( interativos_para_subtrair_por_posicao[ _posicao_local.regiao_id ][ _posicao_local.area_id ] == null )
+                  if( interativos_para_subtrair_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ] == null )
                         { Console.LogError( "interativos_para_subtrair_area estava null" ); throw new Exception(""); }
 
 
                   
-                  if( interativos_para_subtrair_por_posicao[ _posicao_local.regiao_id ][ _posicao_local.area_id ][ _posicao_local.ponto_id ] == null )
+                  if( interativos_para_subtrair_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ] == null )
                         { Console.LogError( "interativos_para_subtrair_ponto estava null" ); throw new Exception(""); }
 
 
@@ -240,24 +238,24 @@ public class Controlador_interativos {
                         { Console.LogError( "interativos_para_adicionar_por_posicao estava null" ); throw new Exception(""); }
 
 
-                  if( interativos_para_adicionar_por_posicao[ _posicao_local.regiao_id ]  == null )
+                  if( interativos_para_adicionar_por_posicao[ _posicao.regiao_id ]  == null )
                         { Console.LogError( "interativos_para_adicionar_regiao estava null" ); throw new Exception(""); }
 
 
                   
-                  if( interativos_para_adicionar_por_posicao[ _posicao_local.regiao_id ][ _posicao_local.area_id ] == null )
+                  if( interativos_para_adicionar_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ] == null )
                         { Console.LogError( "interativos_para_adicionar_area estava null" ); throw new Exception(""); }
 
 
                   
-                  if( interativos_para_adicionar_por_posicao[ _posicao_local.regiao_id ][ _posicao_local.area_id ][ _posicao_local.ponto_id ] == null )
+                  if( interativos_para_adicionar_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ] == null )
                         { Console.LogError( "interativos_para_adicionar_ponto estava null" ); throw new Exception(""); }
 
 
 
-                  int[] interativos_default = interativos_default_por_posicao[ _posicao_local.regiao_id ][ _posicao_local.area_id ][ _posicao_local.ponto_id ];
-                  int[] interativos_para_subtrair = interativos_para_subtrair_por_posicao[ _posicao_local.regiao_id ][ _posicao_local.area_id ][ _posicao_local.ponto_id ];
-                  int[] interativos_para_adicionar = interativos_para_adicionar_por_posicao[ _posicao_local.regiao_id ][ _posicao_local.area_id ][ _posicao_local.ponto_id ];
+                  int[] interativos_default = interativos_default_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ];
+                  int[] interativos_para_subtrair = interativos_para_subtrair_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ];
+                  int[] interativos_para_adicionar = interativos_para_adicionar_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ];
 
                   int[] interativos_finais_ids = INT.Aplicar_subtrair_e_adicionar_array( interativos_default , interativos_para_subtrair, interativos_para_adicionar );
 
@@ -269,11 +267,10 @@ public class Controlador_interativos {
 
                               int interativo_id = interativos_finais_ids[ interativo_slot ];
 
-                              Interativo_tela interativo_tela  = Construtor_interativos_DEVELOPMENT.Criar_interativo_tela_DEVELOPMENT( _posicao_local , interativo_id );
-
+                              Interativo_tela interativo_tela = Construtor_interativos_DEVELOPMENT.Criar_interativo_tela_DEVELOPMENT( _posicao , interativo_id );
                               
-                              = construtor_interativos.Criar_interativo_tela_DEVELOPMENT( interativo_tela_dados_desenvolvimento );
-                              gerenciador_imagens_interativos.Colocar_sprites_interativo_tela_DESENVOLVIMENTO( interativo_tela_dados_desenvolvimento , interativo_tela );
+                              // construtor_interativos.Criar_interativo_tela_DEVELOPMENT( interativo_tela_dados_desenvolvimento );
+                              // gerenciador_imagens_interativos.Colocar_sprites_interativo_tela_DESENVOLVIMENTO( interativo_tela_dados_desenvolvimento , interativo_tela );
 
                               interativos_tipo_tela_retorno[ interativo_slot ] = interativo_tela;
 
@@ -289,17 +286,17 @@ public class Controlador_interativos {
             }
 
 
-            public Interativo_tela Criar_interativo_tela_DEVELOPMENT( Posicao_local _posicao_local , int  _interativo_id ){
+            // public Interativo_tela Criar_interativo_tela_DEVELOPMENT( Posicao_local _posicao_local , int  _interativo_id ){
 
 
-                        Interativo_tela_DADOS_DESENVOLVIMENTO interativo_tela_dados_desenvolvimento = Leitor_interativos_tela_DESENVOLVIMENTO.Pegar( _posicao_local , _interativo_id );
-                        Interativo_tela interativo_tela = construtor_interativos.Criar_interativo_tela_DEVELOPMENT( interativo_tela_dados_desenvolvimento );
+            //             Interativo_tela_DADOS_DESENVOLVIMENTO interativo_tela_dados_desenvolvimento = Leitor_interativos_tela_DESENVOLVIMENTO.Pegar( _posicao_local , _interativo_id );
+            //             Interativo_tela interativo_tela = Construtor_interativos_DEVELOPMENT.Criar_interativo_tela_DEVELOPMENT( interativo_tela_dados_desenvolvimento );
 
-                        gerenciador_imagens_interativos.Colocar_sprites_interativo_tela_DESENVOLVIMENTO( interativo_tela_dados_desenvolvimento , interativo_tela );
+            //             gerenciador_imagens_interativos.Colocar_sprites_interativo_tela_DESENVOLVIMENTO( interativo_tela_dados_desenvolvimento , interativo_tela );
                         
-                        return interativo_tela;
+            //             return interativo_tela;
 
-            }
+            // }
 
 
     

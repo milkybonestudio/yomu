@@ -9,26 +9,26 @@ using System;
     sempre deixar a ram o .dat com a cidade inteira. se ficar muito grande pode trocar para regiao
 
 */
-#if UNITY_EDITOR || true
+#if ( UNITY_EDITOR && TESTE_SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__NARA_ROOM__interativos_UP ) || true
 
 
 
-        public static class SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__interativos_LISTA_DADOS {
+        public static class SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__NARA_ROOM__interativos_UP__LISTA_DADOS {
 
                 public static Interativo_tela_DADOS_DESENVOLVIMENTO[] dados;
 
-                public static Interativo_tela_DADOS_DESENVOLVIMENTO Pegar_interativo(  Posicao_local _posicao_local,  int _interativo_id  ){
+                public static Interativo_tela_DADOS_DESENVOLVIMENTO Pegar_interativo(  Posicao _posicao,  int _interativo_id  ){
 
-                    int ponto_id = _posicao_local.ponto_id;
+                    int ponto_id = _posicao.ponto_id;
 
                     if( dados == null )
                         { Colocar_interativos(); }
 
                     if( dados[ _interativo_id ] == null )
-                        { throw new Exception( $" o interativo { ( SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__interativo ) _interativo_id } na nao foi criado" ); }
+                        { throw new Exception( $" o interativo { ( SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__NARA_ROOM__UP__interativo ) _interativo_id } na nao foi criado" ); }
 
                     if( ponto_id != dados[ _interativo_id ].ponto_id )
-                        { throw new Exception( $" O ponto_id estava diferente em SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__interativos_lista.Pegar(). O id que veio foi: { ponto_id } e oque tinha sido definido no interativo foi { dados[ _interativo_id ].ponto_id } " ); }
+                        { throw new Exception( $" O ponto_id estava diferente em SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__NARA_ROOM__interativos_UP__LISTA_DADOS.Pegar(). O id que veio foi: { ponto_id } e oque tinha sido definido no interativo foi { dados[ _interativo_id ].ponto_id } " ); }
 
                     return dados[ _interativo_id ];
 
@@ -45,10 +45,12 @@ using System;
 
                         // ------------------ 
                         
-                                index = (int) SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__interativo.NARA_ROOM__up__espelho;
+                                index = (int) SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__NARA_ROOM__UP__interativo.espelho;
 
                         dados[ index ] = new Interativo_tela_DADOS_DESENVOLVIMENTO( index );
-                        dados[ index ].ponto_id = ( int ) SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__ponto.NARA_ROOM__up;
+
+                        // faz sentido?
+                        dados[ index ].ponto_id = ( int ) SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__NARA_ROOM__ponto.up;
 
                         // funcao
                         dados[ index ].tipo_interativo =  Tipo_interativo.movimento;
@@ -66,11 +68,6 @@ using System;
 
 
 
-
-
-
-
-
                         dados[ index ].area = new float[]{
 
                             1189f,36f,
@@ -85,10 +82,6 @@ using System;
                             
                         };
 
-
-
-
-
                          
                         try { 
                                 
@@ -97,8 +90,8 @@ using System;
                                         if( dados[ interativo_dados_teste_index ] == null )
                                             { continue; }
                                         
-                                        dados[ interativo_dados_teste_index ].nome_insterativo_DESENVOLVIMENTO = (( SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__interativo ) interativo_dados_teste_index ).ToString();
-                                        dados[ interativo_dados_teste_index ].enum_nome_interativo_DESENVOLVIMENTO = "SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__interativo";
+                                        dados[ interativo_dados_teste_index ].nome_insterativo_DESENVOLVIMENTO = (( SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__NARA_ROOM__interativo ) interativo_dados_teste_index ).ToString();
+                                        dados[ interativo_dados_teste_index ].enum_nome_interativo_DESENVOLVIMENTO = "SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__NARA_ROOM__interativo";
 
                                         Verificador_interativos_tela_DESENVOLVIMENTO.Checar_interativo_tela( dados[ interativo_dados_teste_index ] );
 

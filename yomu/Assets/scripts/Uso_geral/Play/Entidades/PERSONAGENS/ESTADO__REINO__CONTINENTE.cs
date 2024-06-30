@@ -1,22 +1,34 @@
 
 
-public enum Estado_nome : short {
+public enum Estado_nome {
 
     San_sebastian,
 
 }
 
-public enum Reino_nome : byte {
+public enum Reino_nome {
 
-    Human
+    // --- CENTRAL
+    Humans, 
+    Demons,
+    Elves, 
+    Dwarves,
+
+
+    
+
+
+
 
 }
 
-public enum Continente_nome : byte {
+public enum Continente_nome {
 
     central,
 
 }
+
+
 
 // talvez Ponto_nome nao faça sentido pois ponto depende de local que depende de regiao [ ... ] 
 // posicao pode ter somente coisas genericas. 
@@ -40,27 +52,27 @@ public enum Continente_nome : byte {
 
 
 
-public struct Posicao_perto {
+// public struct Posicao_perto {
 
 
 
 
-    public  short  ponto;  // LILY_quarto
-    public  byte   local; // dormitorio 
-    public  byte   regiao; // catedral 
+//     public  short  ponto;  // LILY_quarto
+//     public  byte   local; // dormitorio 
+//     public  byte   regiao; // catedral 
     
-}
+// }
 
 
 
-public struct Posicao_cidade {
+// public struct Posicao_cidade {
 
-    public  byte   cidade; // cidade da catedral
-    public  byte   estado; // conjunto de cidades 
-    public  byte   reino;  // conjuntod e estados 
-    public  byte   continenete; // conjunto de reinos
+//     public  byte   cidade; // cidade da catedral
+//     public  byte   estado; // conjunto de cidades 
+//     public  byte   reino;  // conjuntod e estados 
+//     public  byte   continenete; // conjunto de reinos
 
-}
+// }
 
 
 

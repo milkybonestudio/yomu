@@ -14,16 +14,16 @@ public static class Construtor_personagem {
 				Posicao posicao = new Posicao();
 
 
-					posicao.posicao_local.ponto_id = ( int ) _dados_sistema_personagens_essenciais.ponto_id;
-					posicao.posicao_local.regiao_id = ( int ) _dados_sistema_personagens_essenciais.regiao_id;
-					posicao.posicao_local.area_id = ( int ) _dados_sistema_personagens_essenciais.area_id;
-					posicao.posicao_local.cidade_id = ( int ) _dados_sistema_personagens_essenciais.posicao_cidade_id;
+					posicao.ponto_id = ( int ) _dados_sistema_personagens_essenciais.ponto_id;
+					posicao.regiao_id = ( int ) _dados_sistema_personagens_essenciais.regiao_id;
+					posicao.area_id = ( int ) _dados_sistema_personagens_essenciais.area_id;
+					posicao.cidade_id = ( int ) _dados_sistema_personagens_essenciais.posicao_cidade_id;
 
 
-					posicao.posicao_mundial.cidade_id = ( int ) _dados_sistema_personagens_essenciais.posicao_cidade_id;
-					posicao.posicao_mundial.estado_id = ( int ) _dados_sistema_personagens_essenciais.estado_id;
-					posicao.posicao_mundial.reino_id = ( int ) _dados_sistema_personagens_essenciais.reino_id;
-					posicao.posicao_mundial.continente_id = ( int ) _dados_sistema_personagens_essenciais.continente_id;
+					posicao.cidade_id = ( int ) _dados_sistema_personagens_essenciais.posicao_cidade_id;
+					posicao.estado_id = ( int ) _dados_sistema_personagens_essenciais.estado_id;
+					posicao.reino_id = ( int ) _dados_sistema_personagens_essenciais.reino_id;
+					posicao.continente_id = ( int ) _dados_sistema_personagens_essenciais.continente_id;
 
 		
 				int atividade_id = _dados_sistema_personagens_essenciais.atividade_atual_id;

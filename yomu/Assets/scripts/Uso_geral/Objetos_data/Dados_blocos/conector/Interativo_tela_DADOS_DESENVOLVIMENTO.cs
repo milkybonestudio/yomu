@@ -17,7 +17,9 @@
                 public int tipo_interativo_id;
                 public int ponto_id;
 
-                public Posicao_local posicao_local;
+                public Posicao posicao;
+
+                public int sub_area_id;
 
                         
                 // -- !!  os nomes vão ser colocados na classe com os dados para nao ter 2 classes gigantes !! --

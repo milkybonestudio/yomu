@@ -68,5 +68,13 @@
             }
         ]
     },
+
+
+    "workbench.colorCustomizations": {
+        "tree.indentGuidesStroke": "#6fff2d"
+    },
+    
+
+
     "dotnet.preferCSharpExtension": true
 }

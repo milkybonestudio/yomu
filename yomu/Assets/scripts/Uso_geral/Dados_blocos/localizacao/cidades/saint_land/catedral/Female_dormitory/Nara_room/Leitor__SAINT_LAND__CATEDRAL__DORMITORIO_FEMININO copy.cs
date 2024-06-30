@@ -1,97 +1,131 @@
-using UnityEngine;
-using System;
+// using UnityEngine;
+// using System;
 
-/*
+// /*
 
-    nao vai existir no jogo, somente no editor
+//     nao vai existir no jogo, somente no editor
 
-    quando for construir a build =>  compilar para pegar o byte_arr => criar novo .dat
-    sempre deixar a ram o .dat com a cidade inteira. se ficar muito grande pode trocar para regiao
+//     quando for construir a build =>  compilar para pegar o byte_arr => criar novo .dat
+//     sempre deixar a ram o .dat com a cidade inteira. se ficar muito grande pode trocar para regiao
 
-*/
-#if UNITY_EDITOR || true
-
-
-
-        public static class SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__pontos_LISTA_DADOS {
-
-                public static Ponto_DADOS_DEVELOPMENT[] dados;
-
-                public static Ponto_DADOS_DEVELOPMENT Pegar_interativo(  Posicao_local _posicao_local  ){
-
-                    int ponto_id = _posicao_local.ponto_id;
-
-                    if( dados == null )
-                        { Colocar_interativos(); }
-
-                    if( dados[ ponto_id ] == null )
-                        { throw new Exception( $" o ponto { ( SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__ponto ) ponto_id } nao foi criado" ); }
+// */
+// #if UNITY_EDITOR || true
 
 
-                    return dados[ ponto_id ];
 
-                }
+//         public static class Leitor__SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__NARA_ROOM_interativos {
+
+//                 public static Interativo_tela_DADOS_DESENVOLVIMENTO[] dados;
+
+//                 public static Interativo_tela_DADOS_DESENVOLVIMENTO Pegar_interativo(  Posicao_local _posicao_local,  int _interativo_id  ){
+
+//                     int ponto_id = _posicao_local.ponto_id;
+
+//                     if( dados == null )
+//                         { Colocar_interativos(); }
+
+//                     if( dados[ _interativo_id ] == null )
+//                         { throw new Exception( $" o interativo { ( SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__NARA_ROOM__interativo ) _interativo_id } na nao foi criado" ); }
+
+//                     if( ponto_id != dados[ _interativo_id ].ponto_id )
+//                         { throw new Exception( $" O ponto_id estava diferente em Leitor__SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__NARA_ROOM_interativos.Pegar(). O id que veio foi: { ponto_id } e oque tinha sido definido no interativo foi { dados[ _interativo_id ].ponto_id } " ); }
+
+//                     return dados[ _interativo_id ];
+
+//                 }
 
 
-                public static void Colocar_interativos(){
+//                 public static void Colocar_interativos(){
 
-                        dados = new Ponto_DADOS_DEVELOPMENT[ 100 ];
+//                         dados = new Interativo_tela_DADOS_DESENVOLVIMENTO[ 100 ];
 
-                        // --- ZERO
+//                         // --- ZERO
 
-                        int index = 0;
+//                         int index = 0;
 
-                        // ------------------ 
+//                         // ------------------ 
                         
-                                index = (int) SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__ponto.NARA_ROOM__up;
+//                                 index = (int) SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__NARA_ROOM__interativo.UP__bau;
 
-                        dados[ index ] = new Ponto_DADOS_DEVELOPMENT( index );
+//                         dados[ index ] = new Interativo_tela_DADOS_DESENVOLVIMENTO( index );
+//                         dados[ index ].ponto_id = ( int ) SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__NARA_ROOM__ponto.corredor;
 
-                        dados[ index ].imagem_principal_id = ( int ) SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__imagem.DEFAULT_ROOM;
-                        dados[ index ].imagem_principal_nome = SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__imagem.DEFAULT_ROOM.ToString();
+//                         // funcao
+//                         dados[ index ].tipo_interativo =  Tipo_interativo.movimento;
+                        
+//                         // --- cursor
+//                         dados[ index ].metodo_para_mudar_cursor = Metodo_para_mudar_cursor.cor_unica;
+//                         dados[ index ].cores_cursor = null;
+//                         dados[ index ].cor_cursor = Cor_cursor.red;
 
+//                         // imagem
+//                         dados[ index ].metodo_FOLDER_que_as_imagens_estao_salvas = Metodo_FOLDER_que_as_imagens_estao_salvas.contexto_area;
+//                         dados[ index ].metodo_que_as_imagens_estao_salvas =   Metodo_que_as_imagens_estao_salvas.dia_E_noite;
+//                         dados[ index ].metodo_IMAGENS_DISPONIVEIS_no_mouse_hover = Metodo_IMAGENS_DISPONIVEIS_no_mouse_hover.one_E_one;
+//                         dados[ index ].metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover = Metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover.core_80_e_100;
+
+
+
+
+
+
+
+
+//                         dados[ index ].area = new float[]{
+
+//                             1189f,36f,
+//                             1280f,247f,
+//                             1374f,298f,
+//                             1385f,290f,
+//                             1299f,101f,
+//                             1364f,60f,
+//                             1289f,0f,
+//                             1244f,0f,
+//                             1189f,36f,
+                            
+//                         };
 
 
 
 
 
                          
-                        try { 
+//                         try { 
                                 
-                                for( int ponto_dados_teste_index = 0 ; ponto_dados_teste_index< dados.Length ; ponto_dados_teste_index++ ){
+//                                 for( int interativo_dados_teste_index = 0 ; interativo_dados_teste_index< dados.Length ; interativo_dados_teste_index++ ){
 
-                                        if( dados[ ponto_dados_teste_index ] == null )
-                                            { continue; }
+//                                         if( dados[ interativo_dados_teste_index ] == null )
+//                                             { continue; }
                                         
-                                        dados[ ponto_dados_teste_index ].nome_ponto_DEVELOPMENT = (( SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__ponto ) ponto_dados_teste_index ).ToString();
-                                        dados[ ponto_dados_teste_index ].enum_nome_ponto_DEVELOPMENT = "SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__ponto";
+//                                         dados[ interativo_dados_teste_index ].nome_insterativo_DESENVOLVIMENTO = (( SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__DORMITORIO_FEMININO__interativo ) interativo_dados_teste_index ).ToString();
+//                                         dados[ interativo_dados_teste_index ].enum_nome_interativo_DESENVOLVIMENTO = "SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__interativo";
 
-                                        Verificador_pontos_DEVELOPMENT.Checar_interativo_tela( dados[ ponto_dados_teste_index ] );
+//                                         Verificador_interativos_tela_DESENVOLVIMENTO.Checar_interativo_tela( dados[ interativo_dados_teste_index ] );
 
-                                        continue;
+//                                         continue;
 
-                                }
+//                                 }
 
-                            } 
-                            catch ( Exception e )
-                            {
+//                             } 
+//                             catch ( Exception e )
+//                             {
 
-                                dados = null;
-                                throw e;
+//                                 dados = null;
+//                                 throw e;
 
-                            }
-
-
+//                             }
 
 
 
-                }
 
 
-        }
+//                 }
 
 
-#endif
+//         }
+
+
+// #endif
 
 
 

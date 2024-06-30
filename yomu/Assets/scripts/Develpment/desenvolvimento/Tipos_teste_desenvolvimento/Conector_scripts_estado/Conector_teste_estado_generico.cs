@@ -42,17 +42,16 @@ public static class Conector_teste_estado_generico {
         public static void Ativar_script_inicial(){
 
 
-                Posicao_local posicao_local = new Posicao_local();
+                Posicao posicao_local = new Posicao();
 
                 posicao_local.cidade_id = ( int ) Cidade_nome.saint_land;
                 posicao_local.regiao_id = ( int ) SAINT_LAND__regiao.cathedral;
-                posicao_local.area_id   = ( int ) SAINT_LAND__CATEDRAL__area.dormitorio_feminino;
-                posicao_local.ponto_id  = ( int ) SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__ponto.NARA_ROOM__up;
+                // posicao_local.area_id   = ( int ) SAINT_LAND__CATEDRAL__area.dormitorio_feminino;
+                // posicao_local.ponto_id  = ( int ) SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__ponto.NARA_ROOM__up;
 
 
 
-
-                Interativo_tela interativo = Controlador_interativos.Pegar_instancia().Criar_interativo_tela_DEVELOPMENT( posicao_local , ( ( int ) SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__interativo.NARA_ROOM__up__espelho) );
+                Interativo_tela interativo = Construtor_interativos_DEVELOPMENT.Criar_interativo_tela_DEVELOPMENT( posicao_local , ( ( int ) SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__NARA_ROOM__UP__interativo.espelho ) );
                 UnityEngine.Debug.Log( interativo );
 
 

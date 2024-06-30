@@ -7,11 +7,11 @@ using UnityEngine;
 
     public static class Construtor_interativos_DEVELOPMENT{
 
-        public static Interativo_tela Criar_interativo_tela_DEVELOPMENT(  Posicao_local _posicao, int _interativo_id   ) {
+        public static Interativo_tela Criar_interativo_tela_DEVELOPMENT(  Posicao _posicao, int _interativo_id   ) {
 
 
                 // **como vai lidar com imagens especiais? 
-                Interativo_tela_DADOS_DESENVOLVIMENTO _interativo_tela_dados = Leitor_interativos_tela_DESENVOLVIMENTO.Pegar( Posicao_local _posicao, int _interativo_id );
+                Interativo_tela_DADOS_DESENVOLVIMENTO _interativo_tela_dados = Leitor_interativos_tela_DESENVOLVIMENTO.Pegar( _posicao,  _interativo_id );
 
                 Interativo_tela interativo_retorno = new Interativo_tela( _interativo_id );
 
@@ -30,30 +30,28 @@ using UnityEngine;
                 return interativo_retorno;
 
 
-
-
         }
 
 
-        public void Colocar_logica_interativo_tela_DEVELOPMENT( Interativo_tela_DADOS_DESENVOLVIMENTO _interativo_tela_dados , Interativo_tela _interativo ){
+        public static  void Colocar_logica_interativo_tela_DEVELOPMENT( Interativo_tela_DADOS_DESENVOLVIMENTO _interativo_tela_dados_developmetn , Interativo_tela _interativo_tela ){
 
             
-                interativo_retorno.ponto_id = _interativo_tela_dados.posicao_local.ponto_id;
-                interativo_retorno.tipo_interativo_id = ( int ) _interativo_tela_dados.tipo_interativo;
-                interativo_retorno.area = _interativo_tela_dados.area;
+                _interativo_tela.ponto_id = _interativo_tela_dados_developmetn.posicao.ponto_id;
+                _interativo_tela.tipo_interativo_id = ( int ) _interativo_tela_dados_developmetn.tipo_interativo;
+                _interativo_tela.area = _interativo_tela_dados_developmetn.area;
                 return;
 
         }
 
 
-        public void Colocar_cursor_interativo_tela_DEVELOPMENT( Interativo_tela_DADOS_DESENVOLVIMENTO _interativo_tela_dados , Interativo_tela _interativo ){
+        public static  void Colocar_cursor_interativo_tela_DEVELOPMENT( Interativo_tela_DADOS_DESENVOLVIMENTO _interativo_tela_dados , Interativo_tela _interativo ){
 
 
 
         }
 
 
-        public void Colocar_path_interativo_tela_DEVELOPMENT( Interativo_tela_DADOS_DESENVOLVIMENTO _interativo_tela_dados , Interativo_tela _interativo ){
+        public static  void Colocar_path_interativo_tela_DEVELOPMENT( Interativo_tela_DADOS_DESENVOLVIMENTO _interativo_tela_dados , Interativo_tela _interativo ){
 
         
                 string interativo_enum_nome_DESENVOLVIMENTO = _interativo_tela_dados.enum_nome_interativo_DESENVOLVIMENTO; // interativo_enum_nome_DESENVOLVIMENTO => SAINT_LAND__CATHEDRAL__DORMITORIO_FEMININO_interativo 
@@ -99,7 +97,7 @@ using UnityEngine;
 
 
 
-            public void Colocar_cores_interativo_tela_DESENVOLVIMENTO( Interativo_tela_DADOS_DESENVOLVIMENTO _interativo_tela_dados , Interativo_tela _interativo ){
+            public static void Colocar_cores_interativo_tela_DESENVOLVIMENTO( Interativo_tela_DADOS_DESENVOLVIMENTO _interativo_tela_dados_development , Interativo_tela _interativo_tela ){
 
                     
                 int periodo_id = Controlador_timer.Pegar_instancia().periodo_atual_id;
@@ -108,23 +106,23 @@ using UnityEngine;
                     Nome_cor cor_imagem_2 = Nome_cor.nada; 
 
 
-                    if     ( _interativo_tela_dados.metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover == Metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover.cores_especificas )
+                    if     ( _interativo_tela_dados_development.metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover == Metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover.cores_especificas )
                             {
                                     // PEGAR CORES ESPECIFICAS 
 
-                                    cor_imagem_1 =  _interativo_tela_dados.cor_primeira_imagem ;
-                                    cor_imagem_2 =  _interativo_tela_dados.cor_segunda_imagem ;
+                                    cor_imagem_1 =  _interativo_tela_dados_development.cor_primeira_imagem ;
+                                    cor_imagem_2 =  _interativo_tela_dados_development.cor_segunda_imagem ;
 
                             }
-                    else if( _interativo_tela_dados.metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover == Metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover.cor_especifica )
+                    else if( _interativo_tela_dados_development.metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover == Metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover.cor_especifica )
                             {
                                     // PEGAR COR ESPECIFICA
 
-                                    cor_imagem_1 =  _interativo_tela_dados.cor_imagens ;
-                                    cor_imagem_2 =  _interativo_tela_dados.cor_imagens ;
+                                    cor_imagem_1 =  _interativo_tela_dados_development.cor_imagens ;
+                                    cor_imagem_2 =  _interativo_tela_dados_development.cor_imagens ;
 
                             }
-                    else if( _interativo_tela_dados.metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover == Metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover.core_80_e_100 )
+                    else if( _interativo_tela_dados_development.metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover == Metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover.core_80_e_100 )
                             {
                                     // PEGAR COR  80 / 100  
 
@@ -132,7 +130,7 @@ using UnityEngine;
                                     cor_imagem_2 =  Nome_cor.white_100 ;
 
                             }
-                    else if( _interativo_tela_dados.metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover == Metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover.normal )
+                    else if( _interativo_tela_dados_development.metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover == Metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover.normal )
                             {
                                     // DEFINE AS 2 COMO WHITE
 
@@ -141,12 +139,12 @@ using UnityEngine;
 
                             }
 
-                    interativo_retorno.cor_image_1 = Cores.Pegar_cor( cor_imagem_1 ) ;
-                    interativo_retorno.cor_image_2 = Cores.Pegar_cor( cor_imagem_2 ) ;
+                    _interativo_tela.cor_image_1 = Cores.Pegar_cor( cor_imagem_1 ) ;
+                    _interativo_tela.cor_image_2 = Cores.Pegar_cor( cor_imagem_2 ) ;
 
 
-                    interativo_retorno.cores_imagem_1_ids_unicos_por_periodo[ periodo_id ] = ( int ) cor_imagem_1;
-                    interativo_retorno.cores_imagem_2_ids_unicos_por_periodo[ periodo_id ] = ( int ) cor_imagem_2;
+                    _interativo_tela.cores_imagem_1_ids_unicos_por_periodo[ periodo_id ] = ( int ) cor_imagem_1;
+                    _interativo_tela.cores_imagem_2_ids_unicos_por_periodo[ periodo_id ] = ( int ) cor_imagem_2;
 
                     return;
 
@@ -157,7 +155,7 @@ using UnityEngine;
 
 
 
-            public void Colocar_sprites_interativo_tela_DESENVOLVIMENTO(  Interativo_tela_DADOS_DESENVOLVIMENTO _interativo_dados , Interativo_tela _interativo ){
+            public static void Colocar_sprites_interativo_tela_DESENVOLVIMENTO(  Interativo_tela_DADOS_DESENVOLVIMENTO _interativo_dados , Interativo_tela _interativo ){
 
 
 
@@ -277,7 +275,7 @@ using UnityEngine;
 
 
 
-        public string Pegar_sufixo_interativo_modelos_DESENVOLVIMENTO( Interativo_tela_DADOS_DESENVOLVIMENTO _interativo_dados ){
+        public static string Pegar_sufixo_interativo_modelos_DESENVOLVIMENTO( Interativo_tela_DADOS_DESENVOLVIMENTO _interativo_dados ){
 
                 
                 
@@ -307,14 +305,14 @@ using UnityEngine;
                                                                                     { break; }
                         case Metodo_que_as_imagens_estao_salvas.todos_os_periodos:  { 
                             
-                                                                                        return ( "_" Periodo_tempo.ToString() );
+                                                                                        return ( "_" + periodo_atual.ToString() );
                                                                                        
                                                                                     }
                                                                                     {break;}
 
-                        case Metodo_que_as_imagens_estao_salvas.:  { 
+                        case Metodo_que_as_imagens_estao_salvas.nome:  { 
                             
-                                                                                        return ( "_" Periodo_tempo.ToString() );
+                                                                                        return ( "_" + periodo_atual.ToString() );
                                                                                        
                                                                                     }
                                                                                     {break;}
