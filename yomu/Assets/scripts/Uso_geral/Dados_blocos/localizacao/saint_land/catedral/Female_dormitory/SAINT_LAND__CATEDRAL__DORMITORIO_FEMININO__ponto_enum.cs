@@ -5,6 +5,7 @@
 
         nada,
 
+
         NARA_ROOM__up,
         NARA_ROOM__frente,
         NARA_ROOM__traseira,

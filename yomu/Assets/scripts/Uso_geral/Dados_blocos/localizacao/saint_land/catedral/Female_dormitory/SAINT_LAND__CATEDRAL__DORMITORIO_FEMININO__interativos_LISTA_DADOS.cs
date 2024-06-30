@@ -59,9 +59,16 @@ using System;
                         dados[ index ].cor_cursor = Cor_cursor.red;
 
                         // imagem
+                        dados[ index ].metodo_FOLDER_que_as_imagens_estao_salvas = Metodo_FOLDER_que_as_imagens_estao_salvas.contexto_area;
                         dados[ index ].metodo_que_as_imagens_estao_salvas =   Metodo_que_as_imagens_estao_salvas.dia_E_noite;
                         dados[ index ].metodo_IMAGENS_DISPONIVEIS_no_mouse_hover = Metodo_IMAGENS_DISPONIVEIS_no_mouse_hover.one_E_one;
                         dados[ index ].metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover = Metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover.core_80_e_100;
+
+
+
+
+
+
 
 
                         dados[ index ].area = new float[]{

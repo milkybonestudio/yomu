@@ -269,8 +269,10 @@ public class Controlador_interativos {
 
                               int interativo_id = interativos_finais_ids[ interativo_slot ];
 
-                              Interativo_tela_DADOS_DESENVOLVIMENTO interativo_tela_dados_desenvolvimento = Leitor_interativos_tela_DESENVOLVIMENTO.Pegar( _posicao_local , interativo_id );
-                              Interativo_tela interativo_tela = construtor_interativos.Criar_interativo_tela_DEVELOPMENT( interativo_tela_dados_desenvolvimento );
+                              Interativo_tela interativo_tela  = Construtor_interativos_DEVELOPMENT.Criar_interativo_tela_DEVELOPMENT( _posicao_local , interativo_id );
+
+                              
+                              = construtor_interativos.Criar_interativo_tela_DEVELOPMENT( interativo_tela_dados_desenvolvimento );
                               gerenciador_imagens_interativos.Colocar_sprites_interativo_tela_DESENVOLVIMENTO( interativo_tela_dados_desenvolvimento , interativo_tela );
 
                               interativos_tipo_tela_retorno[ interativo_slot ] = interativo_tela;
