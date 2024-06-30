@@ -6,20 +6,33 @@ using System;
 
 
 
-        public static Interativo_tela_DADOS_DESENVOLVIMENTO Pegar( Posicao _posicao, int _interativo_id ){
+        public static Interativo_tela_DADOS_DESENVOLVIMENTO Pegar_cidades_no_estado( Posicao _posicao, int _interativo_id ){
 
 
-            Cidade_nome cidade =  ( Cidade_nome ) _posicao.cidade_id;
+                Estado_nome estado =  ( Estado_nome ) _posicao.estado_id;
 
-            switch( cidade ){
+                switch( estado ){
 
-                case Cidade_nome.saint_land: return Leitor_interativos__SAINT_LAND.Pegar( _posicao, _interativo_id );
-                default: throw new Exception( $"nao foi achado o handler para a cidade { cidade } no Leitor_interativos_tela_DESENVOLVIMENTO" );
+                    case Estado_nome.San_sebastian: return Leitor_interativos__SAINT_LAND.Pegar( _posicao, _interativo_id );
+                    default: throw new Exception( $"nao foi achado o handler para a cidade { estado } no Leitor_interativos_tela_DESENVOLVIMENTO" );
 
-            }
+                }
 
-            return null;
+                return null;
 
+        }
+
+
+        public static Cidade_nome[] Pegar_cidades_SAN_SEBASTIAN(){
+
+
+                return new Cidade_nome[]{
+
+                    Cidade_nome.saint_land
+
+
+                };
+            
         }
 
 

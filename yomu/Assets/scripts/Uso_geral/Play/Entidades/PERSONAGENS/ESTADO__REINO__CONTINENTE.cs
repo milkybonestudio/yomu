@@ -1,18 +1,13 @@
 
 
-public enum Estado_nome {
+// public enum Estado_nome {
 
-    San_sebastian,
+//     San_sebastian,
 
-}
+// }
 
-public enum Reino_nome {
+// public enum Reino_nome {
 
-    // --- CENTRAL
-    Humans, 
-    Demons,
-    Elves, 
-    Dwarves,
 
 
     
@@ -20,13 +15,13 @@ public enum Reino_nome {
 
 
 
-}
+// }
 
-public enum Continente_nome {
+// public enum Continente_nome {
 
-    central,
+//     central,
 
-}
+// }
 
 
 

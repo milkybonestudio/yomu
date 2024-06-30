@@ -7,7 +7,7 @@ using System;
 
 
 
-                public static Reino_nome[] Pegar( Posicao _posicao ){
+                public static Reino_nome[] Pegar_reinos_no_continente( Posicao _posicao ){
 
 
                         Continente_nome continente =  ( Continente_nome ) _posicao.continente_id;

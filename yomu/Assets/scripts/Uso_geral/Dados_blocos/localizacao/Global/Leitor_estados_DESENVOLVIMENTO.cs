@@ -7,18 +7,15 @@ using System;
 
 
 
-                public static Estado_nome[] Pegar( Posicao _posicao ){
+                public static Estado_nome[] Pegar_estados_no_reino( Posicao _posicao ){
 
-
-
-                        Cidade_nome
 
 
                         Reino_nome reino =  ( Reino_nome ) _posicao.reino_id;
 
                         switch( reino ){
 
-                            case Reino_nome.Humans: return Pegar_cidades_reino_humanos();
+                            case Reino_nome.Humans: return Pegar_estados_reino_humanos();
                             default: throw new Exception( $"nao foi achado os reinos do continente { reino } no Leitor_reinos_DESENVOLVIMENTO" );
 
                         }
@@ -29,17 +26,15 @@ using System;
 
 
 
-                public static Estado_nome[] Pegar_cidades_reino_humanos(){
+                public static Estado_nome[] Pegar_estados_reino_humanos(){
 
-                        Estado_nome[] cidades = new Estado_nome[]{
+                        return new Estado_nome[]{
 
-                                Estado_nome.saint_land,
+                                Estado_nome.San_sebastian
 
 
                         };
-
-                        return cidades;
-
+                        
                 }
 
 

@@ -1,8 +1,13 @@
 
 
 
-public enum Reino_nome : byte {
+public enum Reino_nome {
 
-    Human
+
+    // --- CENTRAL
+    Humans, 
+    Demons,
+    Elves, 
+    Dwarves,
 
 }

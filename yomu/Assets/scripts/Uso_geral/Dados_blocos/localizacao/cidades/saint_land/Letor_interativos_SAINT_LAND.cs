@@ -1,7 +1,7 @@
 using System;
 
 
-#if UNITY_EDITOR
+#if ( UNITY_EDITOR && INTERATIVOS_SAINT_LAND ) || FORCAR_TODOS_INTERATIVOS 
 
     public static class Leitor_interativos__SAINT_LAND {
 
@@ -23,5 +23,20 @@ using System;
             }
 
     }
+
+#elif UNITY_EDITOR
+
+    public static class Leitor_interativos__SAINT_LAND {
+
+            public static Interativo_tela_DADOS_DESENVOLVIMENTO Pegar( Posicao _posicao, int _interativo_id ){
+
+                    throw  new Exception( $"classe Leitor_interativos__SAINT_LAND nao esta ativa" );
+
+                
+            }
+
+    }
+
+
 
 #endif
