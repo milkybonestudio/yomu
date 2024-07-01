@@ -144,7 +144,7 @@ public static class Gerenciador_cidades_directivas {
                                                 Posicao posicao = new Posicao();
                                                 posicao.estado_id = ( int ) estado;
 
-                                                cidades_arr[ estado_slot ] = Leitor_cidades_DESENVOLVIMENTO.Pegar_cidades_no_estado( posicao );
+                                                cidades_arr[ estado_slot ] = Leitor_info_estados_DESENVOLVIMENTO.Pegar_info_estado( posicao ).cidades;
                                                 continue;
 
                                 }
