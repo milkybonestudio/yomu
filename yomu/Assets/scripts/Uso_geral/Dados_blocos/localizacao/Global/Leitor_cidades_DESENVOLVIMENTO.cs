@@ -1,40 +1,25 @@
 using System;
 
-#if UNITY_EDITOR || true 
+#if UNITY_EDITOR 
 
     public static class Leitor_cidades_DESENVOLVIMENTO {
 
 
 
-        public static Interativo_tela_DADOS_DESENVOLVIMENTO Pegar_cidades_no_estado( Posicao _posicao, int _interativo_id ){
+        public static Cidade_nome[] Pegar_cidades_no_estado( Posicao _posicao ){
 
 
-                Estado_nome estado =  ( Estado_nome ) _posicao.estado_id;
+                Reino_nome reino =  ( Reino_nome ) _posicao.reino_id;
 
-                switch( estado ){
+                switch( reino ){
 
-                    case Estado_nome.San_sebastian: return Leitor_interativos__SAINT_LAND.Pegar( _posicao, _interativo_id );
-                    default: throw new Exception( $"nao foi achado o handler para a cidade { estado } no Leitor_interativos_tela_DESENVOLVIMENTO" );
+                    case Reino_nome.Humans: return Leitor_cidades_reino_humanos_DEVELOPMENT.Pegar_cidades_SAN_SEBASTIAN();
+                    default: throw new Exception( $"nao foi achado o handler para pegar as cidades no reino { reino } no Leitor_cidades_DESENVOLVIMENTO" );
 
                 }
 
-                return null;
 
         }
-
-
-        public static Cidade_nome[] Pegar_cidades_SAN_SEBASTIAN(){
-
-
-                return new Cidade_nome[]{
-
-                    Cidade_nome.saint_land
-
-
-                };
-            
-        }
-
 
 
     }

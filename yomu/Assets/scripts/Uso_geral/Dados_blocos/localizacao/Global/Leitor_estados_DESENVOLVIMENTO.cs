@@ -1,6 +1,6 @@
 using System;
 
-#if UNITY_EDITOR || true 
+#if UNITY_EDITOR
 
 
         public static class Leitor_estados_DESENVOLVIMENTO {

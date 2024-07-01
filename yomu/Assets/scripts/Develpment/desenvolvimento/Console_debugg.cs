@@ -25,7 +25,7 @@ public class ConsoleToGUI : MonoBehaviour {
         }
 
         void Start(){
-
+            
             tela_aparente = false;
                 
         }

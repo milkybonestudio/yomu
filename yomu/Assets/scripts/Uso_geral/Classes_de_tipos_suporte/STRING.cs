@@ -24,6 +24,10 @@ public static class  STRING {
         }
 
 
+
+
+
+
         public static int Pegar_index_null ( string[] _arr ){
 
 

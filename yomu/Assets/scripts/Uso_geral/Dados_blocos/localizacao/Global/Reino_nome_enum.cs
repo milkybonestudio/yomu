@@ -10,4 +10,6 @@ public enum Reino_nome {
     Elves, 
     Dwarves,
 
+    
+
 }

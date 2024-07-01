@@ -1,7 +1,6 @@
-using System;
 
 
-#if UNITY_EDITOR || true
+#if ( UNITY_EDITOR && CIDADE_SAINT_LAND ) || FORCAR_TODOS_OS_ESTADOS 
 
     public static class Leitor_interativos__SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__NARA_ROOM {
 
@@ -15,7 +14,7 @@ using System;
                     
                     }
 
-                    throw new Exception( $"nao foi achado o ponto { ponto }" );   
+                    throw new System.Exception( $"nao foi achado o ponto { ponto }" );   
 
                 
             }

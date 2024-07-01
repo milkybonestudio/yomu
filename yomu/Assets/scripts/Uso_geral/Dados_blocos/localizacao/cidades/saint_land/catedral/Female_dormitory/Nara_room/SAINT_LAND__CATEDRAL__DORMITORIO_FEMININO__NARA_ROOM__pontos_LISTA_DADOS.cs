@@ -9,7 +9,7 @@ using System;
     sempre deixar a ram o .dat com a cidade inteira. se ficar muito grande pode trocar para regiao
 
 */
-#if UNITY_EDITOR || true
+#if ( UNITY_EDITOR && CIDADE_SAINT_LAND ) || FORCAR_TODOS_OS_ESTADOS 
 
 
 

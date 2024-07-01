@@ -2,9 +2,15 @@
 
 public enum Cidade_nome {
 
+    nada,
+
     // --- Humanos 
 
-        // --- 
-        saint_land,
+        // --- San sebastian 
+
+                saint_land, // catedral
+                sunnyvale, // vila player 
+
+
 
 }

@@ -1,7 +1,7 @@
 using System;
 
 
-#if ( UNITY_EDITOR && INTERATIVOS_SAINT_LAND ) || FORCAR_TODOS_INTERATIVOS 
+#if ( UNITY_EDITOR && CIDADE_SAINT_LAND ) || FORCAR_TODOS_OS_ESTADOS 
 
     public static class Leitor_interativos__SAINT_LAND {
 
@@ -24,7 +24,7 @@ using System;
 
     }
 
-#elif UNITY_EDITOR
+#elif UNITY_EDITOR 
 
     public static class Leitor_interativos__SAINT_LAND {
 

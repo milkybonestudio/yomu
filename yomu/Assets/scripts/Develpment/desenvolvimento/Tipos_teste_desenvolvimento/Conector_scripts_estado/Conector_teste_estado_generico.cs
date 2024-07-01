@@ -42,6 +42,10 @@ public static class Conector_teste_estado_generico {
         public static void Ativar_script_inicial(){
 
 
+                #if ( UNITY_EDITOR && CIDADE_SAINT_LAND ) || FORCAR_TODOS_OS_ESTADOS 
+
+
+
                 Posicao posicao_local = new Posicao();
 
                 posicao_local.cidade_id = ( int ) Cidade_nome.saint_land;
@@ -54,6 +58,7 @@ public static class Conector_teste_estado_generico {
                 Interativo_tela interativo = Construtor_interativos_DEVELOPMENT.Criar_interativo_tela_DEVELOPMENT( posicao_local , ( ( int ) SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__NARA_ROOM__UP__interativo.espelho ) );
                 UnityEngine.Debug.Log( interativo );
 
+                #endif
 
         }
 

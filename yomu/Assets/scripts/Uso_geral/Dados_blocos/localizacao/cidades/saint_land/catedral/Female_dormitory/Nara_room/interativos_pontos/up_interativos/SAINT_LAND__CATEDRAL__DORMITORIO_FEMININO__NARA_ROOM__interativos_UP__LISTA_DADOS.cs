@@ -4,12 +4,13 @@ using System;
 /*
 
     nao vai existir no jogo, somente no editor
-
     quando for construir a build =>  compilar para pegar o byte_arr => criar novo .dat
     sempre deixar a ram o .dat com a cidade inteira. se ficar muito grande pode trocar para regiao
 
 */
-#if ( UNITY_EDITOR && TESTE_SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__NARA_ROOM__interativos_UP ) || true
+
+                                             
+#if ( UNITY_EDITOR && CIDADE_SAINT_LAND ) || FORCAR_TODOS_OS_ESTADOS 
 
 
 

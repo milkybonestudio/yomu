@@ -767,7 +767,7 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Standalone: 
+    Standalone: FORCAR_TODOS_OS_ESTADOS
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
