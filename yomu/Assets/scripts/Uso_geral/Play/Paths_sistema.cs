@@ -13,10 +13,22 @@ public static class Paths_sistema {
                 // --- SAVE
 
                 path_dados_sistema = path_save + "/Dados_programa/dados_programa.dat";
+
+
+                // --- ENTIDADES
+                // precisa?
+
                 path_dados_personagens =  path_save + "/Personagens" ;
+                path_dados_mobs =  path_save + "/Mobs" ;
+                path_dados_bosses =  path_save + "/Bosses" ;
+
                 path_dados_cidades =  path_save + "/Cidades" ;
+                path_dados_estados =  path_save + "/Estados" ;
+                path_dados_reinos =  path_save + "/Reinos" ;
+
                 path_dados_plots =  path_save + "/Plots" ;
 
+                
 
                 // --- PERSISTENT
 
@@ -40,7 +52,13 @@ public static class Paths_sistema {
 
         public static string path_save;
         public static string path_dados_personagens;
+        public static string path_dados_mobs;
+        public static string path_dados_bosses;
+
+        public static string path_dados_reinos;
+        public static string path_dados_estados;
         public static string path_dados_cidades;
+
         public static string path_dados_plots;
         public static string path_dados_sistema;
         public static string path_dados_player;

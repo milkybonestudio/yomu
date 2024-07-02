@@ -6,7 +6,7 @@ public static class Construtor_containers_personagens {
 
     
 
-        public static Dados_containers_personagem Construir( byte[] _dados_raw ){
+        public static Dados_containers_entidade Construir( byte[] _dados_raw ){
 
                     // ISSO SIMPLESMENTE CORTA O CONTAINER_RAW
 
@@ -16,7 +16,7 @@ public static class Construtor_containers_personagens {
 
 
                     
-                    return dados_retorno;
+                    return null;
 
 
         }

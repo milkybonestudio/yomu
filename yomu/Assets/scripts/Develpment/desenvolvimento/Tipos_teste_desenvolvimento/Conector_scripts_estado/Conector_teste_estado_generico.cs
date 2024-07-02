@@ -48,7 +48,7 @@ public static class Conector_teste_estado_generico {
 
                 Posicao posicao_local = new Posicao();
 
-                posicao_local.cidade_id = ( int ) Cidade_nome.saint_land;
+                posicao_local.cidade_id = ( int ) Cidade_nome.san_sebastian;
                 posicao_local.regiao_id = ( int ) SAINT_LAND__regiao.cathedral;
                 // posicao_local.area_id   = ( int ) SAINT_LAND__CATEDRAL__area.dormitorio_feminino;
                 // posicao_local.ponto_id  = ( int ) SAINT_LAND__CATEDRAL__DORMITORIO_FEMININO__ponto.NARA_ROOM__up;

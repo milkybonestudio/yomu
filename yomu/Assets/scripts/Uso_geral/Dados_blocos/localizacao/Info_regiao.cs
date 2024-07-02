@@ -1,7 +1,7 @@
 
 
 
-public class Regiao_info {
+public class Info_regiao {
 
 
     public string regiao_nome;

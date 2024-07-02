@@ -1,9 +1,9 @@
 using System;
 
 
-#if ( UNITY_EDITOR && CIDADE_SAINT_LAND ) || FORCAR_TODOS_OS_ESTADOS 
+#if ( UNITY_EDITOR && CIDADE_SAN_SEBASTIAN ) || FORCAR_TODOS_OS_ESTADOS 
 
-    public static class Leitor_interativos__SAINT_LAND {
+    public static class Leitor_interativos__SAN_SEBASTIAN {
 
             public static Interativo_tela_DADOS_DESENVOLVIMENTO Pegar( Posicao _posicao, int _interativo_id ){
 

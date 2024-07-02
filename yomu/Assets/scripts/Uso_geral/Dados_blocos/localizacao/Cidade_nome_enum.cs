@@ -8,7 +8,7 @@ public enum Cidade_nome {
 
         // --- San sebastian 
 
-                saint_land, // catedral
+                san_sebastian, // catedral
                 sunnyvale, // vila player 
 
 

@@ -5,6 +5,7 @@
 public class Cidade {
 
     public Cidade( int _cidade_id ){
+        
         cidade_id = _cidade_id;
 
     }

@@ -9,21 +9,12 @@ public static class Leitor_Info_cidades_reino_humano_DEVELOPMENT{
         Cidade_nome  cidade = ( Cidade_nome ) _posicao.cidade_id;
 
         switch( cidade ){
-            case Cidade_nome.saint_land: return Pegar_info_SAINT_LAND();
+            case Cidade_nome.san_sebastian: return Info_san_sebastian.Pegar();
             default: throw new System.Exception();
         }
 
     }
 
-
-    public static Info_cidade Pegar_info_SAINT_LAND(){
-
-        return null;
-
-    }
-
-
-     
 
 
 }

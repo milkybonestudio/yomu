@@ -26,7 +26,6 @@
 
                         Info_reino info_reino = new Info_reino();
 
-
                         return info_reino;
 
                 }
@@ -36,3 +35,7 @@
         
 
 #endif
+
+
+// [ oque tem do lado ]
+// [ oque tem dentro ]

@@ -85,7 +85,7 @@ public class Gerenciador_dados_dinamicos_cidades {
                                 string cidades_nome = ( ( Cidade_nome ) cidades_ids[ _index_slot_cidades ] ).ToString() ;
                                 string path_dados = Paths_sistema.path_dados_cidades + cidades_nome + "_dados.dat" ;
                                 byte[] dados_bytes = System.IO.File.ReadAllBytes( path_dados );
-                                cidades_containers = Construtor_containers_cidades.Construir( dados_bytes );
+                                //cidades_containers = Construtor_containers_cidades.Construir( dados_bytes );
                                 
                         }
 
@@ -101,7 +101,7 @@ public class Gerenciador_dados_dinamicos_cidades {
                 string cidades_nome =  ( ( Cidade_nome ) _cidade_id ).ToString() ;
                 string path_dados = Paths_sistema.path_dados_cidades  + "/" + cidades_nome + "_dados.dat" ;
                 byte[] dados_bytes = System.IO.File.ReadAllBytes( path_dados );
-                Dados_containers_cidade cidades_containers = Construtor_containers_cidades.Construir( dados_bytes );
+                Dados_containers_cidade cidades_containers =  null;// Construtor_containers_cidades.Construir( dados_bytes );
                 return cidades_containers;
 
 
@@ -161,7 +161,7 @@ public class Gerenciador_dados_dinamicos_cidades {
                         if( ! ( System.IO.File.Exists( path_dados ) ) )
                                 { return; } // vai dar erro depois 
                         dados_bytes = System.IO.File.ReadAllBytes( path_dados );
-                        Dados_containers_cidade cidades_containers = Construtor_containers_cidades.Construir( dados_bytes );
+                        Dados_containers_cidade cidades_containers = null;
 
                         _req.dados_array_suporte[ 1 ] = cidades_containers;
 

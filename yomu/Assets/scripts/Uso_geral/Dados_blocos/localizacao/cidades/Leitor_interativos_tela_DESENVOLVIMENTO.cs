@@ -13,7 +13,7 @@ using System;
 
             switch( cidade ){
 
-                case Cidade_nome.saint_land: return Leitor_interativos__SAINT_LAND.Pegar( _posicao, _interativo_id );
+                case Cidade_nome.san_sebastian: return Leitor_interativos__SAN_SEBASTIAN.Pegar( _posicao, _interativo_id );
                 default: throw new Exception( $"nao foi achado o handler para a cidade { cidade } no Leitor_interativos_tela_DESENVOLVIMENTO" );
 
             }

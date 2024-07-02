@@ -15,12 +15,13 @@ using UnityEngine;
 
                 Interativo_tela interativo_retorno = new Interativo_tela( _interativo_id );
 
-
+                
                 Colocar_logica_interativo_tela_DEVELOPMENT(  _interativo_tela_dados, interativo_retorno );
                 Colocar_cursor_interativo_tela_DEVELOPMENT( _interativo_tela_dados, interativo_retorno );
                 Colocar_path_interativo_tela_DEVELOPMENT( _interativo_tela_dados, interativo_retorno );
                 Colocar_cores_interativo_tela_DESENVOLVIMENTO(  _interativo_tela_dados, interativo_retorno );
                 Colocar_sprites_interativo_tela_DESENVOLVIMENTO(  _interativo_tela_dados, interativo_retorno );
+                
 
                 // COLOCAR SHADDER 
                 // fazer

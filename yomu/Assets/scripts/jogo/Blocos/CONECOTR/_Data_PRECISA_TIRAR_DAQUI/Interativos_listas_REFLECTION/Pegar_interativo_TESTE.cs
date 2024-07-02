@@ -10,7 +10,7 @@
 
                         switch( cidade ){
 
-                            case Cidade_nome.saint_land: return null;
+                            case Cidade_nome.san_sebastian: return null;
 
                         }
 

@@ -1,33 +1,6 @@
 
 
 
-public class Info_estado {
-
-
-    // --- INTERACAO PLAYER 
-
-    public string nome;
-    public string descricao;
-
-    
-    // aparece quando o player passar o mouse
-    public string[] comentarios;
-    
-
-    public Reino_nome reino;
-    public Estado_nome[] estados_ao_arredor;
-    public Cidade_nome[] cidades;
-
-
-    // --- INFO
-
-    
-
-
-
-}
-
-
 #if UNITY_EDITOR || true
 
 
@@ -40,7 +13,7 @@ public class Info_estado {
 
             switch( estado ){
 
-                case Estado_nome.San_sebastian : return Pegar_info_SAN_SEBASTIAN();
+                case Estado_nome.saint_land : return Pegar_info_saint_land();
                 default: throw new System.Exception( $"nao foi achado o estado { estado } para pegar os dados" );
 
             }
@@ -50,7 +23,7 @@ public class Info_estado {
         }
 
         // outras linguas?
-        public static Info_estado Pegar_info_SAN_SEBASTIAN(){
+        public static Info_estado Pegar_info_saint_land(){
 
             Info_estado info_estado = new Info_estado();
 
@@ -58,7 +31,7 @@ public class Info_estado {
             info_estado.descricao = "";
             info_estado.comentarios = new string[]{
 
-                "Good state. hard."
+                "Good state. hard work."
 
             };
 
@@ -69,16 +42,16 @@ public class Info_estado {
             info_estado.cidades = new Cidade_nome[]{
 
                 
-                    Cidade_nome.saint_land,
+                    Cidade_nome.san_sebastian,
                     Cidade_nome.sunnyvale,
 
 
             };
 
 
-
-
             return info_estado;
+
+
 
         }
 

@@ -187,77 +187,18 @@ public class Controlador_interativos {
                   int[][][][] interativos_para_subtrair_por_posicao  =  cidade.interativos_tela_para_subtrair_ids;
                   int[][][][] interativos_para_adicionar_por_posicao  =  cidade.interativos_tela_para_adicionar_ids;
 
-                  if( interativos_default_por_posicao == null )
-                        { Console.LogError( "" ); throw new Exception(""); }
-
-
-                  // --- VERIFICAR 
-                  // *** talvez passar para uma class especial de teste 
-
-                  // --- DEFAULT
+                  // --- GARANTE QUE TODOS EXISTEM
+                  Verificador_interativos_DEVELOPMENT.Verificar_interativos_ids( _posicao, interativos_default_por_posicao, interativos_para_subtrair_por_posicao, interativos_para_adicionar_por_posicao );
                   
-                  if( interativos_default_por_posicao == null )
-                        { Console.LogError( "interativos_default_por_posicao estava null" ); throw new Exception(""); }
-                  
-                  if( interativos_default_por_posicao[ _posicao.regiao_id ]  == null )
-                        { Console.LogError( "interativos_default_regiao estava null" ); throw new Exception(""); }
-
-
-                  if( interativos_default_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ] == null )
-                        { Console.LogError( "interativos_default_area estava null" ); throw new Exception(""); }
-
-
-                  if( interativos_default_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ] == null )
-                        { Console.LogError( "interativos_default_ponto estava null" ); throw new Exception(""); }
-
-
-                  // --- SUBTRAIR
-
-                  if( interativos_para_subtrair_por_posicao == null )
-                        { Console.LogError( "interativos_para_subtrair_por_posicao estava null" ); throw new Exception(""); }
-
-                  if( interativos_para_subtrair_por_posicao[ _posicao.regiao_id ]  == null )
-                        { Console.LogError( "interativos_para_subtrair_regiao estava null" ); throw new Exception(""); }
-
-
-                  
-                  if( interativos_para_subtrair_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ] == null )
-                        { Console.LogError( "interativos_para_subtrair_area estava null" ); throw new Exception(""); }
-
-
-                  
-                  if( interativos_para_subtrair_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ] == null )
-                        { Console.LogError( "interativos_para_subtrair_ponto estava null" ); throw new Exception(""); }
-
-
-
-                  // --- ADICIONAR
-
-
-                  if( interativos_para_adicionar_por_posicao == null )
-                        { Console.LogError( "interativos_para_adicionar_por_posicao estava null" ); throw new Exception(""); }
-
-
-                  if( interativos_para_adicionar_por_posicao[ _posicao.regiao_id ]  == null )
-                        { Console.LogError( "interativos_para_adicionar_regiao estava null" ); throw new Exception(""); }
-
-
-                  
-                  if( interativos_para_adicionar_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ] == null )
-                        { Console.LogError( "interativos_para_adicionar_area estava null" ); throw new Exception(""); }
-
-
-                  
-                  if( interativos_para_adicionar_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ] == null )
-                        { Console.LogError( "interativos_para_adicionar_ponto estava null" ); throw new Exception(""); }
-
-
 
                   int[] interativos_default = interativos_default_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ];
                   int[] interativos_para_subtrair = interativos_para_subtrair_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ];
                   int[] interativos_para_adicionar = interativos_para_adicionar_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ];
 
+
+
                   int[] interativos_finais_ids = INT.Aplicar_subtrair_e_adicionar_array( interativos_default , interativos_para_subtrair, interativos_para_adicionar );
+
 
                   Interativo_tela[] interativos_tipo_tela_retorno = new Interativo_tela[ interativos_finais_ids.Length ] ;
 
