@@ -15,22 +15,23 @@ using UnityEngine;
 public class Controlador_directives : Editor {
 
 
+                // por hora sempre carregar uma ou mais regioes interias 
+
 
                 public static bool forcar_tudo = true;
+
+
                 
-                public static Estado_nome[] estados_ativos = new Estado_nome[]{
+                public static Regiao_nome[] regioes_ativas = new Regiao_nome[]{
 
 
-                                Estado_nome.saint_land,
+                                Regiao_nome.regiao_1
 
 
                 };
 
 
-                public static Cidade_nome[] cidades_ativas = new Cidade_nome[]{
 
-
-                }; 
 
                 static Controlador_directives(){
 
@@ -49,11 +50,11 @@ public class Controlador_directives : Editor {
                                         { 
                                                 // --- FORCAR TUDO
                                                 
-                                                if( directives_atual == "FORCAR_TODOS_OS_ESTADOS" )
+                                                if( directives_atual == "FORCAR_TODAS_AS_REGIOES" )
                                                         { return; }
 
-                                                UnityEditor.PlayerSettings.SetScriptingDefineSymbolsForGroup( BuildTargetGroup.Standalone, "FORCAR_TODOS_OS_ESTADOS" );
-                                                Debug.Log( $"directiva colocada: <color=lime><b> FORCAR_TODOS_OS_ESTADOS </b></color>" );
+                                                UnityEditor.PlayerSettings.SetScriptingDefineSymbolsForGroup( BuildTargetGroup.Standalone, "FORCAR_TODAS_AS_REGIOES" );
+                                                Debug.Log( $"directiva colocada: <color=lime><b> FORCAR_TODAS_AS_REGIOES </b></color>" );
 
                                                 return;
                                         }
@@ -63,7 +64,11 @@ public class Controlador_directives : Editor {
                                 // --- PEGAR NOVAS DIRECTIVAS
 
                                 string texto = "";
-                                texto = Gerenciador_cidades_directivas.Pegar_cidades_para_adicionar( estados_ativos, cidades_ativas, texto );
+                                texto = Gerenciador_regioes_directivas.Pegar_regioes_para_adicionar( regioes_ativas, texto );
+
+                                Debug.Log( texto );
+
+                                
 
 
                                 // --- VERIFICAR SE TEVE MUDANCA

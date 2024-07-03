@@ -11,8 +11,36 @@ using UnityEngine.UI;
 */
 
 /*
+        
 
-        logica :
+
+        - reinos podem ser destruidos, expandidos ou reduzidos. um reino sempre esta dependendo da capital. Se a capital for derrotada todo o reino se rende.
+
+        - estados nao podem ser trocados ou excluidos 
+        
+        e cidades nunca sao divididos mas podem ter os dados trocados ou EVOLUIDAS.
+             ** cada cidade tem que ocupar sempre o mesmo espaço. 
+             talvez usar um enum para Espacos.espaco_1, Espacos.espaco_2 ... 
+             principalmente para um jogo que vai se passar em varios anos faria sentido
+
+
+        [ reinos ] 
+
+        [ estados ]
+
+        [ cidades ]
+
+
+        posicao => cidade => 
+                 
+                      
+
+
+                
+
+
+        
+
 
         interativos: o funcionamento sempre esta nos proprios dados, nao tem scripts 
         

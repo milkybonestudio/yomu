@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class Controlador_interativos {
 
 
-
             public static Controlador_interativos instancia;
             public static Controlador_interativos Pegar_instancia(){ return instancia; }
 
@@ -100,7 +99,7 @@ public class Controlador_interativos {
             unsafe public Interativo_tela[] Criar_interativos_tela( Posicao _posicao ){
 
 
-                        Cidade cidade = Controlador_cidades.instancia.cidades[ _posicao.cidade_id ];
+                        Cidade cidade = Controlador_cidades.instancia.cidades[ _posicao.cidade_no_trecho_id ];
                         int[] interativos_default  = cidade.interativos_tela_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ];
                         int[] interativos_para_subtrair  = cidade.interativos_tela_para_subtrair_ids[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ];
                         int[] interativos_para_adicionar  = cidade.interativos_tela_para_adicionar_ids[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ];
@@ -181,7 +180,7 @@ public class Controlador_interativos {
             public Interativo_tela[] Criar_interativos_tela_DESENVOLVIMENTO( Posicao _posicao ){
 
 
-                  Cidade cidade = Controlador_cidades.Pegar_instancia().Pegar_cidade_DESENVOLVIMENTO( "controlador_interativos", _posicao.cidade_id );
+                  Cidade cidade = Controlador_cidades.Pegar_instancia().Pegar_cidade_DESENVOLVIMENTO( "controlador_interativos", _posicao.cidade_no_trecho_id );
 
                   int[][][][] interativos_default_por_posicao  =  cidade.interativos_tela_por_posicao;
                   int[][][][] interativos_para_subtrair_por_posicao  =  cidade.interativos_tela_para_subtrair_ids;

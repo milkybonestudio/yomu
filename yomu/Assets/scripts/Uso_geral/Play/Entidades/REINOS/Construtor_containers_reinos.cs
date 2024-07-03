@@ -1,5 +1,13 @@
 
 
+/*
+  
+       
+       reinos podem mudar, serem criados e destruidos. 
+       mas geralmente sao estaticos. 
+       
+*/
+
 public static class Construtor_containers_reinos {
 
 
