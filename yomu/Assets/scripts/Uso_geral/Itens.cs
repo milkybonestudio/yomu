@@ -51,7 +51,7 @@ using System;
         public string item_enum_nome;
         public string enum_item_nome;
 
-        public Carta_localizador
+        //public Carta_localizador
 
 
 

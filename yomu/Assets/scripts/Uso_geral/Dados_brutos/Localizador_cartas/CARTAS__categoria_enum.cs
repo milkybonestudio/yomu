@@ -1,6 +1,6 @@
 
 
-public enum Grupo_carta {
+public enum CARTAS__categoria {
 
 
     monstro,

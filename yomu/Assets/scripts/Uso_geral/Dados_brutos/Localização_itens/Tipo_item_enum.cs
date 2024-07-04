@@ -1,7 +1,7 @@
 
 
 
-public enum Tipo_item {
+public enum ITEM__tipo_item {
 
 
         item_nomeado,
