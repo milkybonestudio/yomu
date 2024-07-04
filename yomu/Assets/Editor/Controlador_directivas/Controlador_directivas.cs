@@ -50,11 +50,11 @@ public class Controlador_directives : Editor {
                                         { 
                                                 // --- FORCAR TUDO
                                                 
-                                                if( directives_atual == "FORCAR_TODAS_AS_REGIOES" )
+                                                if( directives_atual == "FORCAR_TUDO" )
                                                         { return; }
 
-                                                UnityEditor.PlayerSettings.SetScriptingDefineSymbolsForGroup( BuildTargetGroup.Standalone, "FORCAR_TODAS_AS_REGIOES" );
-                                                Debug.Log( $"directiva colocada: <color=lime><b> FORCAR_TODAS_AS_REGIOES </b></color>" );
+                                                UnityEditor.PlayerSettings.SetScriptingDefineSymbolsForGroup( BuildTargetGroup.Standalone, "FORCAR_TUDO" );
+                                                Debug.Log( $"directiva colocada: <color=lime><b> FORCAR_TUDO </b></color>" );
 
                                                 return;
                                         }
@@ -65,6 +65,7 @@ public class Controlador_directives : Editor {
 
                                 string texto = "";
                                 texto = Gerenciador_regioes_directivas.Pegar_regioes_para_adicionar( regioes_ativas, texto );
+                                texto += "FORCAR_TODOS_OS_ITENS;";
 
                                 Debug.Log( texto );
 

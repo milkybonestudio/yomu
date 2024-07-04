@@ -35,13 +35,6 @@ using UnityEngine.UI;
                  
                       
 
-
-                
-
-
-        
-
-
         interativos: o funcionamento sempre esta nos proprios dados, nao tem scripts 
         
         de onde vem os dados? => 
@@ -60,6 +53,9 @@ using UnityEngine.UI;
 
         Mas controlador_interativos vai poder 1 - ver quais interativos tem scripts 
                                               2 - ativar os scripts?? nao 
+
+
+        ** itens sao sempre guardados em quantidade e tem limites definidos em cada item
 
 
 

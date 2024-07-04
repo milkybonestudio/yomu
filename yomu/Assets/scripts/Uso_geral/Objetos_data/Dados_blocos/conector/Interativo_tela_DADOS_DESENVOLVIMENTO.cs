@@ -1,6 +1,9 @@
 
 #if UNITY_EDITOR
 
+
+
+
         public class Interativo_tela_DADOS_DESENVOLVIMENTO {
 
 
@@ -19,7 +22,6 @@
 
                 public Posicao posicao;
 
-                public int sub_area_id;
 
                         
                 // -- !!  os nomes vão ser colocados na classe com os dados para nao ter 2 classes gigantes !! --
@@ -31,14 +33,17 @@
 
                 public string path_imagem; // vai faltar o _modelo + _numero + .png
 
+
                 
 
                 // vai ser usado para construir 
 
                 public Tipo_interativo tipo_interativo;
-                public Interativo_tipo_mouse_hover tipo_mouse_hover;
+                public Interativo_funcao[] interativo_funcoes;
+                public Dados_interativo_funcoes_DEVELOPMENT dados_interativo_funcoes_DEVELOPMENT = new Dados_interativo_funcoes_DEVELOPMENT();
 
-                public Cor_cursor cor_cursor;
+
+
 
 
                 // --- SUPORTE PARA A IMAGEM DO INTERATIVO
@@ -60,6 +65,7 @@
                 public Metodo_para_mudar_cursor metodo_para_mudar_cursor;
 
                 public Cor_cursor[] cores_cursor;
+                public Cor_cursor cor_cursor;
 
                 // --- SUPORTE PARA SOM
 

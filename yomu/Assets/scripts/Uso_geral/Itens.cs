@@ -42,6 +42,21 @@ using System;
         
     }
 
+    public class Item_DADOS_DEVELOPMENT {
+
+        public Item_localizador item_localizador;
+        public string item_nome;
+
+        // consegue pegar path para as imagens dos icones e das imagens espandidas
+        public string item_enum_nome;
+        public string enum_item_nome;
+
+        public Carta_localizador
+
+
+
+    }
+
 
 
 
