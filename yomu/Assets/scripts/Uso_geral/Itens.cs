@@ -48,8 +48,9 @@ using System;
         public string item_nome;
 
         // consegue pegar path para as imagens dos icones e das imagens espandidas
-        public string item_enum_nome;
-        public string enum_item_nome;
+        public string nome_item_enum_DEVELOPMENT;
+        public string enum_nome_item_DEVELOPMENT;
+                      
 
         //public Carta_localizador
 

@@ -3,7 +3,7 @@
 public static class Leitor_itens_DEVELOPMENT {
 
 
-    public static Item Pegar_item( Item_localizador _item_localizador ){
+    public static Item_DADOS_DEVELOPMENT Pegar_item( Item_localizador _item_localizador ){
 
         ITEM__tipo_item tipo_item = ( ITEM__tipo_item ) _item_localizador.tipo_id;
 

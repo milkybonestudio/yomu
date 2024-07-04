@@ -6,9 +6,9 @@ using System;
 
 public static class Leitor_itens__ITEM_NOMEADO__ITEM_POSSUIDO__ARMA_PRIMORDIAL {
 
-        public static Item[] itens;
+        public static Item_DADOS_DEVELOPMENT[] itens;
 
-        public static Item Pegar_item( Item_localizador _item_localizador ){
+        public static Item_DADOS_DEVELOPMENT Pegar_item( Item_localizador _item_localizador ){
 
 
         int item_id = _item_localizador.item_id;
@@ -17,15 +17,16 @@ public static class Leitor_itens__ITEM_NOMEADO__ITEM_POSSUIDO__ARMA_PRIMORDIAL {
                 { 
                     Colocar_itens();
                      
-                    // ** ver depois
-                    // Type tipo_item = typeof( CATEDRAL_DO_SUL__ZONA_LESTE__DORMITORIO_FEMININO__NARA_ROOM__UP__interativo );
+                    Type tipo_item = typeof( ITEM__ITENS_NOMEADOS__ITENS_POSSUIDOS__ARMAS_PRIMORDIAIS__item );
                     // string nome_area = typeof( CATEDRAL_DO_SUL__ZONA_LESTE__DORMITORIO_FEMININO__NARA_ROOM__ponto ).Namespace;
+                    Verificador_itens_DESENVOLVIMENTO.Verificar_itens(  ref itens );
+                    Marcador_de_nomes_DEVELOPMENT.Colocar_nome_itens( tipo_item, itens );
 
-                    // Verificador_itens_DESENVOLVIMENTO.Verificar_itens( tipo_item, nome_area, ref dados );
+
                 }
 
         if( itens[ item_id ] == null )
-                { throw new Exception( $" o interativo { ( CATEDRAL_DO_SUL__ZONA_LESTE__DORMITORIO_FEMININO__NARA_ROOM__UP__interativo ) item_id } na nao foi criado" ); }
+                { throw new Exception( $" o item { ( ITEM__ITENS_NOMEADOS__ITENS_POSSUIDOS__ARMAS_PRIMORDIAIS__item ) item_id } na nao foi criado" ); }
 
 
         return itens[ item_id ];
@@ -35,13 +36,15 @@ public static class Leitor_itens__ITEM_NOMEADO__ITEM_POSSUIDO__ARMA_PRIMORDIAL {
 
     public static void Colocar_itens(){
 
-            itens = new Item[ 100 ];
+            itens = new Item_DADOS_DEVELOPMENT[ 100 ];
 
             // --- ZERO
 
             int index = 0;
 
             // ------------------
+
+            index = ( int ) ITEM__ITENS_NOMEADOS__ITENS_POSSUIDOS__ARMAS_PRIMORDIAIS__item.hokushi;
              
 
 

@@ -1,4 +1,4 @@
-
+using System;
 
 public static class CARTAS__HUMANO__CATEDRAL_DO_SUL_PRIMEIRO_ANO__MULHER__nara{
 
@@ -11,7 +11,10 @@ public static class CARTAS__HUMANO__CATEDRAL_DO_SUL_PRIMEIRO_ANO__MULHER__nara{
         if( cartas == null )
             {
                 Colocar_cartas();
-                Verificador_cartas_DESENVOLVIMENTO.Verificar_cartas( cartas );
+                Type tipo = typeof( CARTAS__HUMANO__CATEDRAL_DO_SUL_PRIMEIRO_ANO__MULHER__NARA__carta );
+                Verificador_cartas_DESENVOLVIMENTO.Verificar_cartas(  ref cartas );
+                Marcador_de_nomes_DEVELOPMENT.Colocar_nome_cartas( tipo, cartas );
+
             }
 
 

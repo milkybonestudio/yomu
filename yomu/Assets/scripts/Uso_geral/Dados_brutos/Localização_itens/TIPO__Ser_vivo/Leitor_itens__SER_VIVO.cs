@@ -5,7 +5,7 @@
 
 public static class Leitor_itens__SER_VIVO {
 
-    public static Item Pegar_item( Item_localizador _item_localizador){
+    public static Item_DADOS_DEVELOPMENT Pegar_item( Item_localizador _item_localizador){
 
             SER_VIVO__categoria categoria = ( SER_VIVO__categoria ) _item_localizador.categoria_id;
 
