@@ -42,7 +42,7 @@ public class Controlador_save {
                               Paths_sistema.Colocar_save( 0 );      
                               Dados_blocos.Resetar();
                               Controlador_timer.Construir_teste( null );
-                              Controlador_dados_dinamicos.Construir_teste( null );
+                              //Controlador_dados_dinamicos.Construir_teste( null );
 
                         
                               Player_estado_atual.Construir();
@@ -117,7 +117,7 @@ public class Controlador_save {
 
 
                         Controlador_timer.Construir( dados_sistema_estado_atual );
-                        Controlador_dados_dinamicos.Construir( dados_sistema_estado_atual );
+                        
                         
 
 

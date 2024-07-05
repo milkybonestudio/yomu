@@ -18,9 +18,6 @@ public class Ponto_data {
         public Tipo_get_ponto_data tipo_get_background;
 
 
-        // ??
-        public static string Pegar_nome_background_por_script( Ponto_nome _ponto_nome ){ return null;}
-        public static Interativo_nome[] Pegar_interativos_por_script (Ponto_nome _ponto_nome){  return null;  }
         
 
     

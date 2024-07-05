@@ -363,9 +363,9 @@ public class Controlador_interativos {
 
     public void Receber_utilidade(Interativo _interativo){
 
-          Interativo_nome interativo_nome = _interativo.interativo_nome;
+      //     Interativo_nome interativo_nome = _interativo.interativo_nome;
          
-          Controlador_utilidades.Pegar_instancia().Iniciar_utilidade( interativo_nome );
+      //     Controlador_utilidades.Pegar_instancia().Iniciar_utilidade( interativo_nome );
 
           return;
 
@@ -376,7 +376,7 @@ public class Controlador_interativos {
 
 
     
-          Ponto_nome ponto_destino  =  _interativo.ponto_destino;
+          //Ponto_nome ponto_destino  =  _interativo.ponto_destino;
           // tempo vai ser pego dentro das verificacoes'
           
 

@@ -10,7 +10,7 @@ using System;
 
 
 
-        public Ponto_nome ponto_destino = Ponto_nome.nada ;
+        public Posicao ponto_destino;
         public GameObject game_object = null;
         public Image ponto_imagem = null ;
         public Cor_cursor cor_cursor = Cor_cursor.red ;
@@ -75,7 +75,8 @@ public static class Icone_barra_mapa {
 
                                     //BLOCO_jogo.Pegar_instancia().update_tipo_atual = Jogo_update_tipo.movimento;
 
-                                    BLOCO_conector.Pegar_instancia().Mover_player( ponto.ponto_destino , true  );
+                                    // ** ver depois
+                                    //BLOCO_conector.Pegar_instancia().Mover_player( ponto.ponto_destino , true  ); 
 
                                     Encerrar();
                                     return true;
@@ -129,7 +130,7 @@ public static class Icone_barra_mapa {
         Player_estado_atual p  =  Player_estado_atual.Pegar_instancia() ; 
 
         string mapa_atual = p.mapa_atual;
-        Ponto_nome[] pontos_mapa = p.pontos_mapa;
+        Posicao[] pontos_mapa = p.pontos_mapa;
 
         float[][] pontos_mapa_posicoes = p.pontos_mapa_posicoes;
 

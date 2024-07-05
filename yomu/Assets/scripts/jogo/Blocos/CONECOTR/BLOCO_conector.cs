@@ -12,7 +12,6 @@ public class BLOCO_conector {
 
 
         // --- CONTROLADORES
-        public Controlador_dados_dinamicos dados;
         public Controlador_cursor controlador_cursor;
         public Controlador_tela_conector controlador_tela_conector;
         public Controlador_interativos controlador_interativos;
@@ -94,8 +93,8 @@ public class BLOCO_conector {
                 if( dados == null )
                         { throw new Exception( "nao veio os dados para iniciar conector" ); }
 
-                        
-                controlador_tela_conector.Trocar_tela( player_estado_atual.Pegar_path_imagem_background() );
+                // ver depois
+                // controlador_tela_conector.Trocar_tela( player_estado_atual.Pegar_path_imagem_background() ); 
 
                 
                 // ** trocar depois
@@ -232,7 +231,7 @@ public class BLOCO_conector {
 
         //   trocar para ponto_nome
 
-        public void Mover_player( Ponto_nome _ponto_nome , bool _reset = false , bool _instantaneo = false ){
+        public void Mover_player( Posicao _ponto , bool _reset = false , bool _instantaneo = false ){
 
 
 

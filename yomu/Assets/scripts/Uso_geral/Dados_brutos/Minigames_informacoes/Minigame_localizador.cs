@@ -8,6 +8,8 @@ public class Minigame_localizador {
         public int modelo_id;
         public int minigame_id;
 
+        public string nome_minigame;
+
 
 
 }

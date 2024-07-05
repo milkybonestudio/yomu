@@ -8,7 +8,11 @@
 
                 public static Minigame_DADOS_DEVELOPMENT Pegar_minigame( Minigame_localizador _minigame_localizador ){
 
-                        RITIMO__MUSICA__VIOLINO__nome nome = ( RITIMO__MUSICA__VIOLINO__nome ) _minigame_localizador.minigame_id;
+                        int minigame_id =  _minigame_localizador.minigame_id;
+
+                        RITIMO__MUSICA__VIOLINO__nome nome = ( RITIMO__MUSICA__VIOLINO__nome ) minigame_id ;
+
+                        _minigame_localizador.nome_minigame = Marcador_de_nomes_DEVELOPMENT.Pegar_nome_minigame_localizador( typeof( RITIMO__MUSICA__VIOLINO__nome ), minigame_id);
 
                         switch( nome ){
 
@@ -16,8 +20,9 @@
 
                         }
 
-                        throw new System.Exception( $"nao foi acho o nome { nome }." );
                         
+
+                        return null;
 
                 }
 

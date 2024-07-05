@@ -21,27 +21,28 @@ public class Player_estado_atual {
 
     public int[] mochila = new int[9];
 
-    public Item_nome[] itens_mochila = new Item_nome[ 9 ]{
+    public Item_localizador[] itens_mochila = new Item_localizador[ 9 ];
 
-        Item_nome.albuin_meat,
-        Item_nome.nada,
-        Item_nome.nada,
-        Item_nome.nada,
-        Item_nome.nada,
-        Item_nome.nada,
-        Item_nome.nada,
-        Item_nome.nada,
-        Item_nome.nada,
+    //     Item_nome.albuin_meat,
+    //     Item_nome.nada,
+    //     Item_nome.nada,
+    //     Item_nome.nada,
+    //     Item_nome.nada,
+    //     Item_nome.nada,
+    //     Item_nome.nada,
+    //     Item_nome.nada,
+    //     Item_nome.nada,
 
-    };
+    // };
 
     public int[] bau = new int[24];
 
-    public Ponto_nome[] posicao_arr = new Ponto_nome[20];
+    public Posicao[] posicao_arr = new Posicao[20];
+    public Ponto ponto_atual ;
+
 
     public float sadismo = 0f;
 
-    public Ponto ponto_atual ;
 
 
     public Bloco[] blocos_anteriores = new Bloco[10];
@@ -51,12 +52,7 @@ public class Player_estado_atual {
 
 
     public string mapa_atual = "catedral" ;
-    public Ponto_nome[] pontos_mapa = new Ponto_nome[]{
-
-        Ponto_nome.UP_quarto_nara,
-        Ponto_nome.CORREDOR_1
-
-    };
+    public Posicao[] pontos_mapa;
 
 
     public float[][] pontos_mapa_posicoes = new float[][]{
@@ -105,33 +101,33 @@ public void Zerar_dados(){
 
 }
 
-    public Ponto_nome Pegar_posicao_atual(){
+    // public Ponto_nome Pegar_posicao_atual(){
 
-            return Ponto_nome.BACK_quarto_nara;
+    //         return Ponto_nome.BACK_quarto_nara;
 
-            // int index = 0 ;
+    //         // int index = 0 ;
 
-            // for ( int i = 0; i < posicao_arr.Length ;i++){
+    //         // for ( int i = 0; i < posicao_arr.Length ;i++){
 
-            // if( posicao_arr[ i ] == Ponto_nome.nada ){
+    //         // if( posicao_arr[ i ] == Ponto_nome.nada ){
 
-            //     index = i;
-            //     break;
+    //         //     index = i;
+    //         //     break;
 
-            // }
+    //         // }
 
-            // }
+    //         // }
 
-            // if(index == 0) { return 0; }
+    //         // if(index == 0) { return 0; }
 
-            // return posicao_arr[  index-1 ];
+    //         // return posicao_arr[  index-1 ];
 
 
-    }
+    // }
 
-    public Ponto_nome Pegar_posicao_anterior(){
+    // public Ponto_nome Pegar_posicao_anterior(){
 
-            return Ponto_nome.BACK_quarto_nara;
+    //         return Ponto_nome.BACK_quarto_nara;
 
 
             // int index = 0 ;
@@ -158,26 +154,22 @@ public void Zerar_dados(){
             // return posicao_arr[ index -2 ] ;
 
 
-    }
+    //}
 
 
 
-    public string Pegar_path_imagem_background(){
+    // public string Pegar_path_imagem_background(){
 
-            return null;
-
-
-            // return "images/in_game/black";
+    //         return null;
 
 
-            // return   "images/in_game/" + ponto_atual.folder_path + ponto_atual.background_name;
+    //         // return "images/in_game/black";
 
 
-    }
+    //         // return   "images/in_game/" + ponto_atual.folder_path + ponto_atual.background_name;
 
 
-
-
+    // }
 
 
 
@@ -187,7 +179,11 @@ public void Zerar_dados(){
 
 
 
-      public void Acrecentar_posicao (    Ponto _ponto,  bool _resetar = false ) {
+
+
+
+
+      // public void Acrecentar_posicao (    Ponto _ponto,  bool _resetar = false ) {
 
 
             // ponto_atual = _ponto;
@@ -270,7 +266,7 @@ public void Zerar_dados(){
 
 
 
-    }
+    //}
 
 
 
@@ -358,11 +354,11 @@ public void Zerar_dados(){
 
     public void Trocar_itens_mochila( int slot_1 ,  int slot_2 ){
 
-        Item_nome item_1 = itens_mochila[ slot_1 ];
-        Item_nome item_2 = itens_mochila[ slot_2 ];
+        // Item_nome item_1 = itens_mochila[ slot_1 ];
+        // Item_nome item_2 = itens_mochila[ slot_2 ];
 
-        itens_mochila[ slot_1 ] = item_2;
-        itens_mochila[ slot_2 ] = item_1;
+        // itens_mochila[ slot_1 ] = item_2;
+        // itens_mochila[ slot_2 ] = item_1;
 
         return;
 

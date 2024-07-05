@@ -51,7 +51,7 @@ public static class Primeiro_jogo_suporte {
 
 
       
-                    Lista_navegacao lista = Controlador_dados_dinamicos.Pegar_instancia().lista_navegacao;
+                    //Lista_navegacao lista = Controlador_dados_dinamicos.Pegar_instancia().lista_navegacao;
 
 
                     /// frente 
@@ -67,53 +67,53 @@ public static class Primeiro_jogo_suporte {
                     /// muda Lidar retorno 
                     // 
 
-                    int[] slots = new int[ 1 ]{  1  };
+                    // int[] slots = new int[ 1 ]{  1  };
 
-                        Interativo_nome[] interativos_default_front = new Interativo_nome[] {  
+                    //     Interativo_nome[] interativos_default_front = new Interativo_nome[] {  
                         
-                            Interativo_nome.MESA_front_quarto_nara,
-                            Interativo_nome.ESPELHO_front_quarto_nara,
-                            Interativo_nome.CORREDOR_front_quarto_nara
+                    //         Interativo_nome.MESA_front_quarto_nara,
+                    //         Interativo_nome.ESPELHO_front_quarto_nara,
+                    //         Interativo_nome.CORREDOR_front_quarto_nara
 
-                        };
+                    //     };
 
-                        Interativo_nome[] interativos_default_back = new Interativo_nome[] {  
+                    //     Interativo_nome[] interativos_default_back = new Interativo_nome[] {  
                         
-                            Interativo_nome.BURACO_back_quarto_nara,
-                            Interativo_nome.CAMA_back_quarto_nara    
+                    //         Interativo_nome.BURACO_back_quarto_nara,
+                    //         Interativo_nome.CAMA_back_quarto_nara    
 
-                        };
+                    //     };
 
-                        Interativo_nome[] interativos_default_mesa = new Interativo_nome[] {  
+                    //     Interativo_nome[] interativos_default_mesa = new Interativo_nome[] {  
                         
-                                    Interativo_nome.LIVRO_1_mesa_quarto_nara,
-                                    Interativo_nome.LIVRO_2_mesa_quarto_nara,
-                                    Interativo_nome.LIVRO_3_mesa_quarto_nara,
-                                    Interativo_nome.LIVRO_4_mesa_quarto_nara,
-                                    Interativo_nome.LIVRO_5_mesa_quarto_nara,
-                                    Interativo_nome.LIVRO_6_mesa_quarto_nara,
-                                    Interativo_nome.CAIXA_mesa_quarto_nara,
-                                    Interativo_nome.CARTAS_mesa_quarto_nara,
-                                    Interativo_nome.TINTA_mesa_quarto_nara
+                    //                 Interativo_nome.LIVRO_1_mesa_quarto_nara,
+                    //                 Interativo_nome.LIVRO_2_mesa_quarto_nara,
+                    //                 Interativo_nome.LIVRO_3_mesa_quarto_nara,
+                    //                 Interativo_nome.LIVRO_4_mesa_quarto_nara,
+                    //                 Interativo_nome.LIVRO_5_mesa_quarto_nara,
+                    //                 Interativo_nome.LIVRO_6_mesa_quarto_nara,
+                    //                 Interativo_nome.CAIXA_mesa_quarto_nara,
+                    //                 Interativo_nome.CARTAS_mesa_quarto_nara,
+                    //                 Interativo_nome.TINTA_mesa_quarto_nara
 
 
-                        };
+                    //     };
 
 
-                    lista.Mudar_interativos_para_subtrair(    Ponto_nome.FRONT_quarto_nara ,  slots,  interativos_default_front  );
-                    lista.Mudar_interativos_para_subtrair(    Ponto_nome.BACK_quarto_nara ,  slots,  interativos_default_back  );
-                    lista.Mudar_interativos_para_subtrair(    Ponto_nome.MESA_quarto_nara ,  slots,  interativos_default_mesa  );
+                    // lista.Mudar_interativos_para_subtrair(    Ponto_nome.FRONT_quarto_nara ,  slots,  interativos_default_front  );
+                    // lista.Mudar_interativos_para_subtrair(    Ponto_nome.BACK_quarto_nara ,  slots,  interativos_default_back  );
+                    // lista.Mudar_interativos_para_subtrair(    Ponto_nome.MESA_quarto_nara ,  slots,  interativos_default_mesa  );
 
-                    lista.Mudar_background_para_substituir( Ponto_nome.MESA_quarto_nara , Periodo_tempo.dia , "mesa_sem_nada_n" );
-
-
+                    // lista.Mudar_background_para_substituir( Ponto_nome.MESA_quarto_nara , Periodo_tempo.dia , "mesa_sem_nada_n" );
 
 
-                    lista.Remover_interativo_para_subtrair (  Ponto_nome.FRONT_quarto_nara ,  slots,  Interativo_nome.ESPELHO_front_quarto_nara  );
 
 
-                    lista.Adicionar_script_interativo_em_espera( Interativo_nome.ESPELHO_front_quarto_nara , Script_jogo_nome.NARA_INTRODUCAO_espelho );
-                    lista.Adicionar_script_interativo_em_espera( Interativo_nome.MACANETA_corredor_quarto_nara , Script_jogo_nome.NARA_INTRODUCAO_corredor );
+                    // lista.Remover_interativo_para_subtrair (  Ponto_nome.FRONT_quarto_nara ,  slots,  Interativo_nome.ESPELHO_front_quarto_nara  );
+
+
+                    // lista.Adicionar_script_interativo_em_espera( Interativo_nome.ESPELHO_front_quarto_nara , Script_jogo_nome.NARA_INTRODUCAO_espelho );
+                    // lista.Adicionar_script_interativo_em_espera( Interativo_nome.MACANETA_corredor_quarto_nara , Script_jogo_nome.NARA_INTRODUCAO_corredor );
 
 
                     // precisa?

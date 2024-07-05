@@ -5,9 +5,6 @@ using UnityEngine;
 
 
 
-
-
-
 public class Controlador_personagens {
 
 		// ** REQUISICAO PARA ADICIONAR PERSONAGEM É SOMENTE TEMPO

@@ -124,7 +124,7 @@ public class Gerenciador_dados_dinamicos_cidades {
                                 // tem que garantir que vai excluir o cidades aqui também 
                                 { 
                                         #if UNITY_EDITOR
-                                          Teste_play.Verificar_se_cidade_realmente_foi_pedida( slot_teste, _cidades_id,requisicoes_cidades, dados_containers_cidades, cidades_AIs );
+                                                Teste_cidades_DEVELOPMENT.Verificar_se_cidade_realmente_foi_pedida( slot_teste, _cidades_id,requisicoes_cidades, dados_containers_cidades, cidades_AIs );
                                         #endif
                                         return; 
                                 }

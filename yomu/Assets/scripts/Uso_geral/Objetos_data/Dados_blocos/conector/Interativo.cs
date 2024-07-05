@@ -34,18 +34,16 @@ public enum Tipo_get_interativo {
 
         public Interativo( int _index_int ){
 
-                this.interativo_nome = (  Interativo_nome ) _index_int ;
+                interativo_id =  _index_int ;
         }
 
 
 
         public Tipo_interativo tipo;
 
-   
-        public Interativo_nome interativo_nome;
-        public Ponto_nome ponto_nome;
 
-        public int id_arr = 0;
+        public int interativo_id;
+        public int ponto_id;
 
  
 
@@ -83,7 +81,6 @@ public enum Tipo_get_interativo {
 
         //  especificos
 
-        public Ponto_nome ponto_destino;
 
         public Personagem_nome personagem;
         public string  conversa_nome = null ;

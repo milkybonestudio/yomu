@@ -126,7 +126,7 @@ public class Gerenciador_dados_dinamicos_plots {
                                 // tem que garantir que vai excluir o plots aqui também 
                                 { 
                                         #if UNITY_EDITOR
-                                          Teste_play.Verificar_se_plot_realmente_foi_pedido( slot_teste, _plots_id, requisicoes_plots, dados_containers_plots, plots_AIs );
+                                          Teste_plots_DEVELOPMENT.Verificar_se_plot_realmente_foi_pedido( slot_teste, _plots_id, requisicoes_plots, dados_containers_plots, plots_AIs );
                                         #endif
                                         return; 
                                 }

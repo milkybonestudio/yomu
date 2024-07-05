@@ -100,6 +100,12 @@ public static class Marcador_de_nomes_DEVELOPMENT {
     
         }
 
+        public static string Pegar_nome_minigame_localizador( Type _tipo, int _minigame_id ){
+
+                return _tipo.Namespace + "__" + Enum.GetNames( _tipo )[ _minigame_id ];
+
+        }
+
 
 
 

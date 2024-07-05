@@ -9,11 +9,11 @@ using System;
     public class Mochila_slot {
 
 
-        public Item_nome item_nome = Item_nome.nada; 
+        public Item_localizador item_nome; 
         public Slot_generico generico = null;
 
 
-        public Mochila_slot(    Item_nome _item_nome  ,  string _nome,  GameObject _pai, string _path_imagem , float[] _posicao , Cor_cursor _cor      ){
+        public Mochila_slot(    Item_localizador _item_nome  ,  string _nome,  GameObject _pai, string _path_imagem , float[] _posicao , Cor_cursor _cor      ){
 
 
             float _height = 100f;
@@ -157,8 +157,8 @@ public static class Icone_barra_mochila {
                                     Player_estado_atual.Pegar_instancia().Trocar_itens_mochila( hold_slot, slot_index_soltar );
 
 
-                                    Item_nome item_slot_1 = slot_hold.item_nome;
-                                    Item_nome item_slot_2 = slot.item_nome;
+                                    Item_localizador item_slot_1 = slot_hold.item_nome;
+                                    Item_localizador item_slot_2 = slot.item_nome;
 
                                     slot_hold.item_nome = item_slot_2;
                                     slot.item_nome = item_slot_1;
@@ -285,7 +285,7 @@ public static class Icone_barra_mochila {
         display_dinheiro.Colocar_texto(  "$" + dinheiro.ToString() , Color.black );
         display_dinheiro.Centralizar_texto();
 
-        Item_nome[] itens = p.itens_mochila;
+        Item_localizador[] itens = p.itens_mochila;
 
         int numero_itens = itens.Length ;
 

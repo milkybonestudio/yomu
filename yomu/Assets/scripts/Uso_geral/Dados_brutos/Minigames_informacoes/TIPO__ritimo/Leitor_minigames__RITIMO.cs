@@ -7,14 +7,19 @@ public static class Leitor_minigames__RITIMO {
 
         RITIMO__trabalho trabalho = ( RITIMO__trabalho ) _minigame_localizador.trabalho_id;
 
+        Minigame_DADOS_DEVELOPMENT minigame_dados = null;
+        
+
         switch( trabalho ){
 
-            case RITIMO__trabalho.musica: return Leitor_minigames__RITIMO__MUSICA.Pegar_minigame( _minigame_localizador );
+            case RITIMO__trabalho.musica: minigame_dados =  Leitor_minigames__RITIMO__MUSICA.Pegar_minigame( _minigame_localizador ); break;
 
         }
 
-        throw new System.Exception( $"nao foi achado o trabalho { trabalho }" );
+        if( minigame_dados == null )
+            { throw new System.Exception(  $"nao foi achado o minigame: { _minigame_localizador.nome_minigame }" ); }
 
+            return minigame_dados;
 
     }
 
