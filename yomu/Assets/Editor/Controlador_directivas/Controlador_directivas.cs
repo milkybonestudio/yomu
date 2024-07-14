@@ -18,7 +18,10 @@ public class Controlador_directives : Editor {
                 // por hora sempre carregar uma ou mais regioes interias 
 
 
-                public static bool forcar_tudo = true;
+                public static bool modo_build = false; // forca tudo
+
+
+                //public static bool forcar_tudo = true;
 
 
                 
@@ -46,9 +49,11 @@ public class Controlador_directives : Editor {
 
                                 string directives_atual = UnityEditor.PlayerSettings.GetScriptingDefineSymbolsForGroup( BuildTargetGroup.Standalone );
 
-                                if( forcar_tudo )
+                                if( modo_build )
                                         { 
                                                 // --- FORCAR TUDO
+
+                                                Debug.Log("a");
                                                 
                                                 if( directives_atual == "FORCAR_TUDO" )
                                                         { return; }
@@ -66,8 +71,6 @@ public class Controlador_directives : Editor {
                                 string texto = "";
                                 texto = Gerenciador_regioes_directivas.Pegar_regioes_para_adicionar( regioes_ativas, texto );
                                 texto += "FORCAR_TODOS_OS_ITENS;";
-
-                                Debug.Log( texto );
 
                                 
 

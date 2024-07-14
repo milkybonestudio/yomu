@@ -73,7 +73,7 @@ using System;
                         if( dados_movimento.posicao_unica_destino == null )
                                 { throw new Exception( $"nao foi colocado a posicao no interativo { _interativo_dados } tipo moimento" ); }
 
-                        Ponto_DADOS_DEVELOPMENT ponto_dados = Leitor_pontos_DEVELOPMENT.Pegar_ponto( dados_movimento.posicao_unica_destino );
+                        Ponto_DADOS_DEVELOPMENT ponto_dados = Leitor_pontos.Pegar_ponto( dados_movimento.posicao_unica_destino );
 
                         
 
@@ -140,6 +140,23 @@ using System;
 
 
                         // --- IMAGEM   
+
+
+                        if( _interativo_tela_DADOS_DESENVOLVIMENTO.metodo_que_as_imagens_estao_salvas == Metodo_que_as_imagens_estao_salvas.nome )
+                                {
+                                        if( _interativo_tela_DADOS_DESENVOLVIMENTO.nomes_imagens_especificas_periodos == null )
+                                                { throw new Exception( $"Veio metodo_que_as_imagens_estao_salvas como nome especifico mas o array veio null" ); }
+                                        if( _interativo_tela_DADOS_DESENVOLVIMENTO.nomes_imagens_especificas_periodos.Length != 5 )
+                                                { throw new Exception( $"Veio metodo_que_as_imagens_estao_salvas como nome especifico mas o array veio null" ); }
+                                        for( int nome_index = 0 ; nome_index < 5 ; nome_index++ ){
+
+                                                if( _interativo_tela_DADOS_DESENVOLVIMENTO.nomes_imagens_especificas_periodos[ nome_index ] == null  )
+                                                        { throw new Exception( $"Veio metodo_que_as_imagens_estao_salvas como nome especifico mas o array veio null" ); }
+                                                
+                                                continue;
+
+                                        }
+                                }
 
                         // CHECAR: NADA x NADA
                         if( _interativo_tela_DADOS_DESENVOLVIMENTO.metodo_IMAGENS_DISPONIVEIS_no_mouse_hover == Metodo_IMAGENS_DISPONIVEIS_no_mouse_hover.nada_E_nada )

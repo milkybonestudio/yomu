@@ -146,7 +146,7 @@ public class Controlador : MonoBehaviour {
                                     case Controlador_modo.login :  login.Update() ; break;
                                     case Controlador_modo.menu : menu.Update() ; break;
                                     case Controlador_modo.transicao: console.log("esta no modo_tela transicao"); break;
-                                    case Controlador_modo.nada: console.log("esta no modo_tela NADA"); break;
+                                    case Controlador_modo.nada:  break;//console.log("esta no modo_tela NADA"); break;
 
                               }
 

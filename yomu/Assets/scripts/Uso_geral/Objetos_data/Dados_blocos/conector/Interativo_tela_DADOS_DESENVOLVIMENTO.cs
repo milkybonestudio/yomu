@@ -50,6 +50,7 @@
 
                 public Metodo_FOLDER_que_as_imagens_estao_salvas metodo_FOLDER_que_as_imagens_estao_salvas; // default => contexto ponto
                 public Metodo_que_as_imagens_estao_salvas metodo_que_as_imagens_estao_salvas;
+                public string[] nomes_imagens_especificas_periodos = new string[]{  "", "", "", "", ""  };
 
                 public Metodo_IMAGENS_DISPONIVEIS_no_mouse_hover metodo_IMAGENS_DISPONIVEIS_no_mouse_hover;
                 public Metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover metodo_das_CORES_IMAGENS_disponiveis_no_mouse_hover;
@@ -69,9 +70,6 @@
 
                 // --- SUPORTE PARA SOM
 
-
-
-                public string[] nomes_imagens_especificas_periodos = new string[]{  "", "", "", "", ""  };
 
 
                 public float[] area;

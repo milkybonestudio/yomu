@@ -5,8 +5,6 @@ using System.Threading;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
-
 
 
 
@@ -25,39 +23,6 @@ public class Controlador_save {
             public static bool esta_em_teste = false;
 
             public Task_req task_salvar;
-
-
-            public static Controlador_save Construir_teste (){
-
-                        // vai ser executado na main thread
-                        esta_em_teste = true;
-
-                        
-                        Controlador_save controlador = new Controlador_save(); 
-
-
-                              // ** tem que deixar o jogo na posicao "0"
-                              // personagem inicial : nara 
-                              // posicao inicial: ( 0 , 0  , 0 ) ( cidade:  )
-                              Paths_sistema.Colocar_save( 0 );      
-                              Dados_blocos.Resetar();
-                              Controlador_timer.Construir_teste( null );
-                              //Controlador_dados_dinamicos.Construir_teste( null );
-
-                        
-                              Player_estado_atual.Construir();
-
-                              
-                              // nao vai construir nenhum personagem além da nara
-                              TESTE_controlador_personagens.Construir_controlador();
-                              TESTE_controlador_cidades.Construir_controlador();
-                              TESTE_controlador_plots.Construir_controlador();
-                              TESTE_controlador_sistema.Construir_controlador();
-
-                        instancia = controlador;
-                        return controlador;
-
-            }
 
 
 
@@ -382,32 +347,40 @@ public class Controlador_save {
 
 
 
-
-      // public void Update(){
-
-      //       // Save pode usar o update para salvar os arquivos de segurança 
-
-      // }
-
-
-      
-
       // isso poderia estar em ferramentas 
-      public  void  Screen_shot (string _path = null , int _compress_w = 1920 , int _compress_h = 1080){
+      public  void  Screen_shot (string _path  , bool _pode_substituir_arquivo,  int _compress_w, int _compress_h ){
 
-            Mono_instancia.Start_coroutine(a());
+            Mono_instancia.Start_coroutine( Screen_shot_c() );
             return;
     
-             IEnumerator a(){
+             IEnumerator Screen_shot_c(){
 
-                        yield return new WaitForEndOfFrame();        
+                        yield return new WaitForEndOfFrame();
 
-                        string path =  _path != null ? _path : System.IO.Directory.GetCurrentDirectory() + "\\Assets\\Resources\\images\\in_game\\teste_imagem_compress.png" ;
+                        // --- GARANTE QUE PEDIU PARA SALVAR COMO PNG
+                        string extensao_do_path = System.IO.Path.GetExtension( _path );
+                        if( extensao_do_path != "png" )
+                              { throw new Exception( $"a estensao do arqivo { _path } nao veio como png" ); }
+
+                        
+                        if( _pode_substituir_arquivo )
+                              {
+                                    if( System.IO.File.Exists( _path ) )
+                                          { File.Delete( _path ); }
+                              }
+                              else 
+                              {
+                                    if( System.IO.File.Exists( _path ) )
+                                          { throw new System.Exception( $"queria criar um png no path { _path } mas o arquivo já existia" ); }
+                              }
+
+
+                        //string path =  _path != null ? _path : System.IO.Directory.GetCurrentDirectory() + "\\Assets\\Resources\\images\\in_game\\teste_imagem_compress.png" ;
             
                         int  compress_w = _compress_w;
                         int  compress_h = _compress_h;
 
-                        Texture2D texture = new Texture2D(Screen.width, Screen.height  ,  TextureFormat.ARGB32, false );
+                        Texture2D texture = new Texture2D( Screen.width, Screen.height  ,  TextureFormat.ARGB32, false );
 
                         texture.ReadPixels(    new Rect(0,0,Screen.width, Screen.height)    ,  0 , 0 );
                         texture.Apply();
@@ -458,9 +431,9 @@ public class Controlador_save {
 
                               }
                         }
-                  
-                        File.Delete(path);
-                        File.WriteAllBytes (  path  , texture_compress.EncodeToPNG()) ; 
+
+                        byte[] png = texture_compress.EncodeToPNG();
+                        File.WriteAllBytes (  _path  , png ) ; 
 
                         yield break;
 
@@ -470,127 +443,6 @@ public class Controlador_save {
       }
 
  
-
-    
-
-      
-      // public void Salvar(  int _save  ){
-
-      //       throw new ArgumentException("por hora não é para salvar");
-
-      // }
-
-      
-
-      // public void Carregar( int _save ){
-
-
-
-      // }
-
-      
-
-
- 
-    public void Carregar_save(  int _save = -1 ){
-
-            return;
-
-             
-
-
-    }
-
-
-
-
-
-
-
-
-    public string IntArr_to_string(int[] arr){
-
-       if(arr.Length == 0) return "";
-        
-        string final = "";
-
-        for(  int i = 0 ; i < arr.Length - 1 ; i++ ){
-
-           final = final + arr[i].ToString() + ",";
-
-        }
-
-
-        final = final + arr[arr.Length -1 ].ToString();
-
-        return final;
-
-    }
-
-
-    public int[] ToIntArr(string line){
-
-        if(line == "") return new int[0];
-
-        string[] arr = line.Split(",");
-   
-        int n = arr.Length;
-        int[] retorno = new int[n];
-       
-        for(int i = 0  ;  i< n ;i++ ){
-           
-              retorno[i] = Convert.ToInt32(arr[i]);
-
-        }
-
-       return retorno;
-   
-    }
-
-    public Interativo_nome[] ToInterativosArr(string line){
-
-        if(line == "") return new Interativo_nome[0];
-
-        string[] arr = line.Split(",");
-   
-        int n = arr.Length;
-
-        Interativo_nome[] retorno = new Interativo_nome[n];
-       
-        for(int i = 0  ;  i< n ;i++ ){
-           
-            retorno[i] =  (Interativo_nome) Convert.ToInt32(arr[i]);
-
-        }
-
-       return retorno;
-   
-    }
-
-
-
-    
-   
-        public Personagem_nome[] To_personagens_nome_arr(string line){
-
-        if(line == "") return new Personagem_nome[0];
-
-        string[] arr = line.Split(",");
-   
-        int n = arr.Length;
-        Personagem_nome[] retorno = new Personagem_nome[n];
-       
-        for(int i = 0  ;  i< n ;i++ ){
-           
-              retorno[i] =  (Personagem_nome) Enum.Parse(  typeof(Personagem_nome) , arr[i]  );
-              
-
-        }
-
-       return retorno;
-   
-    }
-
 
 }
 

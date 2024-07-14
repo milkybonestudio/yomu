@@ -24,7 +24,6 @@ public class Interativo_tela {
 
         // ** tudo vai ser descartado e reiniciado durante a troca de dias 
 
-
         // --- DEFAULT
 
                 // --- SPRITES

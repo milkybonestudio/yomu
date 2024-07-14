@@ -3,37 +3,29 @@
 
 
 
-public class Ponto {
+unsafe public class Ponto {
 
 
-      // tem que ter os interativos 
-      // tem que ter as informacoes para construir um background imagem de background
+      // public Posicao_local posicao; // posicao.ponto_id => esse ponto
+
+      public byte background_sprite_id; 
+      public byte[] background_imagens_suporte_ids;
 
 
+      // tem os finais
+      // se for modificar algum ponto tem que modificar o ponto também 
+      public byte[] interativos_tipo_tela_ids; // tem os finais 
 
-      public Posicao_local posicao; // posicao.ponto_id => esse ponto
+      // vai usar para se locomover
+      public byte ponto_id;
 
-      public int ponto_anterior = -1;
-      public int background_sprite_id; 
-      public int[] background_imagens_suporte_ids;
+      // tudo precisa entrar com o id do ponto
+      public byte[][][] interativos_por_periodo_para_adicionar_PONTOS;  // vale a pena?
+      public byte[][][] interativos_por_periodo_para_subtrair_PONTOS;  // vale a pena?
 
-      public int[] interativos_tipo_personagem_ids;
-      public int[] interativos_tipo_item_ids;
-      public int[] interativos_tipo_tela_ids;
-
-
-      // precisa?
-      public string background_name;
-      public Interativo_nome[] interativos_nomes = new Interativo_nome[ 0 ] ;
-      public Personagem_nome[] personagens_no_ponto = new Personagem_nome[ 0 ];
-
-
-
-
-
-
-
-      public int script_entrada;
+      public Item_localizador[][] itens_no_ponto_PONTOS;
+      public Personagem_nome[][] personagens_no_ponto_PONTOS;
+      public Script_localizador[] script_entrada_PONTOS;
 
 
 }

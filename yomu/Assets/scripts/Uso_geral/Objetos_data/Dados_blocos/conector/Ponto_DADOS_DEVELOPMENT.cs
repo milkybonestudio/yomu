@@ -13,7 +13,19 @@
 
             public int ponto_id;
 
-            public Posicao_local posicao_local;
+            //public Posicao_local posicao_local;
+
+            public Posicao posicao;
+            public string regiao_nome;
+            public string trecho_nome;
+            public string cidade_no_trecho_nome;
+            public string zona_nome;
+            public string local_nome;
+            public string area_nome;
+            public string ponto_nome;
+            
+
+
 
             // usado para pegar 
             public string nome_ponto_DEVELOPMENT; 
@@ -25,24 +37,14 @@
             public string[] background_imagens_suporte_nomes;
             public int[] background_imagens_suporte_ids;
             public int[][] posicoes_imagens_suporte; 
+
+
+            public Metodo_interativos_default metodo_interativos_default;
+            public int[][] interativos_ids;
             
 
-            // um imagem de backgroun pode ser pega pelo enum quem leva até o ponto 
-            
-            // ou é possivel pegar com uma Posicao_local
 
-
-            /*
-
-                geralmente vai ter "/" para separar e colocar em um folder 
-                entao se tiver o gernerico "folder/folder/up/" com "/ursinho"=> "folder/folder/"
-
-            */
-
-            
-
-            public string[] interativos_tipo_personagem_nomes;
-            public string[] interativos_tipo_item_nomes;
+            public string[] interativos_tipo_item_nomes; // Precisa?
 
             public string[] interativos_tipo_tela_nomes;
 

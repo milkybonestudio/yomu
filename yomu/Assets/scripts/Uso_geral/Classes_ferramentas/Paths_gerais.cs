@@ -6,6 +6,77 @@ using UnityEngine;
 
 
 
+            public static string Pegar_path_dados_dlls(){
+
+                #if UNITY_EDITOR
+                
+                    // nao pode pegar pelo path
+                    return null;
+
+                #endif
+
+                return System.IO.Path.Combine( Application.dataPath , "Dados_run_time" );
+
+            }
+
+
+
+            public static string Pegar_path_folder_dados_usuario(){
+
+                #if UNITY_EDITOR
+
+                    return System.IO.Path.Combine( Application.dataPath , "Editor/Folder_dados_teste", "Dados_usuario" );
+                    
+                #endif
+
+                throw new Exception();
+
+                return System.IO.Path.Combine( Application.persistentDataPath , "Dados_usuario" );
+
+
+            }
+
+
+
+            public static string Pegar_path_folder_dados_save( int _save ){
+
+                    
+                    #if UNITY_EDITOR
+                        return System.IO.Path.Combine( Application.dataPath , "Editor/Folder_dados_teste", $"save_{ _save.ToString() }" );
+                    #endif
+
+                    throw new Exception();
+                    return System.IO.Path.Combine( Application.persistentDataPath ,  $"save_{ _save.ToString() }" );
+
+                
+            }
+
+            public static string Pegar_path_folder_dados_estaticos(){
+
+                    
+                    #if UNITY_EDITOR
+
+                        // nao vai chamar no editor
+
+                        return System.IO.Path.Combine( Application.dataPath , "Editor/Folder_dados_teste", "Dados_estaticos" );
+
+
+                    #endif
+
+                    throw new Exception();
+
+                    // vai vir aqui para o jogo normal
+                    return System.IO.Path.Combine( Application.dataPath ,  "Dados_estaticos" );
+
+            
+            }
+
+
+
+
+
+
+
             public static string Pegar_path_imagens_DESENVOLVIMENTO(){
 
                     string path_folder_jogo = System.IO.Directory.GetCurrentDirectory();
@@ -39,27 +110,6 @@ using UnityEngine;
             }
 
 
-            public static string Pegar_path_folder_dados_save( int _save ){
-
-                    
-                    #if UNITY_EDITOR
-
-                        // aqui é onde os dados de teste vao estar salvos.
-                        // provavelmente vai ter varios saves diferentes, poderia ter um enum com oque cada save significa
-                        //          Assets
-                        // talvez path de problemas em outros OS? 
-                        return Application.dataPath + "/Editor/Dados_saves_para_teste/save_" + _save.ToString() ;
-
-
-                    #else
-
-                        // vai vir aqui para o jogo normal
-                        return Application.persistentDataPath + "/saves/save_" + _save.ToString() + "save_morte/personagens";
-
-                    #endif
-
-                
-            }
 
             public static string Pegar_path_folder_dados_save_default(){
 

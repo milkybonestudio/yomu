@@ -9,16 +9,6 @@ using UnityEngine.UI;
 
 
 
-public enum Tipo_dado {
-
-      nada, 
-      sprite, 
-
-}
-
-
-
-
 public class Controlador_dados {
 
 
