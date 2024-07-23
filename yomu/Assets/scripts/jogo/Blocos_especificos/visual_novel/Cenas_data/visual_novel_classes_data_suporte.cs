@@ -144,8 +144,9 @@ public class Animacao_visual_novel {
 
    public enum Modo_visual_novel {
 
-      normal = 0,
-      choice = 1,
+      nada, 
+      normal,
+      choice,
 
    }
 

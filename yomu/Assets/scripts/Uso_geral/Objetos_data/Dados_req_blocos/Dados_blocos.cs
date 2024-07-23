@@ -14,26 +14,31 @@ public static class Dados_blocos {
         public static Req_mudar_input req_mudar_input;
 
 
-        public static Plataforma_START plataforma_START ;
-        public static Plataforma_RETURN plataforma_RETURN ;
+        // public static Plataforma_START plataforma_START ;
+        // public static Plataforma_RETURN plataforma_RETURN ;
 
 
         public static Visual_novel_START visual_novel_START ;
+        public static string[] visual_novel_finalizar_localizador;
         public static Visual_novel_RETURN visual_novel_RETURN ;
 
 
         public static Conector_START conector_START ;
+        public static string[] conector_finalizar_localizador;
         public static Conector_RETURN conector_RETURN ;
 
         
         public static Cartas_START cartas_START ;
+        public static string[] cartas_finalizar_localizador;
         public static Cartas_RETURN cartas_RETURN ;
         
         public static Conversa_START conversa_START ;
+        public static string[] conversas_finalizar_localizador;
         public static Conversa_RETURN conversa_RETURN ;
 
-        public static Minigame_START minigame_START ;
-        public static Minigame_RETURN minigame_RETURN ;
+        public static Minigame_START minigames_START ;
+        public static string[] minigames_finalizar_localizador;
+        public static Minigame_RETURN minigames_RETURN ;
 
 
 
@@ -60,9 +65,6 @@ public static class Dados_blocos {
                 req_mudar_UI  = null ;
                 req_mudar_input = null ;
 
-                plataforma_START  = null ;
-                plataforma_RETURN  = null ;
-
 
                 visual_novel_START  = null ;
                 visual_novel_RETURN  = null ;
@@ -78,8 +80,8 @@ public static class Dados_blocos {
                 conversa_START  = null ;
                 conversa_RETURN  = null ;
 
-                minigame_START  = null ;
-                minigame_RETURN  = null ;
+                minigames_START  = null ;
+                minigames_RETURN  = null ;
 
 
 

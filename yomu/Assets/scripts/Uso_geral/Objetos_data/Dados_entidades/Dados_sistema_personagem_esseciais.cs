@@ -22,13 +22,14 @@ public class Dados_sistema_personagem_essenciais {
         public long posicao_atual_personagem_long;
 
         // Posicao 
-        public byte continente_id;
-        public byte reino_id;
-        public byte estado_id;
-        public short posicao_cidade_id;
+
         public short regiao_id;
-        public short area_id;
-        public short ponto_id;
+        public byte trecho_id;
+        public byte cidade_no_trecho_id;
+        public byte zona_id;
+        public byte local_id;
+        public byte area_id;
+        public byte ponto_id;
 
 
         public int atividade_atual_id;

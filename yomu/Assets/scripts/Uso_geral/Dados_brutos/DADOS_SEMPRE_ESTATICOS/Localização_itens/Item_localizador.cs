@@ -3,9 +3,9 @@
 
 public class Item_localizador {
 
-        public int tipo_id;
-        public int categoria_id;
-        public int modelo_id;
-        public int item_id;
+        public byte tipo_id;
+        public byte categoria_id;
+        public byte modelo_id;
+        public short item_id;
 
 }

@@ -4,6 +4,28 @@
 public static class  STRING {
 
 
+        public static bool Verificar_se_array_2d_esta_preenchido_corretamente( string[] _arr, int _length ){
+
+                if( _arr.Length != _length )
+                        { return false; }
+
+                for( int string_index = 0 ; string_index < _arr.Length ; string_index++ ){
+
+                        string string_para_verificar = _arr[ string_index ];
+
+                        if( string_para_verificar == null || string_para_verificar == "" )
+                                { return false; }
+                        
+
+                }
+
+                return true;
+
+
+
+        }
+
+
 
         public static string Deixar_somente_a_primeira_letra_maiuscula( string _string ){
 

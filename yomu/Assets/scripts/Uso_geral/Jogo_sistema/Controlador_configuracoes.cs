@@ -96,7 +96,7 @@ using System.IO;
         public void Salvar_configurations(){
 
           //string path = Controlador_dados.Pegar_instancia().Pegar_path_raiz() + "/configurations.txt";
-          string path = Paths_gerais.Pegar_path_folder_usuario() +  "/configurations.txt";
+          string path = Paths_sistema.path_folder__dados_usuario +  "/configurations.txt";
           string[] lines = System.IO.File.ReadAllLines(path);
 
          int i = 1;
@@ -341,7 +341,7 @@ using System.IO;
                 return  Resources.Load<TextAsset>("files/configurations_default").text.Split("\r\n") ; 
                 
 
-                string path = Paths_gerais.Pegar_path_folder_usuario() + "/arquivos_mutaveis/configurations.txt" ;
+                string path = Paths_sistema.path_folder__dados_usuario + "/arquivos_mutaveis/configurations.txt" ;
                 return null;
 
 

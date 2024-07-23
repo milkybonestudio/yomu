@@ -3,27 +3,18 @@ using System;
 
 
 /*
-
     assim que um personagem for introduzido ele sempre vai estar como generico 
-
 */
 
 
 /*
-
-
 
     ** movimento 
     ** lidar com conversas 
             => lidar modificadores 
             => 
     
-
-
-
-
 */
-
 
 
 public enum Kink {

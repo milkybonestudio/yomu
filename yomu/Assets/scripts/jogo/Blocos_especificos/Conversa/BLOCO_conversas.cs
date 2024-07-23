@@ -393,19 +393,6 @@ public class BLOCO_conversas {
 
 
 
-        public static void Finalizar(){
-
-                instancia = null;
-
-                Conversas_leitor.instancia = null;
-
-                return;
-
-        }
-
-
-
-
         public void Encerrar_conversa(){
 
 

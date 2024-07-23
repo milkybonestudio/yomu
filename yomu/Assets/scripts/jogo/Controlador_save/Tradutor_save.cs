@@ -90,7 +90,7 @@ public static class Tradutor_dados_sistema {
 
                 int path_index = 0;
 
-                string path_save_folder = Paths_sistema.path_save;
+                string path_save_folder = Paths_sistema.path_folder__save;
 
                 System.Text.UTF8Encoding encoder = new System.Text.UTF8Encoding( true );
 

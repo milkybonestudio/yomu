@@ -3,38 +3,32 @@
 public static class  Verificador_interativos_DEVELOPMENT{
 
 
-        public static void Verificar_interativos_ids(  Posicao _posicao, int[][][][] _interativos_default_por_posicao, int[][][][] _interativos_para_subtrair_por_posicao, int[][][][] _interativos_para_adicionar_por_posicao ){
+        public static void Verificar_interativos_ids(  Ponto _ponto, byte[][] _interativos_default_por_periodo, byte[][] _interativos_para_subtrair_por_posicao_por_periodo, byte[][] _interativos_para_adicionar_por_posicao_por_periodo ){
 
 
 
                             // --- VERIFICAR 
 
+                int periodo = Controlador_timer.Pegar_instancia().periodo_atual_id;
+
 
                 // --- DEFAULT
 
-                Verificador_valor_null_DEVELOPMENT.Verifica_valor( _interativos_default_por_posicao , "interativos_default_por_posicao" );
-                Verificador_valor_null_DEVELOPMENT.Verifica_valor( _interativos_default_por_posicao[ _posicao.regiao_id ] , "interativos_default_regiao" );
-
-                Verificador_valor_null_DEVELOPMENT.Verifica_valor( _interativos_default_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ] , "interativos_default_area" );
-                Verificador_valor_null_DEVELOPMENT.Verifica_valor( _interativos_default_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ] , "interativos_default_ponto" );
-
-
+                Verificador_valor_null_DEVELOPMENT.Verifica_valor( _interativos_default_por_periodo, "_interativos_default_por_periodo" );
+                Verificador_valor_null_DEVELOPMENT.Verifica_valor( _interativos_default_por_periodo[ periodo ] , "interativos_default_regiao[ periodo ]" );
+        
+                
                 // --- SUBTRAIR
 
-                Verificador_valor_null_DEVELOPMENT.Verifica_valor( _interativos_para_subtrair_por_posicao , "_interativos_para_subtrair_por_posicao" );
-                Verificador_valor_null_DEVELOPMENT.Verifica_valor( _interativos_para_subtrair_por_posicao[ _posicao.regiao_id ] , "interativos_para_subtrair_regiao" );
-
-                Verificador_valor_null_DEVELOPMENT.Verifica_valor( _interativos_para_subtrair_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ] , "interativos_para_subtrair_area" );
-                Verificador_valor_null_DEVELOPMENT.Verifica_valor( _interativos_para_subtrair_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ] , "interativos_para_subtrair_ponto" );
-
+                Verificador_valor_null_DEVELOPMENT.Verifica_valor( _interativos_para_subtrair_por_posicao_por_periodo , "_interativos_para_subtrair_por_posicao_por_periodo" );
+                Verificador_valor_null_DEVELOPMENT.Verifica_valor( _interativos_para_subtrair_por_posicao_por_periodo[ periodo ] , "_interativos_para_subtrair_por_posicao_por_periodo[ periodo ] " );
+                
+                
                 // --- ADICIONAR
-
-                Verificador_valor_null_DEVELOPMENT.Verifica_valor( _interativos_para_adicionar_por_posicao , "interativos_para_adicionar_por_posicao" );
-                Verificador_valor_null_DEVELOPMENT.Verifica_valor( _interativos_para_adicionar_por_posicao[ _posicao.regiao_id ] , "interativos_para_adicionar_regiao" );
-
-                Verificador_valor_null_DEVELOPMENT.Verifica_valor( _interativos_para_adicionar_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ] , "interativos_para_adicionar_area" );
-                Verificador_valor_null_DEVELOPMENT.Verifica_valor( _interativos_para_adicionar_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ] , "interativos_para_adicionar_ponto" );
-
+                Verificador_valor_null_DEVELOPMENT.Verifica_valor( _interativos_para_adicionar_por_posicao_por_periodo , "_interativos_para_adicionar_por_posicao_por_periodo" );
+                Verificador_valor_null_DEVELOPMENT.Verifica_valor( _interativos_para_adicionar_por_posicao_por_periodo[ periodo ] , "_interativos_para_adicionar_por_posicao_por_periodo[ periodo ] " );
+                
+            
                 return;
 
             

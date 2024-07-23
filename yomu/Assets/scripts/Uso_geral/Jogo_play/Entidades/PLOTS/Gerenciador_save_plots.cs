@@ -154,9 +154,7 @@ public class Gerenciador_save_plots {
                         // dados agora vai para a segunda stack
                         plots_esperando_para_serem_excluidos_ids[ _plot_id ] = 0;
 
-                        string path = System.IO.Path.Combine( Paths_sistema.path_dados_save_plots, $"{plot_esperando_para_ser_excluido}_dados.dat" );
-
-                        dados_retorno.path = path;
+                        dados_retorno.path = Paths_sistema.Pegar_path_arquivo__dados_dinamicos__entidade( Entidade_nome.plot , plot_esperando_para_ser_excluido.ToString() );
 
                         return dados_retorno;
 

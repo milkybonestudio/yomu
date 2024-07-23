@@ -2,10 +2,11 @@
 
 public class Script_localizador {
 
-    public int escopo_id; // jogo_blocos// jogo // sistema 
-    public int bloco_id;
-    public int tipo_id_;
-    public int instrucoes_id;
+    public byte escopo_id; // jogo_blocos // jogo // sistema 
+    public byte bloco_id; 
+    public byte set_id;
+    public byte subset_id;
+    public byte script_id; 
 
 
 }

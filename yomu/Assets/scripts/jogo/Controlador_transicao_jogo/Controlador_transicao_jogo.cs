@@ -41,45 +41,6 @@ using System;
         public Bloco modo_tela_em_transicao = Bloco.nada;
 
 
-        public static Controlador_transicao_jogo Construir( Jogo _jogo ){ 
-                                
-                Controlador_transicao_jogo controlador = new Controlador_transicao_jogo(); 
-
-                        controlador.jogo = _jogo;
-                        // ** talves eu nao use
-                        controlador.canvas_jogo =  GameObject.Find("Tela/Canvas/Jogo");
-
-
-                        controlador.coberta_canvas = GameObject.Find( "Tela/Canvas/Jogo/Coberta" );
-                        controlador.coberta_canvas_imagem     = controlador.coberta_canvas.GetComponent< Image >();
-                        
-                                        
-
-                        string[] blocos_nomes = Enum.GetNames( typeof( Bloco ) );
-
-
-                        controlador.blocos_transform = new Transform[ blocos_nomes.Length ];
-
-                        int ponto_inicial = ( int ) Bloco.conector ;
-                        
-                        for( int bloco_game_object_index = ponto_inicial ; bloco_game_object_index < blocos_nomes.Length  ; bloco_game_object_index++ ){
-
-                                char[] nome_char = blocos_nomes[ bloco_game_object_index ].ToCharArray();
-                                nome_char[ 0 ] = char.ToUpper( nome_char[ 0 ] );
-                                string nome = new string ( nome_char );
-                                
-                                controlador.blocos_transform[ bloco_game_object_index ] = GameObject.Find( "Tela/Canvas/Jogo/" + nome ).transform;
-                                continue;
-
-                        }
-
-                instancia = controlador;
-                return instancia;
-                
-        }
-
-
-
 
         public void Mudar_bloco(){
 
@@ -132,12 +93,17 @@ using System;
 
                                 switch( bloco_para_ir ){
 
-                                        case Bloco.visual_novel: jogo.bloco_visual_novel = BLOCO_visual_novel.Iniciar_bloco_visual_novel();  break;
-                                        case Bloco.conector: jogo.bloco_conector = BLOCO_conector.Iniciar_bloco_conector();  break;
-                                        case Bloco.conversas: jogo.bloco_conversas = BLOCO_conversas.Iniciar_bloco_conversas();  break;
-                                        case Bloco.minigames: jogo.bloco_minigames = BLOCO_minigames.Iniciar_bloco_minigames();  break;
-                                        case Bloco.cartas: jogo.bloco_cartas = BLOCO_cartas.Iniciar_bloco_cartas();  break;
-                                        case Bloco.utilidades: jogo.bloco_utilidades = BLOCO_utilidades.Iniciar_bloco_utilidades();  break;
+                                        case Bloco.conector: jogo.bloco_conector = Construtor_bloco_CONECTOR.Construir();  break;
+                                        case Bloco.minigames: jogo.bloco_minigames = Construtor_bloco_MINIGAMES.Construir();  break;
+                                        
+
+                                        case Bloco.visual_novel: jogo.bloco_visual_novel = Construtor_bloco_VISUAL_NOVEL.Construir();  break;
+                                        case Bloco.conversas: jogo.bloco_conversas = Construtor_bloco_CONVERSAS.Construir();  break;
+                                        case Bloco.cartas: jogo.bloco_cartas = Construtor_bloco_CARTAS.Construir();  break;
+                                        case Bloco.utilidades: jogo.bloco_utilidades = Construtor_bloco_UTILIDADES.Construir();  break;
+                                        default: throw new Exception( $"bloco { bloco_para_ir } nao aceito em para Construir" );
+
+                                        
                                 }
 
 
@@ -156,12 +122,13 @@ using System;
 
                                 switch( bloco_para_excluir ) {
 
-                                        case Bloco.visual_novel: jogo.bloco_visual_novel = null; BLOCO_visual_novel.Finalizar(); return;
-                                        case Bloco.conector: jogo.bloco_conector = null; BLOCO_conector.Finalizar(); return ;
-                                        case Bloco.conversas: jogo.bloco_conversas = null; BLOCO_conversas.Finalizar(); return ;
-                                        case Bloco.cartas: jogo.bloco_cartas = null; BLOCO_cartas.Finalizar(); return ;
-                                        case Bloco.minigames: jogo.bloco_minigames = null; BLOCO_minigames.Finalizar(); return ;
-                                        case Bloco.utilidades: jogo.bloco_utilidades = null; BLOCO_utilidades.Finalizar();  break;
+                                        case Bloco.visual_novel: jogo.bloco_visual_novel = null; Finalizador_VISUAL_NOVEL.Finalizar(); break;
+                                        case Bloco.conector: jogo.bloco_conector = null; Finalizador_CONECTOR.Finalizar(); break;
+                                        case Bloco.conversas: jogo.bloco_conversas = null; Finalizador_CONVERSAS.Finalizar(); break;
+                                        case Bloco.cartas: jogo.bloco_cartas = null; Finalizador_CARTAS.Finalizar(); break;
+                                        case Bloco.minigames: jogo.bloco_minigames = null; Finalizador_MINIGAMES.Finalizar(); break;
+                                        case Bloco.utilidades: jogo.bloco_utilidades = null; Finalizador_UTILIDADES.Finalizar(); break;
+                                        default: throw new Exception( $"bloco { bloco_para_excluir } nao aceito em para Destruir" );
                                         
                                 }
 
@@ -172,18 +139,20 @@ using System;
                                 Deletar_game_objects_bloco(  bloco_para_excluir );
 
 
+
                                 // --- LIDAR RETORNO
+                                // ** nao existe mais
 
-                                switch( bloco_para_voltar ) {
+                                // switch( bloco_para_voltar ) {
 
-                                        case Bloco.visual_novel: jogo.bloco_visual_novel.Lidar_retorno() ; return ;
-                                        case Bloco.conector: jogo.bloco_conector.Lidar_retorno() ; return ;
-                                        case Bloco.conversas: jogo.bloco_conversas.Lidar_retorno() ; return ;
-                                        case Bloco.cartas: jogo.bloco_cartas.Lidar_retorno() ; return ;
-                                        case Bloco.minigames: jogo.bloco_minigames.Lidar_retorno() ; return ;
-                                        case Bloco.utilidades: jogo.bloco_utilidades.Lidar_retorno();  break;
+                                //         case Bloco.visual_novel: jogo.bloco_visual_novel.Lidar_retorno() ; return ;
+                                //         case Bloco.conector: jogo.bloco_conector.Lidar_retorno() ; return ;
+                                //         case Bloco.conversas: jogo.bloco_conversas.Lidar_retorno() ; return ;
+                                //         case Bloco.cartas: jogo.bloco_cartas.Lidar_retorno() ; return ;
+                                //         case Bloco.minigames: jogo.bloco_minigames.Lidar_retorno() ; return ;
+                                //         case Bloco.utilidades: jogo.bloco_utilidades.Lidar_retorno();  break;
 
-                                }
+                                // }
                                 
 
                         }

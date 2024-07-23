@@ -145,9 +145,9 @@ public class Gerenciador_save_personagens {
                         personagens_esperando_para_serem_excluidos_ids[ _personagem_id ] = 0;
 
                         string personagem_nome = ( ( Personagem_nome ) _personagem_id ).ToString() ;
-                        string path = System.IO.Path.Combine( Paths_sistema.path_dados_save_personagens, $"{ personagem_nome }_dados.dat" );
+                        
 
-                        dados_retorno.path = path;
+                        dados_retorno.path = Paths_sistema.Pegar_path_arquivo__dados_dinamicos__entidade( Entidade_nome.personagem, personagem_nome );// ????
 
                         return dados_retorno;
 

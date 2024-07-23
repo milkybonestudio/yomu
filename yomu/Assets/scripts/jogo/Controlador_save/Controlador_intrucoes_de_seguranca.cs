@@ -55,11 +55,11 @@ public class Controlador_instrucoes_de_seguranca {
                                 controlador.controlador_save = Controlador_save.Pegar_instancia();
                         
                         
-                                if( ! ( File.Exists( Paths_sistema.path_stack_1 ) ) )
-                                        {  throw new Exception( $"stack_1 nao foi encontrada no path { Paths_sistema.path_stack_1 }" );  }
+                                if( ! ( File.Exists( Paths_sistema.path_arquivo__stack_1 ) ) )
+                                        {  throw new Exception( $"stack_1 nao foi encontrada no path { Paths_sistema.path_arquivo__stack_1 }" );  }
 
-                                if( ! ( File.Exists( Paths_sistema.path_stack_2 ) ) )
-                                        {  throw new Exception( $"stack_2 nao foi encontrada no path { Paths_sistema.path_stack_2 }" );  }
+                                if( ! ( File.Exists( Paths_sistema.path_arquivo__stack_2 ) ) )
+                                        {  throw new Exception( $"stack_2 nao foi encontrada no path { Paths_sistema.path_arquivo__stack_2 }" );  }
 
                                         
                                 FileMode file_mode = FileMode.Open;
@@ -67,8 +67,8 @@ public class Controlador_instrucoes_de_seguranca {
                                 FileShare file_share = FileShare.Read;
                                 FileOptions file_options = FileOptions.WriteThrough;
                         
-                                controlador.strems_stacks[ 0 ] = new FileStream( Paths_sistema.path_stack_1, file_mode, file_accees , file_share, controlador.length_arquivo_instrucoes_de_seguranca , file_options );
-                                controlador.strems_stacks[ 1 ] = new FileStream( Paths_sistema.path_stack_2, file_mode, file_accees , file_share, controlador.length_arquivo_instrucoes_de_seguranca , file_options );
+                                controlador.strems_stacks[ 0 ] = new FileStream( Paths_sistema.path_arquivo__stack_1, file_mode, file_accees , file_share, controlador.length_arquivo_instrucoes_de_seguranca , file_options );
+                                controlador.strems_stacks[ 1 ] = new FileStream( Paths_sistema.path_arquivo__stack_2, file_mode, file_accees , file_share, controlador.length_arquivo_instrucoes_de_seguranca , file_options );
 
                         instancia = controlador;
                         return controlador;

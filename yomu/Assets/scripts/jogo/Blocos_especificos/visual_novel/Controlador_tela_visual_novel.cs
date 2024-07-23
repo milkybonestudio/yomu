@@ -6,34 +6,6 @@ using System.Collections;
 
 
 
-
-// public enum Tipo_objeto_visual_novel {
-
-//         simples = 0,
-
-// }
-
-
-// public enum Tipo_plano_objeto_visual_novel {
-
-//         nada = 0,
-//         persoangem, 
-//         background,
-//         frente,
-
-// }
-
-
-// public class Visual_novel_objetos {
-
-//         public Tipo_plano_objeto_visual_novel plano = nullTipo_plano_objeto_visual_novel.nada ; 
-//         public Tipo_objeto_visual_novel tipo  = Tipo_objeto_visual_novel.simples ; 
-//         public GameObject game_object = null;
-
-// }
-
-
-
 public class Controlador_tela_visual_novel {
 
 

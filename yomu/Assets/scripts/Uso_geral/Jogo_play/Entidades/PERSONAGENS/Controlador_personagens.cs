@@ -20,7 +20,7 @@ public class Controlador_personagens {
 		// --- USAO INTERNO
 		public Gerenciador_save_personagens gerenciador_save ;
 
-		public Gerenciador_containers_dinamicos_completos gerenciador_containers_dinamicos_completos ;
+		public MODULO_manipulador_containers_dinamicos_completos manipulador_containers_dinamicos_completos ;
 		public Gerenciador_objetos_dll_dinamicos gerenciador_objetos_dll_dinamicos ;
 
 		// --- MODIFICADORES
@@ -58,7 +58,13 @@ public class Controlador_personagens {
 					// ---- DADOS
 					
 					controlador.gerenciador_save = new Gerenciador_save_personagens( controlador );
-					controlador.gerenciador_containers_dinamicos_completos = new Gerenciador_containers_dinamicos_completos( _folder_para_pegar_dados: Paths_sistema.path_dados_save_personagens, _numero_inicial_de_slots: 50 );
+					controlador.manipulador_containers_dinamicos_completos = new MODULO_manipulador_containers_dinamicos_completos (
+																																		_nome_gerenciador : "" ,
+																																		_folder_para_pegar_dados: null, //Paths_sistema.path_folder__dados_dinamicos__uso_completo__dados_save_personagens,
+																																		_pode_escrever_no_container: false ,
+																																		_numero_inicial_de_slots: ( _dados_sistema_personagens_essenciais.Length + 10 )
+																																
+																																	);
 
 					controlador.dados_sistema_personagens_essenciais = _dados_sistema_personagens_essenciais;
 					controlador.personagens = new Personagem[ _dados_sistema_personagens_essenciais.Length ];
@@ -106,8 +112,8 @@ public class Controlador_personagens {
 				// --- PEGAR CONTAINER
 
 				string path_personagem_dados = $"PERSONAGEM_{ personagem_nome }_dados.dat";
-				gerenciador_containers_dinamicos_completos.Carregar_container_NA_MULTITHREAD( _personagem_id, path_personagem_dados );
-				byte[] dados_container_personagem_byte =  gerenciador_containers_dinamicos_completos.Pegar_container( _personagem_id );
+				manipulador_containers_dinamicos_completos.Carregar_container_NA_MULTITHREAD( _personagem_id, path_personagem_dados );
+				byte[] dados_container_personagem_byte =  manipulador_containers_dinamicos_completos.Pegar_container( _personagem_id );
 				Dados_containers_personagem dados_containers_personagens = Construtor_containers_personagens.Construir( dados_container_personagem_byte );
 
 				Personagem personagem_para_adicionar =  Construtor_personagem.Construir( _personagem_id,  _plano_para_adicionar_id, dados_sistema_personagem_essenciais,  dados_containers_personagens, personagem_AI );
@@ -131,7 +137,7 @@ public class Controlador_personagens {
 				// --- CRIA PERSONAGEM
 				
 				System.Object personagem_AI =   gerenciador_objetos_dll_dinamicos.Pegar_objeto( _personagem_id );
-				byte[] container_byte = gerenciador_containers_dinamicos_completos.Pegar_container( _personagem_id );
+				byte[] container_byte = manipulador_containers_dinamicos_completos.Pegar_container( _personagem_id );
 				Dados_containers_personagem dados_containers_personagens = Construtor_containers_personagens.Construir( container_byte );
 
 				Dados_sistema_personagem_essenciais dados_sistema_personagem_essenciais = dados_sistema_personagens_essenciais[ _personagem_id ];
@@ -168,8 +174,8 @@ public class Controlador_personagens {
 						int slot_objeto = gerenciador_objetos_dll_dinamicos.Criar_slot( _personagem_id );
 						gerenciador_objetos_dll_dinamicos.objetos[ slot_objeto ] = personagem_na_lixeira.gerenciador_AI.personagem_AI;
 
-						int slot_container = gerenciador_containers_dinamicos_completos.Criar_slot( _personagem_id );
-						gerenciador_containers_dinamicos_completos.dados_containers[ slot_container ] = personagem_na_lixeira.gerenciador_containers_dados.Compilar_dados();
+						int slot_container = manipulador_containers_dinamicos_completos.Criar_slot( _personagem_id );
+						manipulador_containers_dinamicos_completos.dados_containers[ slot_container ] = personagem_na_lixeira.gerenciador_containers_dados.Compilar_dados();
 		
 		
 				}
@@ -186,7 +192,7 @@ public class Controlador_personagens {
 
 						// --- PEGAR CONTAINER
 						string path_container = $"PERSONAGEM_{ nome_personagem }_dados.dat";
-						gerenciador_containers_dinamicos_completos.Carregar_container_NA_MULTITHREAD( _personagem_id, path_container );
+						manipulador_containers_dinamicos_completos.Carregar_container_NA_MULTITHREAD( _personagem_id, path_container );
 
 						return;
 								

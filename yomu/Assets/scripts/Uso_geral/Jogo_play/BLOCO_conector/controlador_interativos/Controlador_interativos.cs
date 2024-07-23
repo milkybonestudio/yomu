@@ -3,9 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Runtime.CompilerServices;
 
 
-unsafe public class Controlador_interativos {
+
+// controlador interativos só usa logica de interativos, se o player ou algum outro personagem usou algo, pegou algo ou iniciou algo. Esse algo porecisa vir de um tipo de interativo\\
+
+
+
+public class Controlador_interativos {
 
 
             public static Controlador_interativos instancia;
@@ -14,37 +20,24 @@ unsafe public class Controlador_interativos {
 
 
             public BLOCO_conector bloco_conector;
+            public Controlador_tela_conector controlador_tela_conector;
             
 
             // vai ser usado somente na build
             public byte[] dados_interativos_da_cidade;
 
 
+            public Gerenciador_containers_dinamicos_parciais gerenciador_dados_interativos;
 
-
-            // testar
-
-            public Interativo_personagem[] interativos_tipo_personagem;
-            public Interativo_item[] interativos_tipo_item;
-            public Interativo_tela[] interativos_tipo_tela;
 
 
             // --- CANVAS
 
             public GameObject interativos_container;
-
             public GameObject interativos_tipo_tela_container;
             public GameObject interativos_tipo_personagem_container;
             public GameObject interativos_tipo_item_container;
 
-
-            public Gerenciador_imagens_interativos gerenciador_imagens_interativos;
-            
-
-
-            //public Interativo[] interativos_arr = new Interativo[ 0 ];
-            // ** os gameObjects ficam agora nos interativos 
-            //public GameObject[] interativos_game_objects_arr;
 
 
             // nao faz mais sentido
@@ -52,37 +45,476 @@ unsafe public class Controlador_interativos {
 
 
 
-            public static Controlador_interativos Construir(){ 
+            // --- ITENS 
 
-
-                  Controlador_interativos controlador = new Controlador_interativos(); 
-                        
-
-                        // --- CONTROLADORES
-
-                        controlador.bloco_conector = BLOCO_conector.Pegar_instancia();
-
-                        // --- CRIAR CANVAS 
-
-                        controlador.interativos_container = new GameObject( "Interativos_container" );
-                        controlador.interativos_container.transform.SetParent( controlador.bloco_conector.container_conector.transform, false );
-
-
-                        controlador.interativos_tipo_tela_container = new GameObject( "Interativos_tipo_tela_container" );
-                        controlador.interativos_tipo_tela_container.transform.SetParent( controlador.interativos_container.transform, false );
-
-                        controlador.interativos_tipo_personagem_container = new GameObject( "Interativos_tipo_personagem_container" );
-                        controlador.interativos_tipo_personagem_container.transform.SetParent( controlador.interativos_container.transform, false );
-
-                        controlador.interativos_tipo_item_container = new GameObject( "Interativos_tipo_item_container" );
-                        controlador.interativos_tipo_item_container.transform.SetParent( controlador.interativos_container.transform, false );
+            public void Acrescentar_itens( Ponto _ponto, Item_localizador[] _itens ){
 
 
 
-                  instancia = controlador; 
-                  return instancia;
+            }
+
+            public void Remover_itens( Ponto _ponto, Item_localizador[] _itens ){
+
+
+
+            }
+
+
+            // --- PERSONAGENS
+
+            void Mover_personagem( Ponto _ponto_saida, Ponto _ponto_entrada, Personagem_nome _personagem ){
+
+                  Remover_personagem( _ponto_saida , _personagem);
+                  Acrescentar_personagem( _ponto_entrada, _personagem );
+                  return;
+
+            }
+
+            public void Acrescentar_personagem( Ponto _ponto, Personagem_nome _personagem ){
+
+                  
+
+            }
+
+            public void Remover_personagem( Ponto _ponto, Personagem_nome _personagem ){
+
+
+
+                  Personagem_nome[] personagens_no_ponto = _ponto.ponto_ativo.personagens_no_ponto;
+
+                  bool achou_o_interativo = false;
+
+                  for( int personagem_index = 0 ; personagem_index < personagens_no_ponto.Length ; personagem_index++ ){
+
+                              // --- VERIFICA SE O PERSONAGEM ESTA NO PONTO
+                              if( personagens_no_ponto[ personagem_index ] == _personagem )
+                                    {
+                                          // --- ACHOU PERSONAGEM NO PONTO
+                                          personagens_no_ponto[ personagem_index ] = Personagem_nome.nada;
+                                          achou_o_interativo = true;
+                                          break;
+                                    }
+
+                              // --- VERIFICA O PROXIO PERSONAGEM 
+                              continue;
+
+                  }
+
+
+                  #if UNITY_EDITOR
+
+                        if( !( achou_o_interativo ) )
+                              { throw new Exception( $"Tentou remover o personagem { _personagem.ToString() } no ponto { _ponto.ponto_ativo.nome }, mas ele nao estava no ponto" ); }
+
+                  #endif
+
+                  // 
+
+                  return;
+            
+
+            }
+
+
+
+
+
+
+            // --- INTERATIVOS TELA
+
+
+            public void Acrescentar_interativos_tela_para_subtrair(   Ponto _ponto, int _tipo_alocar_interativos ,byte[][] _interativos_ids ){
+
+                  Modificar_interativos_genericos( _ponto, Tipo_modificacao_interativo_id.subtrair, Tipo_acao.remover, _tipo_alocar_interativos, _interativos_ids );
+                  return;
                   
             }
+
+
+            public void Acrescentar_interativos_tela_para_adicionar(   Ponto _ponto, int _tipo_alocar_interativos ,byte[][] _interativos_ids ){
+
+                  Modificar_interativos_genericos( _ponto, Tipo_modificacao_interativo_id.adicionar, Tipo_acao.remover, _tipo_alocar_interativos, _interativos_ids );
+                  return;
+                  
+            }
+
+            public void Remover_interativos_tela_para_subtrair(   Ponto _ponto, int _tipo_alocar_interativos ,byte[][] _interativos_ids ){
+
+                  Modificar_interativos_genericos( _ponto, Tipo_modificacao_interativo_id.subtrair, Tipo_acao.remover, _tipo_alocar_interativos, _interativos_ids );
+                  return;
+                  
+            }
+
+
+            public void Remover_interativos_tela_para_adicionar(   Ponto _ponto, int _tipo_alocar_interativos ,byte[][] _interativos_ids ){
+
+                  Modificar_interativos_genericos( _ponto, Tipo_modificacao_interativo_id.adicionar, Tipo_acao.remover, _tipo_alocar_interativos, _interativos_ids );
+                  return;
+                  
+            }
+
+
+
+
+
+      public enum Tipo_acao{
+
+            acrescentar, 
+            remover,
+
+      }
+
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public void Modificar_interativos_genericos(   Ponto _ponto, Tipo_modificacao_interativo_id _tipo , Tipo_acao _tipo_acao  ,int _tipo_alocar_interativos ,byte[][] _interativos_ids ){
+
+                  if ( _ponto.ponto_ativo == null )
+                        {
+                              // --- PONTO ESTA COMPRIMIDO
+
+                              // *** mesmo o array no ponto sendo 1d a funcao vai interar sobre o intervalo
+                              byte[][] interativos_por_periodo_atuais_comprimidos =  Manipulador_interativos_COMPRIMIDOS.Garantir_mesmo_formato_interativos( _ponto , _tipo,  _tipo_alocar_interativos , _interativos_ids );
+
+                              if( _tipo_acao == Tipo_acao.acrescentar )
+                                    { Manipulador_interativos_COMPRIMIDOS.Acrescentar_interativos_tela( interativos_por_periodo_atuais_comprimidos, _interativos_ids ); } // --- ADICIONAR
+                                    else 
+                                    { Manipulador_interativos_COMPRIMIDOS.Remover_interativos_tela( interativos_por_periodo_atuais_comprimidos, _interativos_ids ); }     // --- REMOVER 
+      
+                              //** se nao esta ativo nao precisa fazer nada
+                              return;
+
+                        }
+                        else 
+                        {
+                              // --- PONTO ESTA ATIVO
+
+                              Ponto_ativo ponto_ativo = _ponto.ponto_ativo;
+                              int periodo = Controlador_timer.Pegar_instancia().periodo_atual_id;
+
+                              byte[][] interativos_por_periodo_atuais_descomprimidos =  Manipulador_interativos_DESCOMPRIMIDOS.Garantir_mesmo_formato_interativos( ponto_ativo , _tipo,  _tipo_alocar_interativos , _interativos_ids );
+
+                              if( _tipo_acao == Tipo_acao.acrescentar )
+                                    { Manipulador_interativos_DESCOMPRIMIDOS.Acrescentar_interativos_tela( interativos_por_periodo_atuais_descomprimidos, _interativos_ids ); } // --- ADICIONAR
+                                    else 
+                                    { Manipulador_interativos_DESCOMPRIMIDOS.Remover_interativos_tela( interativos_por_periodo_atuais_descomprimidos, _interativos_ids ); }     // --- REMOVER 
+
+                              
+                              // --- PEGA IDS COM A ATUALIZACAO
+                              byte[] novos_ids = Manipulador_interativos_DESCOMPRIMIDOS.Criar_interativos_tela_ids_ponto(  ponto_ativo );
+                              byte[] ids_antigos = ponto_ativo.tipos_interativos_tela_por_periodo[ periodo ];
+            
+
+                              if( Verificar_se_teve_alteracao_nos_ids( novos_ids, ids_antigos ) )
+                                    { controlador_tela_conector.Informar_alteracao_ponto_ativo( _ponto ); } // --- TEVE ALTERACAO
+
+                              return;
+
+                              
+                        }
+                  
+                  return;
+                  
+            }
+
+
+
+
+
+
+
+
+            // public void Remover_interativos_tela_para_subtrair(   Ponto _ponto, int _tipo_alocar_interativos ,byte[][] _interativos_ids ){
+
+            //       if ( _ponto.ponto_ativo == null )
+            //             {
+            //                   // --- PONTO ESTA COMPRIMIDO
+
+            //                   // *** mesmo o array no ponto sendo 1d a funcao vai interar sobre o intervalo
+            //                   byte[][] interativos_por_periodo_para_subtrair_atuais =  Manipulador_interativos_COMPRIMIDOS.Garantir_mesmo_formato_interativos( _ponto , Tipo_modificacao_interativo_id.subtrair,  _tipo_alocar_interativos , _interativos_ids );
+            //                   Manipulador_interativos_COMPRIMIDOS.Remover_interativos_tela( interativos_por_periodo_para_subtrair_atuais, _interativos_ids );
+
+            //                   //** se nao esta ativo nao precisa fazer nada
+            //                   return;
+
+            //             }
+            //             else 
+            //             {
+            //                   // --- PONTO ESTA ATIVO
+
+            //                   Ponto_ativo ponto_ativo = _ponto.ponto_ativo;
+            //                   int periodo = Controlador_timer.Pegar_instancia().periodo_atual_id;
+
+            //                   byte[][] interativos_por_periodo_para_subtrair_atuais =  Manipulador_interativos_DESCOMPRIMIDOS.Garantir_mesmo_formato_interativos( ponto_ativo , Tipo_modificacao_interativo_id.subtrair,  _tipo_alocar_interativos , _interativos_ids );
+            //                   Manipulador_interativos_DESCOMPRIMIDOS.Remover_interativos_tela( interativos_por_periodo_para_subtrair_atuais, _interativos_ids );
+
+                              
+            //                   // --- PEGA IDS COM A ATUALIZACAO
+            //                   byte[] novos_ids = Manipulador_interativos_DESCOMPRIMIDOS.Criar_interativos_tela_ids_ponto(  ponto_ativo, _interativos_ids );
+            //                   byte[] ids_antigos = ponto_ativo.tipos_interativos_tela_por_periodo[ periodo ];
+            
+
+            //                   if( Verificar_se_teve_alteracao_nos_ids( novos_ids, ids_antigos ) )
+            //                         { controlador_tela_conector.Informar_alteracao_ponto_ativo( _ponto ); } // --- TEVE ALTERACAO
+
+            //                   return;
+
+                              
+            //             }
+                  
+            //       return;
+                  
+            // }
+
+
+
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Verificar_se_teve_alteracao_nos_ids( byte[] _ids_novos, byte[] _ids_antigos ){
+
+
+                  if( _ids_novos.Length != _ids_antigos.Length )
+                        {
+                              // --- NUMERO DE ELEMENTOS DIFERENTES => TEVE ALTERACAO
+                              return true;
+                        }
+
+                  // *** ids sempre sao exatos e sem 0
+
+                  for( int index_novos = 0 ; index_novos < _ids_novos.Length ; index_novos++ ){
+
+   
+                        // --- VERIFICA SE O ID EXISTE NO ANTIGO
+                        for( int index_antigo = 0 ; index_antigo < _ids_antigos.Length  ;  index_antigo++ ){
+
+                              // --- VERIFICA SE O ID_NOVO ESTA NO ID_ANTIGO
+                              if( _ids_antigos[ index_antigo ] == _ids_novos[ index_novos ] )
+                                    {
+                                          // --- JA EXISTIA, VERIFICAR O PROXIMO NOVO
+                                          break;
+                                    }
+
+                              if( index_antigo == ( _ids_antigos.Length - 1 ) )
+                                    {
+                                          // --- ULTIMO ELEMENTO E AINDA NAO FOI ACHADO => NAO TEM => TEVE ALTERACAO
+                                          return true;
+                                    }
+
+                        }
+
+                        // --- ELEMNTE DO LOOP FOI ACHADO, VERIFICAR O PROXIMO
+                        continue;
+
+                  }
+
+                  // --- NENHUM ERA DIFERENTE
+                  return false;
+
+            }
+
+
+
+
+            // [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            // private void Verificar_ponto( Ponto _ponto ){
+
+            //       if( _ponto.ponto_esta_sendo_monitorado )
+            //             { 
+            //                   // --- ATUALIZA PONTOS
+            //                   Atualizar_interativos_tela_ponto( _ponto );
+
+            //                   // --- TROCA TELA COM OS NOVOS INTRATIVOS
+            //                   // *** talvez trave se muitos scripts adicionarem ou removerem interativos em sequencia
+            //                   controlador_tela_conector.Trocar_tela( _ponto :_ponto.ponto_esta_sendo_monitorado, _tem_transicao :false );
+            //             }
+
+
+            //       return;
+
+            // }
+
+
+
+
+            public void Atualizar_interativos_tela_ponto( Ponto _ponto ){
+
+
+                  // *** aqui ele vai ter que criar um byte[] com os interativos dos periodos
+
+                  //  pode ter algumas coisas como default => arr[ 1 ], sub => arr[ 2 ], add => arr[ 5 ]
+                  //  ele nao pode mudar os interativos pois seria muita memoria, e vai ser refeito no proximo frame de qualquer jeito
+
+
+
+            }
+
+
+
+
+            public Interativo_item[] Criar_interativos_item( Ponto _ponto ){
+
+                  throw new Exception( "ainda tem que fazer" );
+
+            }
+
+
+            public Interativo_personagem[] Criar_interativos_personagem( Ponto _ponto ){
+
+                  throw new Exception( "ainda tem que fazer" );
+                  
+            }
+
+
+            public Interativo_tela[] Criar_interativos_tela( Ponto _ponto  ){
+
+                  #if UNITY_EDITOR
+
+                        return Criar_interativos_tela_DEVELOPMENT( _ponto );
+
+                  #else
+
+                        return Criar_interativos_tela_BUILD( _ponto );
+
+                  #endif
+
+
+            }
+
+
+            private Interativo_tela[] Criar_interativos_tela_BUILD( Ponto _ponto  ){  
+                  
+
+                  // int ponto_id = ( int ) _ponto.ponto_id;
+                  // int periodo_atual_id = Controlador_timer.Pegar_instancia().periodo_atual_id;
+
+                  // // --- PEGAR INTERATIVOS 
+                  // byte[][] interativos_default_PERIODOS = _ponto.interativos_tipo_tela_default_ids;
+                  // byte[][] interativos_para_adicionar_PERIODOS = _ponto.interativos_por_periodo_para_adicionar;
+                  // byte[][] interativos_para_subtrair_PERIODOS = _ponto.interativos_por_periodo_para_subtrair;
+
+                  // // --- PEGAR INTERATIVOS DO PERIODO
+                  // byte[] interativos_default = Manipulador_interativos_DESCOMPRIMIDOS.Pegar_interativos_com_alocacao_comprimida( interativos_default_PERIODOS , periodo_atual_id );
+                  // byte[] interativos_para_adicionar = Manipulador_interativos_DESCOMPRIMIDOS.Pegar_interativos_com_alocacao_comprimida( interativos_para_adicionar_PERIODOS , periodo_atual_id );
+                  // byte[] interativos_para_subtrair = Manipulador_interativos_DESCOMPRIMIDOS.Pegar_interativos_com_alocacao_comprimida( interativos_para_subtrair_PERIODOS , periodo_atual_id );
+
+                  // // --- PEGAR FINAL
+                  // byte[] interativos_finais = BYTE.Aplicar_subtrair_e_adicionar_array( interativos_default, interativos_para_subtrair, interativos_para_adicionar );
+                  // interativos_finais = BYTE.Remover_valor( interativos_finais, 0 );
+
+                  // Interativo_tela[] interativos_retorno = Leitor_interativos_tela.Pegar_interativos_tela(  _ponto.posicao,  interativos_finais );
+
+                  // return interativos_retorno; 
+
+                  return null;
+                  
+            }
+
+
+            // #if UNITY_EDITOR
+            // #end
+
+                  private Interativo_tela[] Criar_interativos_tela_DEVELOPMENT( Ponto _ponto ){
+
+
+                        // int periodo = Controlador_timer.Pegar_instancia().periodo_atual_id;
+
+                        // byte[][] interativos_tipo_tela_default_ids_por_periodo  =  _ponto.ponto_ativo.interativos_tipo_tela_default_ids_por_periodo ;
+                        // byte[][] interativos_para_adicionar_por_posicao_por_periodo  = _ponto.ponto_ativo.interativos_por_periodo_para_adicionar;
+                        // byte[][] interativos_para_subtrair_por_posicao_por_periodo  =  _ponto.ponto_ativo.interativos_por_periodo_para_subtrair;
+                        
+
+                        // // --- GARANTE QUE TODOS EXISTEM
+                        // Verificador_interativos_DEVELOPMENT.Verificar_interativos_ids( _ponto, interativos_default_por_posicao, interativos_para_subtrair_por_posicao_por_periodo, interativos_para_adicionar_por_posicao_por_periodo ) ;
+                        
+
+                        // byte[] interativos_default = interativos_tipo_tela_default_ids_por_periodo[ periodo ];
+                        // byte[] interativos_para_subtrair = _ponto.ponto_ativo.interativos_por_periodo_para_subtrair[ periodo ];
+                        // byte[] interativos_para_adicionar = _ponto.ponto_ativo.interativos_por_periodo_para_adicionar[ periodo ];
+
+
+                        // byte[] interativos_finais_ids = BYTE.Aplicar_subtrair_e_adicionar_array( interativos_default , interativos_para_subtrair, interativos_para_adicionar );
+
+
+                        // Interativo_tela[] interativos_tipo_tela_retorno = new Interativo_tela[ interativos_finais_ids.Length ] ;
+
+
+                        // for( int interativo_slot = 0 ; interativo_slot < interativos_finais_ids.Length ; interativo_slot++ ){
+
+
+                        //             // byte interativo_id = interativos_finais_ids[ interativo_slot ];
+
+                        //             // //Interativo_tela_DADOS_DESENVOLVIMENTO 
+                        //             // Interativo_tela_DADOS_DESENVOLVIMENTO interativo_Tela_DADOS_DESENVOLVIMENTO = Leitor_interativos_tela.Pegar_interativo( _ponto.posicao , interativo_id );
+                        //             // Interativo_tela interativo_tela = Construtor_interativos_DEVELOPMENT.Criar_interativo_tela_com_DADOS_DEVELOPMENT( interativo_Tela_DADOS_DESENVOLVIMENTO );
+                                    
+                        //             // interativos_tipo_tela_retorno[ interativo_slot ] = interativo_tela;
+
+                        //             continue;
+
+                        // }
+
+                        // return interativos_tipo_tela_retorno;                        
+
+                        return null;
+
+                  }
+
+
+
+    
+
+
+
+
+
+            public void Ativar_interativo_tela( Interativo_tela _interativo_tela ){
+
+                        Tipo_interativo_tela tipo = _interativo_tela.tipo_interativo_tela;
+                  
+                        switch( tipo  ){
+
+                              case Tipo_interativo_tela.movimento: Receptor_interativo_tela_movimento.Receber( _interativo_tela ); return;
+                              // case Tipo_interativo_tela.conversa: Receber_personagem( interativo ); return;
+                              // case Tipo_interativo_tela.item: Receber_item( interativo ); return;
+                              // case Tipo_interativo_tela.cenas: Receber_visual_novel( interativo ); return;
+                              // case Tipo_interativo_tela.utilidade: Receber_utilidade( interativo ); return;
+
+                        }
+
+            }
+
+
+
+            public void Ativar_interativo_personagem( Interativo_personagem _interativo_personagem ){
+
+                         
+
+                        Tipo_interativo_personagem tipo = _interativo_personagem.tipo_interativo_personagem;
+                  
+                        switch( tipo  ){
+
+                              //case Tipo_interativo_personagem.conversa: Receptor_interativo_tela_movimento.Receber( _interativo_tela ); return;
+
+
+                        }
+
+            }
+
+
+            public void Ativar_interativo_item( Interativo_item _interativo_item ){
+
+                         
+                        Tipo_interativo_item tipo = _interativo_item.tipo_interativo_item;
+                  
+                        switch( tipo  ){
+
+                              case Tipo_interativo_item.item: return; 
+
+
+                        }
+
+            }
+
+
 
 
             public void Esconder_interativos( bool _valor ){
@@ -94,480 +526,7 @@ unsafe public class Controlador_interativos {
 
 
 
-            public void Acrescentar_interativos_para_adicionar(   Ponto _ponto, int _tipo_alocar_interativos ,byte[][] _interativos_ids ){
-
-                  byte[][] interativos_por_periodo_para_adicionar_atuais =  Manipulador_interativos.Garantir_mesmo_formato_interativos( _ponto , Tipo_interativo_acao.adicionar,  _tipo_alocar_interativos , _interativos_ids );
-                  Manipulador_interativos.Acrescentar_interativos( interativos_por_periodo_para_adicionar_atuais, _interativos_ids );
-                  return;
-                  
-            }
-
-
-            public void Acrescentar_interativos_para_subtrair(   Ponto _ponto, int _tipo_alocar_interativos ,byte[][] _interativos_ids ){
-
-                  byte[][] interativos_por_periodo_para_subtrair_atuais =  Manipulador_interativos.Garantir_mesmo_formato_interativos( _ponto , Tipo_interativo_acao.subtrair,  _tipo_alocar_interativos , _interativos_ids );
-                  Manipulador_interativos.Acrescentar_interativos( interativos_por_periodo_para_subtrair_atuais, _interativos_ids );
-                  return;
-                  
-            }
-
-
-            public void Remover_interativos_para_adicionar(   Ponto _ponto, int _tipo_alocar_interativos ,byte[][] _interativos_ids ){
-
-                  byte[][] interativos_por_periodo_para_adicionar_atuais =  Manipulador_interativos.Garantir_mesmo_formato_interativos( _ponto , Tipo_interativo_acao.adicionar,  _tipo_alocar_interativos , _interativos_ids );
-                  Manipulador_interativos.Remover_interativos( interativos_por_periodo_para_adicionar_atuais, _interativos_ids );                
-                  return;
-                  
-            }
-
-
-            public void Remover_interativos_para_subtrair(   Ponto _ponto, int _tipo_alocar_interativos ,byte[][] _interativos_ids ){
-
-                  byte[][] interativos_por_periodo_para_subtrair_atuais =  Manipulador_interativos.Garantir_mesmo_formato_interativos( _ponto , Tipo_interativo_acao.subtrair,  _tipo_alocar_interativos , _interativos_ids );
-                  Manipulador_interativos.Remover_interativos( interativos_por_periodo_para_subtrair_atuais, _interativos_ids );
-                  return;
-                  
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-            public Interativo[] Criar_interativos( Ponto _p  ){  return null; } // excluirt
-
-
-            unsafe public Interativo_tela[] Criar_interativos_tela( Posicao _posicao ){
-
-                        #if UNITY_EDITOR
-
-                              return Criar_interativos_tela_DESENVOLVIMENTO( _posicao );
-
-                        #endif
-
-
-                        Cidade cidade = Controlador_cidades.instancia.cidades[ _posicao.cidade_no_trecho_id ];
-                        int[] interativos_default  = cidade.interativos_tela_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ];
-                        int[] interativos_para_subtrair  = cidade.interativos_tela_para_subtrair_ids[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ];
-                        int[] interativos_para_adicionar  = cidade.interativos_tela_para_adicionar_ids[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ];
-
-                        int[] interativos_finais_ids = INT.Aplicar_subtrair_e_adicionar_array( interativos_default , interativos_para_subtrair, interativos_para_adicionar );
-
-                        Interativo_tela[] interativos_retorno = new Interativo_tela[ interativos_finais_ids.Length ];
-
-                        // pegar e pensar melhor depois
-                        // ** vao ser todas iguais, porque os interativos vao ser do mesmo ponto
-
-
-                        // acho que tem que ser long para fazer pointer + p0?
-                        long pointer_container_da_area = 0;
-
-                        for( int interativo_tela_slot = 0 ; interativo_tela_slot < interativos_finais_ids.Length ; interativo_tela_slot++ ){
-
-                                    // int interativo_tela_id =  interativos_finais_ids[ interativo_tela_slot ];
-
-                                    //long pointer_inicial_busca =( ( long )( & (dados_interativos_da_cidade[ 0 ]) ) + pointer_container_da_area + ( interativo_tela_id << 2 ) ) ;
-
-
-                                    // int ponto_1  =  *( int* ) ( pointer_inicial_busca  + 0l );
-                                    // int ponto_2  =  *( int* ) ( pointer_inicial_busca  + 4l );
-
-
-                                    // byte[] dados =   * ( byte* ) ( ( long ) &dados_interativos_da_cidade   + ( long ) ( ponto_1 << 2 ) );
-
-
-                                    // // talvez?
-                                    // // int ponto_1  =  *( int* ) (  ( long )( &dados_interativos_da_cidade ) + pointer_container_da_area + ( interativo_tela_id << 2 ) );
-                                    // // int ponto_2  =  *( int* ) (  ( long )( &dados_interativos_da_cidade ) + pointer_container_da_area + ( interativo_tela_id << 2 ) );
-
-
-                                    // byte[] dados_interativo_compactos  = new byte[ ( ponto_final_dados - ponto_inicial_dados ) ] ;
-
-                                    // for( int index_dados = 0 ; index_dados < dados_interativo_compactos.Length ; index_dados++ ){
-
-                                    //             dados_interativo_compactos[ index_dados ] = dados_interativos_da_cidade[ ( ponto_inicial_dados + index_dados ) ] ;
-
-                                    // }
-
-                                    // interativos_retorno[ interativo_tela_slot ] = Criar_interativo_tela( dados_interativo_compactos , interativo_tela_id ) ;
-
-                                    continue;
-
-                        }
-
-                        return interativos_retorno;
-
-
-
-            }
-
-
-            public Interativo_tela Criar_interativo_tela(  byte[] _dados, int _interativo_tela_id ){
-
-                        int periodo = Controlador_timer.instancia.periodo_atual_id;
-
-                        Interativo_tela interativo_tela  = new Interativo_tela( _interativo_tela_id );
-
-                        // interar sobre o container ... 
-
-
-                        int sprite_id_imagem_1 = interativo_tela.sprites_imagem_1_ids_unicos_por_periodo[ periodo ];
-                        int sprite_id_imagem_2 = interativo_tela.sprites_imagem_2_ids_unicos_por_periodo[ periodo ];
-
-                        Sprite sprite_imagem_1 =  gerenciador_imagens_interativos.Pegar_sprite( sprite_id_imagem_1 );
-                        Sprite sprite_imagem_2 =  gerenciador_imagens_interativos.Pegar_sprite( sprite_id_imagem_2 );
-
-                        return interativo_tela;
-
-                        
-            }
-
-
-            public Interativo_tela[] Criar_interativos_tela_DESENVOLVIMENTO( Posicao _posicao ){
-
-
-                  Cidade cidade = Controlador_cidades.Pegar_instancia().Pegar_cidade_DESENVOLVIMENTO( "controlador_interativos", _posicao.cidade_no_trecho_id );
-
-                  int[][][][] interativos_default_por_posicao  =  cidade.interativos_tela_por_posicao;
-                  int[][][][] interativos_para_subtrair_por_posicao  =  cidade.interativos_tela_para_subtrair_ids;
-                  int[][][][] interativos_para_adicionar_por_posicao  =  cidade.interativos_tela_para_adicionar_ids;
-
-                  // --- GARANTE QUE TODOS EXISTEM
-                  Verificador_interativos_DEVELOPMENT.Verificar_interativos_ids( _posicao, interativos_default_por_posicao, interativos_para_subtrair_por_posicao, interativos_para_adicionar_por_posicao );
-                  
-
-                  int[] interativos_default = interativos_default_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ];
-                  int[] interativos_para_subtrair = interativos_para_subtrair_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ];
-                  int[] interativos_para_adicionar = interativos_para_adicionar_por_posicao[ _posicao.regiao_id ][ _posicao.area_id ][ _posicao.ponto_id ];
-
-
-
-                  int[] interativos_finais_ids = INT.Aplicar_subtrair_e_adicionar_array( interativos_default , interativos_para_subtrair, interativos_para_adicionar );
-
-
-                  Interativo_tela[] interativos_tipo_tela_retorno = new Interativo_tela[ interativos_finais_ids.Length ] ;
-
-
-                  for( int interativo_slot = 0 ; interativo_slot < interativos_finais_ids.Length ; interativo_slot++ ){
-
-
-                              int interativo_id = interativos_finais_ids[ interativo_slot ];
-
-                              //Interativo_tela_DADOS_DESENVOLVIMENTO 
-                              Interativo_tela_DADOS_DESENVOLVIMENTO interativo_Tela_DADOS_DESENVOLVIMENTO = Leitor_interativos_tela.Pegar( _posicao , interativo_id );
-                              Interativo_tela interativo_tela = Construtor_interativos_DEVELOPMENT.Criar_interativo_tela_com_DADOS_DEVELOPMENT( interativo_Tela_DADOS_DESENVOLVIMENTO );
-                              
-                              interativos_tipo_tela_retorno[ interativo_slot ] = interativo_tela;
-
-                              continue;
-
-                  }
-
-
-      	      return interativos_tipo_tela_retorno;
-
-                  
-
-            }
-
-
-            // public Interativo_tela Criar_interativo_tela_DEVELOPMENT( Posicao_local _posicao_local , int  _interativo_id ){
-
-
-            //             Interativo_tela_DADOS_DESENVOLVIMENTO interativo_tela_dados_desenvolvimento = Leitor_interativos_tela_DESENVOLVIMENTO.Pegar( _posicao_local , _interativo_id );
-            //             Interativo_tela interativo_tela = Construtor_interativos_DEVELOPMENT.Criar_interativo_tela_DEVELOPMENT( interativo_tela_dados_desenvolvimento );
-
-            //             gerenciador_imagens_interativos.Colocar_sprites_interativo_tela_DESENVOLVIMENTO( interativo_tela_dados_desenvolvimento , interativo_tela );
-                        
-            //             return interativo_tela;
-
-            // }
-
-
-    
-
-
-            public void Mudar_interativos ( Ponto _ponto ){
-
-                        // depois tirar
-                        interativo_atual_hover = -1;
-                        
-                        if( interativos_tipo_tela_container == null )
-                              { throw new Exception( "interativos_tipo_tela_container estava null" ); }
-
-                              
-
-
-                        // int[] interativos_tipo_tela_ids = null; // ver 
-                        // Interativo_tela[] novos_interativos_tipo_tela = construtor_interativos.Criar_interativos_tipo_tela( interativos_tipo_tela_ids );
-
-                        // int[] interativos_tipo_item_ids = null; // ver 
-                        // Interativo_item[] novos_interativos_tipo_item = construtor_interativos.Criar_interativos_tipo_item( interativos_tipo_item_ids );
-
-                        // int[] interativos_tipo_personagem_ids = null; // ver 
-                        // Interativo_personagem[] novos_interativos_tipo_personagem = construtor_interativos.Criar_interativos_tipo_personagem( interativos_tipo_personagem_ids );
-
-
-
-
-
-                        // interativo_atual_hover = -1;
-                        
-                        // if(interativos_container != null){ Mono_instancia.DestroyImmediate(interativos_container);}
-
-
-                        // interativos_container = new GameObject("Container");
-                        // interativos_container.transform.SetParent(interativos_canvas.transform, false);
-
-                        // Controlador_jogo_data jogo_data = Controlador_jogo_data.Pegar_instancia();
-                        // Interativo_nome[] interativos_nomes = _ponto.interativos_nomes;
-                        
-                        // int numero_interativos = interativos_nomes.Length;
-                        // string path =  "images/in_game/" +  _ponto.folder_path;
-                        // int periodo =    ( Controlador_timer.Pegar_instancia().periodo_atual_id);
-
-                        
-
-
-                        // interativos_game_objects_arr = new GameObject[numero_interativos];
-                        // interativos_arr = new Interativo[interativos_nomes.Length];
-
-
-
-                        
-                        // for( int i= 0; i < numero_interativos  ;i++){
-
-                              
-                        //             string name  = "Interativo_" + Convert.ToString( interativos_nomes[ i ] );
-
-                        //             GameObject interativo_game_object = new GameObject(name);
-                        //             interativos_game_objects_arr[i] = interativo_game_object;
-
-
-                        //             Interativo interativo = null;
-                        //             //Lista_interativos.Pegar_interativo( interativos_nomes[i] );
-                        //             interativos_arr[i] = interativo;
-
-                        //             // interativos_arr[i] = jogo_data.lista_interativos[  (int) interativos_nomes[i] ];
-
-
-
-                        //             interativos_arr[i].image_slot =  interativo_game_object.AddComponent<Image>();
-
-                        //             RectTransform rect = interativo_game_object.GetComponent<RectTransform>();
-                        //             rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical ,  1080f );
-                        //             rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal ,  1920f );
-
-                        //             interativo_game_object.transform.SetParent( interativos_container.transform , false );
-
-
-                        //             Carregar_imagens_interativo(  interativos_arr[ i ] ,  path , periodo);
-
-
-                        // }
-
-            }
-
-
-
-
-
-
-    public void Ativar_interativo( int _interativo_index ){
-
-            // ** pensar depois
-
-
-            // Interativo interativo = interativos_arr[_interativo_index];
-            // Interativo_nome interativo_nome = interativo.interativo_nome ;
-
-
-            // Script_jogo_nome script_interativo_em_espera = Controlador_dados_dinamicos.Pegar_instancia().lista_navegacao.Pegar_script_interativo_em_espera(  interativo_nome  );
-
-            // if(  script_interativo_em_espera != Script_jogo_nome.nada  ){
-
-
-            //             //Scripts_jogo.Ativar_script( script_interativo_em_espera );  
-            //             return;
-
-            // }
-
-
-      
-            // switch(interativo.tipo){
-
-            //       case Tipo_interativo.movimento: Receber_movimento( interativo ); return;
-            //       case Tipo_interativo.personagem: Receber_personagem( interativo ); return;
-            //       case Tipo_interativo.item: Receber_item( interativo ); return;
-            //       case Tipo_interativo.cenas: Receber_visual_novel( interativo ); return;
-            //       case Tipo_interativo.utilidade: Receber_utilidade( interativo ); return;
-
-            // }
-
-    }
-
-    public void Receber_utilidade(Interativo _interativo){
-
-      //     Interativo_nome interativo_nome = _interativo.interativo_nome;
-         
-      //     Controlador_utilidades.Pegar_instancia().Iniciar_utilidade( interativo_nome );
-
-          return;
-
-    }
-
-
-    public void Receber_movimento(Interativo _interativo){
-
-
-    
-          //Ponto_nome ponto_destino  =  _interativo.ponto_destino;
-          // tempo vai ser pego dentro das verificacoes'
-          
-
-        
-
-
-         //mark 
-         // pode ser util depois, mas Controlador_verificacoes é um nome horrivel
-         // if(  ponto_destino == Ponto_nome.pegar_por_script ) ponto_destino = Controlador_verificacoes.Pegar_instancia().Pegar_ponto_variante(_interativo.interativo_nome);`
-
-
-
-
-
-          //bool ponto_is_bloqueado =  Controlador_dados_dinamicos.Pegar_instancia().lista_navegacao.lista_pontos_bloqueados[ponto_destino];
-
-
-      // *** FAZER INTERNO
-      //     Script_jogo_nome script_espera = Controlador_dados_dinamicos.Pegar_instancia().lista_navegacao.lista_scripts_por_pontos_bloqueados[ (int) ponto_destino ];
-      //     Scripts_jogo.Ativar_script( script_espera );  
-      //     Scripts_jogo.Ativar_script( _interativo.script_jogo_nome );  
-
-
-          //Controlador_movimento.Pegar_instancia().Mover_player(ponto_destino);
-              
-          
-          return;
-    
-    }
-
-
-
-
-
-
-
-
-
-
-   public void Receber_personagem( Interativo _interativo ){
-
-      
-                  // Personagem_nome nome = _interativo.personagem;
-                  // string conversa_nome = _interativo.conversa_nome;
-
-                  // string personagem_nome = nome.ToString();
-                  
-
-                  // Controlador_conversas.Pegar_instancia().Iniciar_conversas( personagem_nome  , conversa_nome  );
-
-                  // return;
-
-     
-   }
-
-   
-   public void Receber_item( Interativo _interativo ){
-
-     ///   fazercom req
-    // if(_interativo.script != 0 ) controlador.controlador_scripts.Ativar_script(_interativo.script);
-
-     return;
-
-
-   }
-
-   
-
-   public void Receber_visual_novel ( Interativo _interativo ){
-
-
-            Script_jogo_nome script_id = _interativo.script_jogo_nome;
             
-            //Scripts_jogo.Ativar_script(  script_id );
-
-            Req_transicao req = new Req_transicao(
-
-                  _tipo_troca_bloco: Tipo_troca_bloco.START,
-                  _novo_bloco: Bloco.visual_novel,
-                  _tipo_transicao: Tipo_transicao.instantaneo
-
-            );
-
-            
-            Dados_blocos.visual_novel_START = new Visual_novel_START(  _interativo.nome_screen_play );
-            Dados_blocos.Colocar_nova_req( req );
-      
-
-            return;
-     
-   }
-
-
-     
-
-
-     
-
-
-
-   public  void Ativar_hover_interativo( int _id ){
-
-    
-            // Interativo interativo = interativos_arr[_id];
-
-            // interativo.image_slot.sprite = interativo.interativo_image_2;
-            // interativo.image_slot.color = interativo.cor_image_2;
-
-
-       
-         
-
-  }
-
-
-
-
-
-   public void Tirar_hover_interativo( int _id ){
-
-            
-            // Interativo interativo = interativos_arr[_id];
-
-            // interativo.image_slot.sprite = interativo.interativo_image_1;
-            // interativo.image_slot.color = interativo.cor_image_1;
-
-
-
-
-
-
-   }
-
-
-
-
-
-
-
 
 
 

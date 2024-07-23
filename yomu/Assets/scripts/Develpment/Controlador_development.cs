@@ -849,11 +849,13 @@ public static class Controlador_development {
 
             // criar dados sistema 
 
+            throw new Exception();
+
             // onde vai colocar os arquivos 
-            string path_folder_save_default = Paths_gerais.Pegar_path_folder_dados_save_default() + "/Personagens";
+            string path_folder_save_default = null;
             // onde que vai pegar
-            string path_localidades_personagens =  Paths_gerais.Pegar_path_folder_dados_producao() + "Personagens/Lista_localidades_iniciais_personagens.txt";
-            string[] personagens_nomes = Enum.GetNames( typeof( Personagem_nome ));
+            string path_localidades_personagens =  null;
+            string[] personagens_nomes = Enum.GetNames( typeof( Personagem_nome ) );
             int numero_personagens = personagens_nomes.Length ;
 
              
@@ -1002,13 +1004,13 @@ public static class Controlador_development {
             }
 
 
+            return;
 
-            string path_para_salvar_novos_dados = Paths_gerais.Pegar_path_folder_dados_save_default() + "/dados_sistema.dat";
+            string path_para_salvar_novos_dados =  null; //Paths_sistema.path_arqu  Paths_gerais.Pegar_path_folder_dados_save_default() + "/dados_sistema.dat";
 
             System.IO.File.WriteAllBytes( path_para_salvar_novos_dados, container );
 
 
-            return;
 
                 
 

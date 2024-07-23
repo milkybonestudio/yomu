@@ -1,17 +1,32 @@
 
 
 
+
+public class Skill {
+
+    public int xp = 0;
+    public int cp_para_o_proximo_nivel;
+    public int nivel = 0;
+
+}
+
 public static class Manipulador_niveis {
 
 
-        public static void Trocar_itens_containers( Container_itens _container_1, Item_localizador[] _itens_1, Container_itens _container_2, Item_localizador[] _itens_2 ){}
-        public static int Pegar_quantidade_do_mesmo_item_no_container( Container_itens _container_1, Item_localizador _item_localizador ){ return 0; }
+        public static bool Colocar_xp( Skill _skill,  int xp_atual, int _xp  ){
+
+                int xp_para_o_proximo_nivel = SKILLS_DADOS.xp_para_o_proximo_nivel[_skill.nivel ];
+
+                _skill.xp += _xp;
+
+                
+                return ( _skill.xp >= xp_para_o_proximo_nivel );
+
+            
 
 
-        public static void Trocar_itens_personagens( Personagem _personagem_1, Item_localizador[] _itens_1,  Personagem _personagem_2, Item_localizador[] _itens_2 ){}
-        public static void Adicionar_itens_personagem( Personagem _personagem, Item_localizador[] _itens ){}
-        public static void Remover_itens_personagem( Personagem _personagem, Item_localizador[] _itens ){}
-        
+        }
+
 
 
 }

@@ -4,6 +4,44 @@ using UnityEngine;
 unsafe public class Controlador_movimento {
 
 
+        /*
+
+
+                tipos de movimento:
+
+
+
+                Movimentar_PONTO(); 
+
+                Movimento_LOCAL();
+
+                Movimento_CIDADE();
+
+
+                perto : movimenta dentro do mesmo local
+                
+                longe : movimenta entre dimensoes maiores 
+
+                       zona   :  zona
+                       cidade :  cidade
+                       regiao :  regiao
+                
+
+
+                visao_ampla : movimenta entre blocos, pode custar tempo
+                        
+                todo zona_1.local_0 sepre vai ser o minimapa que leva para algum local
+
+                todo cidade_1.zona_0 sempre vai ser o minimapa que leva para algum local, e a partir de zona sempre precisa ter o quanto que custa
+
+
+                se um personagem sem ser o player for se movimentar com custo o personagem fica no limbo até que o custo seja efetivado
+
+                todo mover precisa mover o player para algum ( 0 0 0 00 0 ) ou algo. 
+        
+        */
+
+
 
         public static Controlador_movimento instancia;
         public static Controlador_movimento Pegar_instancia(){ return instancia; }
@@ -18,106 +56,39 @@ unsafe public class Controlador_movimento {
         }
 
 
-        public void Mover_personagem( Personagem _personagem, Posicao _posicao ){
+        public void Mover_personagem_PONTO( Personagem _personagem, Posicao _nova_posicao ){
 
-                if( _personagem.posicao.teste ==_posicao.teste )  
-                        { return; }
+                // *** MOVE O PERSONAGEM DENTRO DE UM MESMO LOCAL
 
-        }
-
-        public bool Posicoes_sao_iguais( Posicao _posicao_1, Posicao _posicao_2 ){
-
-                fixed(  int* p_posicao = &( _posicao_1.regiao_id ) ){
-
-                        return false;
-
-                }
+                // --- VERIFICA SE JA NAO ESTA NA POSICAO
+                if( _personagem.posicao.posicao_id ==_nova_posicao.posicao_id )  
+                        { return; } // --- JA ESTA NA POSICAO
+                        
 
         }
 
 
+        public void Mover_personagem_LOCAL( Personagem _personagem, Posicao _nova_posicao ){
 
-       //   trocar para ponto_nome
+                // --- VERIFICA SE JA NAO ESTA NA POSICAO
+                if( _personagem.posicao.posicao_id ==_nova_posicao.posicao_id )  
+                        { return; } // --- JA ESTA NA POSICAO
+                        
 
-        public void Mover_player( Posicao _ponto , bool _reset = false , bool _instantaneo = false ){
+        }
 
+        
+        public void Mover_personagem_CIDADE( Personagem _personagem, Posicao _nova_posicao ){
 
-
-                // int _ponto_id  = (int) _ponto_nome;
+                // --- VERIFICA SE JA NAO ESTA NA POSICAO
+                if( _personagem.posicao.posicao_id ==_nova_posicao.posicao_id )  
+                        { return; } // --- JA ESTA NA POSICAO
                 
-                // Ponto ponto = Controlador_jogo_data.Criar_ponto( _ponto_nome );
 
-
-                // controlador_interativos.Criar_interativos(  ponto );
-                // controlador_interativos.Limpar_sprite_interativos( player_estado_atual.interativos );
-                // player_estado_atual.Acrecentar_posicao( ponto , _reset );
-
-                
-                // // ** TEM QUE SER DENTO DO BLOCO MOVIMENTO 
-                // // Script_jogo_nome script_entrada = Controlador_dados_dinamicos.Pegar_instancia().lista_navegacao.lista_scripts_por_entrar_ponto[_ponto_id];
-                // // Scripts_jogo.Ativar_script( script_entrada );
-
-
-                // controlador_interativos.interativo_atual_hover = -1;
-                // Controlador_cursor.Pegar_instancia().Mudar_cursor( Cor_cursor.off );
-
-                
-                // //  usa player_estado_atual
-                // controlador_tela_conector.Trocar_tela( player_estado_atual.Pegar_path_imagem_background() , _instantaneo);
-
-                // return;
 
         }
 
 
-
-
-        public void Voltar_player(){
-
-
-                // Debug.Log( "veio voltar" );
-
-                // Debug.Log("===============");
-
-                // for( int i = 0 ; i < player_estado_atual.posicao_arr.Length ; i++  ){
-
-                //         Debug.Log( "indice " + i + " com valor: " + player_estado_atual.posicao_arr[ i ]);
-
-                // }
-
-
-
-
-                // Ponto_nome novo_ponto_id =  player_estado_atual.Pegar_posicao_anterior();
-                // Ponto_nome ponto_atual_id = player_estado_atual.Pegar_posicao_atual();
-
-                // // Debug.Log("posicao atual: " + ponto_atual_id);
-
-                // if( novo_ponto_id == ponto_atual_id ) { return;}
-
-
-                // Ponto novo_ponto = Controlador_jogo_data.Criar_ponto( (Ponto_nome) novo_ponto_id);
-                
-                
-                // player_estado_atual.Acrecentar_posicao( novo_ponto );
-                
-
-                // Controlador_cursor.Pegar_instancia().Mudar_cursor(Cor_cursor.off);
-                // controlador_tela_conector.Trocar_tela(player_estado_atual.Pegar_path_imagem_background());
-                // controlador_interativos.Criar_interativos(novo_ponto);
-
-                
-                // Debug.Log("===============");
-
-                // for( int i = 0 ; i < player_estado_atual.posicao_arr.Length ; i++  ){
-
-                //         Debug.Log( "indice " + i + " com valor: " + player_estado_atual.posicao_arr[ i ]);
-
-                // }
-
-
-
-        }
 
 
 }

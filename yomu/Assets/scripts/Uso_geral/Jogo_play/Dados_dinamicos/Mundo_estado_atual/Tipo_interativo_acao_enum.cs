@@ -1,7 +1,7 @@
 
 
 
-public enum Tipo_interativo_acao {
+public enum Tipo_modificacao_interativo_id {
 
         subtrair, 
         adicionar,

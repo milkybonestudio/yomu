@@ -1,200 +1,85 @@
 using System;
-using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
-// personagens e icones nao precisam de tanto trabalho. talvez?
 
 public class Gerenciador_imagens_interativos {
 
-        public Gerenciador_imagens_interativos( byte[] _localizador  ){
 
-            #if !UNITY_EDITOR
+    public Gerenciador_imagens_interativos(){
 
-                string path_lista_localizador = Paths_sistema.path_localizador_interativos;
-                localizador = System.IO.File.ReadAllByte( path_lista_localizador ) ;
+            // ** so vai ser criado no inicio de um novo save
 
-            #endif
 
-        }
+            
+            byte[] localizador_interativos_imagens = System.IO.File.ReadAllBytes( Paths_sistema.path_arquivo__localizador__interativos_logica );
 
+            manipulador_imagens_dinamicas = new MODULO_manipulador_imagens_dinamicas( 
+                                                                                        _nome_modulo   :  "Manipulador_imagens_interativos" , 
+                                                                                        _path_container  :  Paths_sistema.path_arquivo__dados_estaticos__uso_parcial__interativos_imagens, 
+                                                                                        _numero_inicial_de_slots  :  50
+
+                                                                                    );
+            return;
+
+
+    }
+
+
+    public MODULO_manipulador_imagens_dinamicas manipulador_imagens_dinamicas;
+
+
+    #if !UNITY_EDITOR 
+
+
+
+
+    #endif
+
+
+    #if UNITY_EDITOR
+
+        // *** no editor tem o path absoluto para as imagens como é definido no construtor_DEVELOPMENT
+        // *** contrutor vai modificar esses campos
+        // *** imagens sao sempre descartadas e recriadas no editor
+        public static string[] paths_imagens_DEVELOPMENT;
+        public static int poiner_imagem = -1;
         
-        // SO VAI SER UUSADO NA BUILD  
-        // com 5000 * 4 = 20kb. se ficar muito grande pode separar por continenete ou reino ou cidade
-        public byte[] localizador;
 
-        public Sprite[] sprites_atuais;
-        public int[] sprite_ids_unicos;
-        public Task_req[] requisicoes_imagens;
+        public Sprite Pegar_sprite_interativo(  Posicao _posicao, int _interativo_sprite_id ){
 
-        public int total_bytes_imagens = 0;
+                // ** id => index 
 
-        // setar depois 
-        public int cidade_pointer_no_localizador;
+                if( paths_imagens_DEVELOPMENT.Length >= _interativo_sprite_id )
+                    { throw new Exception( $"tentou carregar o id { _interativo_sprite_id } mas os paths tinham length { paths_imagens_DEVELOPMENT.Length }" ); }
 
 
+                string path_imagem = paths_imagens_DEVELOPMENT[ _interativo_sprite_id ];
 
-        public Gerenciador_imagens_interativos(){
-
-            sprites_atuais = new Sprite[ 50 ];
-            sprite_ids_unicos = new int[ 50 ];
-            requisicoes_imagens = new Task_req[ 50 ];
-
-            
-        }
-
-    
-    
-        public Sprite Pegar_sprite(  int _sprite_id ){
-
-                // sprite_id => id unico de cada imagem 
-
-                // ** iria pegar em um localizador que sempre vai estar na ram 
-                // se nao estiver carregado força na main 
-
-                // inverter ordem depois 
-
-                throw  new Exception( "ainda nao esta pronto" );
-
-                int slot_sprite = INT.Pegar_index_valor( sprite_ids_unicos , _sprite_id );
+                if( !( System.IO.File.Exists( path_imagem ) ) )
+                    { throw new Exception( $" nao existia imagem no path { path_imagem }" );}
 
 
-                // --- NAO FOI PEDIDO PARA CARREGAR
-
-                if( slot_sprite == -1 )
-                    {
-                        Sprite sprite = Criar_sprite( _sprite_id );
-                        int slot_vazio = INT.Pegar_index_valor( sprite_ids_unicos , 0 );
-                        if( slot_vazio == -1 )
-                            { 
-                                slot_vazio = sprite_ids_unicos.Length;
-                                sprite_ids_unicos = INT.Aumentar_length_array( sprite_ids_unicos , 10 ); 
-                                sprites_atuais = SPRITE.Aumentar_length_array( sprites_atuais , 10 );
-                            }
-
-                        slot_sprite = slot_vazio;
-
-                        sprite_ids_unicos[ slot_sprite ] = _sprite_id;
-                        sprites_atuais[ slot_sprite ] = sprite;   
-                        return sprite;
-
-                    }
-
-
-                // ---  NAO TERMONOU DE CARREGAR
-
-                if( sprites_atuais[ slot_sprite ] == null )
-                    {            
-                        requisicoes_imagens[ slot_sprite ].pode_executar = false;
-                        requisicoes_imagens[ slot_sprite ] = null;
-                        Sprite sprite = Criar_sprite( _sprite_id );
-                    }
-
-
-                // --- CARREGADA COM SUCESSO
-
-                return sprites_atuais[ slot_sprite ];
+                byte[] png = System.IO.File.ReadAllBytes( path_imagem );
+                Sprite sprite = SPRITE.Transformar_png_TO_sprite( png );
                 
-
-        }
-
-
-        public byte[] Pegar_png( int _sprite_id_unico ){
-
-
-                // PEGAR RUN TIME
-
-                int pointer_1 = BYTE.Pegar_int_em_byte_array( localizador , ( _sprite_id_unico * 4 ) + 0 );
-                int pointer_2 = BYTE.Pegar_int_em_byte_array( localizador , ( _sprite_id_unico * 4 ) + 4 );
-
-                
-                int length = ( pointer_2 - pointer_1 - 1 ) ;
-
-                string path_imagens_interativos = Paths_sistema.path_imagens_interativos;
-                FileStream leitor = new FileStream( path_imagens_interativos, FileMode.Open );
-                leitor.Seek(  pointer_1  , SeekOrigin.Begin  );
-
-                byte[] buffer = new byte[ length ];
-
-                leitor.Read(  buffer, 0, length  );
-                leitor.Close();
-
-                return buffer;
+                return sprite;
 
 
         }
 
 
-        public Sprite Criar_sprite( int _sprite_id_unico ){
+        public void Carregar_sprite( Posicao _posicao, int _interativo_id ){
 
-                byte[] dados = Pegar_png( _sprite_id_unico );
-                Sprite nova_sprite = SPRITE.Transformar_png_TO_sprite( dados );
-
-                return nova_sprite;
-
+            // --- NA BUILD SEMPRE VAI CARREGAR TUDO NA MAIN THREAD
+            return;
+        
         }
 
 
+    #endif
 
 
-
-
-
-        public void Carregar_sprite( int _sprite_id_unico ){
-                // começa a carregar na multitheread 
-
-                throw new Exception( "fazer depois" );
-
-                // pegar slot
-
-
-
-                Task_req req = new Task_req( new Chave_cache(), ("pedindo_imagem_" + Convert.ToString( _sprite_id_unico ) ) );
-
-                int slot_vazio = INT.Pegar_index_valor( sprite_ids_unicos , 0 );
-                if( slot_vazio == -1 )
-                    { 
-                        slot_vazio = sprite_ids_unicos.Length;
-                        sprite_ids_unicos = INT.Aumentar_length_array( sprite_ids_unicos , 10 ); 
-                        sprites_atuais = SPRITE.Aumentar_length_array( sprites_atuais , 10 );
-                    }
-
-                
-                requisicoes_imagens[ slot_vazio ] = req;
-                sprite_ids_unicos[ slot_vazio ] = _sprite_id_unico;
-                
-
-
-                req.fn_iniciar = ( Task_req _req )  =>  {
-                                                            // 
-
-                                                            byte[] png = Pegar_png( _sprite_id_unico );
-                                                            Color32[] pixels_containers =  PNG.Descomprimir( png );
-                                                            _req.dados = ( System.Object ) pixels_containers;
-                                                            _req.dados_suporte_1 =  ( System.Object ) PNG.Pegar_width_e_height( png );
-
-                                                            return;
-
-                                                        };
-
-                req.fn_finalizar = ( Task_req _req )  =>  {
-                                                            // 
-
-                                                            Color32[] container =  ( Color32[] ) _req.dados;
-                                                            int[] width__E__height  = ( int[] ) _req.dados_suporte_1;
-                                                            Sprite sprite = SPRITE.Transformar_colors_container_TO_sprite( container, width__E__height[ 0 ], width__E__height[ 1 ] );
-
-                                                            sprites_atuais[ slot_vazio ]  = sprite;
-
-                                                            
-                                                            return;
-
-                                                        };
-            
-
-                return;
-
-
-        }
 
 
 

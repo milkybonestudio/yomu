@@ -87,7 +87,7 @@ public class Controlador : MonoBehaviour {
                                     modo_controlador_atual = Controlador_modo.desenvolvimento;
 
                                     // --- SETA TUDO COMO DEFAULT
-                                    this.jogo =  Jogo.Construir();
+                                    this.jogo =  Construtor_jogo.Construir();
                                     
                                     // --- DESENVOLVIMENTO UTILIDADES
                                     desenvolvimento.Colocar_estado_teste();

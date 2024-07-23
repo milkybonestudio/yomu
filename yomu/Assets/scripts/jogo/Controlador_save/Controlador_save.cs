@@ -45,8 +45,8 @@ public class Controlador_save {
                         if( _novo_jogo )
                               { controlador.Criar_arquivos_novo_jogo( _save ); }
 
-                        if( ! ( System.IO.File.Exists( Paths_sistema.path_dados_sistema ) ) )
-                              { throw new Exception( $"dados_programa.dat nao foi encontrado no path { Paths_sistema.path_dados_sistema }"); }
+                        if( ! ( System.IO.File.Exists( Paths_sistema.path_arquivo__dados_dinamicos__uso_completo__dados_sistema ) ) )
+                              { throw new Exception( $"dados_programa.dat nao foi encontrado no path { Paths_sistema.path_arquivo__dados_dinamicos__uso_completo__dados_sistema }"); }
 
                         
                         
@@ -58,7 +58,7 @@ public class Controlador_save {
                         // --- DADOS SISTEMA
 
                         // dados_sistema => dados essencias entidades, estado atual 
-                        byte[] dados_sistema = System.IO.File.ReadAllBytes( Paths_sistema.path_dados_sistema );
+                        byte[] dados_sistema = System.IO.File.ReadAllBytes( Paths_sistema.path_arquivo__dados_dinamicos__uso_completo__dados_sistema );
                         Dados_sistema_estado_atual dados_sistema_estado_atual = Tradutor_dados_sistema.Descompactar_dados_sistema_estado_atual( dados_sistema );
 
 
@@ -256,9 +256,9 @@ public class Controlador_save {
 
 
 
-            public void Copiar_arquvios_do_novo_jogo( int _save ){
+            public void Copiar_arquivos_do_novo_jogo( int _save ){
 
-
+                        // *** tem que iniciar o save antes
                         // ** TIRAR DEPOIS 
                         return;
 
@@ -274,28 +274,96 @@ public class Controlador_save {
 
                         */
 
-                        string path_com_os_dados = Paths_gerais.Pegar_path_folder_com_os_saves_defaults();
+
+                        // --- PERSONAGEM
+
+                              // *** vai ter que estar vazio
+                              string path_folder_dados_personagens_novo_save = Paths_sistema.path_folder__dados_save_personagens;
+                              string path_folder_dados_personagens_novo_save_MORTE =  Paths_sistema.path_folder__dados_save_personagens_MORTE;
+                              
+                              string path_folder_save_default_personagens = Paths_sistema.path_folder__entidades_para_copiar_novo_save_personagens;
 
 
-                        // onde vai ser salvo
-                        string path_folder_dados_personagens = Paths_gerais.Pegar_path_folder_dados_save( _save ) + "/Personagens";
-                        string path_folder_dados_personagens_morte = Paths_gerais.Pegar_path_folder_dados_save( _save )  + "save_morte/Personagens";
-                        
-                        string path_folder_save_default = Paths_gerais.Pegar_path_folder_dados_save_default() + "/Personagens";
+                              // --- COPIA OS DADOS
+                              Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_personagens_novo_save, _local_para_copiar : path_folder_save_default_personagens );
+                              Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_personagens_novo_save_MORTE, _local_para_copiar : path_folder_save_default_personagens );
 
-                        // normal
-                        Copiar_pasta_inteira(  
 
-                        _local_para_salvar: path_folder_dados_personagens ,
-                        _local_para_copiar : path_folder_save_default
-                        );
 
-                        // morte 
-                        Copiar_pasta_inteira(  
+                        // --- CIDADES
 
-                        _local_para_salvar: path_folder_dados_personagens_morte ,
-                        _local_para_copiar : path_folder_save_default
-                        );
+                              // *** vai ter que estar vazio
+                              string path_folder_dados_cidades_novo_save = Paths_sistema.path_folder__dados_save_cidades;
+                              string path_folder_dados_cidades_novo_save_MORTE =  Paths_sistema.path_folder__dados_save_cidades_MORTE;
+                              
+                              string path_folder_save_default_cidades = Paths_sistema.path_folder__entidades_para_copiar_novo_save_cidades;
+
+                              // --- COPIA OS DADOS
+                              Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_cidades_novo_save, _local_para_copiar : path_folder_save_default_cidades );
+                              Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_cidades_novo_save_MORTE, _local_para_copiar : path_folder_save_default_cidades );
+
+
+
+                        // --- PLOTS
+
+                              // *** vai ter que estar vazio
+                              string path_folder_dados_plots_novo_save = Paths_sistema.path_folder__dados_save_plots;
+                              string path_folder_dados_plots_novo_save_MORTE =  Paths_sistema.path_folder__dados_save_plots_MORTE;
+                              
+                              string path_folder_save_default_plots = Paths_sistema.path_folder__entidades_para_copiar_novo_save_plots;
+
+
+                              // --- COPIA OS DADOS
+                              Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_cidades_novo_save, _local_para_copiar : path_folder_save_default_plots );
+                              Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_cidades_novo_save_MORTE, _local_para_copiar : path_folder_save_default_plots );
+
+
+
+                        // --- BOSSES
+
+                              // *** vai ter que estar vazio
+                              string path_folder_dados_bosses_novo_save = Paths_sistema.path_folder__dados_save_bosses;
+                              string path_folder_dados_bosses_novo_save_MORTE =  Paths_sistema.path_folder__dados_save_bosses_MORTE;
+                              
+                              string path_folder_save_default_bosses = Paths_sistema.path_folder__entidades_para_copiar_novo_save_bosses;
+
+
+                              // --- COPIA OS DADOS
+                              Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_bosses_novo_save, _local_para_copiar : path_folder_save_default_bosses );
+                              Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_bosses_novo_save_MORTE, _local_para_copiar : path_folder_save_default_bosses );
+
+
+
+                        // --- MOBS
+
+                              // *** vai ter que estar vazio
+                              string path_folder_dados_mobs_novo_save = Paths_sistema.path_folder__dados_save_mobs;
+                              string path_folder_dados_mobs_novo_save_MORTE =  Paths_sistema.path_folder__dados_save_mobs_MORTE;
+                              
+                              string path_folder_save_default_mobs = Paths_sistema.path_folder__entidades_para_copiar_novo_save_mobs;
+
+
+                              // --- COPIA OS DADOS
+                              Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_mobs_novo_save, _local_para_copiar : path_folder_save_default_mobs );
+                              Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_mobs_novo_save_MORTE, _local_para_copiar : path_folder_save_default_mobs );
+
+
+
+
+                        // --- REINOS
+
+                              // *** vai ter que estar vazio
+                              string path_folder_dados_reinos_novo_save = Paths_sistema.path_folder__dados_save_reinos;
+                              string path_folder_dados_reinos_novo_save_MORTE =  Paths_sistema.path_folder__dados_save_reinos_MORTE;
+                              
+                              string path_folder_save_default_reinos = Paths_sistema.path_folder__entidades_para_copiar_novo_save_reinos;
+
+                              // --- COPIA OS DADOS
+                              Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_reinos_novo_save, _local_para_copiar : path_folder_save_default_reinos );
+                              Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_reinos_novo_save_MORTE, _local_para_copiar : path_folder_save_default_reinos );
+
+
+                        return;
 
 
             }

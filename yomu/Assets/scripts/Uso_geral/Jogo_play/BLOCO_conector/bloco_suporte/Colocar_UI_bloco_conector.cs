@@ -20,8 +20,6 @@ public static class Colocar_UI_bloco_conector {
             Dados_blocos.req_mudar_UI = novo_UI ;
 
 
-
-
     }
 
 }

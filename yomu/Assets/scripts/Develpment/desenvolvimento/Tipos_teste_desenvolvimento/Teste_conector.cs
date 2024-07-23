@@ -16,7 +16,7 @@ public static class Teste_conector {
                 Chamar_classes_teste( _chave, "estado" );
 
                 Jogo.Pegar_instancia().bloco_atual = Bloco.conector;
-                Jogo.Pegar_instancia().bloco_conector =  BLOCO_conector.Iniciar_bloco_conector();
+                Jogo.Pegar_instancia().bloco_conector =  Construtor_bloco_CONECTOR.Construir();
 
                 Chamar_classes_teste( _chave, "script_inicial" );
 

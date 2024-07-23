@@ -5,6 +5,40 @@
 
 public static class BOOL {
 
+
+
+        public static int Pegar_numero_de_trues( bool[] _arr ){
+
+            int acumulador = 0;
+            for( int i = 0 ; i < _arr.Length ;  i++){
+
+                if( _arr[ i ] )
+                    { acumulador++;}
+
+                continue;
+            }
+
+            return acumulador;
+
+        }
+
+        public static int Pegar_numero_de_falses( bool[] _arr ){
+
+            int acumulador = 0;
+            for( int i = 0 ; i < _arr.Length ;  i++){
+
+                if( !!!( _arr[ i ] ) )
+                    { acumulador++;}
+
+                continue;
+            }
+
+            return acumulador;
+
+        }
+
+
+
         public static int Pegar_index_true( bool[] _arr ){
 
             for( int index = 0 ; index < _arr.Length ; index++ ){

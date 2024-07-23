@@ -11,7 +11,7 @@ public class Controlador_plots {
 
         public Gerenciador_save_plots gerenciador_save;
 
-        public Gerenciador_containers_dinamicos_completos gerenciador_containers_dinamicos_completos;
+        public MODULO_manipulador_containers_dinamicos_completos manipulador_containers_dinamicos_completos;
         public Gerenciador_objetos_dll_dinamicos gerenciador_objetos_dll_dinamicos;
         
 
@@ -34,7 +34,13 @@ public class Controlador_plots {
 
 
                         controlador.gerenciador_objetos_dll_dinamicos = new Gerenciador_objetos_dll_dinamicos( _nome_dll: "Plot", _numero_inicial_de_slots: 10 );
-                        controlador.gerenciador_containers_dinamicos_completos = new Gerenciador_containers_dinamicos_completos( _folder_para_pegar_dados: Paths_sistema.path_dados_save_plots, _numero_inicial_de_slots: (controlador.plots_ativos_ids.Length + 10) );
+                        controlador.manipulador_containers_dinamicos_completos = new MODULO_manipulador_containers_dinamicos_completos( 
+                                                                                                                                                _nome_gerenciador: "gerenciador_plots",
+                                                                                                                                                _folder_para_pegar_dados: null, // Paths_sistema.path_dados_save_plots,
+                                                                                                                                                _pode_escrever_no_container: true,
+                                                                                                                                                _numero_inicial_de_slots: (controlador.plots_ativos_ids.Length + 10) 
+                                                                                                                                                
+                                                                                                                                        );
 
                         controlador.gerenciador_save = new Gerenciador_save_plots( controlador );
 
@@ -83,8 +89,8 @@ public class Controlador_plots {
 
                         // --- PEGAR CONTAINER
                         string path_container = $"plot_{ dados_sistema_plot_essenciais.nome_plot }_dados.dat";
-                        gerenciador_containers_dinamicos_completos.Carregar_container_NA_MULTITHREAD( _plot_id, path_container );
-                        byte[] dados_containers_plots_bytes = gerenciador_containers_dinamicos_completos.Pegar_container( _plot_id );
+                        manipulador_containers_dinamicos_completos.Carregar_container_NA_MULTITHREAD( _plot_id, path_container );
+                        byte[] dados_containers_plots_bytes = manipulador_containers_dinamicos_completos.Pegar_container( _plot_id );
                         Dados_containers_plot dados_containers_plot = Construtor_containers_plots.Construir( dados_containers_plots_bytes );
 
                         // --- CONSTROI plot
@@ -108,7 +114,7 @@ public class Controlador_plots {
 
 					
                         System.Object plot_AI =   gerenciador_objetos_dll_dinamicos.Pegar_objeto( _plot_id );
-                        byte[] dados_containers_plots_byte = gerenciador_containers_dinamicos_completos.Pegar_container( _plot_id );
+                        byte[] dados_containers_plots_byte = manipulador_containers_dinamicos_completos.Pegar_container( _plot_id );
                         Dados_containers_plot dados_containers_plot = Construtor_containers_plots.Construir( dados_containers_plots_byte );
 
                         Dados_sistema_plot_essenciais dados_sistema_plot_essenciais = dados_sistema_plots_essenciais[ _plot_id ];
@@ -154,8 +160,8 @@ public class Controlador_plots {
                                                         int slot_objeto = gerenciador_objetos_dll_dinamicos.Criar_slot( _plot_id );
                                                         gerenciador_objetos_dll_dinamicos.objetos[ slot_objeto ] = plot_na_lixeira.gerenciador_AI.plot_AI;
 
-                                                        int slot_container = gerenciador_containers_dinamicos_completos.Criar_slot( _plot_id );
-                                                        gerenciador_containers_dinamicos_completos.dados_containers[ slot_container ] = plot_na_lixeira.gerenciador_containers_dados.Compilar_dados();
+                                                        int slot_container = manipulador_containers_dinamicos_completos.Criar_slot( _plot_id );
+                                                        manipulador_containers_dinamicos_completos.dados_containers[ slot_container ] = plot_na_lixeira.gerenciador_containers_dados.Compilar_dados();
                                                         
                                                         return;
 
@@ -171,7 +177,7 @@ public class Controlador_plots {
 
                                                         // --- PEGAR CONTAINER
                                                         string path_container = $"PLOT_{ plot_na_lixeira.plot_nome }_dados.dat";
-                                                        gerenciador_containers_dinamicos_completos.Carregar_container_NA_MULTITHREAD( _plot_id, path_container );
+                                                        manipulador_containers_dinamicos_completos.Carregar_container_NA_MULTITHREAD( _plot_id, path_container );
 
                                                         return;
                                                         

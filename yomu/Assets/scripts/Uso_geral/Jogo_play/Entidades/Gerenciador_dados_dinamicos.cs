@@ -170,7 +170,7 @@ public class Gerenciador_dados_dinamicos {
         public Dados_containers_entidade Pegar_containers_NAO_CARREGADO( int _entidade_id ){
 
                 string nome_entidade_folder = Pegar_nome_entidade( _entidade_id );
-                string path_dados = Paths_sistema.path_save + "/" + nome_entidade_folder + "_dados.dat" ;
+                string path_dados = Paths_sistema.path_folder__save + "/" + nome_entidade_folder + "_dados.dat" ;
 
                 if( ! ( System.IO.File.Exists( path_dados ) ) )
                         { throw new Exception( $" path { path_dados } " ); }
@@ -211,7 +211,7 @@ public class Gerenciador_dados_dinamicos {
                 // --- CRIAR DADOS
                 string nome_entidade = Pegar_nome_entidade( _id );
                 string nome_classe = nome_entidade + "_dados";
-                string nome_dados_path = Paths_sistema.path_save + nome_classe + ".dat";
+                string nome_dados_path = Paths_sistema.path_folder__save + nome_classe + ".dat";
 
                 Task_req task = new Task_req( new Chave_cache() , ( "pegar_" + entidade.ToString() + "_" + nome_entidade) );                                                
                 task.dados_array_suporte = new System.Object[ 2 ];

@@ -35,7 +35,7 @@ public class BLOCO_cartas {
                 controlador_tela_cartas = Controlador_tela_cartas.Construir();
         }
 
-        public static void Finalizar(){
+        public void Finalizar(){
 
                 instancia = null;
 

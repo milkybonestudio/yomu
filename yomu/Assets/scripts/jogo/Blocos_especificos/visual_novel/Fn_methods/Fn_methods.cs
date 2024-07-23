@@ -47,10 +47,12 @@ public static class Fn_methods{
             
             BLOCO_visual_novel bloco_vs = BLOCO_visual_novel.Pegar_instancia();
 
-            bloco_vs.bloqueador.clicks_em_espera = numero_clicks;
-            bloco_vs.bloqueador.numero_frames_para_esperar = numero_frames;
-            bloco_vs.bloqueador.true_block = true_block;
-            bloco_vs.bloqueador.tem_click =  tem_click_apo_terminar;
+            // ** refazer com o novo modelo
+
+            // bloco_vs.bloqueador.clicks_em_espera = numero_clicks;
+            // bloco_vs.bloqueador.numero_frames_para_esperar = numero_frames;
+            // bloco_vs.bloqueador.true_block = true_block; 
+            // bloco_vs.bloqueador.tem_click =  tem_click_apo_terminar;
 
 
             return;

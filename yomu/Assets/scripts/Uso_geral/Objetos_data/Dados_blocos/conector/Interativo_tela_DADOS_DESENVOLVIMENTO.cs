@@ -7,17 +7,17 @@
         public class Interativo_tela_DADOS_DESENVOLVIMENTO {
 
 
-                public Interativo_tela_DADOS_DESENVOLVIMENTO( int _index_id ){
+                public Interativo_tela_DADOS_DESENVOLVIMENTO( int _index_id_int ){
 
-                        interativo_id = _index_id ;
+                        interativo_id = ( byte ) _index_id_int ;
                 }
 
                         
                 public string nome = ""; // excluir depois
 
 
-                public int interativo_id;
-                public int tipo_interativo_id;
+                public byte interativo_id;
+                
                 public int ponto_id;
 
                 public Posicao posicao;
@@ -38,7 +38,7 @@
 
                 // vai ser usado para construir 
 
-                public Tipo_interativo tipo_interativo;
+                public Tipo_interativo_tela tipo_interativo;
                 public Interativo_funcao[] interativo_funcoes;
                 public Dados_interativo_funcoes_DEVELOPMENT dados_interativo_funcoes_DEVELOPMENT = new Dados_interativo_funcoes_DEVELOPMENT();
 

@@ -5,9 +5,8 @@
 public static class Primeiro_jogo_suporte {
 
 
+        public static Task_req Pegar_task_criar_primeiro_jogo_default( int _save, bool _novo_jogo  ){
 
-
-    public static Task_req Pegar_task_criar_primeiro_jogo_default( int _save, bool _novo_jogo  ){
 
                 if( Jogo.instancia == null )
                     {  throw new System.Exception( "Pediu a req para criar o primeiro jogo como default mas a instancia de jogo estava null" );}

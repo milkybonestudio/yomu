@@ -2,6 +2,84 @@
 
 
 public static class INT {
+
+
+
+        public static int[] Transformar_array_2d_em_1d( int[][] _array_2d ){
+
+                // ** nao se preocupa em ter repetidos
+
+                int numero_de_elementos = 0;
+
+                // --- PEGA QUANTOS ELEMENTOS
+
+                int array_2d_index = 0;
+                for( array_2d_index = 0 ; array_2d_index < _array_2d.Length ; array_2d_index++ ){ 
+
+                        if( _array_2d[ array_2d_index ] == null )
+                                { continue; }
+
+                        numero_de_elementos += _array_2d[ array_2d_index ].Length; 
+                        continue;
+
+                }
+
+                // --- CRIA ARRAY
+                int[] array_retorno = new int[ numero_de_elementos ];
+
+                int poiner_atual = 0;
+
+                for( array_2d_index = 0 ; array_2d_index < _array_2d.Length ; array_2d_index++ ){
+
+
+                        int[] array_1d = _array_2d[ array_2d_index ];
+
+                        if( array_1d == null )
+                                { continue; }
+
+                        for( int array_1d_index = 0 ; array_1d_index < array_1d.Length ; array_1d_index++ ){
+
+                                array_retorno[ poiner_atual ] = array_1d[ array_1d_index ];
+                                poiner_atual++;
+                                continue;
+                        }
+                        
+                        continue;
+
+                }
+
+                return array_retorno;
+
+        }
+
+
+        public static int[] Remover_valor( int[] _array, int _valor ){
+
+                int numero_para_remover = 0;
+                for( int index = 0 ; index < _array.Length ; index++ ){
+
+                        if( _array[ index ] == _valor )
+                                { index++; }
+                        continue;
+                }
+
+                int[] retorno = new int[ ( _array.Length - numero_para_remover ) ];
+
+                int index_array_final = 0;
+
+                for( int index_final = 0 ; index_final < _array.Length ; index_final++ ){
+
+                        if( _array[ index_final ] == _valor )
+                                { 
+                                        retorno[ index_array_final ] = _array[ index_final ];
+                                        index_array_final++;
+                                }
+                        continue;
+                }
+
+                return retorno;
+
+        }
         
 
         public static int Length_elementos_maiores_que_0 (  int[] _arr  ){

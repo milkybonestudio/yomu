@@ -10,7 +10,15 @@ public class Personagem {
                 atividade_id = _atividade_id ;
                 personagem_id = _personagem_id ;
 
+                personagem_nome = ( ( Personagem_nome ) _personagem_id ).ToString();
+
         }
+
+        #if UNITY_EDITOR 
+
+                public string personagem_nome;
+
+        #endif
 
 
         public Posicao posicao;

@@ -18,7 +18,7 @@ public static class Geral {
                     trava_i++;
                     //Debug.Log("tava_atual: " + trava_i);
 
-                    if(trava_i > 100_000){ 
+                    if(trava_i > 5_000){ 
 
                             throw new ArgumentException("passou do limite");
 
@@ -184,6 +184,41 @@ public static class Geral {
                     
 
                     //System.IO.File.WriteAllLines( path_final ,( t) );
+                    System.IO.File.WriteAllLines( path_final ,  str_arr );
+                    
+
+
+            }
+
+
+            public static void Salvar_int_array( int[] _bytes , int n = -1 ){
+
+                    
+                    string path_dir = System.IO.Directory.GetCurrentDirectory();
+
+                    string path_para_salvar = path_dir + "\\Assets\\scripts\\Main\\";
+
+                    
+                    string path_final = path_para_salvar + "texto_para_verificar.txt";
+
+                    if(System.IO.File.Exists( path_final )) {System.IO.File.Delete( path_final );}
+
+
+
+                    
+
+                    
+                    string[] str_arr = new string[ _bytes.Length + 1 ];
+                     str_arr[ 0 ] = "texto:";
+
+
+                    for( int k = 0 ; k < _bytes.Length ;k++ ){
+
+                        str_arr[ k + 1 ] = _bytes[ k ].ToString();
+                        
+
+                    }
+
                     System.IO.File.WriteAllLines( path_final ,  str_arr );
                     
 

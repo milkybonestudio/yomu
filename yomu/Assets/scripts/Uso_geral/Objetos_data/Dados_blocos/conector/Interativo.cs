@@ -39,7 +39,7 @@ public enum Tipo_get_interativo {
 
 
 
-        public Tipo_interativo tipo;
+        public Tipo_interativo_tela tipo;
 
 
         public int interativo_id;

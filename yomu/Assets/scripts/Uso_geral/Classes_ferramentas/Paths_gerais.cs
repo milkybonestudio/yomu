@@ -6,35 +6,74 @@ using UnityEngine;
 
 
 
-            public static string Pegar_path_dados_dlls(){
+            // public static string Pegar_path_dados_dlls(){
 
-                #if UNITY_EDITOR
-                
-                    // nao pode pegar pelo path
-                    return null;
-
-                #endif
-
-                return System.IO.Path.Combine( Application.dataPath , "Dados_run_time" );
-
-            }
-
-
-
-            public static string Pegar_path_folder_dados_usuario(){
-
-                #if UNITY_EDITOR
-
-                    return System.IO.Path.Combine( Application.dataPath , "Editor/Folder_dados_teste", "Dados_usuario" );
+            //         #if UNITY_EDITOR
                     
-                #endif
+            //             throw new Exception( "nao pode pegar pelo path" );
 
-                throw new Exception();
+            //         #endif
 
-                return System.IO.Path.Combine( Application.persistentDataPath , "Dados_usuario" );
+            //         return System.IO.Path.Combine( Application.dataPath , "Dados_run_time" );
+
+            // }
 
 
-            }
+            // public static string Pegar_path_dados_dinamicos_dll( string _dll_nome ){
+
+            //         #if UNITY_EDITOR
+                    
+            //             throw new Exception( "nao pode pegar DLL pelo path no editor " );
+
+            //         #endif
+
+            //         string path =  System.IO.Path.Combine( Application.dataPath , "Dados_run_time", _dll_nome );
+            //         path = System.IO.Path.ChangeExtension( path, ".dll"  );
+
+            //         if( !!!( System.IO.File.Exists( path ) ) )
+            //             { throw new Exception( $"Nao foi achado a dll" ); }
+
+            //         return path;
+
+
+            // }
+
+
+
+            // public static string Pegar_path_folder_dados_usuario(){
+
+            //     #if UNITY_EDITOR
+
+            //         return System.IO.Path.Combine( Application.dataPath , "Editor/Folder_dados_teste", "Dados_usuario" );
+                    
+            //     #endif
+
+            //     throw new Exception();
+
+            //     return System.IO.Path.Combine( Application.persistentDataPath , "Dados_usuario" );
+
+
+            // }
+
+
+
+            // public static string Pegar_path_folder_imagens_gerais(){
+
+
+            //         #if UNITY_EDITOR
+
+            //             return ( Application.dataPath + "Editor/Folder_dados_teste/Dados_usuario" );
+                        
+            //         #endif
+
+            //         throw new Exception( "" );
+
+            //         // *** ver depois
+            //         return System.IO.Path.Combine( Application.dataPath , "Imagens_gerais" );
+
+
+            // }
+
 
 
 
@@ -51,25 +90,25 @@ using UnityEngine;
                 
             }
 
-            public static string Pegar_path_folder_dados_estaticos(){
+            // public static string Pegar_path_folder_dados_estaticos(){
 
                     
-                    #if UNITY_EDITOR
+            //         #if UNITY_EDITOR
 
-                        // nao vai chamar no editor
+            //             // nao vai chamar no editor
 
-                        return System.IO.Path.Combine( Application.dataPath , "Editor/Folder_dados_teste", "Dados_estaticos" );
+            //             return System.IO.Path.Combine( Application.dataPath , "Editor/Folder_dados_teste", "Dados_estaticos" );
 
 
-                    #endif
+            //         #endif
 
-                    throw new Exception();
+            //         throw new Exception();
 
-                    // vai vir aqui para o jogo normal
-                    return System.IO.Path.Combine( Application.dataPath ,  "Dados_estaticos" );
+            //         // vai vir aqui para o jogo normal
+            //         return System.IO.Path.Combine( Application.dataPath ,  "Dados_estaticos" );
 
             
-            }
+            // }
 
 
 
@@ -93,6 +132,7 @@ using UnityEngine;
 
             }
 
+
             public static string Pegar_path_imagens_personagens_DESENVOLVIMENTO(){
 
                     string path_imagens = Pegar_path_imagens_DESENVOLVIMENTO();
@@ -101,88 +141,74 @@ using UnityEngine;
 
             }
 
-            public static string Pegar_path_imagens_interativos_DESENVOLVIMENTO(){
-
-                    string path_imagens = Pegar_path_imagens_DESENVOLVIMENTO();
-                    string path_personagens = System.IO.Path.Combine( path_imagens , "Interativos" );
-                    return path_personagens;
-
-            }
 
 
 
-            public static string Pegar_path_folder_dados_save_default(){
-
-                    // aqui vai voltar o folder que tem os dados para carregar 
-
-                    #if UNITY_EDITOR
-
-                        // esses dados vao ser os dados usados na versao final 
-                        return Application.dataPath + "/Editor/Dados_saves_default";
-
-                    #else
-                        // o jogo deve salvar uma copia aqui dos dados default
-                        // o folder_morte também vai estar aqui
-                        return Application.streamingAssetsPath + "save_default/personagens";
-
-                    #endif
 
 
+            // public static string Pegar_path_folder_dados_save_default(){
 
-            }
+            //         // aqui vai voltar o folder que tem os dados para carregar 
+
+            //         #if UNITY_EDITOR
+
+            //             // esses dados vao ser os dados usados na versao final 
+            //             return Application.dataPath + "/Editor/Dados_saves_default";
+
+            //         #else
+            //             // o jogo deve salvar uma copia aqui dos dados default
+            //             // o folder_morte também vai estar aqui
+            //             return Application.streamingAssetsPath + "save_default/personagens";
+
+            //         #endif
 
 
-            public static string Pegar_path_folder_com_os_saves_defaults() {
+
+            // }
 
 
-                throw new Exception( "ainda nao fiz" );
+
+                //mark
+
+            //** tem que ver como vai ficar isso aqui
+
+            // public static string Pegar_path_folder_com_os_saves_defaults() {
+
+
+            //     throw new Exception( "ainda nao fiz" );
                 
-                #if UNITY_EDITOR 
+            //     #if UNITY_EDITOR 
 
-                         // assets 
-                    return Application.dataPath  + "/Editor";
-
-
-                #endif
+            //              // assets 
+            //         return Application.dataPath  + "/Editor";
 
 
-
-            }
-
-
-            public static string Pegar_path_folder_usuario(){
+            //     #endif
 
 
-                #if UNITY_EDITOR
 
-                    return Application.dataPath + "/Resources/files";
-
-                #endif
+            // }
 
 
-                return Application.persistentDataPath + "/user_info";
+            // public static string Pegar_path_folder_usuario(){
 
-            }
+
+            //     #if UNITY_EDITOR
+
+            //         return Application.dataPath + "/Resources/files";
+
+            //     #endif
+
+
+            //     return Application.persistentDataPath + "/user_info";
+
+            // }
 
 
 
 
         // SOMENTE PRODUCAO
         // se algum codigo pedir aqui na builda vai dar erro 
-
-        #if UNITY_EDITOR
-
-
-                public static string Pegar_path_folder_dados_producao(){
-
-                    return Application.dataPath + "/Editor/Dados_producao";
-
-                }
-
-
-        #endif
-
-
 
 
 

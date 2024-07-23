@@ -7,6 +7,11 @@ using System.Collections;
 
 public class Controlador_tela_conector {
 
+            // *** trocar => muda completamente 
+            // *** mudar => muda algumas partes
+                  //          Mudar_x__VERIFICAR() => verificar e chama as funcoes pequenas 
+                  // preferir Mudar_x__COISA(); para mudar uma coisa especifica
+
 
             public static Controlador_tela_conector instancia;
             public static Controlador_tela_conector Pegar_instancia(){ return instancia; }
@@ -33,33 +38,125 @@ public class Controlador_tela_conector {
             public Image background_1_image;
             public Image background_2_image;
 
-            
-
-            public static Controlador_tela_conector Construir(){ 
-
-                        if( instancia != null )
-                              { throw new Exception( "tentou construir controlador tela conector mas a instancia nao estava nula" ); }
-                        
-                        Controlador_tela_conector controlador = new Controlador_tela_conector(); 
-                        instancia = controlador;
+            public MODULO_manipulador_imagens_dinamicas gerenciador_imagens_backgrounds;
 
 
-                              controlador.bloco_conector = BLOCO_conector.Pegar_instancia();
+            // --- INTERATIVOS
 
-                              controlador.posicao_mouse = Controlador_dados.Pegar_instancia().posicao_mouse;
-                              controlador.controlador_interativos = Controlador_interativos.Pegar_instancia();
-                              controlador.controlador_cursor = Controlador_cursor.Pegar_instancia();
-                              controlador.player_estado_atual = Player_estado_atual.Pegar_instancia();
+            public Gerenciador_imagens_interativos gerenciador_imagens_interativos;
+            public Gerenciador_imagens_background_conector gerenciador_imagens_background_conector; 
 
-                              // ---CRIAR TELA
 
-                              Construtor_tela_jogo.Criar_tela( controlador );
+            public Interativo_tela[] interativo_tela;
+            public Interativo_item[] interativo_item;
+            public Interativo_personagem[] interativo_personagem;
 
-                              
-                              
-                        return instancia;
-                        
+
+
+
+            // --- INTERATIVOS IMAGENS 
+
+                  public Container_interativo_tela_imagem[] interativos_tela_imagens;
+                  public Container_interativo_personagem_imagem[] interativos_personagens_imagens;
+                  public Container_interativo_item_imagem[] interativos_itens_imagens;
+
+ 
+      
+            // --- LOGICA
+
+                  public Ponto ponto_sendo_mostrado_para_o_player;
+
+
+
+
+
+            public void Verificar_movimento_player(){
+                  
+                  
+                  Personagem personagem_sendo_controlado = Player_estado_atual.Pegar_instancia().personagem_sendo_controlado_player;
+
+                  if ( ponto_sendo_mostrado_para_o_player.posicao_ponto.posicao_id != personagem_sendo_controlado.posicao.posicao_id )
+                        {
+                              // --- TEM QUE MUDAR PONTO SENDO MOSTRADO
+
+                              Ponto novo_ponto = Controlador_navegacao.Pegar_instancia().Pegar_ponto( personagem_sendo_controlado.posicao );
+
+                              ponto_sendo_mostrado_para_o_player = novo_ponto;
+
+                              Trocar_tela( novo_ponto, Tipo_troca_tela_conector.transicao );
+
+                        }
+
+                  return;
+
             }
+
+
+
+
+            public void Informar_alteracao_ponto_ativo( Ponto _ponto  ){
+
+                  return;
+
+            }
+
+
+
+
+            // vai trocar tudo 
+            public void Trocar_tela(  Ponto _novo_ponto, Tipo_troca_tela_conector _tipo_troca ){
+
+                        // ** vai pegar as imagens aqui
+
+                        Posicao _nova_posicao = _novo_ponto.posicao_ponto;
+                        Ponto_ativo ponto_ativo = _novo_ponto.ponto_ativo;
+
+
+                        // --- PEGA OS INTERATIVOS
+
+                        Interativo_tela[] novos_interativos_tela = ponto_ativo.interativos_tela;
+                        Interativo_personagem[] novos_interativos_personagens = ponto_ativo.interativos_personagens;
+                        Interativo_item[] novos_interativos_itens = ponto_ativo.interativos_itens;
+
+
+                        // --- PEGA NOVO BACKGROUND
+
+                        Container_interativo_tela_imagem[] interativos_tela_imagens;
+                        Container_interativo_personagem_imagem[] interativos_personagens_imagens;
+                        Container_interativo_item_imagem[] interativos_itens_imagens;
+
+
+                        // Controlador_configuracoes.Pegar_instancia().
+
+
+
+                        if   ( _tipo_troca == Tipo_troca_tela_conector.instantaneo )
+                              {
+                                    // --- FORCAR TROCAR
+
+
+                                    return;
+                              }
+
+                        if( _tipo_troca == Tipo_troca_tela_conector.transicao )
+                              {
+
+                                    // --- TRANSICAO
+
+
+
+                                    return;
+
+                              }
+
+                        throw new Exception();
+                  
+
+            }
+
+
+
+            
 
             
 

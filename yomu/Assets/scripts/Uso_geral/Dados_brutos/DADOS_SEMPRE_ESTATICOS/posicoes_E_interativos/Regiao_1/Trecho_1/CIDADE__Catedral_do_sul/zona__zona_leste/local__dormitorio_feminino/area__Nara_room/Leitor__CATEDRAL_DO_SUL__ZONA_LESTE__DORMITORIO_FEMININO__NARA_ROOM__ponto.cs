@@ -55,7 +55,7 @@ using System;
                         if( !( conseguiu_fazer_o_parse ) )
                                 { throw new System.Exception( $"Nao foi achado o nome { _nome_ponto } " ); }
 
-                        posicao.ponto_id = ( int ) ponto;
+                        posicao.ponto_id = ( byte ) ponto;
 
                         return posicao;
 

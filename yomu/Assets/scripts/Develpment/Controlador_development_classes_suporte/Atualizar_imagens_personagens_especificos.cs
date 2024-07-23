@@ -104,14 +104,14 @@ public static class Atualizar_imagens_personagens_especificos {
                                                 pointer_alocador_imagens++;
 
                                                 
-                                                string path_imagem =  Paths_gerais.Pegar_path_folder_dados_producao() + "/Personagens/" + nome_personagem_str + "/Imagens_in_game/" +  nova_string  + ".png";
+                                                string path_imagem =  Paths_sistema.path_folder_dados_DEVELOPMENT + "/Personagens/" + nome_personagem_str + "/Imagens_in_game/" +  nova_string  + ".png";
                                                 //
                                                 bool arquivo_existe = System.IO.File.Exists( path_imagem );
 
                                                 if( !( arquivo_existe ) ){
 
-                                                        Debug.LogError( $"imagem <color=lightblue>${nova_string}</color> do personagem <color=lightblue>${ nome_personagem_str }</color> <color=red><size=15> nao foi encontrada.</size></color>" );
-                                                        Debug.LogError( $"path: {path_imagem}" );
+                                                        Debug.LogError( $"imagem <color=lightblue>${ nova_string }</color> do personagem <color=lightblue>${ nome_personagem_str }</color> <color=red><size=15> nao foi encontrada.</size></color>" );
+                                                        Debug.LogError( $"path: { path_imagem }" );
                                                         throw new Exception("");
 
                                                 }
@@ -203,7 +203,7 @@ public static class Atualizar_imagens_personagens_especificos {
 
 
 
-                        string path_folder_dados_producao  = Paths_gerais.Pegar_path_folder_dados_producao();
+                        string path_folder_dados_producao  = Paths_sistema.path_folder_dados_DEVELOPMENT;
                         //aponta para o folder do personagem que vai construir o container.dat com as imagens 
                         string path_folder_personagem = path_folder_dados_producao + "/Personagens/" + nome_personagem_str;
 

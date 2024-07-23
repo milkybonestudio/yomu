@@ -63,10 +63,9 @@ public class Dados_sistema_estado_atual {
 		public int[] plots_pentendes_para_adicionar_tempo;
 
 
-		// --- 
+		// --- NAVEGACAO
 
-		public byte[][][][][][] interativos_para_adicionar_ids;
-		public byte[][][][][][] interativos_para_subtrair_ids;
+		public byte[] dados_pontos_compactados;
 		
 
 

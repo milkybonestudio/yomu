@@ -7,75 +7,68 @@ using UnityEngine.UI;
 public class Interativo_tela {
 
 
-        public Interativo_tela( int _index_id ){
+        public Interativo_tela( byte _interativo_id ){
 
-                interativo_id = _index_id ;
+                interativo_id = _interativo_id ;
         }
 
 
+        #if UNITY_EDITOR
+                public string nome = "";
+        #endif
         
-        public string nome = ""; // excluir depois
 
+        // --- DADOS IMAGENS
 
-        public int interativo_id;
-        public int tipo_interativo_id;
-        public int ponto_id;
+                public short sprite_imagem_1_id_unico;
+                public short sprite_imagem_2_id_unico;
 
-
-        // ** tudo vai ser descartado e reiniciado durante a troca de dias 
-
-        // --- DEFAULT
-
-                // --- SPRITES
-                public int[] sprites_imagem_1_ids_unicos_por_periodo; // sempre vai ter os 5 periodos
-                public int[] sprites_imagem_2_ids_unicos_por_periodo;
 
                 // --- CORES
-                public int[] cores_imagem_1_ids_unicos_por_periodo;
-                public int[] cores_imagem_2_ids_unicos_por_periodo;
-
-                // --- CURSORES
-                public int[] cores_cursores_ids_unicos_por_periodo;
+                
+                public short cor_imagem_1_id; 
+                public short cor_imagem_2_id;
 
 
-        // --- FORCADO ( SISTEMA )
+                // --- MOUSE 
 
-                public bool FOCADO_esta_ativado = false;
+                public int cor_cursor_id;
+                public int som_click_id;
+                public int som_houver_id;
 
-                // --- SPRITES
-                public int[] sprites_imagem_1_ids_unicos_por_periodo_FORCADO; // sempre vai ter os 5 periodos
-                public int[] sprites_imagem_2_ids_unicos_por_periodo_FORCADO;
 
-                // --- CORES
-                public int[] cores_imagem_1_ids_unicos_por_periodo_FORCADO;
-                public int[] cores_imagem_2_ids_unicos_por_periodo_FORCADO;
+                // --- MATERIAL
 
-                // --- CURSORES
-                public int[] cores_cursores_ids_unicos_por_periodo_FORCADO;
+                public int material_id_imagem_1;
+                public int material_id_imagem_2;
 
+
+                public float[] posicao;
+                public float[] area;
 
 
 
-        // --- DADOS
+        // --- LOGICA
 
-        public Image image_slot;
-
-        public int cor_cursor_id;
+                public byte interativo_id;
+                public Tipo_interativo_tela tipo_interativo_tela;
+                public byte[] dados_logicas_interativos_tela; // vai interpretar na hora 
 
         
-        public Sprite interativo_sprite_1;
-        public Color cor_image_1;
-        
-        public Sprite interativo_sprite_2;
-        public Color cor_image_2;
-
-        public float[] posicao; // tem que cuidar pois é novo. Agora a imagem nao vai ser full hd
-        public float[] area = new float[]{ 0f,0f } ;
 
 
 
-        // ??
-        public bool hover_esta_ativo;
+        // public Cartas_combate_localizador cartas_combate_localizador;
+        // public Utilidade_localizador utilidade_localizador;
+        // public Screen_play_localizador screen_play_localizador;
+        // public Conversa_localizador conversa_localizador;
+        // public Script_localizador script_localizador;
+        // public Posicao posicao_destino; // movimento => ponto que vai
+        // public Item_localizador item_localizador; 
+        // public Plot_localizador plot_localizador;
+
+
+
 
 
 }

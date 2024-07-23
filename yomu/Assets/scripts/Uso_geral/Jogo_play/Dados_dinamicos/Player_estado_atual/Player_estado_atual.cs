@@ -15,6 +15,9 @@ public class Player_estado_atual {
 
 
 
+
+    public Personagem personagem_sendo_controlado_player;
+
     public int posicao_atual = 0;
 
     public int[] interativos = new int[0]{};

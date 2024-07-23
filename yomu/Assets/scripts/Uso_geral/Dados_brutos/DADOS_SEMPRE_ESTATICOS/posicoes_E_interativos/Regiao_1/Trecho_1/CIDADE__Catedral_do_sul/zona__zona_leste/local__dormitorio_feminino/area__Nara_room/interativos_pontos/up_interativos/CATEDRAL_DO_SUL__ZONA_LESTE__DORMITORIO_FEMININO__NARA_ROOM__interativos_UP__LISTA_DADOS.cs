@@ -67,7 +67,7 @@ using System;
                         dados[ index ].ponto_id = ( int ) CATEDRAL_DO_SUL__ZONA_LESTE__DORMITORIO_FEMININO__NARA_ROOM__ponto.up;
 
                         // funcao
-                        dados[ index ].tipo_interativo =  Tipo_interativo.movimento;
+                        dados[ index ].tipo_interativo =  Tipo_interativo_tela.movimento;
                         
                         // --- cursor
                         dados[ index ].metodo_para_mudar_cursor = Metodo_para_mudar_cursor.cor_unica;

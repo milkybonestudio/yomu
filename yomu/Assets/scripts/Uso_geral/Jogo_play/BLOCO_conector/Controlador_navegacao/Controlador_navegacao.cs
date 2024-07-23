@@ -23,26 +23,63 @@ public class Controlador_navegacao {
         public int cidade_atual_id; // ( regiao, trecho, id )
 
 
+        // ** logica : local sempre carrega todas as areas
+        //           movimento tem 2 tipos: movimento interno e movimento externo
+        //           movimento interno esta na mesma area 
+        //           movimento externo tem que carregar o local em que o player vai ir
+
+
+
+
         public Ponto[ /*zona*/ ][ /*local*/ ][ /*area*/ ][ /*pontos*/ ] pontos_cidade_primaria;
 
-        // o id do interativo aqui nao vai fazer muito sentido ser int. vai gastar muito espaço.
+        public Gerenciador_dados_pontos gerenciador_dados_pontos;
 
-        public byte [ /*zona*/ ][ /*local*/ ][ /*area*/ ][ /*pontos*/ ][ /*periodos*/ ][/*interativos*/] interativos_para_acrescentar_ids_em_cada_posicao;
-        public byte [ /*zona*/ ][ /*local*/ ][ /*area*/ ][ /*pontos*/ ][ /*periodos*/ ][ /*interativos*/ ] interativos_para_subtrair_ids_em_cada_posicao;
-
+        
 
         public static Controlador_navegacao Construir( Dados_sistema_estado_atual _dados_sistema_estado_atual ){
 
                 Controlador_navegacao controlador = new Controlador_navegacao();
 
-                    controlador.interativos_para_acrescentar_ids_em_cada_posicao  = _dados_sistema_estado_atual.interativos_para_adicionar_ids;
-                    controlador.interativos_para_subtrair_ids_em_cada_posicao  = _dados_sistema_estado_atual.interativos_para_subtrair_ids;
-                    Manipulador_interativos.controlador_navegacao = controlador;
+                        controlador.gerenciador_dados_pontos = new Gerenciador_dados_pontos( _nome_gerenciador: "", _path_container: "" );
+                        controlador.pontos_cidade_primaria = Tradutor_pontos_estado_atual.Descompactar_pontos( _dados_sistema_estado_atual.dados_pontos_compactados, controlador.gerenciador_dados_pontos );
 
+                        //Controlador_interativos.Pegar_instancia().Pegar_interativos_tela_pontos_iniciais( pontos_cidade_primaria. controlador. );
+                        
                 instancia = controlador;
                 return instancia;
 
         }
+
+
+        public Ponto Construir_ponto( Posicao _posicao ){
+
+                Ponto ponto = new Ponto();
+
+                return ponto;
+
+                //ponto.
+
+                // *** o Leitor_interativos sempre tem que ter os interativos que o sistema pode precisar
+
+                // dados_pontos_brutos  =>   interativos default/sub/add
+                //                      =>   imagens_forcadas 
+                //                      =>   scripts 
+
+
+                // ** pegar dados dinamicos 
+
+                // gerenciador imagens + leitor 
+                // leitor => carrega todos os dados previamente e entrega conforme é pedido 
+                // gerenciador => cerrega dados e pode modificar os dados
+
+        }
+
+
+
+
+
+
 
         public Ponto Pegar_ponto( Posicao _posicao ){
 
@@ -59,51 +96,5 @@ public class Controlador_navegacao {
 
 
 
-
-        public Ponto Modificar_interativos(  Tipo_modificar_interativo _tipo, Ponto _ponto,  int[][] _interativos_para_modificar ){
-
-
-                // switch( _tipo ){
-
-                //         case Tipo_modificar_interativo.acrescentar_para_adicionar:  
-
-                // }
-
-
-                return _ponto;
-
-                // switch( _tipo ){
-
-                //         //case Tipo_modificar_interativo.acrescentar_para_adicionar: Manipulador_interativos.Acrescentar_interativos_para_adicionar(  );
-
-                // }
-
-        }
-
-
 }
-
-public enum Tipo_modificar_interativo {
-
-        acrescentar_para_adicionar,
-        remover_para_adicionar,
-
-        acrescentar_para_subtrair,
-        remover_para_subtrair,
-
-}
-
-
-/*
-
-        controlador_navegacao => auxilia na movimentacao e entrega dados para a AI
-        controlador_movimento => movimenta personagens e verifca scripts 
-        controlador_interativos => ativa interativos e cria interativos 
-
-                                            => personagens 
-                                            => tela 
-                                            => itens 
-        
-*/
-
 

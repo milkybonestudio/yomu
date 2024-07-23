@@ -1,12 +1,118 @@
 
 
 
-
-
-
-
-
 public static class BYTE {
+
+
+
+        public static string Transformar_em_string( byte[] _arr ){
+
+                string[] txts = new string[ _arr.Length ];
+                for( int index = 0 ;index < _arr.Length ;index++ ){
+
+                        txts[ index ] = ( " " + _arr[ index ].ToString() );
+
+                }
+
+                // 25, 35, 45
+
+                return string.Join(',' , txts );
+
+        }
+
+
+
+     public static byte[] Aplicar_subtrair_e_adicionar_array( byte[] _default, byte[] _subtrair , byte[] _acrescentar){
+
+        
+                throw new System.Exception( "tem que verificar o 255 e -1 ali em baixo" )  ;
+
+            int default_length = _default.Length;
+            int subtrair_length =  _subtrair.Length ;
+            int acrescentar_length =   _acrescentar.Length;
+
+            int max_arr_length = default_length + acrescentar_length;
+
+            byte[] max_arr = new byte[default_length + acrescentar_length];
+
+            
+            int j = 0; 
+            int i , k ;
+
+
+            for( i = 0; i< default_length ;i++ ){
+
+                for( k = 0;  k<acrescentar_length ;k++){
+                  
+                  if(_acrescentar[k] == _default[i]){ max_arr[k] = 255; break;}
+                  
+                }
+
+            }  
+            for(i = 0, j = 0; i < acrescentar_length ;i++){if(max_arr[i] != 255)  {max_arr[j] = _acrescentar[i]; j++;}}
+
+            for(i = 0  ; i< default_length ;i++, j++){ max_arr[j] = _default[i];}
+
+
+
+            for(  i = 0; i < max_arr_length ;i++){
+                for( j = 0; j<subtrair_length ;j++){
+
+                  if(_subtrair[j] == max_arr[i])  max_arr[i] = 0;}
+
+                }
+            int t = 0;
+            for(i = 0 ; i < max_arr.Length ; i++ ){
+              if(max_arr[i] != 0 ) t++;
+            }
+
+            byte[] retorno = new byte[ t ];
+
+            for(  i = 0 , k = 0  ;  i<max_arr_length ;  i++){ 
+              
+                  if(max_arr[i] != 0) {
+              
+                       retorno[k] = max_arr[i]; k++;
+                       
+                  }
+              
+              }
+
+            return retorno;
+      
+  }
+
+
+
+
+        public static byte[] Remover_valor( byte[] _array, byte _valor ){
+
+                int numero_para_remover = 0;
+                for( int index = 0 ; index < _array.Length ; index++ ){
+
+                        if( _array[ index ] == _valor )
+                                { index++; }
+                        continue;
+                }
+
+                byte[] retorno = new byte[ ( _array.Length - numero_para_remover ) ];
+
+                int index_array_final = 0;
+
+                for( int index_final = 0 ; index_final < _array.Length ; index_final++ ){
+
+                        if( _array[ index_final ] == _valor )
+                                { 
+                                        retorno[ index_array_final ] = _array[ index_final ];
+                                        index_array_final++;
+                                }
+                        continue;
+                }
+
+                return retorno;
+
+        }
+
 
 
 
