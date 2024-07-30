@@ -10,10 +10,13 @@ public class Controlador_cidades {
 
     //public Gerenciador_dados_dinamicos_cidades gerenciador_dados_dinamicos;
 
+
 	public Gerenciador_objetos_dll_dinamicos gerenciador_objetos_dll_dinamicos;
-	public MODULO_manipulador_containers_dinamicos_completos manipulador_containers_dinamicos_completos;
-	// poderia ser usado para pegar textos em outras linguas?
-	public Gerenciador_containers_dinamicos_parciais gerenciador_containers_dinamicos_parciais_textos;
+	public MODULO__leitor_de_arquivos leitor_de_arquivos;
+
+	// *** pensar depois
+	// poderia ser usado para pegar textos em outras linguas? 
+	//public Gerenciador_containers_dinamicos_parciais gerenciador_containers_dinamicos_parciais_textos;
 
     public Gerenciador_save_cidades gerenciador_save;
 
@@ -44,13 +47,12 @@ public class Controlador_cidades {
 
 					controlador.gerenciador_save = new Gerenciador_save_cidades( controlador );
 					controlador.gerenciador_objetos_dll_dinamicos = new Gerenciador_objetos_dll_dinamicos( _nome_dll: "Cidades", _numero_inicial_de_slots: ( _dados_sistema_cidades_essenciais.Length + 10 ) );
-					controlador.manipulador_containers_dinamicos_completos = new MODULO_manipulador_containers_dinamicos_completos ( 
-																																		_nome_gerenciador : "" ,
-																																		_folder_para_pegar_dados: null, // pegar depois
-																																		_pode_escrever_no_container: false ,
-																																		_numero_inicial_de_slots: ( _dados_sistema_cidades_essenciais.Length + 10 ) 
-																																		
-																																	);
+
+					controlador.leitor_de_arquivos = new MODULO__leitor_de_arquivos ( 
+																						_gerenciador_nome : "" ,
+																						_path_folder: null, // pegar depois
+																						_numero_inicial_de_slots: ( _dados_sistema_cidades_essenciais.Length + 10 ) 
+																					);
 
 					controlador.dados_sistema_cidades_essenciais = _dados_sistema_cidades_essenciais;
 					controlador.cidades = new Cidade[ _dados_sistema_cidades_essenciais.Length ]; // agora fala quais cidades existem, já que cidades podem mudar 
@@ -108,8 +110,8 @@ public class Controlador_cidades {
 
 						// --- PEGAR CONTAINER
 						string path_container = $"CIDADE_{ dados_sistema_cidade_essenciais.nome_cidade }_dados.dat";
-						manipulador_containers_dinamicos_completos.Carregar_container_NA_MULTITHREAD( _cidade_id, path_container );
-                        byte[] dados_containers_cidades_bytes = manipulador_containers_dinamicos_completos.Pegar_container( _cidade_id );
+						//leitor_de_arquivos.Carregar_container_NA_MULTITHREAD( _cidade_id, path_container );
+                        byte[] dados_containers_cidades_bytes = leitor_de_arquivos.Pegar_dados_com_localizador( _cidade_id );
 						Dados_containers_cidade dados_containers_cidade = Construtor_containers_cidades.Construir( dados_containers_cidades_bytes );
 
 						// --- CONSTROI CIDADE
@@ -135,29 +137,29 @@ public class Controlador_cidades {
 
         public void Adicionar_cidade( int _plano_para_adicionar_id,  int _cidade_id )  {
 
-					// sempre adiciona uma cidade como segundo plano?
-					// nao, o player pode fazer uma viagem longa que pula cidades 
+					// // sempre adiciona uma cidade como segundo plano?
+					// // nao, o player pode fazer uma viagem longa que pula cidades 
 
-					// se primeiro plano => 
+					// // se primeiro plano => 
 
-					// --- CRIA cidade
+					// // --- CRIA cidade
 					
-					System.Object cidade_AI =   gerenciador_objetos_dll_dinamicos.Pegar_objeto( _cidade_id );
-					byte[] dados_containers_cidades_byte = manipulador_containers_dinamicos_completos.Pegar_container( _cidade_id );
-					Dados_containers_cidade dados_containers_cidade = Construtor_containers_cidades.Construir( dados_containers_cidades_byte );
+					// System.Object cidade_AI =   gerenciador_objetos_dll_dinamicos.Pegar_objeto( _cidade_id );
+					// byte[] dados_containers_cidades_byte = leitor_de_arquivos.Pegar_dados_com_localizador( _cidade_id );
+					// Dados_containers_cidade dados_containers_cidade = Construtor_containers_cidades.Construir( dados_containers_cidades_byte );
 
-					Dados_sistema_cidade_essenciais dados_sistema_cidade_essenciais = dados_sistema_cidades_essenciais[ _cidade_id ];
+					// Dados_sistema_cidade_essenciais dados_sistema_cidade_essenciais = dados_sistema_cidades_essenciais[ _cidade_id ];
 
-					Cidade cidade_para_adicionar =  Construtor_cidade.Construir( _cidade_id, _plano_para_adicionar_id, dados_sistema_cidade_essenciais,  dados_containers_cidade, cidade_AI );
+					// Cidade cidade_para_adicionar =  Construtor_cidade.Construir( _cidade_id, _plano_para_adicionar_id, dados_sistema_cidade_essenciais,  dados_containers_cidade, cidade_AI );
 
-					// --- COLOCA DADOS CONTAINERS 
+					// // --- COLOCA DADOS CONTAINERS 
 
-					cidades [ _cidade_id ] = cidade_para_adicionar; 
-					int index_slot_cidade = INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref cidades_segundo_plano_ativas , _cidade_id );
-					dados_sistema_cidades[ index_slot_cidade ] = cidade_para_adicionar.gerenciador_dados_sistema.Pegar_dados();
+					// cidades [ _cidade_id ] = cidade_para_adicionar; 
+					// int index_slot_cidade = INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref cidades_segundo_plano_ativas , _cidade_id );
+					// dados_sistema_cidades[ index_slot_cidade ] = cidade_para_adicionar.gerenciador_dados_sistema.Pegar_dados();
 
-					// ---- CRIA SLOT INSTRUCOES
-					gerenciador_save.instrucoes_cidades[ _cidade_id ]  = new byte[ 50 ][];
+					// // ---- CRIA SLOT INSTRUCOES
+					// gerenciador_save.instrucoes_cidades[ _cidade_id ]  = new byte[ 50 ][];
 
 					return;
 
@@ -171,41 +173,41 @@ public class Controlador_cidades {
 		public void Carregar_dados_cidade( int _cidade_id , int _periodos_para_iniciar  ){
 			
 
-				Cidade cidade_na_lixeira = gerenciador_save.Retirar_cidade_da_lixeira( _cidade_id );
+				// Cidade cidade_na_lixeira = gerenciador_save.Retirar_cidade_da_lixeira( _cidade_id );
 
-				if( cidade_na_lixeira != null )
-						{
-								#if UNITY_EDITOR
-										Console.Log( $"cidade <color=red> { (( Cidade_nome ) _cidade_id ).ToString()  } </color> foi tirado da lixeira e vai ser colocado em dados dinamicos" );
-								#endif
-								// --- TEM QUE COLOCAR OS DADOS DE VOLTA
+				// if( cidade_na_lixeira != null )
+				// 		{
+				// 				#if UNITY_EDITOR
+				// 						Console.Log( $"cidade <color=red> { (( Cidade_nome ) _cidade_id ).ToString()  } </color> foi tirado da lixeira e vai ser colocado em dados dinamicos" );
+				// 				#endif
+				// 				// --- TEM QUE COLOCAR OS DADOS DE VOLTA
 
-								int slot_objeto = gerenciador_objetos_dll_dinamicos.Criar_slot( _cidade_id );
-								gerenciador_objetos_dll_dinamicos.objetos[ slot_objeto ] = cidade_na_lixeira.gerenciador_AI.cidade_AI;
+				// 				int slot_objeto = gerenciador_objetos_dll_dinamicos.Criar_slot( _cidade_id );
+				// 				gerenciador_objetos_dll_dinamicos.objetos[ slot_objeto ] = cidade_na_lixeira.gerenciador_AI.cidade_AI;
 
-								int slot_container = manipulador_containers_dinamicos_completos.Criar_slot( _cidade_id );
-								manipulador_containers_dinamicos_completos.dados_containers[ slot_container ] = cidade_na_lixeira.gerenciador_containers_dados.Compilar_dados();
+				// 				int slot_container = leitor_de_arquivos.Criar_slot( _cidade_id );
+				// 				leitor_de_arquivos.dados_containers[ slot_container ] = cidade_na_lixeira.gerenciador_containers_dados.Compilar_dados();
 								
-								return;
+				// 				return;
 
-						}
-						else
-						{
-								Dados_sistema_cidade_essenciais dados_sistema_cidade_essenciais = dados_sistema_cidades_essenciais[ _cidade_id ];
+				// 		}
+				// 		else
+				// 		{
+				// 				Dados_sistema_cidade_essenciais dados_sistema_cidade_essenciais = dados_sistema_cidades_essenciais[ _cidade_id ];
 
-								// --- CARREGAR AI
-								string nome_objeto_classe = $"CIDADE_{ dados_sistema_cidade_essenciais.nome_cidade }_classe";
-								gerenciador_objetos_dll_dinamicos.Carregar_objeto_NA_MULTITHREAD( _cidade_id, nome_objeto_classe );
+				// 				// --- CARREGAR AI
+				// 				string nome_objeto_classe = $"CIDADE_{ dados_sistema_cidade_essenciais.nome_cidade }_classe";
+				// 				gerenciador_objetos_dll_dinamicos.Carregar_objeto_NA_MULTITHREAD( _cidade_id, nome_objeto_classe );
 								
 
-								// --- PEGAR CONTAINER
-								string path_container = $"CIDADE_{ dados_sistema_cidade_essenciais.nome_cidade }_dados.dat";
-								manipulador_containers_dinamicos_completos.Carregar_container_NA_MULTITHREAD( _cidade_id, path_container );
+				// 				// --- PEGAR CONTAINER
+				// 				string path_container = $"CIDADE_{ dados_sistema_cidade_essenciais.nome_cidade }_dados.dat";
+				// 				leitor_de_arquivos.Carregar_container_NA_MULTITHREAD( _cidade_id, path_container );
 
-								return;
+				// 				return;
 								
 							
-						}
+				// 		}
 
 
 				return;

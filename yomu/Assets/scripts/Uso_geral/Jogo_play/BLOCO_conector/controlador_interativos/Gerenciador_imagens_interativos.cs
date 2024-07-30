@@ -10,31 +10,23 @@ public class Gerenciador_imagens_interativos {
 
             // ** so vai ser criado no inicio de um novo save
 
+            #if !UNITY_EDITOR
 
-            
-            byte[] localizador_interativos_imagens = System.IO.File.ReadAllBytes( Paths_sistema.path_arquivo__localizador__interativos_logica );
+                byte[] localizador_interativos_imagens = System.IO.File.ReadAllBytes( Paths_sistema.path_arquivo__localizador__interativos_logica );
 
-            manipulador_imagens_dinamicas = new MODULO_manipulador_imagens_dinamicas( 
-                                                                                        _nome_modulo   :  "Manipulador_imagens_interativos" , 
-                                                                                        _path_container  :  Paths_sistema.path_arquivo__dados_estaticos__uso_parcial__interativos_imagens, 
-                                                                                        _numero_inicial_de_slots  :  50
+                leitor_de_arquivos  =  new MODULO__leitor_de_arquivos  ( 
+                                                                            _gerenciador_nome   :  "Manipulador_imagens_interativos" , 
+                                                                            _path_folder  :  Paths_sistema.path_arquivo__dados_estaticos__uso_parcial__interativos_imagens, 
+                                                                            _numero_inicial_de_slots  :  50
+                                                                        );
+                return;
 
-                                                                                    );
-            return;
-
+            #endif
 
     }
 
 
-    public MODULO_manipulador_imagens_dinamicas manipulador_imagens_dinamicas;
-
-
-    #if !UNITY_EDITOR 
-
-
-
-
-    #endif
+    public MODULO__leitor_de_arquivos leitor_de_arquivos;
 
 
     #if UNITY_EDITOR

@@ -153,6 +153,7 @@ public class Controlador : MonoBehaviour {
                         } 
                         catch( Exception e )
                         {
+                              return;
 
                               Debug.LogError( "Tem que fazer um modo para mandar mensagem " );
 

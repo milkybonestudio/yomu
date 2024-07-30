@@ -13,7 +13,7 @@ public static class Construtor_bloco_CONECTOR {
 
                     // --- TELA
 
-                    BLOCO_conector bloco = BLOCO_conector.instancia;
+                    BLOCO_conector bloco = new BLOCO_conector();
                     BLOCO_conector.instancia = bloco;
 
                     bloco.container_conector = GameObject.Find( "Tela/Canvas/Jogo/Conector" );
@@ -45,9 +45,11 @@ public static class Construtor_bloco_CONECTOR {
                     // ** conector 
 
 
+                    //mark
+                    // ver depois
                     // ** talves colocar na req
-                    bloco.Colocar_UI_atual();
-                    bloco.Colocar_input_atual();
+                    // bloco.Colocar_UI_atual();
+                    // bloco.Colocar_input_atual();
 
                     // --- CONTROLADORES ENTIDADES 
 

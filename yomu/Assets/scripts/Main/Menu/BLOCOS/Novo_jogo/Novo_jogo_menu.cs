@@ -6,11 +6,22 @@ using UnityEngine.UI;
 
 public class Novo_jogo_menu {
 
+        public Novo_jogo_menu(){
+
+            int numero_de_interativos = 0;
+            
+            numero_de_interativos += 1; // quadro
+            
+            novo_jogo_arr = new Interativo_menu[ numero_de_interativos ];
+
+            return;
+
+        }
 
 
         public GameObject novo_jogo_container;
-        public Menu_objects_generico[] novo_jogo_arr = new Menu_objects_generico[ 1 ];
-        public Menu_objects_generico novo_jogo;
+        public Interativo_menu[] novo_jogo_arr;
+        public Interativo_menu novo_jogo;
 
 
         public void Update(){

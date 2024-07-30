@@ -209,6 +209,10 @@ public  class Login {
                         Controlador.Pegar_instancia().menu = Menu.Construir();
                         Debug.Log( Controlador.Pegar_instancia().menu );
                         Controlador.Pegar_instancia().login = null;
+
+                        Controlador.Pegar_instancia().modo_controlador_atual = Controlador_modo.menu; 
+
+                        
                         // colocar depois
                         // Controlador_cache.Pegar_instancia().Excluir_dados( chaves_imagens );
 

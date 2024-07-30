@@ -5,7 +5,7 @@ using TMPro;
 
 
 
-public class Menu_objects_generico{
+public class Interativo_menu {
 
 
         // --- DADOS
@@ -48,34 +48,25 @@ public class Menu_objects_generico{
 
         }
 
-        public Menu_objects_generico(  string id , GameObject parent , string path , float position_x  , float position_y , float width = 150f, float height = 100f){
+        public Interativo_menu(  string id , GameObject parent ,Sprite _sprite  , float position_x  , float position_y ){
 
             this.On_click = ()=>{};
             
-            this.width = width;
-            this.height = height;
+            this.width = _sprite.rect.width;
+            this.height = _sprite.rect.height;
 
             this.game_object = new GameObject( id );
 
-            if(path != "")
-                {
+            this.image  = this.game_object.AddComponent<Image>(); 
+            this.rect = this.game_object.GetComponent<RectTransform>();
 
-                    this.image  = this.game_object.AddComponent<Image>(); 
-                    this.rect = this.game_object.GetComponent<RectTransform>();
+            this.image.color = Cores.Pegar_cor( Nome_cor.dark_2 );
+            this.image.sprite = _sprite;
 
-                    this.image.color = Cores.Pegar_cor( Nome_cor.dark_2 );
-                    this.image.sprite = Resources.Load<Sprite>( path );
+            this.rect.SetSizeWithCurrentAnchors(   RectTransform.Axis.Vertical ,  height );
+            this.rect.SetSizeWithCurrentAnchors(   RectTransform.Axis.Horizontal ,  width  );
 
-                    this.rect.SetSizeWithCurrentAnchors(   RectTransform.Axis.Vertical ,  height );
-                    this.rect.SetSizeWithCurrentAnchors(   RectTransform.Axis.Horizontal ,  width  );
-
-
-                } 
-                else
-                {
-                    this.rect = this.game_object.AddComponent<RectTransform>();
-                }
-
+                    
 
             
 

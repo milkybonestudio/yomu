@@ -86,20 +86,20 @@ public static  class Mat {
 
 
 
-          public static int[] calcular_teste_enum_exp(Interativo_nome[]  arr){
+          // public static int[] calcular_teste_enum_exp(Interativo_nome[]  arr){
 
-               int[] a = new int[arr.Length];
+          //      int[] a = new int[arr.Length];
 
-               for(  int i = 0;  i < arr.Length  ; i++  ){
+          //      for(  int i = 0;  i < arr.Length  ; i++  ){
 
-                         a[i] =  (int) arr[i];
+          //                a[i] =  (int) arr[i];
 
-               }
+          //      }
 
-               return a;
+          //      return a;
 
 
-          }
+          // }
 
 
 

@@ -22,7 +22,7 @@ public static class Interpretador {
                 Garantir_backup( _nome ) ;
 
                 string[] cenas_compiladas  =  Compilar( _nome );
-
+        
                 Salvar_texto_compilado( _nome , cenas_compiladas );
 
                 /// mudar depois 

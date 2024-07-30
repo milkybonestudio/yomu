@@ -1,6 +1,7 @@
+using System.Runtime.CompilerServices;
 
 
-
+ // [MethodImpl(MethodImplOptions.AggressiveInlining)]
 public static class BYTE {
 
 
@@ -20,6 +21,33 @@ public static class BYTE {
 
         }
 
+
+
+    public static int[] Converter_para_int_array( byte[] _array ){
+
+
+            int[] novo_array = new int[ ( _array.Length / 4 ) ];
+
+            /*
+                ver depois quando que começa a valer a pena
+                System.Buffer.BlockCopy( _array, 0, novo_array, 0, _array.Length );
+            */
+
+
+
+            for( int index = 0 ; index < novo_array.Length ; index += 4 ){
+
+                    novo_array[ index + 0  ] += ( ( int ) _array[ ( ( index * 4 ) + 0 )]  << 24 );
+                    novo_array[ index + 1  ] += ( ( int ) _array[ ( ( index * 4 ) + 1 )]  << 16 );
+                    novo_array[ index + 2  ] += ( ( int ) _array[ ( ( index * 4 ) + 2 )]  <<  8 );
+                    novo_array[ index + 3  ] += ( ( int ) _array[ ( ( index * 4 ) + 3 )]  <<  0 );
+
+            }
+
+            return novo_array;
+
+
+    }
 
 
      public static byte[] Aplicar_subtrair_e_adicionar_array( byte[] _default, byte[] _subtrair , byte[] _acrescentar){
@@ -131,16 +159,20 @@ public static class BYTE {
 
         
 
-
-        
+        [ MethodImpl(MethodImplOptions.AggressiveInlining) ]
         public static byte[] Aumentar_length_array( byte[] _arr , int numero_para_aumentar ){
 
 
-                int numero_antigo = _arr.Length ;
-                int novo_numero = ( numero_antigo + numero_para_aumentar );
-                byte[] novo_array = new byte[ novo_numero ];
 
-                for( int index =0 ; index < numero_antigo ; index++ ){
+                if( (_arr.Length + numero_para_aumentar ) > 150 )
+                        { 
+                                System.Array.Resize( ref _arr, _arr.Length + numero_para_aumentar );
+                                return  _arr;
+                        }
+
+                byte[] novo_array = new byte[ ( _arr.Length + numero_para_aumentar ) ];
+
+                for( int index =0 ; index < _arr.Length ; index++ ){
 
                         novo_array [ index ] = _arr[ index ];
 
@@ -149,7 +181,44 @@ public static class BYTE {
                 return novo_array;
 
 
+
+
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static byte[] Diminuir_length_array( byte[] _arr , int numero_para_aumentar ){
+
+
+                if( (_arr.Length - numero_para_aumentar ) > 150 )
+                        { 
+                                // byte[] buffer = new byte[ _arr.Length - numero_para_aumentar ];
+                                // System.Array.Copy( _arr, 0, buffer, 0, buffer.Length );
+                                // return buffer;
+
+                                System.Array.Resize( ref _arr, _arr.Length - numero_para_aumentar );
+                                return  _arr;
+                        }
+
+                        
+                byte[] novo_array = new byte[ ( _arr.Length - numero_para_aumentar ) ];
+
+                for( int index =0 ; index < novo_array.Length ; index++ ){
+
+                        novo_array [ index ] = _arr[ index ];
+
+                }
+
+                return novo_array;
+
+                        
+
+
+
+        }
+
+
+
+
 
         public static byte[][] Aumentar_length_array_2d(  byte[][] _arr , int numero_para_aumentar ){
 

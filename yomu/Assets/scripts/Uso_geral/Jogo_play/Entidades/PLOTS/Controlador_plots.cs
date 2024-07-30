@@ -1,8 +1,6 @@
 using System;
 
 
-
-
 public class Controlador_plots {
 
         public static Controlador_plots instancia;
@@ -11,7 +9,7 @@ public class Controlador_plots {
 
         public Gerenciador_save_plots gerenciador_save;
 
-        public MODULO_manipulador_containers_dinamicos_completos manipulador_containers_dinamicos_completos;
+        public MODULO__leitor_de_arquivos leitor_de_arquivos;
         public Gerenciador_objetos_dll_dinamicos gerenciador_objetos_dll_dinamicos;
         
 
@@ -26,21 +24,18 @@ public class Controlador_plots {
 
 
 
-
-
         public static Controlador_plots Construir( Dados_sistema_plot_essenciais[] _dados_sistema_plots_essenciais , Dados_sistema_estado_atual _dados_sistema_estado_atual ) {
 
                 Controlador_plots controlador = new Controlador_plots();
 
 
                         controlador.gerenciador_objetos_dll_dinamicos = new Gerenciador_objetos_dll_dinamicos( _nome_dll: "Plot", _numero_inicial_de_slots: 10 );
-                        controlador.manipulador_containers_dinamicos_completos = new MODULO_manipulador_containers_dinamicos_completos( 
-                                                                                                                                                _nome_gerenciador: "gerenciador_plots",
-                                                                                                                                                _folder_para_pegar_dados: null, // Paths_sistema.path_dados_save_plots,
-                                                                                                                                                _pode_escrever_no_container: true,
-                                                                                                                                                _numero_inicial_de_slots: (controlador.plots_ativos_ids.Length + 10) 
-                                                                                                                                                
-                                                                                                                                        );
+                        controlador.leitor_de_arquivos = new MODULO__leitor_de_arquivos ( 
+                                                                                                _gerenciador_nome: "gerenciador_plots",
+                                                                                                _path_folder: Paths_sistema.path_folder__dados_save_plots,
+                                                                                                _numero_inicial_de_slots: (controlador.plots_ativos_ids.Length + 10) 
+                                                                                        
+                                                                                        );
 
                         controlador.gerenciador_save = new Gerenciador_save_plots( controlador );
 
@@ -89,8 +84,8 @@ public class Controlador_plots {
 
                         // --- PEGAR CONTAINER
                         string path_container = $"plot_{ dados_sistema_plot_essenciais.nome_plot }_dados.dat";
-                        manipulador_containers_dinamicos_completos.Carregar_container_NA_MULTITHREAD( _plot_id, path_container );
-                        byte[] dados_containers_plots_bytes = manipulador_containers_dinamicos_completos.Pegar_container( _plot_id );
+                        //leitor_de_arquivos.Carregar_container_NA_MULTITHREAD( _plot_id, path_container );
+                        byte[] dados_containers_plots_bytes = leitor_de_arquivos.Pegar_dados_com_localizador( _plot_id );
                         Dados_containers_plot dados_containers_plot = Construtor_containers_plots.Construir( dados_containers_plots_bytes );
 
                         // --- CONSTROI plot
@@ -114,7 +109,7 @@ public class Controlador_plots {
 
 					
                         System.Object plot_AI =   gerenciador_objetos_dll_dinamicos.Pegar_objeto( _plot_id );
-                        byte[] dados_containers_plots_byte = manipulador_containers_dinamicos_completos.Pegar_container( _plot_id );
+                        byte[] dados_containers_plots_byte = leitor_de_arquivos.Pegar_dados_com_localizador( _plot_id );
                         Dados_containers_plot dados_containers_plot = Construtor_containers_plots.Construir( dados_containers_plots_byte );
 
                         Dados_sistema_plot_essenciais dados_sistema_plot_essenciais = dados_sistema_plots_essenciais[ _plot_id ];
@@ -125,13 +120,6 @@ public class Controlador_plots {
 
                         plots [ _plot_id ] = plot_para_adicionar; 
                         
-                        // *** TEM QUE REPENSAR ESSA PARTE
-
-                        //plots_ativos_ids[]
-                        // int index_slot_plot = INT.Acrescentar_valor_COMPLETO_GARANTIDO( ref plots_segundo_plano_ativos , _plot_id );
-                        // dados_sistema_plots[ index_slot_plot ] = dados_containers_plot[ _plot_id ];
-
-
 
                         // ---- CRIA SLOT INSTRUCOES
                         gerenciador_save.instrucoes_plots[ _plot_id ]  = new byte[ 50 ][];
@@ -148,46 +136,47 @@ public class Controlador_plots {
 
 
 
-                        Plot plot_na_lixeira = gerenciador_save.Retirar_plot_da_lixeira( _plot_id );
+                // Plot plot_na_lixeira = gerenciador_save.Retirar_plot_da_lixeira( _plot_id );
 
-                        if( plot_na_lixeira != null )
-                                        {
-                                                        #if UNITY_EDITOR
-                                                                        Console.Log( $"plot <color=red> { plot_na_lixeira.plot_nome  } </color> foi tirado da lixeira e vai ser colocado em dados dinamicos" );
-                                                        #endif
-                                                        // --- TEM QUE COLOCAR OS DADOS DE VOLTA
+                // if( plot_na_lixeira != null )
+                //         {
+                //                 #if UNITY_EDITOR
+                //                                 Console.Log( $"plot <color=red> { plot_na_lixeira.plot_nome  } </color> foi tirado da lixeira e vai ser colocado em dados dinamicos" );
+                //                 #endif
+                //                 // --- TEM QUE COLOCAR OS DADOS DE VOLTA
 
-                                                        int slot_objeto = gerenciador_objetos_dll_dinamicos.Criar_slot( _plot_id );
-                                                        gerenciador_objetos_dll_dinamicos.objetos[ slot_objeto ] = plot_na_lixeira.gerenciador_AI.plot_AI;
+                //                 int slot_objeto = gerenciador_objetos_dll_dinamicos.Criar_slot( _plot_id );
+                //                 gerenciador_objetos_dll_dinamicos.objetos[ slot_objeto ] = plot_na_lixeira.gerenciador_AI.plot_AI;
 
-                                                        int slot_container = manipulador_containers_dinamicos_completos.Criar_slot( _plot_id );
-                                                        manipulador_containers_dinamicos_completos.dados_containers[ slot_container ] = plot_na_lixeira.gerenciador_containers_dados.Compilar_dados();
-                                                        
-                                                        return;
+                //                 int slot_container = leitor_de_arquivos.Criar_slot( _plot_id );
+                //                 leitor_de_arquivos.dados_containers[ slot_container ] = plot_na_lixeira.gerenciador_containers_dados.Compilar_dados();
+                                
+                //                 return;
 
-                                        }
-                                        else
-                                        {
-                                                        
+                //         }
+                //         else
+                //         {
+                                        
 
-                                                        // --- CARREGAR AI
-                                                        string nome_objeto_classe = $"PLOT_{ plot_na_lixeira.plot_nome }_classe";
-                                                        gerenciador_objetos_dll_dinamicos.Carregar_objeto_NA_MULTITHREAD( _plot_id, nome_objeto_classe );
-                                                        
+                //                 // --- CARREGAR AI
+                //                 string nome_objeto_classe = $"PLOT_{ plot_na_lixeira.plot_nome }_classe";
+                //                 gerenciador_objetos_dll_dinamicos.Carregar_objeto_NA_MULTITHREAD( _plot_id, nome_objeto_classe );
+                                
 
-                                                        // --- PEGAR CONTAINER
-                                                        string path_container = $"PLOT_{ plot_na_lixeira.plot_nome }_dados.dat";
-                                                        manipulador_containers_dinamicos_completos.Carregar_container_NA_MULTITHREAD( _plot_id, path_container );
+                //                 // --- PEGAR CONTAINER
+                //                 string path_container = $"PLOT_{ plot_na_lixeira.plot_nome }_dados.dat";
+                //                 leitor_de_arquivos.Carregar_container_NA_MULTITHREAD( _plot_id, path_container );
 
-                                                        return;
-                                                        
-                                                
-                                        }
+                //                 return;
+                                        
+                                
+                //         }
+
+
                 return;
 
 
         }
-
 
 
 

@@ -38,13 +38,12 @@ public class Controlador_tela_conector {
             public Image background_1_image;
             public Image background_2_image;
 
-            public MODULO_manipulador_imagens_dinamicas gerenciador_imagens_backgrounds;
+            public Gerenciador_imagens_background_conector gerenciador_imagens_background_conector; 
 
 
             // --- INTERATIVOS
 
             public Gerenciador_imagens_interativos gerenciador_imagens_interativos;
-            public Gerenciador_imagens_background_conector gerenciador_imagens_background_conector; 
 
 
             public Interativo_tela[] interativo_tela;

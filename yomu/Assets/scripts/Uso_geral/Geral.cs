@@ -10,7 +10,6 @@ public static class Geral {
     
 
 
-
                 public static int trava_i= 0;
                 public static void Trava(){  
 
@@ -25,8 +24,6 @@ public static class Geral {
                     }
                         
                 }
-
-
 
 
 

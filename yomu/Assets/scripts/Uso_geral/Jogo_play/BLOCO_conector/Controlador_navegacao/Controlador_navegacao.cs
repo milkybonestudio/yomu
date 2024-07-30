@@ -41,7 +41,7 @@ public class Controlador_navegacao {
 
                 Controlador_navegacao controlador = new Controlador_navegacao();
 
-                        controlador.gerenciador_dados_pontos = new Gerenciador_dados_pontos( _nome_gerenciador: "", _path_container: "" );
+                        controlador.gerenciador_dados_pontos = new Gerenciador_dados_pontos();
                         controlador.pontos_cidade_primaria = Tradutor_pontos_estado_atual.Descompactar_pontos( _dados_sistema_estado_atual.dados_pontos_compactados, controlador.gerenciador_dados_pontos );
 
                         //Controlador_interativos.Pegar_instancia().Pegar_interativos_tela_pontos_iniciais( pontos_cidade_primaria. controlador. );

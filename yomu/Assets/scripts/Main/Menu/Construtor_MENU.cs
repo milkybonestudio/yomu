@@ -9,63 +9,272 @@ public static class Construtor_MENU {
 
 
             Menu menu = new Menu();
-
             
             menu.menu_background = _dados_menu.tipo_menu_background;
 
 
-            //mark
-            // ** nao faz sentido ficar aqui
-            // Controlador.Pegar_instancia().modo_controlador_atual = Controlador_modo.menu; 
+            // --- COLCOAR PREFAB
 
 
-            menu.controlador_dados = Controlador_dados.Pegar_instancia();
+            GameObject canvas = GameObject.Find("Tela/Canvas"); 
+
+            // --- PEGA MENU
+            string nome_prefab = Paths_sistema.path_folder__prefabs_tipos_de_menu  + "/" +  ( _dados_menu.tipo_menu_background ).ToString() + "_prefab";
+            GameObject menu_prefab = Resources.Load<GameObject>( nome_prefab );
+
+            menu_prefab.transform.SetParent( canvas.transform, false );
+
             
           
             // --- SETA INPUT
+            menu.controlador_dados = Controlador_dados.Pegar_instancia();
             Controlador_input.ativar_movimentacao_mouse = true;
             Controlador_cursor.Pegar_instancia().Mudar_cursor( Cor_cursor.off );
             Controlador_input.tipo_teclado = Tipo_teclado.plataforma; // ???
 
 
-            //   |>  bg // infor imagens // objetos static // opcoes
+            // --- CONSTRUTORES ENDIVIDUAIS
+            menu.novo_jogo_menu = new Novo_jogo_menu();
+            menu.galeria_menu = new Galeria_menu();
+            menu.saves_menu = new Saves_menu();
+            menu.configuracoes_menu = new Configuracoes_menu();
+            menu.personagens_menu = new Personagens_menu();
+
+            #if UNITY_EDITOR
+
+
+                    // --- COLOCAR IMAGENS 
+
+                    // --- BACKGROUNDS
+
+                    Sprite[] sprites_backgrounds = Gerenciador_imagens_MENU.sprites_background;
+                    string[] sprites_backgrounds_nomes = Gerenciador_imagens_MENU.sprites_backgrounds_nomes;
+
+                    for( int background_id = 0 ; background_id < sprites_backgrounds.Length  ; background_id++ ){
+
+
+                            GameObject game_object = GameObject.Find(  $"MENU__BACKGROUND__{ sprites_backgrounds_nomes[ background_id ] }" );
+                            Image image = game_object.GetComponent<Image>();
+                            image.sprite = sprites_backgrounds[ background_id ];
+                            continue;
+
+                    }
+
+
+                    // --- INTERATIVOS
+
+                    Sprite[] sprites_interativos = Gerenciador_imagens_MENU.sprites_interativos;
+                    string[] sprites_interativos_nomes = Gerenciador_imagens_MENU.sprites_interativos_nomes;
+
+                    for( int interativo_id = 0 ; interativo_id < sprites_backgrounds.Length  ; interativo_id++ ){
+
+
+                            GameObject game_object = GameObject.Find(  $"MENU__INTERATIVO__{ sprites_interativos_nomes[ interativo_id ] }" );
+                            Image image = game_object.GetComponent<Image>();
+                            image.sprite = sprites_interativos[ interativo_id ];
+                            continue;
+
+                    }
+
+
+                    // --- OBJETOS
+
+                    Sprite[] sprites_objetos = Gerenciador_imagens_MENU.sprites_objetos;
+                    string[] sprites_objetos_nomes = Gerenciador_imagens_MENU.sprites_objetos_nomes;
+
+                    for( int objeto_id = 0 ; objeto_id < sprites_backgrounds.Length  ; objeto_id++ ){
+
+
+                            GameObject game_object = GameObject.Find(  $"MENU__OBJETO__{ sprites_interativos_nomes[ objeto_id ] }" );
+                            Image image = game_object.GetComponent<Image>();
+
+                            if( sprites_interativos[ objeto_id ] == null )
+                                {
+                                    // --- NAO PODE MOSTRAR
+                                    image.color = Color.clear;
+                                }
+                                else
+                                {
+                                    // --- TEM QUE MOSTRAR
+                                    image.sprite = sprites_interativos[ objeto_id ];
+                                    image.color = Color.white;
+                                }
+
+
+                            continue;
+
+                    }
+
+
+
+
+
+
+            #endif
+
+
+
+
+
+
+
+            // // --- CONSTRUTORES DADOS
+
+            // Menu_bloco[] blocos = ( Menu_bloco[] ) System.Enum.GetValues( typeof( Menu_bloco ) ) ;
+            // int numero_de_blocos = blocos.Length;
+
+            // // --- PEGAR MENU_OBJECTS
+            // Interativo_menu[][] blocos_interativos_menu = new Interativo_menu[ numero_de_blocos ][];
+
+            // blocos_interativos_menu[ ( int ) Menu_bloco.personagens ] = menu.personagens_menu.personagens_arr;
+            // blocos_interativos_menu[ ( int ) Menu_bloco.galeria ] = menu.galeria_menu.galeria_arr;
+            // blocos_interativos_menu[ ( int ) Menu_bloco.novo_jogo ] = menu.novo_jogo_menu.novo_jogo_arr;
+            // blocos_interativos_menu[ ( int ) Menu_bloco.saves ] = menu.saves_menu.saves_arr;
+            // blocos_interativos_menu[ ( int ) Menu_bloco.configuracoes ] = menu.configuracoes_menu.configuracoes_arr;
+
+
+            // // --- PEGAR VERIFICADORES
+            // Action[] blocos_verificadores = new Action[ numero_de_blocos ];
+
+            // blocos_verificadores[ ( int ) Menu_bloco.personagens ] = null;
+            // blocos_verificadores[ ( int ) Menu_bloco.galeria ] = menu.galeria_menu.Verificar_galeria;
+            // blocos_verificadores[ ( int ) Menu_bloco.novo_jogo ] = null;
+            // blocos_verificadores[ ( int ) Menu_bloco.saves ] = menu.saves_menu.Verificar_saves;
+            // blocos_verificadores[ ( int ) Menu_bloco.configuracoes ] = null;
 
             
-            // --- CONSTROI TELA
+            
+            // // --- CONSTRUIR TELA
+            // // *** Constroi backgrounds
 
-            menu.controlador_tela_menu = Construtor_controlador_tela_menu.Construir( _dados_menu );
-
-            // --- CRIAR BLOCOS
-
-            menu.novo_jogo_menu = Construtor_NOVO_JOGO_MENU.Construir( menu, _dados_menu );
-            menu.galeria_menu = Construtor_GALERIA_MENU.Construir( menu, _dados_menu );
-            menu.saves_menu = Construtor_SAVES_MENU.Construir( menu, _dados_menu );
-            menu.configuracoes_menu = Construtor_CONFIGURACOES_MENU.Construir( menu, _dados_menu );
-            menu.personagens_menu = Construtor_PERSONAGENS_MENU.Construir( menu, _dados_menu );
+            // menu.controlador_tela_menu = Construtor_controlador_tela_menu.Construir( _dados_menu );
 
 
-            // --- CRIAR OBJETOS ESTATICOS
+            // // --- CRIA INTERATIVOS MENU
 
-            // --- CRIA SLOTS OBJETOS ESTATICOS
-
-
-            int numero_objetos_ativos = BOOL.Pegar_numero_de_trues( _dados_menu.objetos_estaticos_liberados );
+            // for(  int bloco_id = 1; bloco_id < blocos.Length ; bloco_id++ ){
 
 
-            menu.controlador_tela_menu.canvas_individuais_menu_objetos_estaticos = new GameObject[ numero_objetos_ativos ];
-            menu.controlador_tela_menu.canvas_individuais_menu_imagens_objetos_estaticos = new Image[ numero_objetos_ativos ];
-            menu.controlador_tela_menu.canvas_individuais_menu_rects_objetos_estaticos = new RectTransform[ numero_objetos_ativos ];
+            //         Menu_bloco bloco = ( Menu_bloco ) bloco_id;
+
+            //         string bloco_nome = bloco.ToString();
 
 
-            for( int objeto_index = 0 ; objeto_index < _dados_menu.objetos_estaticos_liberados.Length ; objeto_index++ ){
+            //         int posicao_x_bloco_int = _dados_menu.posicoes_blocos[ ( bloco_id * 2 ) + 0 ];
+            //         int posicao_y_bloco_int = _dados_menu.posicoes_blocos[ ( bloco_id * 2 ) + 1 ];
 
-                
+            //         float posicao_x_bloco =  Convert.ToSingle( posicao_x_bloco_int );
+            //         float posicao_y_bloco =  Convert.ToSingle( posicao_y_bloco_int );
+                    
 
-            }
+
+            //         GameObject game_object_bloco  = new GameObject( $"{ bloco_nome }_container" );
+            //         game_object_bloco.transform.SetParent(  menu.controlador_tela_menu.container_blocos_menu.transform, false );
+            //         game_object_bloco.transform.localPosition = new Vector3( posicao_x_bloco, posicao_y_bloco, 0f );
+
+
+            //         menu.controlador_tela_menu.containers_blocos_especificos[ bloco_id ] = game_object_bloco;
+
+
+            //         int[] ids = _dados_menu.interativos_menu_imagens_por_bloco[ bloco_id ];
+            //         int[] posicoes_interativos_menu = _dados_menu.posicoes_interativos_menu_por_bloco[ bloco_id ];
+
+            //         Interativo_menu[] interativos_menu_do_bloco = blocos_interativos_menu[ bloco_id ];
+
+            //         for( int index = 0 ; index < ids.Length ; index++ ){
+
+
+            //                 int id = ids[ index ];
+            //                 float posicao_x = Convert.ToSingle( posicoes_interativos_menu[ ( index * 2  ) + 0 ] );
+            //                 float posicao_y = Convert.ToSingle( posicoes_interativos_menu[ ( index * 2  ) + 1 ] );
+
+            //                 Sprite sprite = Gerenciador_imagens_MENU.Pegar_sprite_interativo( id );
+
+            //                 interativos_menu_do_bloco[ index ]  = new Interativo_menu       ( 
+            //                                                                                     $"Personagem_interativop_menu__{ id }",
+            //                                                                                     menu.controlador_tela_menu.containers_blocos_especificos[ bloco_id ],
+            //                                                                                     sprite,
+            //                                                                                     posicao_x,
+            //                                                                                     posicao_y
+            //                                                                                 );
+
+
+            //                 continue;
+
+            //         }
+
+            //         Action Verificador =  blocos_verificadores[ bloco_id ];
+            //         if( Verificador != null )
+            //             { Verificador(); }
+                    
+
+            //         continue;
+
+
+            // }
+
+
+
+
+            // // --- CRIAR OBJETOS ESTATICOS
+
+            //     // --- CRIA SLOTS OBJETOS ESTATICOS
+
+            //     GameObject[] objetos_estaticos_game_objects = new GameObject[ _dados_menu.objetos_estaticos_ids.Length ];
+            //     menu.controlador_tela_menu.canvas_individuais_menu_objetos_estaticos = objetos_estaticos_game_objects;
+
+            //     Image[] objetos_estaticos_images = new Image[ _dados_menu.objetos_estaticos_ids.Length ];
+            //     menu.controlador_tela_menu.canvas_individuais_menu_imagens_objetos_estaticos = objetos_estaticos_images;
+
+            //     RectTransform[] objetos_estaticos_rects = new RectTransform[ _dados_menu.objetos_estaticos_ids.Length ];
+            //     menu.controlador_tela_menu.canvas_individuais_menu_rects_objetos_estaticos = objetos_estaticos_rects;
+
+            
+
+            //     int[] objetos_estaticos_ids =  _dados_menu.objetos_estaticos_ids;
+            //     int[] posicoes = _dados_menu.objetos_estaticos_posicoes;
+
+
+            //     for( int objeto_index = 0 ; objeto_index < objetos_estaticos_ids.Length ; objeto_index++ ){
+
+            //             int id = objetos_estaticos_ids[ objeto_index ];
+
+            //             // --- PEGA POSICOES
+            //             int posicao_x_objeto_estatico_int = posicoes[ ( objeto_index * 2 ) + 0 ];
+            //             int posicao_y_objeto_estatico_int = posicoes[ ( objeto_index * 2 ) + 1 ];
+
+            //             float posicao_x_objeto_estatico =  Convert.ToSingle( posicao_x_objeto_estatico_int );
+            //             float posicao_y_objeto_estatico =  Convert.ToSingle( posicao_y_objeto_estatico_int );
+
+            //             // --- CRIA OBJETO ESTATICO
+            //             objetos_estaticos_game_objects[ objeto_index ] = new GameObject( $"Objeto_estatico_menu_{ objeto_index }" );
+
+            //             objetos_estaticos_images[ objeto_index ]  =  IMAGE.Criar_imagem_somente_com_sprite  (
+            //                                                                                                     objetos_estaticos_game_objects[ objeto_index ],
+            //                                                                                                     menu.controlador_tela_menu.container_objetos_estaticos,
+            //                                                                                                     Gerenciador_imagens_MENU.Pegar_sprite_objeto_estatico( id )
+            //                                                                                                 );
+
+            //             // ta meio feio                                          
+            //             objetos_estaticos_rects[ objeto_index ] = objetos_estaticos_game_objects[ objeto_index ].GetComponent<RectTransform>();
+
+            //             objetos_estaticos_game_objects[ objeto_index ].transform.localPosition = new Vector3( posicao_x_objeto_estatico, posicao_y_objeto_estatico, 0f );
+
+
+
+            //             continue;
+
+
+
+            //     }
 
 
 
             //  botoes
+
+
+
+
 
 
             menu.opcoes_container = new GameObject("Opcoes_container");

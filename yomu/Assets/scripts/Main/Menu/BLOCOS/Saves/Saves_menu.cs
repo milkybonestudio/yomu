@@ -9,9 +9,9 @@ public class Saves_menu {
 
         public GameObject save_container;
 
-        public Menu_objects_generico[] menu_saves_arr = new Menu_objects_generico[4];
+        public Interativo_menu[] saves_arr;
 
-        public Save_information[] menu_save_information_arr = new Save_information[4];
+        public Save_information[] menu_save_information_arr;
 
 
 

@@ -15,9 +15,7 @@ using System.IO;
 
         public static Controlador_configuracoes Construir(){ 
                 
-
                 instancia = new Controlador_configuracoes(); 
-                
                 return instancia;
                 
         }

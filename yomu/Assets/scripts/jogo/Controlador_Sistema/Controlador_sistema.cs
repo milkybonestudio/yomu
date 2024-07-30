@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Unity.Jobs;
 
 
 
@@ -36,6 +37,9 @@ public class Controlador_sistema {
         public Dados_sistema_cidade[] dados_cidades;
         public Dados_sistema_plot[] dados_plots;
 
+        // --- DADOS PARA TROCA DIA
+
+        public JobHandle job_handler_passada_dia;
 
 
         // --- ENTIDADES_PARA_ADICIONAR
@@ -54,6 +58,33 @@ public class Controlador_sistema {
                 // ** plots 
                 public int[] plots_pentendes_para_adicionar;
                 public int[] plots_pentendes_para_adicionar_tempo;
+
+
+
+        public void Passar_dia(){
+
+                Virar_dia_struct v = new Virar_dia_struct();
+                v.Schedule();
+
+                // -- iniciar animacao()
+
+
+        }
+
+
+        public void Verificar_passar_dia(){
+
+                if( job_handler_passada_dia.IsCompleted )
+                        {
+                                // *** destruir animacao 
+                                Jogo.Pegar_instancia().bloco_atual = Bloco.conector;
+                                return;
+                        }
+
+                // *** atualizar animacao
+                Debug.Log( "Esta esperando os dados do background serem finalizados" );
+
+        }
 
 
 

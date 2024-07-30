@@ -20,39 +20,43 @@ public class Controlador_tela_menu {
         public  Image canvas_menu_image;
         public  RectTransform canvas_menu_rect;
 
-        // --- CONTAINERS
-
-        public GameObject container_backgrounds;
-        public GameObject container_interativos_menu;
-        public GameObject container_objetos_estaticos;
-
-
+        
 
         public  GameObject canvas_menu_movel;
 
 
         // --- BACKGROUND
+        
+        public GameObject container_backgrounds;
+
         public  GameObject[] canvas_individuais_menu_backgrounds;
         public  Image[] canvas_individuais_menu_imagens_backgrounds;
         public  RectTransform[] canvas_individuais_menu_rects_backgrounds;
 
         // --- INTERATIVOS MENU
+        
+        public GameObject container_blocos_menu;
+        public GameObject[] containers_blocos_especificos;
+
         public  GameObject[][] canvas_individuais_interativos_menu_POR_BLOCO;
         public  Image[][] canvas_individuais_imagens_interativos_menu_POR_BLOCO;
         public  RectTransform[][] canvas_individuais_rects_interativos_menu_POR_BLOCO;
 
 
         // --- OBJETOS ESTATICOS
+
+        public GameObject container_objetos_estaticos;
+
         public  GameObject[] canvas_individuais_menu_objetos_estaticos;
         public  Image[] canvas_individuais_menu_imagens_objetos_estaticos;
         public  RectTransform[] canvas_individuais_menu_rects_objetos_estaticos;
 
 
 
-        public float[] posicoes_blocos;
+        public int[] posicoes_blocos;
 
         public int[] background_imagens_ids;
-        public float[] background_imagens_posicoes;
+        public int[] background_imagens_posicoes;
 
     
 

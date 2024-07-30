@@ -3,60 +3,30 @@
 public class Gerenciador_dados_pontos {
 
 
-        public MODULO_manipulador_container_estatico_completo manipulador_container_estatico_completo;
+        public MODULO__desmembrador_de_arquivo desmembrador_de_arquivo; 
 
-        public Gerenciador_dados_pontos(  string _nome_gerenciador, string _path_container ){
+        public Gerenciador_dados_pontos(){
 
-                manipulador_container_estatico_completo = new MODULO_manipulador_container_estatico_completo(  _nome_manipulador: _nome_gerenciador, _path_container: path_container, _pode_escrever_no_container: true , _forcar_pegar_container: true  );            
+
+
+                path_container = Paths_sistema.path_folder__dados_save_pontos;
+                localizador = System.IO.File.ReadAllBytes( Paths_sistema.path_arquivo__localizador__pontos_save );
+
+                desmembrador_de_arquivo = new MODULO__desmembrador_de_arquivo   (   
+                                                                                    _gerenciador_nome: "Gerenciador_dados_pontos",
+                                                                                    _path_arquivo: path_container,
+                                                                                    _numero_inicial_de_slots: 50
+                                                                                );            
 
         }
 
 
-    public Task_req req_pegar_container;
-    public byte[] dados_atuais;
-    public string path_container;
+        public byte[] localizador;
 
-    public string nome_gerenciador;
+        public byte[] dados_atuais;
+        public string path_container;
 
+        public string nome_gerenciador;
 
-
-    public void Carregar_novo_container( string _path ){
-
-
-                if( req_pegar_container != null )
-                    {
-                        // --- TEM ALGO SENDO CARREGADO
-
-                        // --- NAO DEIXA TERMINAR
-                        req_pegar_container.pode_executar = false;
-                        req_pegar_container = null;
-
-                    }
-
-
-
-                req_pegar_container = new Task_req( new Chave_cache(), $"Carregando dados do { nome_gerenciador }" );
-
-                req_pegar_container.fn_iniciar = ( Task_req _req ) =>   {
-
-                                                                                byte[] dados =System.IO.File.ReadAllBytes( path_container );
-
-                                                                                req_pegar_container.dados = ( System.Object ) dados;
-                                                                                return;
-
-                                                                        };
-
-                req_pegar_container.fn_finalizar = ( Task_req _req ) => {
-
-                                                                                byte[] dados = ( byte[] ) req_pegar_container.dados;
-                                                                                dados_atuais = dados;
-                                                                                return;
-                                                                                req_pegar_container = null;
-
-                                                                        };
-
-                return;
-
-    }
 
 }

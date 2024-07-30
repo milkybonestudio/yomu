@@ -1,7 +1,55 @@
-
+using System.Runtime.CompilerServices;
 
 
 public static class INT {
+
+
+
+
+        public static string Transformar_int_array_em_string( int[] _array ){
+
+                string[] numeros = new string[ _array.Length ];
+
+                for(  int i = 0 ; i< _array.Length ; i++){
+
+                        numeros[ i ] = _array[ i ].ToString();
+                        continue;
+                }
+
+                return string.Join( ',', numeros );
+
+        }
+
+
+        public static string Transformar_int_array_2d_em_string( int[][] _array_2d ){
+
+                string[] arrays_string = new string [ ( _array_2d.Length * 2 )];
+
+                for( int array_index = 0 ; array_index < _array_2d.Length ; array_index++ ){
+                        int[] array = _array_2d[ array_index ];
+
+                        if( array == null )
+                                {
+                                        arrays_string[ ( array_index * 2 ) + 0 ] = "NULL";
+                                        arrays_string[ ( array_index * 2 ) + 1 ] = "\r\n" ;
+                                }
+                                else
+                                {
+                                        arrays_string[ ( array_index * 2 ) + 0 ] = Transformar_int_array_em_string( array );
+                                        arrays_string[ ( array_index * 2 ) + 1 ] = "\r\n" ;
+                                }
+
+                }
+                
+                // --- REMOVE A ULTIMA QUEBRA DE LINHA DESNECESSARIA
+                arrays_string[ ( arrays_string.Length - 1 ) ] = "";
+
+                return string.Concat( arrays_string );
+
+
+
+        }
+
 
 
 
@@ -138,15 +186,45 @@ public static class INT {
         }
 
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int[] Aumentar_length_array( int[] _array , int quantidade_para_adicionar = 5 ){
 
 
-                int length_atual = _array.Length;
-                int novo_length = ( length_atual + quantidade_para_adicionar ) ;
 
-                int[] novo_array = new int[ novo_length ];
+                // if( (_array.Length + quantidade_para_adicionar ) > 150 )
+                //         { 
+                //                 System.Array.Resize( ref _arr, _arr.Length + quantidade_para_adicionar );
+                //                 return  _arr;
+                //         }
+
+                
+                int[] novo_array = new int[ ( _array.Length + quantidade_para_adicionar ) ];
 
                 for( int i = 0; i < _array.Length ; i++ ){
+
+                        novo_array[ i ] = _array[ i ];
+
+                }
+
+                return novo_array;
+        
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int[] Diminuir_length_array( int[] _array , int quantidade_para_adicionar = 5 ){
+
+
+
+                // if( (_array.Length - numero_para_aumentar ) > 150 )
+                //         { 
+                //                 System.Array.Resize( ref _arr, _arr.Length + numero_para_aumentar );
+                //                 return  _arr;
+                //         }
+
+
+                int[] novo_array = new int[ ( _array.Length - quantidade_para_adicionar ) ];
+
+                for( int i = 0; i < novo_array.Length ; i++ ){
 
                         novo_array[ i ] = _array[ i ];
 
@@ -157,6 +235,19 @@ public static class INT {
                 
 
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         public static int Acrescentar_valor_COMPLETO_GARANTIDO( ref int[] arr , int _valor ){

@@ -87,7 +87,8 @@ public class Controlador_personagens_visual_novel{
         }
 
 
-    public Coroutine_objeto foco_camera_personagens_coroutine_objeto = new Coroutine_objeto( 2 + 1 );
+    // public Coroutine_objeto foco_camera_personagens_coroutine_arr = new Coroutine_objeto( 2 + 1 );
+    public Coroutine[] foco_camera_personagens_coroutine_arr = new Coroutine[ 2 + 1 ];
 
     public GameObject personagens_container;
     public BLOCO_visual_novel bloco_visual_novel;
@@ -157,7 +158,8 @@ public class Controlador_personagens_visual_novel{
         extras_dados = null;
 
 
-        foco_camera_personagens_coroutine_objeto.Stop();
+        COROUTINE.Parar_coroutines_array( foco_camera_personagens_coroutine_arr );
+        //foco_camera_personagens_coroutine_arr.Stop();
 
 
     }
@@ -559,8 +561,8 @@ public class Controlador_personagens_visual_novel{
                     float valor_scale;
                     Vector3 valor_position;
 
-
-                    foco_camera_personagens_coroutine_objeto.Stop();
+                    COROUTINE.Parar_coroutines_array( foco_camera_personagens_coroutine_arr );
+                    //foco_camera_personagens_coroutine_arr.Stop();
 
 
                     switch( _modo ){
@@ -584,21 +586,36 @@ public class Controlador_personagens_visual_novel{
 
                     }
                     
-                    foco_camera_personagens_coroutine_objeto.Iniciar_coroutine( slot: 0, IEn:  a(   valor_position , valor_scale   )  );
+                    COROUTINE.Iniciar_coroutine_especifico_array( 
+                                                                    _coroutine_array: foco_camera_personagens_coroutine_arr,
+                                                                    _index: 0,
+                                                                    IEn:   a(   valor_position , valor_scale   ) 
+                                                                );
+                    
 
 
-                    IEnumerator a(  Vector3 _position,  float _valor_scale    ){
+                    IEnumerator a(  Vector3 _position,  float _valor_scale ){
 
-                        float tempo_ms = 400f;
-
+                            float tempo_ms = 400f;
+    
+                            COROUTINE.Iniciar_coroutine_especifico_array( 
+                                                                            _coroutine_array: foco_camera_personagens_coroutine_arr,
+                                                                            _index: 1,
+                                                                            IEn:   Coroutine_ferramentas.Mudar_position_generico(tempo_ms , personagens_container.transform, _position ) 
+                                                                        );
+                            
+                                                
+                            COROUTINE.Iniciar_coroutine_especifico_array( 
+                                                                            _coroutine_array: foco_camera_personagens_coroutine_arr,
+                                                                            _index: 2,
+                                                                            IEn:   Coroutine_ferramentas.Mudar_scale_generico(tempo_ms , personagens_container.transform, _valor_scale )
+                                                                        );
                         
-                        foco_camera_personagens_coroutine_objeto.Iniciar_coroutine(  slot: 1  , IEn: Coroutine_ferramentas .Mudar_position_generico(tempo_ms , personagens_container.transform, _position )  );
-                        foco_camera_personagens_coroutine_objeto.Iniciar_coroutine(  slot: 2  , IEn: Coroutine_ferramentas.Mudar_scale_generico(tempo_ms , personagens_container.transform, _valor_scale )  );
+                            
+                            yield return foco_camera_personagens_coroutine_arr[ 1 ];
 
-                        yield return foco_camera_personagens_coroutine_objeto.coroutine_arr[ 1 ];
-
-                        foco_camera_personagens_coroutine_objeto.Stop();
-                        yield break;
+                            COROUTINE.Parar_coroutines_array( foco_camera_personagens_coroutine_arr );
+                            yield break;
 
                         
                     }

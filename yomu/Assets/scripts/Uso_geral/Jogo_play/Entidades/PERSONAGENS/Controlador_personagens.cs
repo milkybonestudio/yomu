@@ -20,7 +20,7 @@ public class Controlador_personagens {
 		// --- USAO INTERNO
 		public Gerenciador_save_personagens gerenciador_save ;
 
-		public MODULO_manipulador_containers_dinamicos_completos manipulador_containers_dinamicos_completos ;
+		public MODULO__leitor_de_arquivos leitor_de_arquivos;
 		public Gerenciador_objetos_dll_dinamicos gerenciador_objetos_dll_dinamicos ;
 
 		// --- MODIFICADORES
@@ -58,13 +58,11 @@ public class Controlador_personagens {
 					// ---- DADOS
 					
 					controlador.gerenciador_save = new Gerenciador_save_personagens( controlador );
-					controlador.manipulador_containers_dinamicos_completos = new MODULO_manipulador_containers_dinamicos_completos (
-																																		_nome_gerenciador : "" ,
-																																		_folder_para_pegar_dados: null, //Paths_sistema.path_folder__dados_dinamicos__uso_completo__dados_save_personagens,
-																																		_pode_escrever_no_container: false ,
-																																		_numero_inicial_de_slots: ( _dados_sistema_personagens_essenciais.Length + 10 )
-																																
-																																	);
+					controlador.leitor_de_arquivos = new MODULO__leitor_de_arquivos (
+																						_gerenciador_nome : "" ,
+																						_path_folder: Paths_sistema.path_folder__dados_save_personagens,
+																						_numero_inicial_de_slots: ( _dados_sistema_personagens_essenciais.Length + 10 )
+																					);
 
 					controlador.dados_sistema_personagens_essenciais = _dados_sistema_personagens_essenciais;
 					controlador.personagens = new Personagem[ _dados_sistema_personagens_essenciais.Length ];
@@ -112,8 +110,8 @@ public class Controlador_personagens {
 				// --- PEGAR CONTAINER
 
 				string path_personagem_dados = $"PERSONAGEM_{ personagem_nome }_dados.dat";
-				manipulador_containers_dinamicos_completos.Carregar_container_NA_MULTITHREAD( _personagem_id, path_personagem_dados );
-				byte[] dados_container_personagem_byte =  manipulador_containers_dinamicos_completos.Pegar_container( _personagem_id );
+				//leitor_de_arquivos.Carregar_container_NA_MULTITHREAD( _personagem_id, path_personagem_dados );
+				byte[] dados_container_personagem_byte =  leitor_de_arquivos.Pegar_dados_com_localizador( _personagem_id );
 				Dados_containers_personagem dados_containers_personagens = Construtor_containers_personagens.Construir( dados_container_personagem_byte );
 
 				Personagem personagem_para_adicionar =  Construtor_personagem.Construir( _personagem_id,  _plano_para_adicionar_id, dados_sistema_personagem_essenciais,  dados_containers_personagens, personagem_AI );
@@ -137,7 +135,7 @@ public class Controlador_personagens {
 				// --- CRIA PERSONAGEM
 				
 				System.Object personagem_AI =   gerenciador_objetos_dll_dinamicos.Pegar_objeto( _personagem_id );
-				byte[] container_byte = manipulador_containers_dinamicos_completos.Pegar_container( _personagem_id );
+				byte[] container_byte = leitor_de_arquivos.Pegar_dados_com_localizador( _personagem_id );
 				Dados_containers_personagem dados_containers_personagens = Construtor_containers_personagens.Construir( container_byte );
 
 				Dados_sistema_personagem_essenciais dados_sistema_personagem_essenciais = dados_sistema_personagens_essenciais[ _personagem_id ];
@@ -163,40 +161,42 @@ public class Controlador_personagens {
 		public void Carregar_dados_personagem( int _personagem_id , int _periodos_para_iniciar, int _local_para_colocar ){
 
 
-			Personagem personagem_na_lixeira = gerenciador_save.Retirar_personagem_da_lixeira( _personagem_id );
+			// Personagem personagem_na_lixeira = gerenciador_save.Retirar_personagem_da_lixeira( _personagem_id );
 
-			if( personagem_na_lixeira != null )
-				{
-						#if UNITY_EDITOR
-							Console.Log( $"Personagem <color=red> { ((Personagem_nome ) _personagem_id).ToString()  } </color> foi tirado da lixeira e vai ser colocado em dados dinamicos" );
-						#endif
+			// if( personagem_na_lixeira != null )
+			// 	{
+			// 			#if UNITY_EDITOR
+			// 				Console.Log( $"Personagem <color=red> { ((Personagem_nome ) _personagem_id).ToString()  } </color> foi tirado da lixeira e vai ser colocado em dados dinamicos" );
+			// 			#endif
 
-						int slot_objeto = gerenciador_objetos_dll_dinamicos.Criar_slot( _personagem_id );
-						gerenciador_objetos_dll_dinamicos.objetos[ slot_objeto ] = personagem_na_lixeira.gerenciador_AI.personagem_AI;
+			// 			int slot_objeto = gerenciador_objetos_dll_dinamicos.Criar_slot( _personagem_id );
+			// 			gerenciador_objetos_dll_dinamicos.objetos[ slot_objeto ] = personagem_na_lixeira.gerenciador_AI.personagem_AI;
 
-						int slot_container = manipulador_containers_dinamicos_completos.Criar_slot( _personagem_id );
-						manipulador_containers_dinamicos_completos.dados_containers[ slot_container ] = personagem_na_lixeira.gerenciador_containers_dados.Compilar_dados();
+			// 			//int slot_container = leitor_de_arquivos.Criar_slot( _personagem_id );
+
+			// 			// ** nao tem porque retirar os dados com o persoangem na lixeira, vai ser somente o pointer de qualquer jeito
+			// 			//leitor_de_arquivos.dados_containers[ slot_container ] = personagem_na_lixeira.gerenciador_containers_dados.Compilar_dados();
 		
 		
-				}
-				else
-				{
-						Dados_sistema_personagem_essenciais dados_sistema_personagem_essenciais = dados_sistema_personagens_essenciais[ _personagem_id ];
+			// 	}
+			// 	else
+			// 	{
+			// 			Dados_sistema_personagem_essenciais dados_sistema_personagem_essenciais = dados_sistema_personagens_essenciais[ _personagem_id ];
 
-						string nome_personagem = ( ( Personagem_nome ) _personagem_id ).ToString();
+			// 			string nome_personagem = ( ( Personagem_nome ) _personagem_id ).ToString();
 
-						// --- CARREGAR AI
-						string nome_objeto_classe = $"PERSONAGEM_{ nome_personagem }_classe";
-						gerenciador_objetos_dll_dinamicos.Carregar_objeto_NA_MULTITHREAD( _personagem_id, nome_objeto_classe );
+			// 			// --- CARREGAR AI
+			// 			string nome_objeto_classe = $"PERSONAGEM_{ nome_personagem }_classe";
+			// 			gerenciador_objetos_dll_dinamicos.Carregar_objeto_NA_MULTITHREAD( _personagem_id, nome_objeto_classe );
 						
 
-						// --- PEGAR CONTAINER
-						string path_container = $"PERSONAGEM_{ nome_personagem }_dados.dat";
-						manipulador_containers_dinamicos_completos.Carregar_container_NA_MULTITHREAD( _personagem_id, path_container );
+			// 			// --- PEGAR CONTAINER
+			// 			string path_container = $"PERSONAGEM_{ nome_personagem }_dados.dat";
+			// 			leitor_de_arquivos.Carregar_container_NA_MULTITHREAD( _personagem_id, path_container );
 
-						return;
+			// 			return;
 								
-				}
+			// 	}
 
 
 			// Agora vai fazer parte do Controlador_sistema

@@ -27,7 +27,7 @@ public class Controlador_interativos {
             public byte[] dados_interativos_da_cidade;
 
 
-            public Gerenciador_containers_dinamicos_parciais gerenciador_dados_interativos;
+            public MODULO__leitor_de_arquivos leitor_de_arquivos;
 
 
 

@@ -6,57 +6,6 @@ using System.Diagnostics;
 
 
 
-public enum Semana_periodo {
-
-
-    segunda_manha,
-    segunda_dia,
-    segunda_tarde,
-    segunda_noite,
-    segunda_madrugada,
-
-
-    terca_manha,
-    terca_dia,
-    terca_tarde,
-    terca_noite,
-    terca_madrugada,
-
-    quarta_manha,
-    quarta_dia,
-    quarta_tarde,
-    quarta_noite,
-    quarta_madrugada,
-
-    quinta_manha,
-    quinta_dia,
-    quinta_tarde,
-    quinta_noite,
-    quinta_madrugada,
-
-    sexta_manha,
-    sexta_dia,
-    sexta_tarde,
-    sexta_noite,
-    sexta_madrugada,
-
-    sabado_manha,
-    sabado_dia,
-    sabado_tarde,
-    sabado_noite,
-    sabado_madrugada,
-
-    domingo_manha,
-    domingo_dia,
-    domingo_tarde,
-    domingo_noite,
-    domingo_madrugada,
-
-
-}
-
-
-
 public class Controlador_timer {
 
 
@@ -110,33 +59,33 @@ public class Controlador_timer {
 
     
 
-    //public Controlador controlador;
+        //public Controlador controlador;
 
-    public Stopwatch stop_watch = new Stopwatch();
+        public Stopwatch stop_watch = new Stopwatch();
 
-    public int[] scripts_em_espera = new int[10];
+        public int[] scripts_em_espera = new int[10];
 
-    public double[] scripts_em_espera_tempo = new double[10];
+        public double[] scripts_em_espera_tempo = new double[10];
 
-    public bool have_scripts = false; 
+        public bool have_scripts = false; 
 
-    public int tempo_jogo;
+        public int tempo_jogo;
 
-    public Coroutine global_timer;
+        public Coroutine global_timer;
 
-    public DateTime ponto_inicio_jogo;
+        public DateTime ponto_inicio_jogo;
 
 
-    /*
+        /*
 
-       0 : manha 
-       1 : dia
-       2 : tarde
-       3 : noite 
-       4 : madrugada 
+        0 : manha 
+        1 : dia
+        2 : tarde
+        3 : noite 
+        4 : madrugada 
 
-    */
-  
+        */
+    
 
 
 

@@ -58,6 +58,8 @@ public class Jogo {
 
                         case Bloco.conector: bloco_conector.Update(); break;
 
+                        case Bloco.passando_dia: Controlador_sistema.Pegar_instancia().Verificar_passar_dia();break;
+
                         case Bloco.visual_novel : bloco_visual_novel.Update(); break;
                         case Bloco.minigames: bloco_minigames.Update(); break;
                         case Bloco.conversas: bloco_conversas.Update(); break;

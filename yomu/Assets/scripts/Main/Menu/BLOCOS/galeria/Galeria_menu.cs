@@ -11,10 +11,10 @@ public class Galeria_menu {
 
       public GameObject galery_container;
 
-      public Menu_objects_generico menu_galery_botao_proximo;
-      public Menu_objects_generico menu_galery_botao_anterior;
+      // public Menu_objects_generico menu_galery_botao_proximo;
+      // public Menu_objects_generico menu_galery_botao_anterior;
 
-      public Menu_objects_generico[] menu_galery_arr = new Menu_objects_generico[ 8 ];
+      public Interativo_menu[] galeria_arr;
 
       public int numero_pagina_galeria = 0;
 
@@ -25,7 +25,16 @@ public class Galeria_menu {
 
       public void Update(){
 
+            
+
             return;
+
+      }
+
+
+      public bool Verificar_click(){
+
+                  return false;
 
       }
 

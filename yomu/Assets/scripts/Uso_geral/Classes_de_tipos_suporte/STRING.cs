@@ -4,6 +4,29 @@
 public static class  STRING {
 
 
+
+
+        public static string[] Aumentar_length_array( string[] _array , int quantidade_para_adicionar = 5 ){
+
+
+                int length_atual = _array.Length;
+                int novo_length = ( length_atual + quantidade_para_adicionar ) ;
+
+                string[] novo_array = new string[ novo_length ];
+
+                for( int i = 0; i < _array.Length ; i++ ){
+
+                        novo_array[ i ] = _array[ i ];
+
+                }
+
+                return novo_array;
+
+                
+
+        }
+
+
         public static bool Verificar_se_array_2d_esta_preenchido_corretamente( string[] _arr, int _length ){
 
                 if( _arr.Length != _length )
@@ -22,6 +45,23 @@ public static class  STRING {
                 return true;
 
 
+
+        }
+
+
+
+        public static string[] Deixar_somente_a_primeira_letra_maiuscula_array( string[] _array ){
+
+                string[] retorno = new string[ _array.Length ];
+
+                for( int elemento_index = 0 ; elemento_index < _array.Length ; elemento_index++ ){
+
+                        retorno[ elemento_index ] = Deixar_somente_a_primeira_letra_maiuscula( _array[ elemento_index ] );
+
+                }
+
+
+                return retorno;
 
         }
 
