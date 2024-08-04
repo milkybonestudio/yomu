@@ -1,6 +1,6 @@
 
 
-public enum Parte_dispositivo_tipo {
+public enum Objeto_dispositivo_tipo {
 
 
         imagem_estatica,

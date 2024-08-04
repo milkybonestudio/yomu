@@ -7,13 +7,10 @@ using System;
 
 
 
-
-
-
 public static class Cores {
 
 
-
+    public static Color clear                   = new Color (0f,0f,0f,0f);
     public static Color maroon	                = new Color(128f,0f,0f);
  	public static Color dark_red	            = new Color(139f,0f,0f);
  	public static Color brown	                = new Color(165f,42f,42f);

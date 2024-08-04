@@ -81,6 +81,7 @@ public class Jogo {
 
                 // --- ZERAR BLOCOS
 
+
                 Finalizador_CONVERSAS.Finalizar();
                 Finalizador_MINIGAMES.Finalizar();
                 Finalizador_VISUAL_NOVEL.Finalizar();

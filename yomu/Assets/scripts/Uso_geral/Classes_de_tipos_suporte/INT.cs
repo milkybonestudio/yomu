@@ -4,7 +4,20 @@ using System.Runtime.CompilerServices;
 public static class INT {
 
 
+        public static int[] Criar_array_com_valor_especifico( int _length, int _numero ){
 
+                int[] arr = new int[ _length ];
+
+                for(int i = 0 ; i < arr.Length; i++ ){
+
+                    arr[ i ] = _numero;
+
+                }
+
+                return arr;
+
+
+        }
 
         public static string Transformar_int_array_em_string( int[] _array ){
 
@@ -104,10 +117,11 @@ public static class INT {
         public static int[] Remover_valor( int[] _array, int _valor ){
 
                 int numero_para_remover = 0;
+
                 for( int index = 0 ; index < _array.Length ; index++ ){
 
                         if( _array[ index ] == _valor )
-                                { index++; }
+                                { numero_para_remover++; }
                         continue;
                 }
 
@@ -117,7 +131,7 @@ public static class INT {
 
                 for( int index_final = 0 ; index_final < _array.Length ; index_final++ ){
 
-                        if( _array[ index_final ] == _valor )
+                        if( _array[ index_final ] != _valor )
                                 { 
                                         retorno[ index_array_final ] = _array[ index_final ];
                                         index_array_final++;

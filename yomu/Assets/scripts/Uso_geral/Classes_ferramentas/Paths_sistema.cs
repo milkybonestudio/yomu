@@ -262,7 +262,14 @@ public static class Paths_sistema {
 
         // --- USO GERAL
 
+        // *** folder vai ser copiado para a build final
         public static string path_folder__imagens_gerais;
+        public static string path_folder__imagens_reutilizaveis;
+
+        public static string path_folder__imagens_dispositivos;
+        public static string path_folder__imagens_dispositivos_reutilizaveis;
+
+        
 
 
                 // --- CURSOR
@@ -318,6 +325,8 @@ public static class Paths_sistema {
 
                                 path_folder_imagens_pontos_DEVELOPMENT = System.IO.Path.Combine( path_folder__imagens_DEVELOPMENT, "Pontos" );
                                 path_folder_imagens_personagens_DEVELOPMENT = System.IO.Path.Combine( path_folder__imagens_DEVELOPMENT, "Personagens" );
+
+
 
                 #endif
 
@@ -507,6 +516,12 @@ public static class Paths_sistema {
 
 
                         // --- USO GERAL
+
+                                // --- DISPOSITIVOS
+
+
+                                        path_folder__imagens_dispositivos = System.IO.Path.Combine( Application.dataPath, "Resources", "Images", "Uso_geral", "Dispositivos" );
+                                        path_folder__imagens_dispositivos_reutilizaveis = System.IO.Path.Combine( Application.dataPath, "Resources", "Images", "Reutilizaveis" );
 
 
 

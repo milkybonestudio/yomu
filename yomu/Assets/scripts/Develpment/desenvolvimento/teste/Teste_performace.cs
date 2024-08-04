@@ -1,7 +1,9 @@
 using System;
+using System.Runtime.InteropServices;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Jobs;
 using Unity.Jobs;
 
@@ -9,28 +11,10 @@ using System.Runtime.CompilerServices;
 
 
 
-public static class abc {
+public class C{
 
-        public volatile static int a = 10;
 
-}
-
-public struct teste_job: IJob {
-
-        public void Execute(){
-
-                // ** code 
-
-                for( int i = 0 ; i < 1_000_000 ;i++ ){
-
-                        if ( i > 452_000 )
-                                { break; }
-
-                }
-
-                abc.a = 25;
-
-        }
+    public int Pegar_numero(){return 1555;}
 
 }
 
@@ -52,65 +36,39 @@ public static class Teste_performace {
                 Debug.Log( "teste performace <b><color=lime>ATIVADO</color></b>" );
 
                 int _i = 0;
-                int n_1 =  1; 
+                int n_1 =  80_000_000;
 
 
-
-                // 0,3ms => 3k/segundo
 
                 System.Diagnostics.Stopwatch timePerParse = null;
 
 
-                //abc _abc = new abc();
-
-                teste_job teste = new teste_job();
-                JobHandle j_h = teste.Schedule();
-                
-
-                
-
-                GameObject[] game_objects = new GameObject[ n_1 + 1] ;
-                int acumulador = 0;
-
-                int[] arr = new int[ 1000 ];
-
-                byte[][] dados = new byte[ 10 ][];
-
                 timePerParse  = System.Diagnostics.Stopwatch.StartNew();
 
-                        GameObject canvas = GameObject.Find( "Tela/Canvas" );
-        
-                        while( _i < n_1 ){
 
 
-                                _i++;
-                                // --- ESCOPO 1
+                
+                //byte[] dados_webp = System.IO.File.ReadAllBytes( "C:\\Users\\User\\Desktop\\yomu_things\\teste\\imagem_para_carregar.webp" );
+//                byte[] dados_png = System.IO.File.ReadAllBytes( "C:\\Users\\User\\Desktop\\yomu_things\\teste\\a.png" );
 
-                                FileMode file_mode = FileMode.Open;
-                                FileAccess file_accees = FileAccess.Read;
-                                FileShare file_share = FileShare.Read;
-                                FileOptions file_options = FileOptions.None; // talvez nao?
-
-
-                                FileStream file_stream = new FileStream( $"C:\\Users\\User\\Desktop\\yomu_things\\concrete\\splashes\\sets_obrigatorios\\sara_wake_up\\feitos\\{ _i }.png", file_mode, file_accees , file_share, 1000 , file_options );
-
-                                file_stream.Flush();
-                                file_stream.Close();
+                //WebP w = new WebP();
 
 
 
-                                dados[ 0 ] = System.IO.File.ReadAllBytes( $"C:\\Users\\User\\Desktop\\yomu_things\\concrete\\splashes\\sets_obrigatorios\\sara_wake_up\\feitos\\red\\carriage_window_albuin_group_1-min.png" );
 
-                                
+    
+                    while( _i < n_1 ){
 
 
-                                // // dados[ 0 ][ 7 ] = ( byte ) 75;
-                                // dados[ 1 ][ 7 ] = ( byte ) 75;
-                                // dados[ 2 ][ 7 ] = ( byte ) 75;
-                                // dados[ 3 ][ 7 ] = ( byte ) 75;
-                                // dados[ 4 ][ 7 ] = ( byte ) 75;
-                             
-                        }
+                            _i++;
+                            // --- ESCOPO 1
+
+
+                        //GameObject.Find("Tela/Canvas/Jogo/EXCLUIR DEPOIS").GetComponent<Image>().sprite = ( new WebP()).Decode_2( dados_webp );
+
+
+                            
+                    }
 
 
 
@@ -118,28 +76,7 @@ public static class Teste_performace {
 
 
                 timePerParse.Stop();    
-                Debug.Log( $"acumulador: { acumulador.ToString( "#,0").Replace( ".", "_" ) }");
-
-                _i = 0;
-
-
-                        while( _i < ( n_1 ) ){
-
-                                _i++;
-
-                                FileMode file_mode = FileMode.Open;
-                                FileAccess file_accees = FileAccess.Read;
-                                FileShare file_share = FileShare.Read;
-                                FileOptions file_options = FileOptions.None; // talvez nao?
-
-
-                                FileStream file_stream = new FileStream( $"C:\\Users\\User\\Desktop\\yomu_things\\concrete\\splashes\\sets_obrigatorios\\sara_wake_up\\feitos\\{ _i }.png", file_mode, file_accees , file_share, 1000 , file_options );
-
-                                file_stream.Flush();
-                                file_stream.Close();
-
-                        }
-                
+                // Debug.Log( $"acumulador: { acumulador.ToString( "#,0").Replace( ".", "_" ) }");
 
 
 

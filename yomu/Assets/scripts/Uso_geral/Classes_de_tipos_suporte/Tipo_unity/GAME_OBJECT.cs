@@ -5,6 +5,7 @@ using UnityEngine;
 public static class GAME_OBJECT {
 
 
+
         public static GameObject Criar_filho( string _nome, GameObject _pai ){
 
                 GameObject retorno = new GameObject( _nome );
@@ -35,5 +36,65 @@ public static class GAME_OBJECT {
                 }                
         
         }
+
+
+
+        public static string Pegar_path( GameObject _game_object ){
+
+            if( _game_object == null )
+                { throw new System.Exception( $"Tentou pegar o path de um game object  mas ele estava null" ); }
+
+
+
+            int index = 99;
+            string[] nomes = new string[ 100 ];
+            nomes[ index ] = _game_object.name;
+            index--;            
+            nomes[ index ] = "/";
+            index--;
+
+
+            Transform transform = _game_object.transform.parent;
+
+            nomes[ index ] = transform.gameObject.name;
+            index--;
+            nomes[ index ] = "/";
+            index--;
+
+
+            int trava_de_seguranca = 0;
+            int numero_maximo = 100;
+
+            while( true ){
+
+                trava_de_seguranca++;
+                if( trava_de_seguranca > numero_maximo )
+                    {throw new System.Exception( $"Em pegar o path _game_object a trava de seguranca foi ativada, teve { numero_maximo }" );}
+
+                transform = transform.parent;
+
+                if( transform == null )
+                    { 
+                        // --- NAO COLOCA O ULTIMO "/"
+                        nomes[ ( index + 1 )] = null;
+                        break; 
+                    }
+
+                nomes[ index ] = transform.gameObject.name;
+                index--;
+                nomes[ index ] = "/";
+                index--;
+                
+                continue;
+
+            }
+
+            string path__game_object = string.Concat( nomes );
+
+            return path__game_object;
+
+        }
+
+
 
 }

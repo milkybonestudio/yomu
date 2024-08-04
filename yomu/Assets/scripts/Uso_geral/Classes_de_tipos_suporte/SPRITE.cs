@@ -9,12 +9,54 @@ public static class SPRITE {
 
 
 
+        public static void Copiar_sprites_array_para_array( Sprite[] _array_receptor, Sprite[] _array_com_dados, int[] _ids, string _indentificador = "NAO FOI COLOCADO" ){
+
+
+                // --- VERIFICA SE OS ARRAYS EXISTEM
+
+                if( _array_receptor == null )
+                    { throw new Exception( $"Tentou copiar sprites de um array para o outro mas o array receptor estava null. indentificador: { _indentificador }" ); }
+
+                if( _array_com_dados == null )
+                    { throw new Exception( $"Tentou copiar sprites de um array para o outro mas o array com os dados estava null. indentificador: { _indentificador }" ); }
+
+
+                for( int index = 0 ; index < ids.Length ; index++ ){
+
+                        int id = _ids[ index ];
+
+                        // --- VERIFICA SE É UM ID VALIDO
+
+                        if( id < 0 )
+                            {  throw new Exception( $"Tentou copiar sprites de um array para o outro mas o id { id } é menor que 0. Indentificador : { _indentificador }" ); }
+                
+                        if( id >= _array_receptor.Length )
+                            { throw new Exception( $"Tentou copiar sprites de um array para o outro mas o id { id } era maior que a length do receptor. Indentificador : { _indentificador }" ); }
+
+                        if( id >= _array_com_dados.Length )
+                            { throw new Exception( $"Tentou copiar sprites de um array para o outro mas o id { id } era maior que a length do com os dados. Indentificador : { _indentificador }" ); }
+
+                        // --- FAZ A TROCA
+                        _array_receptor[ id ] = _array_com_dados[ id ];
+
+                        continue;
+
+                }
+
+                return;
+
+        }
+
+
+
         public static Sprite Transformar_png_TO_sprite(  byte[] _png  ){
 
 
                 Texture2D tex = new Texture2D(  1  , 1 , TextureFormat.RGBA32,  false ); 
                 tex.LoadImage( _png  );          
                 Sprite sprite_retorno =   Sprite.Create(tex  ,     new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f ,0, SpriteMeshType.FullRect   );
+
+
 
                 return sprite_retorno;
 

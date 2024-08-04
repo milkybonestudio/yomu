@@ -2,77 +2,40 @@ using UnityEngine;
 
 
 
-public static class Dispositivo__exemplo {
+
+public class Dispositivo__exemplo : INTERFACE__dispositivo {
+
+        
+        // --- CONSTRUTOR
+        public static Dispositivo Construir(){ return new Dispositivo( new Dispositivo_que_nao_pode_ser_instanciado() ); }
+
+        public string nome = "COLOCAR_NOME";
+
+        // ** aponta para onde vao estar os folders com as imagens no editor, o nome do container na build e a primeira pasta da lista indica a pasta com o prefab
+        // ** a ultima pasta semre vai ser com o nome do dispositivo
+        public string[] folders = new string[]{
+
+            "",
+
+        };
+
+        public enum Dispositivo_imagem{}
 
 
-        // ** independente do tipo as imagens sempre vao ser localizadasdentro desse arr
-        public enum DISPOSITIVO__USO_PLAYER__CONECTOR__EXEMPLO__imagem{ bloco_vermelho }''
+        
 
+        // --- METODOS INTERNOS
 
-        public enum Localizador_parte_dispositivo{ parte_1 }
-        public enum Localizador_outros_dispositivos{}
+        public void Update_interno( Dispositivo _dispositivo ){
 
-
-        public enum Localizador_parte_dispositivo_imagem_estatica{}
-        public enum Localizador_parte_dispositivo_imagem_interativo{} 
-        public enum Localizador_parte_dispositivo_botao{}
-        public enum Localizador_parte_dispositivo_slider{} 
-        public enum Localizador_parte_dispositivo_scrollbar{} 
-        public enum Localizador_parte_dispositivo_toggle{} 
-        public enum Localizador_parte_dispositivo_toggle_grupo{} 
-        public enum Localizador_parte_dispositivo_input_field{} 
-        public enum Localizador_parte_dispositivo_drop_down{} 
-
-        public static string nome_dispositivo;
-
-
-        public static Dispositivo Construir( GameObject _pai  /* args */  ){
-
-                // --- CRIA INTERFACE
-
-                Dispositivo dispositivo = Dispositivo.Construir( nome_dispositivo, _pai );
-
-
-                // --- COLOCA FUNCOES
-
-                    dispositivo.Update = Update;
-                    dispositivo.Enviar_dados = ( Del_void_TO_object ) Enviar_dados;
-                    dispositivo.Receber_dados = Receber_dados;
-                    dispositivo.Finalizar = Finalizar;
-
-                    // *** imagens
-                    dispositivo.Definir_imagens_SELF = Definir_imagens;
-                    dispositivo.Definir_audios_SELF = Definir_audios;
-
-                #if UNITY_EDITOR
-                    dispositivo.modulo_imagens.tipo = typeof( DISPOSITIVO__USO_PLAYER__CONECTOR__EXEMPLO__imagem );
-                #endif
-            
-                return null;
-            
-            
-
+                // --- CRIAR 
 
         }
 
 
-        // --- functions 
+        public void Definir_imagens_interno( MODULO__imagens_dispositivo imagens ){
 
-
-        public static void Definir_imagens( MODULO__imagens_dispositivo imagens ){
-
-                imagens.Definir_imagem_estatica                  
-                ( 
-                    _parte_id: ( int ) Localizador_parte_dispositivo.parte_1,
-                    _imagem_id: ( int ) DISPOSITIVO__USO_PLAYER__CONECTOR__EXEMPLO__imagem.bloco_vermelho
-                );
-
-           
-                imagens.Definir_imagem_estatica_com_imagem_geral( 
-                                                                    _parte_id: ( int ) Localizador_parte_dispositivo.parte_1,
-                                                                    _chaves: new string[]{ "folder_1", "imagem"  }
-                                                                );
-                
+                // --- CRIAR
 
                 return;
 
@@ -80,18 +43,95 @@ public static class Dispositivo__exemplo {
         }
 
       
+        public System.Object Enviar_dados_interno( Dispositivo _dispositivo ){ 
 
-        public static void Definir_audios( MODULO__audios_dispositivo audios ){ return; }
-  
+                // --- CRIAR
 
-        // --- METODOS INTERNOS
-        public static void Update(){}
-        public static System.Object Enviar_dados(){ return null; }
-        public static void Receber_dados( string _dados ){ return; }
-        public static void Finalizar(){}
+                return null; 
+        }
+
+        public void Receber_dados_interno( Dispositivo _dispositivo , System.Object _dados ){ 
+
+                // --- CRIAR
+
+                return; 
+
+        }
+        public void Finalizar_interno( Dispositivo _dispositivo){
+
+                // --- CRIAR
+                
+                return;
+
+        }
+
+        public void Definir_audios_interno( MODULO__audios_dispositivo audios ){ 
+
+                // --- CRIAR
+
+                return; 
+                
+        }
+
+
+
+
+        // --- NAO MUDAR ------
+        // --------------------
+
+
+        // --- METODOS QUE VAO SER EXPORTADOS
+
+        public void Update( Dispositivo _dispositivo ){ Update_interno( _dispositivo ); }
+
+        public System.Object Enviar_dados( Dispositivo _dispositivo ){ return Enviar_dados_interno( _dispositivo ); }
+        public void Receber_dados( Dispositivo _dispositivo, System.Object _dados ){ Receber_dados_interno( _dispositivo, _dados ); }
+        public void Finalizar( Dispositivo _dispositivo){ Finalizar_interno( _dispositivo ); }
+
+        public void Definir_audios( MODULO__audios_dispositivo _audios ){ Definir_audios_interno( _audios ); }
+        public void Definir_imagens( MODULO__imagens_dispositivo _imagens ){ Definir_imagens_interno( _imagens ); }
+
+
+        //byte[] bytes = ( new Dispositivo__exemplo() ).Converter_imagens();
+
+
+
+        public string Pegar_nome(){ if( nome == "COLOCAR_NOME" ){ throw new System.Exception( "Nao foi alterado o nome do dispositivo" );} return nome;}
+        public string[] Pegar_folders() { if( (( folders.Length == 1  ) && folders[ 0 ] == "" ) || ( folders.Length == 0) ){ throw new System.Exception("Nao foi definido os folders na classe criadora do dispositivo");} return folders; }
+        public  System.Type Pegar_tipo_imagens(){ return typeof( Dispositivo_imagem );}
+        public static byte[] Converter_imagens(){ return Conversor_imagens_dispositivos.Converter(  (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType ) );}
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+    Protege: 
+
+        prefab: 
+            - garante que quando for fazer algo no prefab ele precisa estar no jogo
+            - verifica se o prefab existe
+            - verifica se o objeto existe dentro do prefab quando a imagem é colocada
+
+        Imagens: 
+            - alerta se o folder com as imagens nao for encontrado
+            - se a imagem nao for encontrada no folder 
+        
+        Quando for iniciar as imagens: 
+            - Garante que as imagens precisam estar carregadas
+
+
+*/
 
 
 
