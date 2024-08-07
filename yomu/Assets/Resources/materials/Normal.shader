@@ -3,8 +3,6 @@
 
 
 
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
 Shader "Normal"
 {
     Properties
@@ -29,13 +27,17 @@ Shader "Normal"
 
             
     }
+
+
+
+
  
     SubShader
     {
    
         Tags
         {
-            "Queue"="Transparent"
+            "Queue"="Overlay"
             "IgnoreProjector"="True"
             "RenderType"="Transparent"
             "PreviewType"="Plane"
@@ -46,11 +48,24 @@ Shader "Normal"
         Lighting Off
         ZWrite Off
         
+
        Blend SrcAlpha OneMinusSrcAlpha
+
+
 
         
         Pass
         {
+            
+            Stencil
+            {
+                Ref [_Stencil]
+                Comp [_StencilComp]
+                Pass [_StencilOp]
+                ReadMask [_StencilReadMask]
+                WriteMask [_StencilWriteMask]
+            }
+             
             CGPROGRAM
                     #pragma vertex vert
                     #pragma fragment frag
@@ -109,53 +124,6 @@ Shader "Normal"
                                                 imagem_real[ 2 ] * cor_atual[ 2 ] * _Color[ 2 ] ,
                                                 imagem_real[ 3 ] * cor_atual[ 3 ] * _Color[ 3 ] 
                                             );
-
-
-
-
-                            fixed4 sum = tex2D(_MainTex , IN.texcoord);
-
-                            if(_BlurSize != 0){
-
-                                sum = fixed4(0.0, 0.0, 0.0, 0.0);
-
-                                sum += tex2D(_MainTex, half2(IN.texcoord.x  -  1  * _BlurSize ,  IN.texcoord.y    +  1  * _BlurSize )) * 0.05;
-                                sum += tex2D(_MainTex, half2(IN.texcoord.x                    ,  IN.texcoord.y    +  1  * _BlurSize )) * 0.09;
-                                sum += tex2D(_MainTex, half2(IN.texcoord.x  +  1  * _BlurSize ,  IN.texcoord.y    +  1  * _BlurSize )) * 0.12;
-                                sum += tex2D(_MainTex, half2(IN.texcoord.x  -  1  * _BlurSize ,  IN.texcoord.y                      )) * 0.15;
-                                sum += tex2D(_MainTex, half2(IN.texcoord.x  +       _BlurSize ,  IN.texcoord.y                      )) * 0.18;
-                                sum += tex2D(_MainTex, half2(IN.texcoord.x  +  1  * _BlurSize ,  IN.texcoord.y                      )) * 0.15;
-                                sum += tex2D(_MainTex, half2(IN.texcoord.x  -  1  * _BlurSize ,  IN.texcoord.y    - 1  * _BlurSize  )) * 0.12;
-                                sum += tex2D(_MainTex, half2(IN.texcoord.x                    ,  IN.texcoord.y    - 1  * _BlurSize  )) * 0.09;
-                                sum += tex2D(_MainTex, half2(IN.texcoord.x  +  1  * _BlurSize ,  IN.texcoord.y    - 1  * _BlurSize  )) * 0.05;
-
-                                // estava deixando meio branco, essa parte escurece um pouco para balancear 
-                                //sum -= fixed4(0.007,0.007,0.007,0);
-                                
-
-                        
-                            #if UNITY_TEXTURE_ALPHASPLIT_ALLOWED
-                            if (_AlphaSplitEnabled)
-                                    //sum.a = tex2D(_AlphaTex, IN.texcoord).r;
-                                #endif //UNITY_TEXTURE_ALPHASPLIT_ALLOWED
-
-                            }
-
-
-                            if(_GrayscaleAmount>0){
-                                
-                                sum.rgb = lerp(sum.rgb, dot(sum.rgb, float3(0.3, 0.59, 0.11)), _GrayscaleAmount);
-                                sum = sum * IN.color;
-
-
-                            }
-
-                        
-                                // sum *= float4(1,1,1,0);
-
-                                sum.a *= _Alpha;
-
-                                return sum;
 
                     
                     

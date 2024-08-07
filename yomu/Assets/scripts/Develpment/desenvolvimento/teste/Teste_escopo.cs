@@ -12,48 +12,6 @@ using System.Runtime.CompilerServices;
 
 
 
-public class A {
-
-    [MethodImpl(MethodImplOptions.NoInlining)]
-    public virtual int Pegar_numero(){ return 5; }
-
-}
-
-
-public class B : A {
-
-    [MethodImpl(MethodImplOptions.NoInlining)]
-    public override int Pegar_numero(){ return 10; }
-
-}
-
-
-public interface I_teste {
-
-    public int Pegar_numero(){
-
-        return -150;
-
-    }
-    
-    public int Nao(){
-
-        return -500;
-
-    }
-
-
-}
-
-
-public class teste_interface : I_teste {
-
-    public int Pegar_numero(){return 77;}
-    public int Nao(){return 77;}
-
-}
-
-
 
 
 
@@ -73,7 +31,6 @@ public static class Teste_escopo {
 
         public static int  run_1_HASH = 0;
 
-        public static I_teste teste;
 
 
         public static void Testar(){
@@ -85,6 +42,12 @@ public static class Teste_escopo {
 
 
                 dispositivo_teste = Dispositivo__teste.Construir();
+                
+                dispositivo_teste.Descompactar_dados();
+                dispositivo_teste.Ativar_dispositivo( teste_body );
+
+                
+                
 
                 // dispositivo_teste.Definir_imagens();
                 // dispositivo_teste.Carregar_imagens();

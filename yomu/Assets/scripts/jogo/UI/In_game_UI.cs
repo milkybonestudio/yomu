@@ -320,7 +320,7 @@ public static  void Update_Icone_barra( Icone_barra _icone ){
 
                     float[] area_choice =  pergaminho.choices_areas[i];
 
-                    bool verificacao = Mat.Verificar_ponto_dentro_poligono( posicao_mouse, area_choice);
+                    bool verificacao = false ; // Mat.Verificar_ponto_dentro_poligono( posicao_mouse, area_choice);
 
                     if(verificacao){
  

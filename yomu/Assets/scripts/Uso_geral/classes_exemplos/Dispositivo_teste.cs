@@ -20,24 +20,11 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
         public enum Dispositivo_imagem{
 
             teste_1,
+            b_1, 
+            b_2,
+            b_3,
 
         }
-
-        public enum Botoes_localizador {
-
-            botao_1,
-
-        }
-
-
-
-        Button[] botoes = new Button[ 3 ];
-        public enum Botao {
-
-            botao_fechar,
-
-        }
-
 
 
 
@@ -45,120 +32,77 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
 
         public void Update_interno( Dispositivo _dispositivo ){
 
+                botao_fechar.Update();
+
                 // --- CRIAR 
-                Debug.Log("a");
+                // Debug.Log( Input.mousePosition.x );
+                // Debug.Log( Input.mousePosition.y );
+                // Debug.Log( $"X botao: { botao_fechar.botao_game_object.transform.position.x }" );
+                // Debug.Log( $"Y botao: { botao_fechar.botao_game_object.transform.position.y }" );
+
+                // Debug.Log(  botao_fechar.ON_collider.points[ 0 ]);
+                // Debug.Log(  botao_fechar.ON_collider.points[ 1 ]);
+                // Debug.Log(  botao_fechar.ON_collider.points[ 2 ]);
+                // Debug.Log(  botao_fechar.ON_collider.points[ 3 ]);
+
+                // Debug.Log( Verificar_colisao_vec2(botao_fechar.ON_collider.points, ( Vector2 ) botao_fechar.ON_game_object.transform.position, Controlador_input.posicao_mouse) );
+                // Debug.Log("--------------------------------");
+                
 
         }
 
 
-        public enum Tipo_ativacao_botao {
-
-                clicar_e_soltar,  
-                clicar,
-                entrar_no_botao,
-
-        }
-
-
-
-
-        // mudanca imagem 
-        // como que e dado o click
 
 
 
 
 
-        public void Definir_logica_interno( MODULO__imagens_dispositivo imagens ){
+        
 
-                // // --- CRIAR
-
-                // botoes[ 0 ] = logica.Definiar_botao(
+        public Botao_dispositivo botao_fechar;
 
 
-                //         _tipo_botao: Tipo_botao.normal
-                //         _nome: "nome", 
-                //         _update: Update_botao_1;
-
-                //         _tipo_ativacao: Tipo_ativacao_botao
-
-                //         _imagem_1_id:  
-                //         _cor_imagem_1: 
-                //         _imagem_2_id: 
-                //         _cor_imagem_2:
-
-                //         _audio_click:  
-                //         _audio_houver: 
-
-                // )
-
-                // // --- BOATAO QUE FECHA
-
-                // Dados_botao_simples dados = new Dados_botao_simples();
-
-                // dados.tipo_botao
-                // dados.nome = "";
-                // dados.update = Update_botao_1;
-                // dados.tipo_ativacao = Tipo_ativacao_botao.clicar_e_soltar;
+        public void Definir_objetos_iniciais( Dispositivo dispositivo ){
 
 
-                //     // --- IMAGEM 1
-                //     dados.imagem_1_id = ( int ) Dispositivo_imagem.teste_1;
-                //     dados.cor_imagem_1 = Cores.white;
+                // --- ESTATICA
 
-                //     // --- IMAGEM 2 
-                //     dados.imagem_2_id = -1;
-                //     dados.cor_imagem_2 = Cores.clear;
+                Dados_imagem_estatica_dispositivo dados_teste = new Dados_imagem_estatica_dispositivo();
 
-                //     // --- AUDIO
-                //     dados.audio_click: 
-                //     dados.audio_houver: 
+                dados_teste.imagem_id = ( int ) Dispositivo_imagem.teste_1;
+                dados_teste.nome = "aa";
 
-                // botoes[ ( int ) botao.botao_fechar] = dispositivo.Adicionar_botao( dados );
+                Imagem_estatica_dispositivo img =  dispositivo.Definir_imagem_estatica( dados_teste );
 
 
 
 
-                // logica.Definir_botao{
+                // --- BOATAO QUE FECHA
 
-                //     _nome: "a", 
+                Dados_botao_dispositivo botao_fechar_dados = new Dados_botao_dispositivo();
 
-
-                // }
-
-                // imagens.Definir_imagem_estatica(
-                //         _nome: "a",
-                //         _imagem_id: ( int ) Dispositivo_imagem.teste_1
-                // );
-
-                // return;
+                botao_fechar_dados.tipo_ativacao = Botao_dispositivo_tipo_ativacao.clicar;
+                botao_fechar_dados.nome = "a";
+                botao_fechar_dados.update_secundario = Update_botao_1;
 
 
-        }
+                    // --- IMAGEM 1
+                    botao_fechar_dados.sprite_off_id = ( int ) Dispositivo_imagem.b_1;
+                    //botao_fechar_dados.cor_imagem_off = Cores.white;
+
+                    // --- IMAGEM 2 
+                    botao_fechar_dados.sprite_on_id = ( int ) Dispositivo_imagem.b_2;
+                    //botao_fechar_dados.cor_imagem_on = Cores.white;
+
+                    // --- AUDIO
+                    // dados.audio_click: 
+                    // dados.audio_houver: 
+
+                botao_fechar = dispositivo.Definir_botao(  botao_fechar_dados );
 
 
-        public void Definir_objetos( Dispositivo dispositivo ){
 
 
-
-
-                // dispositivo.Definir_botao(
-
-
-                //         _tipo_botao: Tipo_botao.normal
-                //         _nome: "nome", 
-                //         _update: Update_botao_1;
-
-                //         _imagem_1_id:  
-                //         _cor_imagem_1: 
-                //         _imagem_2_id: 
-                //         _cor_imagem_2:
-
-                //         _audio_click: 
-                //         _audio_houver: 
-
-
-                // )
 
 
 

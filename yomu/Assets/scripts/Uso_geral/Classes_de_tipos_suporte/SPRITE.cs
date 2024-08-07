@@ -21,7 +21,7 @@ public static class SPRITE {
                     { throw new Exception( $"Tentou copiar sprites de um array para o outro mas o array com os dados estava null. indentificador: { _indentificador }" ); }
 
 
-                for( int index = 0 ; index < ids.Length ; index++ ){
+                for( int index = 0 ; index < _ids.Length ; index++ ){
 
                         int id = _ids[ index ];
 

@@ -6,72 +6,20 @@ using System.Runtime.InteropServices;
 
 //   se trocar a strig do input para ter menos texto reduz o tempo em 50% com 1 char
 
-
-
-public enum Key_code {
-
-
-    q,
-    w,
-    e,
-    r,
-
-
-    up_arrow, 
-    down_arrow,
-    left_arrow,
-    right_arrow,
-
-    up_mov,
-    down_mov,
-    left_mov,
-    right_mov,
-
-
-    space,
-    esc,
-
-
-
-    mouse_right,
-    mouse_left,
-
-
-    
-
-
-}
-
-public enum Tipo_get_key{
-    down,
-    up, 
-    houver
-}
-
-
-
 /*
 por hora vair ser usado somente para a ArrowUp e (X)
 */
-public enum Tipo_teclado {
-
-    normal, 
-    in_game,
-    plataforma,
-
-}
 
 
 public static class Controlador_input {
 
-
+    // ** virtual
+    public static Vector2 posicao_mouse;
 
 
     public static int[] analog_left_houver = new int[ 4 ] ;
     public static int[] analog_right_houver = new int[ 4 ] ;
     public static Tipo_teclado tipo_teclado  =  Tipo_teclado.normal;
-
-
 
 
     public static void Mudar_input ( ){
@@ -104,7 +52,7 @@ public static class Controlador_input {
 
 
         Update_houver();
-     //   Update_mouse();
+        Update_mouse();
 
         return;
 
@@ -114,8 +62,14 @@ public static class Controlador_input {
 
     public static bool ativar_movimentacao_mouse = true;
 
-
     public static void Update_mouse(){
+
+        posicao_mouse = ( ( Vector2 ) Input.mousePosition ) * ( 1080f / Screen.height );
+
+    }
+
+
+    public static void _Update_mouse(){
         
         if( ativar_movimentacao_mouse ){
 

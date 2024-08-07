@@ -30,11 +30,15 @@ public class MODULO__imagens_dispositivo {
         // --- DADOS
         public Sprite[] sprites_especificas;
         public Sprite[] sprites_geral;
+        
+        public byte[][] sprites_especificas_formato_compresso;
+        public byte[][] sprites_geral_formato_compresso;
+
+        public int bytes_sendo_usados_compresso;
 
         // ** nome
         int id_atual = 0;
         public string[] nomes;
-
 
 
         // ** define quais vao ser carregados
@@ -50,7 +54,6 @@ public class MODULO__imagens_dispositivo {
         public string[] imagens_gerais_nomes;
         public string[] imagens_gerais_paths;
         
-
 
 
         public int[] localizador;
@@ -90,7 +93,13 @@ public class MODULO__imagens_dispositivo {
         
 
 
-        public MODULO__imagens_dispositivo (  string _nome_dispositivo, string[] _folders, System.Type _tipo_imagens ){ 
+        public MODULO__imagens_dispositivo (  Dispositivo _dispositivo ){ 
+
+
+
+                string _nome_dispositivo = _dispositivo.nome_dispositivo;
+                string[] _folders = _dispositivo.interface_dispositivo.Pegar_folders();
+                System.Type _tipo_imagens = _dispositivo.interface_dispositivo.Pegar_tipo_imagens();
 
 
                 folders = _folders;
@@ -110,7 +119,6 @@ public class MODULO__imagens_dispositivo {
 
                 int slots_iniciais_gerais = 15;
                 imagens_gerais_nomes = new string[ slots_iniciais_gerais ];
-                imagens_gerais_paths = new string[ slots_iniciais_gerais ];
 
 
 
@@ -165,6 +173,8 @@ public class MODULO__imagens_dispositivo {
                         if( imagens_especificos_ativas[ imagem_id ] == 1 )
                             { continue; }
 
+                        imagens_especificos_ativas[ imagem_id ] = 1;
+
                         // --- PEGA NOVO VALOR
 
                         int pointer = localizador[ imagem_id ];
@@ -187,6 +197,8 @@ public class MODULO__imagens_dispositivo {
 
                 if( imagens_especificos_ativas[ _imagem_id ] == 1 )
                     { return; }
+
+                imagens_especificos_ativas[ _imagem_id ] = 1;  
 
                 
 
@@ -229,6 +241,7 @@ public class MODULO__imagens_dispositivo {
                         if ( encontrou )
                             { continue; }
 
+                        Verificar_imagem_geral( nome );
 
                         if( imagens_gerais_nomes.Length == pointer_imagens_gerais_atual )
                             { Array.Resize( ref imagens_gerais_nomes, ( imagens_gerais_nomes.Length + 5 ) ); }
@@ -237,7 +250,6 @@ public class MODULO__imagens_dispositivo {
                         imagens_gerais_nomes[ pointer_imagens_gerais_atual ] = nome;
                         retorno[ chave_index ] = pointer_imagens_gerais_atual;
 
-                        Verificar_imagem_geral( nome );
                         pointer_imagens_gerais_atual++;
 
                         continue;
@@ -329,138 +341,124 @@ public class MODULO__imagens_dispositivo {
         // --- IMAGEM ESTATICA
 
 
-        public void Definir_imagem_estatica( Dados_imagem_estatica _dados ){
+        public void Definir_imagem_estatica( Dados_imagem_estatica_dispositivo _dados ){
 
-            
-                Pegar_dados_imagem_especifica( _dados.imagem_id );
+                if( _dados.tipo_pegar_sprite == Tipo_pegar_sprite.imagem_especifica )
 
-                _dados.tipo_pegar_sprite = Tipo_pegar_sprite.imagem_especifica;
-                _dados.imagem_id_final = _dados.imagem_id;
+                switch( _dados.tipo_pegar_sprite ){
 
-                return;
+                    case Tipo_pegar_sprite.imagem_especifica: Pegar_dados_imagem_especifica( _dados.imagem_id );  _dados.imagem_id_final = _dados.imagem_id; break;
+                    case Tipo_pegar_sprite.imagem_geral: _dados.imagem_id_final = Pegar_dados_imagem_tipo_geral(  _dados.chaves ); break;
+                    case Tipo_pegar_sprite.nada: break;
 
-        }
-
-
-        // *** MUDAR TIPO
-        public void Definir_imagem_estatica_com_imagem_geral( Dados_imagem_estatica _dados ){
-
-
-                _dados.imagem_id_final = Pegar_dados_imagem_tipo_geral(  _dados.chaves );
-                _dados.tipo_pegar_sprite = Tipo_pegar_sprite.imagem_geral;
-
-                return;
+                }
 
         }
 
 
         // --- BOTAO
 
-        public void Definir_imagem_botao( Dados_botao _dados ){
+
+        public void Definir_botao( Dados_botao_dispositivo _dados ){
 
 
-            
             // --- IMAGEM OFF
 
                 // ** PARTE ESTATICA
 
-                    _dados.tipo_pegar_sprite_off = Tipo_pegar_sprite.imagem_especifica; 
-                    Pegar_dados_imagem_especifica( _dados.sprite_off_id );
-                    _dados.sprite_off_id_final = _dados.sprite_off_id;   
+
+                switch( _dados.tipo_pegar_sprite_off ){
+
+                    case Tipo_pegar_sprite.imagem_especifica: Pegar_dados_imagem_especifica( _dados.sprite_off_id );_dados.sprite_off_id_final = _dados.sprite_off_id; break;
+                    case Tipo_pegar_sprite.imagem_geral: _dados.sprite_off_id_final = Pegar_dados_imagem_tipo_geral( _dados.chaves_imagem_off ); break;
+                    case Tipo_pegar_sprite.nada: break;
+
+                }
+
+                    
                     
                 // ** PARTE ANIMADA
 
                 if( _dados.imagens_animacao_ids_imagem_off != null )
-                    {   
-                        _dados.tem_animacao_imagem_off = true;
-                        _dados.tipo_pegar_sprite_off_animacao = Tipo_pegar_sprite.imagem_especifica; 
-                        Pegar_dados_imagens_especificas( _dados.imagens_animacao_ids_imagem_off );
-                        _dados.imagens_animacao_ids_imagem_off_final = _dados.imagens_animacao_ids_imagem_off;   
+                    {               
+                        switch( _dados.tipo_pegar_sprite_off ){
+
+                            case Tipo_pegar_sprite.imagem_especifica: Pegar_dados_imagens_especificas( _dados.imagens_animacao_ids_imagem_off );_dados.imagens_animacao_ids_imagem_off_final = _dados.imagens_animacao_ids_imagem_off; break;
+                            case Tipo_pegar_sprite.imagem_geral: _dados.imagens_animacao_ids_imagem_off_final = Pegar_dados_imagens_tipo_geral( _dados.chaves_imagens_animacao_ids_imagem_off );; break;
+                            case Tipo_pegar_sprite.nada: break;
+
+                        }
+                    
                     }
 
                     
             // --- IMAGEM ON
 
-                // ** PARTE ESTATICA
-                    _dados.tipo_pegar_sprite_on = Tipo_pegar_sprite.imagem_especifica;
-                    Pegar_dados_imagem_especifica( _dados.sprite_on_id );
-                    _dados.sprite_on_id_final = _dados.sprite_on_id;
-            
+                switch( _dados.tipo_pegar_sprite_on ){
+
+                    case Tipo_pegar_sprite.imagem_especifica: Pegar_dados_imagem_especifica( _dados.sprite_on_id );_dados.sprite_on_id_final = _dados.sprite_on_id; break;
+                    case Tipo_pegar_sprite.imagem_geral: _dados.sprite_on_id_final = Pegar_dados_imagem_tipo_geral( _dados.chaves_imagem_on ); break;
+                    case Tipo_pegar_sprite.nada: break;
+
+                }
+
+                    
                     
                 // ** PARTE ANIMADA
+
                 if( _dados.imagens_animacao_ids_imagem_on != null )
-                    {
-                        _dados.tem_animacao_imagem_on = true;
-                        _dados.tipo_pegar_sprite_on_animacao = Tipo_pegar_sprite.imagem_especifica;  
-                        Pegar_dados_imagens_especificas( _dados.imagens_animacao_ids_imagem_on );
-                        _dados.imagens_animacao_ids_imagem_on_final = _dados.imagens_animacao_ids_imagem_on;   
+                    {               
+                        switch( _dados.tipo_pegar_sprite_on ){
+
+                            case Tipo_pegar_sprite.imagem_especifica: Pegar_dados_imagens_especificas( _dados.imagens_animacao_ids_imagem_on );_dados.imagens_animacao_ids_imagem_on_final = _dados.imagens_animacao_ids_imagem_on; break;
+                            case Tipo_pegar_sprite.imagem_geral: _dados.imagens_animacao_ids_imagem_on_final = Pegar_dados_imagens_tipo_geral( _dados.chaves_imagens_animacao_ids_imagem_on ); break;
+                            case Tipo_pegar_sprite.nada: break;
+
+                        }
+                    
                     }
 
                 
             // --- TRANSICAO OFF -> ON
 
-                if( _dados.imagens_animacao_ids_imagem_transicao != null )
+                if( _dados.imagens_animacao_ids_imagem_transicao_OFF_para_ON != null )
                     {
-                        _dados.tem_animacao_transicao = true;
-                        _dados.tipo_pegar_sprite_transicao_animacao = Tipo_pegar_sprite.imagem_especifica;  
-                        Pegar_dados_imagens_especificas( _dados.imagens_animacao_ids_imagem_transicao );
-                        _dados.imagens_animacao_ids_imagem_transicao_final = _dados.imagens_animacao_ids_imagem_transicao;   
+                        _dados.tipo_pegar_sprite_transicao_animacao_OFF_para_ON = Tipo_pegar_sprite.imagem_especifica;  
+                        
+                        
+
+                        switch( _dados.tipo_pegar_sprite_on ){
+
+                            case Tipo_pegar_sprite.imagem_especifica: Pegar_dados_imagens_especificas( _dados.imagens_animacao_ids_imagem_transicao_OFF_para_ON ); _dados.imagens_animacao_ids_imagem_transicao_final_OFF_para_ON = _dados.imagens_animacao_ids_imagem_transicao_OFF_para_ON;   ; break;
+                            case Tipo_pegar_sprite.imagem_geral: _dados.imagens_animacao_ids_imagem_transicao_final_OFF_para_ON = Pegar_dados_imagens_tipo_geral( _dados.chaves_imagens_animacao_ids_imagem_transicao_OFF_para_ON ); break;
+                            case Tipo_pegar_sprite.nada: break;
+
+                        }
+
                         
                     }
 
-                return;
 
-        }
+            // --- TRANSICAO ON -> OFF
 
-
-        // *** MUDAR TIPO
-        public void Definir_botao_com_imagem_geral( Dados_botao _dados ){
-
-                
-            // --- IMAGEM OFF
-
-                // ** PARTE ESTATICA
-
-                    _dados.tipo_pegar_sprite_off = Tipo_pegar_sprite.imagem_geral; 
-                    _dados.sprite_off_id_final = Pegar_dados_imagem_tipo_geral( _dados.chaves_imagem_off );
-                     
-
-                // ** PARTE ANIMADA
-                if( _dados.imagens_animacao_ids_imagem_off != null )
-                    {   
-                        _dados.tem_animacao_imagem_off = true;
-                        _dados.tipo_pegar_sprite_off_animacao = Tipo_pegar_sprite.imagem_geral; 
-                        _dados.imagens_animacao_ids_imagem_off_final = Pegar_dados_imagens_tipo_geral( _dados.chaves_imagens_animacao_ids_imagem_off );
-                        
-                    }
-
-                    
-            // --- IMAGEM ON
-
-                // ** PARTE ESTATICA
-                    _dados.tipo_pegar_sprite_on = Tipo_pegar_sprite.imagem_geral; 
-                    _dados.sprite_on_id_final = Pegar_dados_imagem_tipo_geral( _dados.chaves_imagem_on );
-                     
-
-                // ** PARTE ANIMADA
-                if( _dados.imagens_animacao_ids_imagem_on != null )
-                    {   
-                        _dados.tem_animacao_imagem_on = true;
-                        _dados.tipo_pegar_sprite_on_animacao = Tipo_pegar_sprite.imagem_geral; 
-                        _dados.imagens_animacao_ids_imagem_on_final = Pegar_dados_imagens_tipo_geral( _dados.chaves_imagens_animacao_ids_imagem_on );
-                        
-                    }
-
-                
-            // --- TRANSICAO OFF -> ON
-
-                if( _dados.imagens_animacao_ids_imagem_transicao != null )
+                if( _dados.imagens_animacao_ids_imagem_transicao_ON_para_OFF != null )
                     {
-                        _dados.tem_animacao_imagem_on = true;
-                        _dados.tipo_pegar_sprite_on_animacao = Tipo_pegar_sprite.imagem_geral; 
-                        _dados.imagens_animacao_ids_imagem_transicao_final = Pegar_dados_imagens_tipo_geral( _dados.chaves_imagens_animacao_ids_imagem_on );
+                        _dados.tipo_pegar_sprite_transicao_animacao_ON_para_OFF = Tipo_pegar_sprite.imagem_especifica;  
+                        
+                        
+
+                        switch( _dados.tipo_pegar_sprite_on ){
+
+                            case Tipo_pegar_sprite.imagem_especifica: Pegar_dados_imagens_especificas( _dados.imagens_animacao_ids_imagem_transicao_ON_para_OFF ); _dados.imagens_animacao_ids_imagem_transicao_final_ON_para_OFF = _dados.imagens_animacao_ids_imagem_transicao_ON_para_OFF;   ; break;
+                            case Tipo_pegar_sprite.imagem_geral: _dados.imagens_animacao_ids_imagem_transicao_final_ON_para_OFF = Pegar_dados_imagens_tipo_geral( _dados.chaves_imagens_animacao_ids_imagem_transicao_ON_para_OFF ); break;
+                            case Tipo_pegar_sprite.nada: break;
+
+                        }
+
                         
                     }
+
+
 
                 return;
 
@@ -470,16 +468,112 @@ public class MODULO__imagens_dispositivo {
 
 
 
-        // *** MUDAR TIPO
-        // **  ver argumentos depois
-        
-        // public void Definir_imagem_scrollbar( int _parte_id,  int _imagem_id ){}
-        // public void Definir_imagem_slider( int _parte_id,  int _imagem_id ){}
-        // public void Definir_imagem_toggle( int _parte_id,  int _imagem_id ){}
-        // public void Definir_imagem_toggle_grupo( int _parte_id,  int _imagem_id ){}
-        // public void Definir_imagem_input_field( int _parte_id,  int _imagem_id ){}
-        // public void Definir_imagem_drop_down( int _parte_id,  int _imagem_id ){}
 
+
+        // public void Definir_botao_ESPECIFICO( Dados_botao_dispositivo _dados ){
+
+
+            
+        //     // --- IMAGEM OFF
+
+        //         // ** PARTE ESTATICA
+
+        //             _dados.tipo_pegar_sprite_off = Tipo_pegar_sprite.imagem_especifica; 
+        //             Pegar_dados_imagem_especifica( _dados.sprite_off_id );
+        //             _dados.sprite_off_id_final = _dados.sprite_off_id;   
+                    
+        //         // ** PARTE ANIMADA
+
+        //         if( _dados.imagens_animacao_ids_imagem_off != null )
+        //             {   
+        //                 _dados.tipo_pegar_sprite_off_animacao = Tipo_pegar_sprite.imagem_especifica; 
+        //                 Pegar_dados_imagens_especificas( _dados.imagens_animacao_ids_imagem_off );
+        //                 _dados.imagens_animacao_ids_imagem_off_final = _dados.imagens_animacao_ids_imagem_off;   
+        //             }
+
+                    
+        //     // --- IMAGEM ON
+
+        //         // ** PARTE ESTATICA
+        //             _dados.tipo_pegar_sprite_on = Tipo_pegar_sprite.imagem_especifica;
+        //             Pegar_dados_imagem_especifica( _dados.sprite_on_id );
+        //             _dados.sprite_on_id_final = _dados.sprite_on_id;
+            
+                    
+        //         // ** PARTE ANIMADA
+        //         if( _dados.imagens_animacao_ids_imagem_on != null )
+        //             {
+        //                 _dados.tipo_pegar_sprite_on_animacao = Tipo_pegar_sprite.imagem_especifica;  
+        //                 Pegar_dados_imagens_especificas( _dados.imagens_animacao_ids_imagem_on );
+        //                 _dados.imagens_animacao_ids_imagem_on_final = _dados.imagens_animacao_ids_imagem_on;   
+        //             }
+
+                
+        //     // --- TRANSICAO OFF -> ON
+
+        //         if( _dados.imagens_animacao_ids_imagem_transicao != null )
+        //             {
+        //                 _dados.tipo_pegar_sprite_transicao_animacao = Tipo_pegar_sprite.imagem_especifica;  
+        //                 Pegar_dados_imagens_especificas( _dados.imagens_animacao_ids_imagem_transicao );
+        //                 _dados.imagens_animacao_ids_imagem_transicao_final = _dados.imagens_animacao_ids_imagem_transicao;   
+                        
+        //             }
+
+        //         return;
+
+        // }
+
+
+        // // *** MUDAR TIPO
+        // public void Definir_botao_GERAL( Dados_botao_dispositivo _dados ){
+
+                
+        //     // --- IMAGEM OFF
+
+        //         // ** PARTE ESTATICA
+
+        //             _dados.tipo_pegar_sprite_off = Tipo_pegar_sprite.imagem_geral; 
+        //             _dados.sprite_off_id_final = Pegar_dados_imagem_tipo_geral( _dados.chaves_imagem_off );
+                     
+
+        //         // ** PARTE ANIMADA
+        //         if( _dados.imagens_animacao_ids_imagem_off != null )
+        //             {   
+        //                 _dados.tipo_pegar_sprite_off_animacao = Tipo_pegar_sprite.imagem_geral; 
+        //                 _dados.imagens_animacao_ids_imagem_off_final = Pegar_dados_imagens_tipo_geral( _dados.chaves_imagens_animacao_ids_imagem_off );
+                        
+        //             }
+
+                    
+        //     // --- IMAGEM ON
+
+        //         // ** PARTE ESTATICA
+        //             _dados.tipo_pegar_sprite_on = Tipo_pegar_sprite.imagem_geral; 
+        //             _dados.sprite_on_id_final = Pegar_dados_imagem_tipo_geral( _dados.chaves_imagem_on );
+                     
+
+        //         // ** PARTE ANIMADA
+        //         if( _dados.imagens_animacao_ids_imagem_on != null )
+        //             {   
+        //                 _dados.tipo_pegar_sprite_on_animacao = Tipo_pegar_sprite.imagem_geral; 
+        //                 _dados.imagens_animacao_ids_imagem_on_final = Pegar_dados_imagens_tipo_geral( _dados.chaves_imagens_animacao_ids_imagem_on );
+                        
+        //             }
+
+                
+        //     // --- TRANSICAO OFF -> ON
+
+        //         if( _dados.imagens_animacao_ids_imagem_transicao != null )
+        //             {
+        //                 _dados.tipo_pegar_sprite_on_animacao = Tipo_pegar_sprite.imagem_geral; 
+        //                 _dados.imagens_animacao_ids_imagem_transicao_final = Pegar_dados_imagens_tipo_geral( _dados.chaves_imagens_animacao_ids_imagem_on );
+                        
+        //             }
+
+        //         return;
+
+
+        // }
 
 
 
@@ -488,8 +582,6 @@ public class MODULO__imagens_dispositivo {
         public void Carregar_imagens(){
 
 
-                // --- INDEXES QUE TEM CADA IMAGEM POR FUNCAO                
-                
                 int numero_de_imagens = 0;
                 // --- PEGAR NUMERO DE IMAGENS 
 
@@ -527,15 +619,13 @@ public class MODULO__imagens_dispositivo {
 
                 string[] nomes = Enum.GetNames( tipo );
 
-                sprites_especificas = new Sprite[ nomes.Length ];
-
+                sprites_especificas_formato_compresso = new byte[ nomes.Length][];
+            
 
                 // --- EDITOR
                 #if UNITY_EDITOR
                 
-    
                         // --- CARREGA IMAGENS
-
                         for( int imagem_slot = 0 ; imagem_slot < imagens_ids.Length ; imagem_slot++ ){
 
                                 
@@ -556,14 +646,12 @@ public class MODULO__imagens_dispositivo {
                                     { throw new Exception( $"Nao foi achado o arquivo com o nome <color=red><b>{ nome_imagem_enum }</b></color>pedido no gerenciador { nome_dispositivo } e no path: { path_imagem }" ); }
 
                                 // --- CRIA ASPRITE
-                                byte[] png = System.IO.File.ReadAllBytes( path_imagem );
-                                sprites_especificas[ imagem_id ] = SPRITE.Transformar_png_TO_sprite( png );
-
+                                sprites_especificas_formato_compresso[ imagem_id ] = System.IO.File.ReadAllBytes( path_imagem );
+                                bytes_sendo_usados_compresso += sprites_especificas_formato_compresso[ imagem_id ].Length;
+                                
                                 continue;
 
                         }
-
-
                 
                 // ---- BUILD
                 #else
@@ -573,8 +661,10 @@ public class MODULO__imagens_dispositivo {
                         
                         for( int index_novas_sprites_index = 0; index_novas_sprites_index < imagens_ids.Length  ; index_novas_sprites_index++ ){
 
-                                int imagem_id = imagens_ids.Length;
-                                sprites_especificas[ imagem_id ] = SPRITE.Transformar_png_TO_sprite( pngs[ index_novas_sprites_index ] );
+                                int imagem_id = imagens_ids[ index_novas_sprites_index ];
+
+                                sprites_especificas_formato_compresso[ imagem_id ] = pngs[ index_novas_sprites_index ];
+                                bytes_sendo_usados_compresso += sprites_especificas_formato_compresso[ imagem_id ].Length;
                                 continue;
 
                         }
@@ -586,13 +676,15 @@ public class MODULO__imagens_dispositivo {
 
                 // --- CARREGAR IMAGENS GERAIS
 
+                sprites_geral_formato_compresso = new byte[ imagens_gerais_nomes.Length ][];
+
                 string path_folder__imagens_dispositivos_reutilizaveis = Paths_sistema.path_folder__imagens_dispositivos_reutilizaveis;
 
-                for( int imagem_geral_index = 0 ; imagem_geral_index < imagens_gerais_paths.Length ; imagem_geral_index++ ){
+                for( int imagem_geral_index = 0 ; imagem_geral_index < imagens_gerais_nomes.Length ; imagem_geral_index++ ){
 
 
                         // --- PEGA NOME ESPECIFICO
-                        string path_arquivo_interno = imagens_gerais_paths[ imagem_geral_index ];
+                        string path_arquivo_interno = imagens_gerais_nomes[ imagem_geral_index ];
 
                         // --- VERIFICA SE AINDA TEm
                         if( path_arquivo_interno == null )
@@ -606,14 +698,13 @@ public class MODULO__imagens_dispositivo {
                         #if UNITY_EDITOR
 
                             if( !!!( System.IO.File.Exists( path_arquivo ) ) )
-                                { throw new System.Exception( $"Tentou pegar imagem especifica de um dispositivo no path  { path_arquivo } mas não foi encontrado"); }
+                                { throw new System.Exception( $"Tentou pegar imagem especifica de um dispositivo no path  { path_arquivo } mas não foi encontrado" ); }
 
                         #endif
 
 
-                        // --- CRIA ASPRITE
-                        byte[] png = System.IO.File.ReadAllBytes( path_arquivo );
-                        sprites_geral[ imagem_geral_index ] = SPRITE.Transformar_png_TO_sprite( png );
+                        sprites_geral_formato_compresso[ imagem_geral_index ] = System.IO.File.ReadAllBytes( path_arquivo );
+                        bytes_sendo_usados_compresso += sprites_geral_formato_compresso[ imagem_geral_index ].Length;
 
                         continue;
 
@@ -622,24 +713,52 @@ public class MODULO__imagens_dispositivo {
         }
 
 
-        public void Criar_sprites(){ 
+        public void Descompactar_dados(){ 
 
-            // ** fazer depois
-            // quando criar => quando for chamar Colocar_imanges() vai ter que verificar se as sprites foram criadas
+                // *** por hora vais er na main
+                
+                sprites_especificas = new Sprite[ sprites_especificas_formato_compresso.Length ];
+                sprites_geral = new Sprite[ sprites_geral_formato_compresso.Length ];
+    
+                // --- CARREGA IMAGENS
+
+                for( int imagem_index = 0 ; imagem_index < imagens_especificos_ativas.Length ; imagem_index++ ){
+
+                        if( imagens_especificos_ativas[ imagem_index ] == 0 )
+                            { continue; }
+
+                        sprites_especificas[ imagem_index ] = SPRITE.Transformar_png_TO_sprite( sprites_especificas_formato_compresso[ imagem_index ] );
+    
+                }
+
+                for( int imagem_geral_index = 0 ; imagem_geral_index < sprites_geral_formato_compresso.Length ; imagem_geral_index++ ){
+
+                        sprites_geral[ imagem_geral_index ] = SPRITE.Transformar_png_TO_sprite( sprites_geral_formato_compresso[ imagem_geral_index ] );
+    
+                }
+
+                return;
+
 
         }
 
 
 
 
-        public void Colocar_imagens_tipo_imagem_estatica( Dados_imagem_estatica[] _dados_imagens, string _dispositivo_game_object_path ){
+        public void Colocar_imagens_tipo_imagem_estatica( Dados_imagem_estatica_dispositivo[] _dados_imagens, string _dispositivo_game_object_path ){
 
 
+                if( _dados_imagens == null )
+                    { throw new Exception( "Dados_imagem_estatica_dispositivo veio null" ); }
 
 
                 for( int imagem_index = 0 ; imagem_index < _dados_imagens.Length ; imagem_index++ ){
 
-                        Dados_imagem_estatica dados = _dados_imagens[ imagem_index ];
+                        Dados_imagem_estatica_dispositivo dados = _dados_imagens[ imagem_index ];
+
+                        if( dados == null )
+                            { break; }
+
                         string nome = dados.nome;
 
                         string path_objeto = _dispositivo_game_object_path + "/" + nome;
@@ -650,40 +769,22 @@ public class MODULO__imagens_dispositivo {
                             { throw new Exception( $"Tentou pegar o gameObject da imagem estatica <color=lightBlue><b>{ nome }</b></color> mas nao foi encontrado no prefab." ); }
 
 
+                        dados.imagem_game_object = game_object;
+                        dados.material_dispositivo = material_dispositivo;
 
-                        Image image = game_object.GetComponent<Image>();
-
-                        if( image== null )
-                            { throw  new Exception( $"Nao foi colocado o componente Image na imagem do { nome } " ); }
-
-                        image.material = material_dispositivo;
                         
-
-                        Tipo_pegar_sprite tipo_pegar_sprite = dados.tipo_pegar_sprite;
                         int imagem_id = dados.imagem_id_final;
 
-                        if( tipo_pegar_sprite == Tipo_pegar_sprite.imagem_especifica )
-                            {
+                        if( dados.tipo_pegar_sprite == Tipo_pegar_sprite.imagem_especifica )
+                            { dados.imagem_sprite = sprites_especificas[ imagem_id ]; }
 
-                                image.sprite = sprites_especificas[ imagem_id ];
-                                image.color = Color.white;
-                                return;
-                            }
+                        if( dados.tipo_pegar_sprite == Tipo_pegar_sprite.imagem_geral )
+                            { dados.imagem_sprite = sprites_geral[ imagem_id ]; }
 
-                        if( tipo_pegar_sprite == Tipo_pegar_sprite.imagem_geral )
-                            {
+                        if( dados.tipo_pegar_sprite == Tipo_pegar_sprite.nada )
+                            { dados.imagem_sprite = null; }
 
-                                image.sprite = sprites_geral[ imagem_id ];
-                                image.color = Color.white;
-                                return;
-                            }
-                        if( tipo_pegar_sprite == Tipo_pegar_sprite.nada )
-                            {
-
-                                image.sprite = null;
-                                image.color = Color.clear;
-                                return;
-                            }
+                        continue;
 
 
                 }
@@ -694,20 +795,25 @@ public class MODULO__imagens_dispositivo {
 
 
 
-        public void Colocar_imagens_tipo_botao( Dados_botao[] _dados_botoes, string _dispositivo_game_object_path ){
-
+        public void Colocar_imagens_tipo_botao( Dados_botao_dispositivo[] _dados_botoes, string _dispositivo_game_object_path ){
 
 
                 if( sprites_especificas == null )
                     { throw new Exception( "Nao foi dado o Carregar_imagens no modulo imagens dispositivos" ); }
 
+                if( _dispositivo_game_object_path == null )
+                    { throw new Exception( $"_dispositivo_game_object_path veio null" ); }
 
-                // if( _dispositivo_game_object == null )
-                //     { throw new Exception( $"Tentou pegar o gameObject <color=lightBlue><b>{ _nome }</b></color> mas nao foi encontrado no prefab" ); }
+
 
                 for( int botao_index = 0 ; botao_index < _dados_botoes.Length ; botao_index++ ){
 
-                        Dados_botao dados = _dados_botoes[ botao_index ];
+                        Dados_botao_dispositivo dados = _dados_botoes[ botao_index ];
+
+                        if( dados == null )
+                            { break; }
+
+                        dados.material_dispositivo = material_dispositivo;
 
                         if( dados == null )
                             { continue; }
@@ -719,34 +825,109 @@ public class MODULO__imagens_dispositivo {
                         GameObject game_object = GameObject.Find( path_objeto );
 
                         if( game_object == null )
-                            { throw  new Exception( $"Nao foi achado a imagem { nome }" ); }
+                            { throw new Exception( $"Tentou pegar o gameObject <color=lightBlue><b>{ nome }</b></color> de um botao mas nao foi encontrado no prefab. Path: { path_objeto }" ); }
+
+                        dados.botao_game_object = game_object;
+
+                        // --- PASSAR IMAGENS 
+
+                        // --- IMAGEM OFF
+
+                            // ** PARTE ESTATICA
+
+                                if( dados.tipo_pegar_sprite_off == Tipo_pegar_sprite.imagem_especifica )
+                                    { dados.sprite_off = sprites_especificas[ dados.sprite_off_id_final ]; }
+
+                                if( dados.tipo_pegar_sprite_off == Tipo_pegar_sprite.imagem_geral )
+                                    { dados.sprite_off = sprites_geral[ dados.sprite_off_id_final ]; }
+
+                            // ** PARTE ANIMADA
+
+                                if( dados.imagens_animacao_ids_imagem_off_final != null )
+                                    {
+
+                                        dados.animacao_sprites_off = new Sprite[ dados.imagens_animacao_ids_imagem_off_final.Length ];
+
+                                        if( dados.tipo_pegar_sprite_off_animacao == Tipo_pegar_sprite.imagem_especifica )
+                                            { SPRITE.Copiar_sprites_array_para_array( dados.animacao_sprites_off, sprites_especificas, dados.imagens_animacao_ids_imagem_off );}
+
+                                        if( dados.tipo_pegar_sprite_off_animacao == Tipo_pegar_sprite.imagem_geral )
+                                            { SPRITE.Copiar_sprites_array_para_array( dados.animacao_sprites_off, sprites_geral, dados.imagens_animacao_ids_imagem_off ); }
+
+                                    }
+
+                        // --- IMAGEM ON
+
+                            // ** PARTE ESTATICA
+
+                                if( dados.tipo_pegar_sprite_on == Tipo_pegar_sprite.imagem_especifica )
+                                    { dados.sprite_on = sprites_especificas[ dados.sprite_on_id_final ]; }
+
+                                if( dados.tipo_pegar_sprite_on == Tipo_pegar_sprite.imagem_geral )
+                                    { dados.sprite_on = sprites_geral[ dados.sprite_on_id_final ]; }
 
 
-                        Image image = game_object.GetComponent<Image>();
-
-                        if( image== null )
-                            { throw  new Exception( $"Nao foi colocado o componente Image na imagem do { nome } " ); }
-
-                        image.material = material_dispositivo;
-                        
-
-                        Tipo_pegar_sprite tipo_pegar_sprite = dados.tipo_pegar_sprite;
-                        int imagem_id = dados.imagem_id_final;
+                            // ** PARTE ANIMADA
 
 
+                                if( dados.imagens_animacao_ids_imagem_on_final != null )
+                                    {
+                                        dados.animacao_sprites_on = new Sprite[ dados.imagens_animacao_ids_imagem_on_final.Length ];
+
+                                        if( dados.tipo_pegar_sprite_on_animacao == Tipo_pegar_sprite.imagem_especifica )
+                                            { SPRITE.Copiar_sprites_array_para_array( dados.animacao_sprites_on, sprites_especificas, dados.imagens_animacao_ids_imagem_on );}
+
+                                        if( dados.tipo_pegar_sprite_on_animacao == Tipo_pegar_sprite.imagem_geral )
+                                            { SPRITE.Copiar_sprites_array_para_array( dados.animacao_sprites_on, sprites_geral, dados.imagens_animacao_ids_imagem_on ); }
+
+                                    }
+
+
+                            
+                        // --- TRANSICAO OFF -> ON
+
+
+                            if( dados.imagens_animacao_ids_imagem_transicao_OFF_para_ON != null )
+                                {
+                                    dados.sprites_animacao_transicao_OFF_para_ON = new Sprite[ dados.imagens_animacao_ids_imagem_transicao_final_OFF_para_ON.Length ];
+
+                                    if( dados.tipo_pegar_sprite_transicao_animacao_OFF_para_ON == Tipo_pegar_sprite.imagem_especifica )
+                                        { SPRITE.Copiar_sprites_array_para_array( dados.sprites_animacao_transicao_OFF_para_ON, sprites_especificas, dados.imagens_animacao_ids_imagem_transicao_OFF_para_ON );}
+
+                                    if( dados.tipo_pegar_sprite_transicao_animacao_OFF_para_ON == Tipo_pegar_sprite.imagem_geral )
+                                        { SPRITE.Copiar_sprites_array_para_array( dados.sprites_animacao_transicao_OFF_para_ON, sprites_geral, dados.imagens_animacao_ids_imagem_transicao_OFF_para_ON ); }
+
+                                }
+
+
+
+                        // --- TRANSICAO ON -> OFF
+
+
+                            if( dados.imagens_animacao_ids_imagem_transicao_ON_para_OFF != null )
+                                {
+                                    dados.sprites_animacao_transicao_ON_para_OFF = new Sprite[ dados.imagens_animacao_ids_imagem_transicao_final_ON_para_OFF.Length ];
+
+                                    if( dados.tipo_pegar_sprite_transicao_animacao_ON_para_OFF == Tipo_pegar_sprite.imagem_especifica )
+                                        { SPRITE.Copiar_sprites_array_para_array( dados.sprites_animacao_transicao_ON_para_OFF, sprites_especificas, dados.imagens_animacao_ids_imagem_transicao_ON_para_OFF );}
+
+                                    if( dados.tipo_pegar_sprite_transicao_animacao_ON_para_OFF == Tipo_pegar_sprite.imagem_geral )
+                                        { SPRITE.Copiar_sprites_array_para_array( dados.sprites_animacao_transicao_ON_para_OFF, sprites_geral, dados.imagens_animacao_ids_imagem_transicao_ON_para_OFF ); }
+
+                                }
+
+
+
+
+                        // --- VAI PARA O PROXIMO BOTAO
+                        continue;
 
                 }
 
+                return;
 
         }
 
-        private void Colocar_imagem_tipo_scrollbar( int _id, string _path_game_object ){}
-        private void Colocar_imagem_tipo_drop_down( int _id, string _path_game_object ){}
-        private void Colocar_imagem_tipo_input_field( int _id, string _path_game_object ){}
-        private void Colocar_imagem_tipo_slider( int _id, string _path_game_object ){}
-        private void Colocar_imagem_tipo_toggle( int _id, string _path_game_object ){}
-        private void Colocar_imagem_tipo_toggle_grupo( int _id, string _path_game_object ){}
-    
 
 
 

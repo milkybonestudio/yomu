@@ -8,6 +8,11 @@ using UnityEngine;
 
 public class Dispositivo {
 
+
+        // --- DADOS
+
+        public string nome_dispositivo;
+
         
         // --- MODULOS
         
@@ -29,40 +34,67 @@ public class Dispositivo {
         public Dispositivo[] dispositivos_filhos;
 
 
-        
+        // *** pode excluir quando Carregar() estiver pronto
+        private bool ativou_carregar = false;
 
-        // --- METODOS LOGICA
+
+
+
+        // --- METODOS PUBLICOS
 
             public void Update(){ if( update_bloqueado ){ return; };interface_dispositivo.Update( this ); }
-
+            
             // ** a perspectiva do objeto é inversa: objeto.Enviar() => void Recebe_dados()
-            public     void      Enviar_dados( System.Object _dados ){ interface_dispositivo.Receber_dados( this, _dados ); }
             public System.Object Receber_dados(){ return interface_dispositivo.Enviar_dados( this ); }
+            public void  Enviar_dados( System.Object _dados ){ interface_dispositivo.Receber_dados( this, _dados ); }
 
 
-            // *** vai ser chamado quando o objeto for criado
-            public void Definir_objetos_iniciais(){ interface_dispositivo.Definir_objetos_iniciais( this ); }
+            public void Descompactar_dados(){  Descompactar_dados_interno(); }
+
+            public void Bloquear_update(){ update_bloqueado = true; }
+            public void Liberar_update(){ update_bloqueado = false; }
+
+            public void Bloquear_movimento(){ movimento_bloqueado = true; }
+            public void Liberar_movimento(){ movimento_bloqueado = false; }
+
+            public void Esconder_dispositivo(){}
 
 
-        // --- METODOS MODULOS
-
-            // *** imagens
-            
-            public void Carregar_imagens(){ modulo_imagens.Carregar_imagens();}
-            public void Criar_sprites(){ modulo_imagens.Criar_sprites();}
-            public void Colocar_imagens(){  Colocar_imagens_interno(); }
+            public void Finalizar_dispositivo(){ interface_dispositivo.Finalizar( this ); }
 
 
-            
-            public void Carregar_audios(){ modulo_audios.Carregar_audios();}
-            public void Colocar_audios(){ Colocar_audios_interno(); }
+            // --- METODOS VISUAIS
 
-
-        // --- METODOS VISUAIS
-
-            public void Anexar_dispositivo( GameObject _pai ){ Anexar_dispositivo_interno( _pai ); }
+            public void Ativar_dispositivo( GameObject _local_para_anexar ){ Ativar_dispositivo_interno( _local_para_anexar ); }
             public void Mover_dispositivo( float _quantidade_para_adicionar_X, float _quantidade_para_adicionar_Y ){if( movimento_bloqueado){ return; } Mover_dispositivo_interno(  _quantidade_para_adicionar_X,  _quantidade_para_adicionar_Y ); }
             public void Mudar_pai_dispositivo( GameObject _pai ){ Mudar_pai_dispositivo_interno( _pai ); }
+
+
+
+        
+
+        // --- METODOS GERAIS
+
+            // *** vai ser chamado quando o objeto for criado
+            private void Definir_objetos_iniciais(){ 
+
+                interface_dispositivo.Definir_objetos_iniciais( this ); 
+                
+            }
+
+            private void Carregar_dados(){
+
+                modulo_imagens.Carregar_imagens();
+                modulo_audios.Carregar_audios();
+
+                ativou_carregar = true;
+
+            }
+
+
+            
+
+
 
 
 
@@ -70,17 +102,6 @@ public class Dispositivo {
 
             private bool update_bloqueado;
             private bool movimento_bloqueado;
-            
-            public void Bloquear_update(){ update_bloqueado = true; }
-            public void Liberar_update(){ update_bloqueado = false; }
-
-            public void Bloquear_movimento(){ movimento_bloqueado = true; }
-            public void Liberar_movimento(){ movimento_bloqueado = false; }
-
-
-
-            //public void Esconder_dispositivo(){}
-
 
 
 
@@ -94,7 +115,7 @@ public class Dispositivo {
 
                 interface_dispositivo = _interface;
 
-                string nome_dispositivo = _interface.Pegar_nome();
+                nome_dispositivo = _interface.Pegar_nome();
                 string[] folders = _interface.Pegar_folders();
 
                 // --- PEGAR PREFAB
@@ -115,26 +136,19 @@ public class Dispositivo {
 
 
                 // --- CRIA MODULO IMAGENS 
-                modulo_imagens = new MODULO__imagens_dispositivo( 
-                                                                    _nome_dispositivo : nome_dispositivo,
-                                                                    _folders: folders,
-                                                                    _tipo_imagens : _interface.Pegar_tipo_imagens()
-                                                                );
-
-
+                modulo_imagens = new MODULO__imagens_dispositivo( this );
 
 
                 // --- CRIA MODULO AUDIO
-                modulo_audios = new MODULO__audios_dispositivo();
+                modulo_audios = new MODULO__audios_dispositivo( this );
 
                 // --- CRIA MODULO DADOS
-                dados_dispositivo = new MODULO__dados_dispositivo();
+                dados_dispositivo = new MODULO__dados_dispositivo( this );
 
 
                 // *** Define os objetos iniciais
-                _interface.Definir_objetos_iniciais( this );
-
-
+                Definir_objetos_iniciais();
+                Carregar_dados();
 
 
         }
@@ -142,16 +156,38 @@ public class Dispositivo {
 
         // --- DEFINICOES OBJETOS
 
-        public void Definir_imagem_estatica( Dados_imagem_estatica _dados ){
 
-                modulo_imagens.Definir_imagem_estatica( _dados );
+
+
+        private void Ativar_dispositivo_interno( GameObject _local_para_anexar ){
+
+
+                Anexar_dispositivo_interno( _local_para_anexar );
+
+                // --- PASSA OS DADOS PARA OS SLOTS
+                Colocar_imagens_interno();
+                Colocar_audios_interno();
+
+                // --- CONSTROI OS OBJETOS
+
+                dados_dispositivo.Construir_objetos();
+
+                return;
+
 
         }
 
-        public void Definir_botao( Dados_botao _dados_botao ){
 
-                modulo_imagens.Definir_imagem_botao( _dados_botao );
-                modulo_audios.Definir_audios_botao( _dados_botao );
+        public void Descompactar_dados_interno(){ 
+
+                // *** vai transformar pngs/webp => sprites
+                // ** por hora vai fazer tudo de uma vez
+
+                if( !!!( ativou_carregar ) )
+                    { throw new System.Exception($"Nao carregou os dados do dispositivo {interface_dispositivo.Pegar_nome()}");}
+                
+                modulo_imagens.Descompactar_dados();
+                modulo_audios.Descompactar_dados();
 
         }
 
@@ -178,7 +214,7 @@ public class Dispositivo {
 
                 dispositivo_game_object.transform.SetParent( _pai.transform, false );
 
-
+                dados_dispositivo.path_para_o_dispositivo = GAME_OBJECT.Pegar_path( dispositivo_game_object );
 
                 return;
             
@@ -235,8 +271,8 @@ public class Dispositivo {
 
                 string path_dispositivo = dados_dispositivo.path_para_o_dispositivo;
                     
-                modulo_imagens.Colocar_imagens_tipo_imagem_estatica( dados_dispositivo.dados_imagens_estaticas, path_dispositivo );
-                modulo_imagens.Colocar_imagens_tipo_botao( dados_dispositivo.dados_botoes, path_dispositivo );
+                modulo_imagens.Colocar_imagens_tipo_imagem_estatica( dados_dispositivo.dados_imagens_estaticas_dispositivo, path_dispositivo );
+                modulo_imagens.Colocar_imagens_tipo_botao( dados_dispositivo.dados_botoes_dispositivo, path_dispositivo );
 
                 return;
 
@@ -247,6 +283,41 @@ public class Dispositivo {
             modulo_audios.Colocar_audios( dados_dispositivo );
 
         }
+
+
+
+
+
+
+        // --- DEFINICOES
+
+
+        public Imagem_estatica_dispositivo Definir_imagem_estatica( Dados_imagem_estatica_dispositivo _dados ){
+
+
+                Imagem_estatica_dispositivo imagem_estatica = dados_dispositivo.Definir_imagem_estatica( _dados );
+
+                // --- DEFINIR
+                modulo_imagens.Definir_imagem_estatica( _dados );
+
+                return imagem_estatica;
+
+        }
+
+    
+
+        public Botao_dispositivo Definir_botao( Dados_botao_dispositivo _dados ){
+
+                Botao_dispositivo botao = dados_dispositivo.Definir_botao( _dados );
+
+                // --- DEFINIR
+
+                modulo_imagens.Definir_botao( _dados );
+
+                return botao;
+
+        }
+
 
 
 

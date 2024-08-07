@@ -2,7 +2,7 @@
 
 
 
-public enum Botao_tipo_ativacao {
+public enum Botao_dispositivo_tipo_ativacao {
 
     
         clicar_e_soltar,  

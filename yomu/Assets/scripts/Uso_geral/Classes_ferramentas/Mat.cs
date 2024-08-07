@@ -83,37 +83,49 @@ public static  class Mat {
 
 
 
+        public static bool Verificar_ponto_dentro_poligono( Vector2[] _poligono, Vector2 _off_set, Vector2 _ponto ){
+
+
+                if( _poligono == null ) 
+                    { return false; }
+
+
+                _ponto -= Conversor_posicao.Ajustar_real_para_virtual( _off_set );
+
+                // Debug.Log($"mouse p X: {_ponto.x}");
+                // Debug.Log($"mouse p Y: {_ponto.y}");
+                
+                bool resultado = false;                
+                
+                for(   int ponto_index = 0 ; ponto_index < _poligono.Length  ; ponto_index ++){
+
+                        Vector2 ponto_1 = _poligono[ ponto_index ];
+                        Vector2 ponto_2 = _poligono[ ( ponto_index + 1 ) % _poligono.Length ];
+
+
+                        if( (  _ponto.y < ponto_1.y  )  ==  ( _ponto.y  < ponto_2.y   ) )
+                            { continue; }
+
+                        
+                        if( (  _ponto.x > ( ( _ponto.y - ponto_1.y   ) * ( ponto_2.x - ponto_1.x ) / (   ponto_2.y  - ponto_1.y     )) + ponto_1.x  ) ) 
+                            { continue; }
+
+                        resultado =! resultado;
+                        continue;
+
+                }
+
+                return resultado;
+
+        }
 
 
 
-          // public static int[] calcular_teste_enum_exp(Interativo_nome[]  arr){
-
-          //      int[] a = new int[arr.Length];
-
-          //      for(  int i = 0;  i < arr.Length  ; i++  ){
-
-          //                a[i] =  (int) arr[i];
-
-          //      }
-
-          //      return a;
-
-
-          // }
 
 
 
 
-
-
-
-
-
-
-
-
-
-     public static bool Verificar_ponto_dentro_poligono(float[] _ponto , float[] _poligono ){
+     public static bool _Verificar_ponto_dentro_poligono(float[] _ponto , float[] _poligono ){
 
             if(_poligono == null) return false;
 
@@ -132,7 +144,7 @@ public static  class Mat {
                 for(   int cont = 0 ; cont < numero_pontos - 1 ; cont ++){
 
                       
-                    if(    (  _ponto[1] < _poligono[k] )    !=     (_ponto[1]<(_poligono[k+2]))    &&     (_ponto[0]<   ((_ponto[1]+( - _poligono[k] ))*(_poligono[i+2]-_poligono[i])/(   _poligono[k+2]  - _poligono[k]     ))+(_poligono[i]))       )  resultado =! resultado;    
+                    if(    (  _ponto[1] < _poligono[k] )    !=     (_ponto[1]<(_poligono[k + 2]))    &&     (_ponto[0]<   ((_ponto[1]+( - _poligono[k] ))*(_poligono[i+2]-_poligono[i])/(   _poligono[k+2]  - _poligono[k]     ))+(_poligono[i]))       )  resultado =! resultado;    
                     i = i+ 2;
                     k = k + 2 ; 
 
