@@ -36,7 +36,7 @@ public static class Teste_performace {
                 Debug.Log( "teste performace <b><color=lime>ATIVADO</color></b>" );
 
                 int _i = 0;
-                int n_1 =  100_000;
+                int n_1 =  100_000_000;
 
 
 
@@ -48,7 +48,9 @@ public static class Teste_performace {
                 Vector2 v_2 = new Vector2( 1f,1f );
                 Vector3 v_3 = new Vector3( 1f,1f, 1f );
                 
-                
+
+
+                Tipo_botao tipo = Tipo_botao.cor;
 
 
 
@@ -61,6 +63,8 @@ public static class Teste_performace {
 
 
                     int nn = 0;
+                    object ob = null;
+                    int kkkk = 23;
     
                     while( _i < n_1 ){
 
@@ -68,15 +72,13 @@ public static class Teste_performace {
                             _i++;
                             // --- ESCOPO 1
 
-                            int acc = 0;
+                            
+                            if( ( int ) ob == _i + 1500 )
+                                { break;}
 
-                            for( int index = 0; index < 100 ; index++ ){
+                            // Debug.Log( a );
+                            // Debug.Log( ob.GetType().Name );
 
-
-                                acc = ( acc + 1 ) % 2;
-
-
-                            }
 
 
                         //GameObject.Find("Tela/Canvas/Jogo/EXCLUIR DEPOIS").GetComponent<Image>().sprite = ( new WebP()).Decode_2( dados_webp );

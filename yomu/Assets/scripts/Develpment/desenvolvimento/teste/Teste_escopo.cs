@@ -41,6 +41,7 @@ public static class Teste_escopo {
 
 
 
+
                 dispositivo_teste = Dispositivo__teste.Construir();
                 
                 dispositivo_teste.Descompactar_dados();

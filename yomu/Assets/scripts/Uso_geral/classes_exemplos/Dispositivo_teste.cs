@@ -20,9 +20,49 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
         public enum Dispositivo_imagem{
 
             teste_1,
+
             b_1, 
             b_2,
             b_3,
+            b_4,
+            b_5,
+
+            aq_1 ,
+            aq_2 ,
+            aq_3 ,
+            aq_4 ,
+            aq_5 ,
+            aq_6 ,
+
+            lb_1 ,
+            lb_2 ,
+            lb_3 ,
+            lb_4 ,
+            lb_5 ,
+            lb_6 ,
+
+            r_1 ,
+            r_2 ,
+            r_3 ,
+            r_4 ,
+            r_5 ,
+            r_6 ,
+
+            y_1 ,
+            y_2 ,
+            y_3 ,
+            y_4 ,
+            y_5 ,
+            y_6 ,
+
+            v_1 ,
+            v_2 ,
+            v_3 ,
+            v_4 ,
+            v_5 ,
+            v_6 ,
+
+
 
         }
 
@@ -88,11 +128,75 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
 
                     // --- IMAGEM 1
                     botao_fechar_dados.sprite_off_id = ( int ) Dispositivo_imagem.b_1;
-                    //botao_fechar_dados.cor_imagem_off = Cores.white;
+                    
+
+                    botao_fechar_dados.tipo_transicao = Tipo_transicao_botao_OFF_ON_dispositivo.animacao_individual;
+
+                    botao_fechar_dados.manter_texto_animacao_OFF = true;
+                    botao_fechar_dados.manter_texto_animacao_ON = true;
+                    botao_fechar_dados.manter_texto_transicao_OFF_para_ON = true;
+                    botao_fechar_dados.manter_texto_transicao_ON_para_OFF = true;
+
+                    botao_fechar_dados.sprites_ids_transicao_OFF_para_ON = new int[]{
+
+
+                            ( int ) Dispositivo_imagem.lb_1,
+                            ( int ) Dispositivo_imagem.lb_2,
+                            ( int ) Dispositivo_imagem.lb_3,
+                            ( int ) Dispositivo_imagem.lb_4,
+                            ( int ) Dispositivo_imagem.lb_5                        
+
+                    };
+
+
+                    botao_fechar_dados.sprites_ids_transicao_ON_para_OFF = new int[]{
+
+
+                            ( int ) Dispositivo_imagem.v_1,
+                            ( int ) Dispositivo_imagem.v_2,
+                            ( int ) Dispositivo_imagem.v_3,
+                            ( int ) Dispositivo_imagem.v_4,
+                            ( int ) Dispositivo_imagem.v_5                        
+
+                    };
+
+
+                    botao_fechar_dados.sprites_ids_animacao_off = new int[]{
+
+                            ( int ) Dispositivo_imagem.r_1,
+                            ( int ) Dispositivo_imagem.r_2,
+                            ( int ) Dispositivo_imagem.r_3,
+                            ( int ) Dispositivo_imagem.r_4,
+                            ( int ) Dispositivo_imagem.r_5
+                        
+                    };
+
+
+                    botao_fechar_dados.sprites_ids_animacao_on = new int[]{
+
+                            ( int ) Dispositivo_imagem.y_1,
+                            ( int ) Dispositivo_imagem.y_2,
+                            ( int ) Dispositivo_imagem.y_3,
+                            ( int ) Dispositivo_imagem.y_4,
+                            ( int ) Dispositivo_imagem.y_5
+                        
+                    };
+
+
+                    // botao_fechar_dados.cores_animacao_imagem_off = new Color[]{
+
+                    //         Cores.red,
+                    //         Cores.red,
+                    //         Cores.red,
+                    //         Cores.red,
+                    //         Cores.red
+                        
+                    // };
+
 
                     // --- IMAGEM 2 
                     botao_fechar_dados.sprite_on_id = ( int ) Dispositivo_imagem.b_2;
-                    //botao_fechar_dados.cor_imagem_on = Cores.white;
+                    
 
                     // --- AUDIO
                     // dados.audio_click: 

@@ -133,8 +133,8 @@ public class Controlador : MonoBehaviour {
                   if( esta_reconstruindo_save )
                         { return ; }  
 
-                  try
-                        {
+                //   try
+                //         {
 
 
                               switch (  modo_controlador_atual ) {
@@ -150,15 +150,15 @@ public class Controlador : MonoBehaviour {
 
                               }
 
-                        } 
-                        catch( Exception e )
-                        {
-                            throw e;
-                              return;
+                        //} 
+                        // catch( Exception e )
+                        // {
+                        //     throw e;
+                        //       return;
 
-                              Debug.LogError( "Tem que fazer um modo para mandar mensagem " );
+                        //       Debug.LogError( "Tem que fazer um modo para mandar mensagem " );
 
-                        }
+                        // }
 
 
 

@@ -30,14 +30,14 @@ public static class SPRITE {
                         if( id < 0 )
                             {  throw new Exception( $"Tentou copiar sprites de um array para o outro mas o id { id } é menor que 0. Indentificador : { _indentificador }" ); }
                 
-                        if( id >= _array_receptor.Length )
-                            { throw new Exception( $"Tentou copiar sprites de um array para o outro mas o id { id } era maior que a length do receptor. Indentificador : { _indentificador }" ); }
+                        // if( id >= _array_receptor.Length )
+                        //     { throw new Exception( $"Tentou copiar sprites de um array para o outro mas o id { id } era maior que a length do receptor: { _array_receptor.Length }. Indentificador : { _indentificador }" ); }
 
                         if( id >= _array_com_dados.Length )
-                            { throw new Exception( $"Tentou copiar sprites de um array para o outro mas o id { id } era maior que a length do com os dados. Indentificador : { _indentificador }" ); }
+                            { throw new Exception( $"Tentou copiar sprites de um array para o outro mas o id { id } era maior que a length do com os dados:{ _array_com_dados.Length}. Indentificador : { _indentificador }" ); }
 
                         // --- FAZ A TROCA
-                        _array_receptor[ id ] = _array_com_dados[ id ];
+                        _array_receptor[ index ] = _array_com_dados[ id ];
 
                         continue;
 
