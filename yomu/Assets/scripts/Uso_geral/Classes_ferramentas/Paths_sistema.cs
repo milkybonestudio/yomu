@@ -20,8 +20,8 @@ public static class Paths_sistema {
         public static string path_arquivo_dados_menu_E_login_dados;
         
 
-        public static string path_arquivo__stack_1;
-        public static string path_arquivo__stack_2;
+        public static string path_arquivo__stack;
+        
 
 
 
@@ -368,8 +368,8 @@ public static class Paths_sistema {
 
                 
 
-                path_arquivo__stack_1 = System.IO.Path.Combine( path_folder__dados_usuario, "stack_1.dat" );
-                path_arquivo__stack_2 = System.IO.Path.Combine( path_folder__dados_usuario, "stack_2.dat" );
+                path_arquivo__stack = System.IO.Path.Combine( path_folder__dados_usuario, "stack.dat" );
+                
 
 
                 // --- DADOS DLL
@@ -591,29 +591,25 @@ public static class Paths_sistema {
 
 
 
-
-
-
-                        
         }
 
 
 
 
-        public static string Pegar_path_arquivo__dados_dinamicos__entidade( Entidade_nome _entidade,  string _nome_entidade ){
+        public static string Pegar_path_arquivo__dados_dinamicos__entidade( Tipo_entidade _entidade,  string _nome_entidade ){
 
 
                 string path_folder = null;
 
                 switch( _entidade ){
 
-                        case Entidade_nome.personagem : path_folder = path_folder__dados_save_personagens; break;
-                        case Entidade_nome.cidade : path_folder = path_folder__dados_save_cidades; break;
-                        case Entidade_nome.plot : path_folder = path_folder__dados_save_plots; break;
+                        case Tipo_entidade.personagem : path_folder = path_folder__dados_save_personagens; break;
+                        case Tipo_entidade.cidade : path_folder = path_folder__dados_save_cidades; break;
+                        case Tipo_entidade.plot : path_folder = path_folder__dados_save_plots; break;
 
-                        case Entidade_nome.boss : path_folder = path_folder__dados_save_bosses; break;
-                        case Entidade_nome.mob : path_folder = path_folder__dados_save_bosses; break;
-                        case Entidade_nome.reino : path_folder = path_folder__dados_save_reinos; break;
+                        case Tipo_entidade.boss : path_folder = path_folder__dados_save_bosses; break;
+                        case Tipo_entidade.mob : path_folder = path_folder__dados_save_bosses; break;
+                        case Tipo_entidade.reino : path_folder = path_folder__dados_save_reinos; break;
 
                         default : throw new System.Exception( $"nao foi aceito o tipo de entidade { _entidade.ToString() }" );
                         
@@ -710,101 +706,99 @@ public static class Paths_sistema {
 
         public static string Pegar_path_arquivo__dll__handler_finalizar( Bloco _bloco_1, Bloco _bloco_2  ){
 
+                // switch( _bloco_1 ){
 
 
-                switch( _bloco_1 ){
+                //         case Bloco.conector:                    {
+                //                                                         switch( _bloco_2 ){
+
+                //                                                                 case Bloco.conector :   throw new Exception( $"veio 2 blocos em pegar path dll handler finalizar, veio { _bloco_1 }");
+                //                                                                 case Bloco.visual_novel :   return path_arquivo__dll__handler_finalizar_VISUAL_NOVEL__E__CONECTOR ; 
+                //                                                                 case Bloco.minigames :   return path_arquivo__dll__handler_finalizar_MINIGAME__E__CONECTOR ;
+                //                                                                 case Bloco.utilidades :   return path_arquivo__dll__handler_finalizar_UTILIDADES__E__CONECTOR;
+                //                                                                 case Bloco.conversas:   return path_arquivo__dll__handler_finalizar_CONVERSAS__E__CONECTOR ;
+                //                                                                 case Bloco.cartas:   return path_arquivo__dll__handler_finalizar_CARTAS__E__CONECTOR ;
+
+                //                                                         }
 
 
-                        case Bloco.conector:                    {
-                                                                        switch( _bloco_2 ){
+                //                                                 }
+                //                                                 { break; }
+                //         case Bloco.visual_novel:                {
+                //                                                         switch( _bloco_2 ){
 
-                                                                                case Bloco.conector :   throw new Exception( $"veio 2 blocos em pegar path dll handler finalizar, veio { _bloco_1 }");
-                                                                                case Bloco.visual_novel :   return path_arquivo__dll__handler_finalizar_VISUAL_NOVEL__E__CONECTOR ; 
-                                                                                case Bloco.minigames :   return path_arquivo__dll__handler_finalizar_MINIGAME__E__CONECTOR ;
-                                                                                case Bloco.utilidades :   return path_arquivo__dll__handler_finalizar_UTILIDADES__E__CONECTOR;
-                                                                                case Bloco.conversas:   return path_arquivo__dll__handler_finalizar_CONVERSAS__E__CONECTOR ;
-                                                                                case Bloco.cartas:   return path_arquivo__dll__handler_finalizar_CARTAS__E__CONECTOR ;
+                //                                                                 case Bloco.conector :   return path_arquivo__dll__handler_finalizar_VISUAL_NOVEL__E__CONECTOR ;
+                //                                                                 case Bloco.visual_novel :   throw new Exception( $"veio 2 blocos em pegar path dll handler finalizar, veio { _bloco_1 }");
+                //                                                                 case Bloco.minigames :   return path_arquivo__dll__handler_finalizar_MINIGAMES__E__VISUAL_NOVEL; 
+                //                                                                 case Bloco.utilidades :   return path_arquivo__dll__handler_finalizar_VISUAL_NOVEL__E__UTILIDADES ;
+                //                                                                 case Bloco.conversas:   return path_arquivo__dll__handler_finalizar_VISUAL_NOVEL__E__CONVERSAS ;
+                //                                                                 case Bloco.cartas:   return path_arquivo__dll__handler_finalizar_VISUAL_NOVEL__E__CARTAS;  
 
-                                                                        }
-
-
-                                                                }
-                                                                { break; }
-                        case Bloco.visual_novel:                {
-                                                                        switch( _bloco_2 ){
-
-                                                                                case Bloco.conector :   return path_arquivo__dll__handler_finalizar_VISUAL_NOVEL__E__CONECTOR ;
-                                                                                case Bloco.visual_novel :   throw new Exception( $"veio 2 blocos em pegar path dll handler finalizar, veio { _bloco_1 }");
-                                                                                case Bloco.minigames :   return path_arquivo__dll__handler_finalizar_MINIGAMES__E__VISUAL_NOVEL; 
-                                                                                case Bloco.utilidades :   return path_arquivo__dll__handler_finalizar_VISUAL_NOVEL__E__UTILIDADES ;
-                                                                                case Bloco.conversas:   return path_arquivo__dll__handler_finalizar_VISUAL_NOVEL__E__CONVERSAS ;
-                                                                                case Bloco.cartas:   return path_arquivo__dll__handler_finalizar_VISUAL_NOVEL__E__CARTAS;  
-
-                                                                        }
+                //                                                         }
 
 
-                                                                }
-                                                                { break; }                                                
-                        case Bloco.minigames:                   {
-                                                                        switch( _bloco_2 ){
+                //                                                 }
+                //                                                 { break; }                                                
+                //         case Bloco.minigames:                   {
+                //                                                         switch( _bloco_2 ){
 
-                                                                                case Bloco.conector :   return path_arquivo__dll__handler_finalizar_MINIGAME__E__CONECTOR ;
-                                                                                case Bloco.visual_novel :   return path_arquivo__dll__handler_finalizar_MINIGAMES__E__VISUAL_NOVEL; 
-                                                                                case Bloco.minigames :   throw new Exception( $"veio 2 blocos em pegar path dll handler finalizar, veio { _bloco_1 }");
-                                                                                case Bloco.utilidades :   return path_arquivo__dll__handler_finalizar_MINIGAMES__E__UTILIDADES;
-                                                                                case Bloco.conversas:   return path_arquivo__dll__handler_finalizar_MINIGAMES__E__CONVERSAS;
-                                                                                case Bloco.cartas:   return path_arquivo__dll__handler_finalizar_MINIGAMES__E__CARTAS; 
+                //                                                                 case Bloco.conector :   return path_arquivo__dll__handler_finalizar_MINIGAME__E__CONECTOR ;
+                //                                                                 case Bloco.visual_novel :   return path_arquivo__dll__handler_finalizar_MINIGAMES__E__VISUAL_NOVEL; 
+                //                                                                 case Bloco.minigames :   throw new Exception( $"veio 2 blocos em pegar path dll handler finalizar, veio { _bloco_1 }");
+                //                                                                 case Bloco.utilidades :   return path_arquivo__dll__handler_finalizar_MINIGAMES__E__UTILIDADES;
+                //                                                                 case Bloco.conversas:   return path_arquivo__dll__handler_finalizar_MINIGAMES__E__CONVERSAS;
+                //                                                                 case Bloco.cartas:   return path_arquivo__dll__handler_finalizar_MINIGAMES__E__CARTAS; 
 
-                                                                        }
+                //                                                         }
 
-                                                                }
-                                                                { break; }
-                        case Bloco.utilidades:                  {
-                                                                        switch( _bloco_2 ){
+                //                                                 }
+                //                                                 { break; }
+                //         case Bloco.utilidades:                  {
+                //                                                         switch( _bloco_2 ){
 
-                                                                                case Bloco.conector :   return path_arquivo__dll__handler_finalizar_UTILIDADES__E__CONECTOR ;
-                                                                                case Bloco.visual_novel :   return path_arquivo__dll__handler_finalizar_VISUAL_NOVEL__E__UTILIDADES; 
-                                                                                case Bloco.minigames :   return path_arquivo__dll__handler_finalizar_MINIGAMES__E__UTILIDADES;
-                                                                                case Bloco.utilidades :  throw new Exception( $"veio 2 blocos em pegar path dll handler finalizar, veio { _bloco_1 }");   
-                                                                                case Bloco.conversas:   return path_arquivo__dll__handler_finalizar_CONVERSAS__E__UTILIDADES;
-                                                                                case Bloco.cartas:   return path_arquivo__dll__handler_finalizar_CARTAS__E__UTILIDADES ; 
+                //                                                                 case Bloco.conector :   return path_arquivo__dll__handler_finalizar_UTILIDADES__E__CONECTOR ;
+                //                                                                 case Bloco.visual_novel :   return path_arquivo__dll__handler_finalizar_VISUAL_NOVEL__E__UTILIDADES; 
+                //                                                                 case Bloco.minigames :   return path_arquivo__dll__handler_finalizar_MINIGAMES__E__UTILIDADES;
+                //                                                                 case Bloco.utilidades :  throw new Exception( $"veio 2 blocos em pegar path dll handler finalizar, veio { _bloco_1 }");   
+                //                                                                 case Bloco.conversas:   return path_arquivo__dll__handler_finalizar_CONVERSAS__E__UTILIDADES;
+                //                                                                 case Bloco.cartas:   return path_arquivo__dll__handler_finalizar_CARTAS__E__UTILIDADES ; 
 
-                                                                        }
+                //                                                         }
 
-                                                                }
-                                                                { break; }
-                        case Bloco.conversas:                   {
-                                                                        switch( _bloco_2 ){
+                //                                                 }
+                //                                                 { break; }
+                //         case Bloco.conversas:                   {
+                //                                                         switch( _bloco_2 ){
 
-                                                                                case Bloco.conector :   return path_arquivo__dll__handler_finalizar_CONVERSAS__E__CONECTOR;
-                                                                                case Bloco.visual_novel :   return path_arquivo__dll__handler_finalizar_VISUAL_NOVEL__E__CONVERSAS ; 
-                                                                                case Bloco.minigames :   return path_arquivo__dll__handler_finalizar_MINIGAMES__E__CONVERSAS;
-                                                                                case Bloco.utilidades :   return path_arquivo__dll__handler_finalizar_CONVERSAS__E__UTILIDADES;
-                                                                                case Bloco.conversas:   throw new Exception( $"veio 2 blocos em pegar path dll handler finalizar, veio { _bloco_1 }");
-                                                                                case Bloco.cartas:   return path_arquivo__dll__handler_finalizar_CARTAS__E__CONVERSAS; 
+                //                                                                 case Bloco.conector :   return path_arquivo__dll__handler_finalizar_CONVERSAS__E__CONECTOR;
+                //                                                                 case Bloco.visual_novel :   return path_arquivo__dll__handler_finalizar_VISUAL_NOVEL__E__CONVERSAS ; 
+                //                                                                 case Bloco.minigames :   return path_arquivo__dll__handler_finalizar_MINIGAMES__E__CONVERSAS;
+                //                                                                 case Bloco.utilidades :   return path_arquivo__dll__handler_finalizar_CONVERSAS__E__UTILIDADES;
+                //                                                                 case Bloco.conversas:   throw new Exception( $"veio 2 blocos em pegar path dll handler finalizar, veio { _bloco_1 }");
+                //                                                                 case Bloco.cartas:   return path_arquivo__dll__handler_finalizar_CARTAS__E__CONVERSAS; 
 
-                                                                        }
+                //                                                         }
 
-                                                                }
-                                                                { break; }
-                        case Bloco.cartas:                      {
-                                                                        switch( _bloco_2 ){
+                //                                                 }
+                //                                                 { break; }
+                //         case Bloco.cartas:                      {
+                //                                                         switch( _bloco_2 ){
 
-                                                                                case Bloco.conector :   return path_arquivo__dll__handler_finalizar_CARTAS__E__CONECTOR;
-                                                                                case Bloco.visual_novel :   return path_arquivo__dll__handler_finalizar_VISUAL_NOVEL__E__CARTAS; 
-                                                                                case Bloco.minigames :   return path_arquivo__dll__handler_finalizar_MINIGAMES__E__CARTAS;
-                                                                                case Bloco.utilidades :   return path_arquivo__dll__handler_finalizar_CARTAS__E__UTILIDADES;
-                                                                                case Bloco.conversas:   return path_arquivo__dll__handler_finalizar_CARTAS__E__CONVERSAS ;
-                                                                                case Bloco.cartas:   throw new Exception( $"veio 2 blocos em pegar path dll handler finalizar, veio { _bloco_1 }");
+                //                                                                 case Bloco.conector :   return path_arquivo__dll__handler_finalizar_CARTAS__E__CONECTOR;
+                //                                                                 case Bloco.visual_novel :   return path_arquivo__dll__handler_finalizar_VISUAL_NOVEL__E__CARTAS; 
+                //                                                                 case Bloco.minigames :   return path_arquivo__dll__handler_finalizar_MINIGAMES__E__CARTAS;
+                //                                                                 case Bloco.utilidades :   return path_arquivo__dll__handler_finalizar_CARTAS__E__UTILIDADES;
+                //                                                                 case Bloco.conversas:   return path_arquivo__dll__handler_finalizar_CARTAS__E__CONVERSAS ;
+                //                                                                 case Bloco.cartas:   throw new Exception( $"veio 2 blocos em pegar path dll handler finalizar, veio { _bloco_1 }");
 
-                                                                        }
+                //                                                         }
 
-                                                                }
-                                                                { break; }
+                //                                                 }
+                //                                                 { break; }
 
-                        default: throw new Exception( $" Nao veio um modo valido no bloco 1, veio { _bloco_1 }" );
+                //         default: throw new Exception( $" Nao veio um modo valido no bloco 1, veio { _bloco_1 }" );
 
-                }
+                // }
 
                 throw new Exception( $" Nao veio um modo valido no bloco 2, veio { _bloco_2 }" );
 

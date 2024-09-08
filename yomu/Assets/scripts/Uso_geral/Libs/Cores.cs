@@ -11,7 +11,9 @@ public static class Cores {
 
     // *** USOS INTERNO ESPECIFICO
 
-    public static Color cor_default_dispositivo = ( Color ) new Color32( 1,1,1,1 );
+
+    public static Color cor_default_dispositivo = ( Color ) new Color32( 0,0,0,0 );
+    public static Color cor_clear_dispositivo = ( Color ) new Color32( 1,1,1,0 );
 
 
     public static Color clear                   = new Color(0f,0f,0f,0f);

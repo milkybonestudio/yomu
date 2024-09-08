@@ -5,7 +5,7 @@ public class Ponto_ativo {
     
       public bool ponto_esta_sendo_monitorado;
 
-      public Posicao posicao;
+      public Locator_position posicao;
 
       public byte[] background_sprite_base_id_por_periodo; 
       

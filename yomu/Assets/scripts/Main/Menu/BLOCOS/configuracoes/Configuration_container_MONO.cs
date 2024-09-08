@@ -175,7 +175,7 @@ public class Configuration_container : MonoBehaviour {
                 float y_max = volume_botao_rect.localPosition[1] + (volume_botao_rect.rect.height / 2) ;
 
                                 
-                if(  volume_is_pressionado && Controlador_input.Get(Key_code.mouse_left) ){
+                if(  volume_is_pressionado && Input.GetMouseButton( 0 )  ){
 
                         float nova_posicao =  mouse_x;
                         if( nova_posicao >  volume_base_rect.rect.width/2 )  { nova_posicao = volume_base_rect.rect.width/2 ;}
@@ -196,7 +196,7 @@ public class Configuration_container : MonoBehaviour {
 
                 if( Mat.Verificar_ponto_dentro_retangulo(  mouse_x + x_position,  mouse_y + y_position  , x_min, x_max, y_min , y_max  )  ){
 
-                        if(  Controlador_input.Get_down(Key_code.mouse_left)  ){ volume_is_pressionado = true; }
+                        if(  Input.GetMouseButtonDown( 0 )  ){ volume_is_pressionado = true; }
                         return true;
 
                 }
@@ -228,7 +228,7 @@ public class Configuration_container : MonoBehaviour {
 
                 if( Mat.Verificar_ponto_dentro_retangulo(  mouse_x + x_position,  mouse_y + y_position  , x_min, x_max, y_min , y_max   )   ){
 
-                        if(   Controlador_input.Get_down(Key_code.mouse_left) ){ Trocar_modo_texto( Tipo_construcao_texto.fade); }
+                        if(   Input.GetMouseButtonDown( 0 ) ){ Trocar_modo_texto( Tipo_construcao_texto.fade); }
                         return true;
 
                 }
@@ -245,7 +245,7 @@ public class Configuration_container : MonoBehaviour {
 
                 if( Mat.Verificar_ponto_dentro_retangulo(  mouse_x + x_position,  mouse_y + y_position  , x_min, x_max, y_min , y_max   )   ){
 
-                        if( Controlador_input.Get_down(Key_code.mouse_left) ){ Trocar_modo_texto( Tipo_construcao_texto.instant );}
+                        if( Input.GetMouseButtonDown( 0 ) ){ Trocar_modo_texto( Tipo_construcao_texto.instant );}
 
                         return true;
                 }
@@ -262,7 +262,7 @@ public class Configuration_container : MonoBehaviour {
 
                 if( Mat.Verificar_ponto_dentro_retangulo(  mouse_x,  mouse_y   , x_min, x_max, y_min , y_max   )   ){
 
-                        if( Controlador_input.Get_down(Key_code.mouse_left) ){ Trocar_modo_texto( Tipo_construcao_texto.typewrite ); }
+                        if( Input.GetMouseButtonDown( 0 ) ){ Trocar_modo_texto( Tipo_construcao_texto.typewrite ); }
                         return true;
                         
                 }
@@ -285,7 +285,7 @@ public class Configuration_container : MonoBehaviour {
                 
                 if( Mat.Verificar_ponto_dentro_retangulo(  mouse_x,  mouse_y   , x_min, x_max, y_min , y_max   )   ){
 
-                        if( Controlador_input.Get_down(Key_code.mouse_left) ){ Trocar_full_screen(); }
+                        if( Input.GetMouseButtonDown( 0 ) ){ Trocar_full_screen(); }
                         return true;
 
                 }

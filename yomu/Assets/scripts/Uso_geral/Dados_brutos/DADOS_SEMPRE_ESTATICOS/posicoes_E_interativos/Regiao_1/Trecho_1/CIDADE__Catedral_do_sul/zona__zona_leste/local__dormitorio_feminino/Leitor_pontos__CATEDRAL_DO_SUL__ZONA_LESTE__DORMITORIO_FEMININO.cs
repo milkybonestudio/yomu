@@ -5,7 +5,7 @@ using System;
 
     public static class Leitor_pontos__CATEDRAL_DO_SUL__ZONA_LESTE__DORMITORIO_FEMININO {
 
-            public static Ponto_DADOS_DEVELOPMENT Pegar_interativo( Posicao _posicao ){
+            public static Ponto_DADOS_DEVELOPMENT Pegar_interativo( Locator_position _posicao ){
 
                     CATEDRAL_DO_SUL__ZONA_LESTE__DORMITORIO_FEMININO__area area = ( CATEDRAL_DO_SUL__ZONA_LESTE__DORMITORIO_FEMININO__area ) _posicao.zona_id;
                 

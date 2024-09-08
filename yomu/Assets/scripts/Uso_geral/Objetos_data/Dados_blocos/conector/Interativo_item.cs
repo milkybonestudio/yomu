@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Interativo_item {
 
 
-    public Tipo_interativo_item tipo_interativo_item;
+    public Script_localizador script;
 
     public int item_id;
     public GameObject interativo_game_object;

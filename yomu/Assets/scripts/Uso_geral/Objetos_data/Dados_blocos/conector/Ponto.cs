@@ -4,7 +4,7 @@
 public class Ponto {
 
 
-      public Posicao posicao_ponto;
+      public Locator_position posicao_ponto;
       public Ponto_ativo ponto_ativo;
 
 

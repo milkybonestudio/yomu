@@ -6,7 +6,6 @@ public static class Controlador_linguagem {
 
             // ** Tudo que envolve texto vai ter um localizador para pegar os dados, mudar linguaguem precisa trocar o localizador 
             
-            // 
 
         }
 

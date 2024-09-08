@@ -7,76 +7,69 @@ using UnityEngine.UI;
 public class Botao_dispositivo {
 
 
-        /*
-
-            ** COMPORTAMENTOS DEFAULT
-
-                transicao: 
-                    - mostrar o texto 
-                    
-
-
-            -> 
-        
-        */
-
-
-        // ** 
-        //mark
-        // ** tem que mudar a cor do texto quando atualizar também 
-
-
-
         // --- GAME OBEJCTS
 
             // ** OFF 
-                public GameObject OFF_game_object;
-                public GameObject OFF_animacao_mostrar_texto_game_object;
-                public GameObject OFF_animacao_esconder_texto_game_object;
-                public GameObject OFF_animacao_game_object_final; // interno
-                public GameObject OFF_texto_game_object;
+                public GameObject IMAGEM_container;
 
-
-            // ** ON
-                public GameObject ON_game_object;
-                public GameObject ON_animacao_mostrar_texto_game_object;
-                public GameObject ON_animacao_esconder_texto_game_object;
-                public GameObject ON_animacao_game_object_final; // interno 
-                public GameObject ON_texto_game_object;
-
+                public GameObject IMAGEM_animacao_back_game_object;
+                public GameObject IMAGEM_base_game_object;
+                public GameObject IMAGEM_animacao_atras_texto_game_object;
+                public GameObject IMAGEM_texto_game_object;
+                public GameObject IMAGEM_decoracao_game_object;
+                public GameObject IMAGEM_animacao_frente_texto_game_object;
+                
+                public GameObject IMAGEM_decoracao_composta_game_object;
 
             // ** TRANSICAO
-                public GameObject TRANS_game_object;
-                public GameObject TRANS_texto_game_object;
+                public GameObject TRANSICAO_container;
+
+                public GameObject TRANSICAO_animacao_back_game_object;
+                public GameObject TRANSICAO_base_game_object;
+                public GameObject TRANSICAO_animacao_atras_texto_game_object;
+                public GameObject TRANSICAO_texto_game_object;
+                public GameObject TRANSICAO_decoracao_game_object;
+                public GameObject TRANSICAO_animacao_frente_texto_game_object;
+
+                public GameObject TRANSICAO_decoracao_composta_game_object;
+
+
+            // ** COLLIDERS
+
+                public GameObject COLLIDERS_container;
+
+                public GameObject OFF_collider_game_object;
+                public GameObject ON_collider_game_object;
 
 
         // --- IMAGES
 
-            // ** OFF 
-                public Image OFF_image;
-                public Image OFF_animacao_mostrar_texto_image;
-                public Image OFF_animacao_esconder_texto_image;
-                public Image OFF_animacao_image_final; // interno
+            // ** IMAGEM
+                public Image IMAGEM_animacao_back_image;
+                public Image IMAGEM_base_image;
+                public Image IMAGEM_decoracao_image;
+                public Image IMAGEM_animacao_atras_texto_image;
+                public Image IMAGEM_animacao_frente_texto_image;
 
-            // ** ON
-
-                public Image ON_image;
-                public Image ON_animacao_mostrar_texto_image;
-                public Image ON_animacao_esconder_texto_image;
-                public Image ON_animacao_image_final; //interno
+                public Image[] TRANSICAO_decoracao_composta_images;
 
             // ** TRANSICAO
-                public Image TRANS_image;
+
+                public Image TRANSICAO_animacao_back_image;
+                public Image TRANSICAO_base_image;
+                public Image TRANSICAO_decoracao_image;
+                public Image TRANSICAO_animacao_atras_texto_image;
+                public Image TRANSICAO_animacao_frente_texto_image;
+
+                public Image[] IMAGEM_decoracao_composta_images;
 
 
         // --- TEXTO
 
-            public TextMeshPro OFF_texto;
-            public TextMeshPro ON_texto;
-            public TextMeshPro TRANS_texto;
+            public TMP_Text IMAGEM_texto;
+            public TMP_Text TRANSICAO_texto;
 
         // --- COLLIDERS
-
 
             public PolygonCollider2D OFF_collider;
             public PolygonCollider2D ON_collider;
@@ -89,8 +82,6 @@ public class Botao_dispositivo {
 
 
 
-
-
         public AudioClip audio_click; 
         public AudioClip audio_houver; 
         //public AudioClip audio_houver;
@@ -100,11 +91,12 @@ public class Botao_dispositivo {
         public GameObject botao_game_object;
 
 
-        // --- LOGICA
+        // --- LOGICA INTERNA
 
 
         public bool esta_down = false; 
         public bool esta_houver = false;
+
 
 
         public float animacao_atual_tempo_ms = 0f;
@@ -112,15 +104,16 @@ public class Botao_dispositivo {
         public int sprite_atual_index = -1;
 
     
-        public Estado_visual_botao estado_visual_botao;
+        public Estado_visual_botao_dispositivo estado_visual_botao;
 
 
         // ---- SUPORTE INTERNO
 
-        public Estado_visual_botao ultimo_estado_visual_botao;
+        public Estado_visual_botao_dispositivo ultimo_estado_visual_botao;
 
 
         public void Update(){
+
 
         
                 if( dados.update_para_substituir != null )
@@ -133,8 +126,8 @@ public class Botao_dispositivo {
                 Update_parte_visual(); 
 
 
-                if( dados.update_secundario != null )
-                    { dados.update_secundario(); }
+                if( dados.Update_secundario != null )
+                    { dados.Update_secundario(); }
 
                 return;
 
@@ -151,8 +144,9 @@ public class Botao_dispositivo {
                 // --- VERIFICAR HOUVER
                 if( esta_houver )
                     {
+
                         // --- VERIFICA SE MOUSE CONTINUA NO BOTAO
-                        esta_houver = Mat.Verificar_ponto_dentro_poligono( ON_collider.points, ( Vector2 ) ON_game_object.transform.position , Controlador_input.posicao_mouse );
+                        esta_houver = Mat.Verificar_ponto_dentro_poligono( ON_collider.points, ( Vector2 ) IMAGEM_base_game_object.transform.position , Controlador_cursor.Pegar_instancia().posicao_cursor );
                         if( !!!( esta_houver ) )
                             { 
                                 // --- SAIU
@@ -163,7 +157,7 @@ public class Botao_dispositivo {
                     else
                     { 
                         // --- VERIFICA SE ENTROU
-                        esta_houver = Mat.Verificar_ponto_dentro_poligono( OFF_collider.points, ( Vector2 ) OFF_game_object.transform.position , Controlador_input.posicao_mouse ); 
+                        esta_houver = Mat.Verificar_ponto_dentro_poligono( OFF_collider.points, ( Vector2 ) IMAGEM_base_game_object.transform.position , Controlador_cursor.Pegar_instancia().posicao_cursor ); 
                         if( !!!( esta_houver ) )
                             { 
                                 // --- NAO ENTROU
@@ -175,7 +169,7 @@ public class Botao_dispositivo {
                         if( dados.tipo_ativacao == Botao_dispositivo_tipo_ativacao.entrar_no_botao )
                             {
                                 // --- ATIVAR BOTAO
-                                dados.ativar(); 
+                                dados.Ativar(); 
                                 return;
 
                             }
@@ -185,32 +179,32 @@ public class Botao_dispositivo {
 
                 // --- VERIFICAR DOWN
 
-                if( Controlador_input.Get_down( Key_code.mouse_left ) )
+                if( Input.GetMouseButtonDown( 0 ) )
                     { 
 
                         esta_down = true; 
                         if( dados.tipo_ativacao == Botao_dispositivo_tipo_ativacao.clicar )
                             { 
                                 // --- ATIVAR BOTAO
-                                dados.ativar(); 
+                                dados.Ativar(); 
                             }
                         
                     }
 
 
-                if( Controlador_input.Get_up( Key_code.mouse_left ) && esta_down )
+                if( Input.GetMouseButtonUp( 0 ) && esta_down )
                     { 
                         // --- ATIVA SOMENTE QUANDO DEU DOWN ANTERIORMENTE
                         if( dados.tipo_ativacao == Botao_dispositivo_tipo_ativacao.clicar_e_soltar && esta_down )
                             { 
                                 // --- ATIVAR BOTAO
-                                dados.ativar(); 
+                                dados.Ativar(); 
                             }
 
                     }
 
 
-                if( !!!( Controlador_input.Get( Key_code.mouse_left ) ) )
+                if( !!!( Input.GetMouseButton( 0 ) ) )
                     { esta_down = false; }
 
 
@@ -220,26 +214,27 @@ public class Botao_dispositivo {
         public void Update_parte_visual(){
 
 
+
                 if( dados.bloquear_update_visual )
                     { return; }
 
 
                 if( estado_visual_botao != ultimo_estado_visual_botao )
                     {
-                        Debug.Log( $"Novo estado_visual_botao: { estado_visual_botao }" );
+                        //Debug.Log( $"Novo estado_visual_botao: { estado_visual_botao  }" );
                         ultimo_estado_visual_botao = estado_visual_botao;
                     }
 
 
                 switch( estado_visual_botao ){
 
-                        case Estado_visual_botao.off_estatico: Lidar_off_estatico(); break;
-                        case Estado_visual_botao.off_animacao: Lidar_off_animacao(); break;
-                        case Estado_visual_botao.on_estatico: Lidar_on_estatico(); break;
-                        case Estado_visual_botao.on_animacao: Lidar_on_animacao(); break;
+                        case Estado_visual_botao_dispositivo.off_estatico: Lidar_off_estatico(); break;
+                        case Estado_visual_botao_dispositivo.off_animacao: Lidar_off_animacao(); break;
+                        case Estado_visual_botao_dispositivo.on_estatico: Lidar_on_estatico(); break;
+                        case Estado_visual_botao_dispositivo.on_animacao: Lidar_on_animacao(); break;
 
-                        case Estado_visual_botao.transicao_animacao_OFF_para_ON: Lidar_transicao_animacao_OFF_para_ON(); break;
-                        case Estado_visual_botao.transicao_animacao_ON_para_OFF: Lidar_transicao_animacao_ON_para_OFF(); break;
+                        case Estado_visual_botao_dispositivo.transicao_animacao_OFF_para_ON: Lidar_transicao_animacao_OFF_para_ON(); break;
+                        case Estado_visual_botao_dispositivo.transicao_animacao_ON_para_OFF: Lidar_transicao_animacao_ON_para_OFF(); break;
 
                 }
 
@@ -250,105 +245,19 @@ public class Botao_dispositivo {
         
         // --- OFF
 
-        private void Lidar_off_estatico(){
+        public void Lidar_off_estatico(){
 
 
                 // --- VERIFICA SE TEM INTERACAO COM O MOUSE
                 if(  esta_houver )
-                    {
-
-                        // --- TEM QUE IR PARA ON
+                    { Botao_dispositivo_SETAR.SETAR_transicao_OFF_para_ON( this ); return; } // --- TEM QUE IR PARA TRANSICAO
 
 
-                        if( dados.comportamento_imagem_on_transicao_OFF_para_ON == Botao_imagem_estado.visivel )
-                            {
-                                // --- DEIXAR VISIVEL
-
-                            
-                                OFF_image.sprite = dados.sprite_off;
-                                OFF_image.color = dados.cor_imagem_off;
-                            }
-                            else 
-                            {
-                                // --- DEIXAR INVISIVEL
-                                OFF_image.sprite = null;
-                                OFF_image.color = Cores.clear;
-                            }
-
-                        
-                        TRANS_image.sprite = dados.sprite_on;
-                        TRANS_image.color = dados.cor_imagem_on;
-                        // ** se for com sprites ele vai resetar no primeiro frame
-                        animacao_sprite_atual_tempo_ms = 0f;
-                        animacao_atual_tempo_ms = dados.animacao_transicao_tempo_espera_OFF_para_ON_ms;
-
-
-                        // --- DEFINE ESTADO TRANSICAO
-                        estado_visual_botao = Estado_visual_botao.transicao_animacao_OFF_para_ON;
-                        Update_parte_visual();
-                        return;
-
-                    }
-
-
-                // --- VERIFICAR SE TEM ANIMAR OFF
-                if( dados.animacao_sprites_off == null )
-                    { return; }
-
-                // --- TEM ANIMACAO
                 animacao_atual_tempo_ms -= ( Time.deltaTime * 1000f );
 
                 // --- VERIFICA SE PODE INICIAR ANIMACAO OFF
                 if( animacao_atual_tempo_ms < 0f )
-                    { 
-                        // --- VAI INICIAR ANIMACAO
-
-
-                        // *** DEFINIR QUAL GAMEOBJECT
-                        if( dados.manter_texto_animacao_OFF )
-                            { 
-                                // --- VAI MOSTRAR O TEXTO 
-                                OFF_animacao_game_object_final = OFF_animacao_mostrar_texto_game_object;
-                                OFF_animacao_image_final = OFF_animacao_mostrar_texto_image;
-
-                                OFF_animacao_esconder_texto_image.sprite = null;
-                                OFF_animacao_esconder_texto_image.color = Cores.clear;
-
-                            } 
-                            else
-                            {
-                                // --- NAO VAI MOSTRAR O TEXTO
-
-                                OFF_animacao_game_object_final = OFF_animacao_esconder_texto_game_object;
-                                OFF_animacao_image_final = OFF_animacao_esconder_texto_image;
-
-                                OFF_animacao_mostrar_texto_image.sprite = null;
-                                OFF_animacao_mostrar_texto_image.color = Cores.clear;
-
-                            }
-
-                        
-                        // --- VERIFICA SE TEM QUE MANTER A SPRITE ESTATICA DO OFF
-                        if( dados.manter_imagem_principal_OFF )
-                            {
-                                // --- TEM QUE DEIXAR 
-                                OFF_image.sprite = dados.sprite_off;
-                                OFF_image.color = dados.cor_imagem_off;
-                            }
-                            else
-                            {
-                                // --- ESCONDER
-                                OFF_image.sprite = null;
-                                OFF_image.color = Cores.clear;
-                            }
-
-
-                        // *** vai forcar mudar para a primeira sprite
-                        animacao_sprite_atual_tempo_ms = 0f; 
-                        estado_visual_botao = Estado_visual_botao.off_animacao;
-                        Update_parte_visual();
-                        
-                    }
+                    { Botao_dispositivo_SETAR.SETAR_OFF_animacao( this ); }// --- VAI INICIAR ANIMACAO
 
                 return;
                 
@@ -356,496 +265,101 @@ public class Botao_dispositivo {
         }
 
 
-        private void Lidar_off_animacao(){
+
+
+        public void Lidar_off_animacao(){
             
 
-            // --- PASSAR TEMPO
-            if( esta_houver )
-                { animacao_sprite_atual_tempo_ms -= 3f * ( Time.deltaTime * 1000f ) ;}// --- PRECISA ACELERAR PARA FINALIZAR RAPIOD
-                else
-                { animacao_sprite_atual_tempo_ms -= ( Time.deltaTime * 1000f ) ; } // --- TEMPO NORMAL
+                // --- PASSAR TEMPO
+                if( esta_houver )
+                    { animacao_sprite_atual_tempo_ms -= dados.animacao_off_tempos.multiplicador_saida_padrao_animacao * ( Time.deltaTime * 1000f ) ;}// --- PRECISA ACELERAR PARA FINALIZAR RAPIOD
+                    else
+                    { animacao_sprite_atual_tempo_ms -= ( Time.deltaTime * 1000f ) ; } // --- TEMPO NORMAL
+
+                
+                // --- VERIFICA SE TEM QUE ESPERAR
+                if( animacao_sprite_atual_tempo_ms > 0f )
+                    { return; }
+
+                
+                // --- VERIFICA SE ESSA ERA A ULTIMA SPRITE
+                if( sprite_atual_index == ( dados.pointers.pointer_final_animacao_OFF - 1 ) )
+                    { Botao_dispositivo_SETAR.SETAR_OFF_estatico( this ); return; } // --- VOLTAR PARA STATIC
+
+                
+                // ---TROCAR SPRITE
+                sprite_atual_index++;
+                Botao_dispositivo_MUDAR_IMAGEM.Mudar_imagens_IMAGEM( this, sprite_atual_index );
+
+                // RENOVA TEMPO
+                if( dados.animacao_off_tempos.tempo_troca_sprite_ms_por_sprite != null )
+                    { animacao_sprite_atual_tempo_ms = dados.animacao_off_tempos.tempo_troca_sprite_ms_por_sprite[ sprite_atual_index ]; }// --- TEM TEMPO DIFERENTE PARA CADA SPRITE
+                    else
+                    { animacao_sprite_atual_tempo_ms = dados.animacao_off_tempos.tempo_troca_sprite_ms; } // --- TEMPO UNICO
 
 
-            
-            // --- VERIFICA SE TEM QUE ESPERAR
-            if( animacao_sprite_atual_tempo_ms > 0f )
-                { return; }
-
-            
-
-            // --- TEM QUE TROCAR FRAME
-            sprite_atual_index++;
-
-
-            // --- VERIFICA SE ESSA ERA A ULTIMA SPRITE
-            if( sprite_atual_index == dados.animacao_sprites_off.Length )
-                {
-                    // --- VOLTAR PARA STATIC 
-
-                    OFF_image.sprite = dados.sprite_off;
-                    OFF_image.color = dados.cor_imagem_off;
-
-                    // --- ESCONDER
-                    OFF_animacao_image_final.sprite = null;
-                    OFF_animacao_image_final.color = Cores.clear;
-
-                    // --- RESETA DADOS
-
-                    OFF_animacao_game_object_final = null;
-                    OFF_animacao_image_final = null;
-
-                    animacao_atual_tempo_ms = dados.animacao_off_tempo_espera_ms;
-                    sprite_atual_index = -1;
-
-                    estado_visual_botao = Estado_visual_botao.off_estatico;
-                    Update_parte_visual();
-
-                    return;
-
-                }
-
-            // --- AINDA TEM SPRITE
-
-            // ---TROCAR SPRITE
-            OFF_animacao_image_final.sprite = dados.animacao_sprites_off[ sprite_atual_index ];
-            OFF_animacao_image_final.color = dados.cores_animacao_imagem_off[ sprite_atual_index ];
-
-            // RENOVA TEMPO
-            if( dados.animacao_off_tempo_troca_sprite_ms_por_sprite != null )
-                { animacao_sprite_atual_tempo_ms = dados.animacao_off_tempo_troca_sprite_ms_por_sprite[ sprite_atual_index ]; }// --- TEM TEMPO DIFERENTE PARA CADA SPRITE
-                else
-                { animacao_sprite_atual_tempo_ms = dados.animacao_off_tempo_troca_sprite_ms; } // --- TEMPO UNICO
-
-
-            return;
+                return;
 
 
         }
-
-
-
-
 
 
         // --- ON
 
-        private void Lidar_on_estatico(){
+        public void Lidar_on_estatico(){
 
 
                 // --- VERIFICA SE O MAUSE SAIU
                 if( !!!( esta_houver ) )
-                        {
+                    { Botao_dispositivo_SETAR.SETAR_transicao_ON_para_OFF( this ); return; } // --- INICIAR TRANSICAO ON => OFF
 
-                                // --- INICIAR TRANSICAO ON => OFF
-
-
-                                // --- VERIFICAR TEXTO
-                                if( dados.manter_texto_transicao_ON_para_OFF )
-                                    { 
-                                        // --- VAI MOSTRAR O TEXTO
-                                        // ** depois tem que copiar o texto que esta no ON e por no slot da transicao
-                                        // no default ele sempre vai esconder o texto
-
-                                    } 
- 
-                                // --- VERIFICAR VISIBILIDADE BOTAO ON
-                                if( dados.comportamento_imagem_on_transicao_ON_para_OFF == Botao_imagem_estado.visivel )
-                                    {
-                                        // --- DEIXAR VISIVEL
-                                                
-                                        ON_image.sprite = dados.sprite_on;
-                                        ON_image.color = dados.cor_imagem_on;
-                                    }
-                                    else 
-                                    {
-                                        // --- DEIXAR INVISIVEL
-                                        ON_image.sprite = null;
-                                        ON_image.color = Cores.clear;
-                                    }
-
-                                
-                                // ** se for com sprites ele vai resetar no primeiro frame
-                                // ** se for cor vai precisar da sprite
-                                TRANS_image.sprite = dados.sprite_off;
-                                TRANS_image.color = dados.cor_imagem_off;
-
-                                // ** ajusta o tempo caso seja da formato cor
-                                animacao_atual_tempo_ms = dados.animacao_transicao_tempo_espera_ON_para_OFF_ms;
-                                animacao_sprite_atual_tempo_ms = 0f;
-                                sprite_atual_index = -1;
-
-
-                                // --- DEFINE ESTADO TRANSICAO
-                                estado_visual_botao = Estado_visual_botao.transicao_animacao_ON_para_OFF;
-                                Update_parte_visual();
-                                return;
-
-                        }
-
-
-                // --- VERIFICAR SE TEM ANIMAR OFF
-                if( dados.animacao_sprites_on == null )
-                    { return; }
-
-                // --- TEM ANIMACAO
                 animacao_atual_tempo_ms -= ( Time.deltaTime * 1000f );
 
 
                 // --- VERIFICA SE PODE INICIAR ANIMACAO ON
-                if( animacao_atual_tempo_ms > 0f )
-                    { return; } // --- NAO TEM 
+                if( animacao_atual_tempo_ms < 0f )
+                    { Botao_dispositivo_SETAR.SETAR_ON_animacao( this ); }  // --- TEM ANIMACAO ON ESTATICA 
 
-
-                // --- TEM ANIMACAO ON ESTATICA
-                        
-
-                // *** DEFINIR QUAL GAMEOBJECT
-                if( dados.manter_texto_animacao_ON )
-                    { 
-                        // --- VAI MOSTRAR O TEXTO 
-                        ON_animacao_game_object_final = ON_animacao_mostrar_texto_game_object;
-                        ON_animacao_image_final = ON_animacao_mostrar_texto_image;
-
-                        ON_animacao_esconder_texto_image.sprite = null;
-                        ON_animacao_esconder_texto_image.color = Cores.clear;
-
-                    } 
-                    else
-                    {
-                        // --- NAO VAI MOSTRAR O TEXTO
-
-                        ON_animacao_game_object_final = ON_animacao_esconder_texto_game_object;
-                        ON_animacao_image_final = ON_animacao_esconder_texto_image;
-
-                        ON_animacao_mostrar_texto_image.sprite = null;
-                        ON_animacao_mostrar_texto_image.color = Cores.clear;
-
-                    }
-                
-                // --- VERIFICA SE TEM QUE MANTER A SPRITE ESTATICA DO ON
-                if( dados.comportamento_imagem_off_animacao == Botao_imagem_estado.visivel )
-                    {
-                        // --- TEM QUE DEIXAR 
-                        ON_image.sprite = dados.sprite_on;
-                        ON_image.color = dados.cor_imagem_on;
-                    }
-                    else
-                    {
-                        // --- ESCONDER
-
-                        ON_image.sprite = null;
-                        ON_image.color = Cores.clear;
-                    }
-
-
-                    animacao_sprite_atual_tempo_ms = 0f; // *** vai forcar mudar para a primeira sprite
-
-                    // --- MUDA ESTADO
-                    estado_visual_botao = Estado_visual_botao.on_animacao;
-                    Lidar_on_animacao();
-                    
-            
 
                 return;
                 
-            
         }
 
 
-        private void Lidar_on_animacao(){
+        public void Lidar_on_animacao(){
             
 
-            // --- PASSAR TEMPO
-            if( esta_houver )
-                { animacao_sprite_atual_tempo_ms -= 3f * ( Time.deltaTime * 1000f ) ;}// --- PRECISA ACELERAR PARA FINALIZAR RAPIOD
-                else
-                { animacao_sprite_atual_tempo_ms -= ( Time.deltaTime * 1000f ) ; } // --- TEMPO NORMAL
-
-
-            
-            // --- VERIFICA SE TEM QUE ESPERAR
-            if( animacao_sprite_atual_tempo_ms > 0f )
-                { return; }
-
-            
-
-            // --- TEM QUE TROCAR FRAME
-            sprite_atual_index++;
-
-
-            // --- VERIFICA SE ESSA ERA A ULTIMA SPRITE
-            if( sprite_atual_index == dados.animacao_sprites_off.Length )
-                {
-                    // --- VOLTAR PARA STATIC 
-
-
-                    ON_image.sprite = dados.sprite_on;
-                    ON_image.color = dados.cor_imagem_on;
-
-                    // --- ESCONDER
-                    ON_animacao_image_final.sprite = null;
-                    ON_animacao_image_final.color = Cores.clear;
-
-                    // --- RESETAR DADOS
-                    animacao_atual_tempo_ms = dados.animacao_off_tempo_espera_ms;
-                    sprite_atual_index = -1;
-                    ON_animacao_image_final = null;
-                    ON_animacao_game_object_final = null;
-
-                    // --- TROCA MODO
-                    estado_visual_botao = Estado_visual_botao.on_estatico;
-                    Update_parte_visual();
-
-                    return;
-
-                }
-
-            // --- AINDA TEM SPRITE
-
-            // ---TROCAR SPRITE
-            ON_animacao_image_final.sprite = dados.animacao_sprites_off[ sprite_atual_index ];
-            ON_animacao_image_final.color = dados.cores_animacao_imagem_off[ sprite_atual_index ];
-
-            // RENOVA TEMPO
-            if( dados.animacao_off_tempo_troca_sprite_ms_por_sprite != null )
-                { animacao_sprite_atual_tempo_ms = dados.animacao_off_tempo_troca_sprite_ms_por_sprite[ sprite_atual_index ]; }// --- TEM TEMPO DIFERENTE PARA CADA SPRITE
-                else
-                { animacao_sprite_atual_tempo_ms = dados.animacao_off_tempo_troca_sprite_ms; } // --- TEMPO UNICO
-
-
-            return;
-
-
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-        // --- TRANSICAO
-
-
-        private void Lidar_transicao_animacao_OFF_para_ON(){
-
-
-            switch( dados.tipo_transicao ){
-
-                case Tipo_transicao_botao_OFF_ON_dispositivo.nada : Finalizar_transicao_OFF_para_ON(); break;
-                case Tipo_transicao_botao_OFF_ON_dispositivo.cor : Lidar_transicao_animacao_OFF_para_ON_cor(); break;
-                case Tipo_transicao_botao_OFF_ON_dispositivo.animacao_vai_e_vem : Lidar_transicao_animacao_OFF_para_ON_animacao_vai_e_vem(); break;
-                case Tipo_transicao_botao_OFF_ON_dispositivo.animacao_individual : Lidar_transicao_animacao_OFF_para_ON_animacao_individual(); break;
-            
-            }
-
-            
-        }
-
-
-
-        private void Finalizar_transicao_OFF_para_ON(){
-
-                // --- VAI DIRETO PARA ON
-
-                // ** remvoer transicao
-                TRANS_image.sprite = null;
-                TRANS_image.color = Cores.clear;
-
-                // ** finaliza imagem off
-                OFF_image.sprite = null;
-                OFF_image.color = Cores.clear;
-
-                
-                // ** remvoer ON
-                ON_image.sprite = dados.sprite_on;
-                ON_image.color = dados.cor_imagem_on;
-
-                // ** coloca tempo animacao
-                animacao_atual_tempo_ms = dados.animacao_on_tempo_espera_ms;
-                sprite_atual_index = -1;
-
-                estado_visual_botao = Estado_visual_botao.on_estatico;
-                Lidar_on_estatico();
-                return;
-
-
-        }
-
-
-
-
-    
-        private void Lidar_transicao_animacao_OFF_para_ON_cor(){
-
-
-                
+                // --- PASSAR TEMPO
                 if( !!!(esta_houver) )
-                    { animacao_atual_tempo_ms -= 3f * ( Time.deltaTime * 1000f ) ; }
-                    else
-                    { animacao_atual_tempo_ms -= ( Time.deltaTime * 1000f ) ; }
-
-
-                if( animacao_atual_tempo_ms < 0.1f )
-                    {
-                        // --- FINALIZAR
-                        Finalizar_transicao_OFF_para_ON();
-                        return;
-
-                    }
-
-                // ** VERIFICAR COMO VAI FICAR NO FINAL
-
-                Color cor_final = dados.cor_imagem_off;
-
-                float rate = ( ( dados.animacao_transicao_tempo_espera_OFF_para_ON_ms - animacao_atual_tempo_ms ) / dados.animacao_transicao_tempo_espera_OFF_para_ON_ms );
-                
-
-                // menos vai ser alterada, manter alpha estatico até perto do final
-                Color cor_atual = COLOR.Pegar_cor_media( dados.cor_imagem_off ,dados.cor_imagem_on , rate );
-                
-                
-                cor_atual[ 3 ] = rate;
-                
-
-                TRANS_image.color = cor_atual;
-
-                
-
-                if( rate > 0.95f )
-                    { cor_atual[ 3 ] =   ( 1.2f - rate ); } // --- QUASE NO FINAL => tem que alterar alpha 
-                    else
-                    { cor_atual[ 3 ] = 1f; } // --- AINDA NO INICIO
-
-                OFF_image.color = cor_atual;
-
-                return;
-
-
-        }
-
-        
-
-        
-
-        private void Lidar_transicao_animacao_OFF_para_ON_animacao_individual(){
-                // --- TEM 1 ANIMACAO PARA CADA
-
-                //Debug.Log( "veio individual");
-
-
-                if( dados.sprites_transicao_OFF_para_ON == null )
-                    {
-                        // --- NAO TEM TRANSICAO INDIVIDUAL
-                        Finalizar_transicao_OFF_para_ON();
-                        return;
-                    }
-
-                    
-                // --- TEM ANIMACAO
-
-
-                // --- PASSA TEMPO                
-                if( !!!(esta_houver) )
-                    { animacao_sprite_atual_tempo_ms -= 3f * ( Time.deltaTime * 1000f ); }// --- ACELERAR
+                    { animacao_sprite_atual_tempo_ms -= dados.animacao_on_tempos.multiplicador_saida_padrao_animacao * ( Time.deltaTime * 1000f ) ;}// --- PRECISA ACELERAR PARA FINALIZAR RAPIOD
                     else
                     { animacao_sprite_atual_tempo_ms -= ( Time.deltaTime * 1000f ) ; } // --- TEMPO NORMAL
 
 
                 // --- VERIFICA SE TEM QUE ESPERAR
                 if( animacao_sprite_atual_tempo_ms > 0f )
-                    { return; } 
+                    { return; }
 
 
+                // --- TEM QUE TROCAR FRAME
 
-                // --- VAI TROCAR SPRITE
+
+                //// --- VERIFICA SE ESSA ERA A ULTIMA SPRITE
+                    if( sprite_atual_index == ( dados.pointers.pointer_final_animacao_ON - 1 ) )
+                    { Botao_dispositivo_SETAR.SETAR_ON_estatico( this ); return; }// --- VOLTAR PARA STATIC 
+
+
+                // --- TROCAR SPRITE
                 sprite_atual_index++;
-                if( sprite_atual_index == dados.sprites_transicao_OFF_para_ON.Length )
-                    {
-                    
-                        // --- ACABOU ANIMACAO
-                        Finalizar_transicao_OFF_para_ON();
-                        return;
-
-                    }
-
-
-                // --- TEM MAIS FRAMES
-
-                animacao_sprite_atual_tempo_ms = dados.animacao_transicao_tempo_troca_sprite_OFF_para_ON_ms;
-
-                // RENOVA TEMPO
-                if( dados.animacao_transicao_tempo_troca_sprite_OFF_para_ON_ms_por_sprite != null )
-                    { animacao_sprite_atual_tempo_ms = dados.animacao_transicao_tempo_troca_sprite_OFF_para_ON_ms_por_sprite[ sprite_atual_index ]; }// --- TEM TEMPO DIFERENTE PARA CADA SPRITE
-                    else
-                    { animacao_sprite_atual_tempo_ms = dados.animacao_transicao_tempo_troca_sprite_OFF_para_ON_ms; } // --- TEMPO UNICO
-
-
-                TRANS_image.sprite = dados.sprites_transicao_OFF_para_ON[ sprite_atual_index ];
-                TRANS_image.color = dados.cores_transicao_OFF_para_ON[ sprite_atual_index ];
-                return;
-
-
-
-
-        }
-
-
-
-
-
-        private void Lidar_transicao_animacao_OFF_para_ON_animacao_vai_e_vem (){
-                // --- TEM SOMENTE O OFF => ON
-
-                if( dados.sprites_transicao_OFF_para_ON == null )
-                    {
-                        // --- NAO TEM TRANSICAO INDIVIDUAL
-                        Finalizar_transicao_ON_para_OFF();
-                        return;
-                    }
+                Botao_dispositivo_MUDAR_IMAGEM.Mudar_imagens_IMAGEM( this, sprite_atual_index );
 
                 
-                if( esta_houver )
-                    { animacao_sprite_atual_tempo_ms -= 3f * ( Time.deltaTime * 1000f ); }// --- ACELERAR
+                // --- RENOVA TEMPO
+                if( dados.animacao_on_tempos.tempo_troca_sprite_ms_por_sprite != null )
+                    { animacao_sprite_atual_tempo_ms = dados.animacao_on_tempos.tempo_troca_sprite_ms_por_sprite[ sprite_atual_index ]; }// --- TEM TEMPO DIFERENTE PARA CADA SPRITE
                     else
-                    { animacao_sprite_atual_tempo_ms -= ( Time.deltaTime * 1000f ) ; } // --- TEMPO NORMAL
+                    { animacao_sprite_atual_tempo_ms = dados.animacao_on_tempos.tempo_troca_sprite_ms; } // --- TEMPO UNICO
 
-
-        
-                // --- VERIFICA SE TERMINOU SPRITE
-                if( animacao_sprite_atual_tempo_ms < 0f )
-                    {
-                        // --- VAI TROCAR SPRITE
-                        sprite_atual_index--;
-                        if( sprite_atual_index < 0 )
-                            {
-                                // --- ACABOU ANIMACAO
-                                Finalizar_transicao_ON_para_OFF();
-                                return;
-
-                            }
-
-                    }
-
-                // --- TEM MAIS FRAMES
-
-                animacao_sprite_atual_tempo_ms = dados.animacao_transicao_tempo_troca_sprite_OFF_para_ON_ms;
-
-                // RENOVA TEMPO
-                if( dados.animacao_transicao_tempo_troca_sprite_OFF_para_ON_ms_por_sprite != null )
-                    { animacao_sprite_atual_tempo_ms = dados.animacao_transicao_tempo_troca_sprite_OFF_para_ON_ms_por_sprite[ sprite_atual_index ]; }// --- TEM TEMPO DIFERENTE PARA CADA SPRITE
-                    else
-                    { animacao_sprite_atual_tempo_ms = dados.animacao_transicao_tempo_troca_sprite_OFF_para_ON_ms; } // --- TEMPO UNICO
-
-
-
-                TRANS_image.sprite = dados.sprites_transicao_ON_para_OFF[ sprite_atual_index ];
-                TRANS_image.color = dados.cores_transicao_ON_para_OFF[ sprite_atual_index ];
 
                 return;
 
@@ -853,64 +367,38 @@ public class Botao_dispositivo {
         }
 
 
+        // --- TRANSICAO
+
+        private void Lidar_transicao_animacao_OFF_para_ON(){
 
 
+                switch( dados.tipo_transicao ){
+
+                    case Tipo_transicao_botao_OFF_ON_dispositivo.nada : Botao_dispositivo_SETAR.SETAR_ON_estatico( this ); break;
+                    case Tipo_transicao_botao_OFF_ON_dispositivo.cor : Botao_dispositivo_TRANSICAO.Lidar_transicao_animacao_OFF_para_ON_cor( this ); break;
+                    case Tipo_transicao_botao_OFF_ON_dispositivo.animacao_individual : Botao_dispositivo_TRANSICAO.Lidar_transicao_animacao_OFF_para_ON_animacao_individual( this ); break;
+                
+                }
 
 
+        }
 
 
         // --- ON -> OFF
 
-
-        private void Lidar_transicao_animacao_ON_para_OFF(){
+        public void Lidar_transicao_animacao_ON_para_OFF(){
             
-                Finalizar_transicao_ON_para_OFF();
+                switch( dados.tipo_transicao ){
 
-        }
-
-
-
-
-
-
-
-        private void Finalizar_transicao_ON_para_OFF(){
-
-                // --- VAI DIRETO PARA OFF
-
-                // ** remvoer transicao
-                TRANS_image.sprite = null;
-                TRANS_image.color = Cores.clear;
-
-                // ** coloca imagem off
-                OFF_image.sprite = dados.sprite_off;
-                OFF_image.color = dados.cor_imagem_off;
-
+                    case Tipo_transicao_botao_OFF_ON_dispositivo.nada : Botao_dispositivo_SETAR.SETAR_OFF_estatico( this ); break;
+                    case Tipo_transicao_botao_OFF_ON_dispositivo.cor : Botao_dispositivo_TRANSICAO.Lidar_transicao_animacao_ON_para_OFF_cor( this ); break;
+                    case Tipo_transicao_botao_OFF_ON_dispositivo.animacao_individual : Botao_dispositivo_TRANSICAO.Lidar_transicao_animacao_ON_para_OFF_animacao_individual( this ); break;
                 
-                // ** remvoer ON
-                ON_image.sprite = null;
-                ON_image.color = Cores.clear;
+                }
 
-                // ** coloca tempo animacao
-                animacao_atual_tempo_ms = dados.animacao_off_tempo_espera_ms;
-
-                estado_visual_botao = Estado_visual_botao.off_estatico;
-                Lidar_off_estatico();
-                return;
 
 
         }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -938,51 +426,122 @@ public class Botao_dispositivo {
 
                         // --- PEGAR GAMEOBJECTS
 
-                            // ** OFF
-                                OFF_game_object =  botao_game_object.transform.GetChild( 0 ).gameObject;
-                                OFF_animacao_mostrar_texto_game_object  =  OFF_game_object.transform.GetChild( 0 ).gameObject;
-                                OFF_texto_game_object                   =  OFF_game_object.transform.GetChild( 1 ).gameObject;
-                                OFF_animacao_esconder_texto_game_object =  OFF_game_object.transform.GetChild( 2 ).gameObject;
+                            // ** COLLIDERS
 
-                            // ** ON
-                                ON_game_object =  botao_game_object.transform.GetChild( 1 ).gameObject;
-                                ON_animacao_mostrar_texto_game_object  =  ON_game_object.transform.GetChild( 0 ).gameObject;
-                                ON_texto_game_object                   =  ON_game_object.transform.GetChild( 1 ).gameObject;
-                                ON_animacao_esconder_texto_game_object =  ON_game_object.transform.GetChild( 2 ).gameObject;
+                                COLLIDERS_container  = botao_game_object.transform.GetChild( 0 ).gameObject;
+                                
+                                ON_collider_game_object   =  COLLIDERS_container.transform.GetChild( 0 ).gameObject;
+                                OFF_collider_game_object  =  COLLIDERS_container.transform.GetChild( 1 ).gameObject;
+
+
+                            // IMAGEM
+                                IMAGEM_container = botao_game_object.transform.GetChild( 1 ).gameObject;
+
+                                IMAGEM_animacao_back_game_object         =  IMAGEM_container.transform.GetChild( 0 ).gameObject;
+                                IMAGEM_base_game_object                  =  IMAGEM_container.transform.GetChild( 1 ).gameObject;
+                                IMAGEM_animacao_atras_texto_game_object  =  IMAGEM_container.transform.GetChild( 2 ).gameObject;
+                                IMAGEM_texto_game_object                 =  IMAGEM_container.transform.GetChild( 3 ).gameObject;
+                                IMAGEM_decoracao_game_object             =  IMAGEM_container.transform.GetChild( 4 ).gameObject;
+                                IMAGEM_animacao_frente_texto_game_object =  IMAGEM_container.transform.GetChild( 5 ).gameObject;
+
+
+
 
                             // ** TRANSICAO
-                                TRANS_game_object =  botao_game_object.transform.GetChild( 2 ).gameObject;
-                                TRANS_texto_game_object = TRANS_game_object.transform.GetChild( 0 ).gameObject;
+                                TRANSICAO_container = botao_game_object.transform.GetChild( 2 ).gameObject;
+
+                                TRANSICAO_animacao_back_game_object         =   TRANSICAO_container.transform.GetChild( 0 ).gameObject;
+                                TRANSICAO_base_game_object                  =   TRANSICAO_container.transform.GetChild( 1 ).gameObject;
+                                TRANSICAO_animacao_atras_texto_game_object  =   TRANSICAO_container.transform.GetChild( 2 ).gameObject;
+                                TRANSICAO_texto_game_object                 =   TRANSICAO_container.transform.GetChild( 3 ).gameObject;
+                                TRANSICAO_decoracao_game_object             =   TRANSICAO_container.transform.GetChild( 4 ).gameObject;
+                                TRANSICAO_animacao_frente_texto_game_object =   TRANSICAO_container.transform.GetChild( 5 ).gameObject;
+                                
+
                                 
                         // --- PEGAR IMAGES
 
-                            // ** OFF 
+                            // IMAGEM 
 
-                                OFF_image =  OFF_game_object.GetComponent<Image>();
-                                OFF_animacao_mostrar_texto_image =  OFF_animacao_mostrar_texto_game_object.GetComponent<Image>();
-                                OFF_animacao_esconder_texto_image =  OFF_animacao_esconder_texto_game_object.GetComponent<Image>();
+                                IMAGEM_animacao_back_image         =  IMAGEM_animacao_back_game_object.GetComponent<Image>();
+                                IMAGEM_base_image                  =  IMAGEM_base_game_object.GetComponent<Image>();
+                                IMAGEM_decoracao_image             =  IMAGEM_decoracao_game_object.GetComponent<Image>();
+                                IMAGEM_animacao_atras_texto_image  =  IMAGEM_animacao_atras_texto_game_object.GetComponent<Image>();
+                                IMAGEM_animacao_frente_texto_image =  IMAGEM_animacao_frente_texto_game_object.GetComponent<Image>();
 
-                            // ** ON
-
-                                ON_image =  ON_game_object.GetComponent<Image>();
-                                ON_animacao_mostrar_texto_image =  ON_animacao_mostrar_texto_game_object.GetComponent<Image>();
-                                ON_animacao_esconder_texto_image =  ON_animacao_esconder_texto_game_object.GetComponent<Image>();
 
                             // ** transicao
 
-                                TRANS_image =  TRANS_game_object.GetComponent<Image>();
-                                TRANS_image =  TRANS_game_object.GetComponent<Image>();
+                                TRANSICAO_animacao_back_image         =  TRANSICAO_animacao_back_game_object.GetComponent<Image>();
+                                TRANSICAO_base_image                  =  TRANSICAO_base_game_object.GetComponent<Image>();
+                                TRANSICAO_decoracao_image             =  TRANSICAO_decoracao_game_object.GetComponent<Image>();
+                                TRANSICAO_animacao_atras_texto_image  =  TRANSICAO_animacao_atras_texto_game_object.GetComponent<Image>();
+                                TRANSICAO_animacao_frente_texto_image =  TRANSICAO_animacao_frente_texto_game_object.GetComponent<Image>();
+
+
+
+                                // --- VERIFICA DECORACAO COMPOSTA
+                                if( IMAGEM_decoracao_game_object.transform.childCount > 0 )
+                                    {
+
+
+                                        // --- TEM DECORACAO COMPOSTA
+                                        // ** copia o game object para detro da imagem da transicao
+
+                                        if( IMAGEM_decoracao_game_object.transform.childCount != 1 )
+                                            { throw new Exception("Dentro de decoracao tinha mais de 1 gameObject. Se a decoracao for composta ela precisa estar dentro de outro container: decoracao => container_dec_composta => gameObjects[]. O sistema vai somente copiar o gameObject para a transicao"); }
+
+                                        if( _dados.sprites_decoracao_composta == null )
+                                            { throw new Exception( $"Tinha um gameObject contianer na decoracao do botao <color=lightBlue><b>{ _dados.nome}</b></color> no dispositivo <color=lightBlue><b>{ _dados.nome_dispositivo }</b></color> MAS nao foi declarado as imagens das sprites." );}
+
+
+                                        IMAGEM_decoracao_composta_game_object = IMAGEM_decoracao_game_object.transform.GetChild( 0 ).gameObject;
+                                        TRANSICAO_decoracao_composta_game_object = GameObject.Instantiate( IMAGEM_decoracao_composta_game_object );
+
+                                        TRANSICAO_decoracao_composta_game_object.transform.SetParent( TRANSICAO_decoracao_game_object.transform, false );
+
+
+                                        int numero_imagens_decoracao_composta = IMAGEM_decoracao_composta_game_object.transform.childCount;
+
+                                        if( numero_imagens_decoracao_composta == 0 )
+                                            { throw new Exception( $"Tinha um gameObject contianer na decoracao do botao <color=lightBlue><b>{ _dados.nome}</b></color> no dispositivo <color=lightBlue><b>{ _dados.nome_dispositivo }</b></color> mas ele nao tinha nenhum gameObject." );}
+
+                                        if( _dados.sprites_decoracao_composta.GetLength( 0 ) > numero_imagens_decoracao_composta )
+                                            { throw new Exception( $"Tinha um gameObject contianer na decoracao do botao <color=lightBlue><b>{ _dados.nome}</b></color> no dispositivo <color=lightBlue><b>{ _dados.nome_dispositivo }</b></color> MAS o numero de gameObjects [ { numero_imagens_decoracao_composta } ] é menor que o numero de sprites [ { _dados.sprites_decoracao_composta.GetLength( 0 ) } ]." );}
+
+
+                                        IMAGEM_decoracao_composta_images = new Image[ numero_imagens_decoracao_composta ];
+                                        TRANSICAO_decoracao_composta_images = new Image[ numero_imagens_decoracao_composta ];
+
+                                        for( int imagem = 0 ; imagem < numero_imagens_decoracao_composta ; imagem++ ){
+
+
+                                                IMAGEM_decoracao_composta_images[ imagem ] = IMAGEM_decoracao_composta_game_object.transform.GetChild( imagem ).gameObject.GetComponent<Image>();
+                                                TRANSICAO_decoracao_composta_images[ imagem ] = TRANSICAO_decoracao_composta_game_object.transform.GetChild( imagem ).gameObject.GetComponent<Image>();
+
+                                                IMAGEM_decoracao_composta_images[ imagem ].material = dados.material_dispositivo; 
+                                                TRANSICAO_decoracao_composta_images[ imagem ].material = dados.material_dispositivo;
+                                                
+                                                continue;
+
+                                        }
+
+
+
+                                    }
+
+                                
 
                         // --- PEGAR TEXTO
 
-                            OFF_texto = OFF_game_object.GetComponent<TextMeshPro>();
-                            ON_texto = ON_game_object.GetComponent<TextMeshPro>();
-                            TRANS_texto = TRANS_texto_game_object.GetComponent<TextMeshPro>();
+                            IMAGEM_texto = IMAGEM_texto_game_object.GetComponent<TMP_Text>();
+                            TRANSICAO_texto = TRANSICAO_texto_game_object.GetComponent<TMP_Text>();
 
 
                         // --- COLIDERS
-                            ON_collider = ON_game_object.GetComponent<PolygonCollider2D>();
-                            OFF_collider = OFF_game_object.GetComponent<PolygonCollider2D>();
+
+                            ON_collider = ON_collider_game_object.GetComponent<PolygonCollider2D>();
+                            OFF_collider = OFF_collider_game_object.GetComponent<PolygonCollider2D>();
                         
                         
                         posicao_x =  botao_game_object.transform.localPosition.x;
@@ -997,34 +556,32 @@ public class Botao_dispositivo {
 
                 }
 
-                OFF_image.sprite = _dados.sprite_off;
-                OFF_image.color = _dados.cor_imagem_off;
+                // --- COLOCAR MATERIAL
 
-                OFF_animacao_mostrar_texto_image.sprite = null;
-                OFF_animacao_mostrar_texto_image.color = Cores.clear;
+                    // ** OFF
+
+                        IMAGEM_animacao_back_image.material = dados.material_dispositivo;
+                        IMAGEM_base_image.material = dados.material_dispositivo;
+                        IMAGEM_decoracao_image.material = dados.material_dispositivo;
+                        IMAGEM_animacao_atras_texto_image.material = dados.material_dispositivo;
+                        IMAGEM_animacao_frente_texto_image.material = dados.material_dispositivo;
+                        IMAGEM_texto.material = dados.material_dispositivo;
+
+
+
+                    // ** TRANSICAO
+
+                        TRANSICAO_base_image.material = dados.material_dispositivo;
+                        TRANSICAO_decoracao_image.material = dados.material_dispositivo;
+                        TRANSICAO_animacao_atras_texto_image.material = dados.material_dispositivo;
+                        TRANSICAO_animacao_frente_texto_image.material = dados.material_dispositivo;
+                        TRANSICAO_texto.material = dados.material_dispositivo;
+
                 
-                OFF_animacao_esconder_texto_image.sprite = null;
-                OFF_animacao_esconder_texto_image.color = Cores.clear;
+                // --- LOGICA 
 
 
-
-                ON_image.sprite = null;
-                ON_image.color = Cores.clear;
-
-                ON_animacao_mostrar_texto_image.sprite = null;
-                ON_animacao_mostrar_texto_image.color = Cores.clear;
-                
-                ON_animacao_esconder_texto_image.sprite = null;
-                ON_animacao_esconder_texto_image.color = Cores.clear;
-
-
-
-        
-                TRANS_image.sprite = null;
-                TRANS_image.color = Cores.clear;
-
-                animacao_atual_tempo_ms = _dados.animacao_off_tempo_espera_ms;
-
+                Botao_dispositivo_SETAR.SETAR_OFF_estatico( this );
             
                 return;
 

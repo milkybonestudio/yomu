@@ -6,7 +6,7 @@ using System;
 
     public static class Leitor_pontos__REGIAO_1 {
 
-        public static Ponto_DADOS_DEVELOPMENT Pegar( Posicao _posicao ){
+        public static Ponto_DADOS_DEVELOPMENT Pegar( Locator_position _posicao ){
 
 
             REGIAO_1__trecho trecho =  ( REGIAO_1__trecho ) _posicao.trecho_id;

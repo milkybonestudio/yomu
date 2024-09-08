@@ -1,0 +1,104 @@
+
+//   testar
+
+
+// mac
+/*
+
+  // Mac calculates global screen coordinates from top left corner of screen
+    #if (UNITY_EDITOR && UNITY_EDITOR_OSX) || (!UNITY_EDITOR && UNITY_STANDALONE_OSX)
+ 
+        [DllImport("/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics")]
+        public static extern int CGWarpMouseCursorPosition(CGPoint point);
+ 
+        [DllImport("/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics")]
+        public static extern IntPtr CGEventCreate(IntPtr source);
+ 
+        [DllImport("/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics")]
+        public static extern CGPoint CGEventGetLocation(IntPtr evt);
+ 
+        [DllImport("/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics")]
+        public static extern void CFRelease(IntPtr cf);
+ 
+        public struct CGPoint
+        {
+            public double X { get; set; }
+            public double Y { get; set; }
+        }
+ 
+        Vector2 GetCursorPos ()
+        {
+            IntPtr ptr = CGEventCreate(IntPtr.Zero);
+            CGPoint loc = CGEventGetLocation(ptr);
+            CFRelease(ptr);
+            return new Vector2((float)loc.X, (float)loc.Y);
+        }
+ 
+        void SetCursorPos(float x, float y)
+        {
+            CGPoint point = new CGPoint() {X = x, Y = y};
+            CGWarpMouseCursorPosition(point);
+        }
+ 
+    #endif
+ 
+    void Update()
+    {
+        if (Time.time < 12.0f) //test: mouse circular movement through 12 seconds
+        {
+            SetCursorPos((Mathf.Sin(Time.time) * 0.5f + 0.5f) * 500.0f, (Mathf.Cos(Time.time) * 0.5f + 0.5f) * 500.0f);
+            Debug.Log(GetCursorPos());
+        }
+    }
+
+
+
+*/
+
+
+// win
+
+
+#if UNITY_STANDALONE_WIN
+
+public class Win32 {
+
+    [DllImport("User32.Dll")]
+    public static extern long SetCursorPos(int x, int y);
+ 
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool GetCursorPos(out POINT lpPoint);
+ 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct POINT {
+
+        public int X;
+        public int Y;
+ 
+        public POINT(int x, int y)
+        {
+            this.X = x;
+            this.Y = y;
+        }
+    }
+}
+
+
+
+
+// // You can use like this:
+// #if UNITY_STANDALONE_WIN
+//                 Win32.POINT pt = new Win32.POINT();
+//                 Win32.GetCursorPos(out pt);
+//                 pos.x = pt.X;
+//                 pos.y = pt.Y;
+// #endif
+// // and / or like this:
+// #if UNITY_STANDALONE_WIN
+//                 Win32.SetCursorPos((int)pos.x, (int)pos.y);
+
+                
+#endif
+ 
+

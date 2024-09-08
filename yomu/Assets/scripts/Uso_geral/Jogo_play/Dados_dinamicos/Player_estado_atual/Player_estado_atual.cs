@@ -31,7 +31,7 @@ public class Player_estado_atual {
 
     public int[] bau = new int[24];
 
-    public Posicao[] posicao_arr = new Posicao[20];
+    public Locator_position[] posicao_arr = new Locator_position[20];
     public Ponto ponto_atual ;
 
 
@@ -46,7 +46,7 @@ public class Player_estado_atual {
 
 
     public string mapa_atual = "catedral" ;
-    public Posicao[] pontos_mapa;
+    public Locator_position[] pontos_mapa;
 
 
     public float[][] pontos_mapa_posicoes = new float[][]{

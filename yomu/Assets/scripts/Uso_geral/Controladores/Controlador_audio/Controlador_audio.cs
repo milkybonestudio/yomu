@@ -6,46 +6,14 @@ using System;
 
 
 
-
-//    passar para data
-
-
-
-
-
-
-
-
- public class Controlador_audio {
+public class Controlador_audio {
 
 
         public static Controlador_audio instancia;
         public static Controlador_audio Pegar_instancia(){ return instancia; }
-        public static Controlador_audio Construir(){ instancia = new Controlador_audio(); return instancia;}
-
-
-
-        public  Controlador_audio(){
-
-                Controlador_audio.instancia = this;
-     
-                audio_game_object =  GameObject.Find("Audio");
-
-                music_1 = new Audio_objeto("Music_1" , Tipo_audio.music);
-                music_2 = new Audio_objeto("Music_2" , Tipo_audio.music);
-
-                voice_1 = new Audio_objeto("Voice_1" , Tipo_audio.voice);
-                voice_2 = new Audio_objeto("Voice_2" , Tipo_audio.voice);
-                voice_3 = new Audio_objeto("Voice_3" , Tipo_audio.voice);
-
-                audio_source_uso_interno = new Audio_objeto("audio_source_uso_interno" , Tipo_audio.INTERNO);
-
-        }
         
 
-
-
-        public  float master_volume = 1f;
+        public float master_volume = 1f;
         public float music_volume = 1f;
         public float sfx_volume = 1f;
         public float voice_volume = 1f;
@@ -80,6 +48,7 @@ using System;
          public void Update(){
 
                 Checar_sfx();
+                return;
 
        }
 
@@ -117,31 +86,54 @@ using System;
                         int index_disponivel = -1;
                         int ultimo_index_com_coisa = 0;
 
-                        for(int i = 0; i< sfx_arr.Length  ; i++){
+                        // for( int i = 0; i< sfx_arr.Length; i++ ){
                                 
-                                if(sfx_arr[i] == null){
+                        //         if( sfx_arr[ i ] == null )
+                        //             {
 
-                                        if(index_disponivel < 0) index_disponivel = i;
-                                        continue;
+                        //                     if( index_disponivel < 0 )
+                        //                         { index_disponivel = i; }
+                        //                     continue;
 
-                                } else {
-                                        ultimo_index_com_coisa = i;
-                                        continue;
-                                }
+                        //             } 
+                        //             else
+                        //             {
+                        //                     ultimo_index_com_coisa = i;
+                        //                     continue;
+                        //             }
 
 
+                        // }
+
+
+
+                        // ainda nao testei
+                        for( int i = 0; i< sfx_arr.Length; i++ ){
+                                
+                                if( sfx_arr[ i ] != null )
+                                    { ultimo_index_com_coisa = i; continue; } 
+                                    
+                                index_disponivel = i; 
+                                break;
+                        
                         }
 
-                        if(index_disponivel == -1) {
+
+
+
+                        // what? 
+                        if( index_disponivel == -1 )
+                        {
 
                                 index_disponivel = sfx_arr.Length;
-                                Modificar_sfx_arr(5);
+                                Modificar_sfx_arr( 5 );
 
                         } else if( sfx_arr.Length - ultimo_index_com_coisa > 5 && sfx_arr.Length > 10 ){
 
                                 Modificar_sfx_arr(-5);
 
                         }
+
 
 
                         Audio_objeto obj  = new Audio_objeto("sfx" , Tipo_audio.sfx);
@@ -182,14 +174,15 @@ using System;
 
                  if(   sfx_arr.Length - ultimo_index_com_coisa > 5  &&   sfx_arr.Length > 6  ){
 
-                        Modificar_sfx_arr(-5);
+                        Modificar_sfx_arr( -5 );
                         
                  }
 
        }
 
 
-       public void Modificar_sfx_arr(int _numero){
+       public void Modificar_sfx_arr( int _numero){
+
 
                 int n_atual = sfx_arr.Length; 
                 int novo_n = n_atual + _numero;
@@ -198,6 +191,8 @@ using System;
                 if(n_atual < novo_n ) novo_n = n_atual;
                 Array.Copy(   sfx_arr, novo_arr , novo_n  );
                 sfx_arr = novo_arr;
+
+                Array.Resize( ref sfx_arr , ( sfx_arr.Length + _numero) );
 
        }
 
@@ -481,11 +476,6 @@ using System;
                 return;
 
         }
-
-
-
-
-        
 
 
 

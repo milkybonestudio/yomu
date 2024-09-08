@@ -4,7 +4,7 @@ using System.IO;
 public class Dados_sistema_personagem {
 
 
-        public Posicao posicao_personagem;
+        public Locator_position posicao_personagem;
 
         public Trigger_personagem[] triggers;
         public Caracteristica_fisica_personagem[] caracteristicas_fisicas;

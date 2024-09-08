@@ -9,6 +9,86 @@ public static class SPRITE {
 
 
 
+
+
+        public static void Copiar_sprites_array_para_matrix_com_pointers( Sprite[,] _array_receptor,  int _coluna, int _index_inicial, int _length, int _pointer_inicial_array_com_dados, Sprite[] _array_com_dados, string _indentificador = "NAO FOI COLOCADO" ){
+
+
+                // --- VERIFICA SE OS ARRAYS EXISTEM
+
+                if( _coluna < 0 )
+                    { throw new Exception( $"Tentou copiar sprites de um array para uma matrix mas a coluna id era menor q  ue 0. indentificador: { _indentificador }" );  }
+
+                if( _length < 0 )
+                    { throw new Exception( $"Tentou copiar sprites de um array para uma matrix mas a length era menor q  ue 0. indentificador: { _indentificador }" );  }
+
+
+                if( _array_receptor == null )
+                    { throw new Exception( $"Tentou copiar sprites de um array para uma matrix mas o array receptor estava null. indentificador: { _indentificador }" ); }
+
+                if( _array_com_dados == null )
+                    { throw new Exception( $"Tentou copiar sprites de um array para uma matrix mas o array com os dados estava null. indentificador: { _indentificador }" ); }
+
+
+                for( int index = 0 ; index < _length ; index++ ){
+
+                        int id = ( _pointer_inicial_array_com_dados + index );
+
+                        if( id >= _array_com_dados.Length )
+                            { throw new Exception( $"Tentou copiar sprites de um array para uma matrix mas o id { id } era maior que a length do com os dados:{ _array_com_dados.Length}. Indentificador : { _indentificador }" ); }
+
+                        // --- FAZ A TROCA
+                        _array_receptor[ _coluna,  ( _index_inicial + index ) ] = _array_com_dados[ id ];
+
+                        continue;
+
+                }
+
+                return;
+
+        }
+
+
+
+        public static void Copiar_sprites_array_para_matrix_com_ids( Sprite[,] _array_receptor, int _coluna, Sprite[] _array_com_dados, int[] _ids, string _indentificador = "NAO FOI COLOCADO" ){
+
+
+                // --- VERIFICA SE OS ARRAYS EXISTEM
+
+                if( _array_receptor == null )
+                    { throw new Exception( $"Tentou Copiar_sprites_array_para_matrix_com_ids para o outro mas o array receptor estava null. indentificador: { _indentificador }" ); }
+
+                if( _array_com_dados == null )
+                    { throw new Exception( $"Tentou Copiar_sprites_array_para_matrix_com_ids para o outro mas o array com os dados estava null. indentificador: { _indentificador }" ); }
+
+
+                for( int index = 0 ; index < _ids.Length ; index++ ){
+
+                        int id = _ids[ index ];
+
+                        // --- VERIFICA SE É UM ID VALIDO
+                        if( id < 0 )
+                            {  throw new Exception( $"Tentou Copiar_sprites_array_para_matrix_com_ids para o outro mas o id { id } é menor que 0. Indentificador : { _indentificador }" ); }
+                
+                        if( id >= _array_com_dados.Length )
+                            { throw new Exception( $"Tentou Copiar_sprites_array_para_matrix_com_ids para o outro mas o id { id } era maior que a length do com os dados:{ _array_com_dados.Length}. Indentificador : { _indentificador }" ); }
+
+                        // --- FAZ A TROCA
+                        _array_receptor[ _coluna, index ] = _array_com_dados[ id ];
+
+                        continue;
+
+                }
+
+                return;
+
+        }
+
+
+
+
+
+
         public static void Copiar_sprites_array_para_array( Sprite[] _array_receptor, Sprite[] _array_com_dados, int[] _ids, string _indentificador = "NAO FOI COLOCADO" ){
 
 
@@ -77,6 +157,8 @@ public static class SPRITE {
                 tex.SetPixelData( _container , 0 );
                 tex.Apply( false, false );
                 tex.filterMode = UnityEngine.FilterMode.Point;
+
+                //--- acho que em cima pode fazer na multi?? 
 
                 Sprite sprite_retorno  =   Sprite.Create(tex  ,     new Rect( 0.0f, 0.0f, tex.width, tex.height ), new Vector2( 0.5f, 0.5f), 100.0f ,0, SpriteMeshType.FullRect   );
 

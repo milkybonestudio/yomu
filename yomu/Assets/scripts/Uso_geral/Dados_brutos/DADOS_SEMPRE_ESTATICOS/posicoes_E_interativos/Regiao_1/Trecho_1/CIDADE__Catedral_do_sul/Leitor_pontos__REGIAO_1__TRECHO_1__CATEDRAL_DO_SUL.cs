@@ -6,7 +6,7 @@ using System;
 
         public static class Leitor_pontos__REGIAO_1__TRECHO_1__CATEDRAL_DO_SUL  {
 
-                public static Ponto_DADOS_DEVELOPMENT Pegar( Posicao _posicao ){
+                public static Ponto_DADOS_DEVELOPMENT Pegar( Locator_position _posicao ){
 
                         CATEDRAL_DO_SUL__zona zona = ( CATEDRAL_DO_SUL__zona ) _posicao.zona_id;
                     

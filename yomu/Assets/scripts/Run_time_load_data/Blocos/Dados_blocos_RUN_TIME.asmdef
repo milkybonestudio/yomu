@@ -1,0 +1,20 @@
+{
+    "name": "Dados_blocos_RUN_TIME",
+    "rootNamespace": "",
+    "references": [
+        "GUID:78b1e125ccbea0c4d81103b44cda4021",
+        "GUID:b06354894c2e34849ae8cb7cf7af9bf4",
+        "GUID:a18eb61b1a566ec49a6e746d96ca1467",
+        "GUID:62bca32632135b74e877e1a10652403a",
+        "GUID:fe46b2a7fb4aaab4b89eb4d3bbb831ee"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

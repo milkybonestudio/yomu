@@ -3,6 +3,7 @@ using System.Collections;
 
 public static class COROUTINE {
 
+
     public static void Parar_coroutines_array( Coroutine[] _arr ){
 
         for( int  i = 0 ;  i < _arr.Length ; i++ ){

@@ -19,6 +19,8 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
 
         public enum Dispositivo_imagem{
 
+            nada, // deixa invisivel
+
             teste_1,
 
             b_1, 
@@ -62,6 +64,39 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
             v_5 ,
             v_6 ,
 
+            
+            t_1 ,
+            t_2 ,
+            t_3 ,
+            t_4 ,
+            t_5 ,
+            t_6 ,
+            t_7 ,
+
+
+            ani_1 ,
+            ani_2 ,
+            ani_3 ,
+            ani_4 ,
+            ani_5 ,
+            ani_6 ,
+            ani_7 ,
+
+            an_2_1 ,
+            an_2_2 ,
+            an_2_3 ,
+            an_2_4 ,
+            an_2_5 ,
+            an_2_6 ,
+            an_2_7 ,
+
+            dec_1,
+            dec_2,
+            dec_3,
+
+
+
+
 
 
         }
@@ -93,12 +128,7 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
 
 
 
-
-
-
-
-        
-
+    
         public Botao_dispositivo botao_fechar;
 
 
@@ -123,64 +153,123 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
 
                 botao_fechar_dados.tipo_ativacao = Botao_dispositivo_tipo_ativacao.clicar;
                 botao_fechar_dados.nome = "a";
-                botao_fechar_dados.update_secundario = Update_botao_1;
+                botao_fechar_dados.Update_secundario = Update_botao_1;
+
+
 
 
                     // --- IMAGEM 1
-                    botao_fechar_dados.sprite_off_id = ( int ) Dispositivo_imagem.b_1;
+                    botao_fechar_dados.off.animacao_base.sprite_id = ( int ) Dispositivo_imagem.b_1;
+                    botao_fechar_dados.off.animacao_base.cor = Cores.red;
+                    //botao_fechar_dados.off.animacao_decoracao.cor = Cores.red;
+                    botao_fechar_dados.off.texto = "OFF";
+
+                    //botao_fechar_dados.off.animacao_base_cor = Cores.cor_clear_dispositivo;
+                    botao_fechar_dados.on.animacao_base.sprite_id = ( int ) Dispositivo_imagem.v_1;
+                    botao_fechar_dados.on.animacao_base.cor = Cores.white;
+                    // botao_fechar_dados.on.animacao_decoracao.cor = Cores.red;
+                    botao_fechar_dados.on.texto = "ON";
+
+
+
+                    Botao_dispositivo_CRIAR_DADOS.Criar_decoracao_composta_simples  (
+                                                                                        _dados: botao_fechar_dados,
+                                                                                        _ids: new int[] {
+                                                                                                            ( int ) Dispositivo_imagem.an_2_1
+                                                                                                        },
+                                                                                        _cor_off : Cores.grey_80,
+                                                                                        _cor_on: Cores.white
+
+                                                                                    );
+
+
+                    
                     
 
-                    botao_fechar_dados.tipo_transicao = Tipo_transicao_botao_OFF_ON_dispositivo.animacao_individual;
+                    // botao_fechar_dados.tipo_transicao_transicao_OFF_para_ON = Tipo_transicao_botao_OFF_ON_dispositivo.cor;
+                    // botao_fechar_dados.tipo_transicao_transicao_ON_para_OFF = Tipo_transicao_botao_OFF_ON_dispositivo.animacao_individual;
 
-                    botao_fechar_dados.manter_texto_animacao_OFF = true;
-                    botao_fechar_dados.manter_texto_animacao_ON = true;
-                    botao_fechar_dados.manter_texto_transicao_OFF_para_ON = true;
-                    botao_fechar_dados.manter_texto_transicao_ON_para_OFF = true;
+                    // botao_fechar_dados.animar_atras_texto_animacao_OFF = true;
+                    // botao_fechar_dados.animar_atras_texto_animacao_ON = true;
 
-                    botao_fechar_dados.sprites_ids_transicao_OFF_para_ON = new int[]{
-
-
-                            ( int ) Dispositivo_imagem.lb_1,
-                            ( int ) Dispositivo_imagem.lb_2,
-                            ( int ) Dispositivo_imagem.lb_3,
-                            ( int ) Dispositivo_imagem.lb_4,
-                            ( int ) Dispositivo_imagem.lb_5                        
-
-                    };
+                    // botao_fechar_dados.animar_atras_texto_transicao_OFF_para_ON = true;
+                    // botao_fechar_dados.animar_atras_texto_transicao_ON_para_OFF = true;
 
 
-                    botao_fechar_dados.sprites_ids_transicao_ON_para_OFF = new int[]{
 
 
-                            ( int ) Dispositivo_imagem.v_1,
-                            ( int ) Dispositivo_imagem.v_2,
-                            ( int ) Dispositivo_imagem.v_3,
-                            ( int ) Dispositivo_imagem.v_4,
-                            ( int ) Dispositivo_imagem.v_5                        
-
-                    };
+                    // botao_fechar_dados.sprites_ids_transicao_OFF_para_ON = new int[]{
 
 
-                    botao_fechar_dados.sprites_ids_animacao_off = new int[]{
+                    //         ( int ) Dispositivo_imagem.t_1,
+                    //         ( int ) Dispositivo_imagem.t_2,
+                    //         ( int ) Dispositivo_imagem.t_3,
+                    //         ( int ) Dispositivo_imagem.t_4,
+                    //         ( int ) Dispositivo_imagem.t_5,
+                    //         ( int ) Dispositivo_imagem.t_6
+                            
 
-                            ( int ) Dispositivo_imagem.r_1,
-                            ( int ) Dispositivo_imagem.r_2,
-                            ( int ) Dispositivo_imagem.r_3,
-                            ( int ) Dispositivo_imagem.r_4,
-                            ( int ) Dispositivo_imagem.r_5
+                    // };
+
+
+
+
+                    // botao_fechar_dados.sprite_id_inicial_transicao_OFF_para_ON = ( int ) Dispositivo_imagem.t_1;
+                    // botao_fechar_dados.sprite_id_final_transicao_OFF_para_ON   = ( int ) Dispositivo_imagem.t_6;
+
+
+                    // botao_fechar_dados.sprite_id_inicial_transicao_ON_para_OFF = ( int ) Dispositivo_imagem.t_1;
+                    // botao_fechar_dados.sprite_id_final_transicao_ON_para_OFF   = ( int ) Dispositivo_imagem.t_6;
+
+
+
+
+                    
+                    // ( ( int ) Dispositivo_imagem.t_1, ( int ) Dispositivo_imagem.t_6 );
+
+
+
+
+                    // botao_fechar_dados.sprites_ids_transicao_ON_para_OFF = new int[]{
+
+
+                            
+                    //         ( int ) Dispositivo_imagem.t_6,
+                    //         ( int ) Dispositivo_imagem.t_5,
+                    //         ( int ) Dispositivo_imagem.t_4,
+                    //         ( int ) Dispositivo_imagem.t_3,
+                    //         ( int ) Dispositivo_imagem.t_2,
+                    //         ( int ) Dispositivo_imagem.t_1
+                    // };
+
+
+
+                    // botao_fechar_dados.manter_primeira_sprite_da_animacao_OFF_aparente = true;
+                    // botao_fechar_dados.sprites_ids_animacao_off = new int[]{
+
+                    //         ( int ) Dispositivo_imagem.ani_1,
+                    //         ( int ) Dispositivo_imagem.ani_2,
+                    //         ( int ) Dispositivo_imagem.ani_3,
+                    //         ( int ) Dispositivo_imagem.ani_4,
+                    //         ( int ) Dispositivo_imagem.ani_5,
+                    //         ( int ) Dispositivo_imagem.ani_6,
+                    //         ( int ) Dispositivo_imagem.ani_7,
+
                         
-                    };
+                    // };
 
 
-                    botao_fechar_dados.sprites_ids_animacao_on = new int[]{
+                    // botao_fechar_dados.sprites_ids_animacao_on = new int[]{
 
-                            ( int ) Dispositivo_imagem.y_1,
-                            ( int ) Dispositivo_imagem.y_2,
-                            ( int ) Dispositivo_imagem.y_3,
-                            ( int ) Dispositivo_imagem.y_4,
-                            ( int ) Dispositivo_imagem.y_5
+                    //         ( int ) Dispositivo_imagem.an_2_1,
+                    //         ( int ) Dispositivo_imagem.an_2_2,
+                    //         ( int ) Dispositivo_imagem.an_2_3,
+                    //         ( int ) Dispositivo_imagem.an_2_4,
+                    //         ( int ) Dispositivo_imagem.an_2_5,
+                    //         ( int ) Dispositivo_imagem.an_2_6,
+                    //         ( int ) Dispositivo_imagem.an_2_7,
                         
-                    };
+                    // };
 
 
                     // botao_fechar_dados.cores_animacao_imagem_off = new Color[]{
@@ -195,7 +284,7 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
 
 
                     // --- IMAGEM 2 
-                    botao_fechar_dados.sprite_on_id = ( int ) Dispositivo_imagem.b_2;
+                    //botao_fechar_dados.sprite_on_id = ( int ) Dispositivo_imagem.r_1;
                     
 
                     // --- AUDIO
@@ -220,7 +309,7 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
 
         // --- isso nao faz sentido. ao invez de usar disp.Definir_imagem(); disp.Definir_audios();... => disp.Definir_objetos() e dentro ele faz a divisao
 
-        public void Definir_imagens_interno( MODULO__imagens_dispositivo imagens ){
+        public void Definir_imagens_interno( GERENCIADOR__imagens_dispositivo imagens ){
 
                 // --- CRIAR
 
@@ -257,7 +346,7 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
 
         }
 
-        public void Definir_audios_interno( MODULO__audios_dispositivo audios ){ 
+        public void Definir_audios_interno( GERENCIADOR__audios_dispositivo audios ){ 
 
                 // --- CRIAR
 
@@ -280,8 +369,8 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
         public void Receber_dados( Dispositivo _dispositivo, System.Object _dados ){ Receber_dados_interno( _dispositivo, _dados ); }
         public void Finalizar( Dispositivo _dispositivo){ Finalizar_interno( _dispositivo ); }
 
-        public void Definir_audios( MODULO__audios_dispositivo _audios ){ Definir_audios_interno( _audios ); }
-        public void Definir_imagens( MODULO__imagens_dispositivo _imagens ){ Definir_imagens_interno( _imagens ); }
+        public void Definir_audios( GERENCIADOR__audios_dispositivo _audios ){ Definir_audios_interno( _audios ); }
+        public void Definir_imagens( GERENCIADOR__imagens_dispositivo _imagens ){ Definir_imagens_interno( _imagens ); }
 
 
 

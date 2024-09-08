@@ -10,7 +10,7 @@ public class Controlador_plots {
         public Gerenciador_save_plots gerenciador_save;
 
         public MODULO__leitor_de_arquivos leitor_de_arquivos;
-        public Gerenciador_objetos_dll_dinamicos gerenciador_objetos_dll_dinamicos;
+        public MODULO__leitor_dll gerenciador_objetos_dll_dinamicos;
         
 
         public Dados_sistema_plot_essenciais[] dados_sistema_plots_essenciais;
@@ -29,7 +29,7 @@ public class Controlador_plots {
                 Controlador_plots controlador = new Controlador_plots();
 
 
-                        controlador.gerenciador_objetos_dll_dinamicos = new Gerenciador_objetos_dll_dinamicos( _nome_dll: "Plot", _numero_inicial_de_slots: 10 );
+                        controlador.gerenciador_objetos_dll_dinamicos = new MODULO__leitor_dll( _nome_dll: "Plot", _numero_inicial_de_slots: 10 );
                         controlador.leitor_de_arquivos = new MODULO__leitor_de_arquivos ( 
                                                                                                 _gerenciador_nome: "gerenciador_plots",
                                                                                                 _path_folder: Paths_sistema.path_folder__dados_save_plots,
@@ -72,31 +72,31 @@ public class Controlador_plots {
         public void Adicionar_plot_INICIO_JOGO( int _plano_para_adicionar_id,  int _plot_id, int _index_dados_sistema ){
 
                         // --- CRIA plot 
-                        Dados_sistema_plot_essenciais dados_sistema_plot_essenciais = dados_sistema_plots_essenciais[ _plot_id ];
+                        //Dados_sistema_plot_essenciais dados_sistema_plot_essenciais = dados_sistema_plots_essenciais[ _plot_id ];
 
-                        if( dados_sistema_plot_essenciais.nome_plot == null )
-                                { throw new Exception( $"nome plot { _plot_id } veio null"); }
+                        // if( dados_sistema_plot_essenciais.nome_plot == null )
+                        //         { throw new Exception( $"nome plot { _plot_id } veio null"); }
 
-                        // --- PEGAR AI
-                        string nome_objeto_classe = $"plot_{ dados_sistema_plot_essenciais.nome_plot }_classe";
-                        gerenciador_objetos_dll_dinamicos.Carregar_objeto_NA_MULTITHREAD( _plot_id, nome_objeto_classe );
-                        System.Object plot_AI =   gerenciador_objetos_dll_dinamicos.Pegar_objeto( _plot_id );
+                        // // --- PEGAR AI
+                        // string nome_objeto_classe = $"plot_{ dados_sistema_plot_essenciais.nome_plot }_classe";
+                        // gerenciador_objetos_dll_dinamicos.Carregar_objeto_NA_MULTITHREAD( _plot_id, nome_objeto_classe );
+                        // System.Object plot_AI =   gerenciador_objetos_dll_dinamicos.Pegar_objeto( _plot_id );
 
-                        // --- PEGAR CONTAINER
-                        string path_container = $"plot_{ dados_sistema_plot_essenciais.nome_plot }_dados.dat";
-                        //leitor_de_arquivos.Carregar_container_NA_MULTITHREAD( _plot_id, path_container );
-                        byte[] dados_containers_plots_bytes = leitor_de_arquivos.Pegar_dados_com_localizador( _plot_id );
-                        Dados_containers_plot dados_containers_plot = Construtor_containers_plots.Construir( dados_containers_plots_bytes );
+                        // // --- PEGAR CONTAINER
+                        // string path_container = $"plot_{ dados_sistema_plot_essenciais.nome_plot }_dados.dat";
+                        // //leitor_de_arquivos.Carregar_container_NA_MULTITHREAD( _plot_id, path_container );
+                        // byte[] dados_containers_plots_bytes = leitor_de_arquivos.Pegar_dados_com_localizador( _plot_id );
+                        // Dados_containers_plot dados_containers_plot = Construtor_containers_plots.Construir( dados_containers_plots_bytes );
 
-                        // --- CONSTROI plot
-                        Plot plot_para_adicionar =  Construtor_plot.Construir( _plot_id, _plano_para_adicionar_id, dados_sistema_plot_essenciais,  dados_containers_plot, plot_AI );
+                        // // --- CONSTROI plot
+                        // Plot plot_para_adicionar =  Construtor_plot.Construir( _plot_id, _plano_para_adicionar_id, dados_sistema_plot_essenciais,  dados_containers_plot, plot_AI );
 
-                        // --- COLOCA DADOS CONTAINERS 
-                        plots [ _plot_id ] = plot_para_adicionar; 
-                        dados_sistema_plots[ _index_dados_sistema ] = plot_para_adicionar.gerenciador_dados_sistema.Pegar_dados();
+                        // // --- COLOCA DADOS CONTAINERS 
+                        // plots [ _plot_id ] = plot_para_adicionar; 
+                        // dados_sistema_plots[ _index_dados_sistema ] = plot_para_adicionar.gerenciador_dados_sistema.Pegar_dados();
 
-                        // ---- CRIA SLOT INSTRUCOES
-                        gerenciador_save.instrucoes_plots[ _plot_id ]  = new byte[ 50 ][];
+                        // // ---- CRIA SLOT INSTRUCOES
+                        // gerenciador_save.instrucoes_plots[ _plot_id ]  = new byte[ 50 ][];
 
                         return;
 

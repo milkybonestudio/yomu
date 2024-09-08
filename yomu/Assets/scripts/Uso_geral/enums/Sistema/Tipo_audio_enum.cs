@@ -1,5 +1,5 @@
 
-public enum Tipo_audio {
+public enum Tipo_audio : int {
 
 
        master ,

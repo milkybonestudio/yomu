@@ -124,7 +124,7 @@ public class Gerenciador_save_plots {
                                 }
 
                                 // --- SE ESTA SALVANDO A STACK NAO VAI PARA A LIXEIRA 
-                                return null;
+                                return new Dados_para_salvar();
                         }
 
                 
@@ -136,7 +136,7 @@ public class Gerenciador_save_plots {
 
                 }
  
-                return null ;
+                return new Dados_para_salvar();
 
         }
 
@@ -145,18 +145,18 @@ public class Gerenciador_save_plots {
         public Dados_para_salvar Criar_dados_para_salvar_plot( int _plot_id ) {
 
 
-                        Dados_para_salvar dados_retorno = new Dados_para_salvar();
-                
-                        // isso talvez possa demorar 
-                        Plot plot_esperando_para_ser_excluido = plots_esperando_para_serem_excluidos[ _plot_id ];
-                        dados_retorno.dados = plot_esperando_para_ser_excluido.gerenciador_containers_dados.Compilar_dados();
+                Dados_para_salvar dados_retorno = new Dados_para_salvar();
+        
+                // isso talvez possa demorar 
+                Plot plot_esperando_para_ser_excluido = plots_esperando_para_serem_excluidos[ _plot_id ];
+                dados_retorno.dados = plot_esperando_para_ser_excluido.gerenciador_containers_dados.Compilar_dados();
 
-                        // dados agora vai para a segunda stack
-                        plots_esperando_para_serem_excluidos_ids[ _plot_id ] = 0;
+                // dados agora vai para a segunda stack
+                plots_esperando_para_serem_excluidos_ids[ _plot_id ] = 0;
 
-                        dados_retorno.path = Paths_sistema.Pegar_path_arquivo__dados_dinamicos__entidade( Entidade_nome.plot , plot_esperando_para_ser_excluido.ToString() );
+                dados_retorno.path = Paths_sistema.Pegar_path_arquivo__dados_dinamicos__entidade( Tipo_entidade.plot , plot_esperando_para_ser_excluido.ToString() );
 
-                        return dados_retorno;
+                return dados_retorno;
 
         }
 

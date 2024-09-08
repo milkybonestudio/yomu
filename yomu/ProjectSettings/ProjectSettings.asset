@@ -770,7 +770,8 @@ PlayerSettings:
     Standalone: REGIAO_1;FORCAR_TODOS_OS_ITENS
   additionalCompilerArguments: {}
   platformArchitecture: {}
-  scriptingBackend: {}
+  scriptingBackend:
+    Standalone: 1
   il2cppCompilerConfiguration: {}
   il2cppCodeGeneration: {}
   managedStrippingLevel:

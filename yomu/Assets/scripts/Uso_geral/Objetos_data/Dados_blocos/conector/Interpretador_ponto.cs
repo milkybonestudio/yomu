@@ -6,7 +6,7 @@ public static class Interpretador_ponto {
 
 
 
-        public static Posicao[] Pegar_pontos_possiveis_movimento( Ponto _ponto ){
+        public static Locator_position[] Pegar_pontos_possiveis_movimento( Ponto _ponto ){
 
                 if( _ponto.ponto_ativo != null  )
                         {
@@ -24,14 +24,14 @@ public static class Interpretador_ponto {
 
                                 }
 
-                                Posicao[] posicoes_retorno = new Posicao[ numero_interativos_movimento ];
+                                Locator_position[] posicoes_retorno = new Locator_position[ numero_interativos_movimento ];
 
                                 int posicoes_retorno_index = 0;
                                 for( interativo_index = 0 ; interativo_index < interativos_tela.Length ; interativo_index++ ){
 
                                         if( interativos_tela[ interativo_index ].tipo_interativo_tela == Tipo_interativo_tela.movimento )
                                                 { 
-                                                        Posicao posicao = new Posicao();
+                                                        Locator_position posicao = new Locator_position();
                                                         byte[] dados = interativos_tela[ interativo_index ].dados_logicas_interativos_tela;
 
                                                         posicao.regiao_id = 0;

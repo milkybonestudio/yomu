@@ -37,7 +37,7 @@ public class Molde_jogo {
 
         switch( _bloco_para_colocar ){
 
-            case Bloco.conector: icones_ativos = Player_estado_atual.Pegar_instancia().icones_movimento; break;
+            case Bloco.interacao: icones_ativos = Player_estado_atual.Pegar_instancia().icones_movimento; break;
             default : throw new Exception( "a" );
 
         }

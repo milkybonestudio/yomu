@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class Interativo_personagem {
 
-    public Tipo_interativo_personagem tipo_interativo_personagem;
+
+    public Localizador_simples script; // ** nao ativa conversa, mas executa o script provavelmente vai ativar vn
 
     public int personagem_id;
     public GameObject interativo_game_object;

@@ -55,7 +55,7 @@ public  class Login {
 
                 if( esta_entrando_menu ){ return; }
 
-                bool mouse_down = Controlador_input.Get_down(Key_code.mouse_left);
+                bool mouse_down = Input.GetMouseButtonDown( 0 );
 
                 if( mouse_down )  Controlador_audio.Pegar_instancia().Acrecentar_sfx( "audio/geral_sfx/botoes/click_4"  );
                     
@@ -86,9 +86,9 @@ public  class Login {
                 */
 
 
-                Controlador_input.ativar_movimentacao_mouse = true;
-                Controlador_cursor.Pegar_instancia().Mudar_cursor(Cor_cursor.off);
-                Controlador_input.tipo_teclado = Tipo_teclado.normal;
+                // Controlador_input.ativar_movimentacao_mouse = true;
+                // Controlador_cursor.Pegar_instancia().Mudar_cursor(Cor_cursor.off);
+                // Controlador_input.tipo_teclado = Tipo_teclado.normal;
 
 
                 string nome_background = Controlador_configuracoes.Pegar_instancia().login_background;

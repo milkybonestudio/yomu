@@ -44,7 +44,7 @@ public class Novo_jogo_menu {
             if(Mat.Verificar_ponto_dentro_retangulo(  mouse_x,  mouse_y   , x_min, x_max, y_min , y_max   )   ){
 
                 novo_jogo.image.color = Color.white;
-                if( Controlador_input.Get_down(Key_code.mouse_left))
+                if(  Input.GetMouseButtonDown( 0 ) )
                     { Ativador_novo_jogo_menu.Ativar_novo_jogo(); }
                     
             }

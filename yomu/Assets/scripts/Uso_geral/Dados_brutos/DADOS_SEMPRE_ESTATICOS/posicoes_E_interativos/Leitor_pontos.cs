@@ -5,7 +5,7 @@ using System;
 
     public static class Leitor_pontos {
 
-        public static Ponto_DADOS_DEVELOPMENT Pegar_ponto( Posicao _posicao ){
+        public static Ponto_DADOS_DEVELOPMENT Pegar_ponto( Locator_position _posicao ){
 
                 Regiao_nome regiao =  ( Regiao_nome ) _posicao.regiao_id;
                 

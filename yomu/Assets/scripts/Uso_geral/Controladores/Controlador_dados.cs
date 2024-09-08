@@ -1,10 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.Runtime;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System.Reflection;
 
 
 
@@ -13,63 +12,53 @@ public class Controlador_dados {
 
 
 
-      public static Controlador_dados instancia;
-      public static Controlador_dados Pegar_instancia(){ return instancia; }
-      public static Controlador_dados Construir(){ instancia = new Controlador_dados(); return instancia;}
+        public static Controlador_dados instancia;
+        public static Controlador_dados Pegar_instancia(){ return instancia; }
+        public static Controlador_dados Construir(){ 
+                
+                Controlador_dados controlador  = new Controlador_dados(); 
+                Controlador_dados.instancia = controlador;
+
+                    controlador.modulo__leitor_dll_dados_blocos = new MODULO__leitor_dll( "Dados_blocos_RUN_TIME", 50 );
+
+                return instancia;
+
+        }
 
 
+        public MODULO__leitor_dll modulo__leitor_dll_dados_blocos;
 
-      public Controlador_dados(){
+        public FileStream stream_arquivo;
+        
 
-            // responsabilidades para adicionar :  
-            //          -- pedir para pegar dados()
+        public bool ja_pegou_dados_do_ciclo = false;
 
+        public void Update(){}
+
+
+        public bool Pode_pedir_dados(){  return ! ( ja_pegou_dados_do_ciclo ); }
 
         
 
-      }
+        public byte[] Pedir_dados_run_time_byte_arr( string _path_dados ){
 
-      public FileStream stream_arquivo;
+                // talvez valha mais a pena retornoar a stream?
 
-      public bool ja_pegou_dados_do_ciclo = false;
+                ja_pegou_dados_do_ciclo = true;
 
-      public void Update(){
+                if ( System.IO.File.Exists( _path_dados ) ){
 
-            ja_pegou_dados_do_ciclo = false;
+                    throw new Exception( $"não foi achado o path { _path_dados } para pegar os dados" );
 
-            if( stream_arquivo != null ){
+                }
 
-
-
-            }
-
-
-      }
-
-
-      public bool Pode_pedir_dados(){  return ! ( ja_pegou_dados_do_ciclo ); }
-
-      
-      // só vai pedir aqui se for em run time
-      public byte[] Pedir_dados_run_time_byte_arr( string _path_dados ){
-
-            // talvez valha mais a pena retornoar a stream?
-
-            ja_pegou_dados_do_ciclo = true;
-
-            if ( System.IO.File.Exists( _path_dados ) ){
-
-                  throw new Exception( $"não foi achado o path { _path_dados } para pegar os dados" );
-
-            }
-
-            byte[] arquivo = System.IO.File.ReadAllBytes( _path_dados );
-            return arquivo;
+                byte[] arquivo = System.IO.File.ReadAllBytes( _path_dados );
+                return arquivo;
 
 
 
-            
-      }
+                
+        }
 
 
 

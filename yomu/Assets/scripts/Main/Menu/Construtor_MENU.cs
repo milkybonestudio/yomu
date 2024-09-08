@@ -27,10 +27,10 @@ public static class Construtor_MENU {
             
           
             // --- SETA INPUT
-            menu.controlador_dados = Controlador_dados.Pegar_instancia();
-            Controlador_input.ativar_movimentacao_mouse = true;
-            Controlador_cursor.Pegar_instancia().Mudar_cursor( Cor_cursor.off );
-            Controlador_input.tipo_teclado = Tipo_teclado.plataforma; // ???
+            // menu.controlador_dados = Controlador_dados.Pegar_instancia();
+            // Controlador_input.ativar_movimentacao_mouse = true;
+            // Controlador_cursor.Pegar_instancia().Mudar_cursor( Cor_cursor.off );
+            // Controlador_input.tipo_teclado = Tipo_teclado.plataforma; // ???
 
 
             // --- CONSTRUTORES ENDIVIDUAIS

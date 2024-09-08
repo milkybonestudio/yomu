@@ -120,7 +120,7 @@ public class Gerenciador_save_cidades {
                                 }
 
                                 // --- SE ESTA SALVANDO A STACK NAO VAI PARA A LIXEIRA 
-                                return null;
+                                return new Dados_para_salvar();
                         }
 
                 
@@ -132,7 +132,7 @@ public class Gerenciador_save_cidades {
 
                 }
  
-                return null ;
+                return new Dados_para_salvar();
 
         }
 
@@ -150,7 +150,7 @@ public class Gerenciador_save_cidades {
                         cidades_esperando_para_serem_excluidos_ids[ _cidade_id ] = 0;
 
                         string cidade_nome = ( ( Cidade_nome ) _cidade_id ).ToString() ;
-                        dados_retorno.path =  Paths_sistema.Pegar_path_arquivo__dados_dinamicos__entidade( Entidade_nome.cidade, $"{ cidade_nome }_dados.dat" ) ;
+                        dados_retorno.path =  Paths_sistema.Pegar_path_arquivo__dados_dinamicos__entidade( Tipo_entidade.cidade, $"{ cidade_nome }_dados.dat" ) ;
                          
 
                         return dados_retorno;

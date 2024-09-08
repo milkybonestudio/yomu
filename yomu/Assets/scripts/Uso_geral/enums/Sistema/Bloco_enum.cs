@@ -1,21 +1,12 @@
 
 public enum Bloco {
 
-
     nada,
-    passando_dia,
-    transicao,
-    salvando,
 
-
-    conector,
-    utilidades,
-    visual_novel,
-    conversas,
+    interacao,
     cartas,
     minigames,
-
-
+    story,
 
 }
 

@@ -25,7 +25,7 @@ public static class Verificador_click_interativo_menu {
 
                             _arr[ menu_object_index ].image.color = Color.white;
 
-                            if( Controlador_input.Get_down( Key_code.mouse_left ) ) 
+                            if( Input.GetMouseButtonDown( 0 )  ) 
                                 { return menu_object_index; }
                             
                             Controlador_cursor.Pegar_instancia().Mudar_cursor( Cor_cursor.red );

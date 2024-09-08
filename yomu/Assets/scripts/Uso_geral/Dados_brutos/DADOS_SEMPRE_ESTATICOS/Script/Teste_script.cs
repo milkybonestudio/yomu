@@ -12,7 +12,7 @@ public class Instrucao {
 
         public Tipo_instrucao tipo;
 
-        public Posicao[] posicoes;
+        public Locator_position[] posicoes;
         public int[] interativos_ids;
 
         public Item_localizador[] itens_localizadores;
@@ -24,7 +24,7 @@ public class Instrucao {
 
 public class a {
 
-    public static Posicao Pegar_posicao(){
+    public static Locator_position Pegar_posicao(){
 
 
 

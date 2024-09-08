@@ -14,7 +14,6 @@ public static class ASSEMBLY {
                 Type tipo = _asm.GetType( _nome_classe );
 
                 
-
                 if( tipo == null )
                     { throw new Exception( $"nao foi achado a classe { _nome_classe} na dll { _asm.FullName }." ); }
 

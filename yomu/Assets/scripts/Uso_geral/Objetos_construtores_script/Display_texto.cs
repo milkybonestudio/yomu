@@ -19,6 +19,7 @@ public enum Tipo_construcao_texto {
 
 
 
+
 public class Display_texto {
 
 
@@ -40,7 +41,7 @@ public class Display_texto {
     public   Display_texto( string _nome , float _width, float _height, float _font_size = 5f ) {
 
 
-            game_object = new GameObject("Display_texto_" + _nome);
+            game_object = new GameObject( "Display_texto_" + _nome );
 
             text_container = game_object.AddComponent<TextMeshProUGUI>();
 
@@ -64,14 +65,15 @@ public class Display_texto {
 
     public void Limpar_texto(){
 
-      if( texto_coroutine != null){
-         
-         Mono_instancia.Stop_coroutine( texto_coroutine );
-         texto_coroutine = null;
 
-      }
+        if( texto_coroutine != null){
+            
+            Mono_instancia.Stop_coroutine( texto_coroutine );
+            texto_coroutine = null;
 
-      caixa_texto.text = "";
+        }
+
+        caixa_texto.text = "";
 
 
     }
@@ -115,9 +117,9 @@ public class Display_texto {
                
                switch( _tipo_texto ){
                
-                     case 0 :pre_text = "  ";break; // reseta
-                     case 1 :pre_text = caixa_texto.text + " "; break; // mesmo bloco
-                     case 2 :pre_text = caixa_texto.text + "\n  " ;break;   // novo bloco
+                     case 0 : pre_text = "  ";break; // reseta
+                     case 1 : pre_text = caixa_texto.text + " "; break; // mesmo bloco
+                     case 2 : pre_text = caixa_texto.text + "\n  " ;break;   // novo bloco
                   
                }
 

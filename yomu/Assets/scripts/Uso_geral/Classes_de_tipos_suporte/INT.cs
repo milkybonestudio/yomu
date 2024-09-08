@@ -205,11 +205,11 @@ public static class INT {
 
 
 
-                // if( (_array.Length + quantidade_para_adicionar ) > 150 )
-                //         { 
-                //                 System.Array.Resize( ref _arr, _arr.Length + quantidade_para_adicionar );
-                //                 return  _arr;
-                //         }
+                if( (_array.Length + quantidade_para_adicionar ) > 150 )
+                        { 
+                                System.Array.Resize( ref _array, ( _array.Length + quantidade_para_adicionar ) );
+                                return  _array;
+                        }
 
                 
                 int[] novo_array = new int[ ( _array.Length + quantidade_para_adicionar ) ];
@@ -229,11 +229,11 @@ public static class INT {
 
 
 
-                // if( (_array.Length - numero_para_aumentar ) > 150 )
-                //         { 
-                //                 System.Array.Resize( ref _arr, _arr.Length + numero_para_aumentar );
-                //                 return  _arr;
-                //         }
+                if( (_array.Length - quantidade_para_adicionar ) > 150 )
+                        { 
+                                System.Array.Resize( ref _array, ( _array.Length - quantidade_para_adicionar ) );
+                                return  _array;
+                        }
 
 
                 int[] novo_array = new int[ ( _array.Length - quantidade_para_adicionar ) ];

@@ -9,7 +9,7 @@ using UnityEngine;
 
         // !!! DEVLOPMENT
         
-        public static Interativo_tela[] Pegar_interativo( Posicao _posicao, byte _interativo_id ){
+        public static Interativo_tela[] Pegar_interativo( Locator_position _posicao, byte _interativo_id ){
 
 
                 Regiao_nome regiao =  ( Regiao_nome ) _posicao.regiao_id;

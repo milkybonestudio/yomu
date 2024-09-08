@@ -119,10 +119,10 @@ public class Botao_mono : MonoBehaviour {
     public Estado_botao Lidar_mouse_sobre(){
 
 
-            bool esta_pressionando  = Controlador_input.Get ( Key_code.mouse_left );
+            bool esta_pressionando  = Input.GetMouseButton( 0 );
         //     if( esta_pressionando ) { imagem_slot.sprite = imagem_press; imagem_slot.color = imagem_press_cor; } else { imagem_slot.sprite = imagem_on; imagem_slot.color = imagem_on_cor;  }
 
-            bool esta_click = Controlador_input.Get_up ( Key_code.mouse_left );
+            bool esta_click = Input.GetMouseButtonUp( 0 ); 
         //     if( esta_click ){ Mouse_click(); }
 
 

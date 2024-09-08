@@ -84,7 +84,7 @@ public class Menu : MonoBehaviour {
         public bool Update_botoes(){
 
             
-                bool is_click = Controlador_input.Get_up(Key_code.mouse_left);
+                bool is_click =  Input.GetMouseButtonUp( 0 );
                 
                 for(int i = 0 ;    i <  botoes.Length ;   i++){
 

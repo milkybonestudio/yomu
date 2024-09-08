@@ -5,7 +5,7 @@ using System;
 
     public static class Leitor_pontos__REGIAO_1__TRECHO_1 {
 
-        public static Ponto_DADOS_DEVELOPMENT Pegar( Posicao _posicao ){
+        public static Ponto_DADOS_DEVELOPMENT Pegar( Locator_position _posicao ){
 
 
             REGIAO_1__TRECHO_1__cidade_no_trecho cidade =  ( REGIAO_1__TRECHO_1__cidade_no_trecho ) _posicao.cidade_no_trecho_id;

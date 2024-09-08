@@ -18,7 +18,7 @@ using System;
 
                 public static Interativo_tela_DADOS_DESENVOLVIMENTO[] dados;
 
-                public static Interativo_tela_DADOS_DESENVOLVIMENTO Pegar_interativo(  Posicao _posicao,  int _interativo_id  ){
+                public static Interativo_tela_DADOS_DESENVOLVIMENTO Pegar_interativo(  Locator_position _posicao,  int _interativo_id  ){
 
                     int ponto_id = _posicao.ponto_id;
 

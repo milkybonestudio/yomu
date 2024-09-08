@@ -1,14 +1,12 @@
 
 
-public static class Construtor_containers_estados {
-
-
-    public static Dados_containers_entidade Construir( byte[] _dados ){
-
-        return null;
-
-    }
+public static class Interpreter_dados_estados {
 
     
+    public static void Add( byte[] dados_estados, int _operacao,  byte[] dados, int _pointer ){
+
+            
+
+    }
 
 }

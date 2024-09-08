@@ -3,7 +3,7 @@
 
     public static class Verificador_navegacao_DEVELOPMENT{
 
-            public static void Verificar_ponto_para_pegar( Ponto[][][][] _pontos, Posicao _posicao ){
+            public static void Verificar_ponto_para_pegar( Ponto[][][][] _pontos, Locator_position _posicao ){
                     
                     Ponto_DADOS_DEVELOPMENT ponto_dados =  Leitor_pontos.Pegar_ponto( _posicao );
 

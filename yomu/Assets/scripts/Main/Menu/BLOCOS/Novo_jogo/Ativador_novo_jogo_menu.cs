@@ -35,7 +35,7 @@ public static class Ativador_novo_jogo_menu {
 
                 Controlador.Pegar_instancia().jogo = Construtor_jogo.Construir();
                 Task_req task_para_carregar = Primeiro_jogo_suporte.Pegar_task_criar_primeiro_jogo_default( _save: save , _novo_jogo: true  );
-                Controlador_multithread.Pegar_instancia().Adicionar_task( task_para_carregar );
+                Controlador_tasks.Pegar_instancia().Adicionar_task( task_para_carregar );
 
 
                 Mono_instancia.Start_coroutine( novo_jogo_start_c() );

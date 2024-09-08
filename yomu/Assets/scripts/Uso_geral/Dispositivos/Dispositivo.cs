@@ -6,6 +6,11 @@ using UnityEngine;
         // fica resposnavel por carregar imagens, instanciar/destruir outros dispositivos e alterar dados do jogo.
 
 
+        //mark
+
+        //** tem que fazer um dispositivo teste que tenha tipos diferentes de botoes para garantir que quando alguma alteração seja feita eles nao percam o comprotamento
+
+
 public class Dispositivo {
 
 
@@ -16,10 +21,10 @@ public class Dispositivo {
         
         // --- MODULOS
         
-        public MODULO__imagens_dispositivo modulo_imagens;
-        public MODULO__estados_dispositivo modulo_estados;
-        public MODULO__audios_dispositivo modulo_audios;
-        public MODULO__dados_dispositivo  dados_dispositivo;
+        public GERENCIADOR__imagens_dispositivo gerenciador_imagens;
+        public GERENCIADOR__estados_dispositivo gerenciador_estados;
+        public GERENCIADOR__audios_dispositivo gerenciador_audios;
+        public GERENCIADOR__dados_dispositivo  dados_dispositivo;
 
     
         // --- OBJETOS PRINCIPAIS
@@ -59,8 +64,11 @@ public class Dispositivo {
 
             public void Esconder_dispositivo(){}
 
-
             public void Finalizar_dispositivo(){ interface_dispositivo.Finalizar( this ); }
+
+            public void Ativar_metodo( int _metodo_id,  object[] _argumentos ){  interface_dispositivo.Ativar_metodo( this,  _metodo_id,  _argumentos );  }
+
+
 
 
             // --- METODOS VISUAIS
@@ -84,8 +92,8 @@ public class Dispositivo {
 
             private void Carregar_dados(){
 
-                modulo_imagens.Carregar_imagens();
-                modulo_audios.Carregar_audios();
+                gerenciador_imagens.Carregar_imagens();
+                gerenciador_audios.Carregar_audios();
 
                 ativou_carregar = true;
 
@@ -136,14 +144,14 @@ public class Dispositivo {
 
 
                 // --- CRIA MODULO IMAGENS 
-                modulo_imagens = new MODULO__imagens_dispositivo( this );
+                gerenciador_imagens = new GERENCIADOR__imagens_dispositivo( this );
 
 
                 // --- CRIA MODULO AUDIO
-                modulo_audios = new MODULO__audios_dispositivo( this );
+                gerenciador_audios = new GERENCIADOR__audios_dispositivo( this );
 
                 // --- CRIA MODULO DADOS
-                dados_dispositivo = new MODULO__dados_dispositivo( this );
+                dados_dispositivo = new GERENCIADOR__dados_dispositivo( this );
 
 
                 // *** Define os objetos iniciais
@@ -186,8 +194,8 @@ public class Dispositivo {
                 if( !!!( ativou_carregar ) )
                     { throw new System.Exception($"Nao carregou os dados do dispositivo {interface_dispositivo.Pegar_nome()}");}
                 
-                modulo_imagens.Descompactar_dados();
-                modulo_audios.Descompactar_dados();
+                gerenciador_imagens.Descompactar_dados();
+                gerenciador_audios.Descompactar_dados();
 
         }
 
@@ -264,15 +272,15 @@ public class Dispositivo {
                 if( dispositivo_game_object == null )
                     { throw new System.Exception( $"tentou colocar as imagens no dispositivo { interface_dispositivo.Pegar_nome() } mas o dispositivo_game_object estava null. Provavelmente não foi colocado no jogo" ); }
 
-                if( modulo_imagens.sprites_especificas == null )
+                if( gerenciador_imagens.sprites_especificas == null )
                     { throw new System.Exception( "Nao foi dado o Carregar_imagens no modulo imagens dispositivos" ); }
 
 
 
                 string path_dispositivo = dados_dispositivo.path_para_o_dispositivo;
                     
-                modulo_imagens.Colocar_imagens_tipo_imagem_estatica( dados_dispositivo.dados_imagens_estaticas_dispositivo, path_dispositivo );
-                modulo_imagens.Colocar_imagens_tipo_botao( dados_dispositivo.dados_botoes_dispositivo, path_dispositivo );
+                gerenciador_imagens.Colocar_imagens_tipo_imagem_estatica( dados_dispositivo.dados_imagens_estaticas_dispositivo, path_dispositivo );
+                gerenciador_imagens.Colocar_imagens_tipo_botao( dados_dispositivo.dados_botoes_dispositivo, path_dispositivo );
 
                 return;
 
@@ -280,7 +288,7 @@ public class Dispositivo {
 
         private void Colocar_audios_interno(){
 
-            modulo_audios.Colocar_audios( dados_dispositivo );
+            gerenciador_audios.Colocar_audios( dados_dispositivo );
 
         }
 
@@ -298,7 +306,7 @@ public class Dispositivo {
                 Imagem_estatica_dispositivo imagem_estatica = dados_dispositivo.Definir_imagem_estatica( _dados );
 
                 // --- DEFINIR
-                modulo_imagens.Definir_imagem_estatica( _dados );
+                gerenciador_imagens.Definir_imagem_estatica( _dados );
 
                 return imagem_estatica;
 
@@ -312,7 +320,7 @@ public class Dispositivo {
 
                 // --- DEFINIR
 
-                modulo_imagens.Definir_botao( _dados );
+                gerenciador_imagens.Definir_botao( _dados );
 
                 return botao;
 

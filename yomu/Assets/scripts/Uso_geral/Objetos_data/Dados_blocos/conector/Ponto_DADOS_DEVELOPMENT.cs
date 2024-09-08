@@ -15,7 +15,7 @@
 
             //public Posicao_local posicao_local;
 
-            public Posicao posicao;
+            public Locator_position posicao;
             public string regiao_nome;
             public string trecho_nome;
             public string cidade_no_trecho_nome;

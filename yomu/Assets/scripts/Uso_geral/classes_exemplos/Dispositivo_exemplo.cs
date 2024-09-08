@@ -33,7 +33,7 @@ public class Dispositivo__exemplo : INTERFACE__dispositivo {
         }
 
 
-        public void Definir_imagens_interno( MODULO__imagens_dispositivo imagens ){
+        public void Definir_imagens_interno( GERENCIADOR__imagens_dispositivo imagens ){
 
                 // --- CRIAR
 
@@ -65,7 +65,7 @@ public class Dispositivo__exemplo : INTERFACE__dispositivo {
 
         }
 
-        public void Definir_audios_interno( MODULO__audios_dispositivo audios ){ 
+        public void Definir_audios_interno( GERENCIADOR__audios_dispositivo audios ){ 
 
                 // --- CRIAR
 
@@ -88,8 +88,8 @@ public class Dispositivo__exemplo : INTERFACE__dispositivo {
         public void Receber_dados( Dispositivo _dispositivo, System.Object _dados ){ Receber_dados_interno( _dispositivo, _dados ); }
         public void Finalizar( Dispositivo _dispositivo){ Finalizar_interno( _dispositivo ); }
 
-        public void Definir_audios( MODULO__audios_dispositivo _audios ){ Definir_audios_interno( _audios ); }
-        public void Definir_imagens( MODULO__imagens_dispositivo _imagens ){ Definir_imagens_interno( _imagens ); }
+        public void Definir_audios( GERENCIADOR__audios_dispositivo _audios ){ Definir_audios_interno( _audios ); }
+        public void Definir_imagens( GERENCIADOR__imagens_dispositivo _imagens ){ Definir_imagens_interno( _imagens ); }
 
 
         //byte[] bytes = ( new Dispositivo__exemplo() ).Converter_imagens();

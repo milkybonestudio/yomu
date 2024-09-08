@@ -20,7 +20,7 @@
                 
                 public int ponto_id;
 
-                public Posicao posicao;
+                public Locator_position posicao;
 
 
                         

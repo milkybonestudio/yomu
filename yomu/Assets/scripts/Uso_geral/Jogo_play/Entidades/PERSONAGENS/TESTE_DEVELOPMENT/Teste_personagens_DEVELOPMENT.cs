@@ -6,7 +6,7 @@ using System;
         public static class Teste_personagens_DEVELOPMENT {
 
 
-                public static void Verificar_se_personagem_realmente_foi_pedido( int slot_teste, int _personagem_id , Task_req[] requisicoes_personagens , Dados_containers_personagem[] dados_containers_personagens ,  System.Object[] personagens_AIs  ){
+                public static void Verificar_se_personagem_realmente_foi_pedido( int slot_teste, int _personagem_id , Task_req[] requisicoes_personagens , byte[] dados_containers_personagens ,  System.Object[] personagens_AIs  ){
 
 
                         if( requisicoes_personagens[ slot_teste] == null )

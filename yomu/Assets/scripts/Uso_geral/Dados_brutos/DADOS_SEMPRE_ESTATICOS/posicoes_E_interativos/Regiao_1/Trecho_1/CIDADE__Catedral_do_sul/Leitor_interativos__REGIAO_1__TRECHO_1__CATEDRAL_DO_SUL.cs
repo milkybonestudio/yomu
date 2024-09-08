@@ -6,7 +6,7 @@ using System;
 
         public static class Leitor_interativos__REGIAO_1__TRECHO_1__CATEDRAL_DO_SUL {
 
-                public static Interativo_tela_DADOS_DESENVOLVIMENTO Pegar( Posicao _posicao, int _interativo_id ){
+                public static Interativo_tela_DADOS_DESENVOLVIMENTO Pegar( Locator_position _posicao, int _interativo_id ){
 
                         CATEDRAL_DO_SUL__zona zona = ( CATEDRAL_DO_SUL__zona ) _posicao.zona_id;
                     

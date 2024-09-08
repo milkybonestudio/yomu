@@ -6,7 +6,7 @@ using System;
 
     public static class Leitor_interativos__REGIAO_1 {
 
-        public static Interativo_tela_DADOS_DESENVOLVIMENTO Pegar( Posicao _posicao, int _interativo_id ){
+        public static Interativo_tela_DADOS_DESENVOLVIMENTO Pegar( Locator_position _posicao, int _interativo_id ){
 
 
             REGIAO_1__trecho trecho =  ( REGIAO_1__trecho ) _posicao.trecho_id;

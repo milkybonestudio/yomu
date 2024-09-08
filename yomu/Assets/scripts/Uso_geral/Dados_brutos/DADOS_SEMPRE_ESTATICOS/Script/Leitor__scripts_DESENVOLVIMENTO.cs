@@ -5,7 +5,7 @@ using System;
 
     public class Leitor_scripts {
 
-        public  Ponto_DADOS_DEVELOPMENT Pegar_ponto( Posicao _posicao ){
+        public  Ponto_DADOS_DEVELOPMENT Pegar_ponto( Locator_position _posicao ){
 
                 Regiao_nome regiao =  ( Regiao_nome ) _posicao.regiao_id;
                 

@@ -2,7 +2,7 @@
 
 
 
-public class Dados_sistema_personagem_essenciais {
+public struct Dados_sistema_personagem_essenciais {
 
         
         // projecoes 
@@ -35,8 +35,8 @@ public class Dados_sistema_personagem_essenciais {
         public int atividade_atual_id;
 
 
-        public bool personagem_bloqueado = false;
-        public bool personagem_ja_foi_apresentado_ao_player = false;
+        public bool personagem_bloqueado;
+        public bool personagem_ja_foi_apresentado_ao_player;
 
     
 	

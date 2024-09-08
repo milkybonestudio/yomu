@@ -17,7 +17,7 @@ using System;
 
                 public static Ponto_DADOS_DEVELOPMENT[] dados;
 
-                public static Ponto_DADOS_DEVELOPMENT Pegar_ponto(  Posicao _posicao  ){
+                public static Ponto_DADOS_DEVELOPMENT Pegar_ponto(  Locator_position _posicao  ){
 
                     int ponto_id = _posicao.ponto_id;
 
@@ -35,10 +35,10 @@ using System;
 
 
 
-                public static Posicao Pegar_posicao( string _nome_ponto ){
+                public static Locator_position Pegar_posicao( string _nome_ponto ){
 
                         
-                        Posicao posicao = new Posicao();
+                        Locator_position posicao = new Locator_position();
                         posicao.regiao_id = ( int ) Regiao_nome.regiao_1;
                         posicao.trecho_id = ( int ) REGIAO_1__trecho.trecho_1;
                         posicao.cidade_no_trecho_id = ( int ) REGIAO_1__TRECHO_1__cidade_no_trecho.catedral_do_sul;
@@ -47,8 +47,8 @@ using System;
                         posicao.local_id = ( int ) CATEDRAL_DO_SUL__ZONA_LESTE__local.dormitorio_feminino;
                         posicao.area_id = ( int ) CATEDRAL_DO_SUL__ZONA_LESTE__DORMITORIO_FEMININO__area.nara_room;
 
-                        System.Object ponto; // ??
-                        System.Type tipo = typeof( CATEDRAL_DO_SUL__ZONA_LESTE__DORMITORIO_FEMININO__NARA_ROOM__ponto );
+                        object ponto; // ??
+                        Type tipo = typeof( CATEDRAL_DO_SUL__ZONA_LESTE__DORMITORIO_FEMININO__NARA_ROOM__ponto );
 
                         bool conseguiu_fazer_o_parse = System.Enum.TryParse(  tipo, _nome_ponto, out ponto );
 
