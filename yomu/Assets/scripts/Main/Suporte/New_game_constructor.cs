@@ -1,10 +1,10 @@
 
 
+public static class New_game_constructor {
 
-public static class Gerador_novo_save {
 
 
-        public static void Copiar_arquivos_do_novo_jogo( int _save ){
+        public static void Construct( int _save ){
 
                 // *** tem que iniciar o save antes
                 // ** TIRAR DEPOIS 
@@ -118,6 +118,5 @@ public static class Gerador_novo_save {
 
 
 
-    
 
 }

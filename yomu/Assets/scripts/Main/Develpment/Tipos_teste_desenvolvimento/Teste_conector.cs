@@ -16,7 +16,7 @@ public static class Teste_interacao {
                 Chamar_classes_teste( _chave, "estado" );
 
                 Jogo.Pegar_instancia().bloco_atual = Bloco.interacao;
-                Jogo.Pegar_instancia().interfaces_blocos[ ( int ) Bloco.interacao ] =   Construtor_bloco_INTERACAO.Construir();   // Construtor_bloco_CONECTOR.Construir();
+                Jogo.Pegar_instancia().interfaces_blocos[ ( int ) Bloco.interacao ] =   Construtor_bloco_INTERACAO.Construir( null );   // Construtor_bloco_CONECTOR.Construir();
 
                 Chamar_classes_teste( _chave, "script_inicial" );
 

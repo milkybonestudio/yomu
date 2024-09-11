@@ -16,7 +16,7 @@ public static class Teste_cartas {
                 // --- INICIAR 
 
                 Jogo.Pegar_instancia().bloco_atual = Bloco.cartas;
-                Jogo.Pegar_instancia().interfaces_blocos[ ( int ) Bloco.cartas ] =  Construtor_bloco_CARTAS.Construir(); // BLOCO_cartas.Iniciar_bloco_cartas();
+                Jogo.Pegar_instancia().interfaces_blocos[ ( int ) Bloco.cartas ] =  Construtor_bloco_CARTAS.Construir( null ); // BLOCO_cartas.Iniciar_bloco_cartas();
 
                 Chamar_classes_teste( _chave, "script_inicial" );
 

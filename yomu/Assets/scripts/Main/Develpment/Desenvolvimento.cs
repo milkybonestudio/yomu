@@ -56,7 +56,9 @@ public class Controlador_development {
                 Controlador.Pegar_instancia().modo_controlador_atual = Controlador_modo.desenvolvimento;
 
                 // --- SETA TUDO COMO DEFAULT
-                Controlador.Pegar_instancia().jogo = Construtor_jogo.Construir();
+                //mark
+                // ** tem que criar uma funcao em especifico
+                //Controlador.Pegar_instancia().jogo = Construtor_jogo.Construir();
                 
                 // --- DESENVOLVIMENTO UTILIDADES
                 Colocar_estado_teste();

@@ -2,7 +2,7 @@ using System;
 
 
 
-public class GERENCIADOR__save_dados_sistema : INTERFACE__coletor_dados_save {
+public class GERENCIADOR__save_dados_sistema : INTERFACE__buffer {
 
         
         public byte[] buffer = new byte[ 10_000 ] ;

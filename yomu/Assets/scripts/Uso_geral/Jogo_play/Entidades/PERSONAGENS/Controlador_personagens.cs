@@ -17,13 +17,20 @@ public class Controlador_personagens : INTERFACE__controlador_entidade {
 
 		
 
-        public MODULO__salvador_buffer_entidade modulo_salvador_buffer;
-        public Dados_para_salvar[] Pegar_dados_para_salvar(){ return Array.ConvertAll( personagens, ( personagem ) => { return personagem.Pegar_dados_para_salvar();  } );}
 
+        public MODULO__buffer_entidade modulo_buffer_stack;
+        
+        public MODULO__buffer_entidade modulo_buffer_dados_completos; // ** só vai ser usado quando for salvar os dados completos. vai ser executado na multithread
+
+        public MODULO__buffer_entidade modulo_buffer_dados_para_salvar;
+
+        
+        public Dados_para_salvar[] Pegar_dados_para_salvar(){ return Array.ConvertAll( personagens, ( personagem ) => { return personagem.Pegar_dados_para_salvar();  } );}
 
 
 		public MODULO__leitor_de_arquivos leitor_de_arquivos;
 		public MODULO__leitor_dll modulo_leitor_dll;
+
 
 		// --- MODIFICADORES
 

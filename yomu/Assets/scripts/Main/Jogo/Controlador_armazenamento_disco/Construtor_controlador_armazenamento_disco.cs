@@ -3,7 +3,7 @@ using System;
 public static class Construtor_controlador_armazenamento_disco {
 
 
-        public static Controlador_armazenamento_disco Construir( int _save, bool _novo_jogo ){
+        public static Controlador_armazenamento_disco Construir( Dados_sistema_estado_atual _dados_sistema_estado_atual, int _save, bool _novo_jogo  ){
 
 
                 // --- por hora nao deixa
@@ -45,16 +45,6 @@ public static class Construtor_controlador_armazenamento_disco {
 
 
 
-                    // --- SISTEMA
-                    //mark 
-                    // ** vai ser pedido primeiro
-                    //Construtor_controlador_sistema.Construir( dados_sistema_estado_atual ); // constroi player
-
-
-                    Controlador_timer.Construir( dados_sistema_estado_atual );
-
-
-                    buffers_dados
                     
                     
 

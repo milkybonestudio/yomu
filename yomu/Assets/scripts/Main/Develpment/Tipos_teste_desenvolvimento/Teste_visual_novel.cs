@@ -12,7 +12,7 @@ public static class Teste_story {
 
                 // --- INICIA VN
                 Jogo.Pegar_instancia().bloco_atual = Bloco.story;
-                Jogo.Pegar_instancia().interfaces_blocos[ ( int ) Bloco.story ] =   Construtor_bloco_STORY.Construir();   //  Construtor_bloco_VISUAL_NOVEL.Construir();
+                Jogo.Pegar_instancia().interfaces_blocos[ ( int ) Bloco.story ] =   Construtor_bloco_STORY.Construir( null );   //  Construtor_bloco_VISUAL_NOVEL.Construir();
 
                 Chamar_classes_teste( _chave, "script_inicial" );
 

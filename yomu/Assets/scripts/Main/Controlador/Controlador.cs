@@ -5,6 +5,9 @@ using UnityEngine;
 
 
 
+// ** talvez mudar para Program?
+
+
 public class Controlador : MonoBehaviour {
 
 
@@ -43,14 +46,6 @@ public class Controlador : MonoBehaviour {
 
         public void Update() {
 
-            
-                foreach( KeyCode kc in Enum.GetValues( typeof( KeyCode ) ) ){
-
-                    if( Input.GetKeyDown( kc ) )
-                        { Debug.Log( kc ); }
-
-                }
-
                 try{ Update_interno(); } catch( Exception exp ){ Debug.LogError( "Tem que fazer um modo para mandar mensagem " ); }
             
         }
@@ -61,36 +56,35 @@ public class Controlador : MonoBehaviour {
             return;
 
             
-                if( Input.GetKey( KeyCode.F1 ) && Input.GetKey( KeyCode.Escape ) ) 
-                        { Application.Quit(); } 
-
                 Console.Update();
                 controlador_audio.Update();
 
-                //Controlador_input.Update_mouse();
+
                 Controlador_dados.Pegar_instancia().Atualizar_mouse_atual(); 
+                controlador_input.Update();
 
                 
-                switch (  modo_controlador_atual ) {
+                switch (  modo_controlador_atual ){
                         
-                        case Controlador_modo.desenvolvimento: controlador_development.Update(); break;// --- SE EM DESENVOLVIMENTO : DESENVOLVIMENTO.UPDATE => MODO ESPECIFICO UPDATE
+
+                        case Controlador_modo.desenvolvimento: controlador_development.Update(); break; // --- SE EM DESENVOLVIMENTO : DESENVOLVIMENTO.UPDATE => MODO ESPECIFICO UPDATE
 
                         case Controlador_modo.jogo :  jogo.Update(); break;
                         case Controlador_modo.login :  login.Update() ; break;
                         case Controlador_modo.menu : menu.Update() ; break;
 
                         case Controlador_modo.reconstruindo_save : return;
-                        case Controlador_modo.transicao: console.log("esta no modo_tela transicao"); break;
-                        case Controlador_modo.nada:  break; 
+                        //case Controlador_modo.transicao: console.log("esta no modo_tela transicao"); break;
+                        
 
                 }
 
-
-                controlador_input.Update();
                 controlador_tasks.Update();
+                return;
                 
     
         }
+
 
 
 

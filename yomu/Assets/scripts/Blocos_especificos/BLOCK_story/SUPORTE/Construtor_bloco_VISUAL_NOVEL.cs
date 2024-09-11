@@ -3,7 +3,7 @@ using UnityEngine;
 public static class Construtor_bloco_STORY {
     
 
-        public static INTERFACE__bloco Construir(){
+        public static INTERFACE__bloco Construir( GameObject _container ){
 
 
                     // --- VERIFICAR SE O BLOCO JA NAO FOI CRIADO
@@ -21,7 +21,7 @@ public static class Construtor_bloco_STORY {
 
                         bloco.leitor_visual_novel  = Leitor_visual_novel.Construir();
                         bloco.controlador_personagens_visual_novel = Controlador_personagens_visual_novel.Construir();
-                        bloco.controlador_tela_story = Controlador_tela_story.Construir();
+                        bloco.controlador_tela_story = Controlador_tela_story.Construir( _container );
                         bloco.controlador_UI_visual_novel = new Controlador_UI_visual_novel();
                         bloco.bloqueador = new Bloqueador_cenas_visual_novel();
 

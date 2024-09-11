@@ -1,7 +1,7 @@
 
 public struct Buffer_localizador {
 
-    public byte[] instrucoes;
+    public byte[] buffer;
     public int pointer;
 
 }

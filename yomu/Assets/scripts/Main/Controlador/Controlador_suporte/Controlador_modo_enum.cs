@@ -1,6 +1,6 @@
 
 
-public enum Controlador_modo {
+public enum Controlador_modo : byte {
 
 
         nada,
@@ -8,11 +8,22 @@ public enum Controlador_modo {
         login,
         menu,
         jogo,
-        transicao,
+
 
         reconstruindo_save,
 
         desenvolvimento,
 
+        //transicao,
+
+}
+
+
+public struct Program_state {
+
+    public byte mode;
+    public bool is_changing_block;
+    public bool is_changing_block_mode;
+    
 
 }

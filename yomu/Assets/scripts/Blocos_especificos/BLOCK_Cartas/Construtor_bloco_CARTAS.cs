@@ -3,7 +3,7 @@ using UnityEngine;
 public static class Construtor_bloco_CARTAS {
     
 
-        public static INTERFACE__bloco Construir( ){
+        public static INTERFACE__bloco Construir( GameObject _container ){
 
 
                     // --- VERIFICAR SE O BLOCO JA NAO FOI CRIADO

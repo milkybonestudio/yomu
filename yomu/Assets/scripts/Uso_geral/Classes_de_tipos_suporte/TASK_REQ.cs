@@ -39,23 +39,26 @@ public static class TASK_REQ {
 
         public static Task_req Pegar_task_com_maior_prioridade( Task_req[] _arr  ){
 
-                Task_req req = null;
-                
-                for( int task_index = 0 ; task_index < _arr.Length ; task_index++ ){
+                Task_req req_com_maior_prioridade = null;
+
+                for( int task_index = 1 ; task_index < _arr.Length ; task_index++ ){
 
                         Task_req task = _arr[ task_index ];
+                        
+                        if ( req_com_maior_prioridade == null )
+                            { req_com_maior_prioridade = task; }
 
                         if( task == null )
                             { continue; }
             
-                        if( task.prioridade > req.prioridade ) 
-                            { req = task; }
+                        if( task.prioridade > req_com_maior_prioridade.prioridade ) 
+                            { req_com_maior_prioridade = task; }
 
                         continue;
 
                 }
 
-                return req;
+                return req_com_maior_prioridade;
 
         }
 

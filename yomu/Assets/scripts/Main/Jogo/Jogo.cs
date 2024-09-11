@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 
 
+
 public class Jogo { 
 
 
@@ -15,18 +16,32 @@ public class Jogo {
 
         // --- CONTROLADORES
         public Controlador_armazenamento_disco controlador_armazenamento_disco;
+        public Controlador_sistema controlador_sistema;
         public Controlador_AI controlador_AI;
+        
 
         // TELA 
-        public GameObject canvas;
-        public GameObject canvas_3d;
+        public GERENCIADOR__tela_jogo gerenciador_tela_jogo;
         
+
+        // ** isso ficaria em controlador_sistema_estado_atual
         public Bloco bloco_atual = Bloco.nada;
+        public Game_update_mode game_update_mode;
+
 
         public void Update(){
 
-                // UPDATE
-                interfaces_blocos[ ( int ) bloco_atual ].Update();
+                controlador_armazenamento_disco.Update();
+
+                switch( game_update_mode ){
+
+                    case Game_update_mode.blocks: interfaces_blocos[ ( int ) bloco_atual ].Update(); break;
+                    case Game_update_mode.transition: break;
+
+                }
+
+                if( CONTROLLER__transition.instancia.transition_request_visual != null )
+                    { game_update_mode = Game_update_mode.transition; } // --- INCIA TRANSICAO
 
         }
 
@@ -41,11 +56,14 @@ public class Jogo {
                     { bloco_interface.Destruir(); }
 
                 Finalizador_UI.Finalizar();
+                CONTROLLER__game_data.instancia = null;
+
 
                 return;
 
 
         }
+
 
 
 }

@@ -16,6 +16,8 @@ public class Menu : MonoBehaviour {
         public static Menu Pegar_instancia(){ return instancia; }
         
         public static Menu Construir(){ instancia = new Menu(); return instancia;}
+
+        
         
 
 
@@ -97,39 +99,11 @@ public class Menu : MonoBehaviour {
 
         }
 
+        public void Finalizar(){
 
-
-
-
-
-
-
-        //mark
-        // ** tem que mover para outro lugar
-        public static class Sistema_mensagens {
-
-                public static void Alertar_player( string _mensagem ){
-
-                        Debug.Log( "fazer mensagem depois" );
-                        Debug.Log( _mensagem );
-                        return;
-
-                }
-
-        }
-
-
-
-
-
-
-
-        
-        // vai destruir tudo quando iniciar o jogo
-        
-        public void Zerar_dados(){
-
-                // Mono_instancia.DestroyImmediate(canvas);
+                //mark
+                // ** vai deixar null o menu e vai destuir o game_object que vier do prefab
+                //Mono_instancia.DestroyImmediate();
                 // canvas = null;
                 // canvas_menu = null;
                 // canvas_menu_movel = null;

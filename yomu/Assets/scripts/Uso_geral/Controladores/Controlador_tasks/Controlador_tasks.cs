@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using UnityEngine;
 using System.Collections.Concurrent;
+using System.Collections;
 
 
 
@@ -35,10 +36,15 @@ public class Controlador_tasks  {
         public Task_req[] tasks_em_espera_para_ativar_multithread;// somente multithread deleta e somente single thread adiciona.
         public Task_req[] tasks_em_espera_para_ativar_single_thread;
 
-        System.Diagnostics.Stopwatch relogio;
+        private System.Diagnostics.Stopwatch relogio;
+
+        public bool block_frame;
 
         public void Update(){
 
+                if( block_frame )
+                    { block_frame = false; return; }
+                
 
                 relogio.Start();
 
@@ -73,6 +79,43 @@ public class Controlador_tasks  {
                 
                 }
                 
+
+        }
+
+        public Coroutine Wait_task_ends( Task_req _task_request, float _max_time_ms ){
+
+                return Mono_instancia.Start_coroutine( Wait() );
+
+                IEnumerator Wait(){
+
+                        float time = 0f;
+
+                        while( true ){
+
+                            time += ( Time.deltaTime * 1000f );
+
+                            if( time > _max_time_ms )
+                                { throw new Exception( $"Passou do tempo na task { _task_request.nome }" ); }
+
+                            if(  _task_request.finalizado )
+                                { break; }
+                                
+                            yield return null; 
+
+                        }
+                        
+                        yield break;
+
+                };
+
+                                                    
+
+        }
+
+
+        public void Block_frame_update(){
+
+            block_frame = true;
 
         }
 

@@ -75,7 +75,8 @@ public class MODULO__gerenciador_instrucoes_de_seguranca {
 
         public int tamanho_buffer = 20_000;
 
-        public MODULO__salvador_buffer_entidade[] buffer_dados;
+        // ** buffer com todos os dados para pegar e salvar na stack. 
+        public INTERFACE__buffer[] buffers_para_salvar_stack;
 
 
         public void Salvar_instrucoes_em_disco(){
@@ -92,15 +93,15 @@ public class MODULO__gerenciador_instrucoes_de_seguranca {
                 buffer_para_salvar_stack[ ( index_bloco_id + 0 ) ] = ( byte ) ( numero_bloco_atual >> 8 );
                 buffer_para_salvar_stack[ ( index_bloco_id + 1 ) ] = ( byte ) ( numero_bloco_atual >> 0 );
 
-                INTERFACE__controlador_entidade[] controladores_entidades
+                //INTERFACE__controlador_entidade[] controladores_entidades;
 
                 
                 // --- COLOCAR DADOIS
                 
-                for( int interface_index = 0 ; interface_index < coletores_dados_save.Length ; interface_index++  ){
+                for( int interface_index = 0 ; interface_index < buffers_para_salvar_stack.Length ; interface_index++  ){
 
-                        INTERFACE__coletor_dados_save gerenciador = coletores_dados_save[ interface_index ];
-                        index_buffer = Passar_dados_para_buffer( index_buffer, gerenciador );
+                        INTERFACE__buffer buffer = buffers_para_salvar_stack[ interface_index ];
+                        index_buffer = Passar_dados_para_buffer( index_buffer, buffer );
                         continue;
 
                 }
@@ -153,12 +154,12 @@ public class MODULO__gerenciador_instrucoes_de_seguranca {
 
 
 
-    private int Passar_dados_para_buffer( int index_buffer, INTERFACE__coletor_dados_save _interface ){
+    private int Passar_dados_para_buffer( int index_buffer, INTERFACE__buffer _buffer ){
         
 
-            Instrucoes_de_seguranca instrucoes = _interface.Pegar_instrucoes_de_seguranca();
+            Buffer_localizador instrucoes = _buffer.Pegar_dados();
 
-            byte[] instrucoes_dados = instrucoes.instrucoes; 
+            byte[] instrucoes_dados = instrucoes.buffer; 
             int length = instrucoes.pointer;
 
             int novo_index = ( index_buffer + length );

@@ -24,19 +24,11 @@ public class Controlador_armazenamento_disco {
         // ** quando for realmente salvar todos os dados em disco
         public Task_req task_salvar;
 
-        public INTERFACE_buffer[] buffers_dados;
+        public INTERFACE__buffer[] buffers_dados;
 
 
         public int frame = 1;
-        public int espacamento = 60;
-
-        public void Update_bloco(){
-
-            // ---> cuidar animacao
-            // ---> verificar se terminou 
-            // ---> garantir que nao passe muito tempo
-
-        }
+        public const int espacamento = 60;
 
 
         public void Update(){
@@ -60,11 +52,22 @@ public class Controlador_armazenamento_disco {
                 frame = ( frame + 1 ) % espacamento ;
 
 
+                switch( frame ){
+
+                    case 0 : modulo_gerenciador_instrucoes_de_seguranca.Salvar_instrucoes_em_disco(); return;  //--- garante que todos os arquivos das instrucoes de seguranca esstao atualizados 
+                    case ( ( espacamento  * 1 ) / 3 ) : Verificar_dados_para_salvar(); break;
+                    case ( ( espacamento  * 2 ) / 3 ) : Verificar_dados_para_salvar(); break;
+
+                }
+
+
+
+
                 if( frame  == 0 )
                     { modulo_gerenciador_instrucoes_de_seguranca.Salvar_instrucoes_em_disco(); return; } //--- garante que todos os arquivos das instrucoes de seguranca esstao atualizados 
 
                 if( frame == ( espacamento / 3 ) || frame == ( ( espacamento * 2 ) / 3 ) )
-                    { Verificar_dados_para_salvar(); } // --- 2 vezes por espacamento
+                    {  } // --- 2 vezes por espacamento
 
                 
 
@@ -81,18 +84,19 @@ public class Controlador_armazenamento_disco {
                 // // a maior parte das coisas vao ser salvas em grandes blocos, ver exatamente oque pode/precisa ser salvo run time 
                 // ** mesmo que esses dados sejam perdidos em ultima analise os dados vão estar salvo nas instrucoes
 
-                for( int coletores_index = 0 ; coletores_index < coletores_dados.Length ; coletores_index++ ){
+                // for( int coletores_index = 0 ; coletores_index < buffers_dados.Length ; coletores_index++ ){
 
-                        Dados_para_salvar[] dados_para_salvar = coletores_dados[ coletores_index ].Pegar_dados_para_salvar();
+                //         Dados_para_salvar[] dados_para_salvar = buffers_dados[ coletores_index ].Pegar_dados_para_salvar();
 
-                        if( dados_para_salvar == null )
-                            { continue; }
+                //         if( dados_para_salvar == null )
+                //             { continue; }
 
-                        Criar_task_salvar_dados( dados_para_salvar );
+                //         Criar_task_salvar_dados( dados_para_salvar );
                 
-                }
+                // }
 
         }
+
 
 
 

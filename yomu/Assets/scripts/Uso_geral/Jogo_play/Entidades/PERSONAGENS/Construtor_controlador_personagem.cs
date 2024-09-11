@@ -14,7 +14,9 @@ public static class Construtor_controlador_personagens {
 					// ---- DADOS
 					
 				
-                    controlador.modulo_salvador_buffer = new MODULO__salvador_buffer_entidade( Tipo_entidade.personagem );
+                    controlador.modulo_buffer_stack = new MODULO__buffer_entidade( Tipo_entidade.personagem );
+                    controlador.modulo_buffer_dados_completos = new MODULO__buffer_entidade( Tipo_entidade.personagem );
+
                     controlador.modulo_leitor_dll = new MODULO__leitor_dll  (
                                                                                 _nome_dll: "Personagens_run_time",
                                                                                 _numero_inicial_de_slots: 50

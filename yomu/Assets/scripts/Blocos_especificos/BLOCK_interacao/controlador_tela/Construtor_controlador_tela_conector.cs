@@ -3,13 +3,13 @@ using UnityEngine;
 
 public static class Construtor_controlador_tela_conector{
 
-        public static Controlador_tela_conector Construir(){
+        public static Controlador_tela_conector Construir( GameObject _container ){
 
                 Controlador_tela_conector controlador = new Controlador_tela_conector();
                 Controlador_tela_conector.instancia = controlador;
 
 
-                        controlador.container_conector = GameObject.Find( "Tela/Canvas/Jogo/Conector" );
+                        controlador.container_conector = _container;
 
                         controlador.posicao_mouse = Controlador_dados.Pegar_instancia().posicao_mouse;
                         controlador.controlador_interativos = Controlador_interativos.Pegar_instancia();

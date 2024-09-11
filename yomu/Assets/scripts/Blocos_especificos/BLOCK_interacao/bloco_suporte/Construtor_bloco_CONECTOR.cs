@@ -3,12 +3,13 @@ using UnityEngine;
 public static class Construtor_bloco_INTERACAO {
     
 
-        public static INTERFACE__bloco Construir(){
+        public static INTERFACE__bloco Construir( GameObject _container ){
 
 
                     // --- VERIFICAR SE O BLOCO JA NAO FOI CRIADO
                     if( BLOCO_interacao.instancia != null )
                         { throw new System.Exception( "Tentou iniciar o BLOCO_interacao mas a instancia não estava null" ); }
+
 
 
                     // --- TELA
@@ -19,7 +20,7 @@ public static class Construtor_bloco_INTERACAO {
         
                     // -- CONTROLADORES
 
-                    Construtor_controlador_tela_conector.Construir();
+                    Construtor_controlador_tela_conector.Construir( _container );
                     Construtor_controlador_interativos.Construir();
                     Controlador_movimento.Construir();
 

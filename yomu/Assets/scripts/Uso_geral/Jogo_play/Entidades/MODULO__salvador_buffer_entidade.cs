@@ -3,11 +3,11 @@ using System.IO;
 using UnityEngine;
 
 
-public class MODULO__salvador_buffer_entidade : INTERFACE_buffer {
+public class MODULO__buffer_entidade : INTERFACE__buffer {
 
         // ** a funcao principal por hora é guardar o buffer e salvar
 
-        public MODULO__salvador_buffer_entidade( Tipo_entidade _tipo ){ 
+        public MODULO__buffer_entidade( Tipo_entidade _tipo ){ 
 
             tipo_entidade = _tipo; 
 
@@ -87,18 +87,18 @@ public class MODULO__salvador_buffer_entidade : INTERFACE_buffer {
 
 
         // ** para salvar em disco( ** somente quando a stack ficar vazia )
-        public Buffer_localizador[] Pegar_todos_os_dados_para_salvar(){ throw new System.Exception( $"nao foi implementado Pegar_todos_os_dados_para_salvar no controlador{ Pegar_nome() }" ); }
+        public Buffer_localizador[] Pegar_todos_os_dados_para_salvar(){ return null; }
 
         // ** somente dados que não precisam mais estar na ram
-        public Buffer_localizador[] Pegar_dados_para_salvar(){ throw new System.Exception( $"nao foi implementado Pegar_dados_para_salvar no controlador{ Pegar_nome() }" );}
+        public Buffer_localizador[] Pegar_dados_para_salvar(){ return null;}
         
         // ** salvar na stack 
         public Buffer_localizador Pegar_instrucoes_de_seguranca(){
 
                 // ** precisa colocar novamente sempre que for salvar em caso de expancao do array
-                Instrucoes_de_seguranca instrucoes = new Instrucoes_de_seguranca();
+                Buffer_localizador instrucoes = new Buffer_localizador();
 
-                instrucoes.instrucoes = entidades_instrucoes_stack;
+                instrucoes.buffer = entidades_instrucoes_stack;
                 instrucoes.pointer = index_instrucao_atual_stack;
                 index_instrucao_atual_stack = 0;
 

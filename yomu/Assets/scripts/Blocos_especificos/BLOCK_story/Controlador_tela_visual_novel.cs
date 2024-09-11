@@ -13,7 +13,7 @@ public class Controlador_tela_story {
         public static Controlador_tela_story Pegar_instancia(){ return instancia; }
 
 
-        public static Controlador_tela_story Construir(){ 
+        public static Controlador_tela_story Construir( GameObject _container ){ 
 
                 Controlador_tela_story controlador = new Controlador_tela_story(); 
 
