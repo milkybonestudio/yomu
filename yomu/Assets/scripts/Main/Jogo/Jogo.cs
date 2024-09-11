@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 
 
-
 public class Jogo { 
 
 
@@ -40,8 +39,20 @@ public class Jogo {
 
                 }
 
+                Verity_transition();
+
+        }
+
+        private void Verity_transition(){
+
                 if( CONTROLLER__transition.instancia.transition_request_visual != null )
-                    { game_update_mode = Game_update_mode.transition; } // --- INCIA TRANSICAO
+                    { 
+                        // --- INCIA TRANSICAO
+                        game_update_mode = Game_update_mode.transition; 
+                        CONTROLLER__transition.instancia.Start_transition_BLOCK();
+                    }
+
+                return;
 
         }
 

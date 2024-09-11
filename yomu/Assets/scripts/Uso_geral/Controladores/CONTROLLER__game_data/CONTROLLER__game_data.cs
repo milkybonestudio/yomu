@@ -17,6 +17,9 @@ public class CONTROLLER__game_data {
         // --- DADOS QUE VAO SER COLCOADOS QUANDO O JOGO INICIAR
         public INTERFACE__bloco[] blocos;
 
+        public Game_current_state game_current_state;
+
+        
 
 
 }

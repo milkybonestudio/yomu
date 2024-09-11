@@ -1,9 +1,11 @@
 using System.Runtime.InteropServices;
 
 
-public class Game_actual_state {
+public struct Game_current_state {
 
-    public BLOCK_INTERACTION__actual_state block_interaction;
+
+    public SYSTEM__current_state system;
+    public BLOCK_INTERACTION__current_state block_interaction;
     
 
 
