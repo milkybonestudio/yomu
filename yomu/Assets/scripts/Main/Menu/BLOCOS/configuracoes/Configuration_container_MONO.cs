@@ -81,7 +81,7 @@ public class Configuration_container : MonoBehaviour {
             tela_cheia_YES_image = full_screen.GetChild( 0 ).gameObject.GetComponent<Image>();
 
             // nao muda a logica, somente a imagem
-            Trocar_volume_ativo(   (float)  Controlador_configuracoes.Pegar_instancia().volume   );
+            Trocar_volume_ativo(   (float)  CONTROLLER__configurations.Pegar_instancia().volume   );
 
         
         }
@@ -98,7 +98,7 @@ public class Configuration_container : MonoBehaviour {
                 if( Verificar_tela_cheia() ) 
                         { return; }
 
-                Controlador_cursor.Pegar_instancia().Mudar_cursor( Cor_cursor.off );
+                Controlador_cursor.Pegar_instancia().Change_action( Cursor_action.choice ); //Mudar_cursor( Cor_cursor.off );
                 
                 return;
 
@@ -107,7 +107,7 @@ public class Configuration_container : MonoBehaviour {
 
         public void Trocar_modo_texto( Tipo_construcao_texto _tipo ){
 
-                Controlador_configuracoes.Pegar_instancia().Mudar_tipo_texto( _tipo );
+                CONTROLLER__configurations.Pegar_instancia().Mudar_tipo_texto( _tipo );
 
                 Vector3 nova_posicao = new Vector3();
                 switch( _tipo ){
@@ -146,17 +146,17 @@ public class Configuration_container : MonoBehaviour {
 
                 Screen.fullScreen = !Screen.fullScreen;
                 
-                if(Controlador_configuracoes.Pegar_instancia().full_screen){
+                if( CONTROLLER__configurations.Pegar_instancia().full_screen){
 
                         tela_cheia_YES_image.color = new Color( 1f , 1f,1f , 0f );
-                        Controlador_configuracoes.Pegar_instancia().full_screen = false;
+                        CONTROLLER__configurations.Pegar_instancia().full_screen = false;
 
                         return;
 
                 } 
                     
                 tela_cheia_YES_image.color = new Color( 1f , 1f,1f , 1f );
-                Controlador_configuracoes.Pegar_instancia().full_screen = true;
+                CONTROLLER__configurations.Pegar_instancia().full_screen = true;
                 
                 return;
 
@@ -165,8 +165,8 @@ public class Configuration_container : MonoBehaviour {
 
         public bool Verificar_volume(){
 
-                float mouse_x = Controlador_dados.Pegar_instancia().posicao_mouse[0]  -    configuration_container_rect.localPosition[0]  -  volume_transform.localPosition[0] - 960f;
-                float mouse_y = Controlador_dados.Pegar_instancia().posicao_mouse[1]  -  configuration_container_rect.localPosition[1]  -  volume_transform.localPosition[1] - 540f ;                
+                float mouse_x = CONTROLLER__data.Pegar_instancia().posicao_mouse[0]  -    configuration_container_rect.localPosition[0]  -  volume_transform.localPosition[0] - 960f;
+                float mouse_y = CONTROLLER__data.Pegar_instancia().posicao_mouse[1]  -  configuration_container_rect.localPosition[1]  -  volume_transform.localPosition[1] - 540f ;                
 
                 float x_min  = volume_botao_rect.localPosition[0] - (volume_botao_rect.rect.width / 2) ;
                 float x_max  = volume_botao_rect.localPosition[0] + (volume_botao_rect.rect.width / 2) ;
@@ -185,7 +185,7 @@ public class Configuration_container : MonoBehaviour {
                             
                         int novo_volume =    Convert.ToInt32(  100f *  ((nova_posicao   +   volume_base_rect.rect.width/ 2) / volume_base_rect.rect.width )  ) ;
                         Trocar_volume_ativo( (float) novo_volume);
-                        Controlador_configuracoes.Pegar_instancia().Mudar_volume(novo_volume);
+                        CONTROLLER__configurations.Pegar_instancia().Mudar_volume(novo_volume);
 
                         return true;
 
@@ -212,8 +212,8 @@ public class Configuration_container : MonoBehaviour {
 
 
                 //  tipo texto         
-                float mouse_x = Controlador_dados.Pegar_instancia().posicao_mouse[0]  -    configuration_container_rect.localPosition[0]  -  texto_transform.localPosition[0] - 960f;
-                float mouse_y = Controlador_dados.Pegar_instancia().posicao_mouse[1]  -  configuration_container_rect.localPosition[1]  -  texto_transform.localPosition[1] - 540f ;
+                float mouse_x = CONTROLLER__data.Pegar_instancia().posicao_mouse[0]  -    configuration_container_rect.localPosition[0]  -  texto_transform.localPosition[0] - 960f;
+                float mouse_y = CONTROLLER__data.Pegar_instancia().posicao_mouse[1]  -  configuration_container_rect.localPosition[1]  -  texto_transform.localPosition[1] - 540f ;
 
 
                 // fade 
@@ -273,8 +273,8 @@ public class Configuration_container : MonoBehaviour {
 
         public bool Verificar_tela_cheia(){
 
-                float mouse_x = Controlador_dados.Pegar_instancia().posicao_mouse[0]  -    configuration_container_rect.localPosition[0]  -  full_screen.localPosition[0] - 960f;
-                float mouse_y = Controlador_dados.Pegar_instancia().posicao_mouse[1]  -  configuration_container_rect.localPosition[1]  -  full_screen.localPosition[1] - 540f ;
+                float mouse_x = CONTROLLER__data.Pegar_instancia().posicao_mouse[0]  -    configuration_container_rect.localPosition[0]  -  full_screen.localPosition[0] - 960f;
+                float mouse_y = CONTROLLER__data.Pegar_instancia().posicao_mouse[1]  -  configuration_container_rect.localPosition[1]  -  full_screen.localPosition[1] - 540f ;
 
                 float x_min  = full_screen_ativa.localPosition[0] - (full_screen_ativa.rect.width / 2) ;
                 float x_max  = full_screen_ativa.localPosition[0] + (full_screen_ativa.rect.width / 2) ;

@@ -31,14 +31,15 @@ public static class Construtor_controlador {
 
                 Controlador_cache.Construir();
 
-                controlador.controlador_tasks = Controlador_tasks.Construir();                
-                controlador.controlador_audio = Construtor_controlador_audio.Construir();
-                controlador.controlador_input = Construtor_controlador_input.Construir();
+                controlador.controlador_tasks = CONSTRUCTOR__controller_tasks.Construct();                
+                controlador.controlador_audio = CONSTRUCTOR__controller_audio.Construct();
+                controlador.controlador_input = CONSTRUCTOR__controller_input.Construct();
 
 
                 Construtor_controlador_cursor.Construir();
-                Controlador_dados.Construir();
-                Controlador_configuracoes.Construir();
+                CONSTRUCTOR__controller_data.Construct();
+                CONSTRUCTOR__controller_configurations.Construct();
+                CONSTRUCTOR__controller_errors.Construct();
                 
 
                 controlador.controlador_development = Construtor_controlador_development.Construir();  

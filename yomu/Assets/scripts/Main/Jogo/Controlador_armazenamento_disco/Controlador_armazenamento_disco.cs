@@ -24,7 +24,7 @@ public class Controlador_armazenamento_disco {
         // ** quando for realmente salvar todos os dados em disco
         public Task_req task_salvar;
 
-        public INTERFACE__buffer[] buffers_dados;
+        public Buffer[] buffers_dados;
 
 
         public int frame = 1;
@@ -100,10 +100,7 @@ public class Controlador_armazenamento_disco {
 
 
 
-
-
-
-        public void Criar_task_salvar_dados( Dados_para_salvar[] _dados_pedidos ){
+        public void Criar_task_salvar_dados( File_to_save[] _dados_pedidos ){
 
 
                 Garantir_dados_para_salvar( _dados_pedidos ); // 0.2ms/file => 2ms 10 - files  => 10ms( 50 files )
@@ -116,7 +113,7 @@ public class Controlador_armazenamento_disco {
 
                     for( int pedido_index = 0 ; pedido_index < _dados_pedidos.Length ; pedido_index++ ){
 
-                            Dados_para_salvar dados_para_salvar = _dados_pedidos[ pedido_index ];
+                            File_to_save dados_para_salvar = _dados_pedidos[ pedido_index ];
 
                             string path = dados_para_salvar.path;
                             byte[] dados = dados_para_salvar.dados;
@@ -156,18 +153,18 @@ public class Controlador_armazenamento_disco {
 
 
 
-                Controlador_tasks.Pegar_instancia().Adicionar_task( task_salvar );
+                CONTROLLER__tasks.Pegar_instancia().Adicionar_task( task_salvar );
 
                 return;
 
         }
 
 
-            private void Garantir_dados_para_salvar( Dados_para_salvar[] _dados ){
+            private void Garantir_dados_para_salvar( File_to_save[] _dados ){
 
                     for( int dados_index = 0 ; dados_index < _dados.Length ; dados_index++ ){
     
-                        Dados_para_salvar dados_para_salvar = _dados[ dados_index ];
+                        File_to_save dados_para_salvar = _dados[ dados_index ];
                         if ( dados_para_salvar.path == null )
                             { continue; }
 
@@ -178,7 +175,6 @@ public class Controlador_armazenamento_disco {
                             { throw new Exception( $"nao veio os dados do arquivo no path { dados_para_salvar.path }. veiV null" ); }
 
                     }
-
 
             }
 

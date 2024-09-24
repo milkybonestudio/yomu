@@ -68,10 +68,12 @@ using System;
                 public static void Verificar_interativo_funcao_MOVIMENTO( Interativo_tela_DADOS_DESENVOLVIMENTO _interativo_dados ){
 
 
+
                         Dados_interativo_funcao_MOVIMENTO dados_movimento  =  _interativo_dados.dados_interativo_funcoes_DEVELOPMENT.dados_interativo_funcao_MOVIMENTO;
 
-                        if( dados_movimento.posicao_unica_destino == null )
-                                { throw new Exception( $"nao foi colocado a posicao no interativo { _interativo_dados } tipo moimento" ); }
+                        // oque fazer? talvez struct.regiao == 0?
+                        // if( dados_movimento.posicao_unica_destino == null )
+                        //         { throw new Exception( $"nao foi colocado a posicao no interativo { _interativo_dados } tipo moimento" ); }
 
                         Ponto_DADOS_DEVELOPMENT ponto_dados = Leitor_pontos.Pegar_ponto( dados_movimento.posicao_unica_destino );
 

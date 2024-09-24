@@ -52,7 +52,7 @@ public class Menu : MonoBehaviour {
 
 
         public Menu_bloco estado_atual = Menu_bloco.novo_jogo;        
-        public Controlador_dados controlador_dados;
+        public CONTROLLER__data controlador_dados;
 
             
 

@@ -9,7 +9,7 @@ using System;
         public static Ponto_DADOS_DEVELOPMENT Pegar( Locator_position _posicao ){
 
 
-            REGIAO_1__trecho trecho =  ( REGIAO_1__trecho ) _posicao.trecho_id;
+            REGIAO_1__trecho trecho =  ( REGIAO_1__trecho ) _posicao.global_position.trecho_id;
             
 
             switch( trecho ){

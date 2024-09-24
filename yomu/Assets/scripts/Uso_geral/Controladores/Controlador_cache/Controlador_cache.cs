@@ -13,7 +13,6 @@ public class Controlador_cache {
 
 
 
-
         public Controlador_cache(){
 
                 dados = new System.Object[ numero_inicial ];                
@@ -30,7 +29,8 @@ public class Controlador_cache {
         int numero_inicial = 10;
 
 
-        public System.Object[] dados;
+    
+        public object[] dados;
         public bool[]   slots_locks ;
         public int[]    slots_senhas ;
 
@@ -50,7 +50,7 @@ public class Controlador_cache {
 
 
 
-        public System.Object Pegar_dados( Chave_cache _chave ){
+        public object Pegar_dados( Chave_cache _chave ){
 
 
                 int slot = _chave.slot;

@@ -417,10 +417,10 @@ public static class Construtor_MENU {
 
 
 
-            string audio_path =  "audio/blocos_pequenos/menu/" + Controlador_configuracoes.Pegar_instancia().music_menu;
+            string audio_path =  "audio/blocos_pequenos/menu/" + CONTROLLER__configurations.Pegar_instancia().music_menu;
 
         
-            Controlador_audio.Pegar_instancia().Start_music( _slot: 1 , audio_path );
+            CONTROLLER__audio.Pegar_instancia().Start_music( _slot: 1 , audio_path );
 
             return menu;
 

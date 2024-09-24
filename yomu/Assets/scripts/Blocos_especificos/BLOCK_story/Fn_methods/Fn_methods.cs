@@ -154,7 +154,7 @@ public static class Fn_methods{
             if( tipo_audio == Tipo_audio.music ){
                   Debug.Log("veio aqui");
 
-                  Controlador_audio.Pegar_instancia().Mudar_volume_musica_unico(   _slot: 1  , modificador_volume , tempo_ms );
+                  CONTROLLER__audio.Pegar_instancia().Mudar_volume_musica_unico(   _slot: 1  , modificador_volume , tempo_ms );
 
 
 

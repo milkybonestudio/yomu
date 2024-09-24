@@ -8,7 +8,7 @@ using System;
 
                 public static Ponto_DADOS_DEVELOPMENT Pegar( Locator_position _posicao ){
 
-                        CATEDRAL_DO_SUL__zona zona = ( CATEDRAL_DO_SUL__zona ) _posicao.zona_id;
+                        CATEDRAL_DO_SUL__zona zona = ( CATEDRAL_DO_SUL__zona ) _posicao.local_position.zona_id;
                     
                         switch( zona ){
 

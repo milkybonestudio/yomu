@@ -4,7 +4,7 @@
 
 public class Dados_sistema_plot {
 
-        public Plot_localizador localizador;
+        public Locator_plot localizador;
     
 
 }

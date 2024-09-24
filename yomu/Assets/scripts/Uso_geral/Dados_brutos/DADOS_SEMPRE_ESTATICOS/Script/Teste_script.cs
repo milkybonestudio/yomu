@@ -47,7 +47,7 @@ public class a {
                 //   ( class 1 ) => ( class 2 )  => ( class 3 ) 
 
                  
-                return null;
+                return new Locator_position();
 
 
             }

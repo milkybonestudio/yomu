@@ -481,7 +481,7 @@ public static class Cenas_inversas_construtor {
 
             int slot = ( ( int )retorno_parte_1[ 3 ] - 48 );
 
-            Controlador_audio controlador_audio = Controlador_audio.Pegar_instancia( );
+            CONTROLLER__audio controlador_audio = CONTROLLER__audio.Pegar_instancia( );
 
 
             string path_audio_atual = null ;

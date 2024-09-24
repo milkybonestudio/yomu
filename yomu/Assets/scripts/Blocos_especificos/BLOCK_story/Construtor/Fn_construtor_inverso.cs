@@ -697,13 +697,15 @@ public static class Fn_construtor_inverso {
 
         Tipo_audio tipo =  ( Tipo_audio )  ( ( int ) args [ 3 ] - 48 ) ; 
 
+        CONTROLLER__audio controlador_audio = CONTROLLER__audio.Pegar_instancia();
+
 
         switch( tipo ){
 
 
-            case Tipo_audio.music :  volume_atual = Controlador_audio.Pegar_instancia().music_volume_interno  * 100f ; ;break;
-            case Tipo_audio.sfx :  volume_atual = Controlador_audio.Pegar_instancia().sfx_volume_interno  * 100f ; ;break;
-            case Tipo_audio.voice :  volume_atual = Controlador_audio.Pegar_instancia().voice_volume_interno  * 100f ; ;break;
+            case Tipo_audio.music :  volume_atual = controlador_audio.music_volume_interno  * 100f ; ;break;
+            case Tipo_audio.sfx :  volume_atual = controlador_audio.sfx_volume_interno  * 100f ; ;break;
+            case Tipo_audio.voice :  volume_atual = controlador_audio.voice_volume_interno  * 100f ; ;break;
 
 
         }

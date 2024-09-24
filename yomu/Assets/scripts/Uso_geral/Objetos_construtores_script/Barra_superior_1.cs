@@ -38,7 +38,7 @@ public class Icone_barra {
 
 
 
-        float[] posicao_mouse = Controlador_dados.Pegar_instancia().posicao_mouse;
+        float[] posicao_mouse = CONTROLLER__data.Pegar_instancia().posicao_mouse;
 
         float x_min = this.posicao[ 0 ] - 25f + 960f;
         float x_max = this.posicao[ 0 ] + 25f + 960f;

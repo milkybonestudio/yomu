@@ -11,7 +11,7 @@ public class Personagem_dados {
 
     public System.Action[][] updates = new System.Action[ 5 ][];
 
-    public void Pegar_dados( Personagem personagem ){
+    public void Pegar_dados( Character personagem ){
 
         // Update update = Update.catedral;
 

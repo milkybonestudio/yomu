@@ -7,7 +7,7 @@ using System;
 
         public  Ponto_DADOS_DEVELOPMENT Pegar_ponto( Locator_position _posicao ){
 
-                Regiao_nome regiao =  ( Regiao_nome ) _posicao.regiao_id;
+                Regiao_nome regiao =  ( Regiao_nome ) _posicao.global_position.regiao_id;
                 
                 switch( regiao ){
 
@@ -19,8 +19,6 @@ using System;
                 return null;
 
         }
-
-
 
     }
 

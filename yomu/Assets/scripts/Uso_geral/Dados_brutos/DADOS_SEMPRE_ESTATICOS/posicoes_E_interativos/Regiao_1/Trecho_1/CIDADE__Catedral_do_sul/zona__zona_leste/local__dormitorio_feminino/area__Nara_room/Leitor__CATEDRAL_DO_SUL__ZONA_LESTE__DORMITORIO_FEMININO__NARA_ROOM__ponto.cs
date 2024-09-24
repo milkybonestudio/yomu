@@ -19,7 +19,7 @@ using System;
 
                 public static Ponto_DADOS_DEVELOPMENT Pegar_ponto(  Locator_position _posicao  ){
 
-                    int ponto_id = _posicao.ponto_id;
+                    int ponto_id = _posicao.local_position.ponto_id;
 
                     if( dados == null )
                         { Colocar_pontos(); }
@@ -39,13 +39,13 @@ using System;
 
                         
                         Locator_position posicao = new Locator_position();
-                        posicao.regiao_id = ( int ) Regiao_nome.regiao_1;
-                        posicao.trecho_id = ( int ) REGIAO_1__trecho.trecho_1;
-                        posicao.cidade_no_trecho_id = ( int ) REGIAO_1__TRECHO_1__cidade_no_trecho.catedral_do_sul;
+                        // posicao.regiao_id = ( int ) Regiao_nome.regiao_1;
+                        // posicao.trecho_id = ( int ) REGIAO_1__trecho.trecho_1;
+                        // posicao.cidade_no_trecho_id = ( int ) REGIAO_1__TRECHO_1__cidade_no_trecho.catedral_do_sul;
 
-                        posicao.zona_id = ( int ) CATEDRAL_DO_SUL__zona.zona_leste;
-                        posicao.local_id = ( int ) CATEDRAL_DO_SUL__ZONA_LESTE__local.dormitorio_feminino;
-                        posicao.area_id = ( int ) CATEDRAL_DO_SUL__ZONA_LESTE__DORMITORIO_FEMININO__area.nara_room;
+                        // posicao.zona_id = ( int ) CATEDRAL_DO_SUL__zona.zona_leste;
+                        // posicao.local_id = ( int ) CATEDRAL_DO_SUL__ZONA_LESTE__local.dormitorio_feminino;
+                        // posicao.area_id = ( int ) CATEDRAL_DO_SUL__ZONA_LESTE__DORMITORIO_FEMININO__area.nara_room;
 
                         object ponto; // ??
                         Type tipo = typeof( CATEDRAL_DO_SUL__ZONA_LESTE__DORMITORIO_FEMININO__NARA_ROOM__ponto );
@@ -55,7 +55,7 @@ using System;
                         if( !( conseguiu_fazer_o_parse ) )
                                 { throw new System.Exception( $"Nao foi achado o nome { _nome_ponto } " ); }
 
-                        posicao.ponto_id = ( byte ) ponto;
+                        posicao.local_position.ponto_id = ( byte ) ponto;
 
                         return posicao;
 

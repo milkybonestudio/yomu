@@ -26,34 +26,34 @@ public static class Interpretador_ponto {
 
                                 Locator_position[] posicoes_retorno = new Locator_position[ numero_interativos_movimento ];
 
-                                int posicoes_retorno_index = 0;
-                                for( interativo_index = 0 ; interativo_index < interativos_tela.Length ; interativo_index++ ){
+                                // int posicoes_retorno_index = 0;
+                                // for( interativo_index = 0 ; interativo_index < interativos_tela.Length ; interativo_index++ ){
 
-                                        if( interativos_tela[ interativo_index ].tipo_interativo_tela == Tipo_interativo_tela.movimento )
-                                                { 
-                                                        Locator_position posicao = new Locator_position();
-                                                        byte[] dados = interativos_tela[ interativo_index ].dados_logicas_interativos_tela;
+                                //         if( interativos_tela[ interativo_index ].tipo_interativo_tela == Tipo_interativo_tela.movimento )
+                                //                 { 
+                                //                         Locator_position posicao = new Locator_position();
+                                //                         byte[] dados = interativos_tela[ interativo_index ].dados_logicas_interativos_tela;
 
-                                                        posicao.regiao_id = 0;
-                                                        posicao.regiao_id += ( short ) dados[ 0 ];
-                                                        posicao.regiao_id += ( short ) dados[ 1 ];
+                                //                         posicao.regiao_id = 0;
+                                //                         posicao.regiao_id += ( short ) dados[ 0 ];
+                                //                         posicao.regiao_id += ( short ) dados[ 1 ];
 
-                                                        posicao.trecho_id = dados[ 2 ];
-                                                        posicao.cidade_no_trecho_id = dados[ 3 ];
-                                                        posicao.zona_id = dados[ 4 ];
-                                                        posicao.local_id = dados[ 5 ];
-                                                        posicao.area_id = dados[ 6 ];
-                                                        posicao.ponto_id = dados[ 7 ];
+                                //                         posicao.trecho_id = dados[ 2 ];
+                                //                         posicao.cidade_no_trecho_id = dados[ 3 ];
+                                //                         posicao.zona_id = dados[ 4 ];
+                                //                         posicao.local_id = dados[ 5 ];
+                                //                         posicao.area_id = dados[ 6 ];
+                                //                         posicao.ponto_id = dados[ 7 ];
 
-                                                        posicoes_retorno[ posicoes_retorno_index ] = posicao;
-                                                        posicoes_retorno_index++;
+                                //                         posicoes_retorno[ posicoes_retorno_index ] = posicao;
+                                //                         posicoes_retorno_index++;
                                                         
-                                                }
+                                //                 }
 
 
-                                        continue;
+                                //         continue;
 
-                                }
+                                // }
 
                                 return posicoes_retorno;
                                 

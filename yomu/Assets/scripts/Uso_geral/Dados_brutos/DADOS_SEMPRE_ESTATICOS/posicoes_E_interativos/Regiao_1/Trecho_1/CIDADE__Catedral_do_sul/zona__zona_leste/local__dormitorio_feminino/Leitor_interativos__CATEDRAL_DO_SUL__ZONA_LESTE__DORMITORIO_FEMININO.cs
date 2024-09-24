@@ -7,7 +7,7 @@ using System;
 
             public static Interativo_tela_DADOS_DESENVOLVIMENTO Pegar_interativo( Locator_position _posicao, int _interativo_id ){
 
-                    CATEDRAL_DO_SUL__ZONA_LESTE__DORMITORIO_FEMININO__area area = ( CATEDRAL_DO_SUL__ZONA_LESTE__DORMITORIO_FEMININO__area ) _posicao.zona_id;
+                    CATEDRAL_DO_SUL__ZONA_LESTE__DORMITORIO_FEMININO__area area = ( CATEDRAL_DO_SUL__ZONA_LESTE__DORMITORIO_FEMININO__area ) _posicao.local_position.zona_id;
                 
                     switch( area ){
 
@@ -23,3 +23,15 @@ using System;
     }
 
 #endif
+
+
+
+//txt 
+
+/*
+
+
+    
+
+
+*/

@@ -9,7 +9,7 @@ using System;
         public static Interativo_tela_DADOS_DESENVOLVIMENTO Pegar( Locator_position _posicao, int _interativo_id ){
 
 
-            REGIAO_1__trecho trecho =  ( REGIAO_1__trecho ) _posicao.trecho_id;
+            REGIAO_1__trecho trecho =  ( REGIAO_1__trecho ) _posicao.global_position.trecho_id;
             
 
             switch( trecho ){

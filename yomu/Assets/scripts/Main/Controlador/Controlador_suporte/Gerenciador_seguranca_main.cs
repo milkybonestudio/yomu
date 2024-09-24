@@ -44,7 +44,7 @@ public static class Gerenciador_seguranca_main {
                                                                                             return;
                                                                                         };
                             
-                            Controlador_tasks.Pegar_instancia().Adicionar_task( task_reconstruir );
+                            CONTROLLER__tasks.Pegar_instancia().Adicionar_task( task_reconstruir );
                             controlador.modo_controlador_atual = Controlador_modo.reconstruindo_save;
                             Mono_instancia.Start_coroutine( C_reconstruindo_save() );
                             

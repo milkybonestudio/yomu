@@ -73,8 +73,8 @@ public class CONTROLLER__transition {
 
                 Task_req task = transition_request.task_to_execute_on_hide;
                 task.prioridade = 1_000;
-                Controlador_tasks.Pegar_instancia().Adicionar_task( task );
-                yield return Controlador_tasks.Pegar_instancia().Wait_task_ends( _task_request: task, _max_time_ms: 10_000f ); 
+                CONTROLLER__tasks.Pegar_instancia().Adicionar_task( task );
+                yield return CONTROLLER__tasks.Pegar_instancia().Wait_task_ends( _task_request: task, _max_time_ms: 10_000f ); 
 
                 // ** sdai loop 
                 Mono_instancia.Stop_coroutine( wait_task_coroutine );

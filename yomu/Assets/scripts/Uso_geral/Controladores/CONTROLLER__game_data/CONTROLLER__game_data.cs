@@ -8,7 +8,9 @@ using System;
 */
 
 
-public class CONTROLLER__game_data {
+
+
+unsafe public class CONTROLLER__game_data {
 
 
         public static CONTROLLER__game_data instancia;
@@ -19,7 +21,15 @@ public class CONTROLLER__game_data {
 
         public Game_current_state game_current_state;
 
-        
+
+        public void Get_data( Game_current_state* _game_current_state ){
+
+            SYSTEM__current_state* current_state = &(( *_game_current_state ).system ) ;
+
+        }
+
+
+
 
 
 }

@@ -65,7 +65,7 @@ public class MODULO__gerenciador_instrucoes_de_seguranca {
 
         public byte[][] arquivos_instrucoes_personagens_completos; // primeira + segunda stack
 
-        public Dados_para_salvar_stack dados_para_salvar_stack = new Dados_para_salvar_stack();
+        //public Dados_para_salvar_stack dados_para_salvar_stack = new Dados_para_salvar_stack();
 
 
         public byte[] buffer_para_salvar_stack = new byte[ 20_000 ];
@@ -76,12 +76,12 @@ public class MODULO__gerenciador_instrucoes_de_seguranca {
         public int tamanho_buffer = 20_000;
 
         // ** buffer com todos os dados para pegar e salvar na stack. 
-        public INTERFACE__buffer[] buffers_para_salvar_stack;
+        public Buffer[] buffers_para_salvar_stack;
 
 
         public void Salvar_instrucoes_em_disco(){
 
-
+                
 
                 // --- COLOCAR ID
                 numero_bloco_atual++;
@@ -100,8 +100,9 @@ public class MODULO__gerenciador_instrucoes_de_seguranca {
                 
                 for( int interface_index = 0 ; interface_index < buffers_para_salvar_stack.Length ; interface_index++  ){
 
-                        INTERFACE__buffer buffer = buffers_para_salvar_stack[ interface_index ];
+                        Buffer buffer = buffers_para_salvar_stack[ interface_index ];
                         index_buffer = Passar_dados_para_buffer( index_buffer, buffer );
+                        buffer.Reset_pointer();
                         continue;
 
                 }
@@ -154,13 +155,13 @@ public class MODULO__gerenciador_instrucoes_de_seguranca {
 
 
 
-    private int Passar_dados_para_buffer( int index_buffer, INTERFACE__buffer _buffer ){
+    private int Passar_dados_para_buffer( int index_buffer, Buffer _buffer ){
         
 
-            Buffer_localizador instrucoes = _buffer.Pegar_dados();
+            byte[] instrucoes_dados = _buffer.data; 
+            int length = _buffer.pointer;
 
-            byte[] instrucoes_dados = instrucoes.buffer; 
-            int length = instrucoes.pointer;
+            
 
             int novo_index = ( index_buffer + length );
 

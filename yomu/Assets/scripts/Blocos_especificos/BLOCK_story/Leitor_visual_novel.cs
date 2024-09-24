@@ -1090,7 +1090,7 @@ public class Leitor_visual_novel{
 
 
                     path_completo  = "audio/jogo/sfx/" + path ;
-                    Controlador_audio.Pegar_instancia().Acrecentar_sfx( path_completo , modificador_volume ) ;
+                    CONTROLLER__audio.Pegar_instancia().Acrecentar_sfx( path_completo , modificador_volume ) ;
 
                     return;
 
@@ -1104,7 +1104,7 @@ public class Leitor_visual_novel{
 
                     if( path == "0"){
                             
-                            Controlador_audio.Pegar_instancia().Stop_music( slot , tempo_transicao_tirar_ms);
+                            CONTROLLER__audio.Pegar_instancia().Stop_music( slot , tempo_transicao_tirar_ms);
                             return;
                         
                     } 
@@ -1112,7 +1112,7 @@ public class Leitor_visual_novel{
 
                     path_completo = "audio/jogo/music/" + path;
 
-                    Controlador_audio.Pegar_instancia().Start_music( slot ,  path_completo,  tempo_transicao_tirar_ms, tempo_transicao_colocar_ms, modificador_volume );
+                    CONTROLLER__audio.Pegar_instancia().Start_music( slot ,  path_completo,  tempo_transicao_tirar_ms, tempo_transicao_colocar_ms, modificador_volume );
 
 
 
@@ -1182,7 +1182,7 @@ public class Leitor_visual_novel{
 
                     
 
-                Req_transicao req_transicao = Controlador_pedidos_sistema.instancia.Create_new_transition_req();
+                Req_transicao req_transicao = CONTROLLER__system_requests.instancia.Create_new_transition_req();
                 
                     req_transicao.tipo_troca_bloco = Tipo_troca_bloco.OUT;
                     req_transicao.tipo_transicao = Tipo_transicao.instantaneo;

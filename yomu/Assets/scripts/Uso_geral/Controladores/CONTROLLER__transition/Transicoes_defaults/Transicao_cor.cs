@@ -44,6 +44,7 @@ public class Transicao_cor : INTERFACE__transition_request_visual {
         public Image tela_image;
 
 
+
         // --- ANIMACOES
 
         public IEnumerator Get_down_IE(){

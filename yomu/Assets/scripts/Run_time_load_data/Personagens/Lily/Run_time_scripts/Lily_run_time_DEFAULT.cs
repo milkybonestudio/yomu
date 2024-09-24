@@ -10,7 +10,7 @@ public class  Run_time_DEFAULT {
     public void fn() {
 
             // aqui vai estar a logica em sim
-            Personagem lily = Controlador_personagens.Pegar_instancia().Pegar_personagem( ( int ) Personagem_nome.Lily );
+            Character lily = CONTROLLER__characters.Get_instance().Get_character( ( int ) Personagem_nome.Lily );
             Periodo_tempo periodo = ( Periodo_tempo ) Controlador_timer.Pegar_instancia().periodo_atual_id;
 
 
@@ -36,7 +36,7 @@ public class  Run_time_DEFAULT {
 
 
 
-    public void Lidar_manha( Personagem lily ){
+    public void Lidar_manha( Character lily ){
 
 
 
@@ -44,25 +44,25 @@ public class  Run_time_DEFAULT {
 
     }
 
-    public void Lidar_dia( Personagem lily ){
+    public void Lidar_dia( Character lily ){
 
         
 
     }
 
-    public void Lidar_tarde( Personagem lily ){
+    public void Lidar_tarde( Character lily ){
 
         
 
     }
 
-    public void Lidar_noite( Personagem lily ){
+    public void Lidar_noite( Character lily ){
 
         
 
     }
 
-    public void Lidar_madrugada ( Personagem lily ){
+    public void Lidar_madrugada ( Character lily ){
 
         
 

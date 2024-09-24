@@ -1,7 +1,7 @@
 
 
 
-public class Figure_personagem {
+public class _Figure_personagem {
 
     // vai ser instanciado somente quando precisar
 

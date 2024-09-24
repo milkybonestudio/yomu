@@ -8,7 +8,7 @@ using UnityEngine;
 // ** talvez mudar para Program?
 
 
-public class Controlador : MonoBehaviour {
+unsafe public class Controlador : MonoBehaviour {
 
 
         public static Controlador Pegar_instancia() { return instancia; }
@@ -30,19 +30,28 @@ public class Controlador : MonoBehaviour {
         // --- USO CONTROLADOR
 
         public Controlador_development controlador_development;
-        public Controlador_UI controlador_UI;
-        public Controlador_input controlador_input;
+        public CONTROLLER__UI controlador_UI;
+        public CONTROLLER__input controlador_input;
 
-        public Controlador_tasks controlador_tasks;
-        public Controlador_audio controlador_audio;
-            
+        public CONTROLLER__tasks controlador_tasks;
+        public CONTROLLER__audio controlador_audio;
+
+
+
+ 
 
         public void Start(){
 
                 Construtor_controlador.Construir();
 
-        }
+                // S s = new S();
+                // //s.b = 1;
+                // byte* s_pointer = ( byte* )( &s );
 
+
+
+
+        }
 
         public void Update() {
 
@@ -60,7 +69,7 @@ public class Controlador : MonoBehaviour {
                 controlador_audio.Update();
 
 
-                Controlador_dados.Pegar_instancia().Atualizar_mouse_atual(); 
+                CONTROLLER__data.Pegar_instancia().Atualizar_mouse_atual(); 
                 controlador_input.Update();
 
                 
@@ -102,6 +111,8 @@ public class Controlador : MonoBehaviour {
 
         public void OnDisable(){
 
+                
+
                 Dados_fundamentais_sistema.jogo_ativo = false;
                 Jogo.Zerar_dados();
                 
@@ -110,3 +121,4 @@ public class Controlador : MonoBehaviour {
         
 
 }
+

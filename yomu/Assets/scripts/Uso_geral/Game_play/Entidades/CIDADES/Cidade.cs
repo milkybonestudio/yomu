@@ -1,0 +1,35 @@
+
+
+
+
+public class Cidade {
+
+    
+    public Cidade( int _cidade_id ){
+
+        cidade_id = _cidade_id;
+
+    }
+
+    public string cidade_nome;
+
+    public int cidade_id;
+    public int plano_id; // primeiro  => cidade pla
+
+
+
+    public int[][][][] interativos_tela_para_adicionar_ids;
+    public int[][][][] interativos_tela_para_subtrair_ids;
+
+    public int[][][][] itens_ids_por_posicao;
+    public int[][][][] personagens_ids_por_posicao;
+
+    public int[][][][] interativos_tela_por_posicao;
+
+
+
+
+    //public Cidadaos cidados;
+    
+    
+}

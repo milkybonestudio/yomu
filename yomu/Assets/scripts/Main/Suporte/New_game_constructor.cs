@@ -33,8 +33,8 @@ public static class New_game_constructor {
 
 
                         // --- COPIA OS DADOS
-                        Arquivos.Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_personagens_novo_save, _local_para_copiar : path_folder_save_default_personagens );
-                        Arquivos.Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_personagens_novo_save_MORTE, _local_para_copiar : path_folder_save_default_personagens );
+                        Files.Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_personagens_novo_save, _local_para_copiar : path_folder_save_default_personagens );
+                        Files.Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_personagens_novo_save_MORTE, _local_para_copiar : path_folder_save_default_personagens );
 
 
 
@@ -47,8 +47,8 @@ public static class New_game_constructor {
                         string path_folder_save_default_cidades = Paths_sistema.path_folder__entidades_para_copiar_novo_save_cidades;
 
                         // --- COPIA OS DADOS
-                        Arquivos.Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_cidades_novo_save, _local_para_copiar : path_folder_save_default_cidades );
-                        Arquivos.Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_cidades_novo_save_MORTE, _local_para_copiar : path_folder_save_default_cidades );
+                        Files.Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_cidades_novo_save, _local_para_copiar : path_folder_save_default_cidades );
+                        Files.Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_cidades_novo_save_MORTE, _local_para_copiar : path_folder_save_default_cidades );
 
 
 
@@ -62,8 +62,8 @@ public static class New_game_constructor {
 
 
                         // --- COPIA OS DADOS
-                        Arquivos.Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_cidades_novo_save, _local_para_copiar : path_folder_save_default_plots );
-                        Arquivos.Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_cidades_novo_save_MORTE, _local_para_copiar : path_folder_save_default_plots );
+                        Files.Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_cidades_novo_save, _local_para_copiar : path_folder_save_default_plots );
+                        Files.Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_cidades_novo_save_MORTE, _local_para_copiar : path_folder_save_default_plots );
 
 
 
@@ -77,8 +77,8 @@ public static class New_game_constructor {
 
 
                         // --- COPIA OS DADOS
-                        Arquivos.Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_bosses_novo_save, _local_para_copiar : path_folder_save_default_bosses );
-                        Arquivos.Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_bosses_novo_save_MORTE, _local_para_copiar : path_folder_save_default_bosses );
+                        Files.Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_bosses_novo_save, _local_para_copiar : path_folder_save_default_bosses );
+                        Files.Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_bosses_novo_save_MORTE, _local_para_copiar : path_folder_save_default_bosses );
 
 
 
@@ -92,8 +92,8 @@ public static class New_game_constructor {
 
 
                         // --- COPIA OS DADOS
-                        Arquivos.Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_mobs_novo_save, _local_para_copiar : path_folder_save_default_mobs );
-                        Arquivos.Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_mobs_novo_save_MORTE, _local_para_copiar : path_folder_save_default_mobs );
+                        Files.Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_mobs_novo_save, _local_para_copiar : path_folder_save_default_mobs );
+                        Files.Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_mobs_novo_save_MORTE, _local_para_copiar : path_folder_save_default_mobs );
 
 
 
@@ -107,8 +107,8 @@ public static class New_game_constructor {
                         string path_folder_save_default_reinos = Paths_sistema.path_folder__entidades_para_copiar_novo_save_reinos;
 
                         // --- COPIA OS DADOS
-                        Arquivos.Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_reinos_novo_save, _local_para_copiar : path_folder_save_default_reinos );
-                        Arquivos.Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_reinos_novo_save_MORTE, _local_para_copiar : path_folder_save_default_reinos );
+                        Files.Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_reinos_novo_save, _local_para_copiar : path_folder_save_default_reinos );
+                        Files.Copiar_pasta_inteira( _local_para_salvar: path_folder_dados_reinos_novo_save_MORTE, _local_para_copiar : path_folder_save_default_reinos );
 
 
                 return;

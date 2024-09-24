@@ -56,33 +56,33 @@ public class Controlador_movimento {
         }
 
 
-        public void Mover_personagem_PONTO( Personagem _personagem, Locator_position _nova_posicao ){
+        public void Mover_personagem_PONTO( Character _personagem, Locator_position _nova_posicao ){
 
                 // *** MOVE O PERSONAGEM DENTRO DE UM MESMO LOCAL
 
-                // --- VERIFICA SE JA NAO ESTA NA POSICAO
-                if( _personagem.posicao.posicao_id ==_nova_posicao.posicao_id )  
-                        { return; } // --- JA ESTA NA POSICAO
+                // // --- VERIFICA SE JA NAO ESTA NA POSICAO
+                // if( _personagem.posicao.posicao_id ==_nova_posicao.unique_id )  
+                //         { return; } // --- JA ESTA NA POSICAO
                         
 
         }
 
 
-        public void Mover_personagem_LOCAL( Personagem _personagem, Locator_position _nova_posicao ){
+        public void Mover_personagem_LOCAL( Character _personagem, Locator_position _nova_posicao ){
 
-                // --- VERIFICA SE JA NAO ESTA NA POSICAO
-                if( _personagem.posicao.posicao_id ==_nova_posicao.posicao_id )  
-                        { return; } // --- JA ESTA NA POSICAO
+                // // --- VERIFICA SE JA NAO ESTA NA POSICAO
+                // if( _personagem.posicao.posicao_id ==_nova_posicao.local_position.posicao_id )  
+                //         { return; } // --- JA ESTA NA POSICAO
                         
 
         }
 
         
-        public void Mover_personagem_CIDADE( Personagem _personagem, Locator_position _nova_posicao ){
+        public void Mover_personagem_CIDADE( Character _personagem, Locator_position _nova_posicao ){
 
-                // --- VERIFICA SE JA NAO ESTA NA POSICAO
-                if( _personagem.posicao.posicao_id ==_nova_posicao.posicao_id )  
-                        { return; } // --- JA ESTA NA POSICAO
+                // // --- VERIFICA SE JA NAO ESTA NA POSICAO
+                // if( _personagem.posicao.posicao_id ==_nova_posicao.local_position.position_id )  
+                //         { return; } // --- JA ESTA NA POSICAO
                 
 
 

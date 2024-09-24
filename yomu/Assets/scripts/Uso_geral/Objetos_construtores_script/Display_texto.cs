@@ -110,7 +110,7 @@ public class Display_texto {
 
                //caixa_texto.ForceMeshUpdate();
                 
-               if(_tipo_construcao == Tipo_construcao_texto.config_default){  _tipo_construcao = Controlador_configuracoes.Pegar_instancia().tipo_texto;}
+               if(_tipo_construcao == Tipo_construcao_texto.config_default){  _tipo_construcao = CONTROLLER__configurations.Pegar_instancia().tipo_texto;}
 
                string pre_text = "";
                string target_text = _text;

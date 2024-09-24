@@ -29,7 +29,7 @@ public static class Conversas_teste_estado_generico {
                 Locator_position posicao = new Locator_position();
                 Atividade atividade = Atividade.nada;
 
-                Personagem lily = new Personagem( ( int ) Personagem_nome.Lily , posicao, ( int ) atividade );
+                // Personagem lily = new Personagem( ( int ) Personagem_nome.Lily , posicao, ( int ) atividade );
 
                 //Dados_containers_personagem dados_para_construir_personagem = new Dados_containers_personagem();
 

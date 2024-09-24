@@ -77,21 +77,21 @@ public class Controlador_tela_conector {
             public void Verificar_movimento_player(){
                   
                   
-                  Personagem personagem_sendo_controlado = Player_estado_atual.Pegar_instancia().personagem_sendo_controlado_player;
+                //   Personagem personagem_sendo_controlado = Player_estado_atual.Pegar_instancia().personagem_sendo_controlado_player;
 
-                  if ( ponto_sendo_mostrado_para_o_player.posicao_ponto.posicao_id != personagem_sendo_controlado.posicao.posicao_id )
-                        {
-                              // --- TEM QUE MUDAR PONTO SENDO MOSTRADO
+                //   if ( ponto_sendo_mostrado_para_o_player.posicao_ponto.posicao_id != personagem_sendo_controlado.posicao.posicao_id )
+                //         {
+                //               // --- TEM QUE MUDAR PONTO SENDO MOSTRADO
 
-                              Ponto novo_ponto = Controlador_navegacao.Pegar_instancia().Pegar_ponto( personagem_sendo_controlado.posicao );
+                //               Ponto novo_ponto = Controlador_navegacao.Pegar_instancia().Pegar_ponto( personagem_sendo_controlado.posicao );
 
-                              ponto_sendo_mostrado_para_o_player = novo_ponto;
+                //               ponto_sendo_mostrado_para_o_player = novo_ponto;
 
-                              Trocar_tela( novo_ponto, Tipo_troca_tela_conector.transicao );
+                //               Trocar_tela( novo_ponto, Tipo_troca_tela_conector.transicao );
 
-                        }
+                //         }
 
-                  return;
+                //   return;
 
             }
 

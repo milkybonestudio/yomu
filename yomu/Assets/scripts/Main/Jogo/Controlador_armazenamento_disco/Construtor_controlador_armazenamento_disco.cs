@@ -41,7 +41,7 @@ public static class Construtor_controlador_armazenamento_disco {
 
                     // dados_sistema => dados essencias entidades, estado atual 
                     byte[] dados_sistema = System.IO.File.ReadAllBytes( Paths_sistema.path_arquivo__dados_dinamicos__uso_completo__dados_sistema );
-                    Dados_sistema_estado_atual dados_sistema_estado_atual = Tradutor_dados_sistema.Descompactar_dados_sistema_estado_atual( dados_sistema );
+                    
 
 
 

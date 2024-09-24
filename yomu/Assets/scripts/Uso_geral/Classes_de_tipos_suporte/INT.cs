@@ -1,8 +1,48 @@
 using System.Runtime.CompilerServices;
 
 
-public static class INT {
+unsafe public static class INT {
 
+
+
+            public static void Reajust_sort_array_after_deletions( int[] _array ){
+
+
+                    int index_old_data = 0;
+
+                    for( int index_new_data = 0 ; index_new_data < _array.Length ; index_new_data++ ){
+
+                            
+                            while( index_old_data < _array.Length ){
+
+
+                                    if( _array[ index_old_data ] != 0 )
+                                        {
+                                            _array[ index_new_data ] = _array[ index_old_data++ ];
+                                            break;
+                                        }
+                                    index_old_data++;
+                                    continue;
+
+
+                            }
+                            continue;
+
+                    }
+
+
+            }
+
+            
+
+
+
+
+        public static bool Guarantee_range( int number, int _min, int _max ){
+
+            return ( number > _max || number < _min );
+            
+        }
 
         public static int[] Criar_array_com_valor_especifico( int _length, int _numero ){
 

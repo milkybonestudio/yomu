@@ -7,7 +7,7 @@
 
                 public static Interativo_tela_DADOS_DESENVOLVIMENTO Pegar_interativo( Locator_position _posicao, int _interativo_id ){
 
-                        CATEDRAL_DO_SUL__ZONA_LESTE__DORMITORIO_FEMININO__NARA_ROOM__ponto ponto = ( CATEDRAL_DO_SUL__ZONA_LESTE__DORMITORIO_FEMININO__NARA_ROOM__ponto ) _posicao.ponto_id;
+                        CATEDRAL_DO_SUL__ZONA_LESTE__DORMITORIO_FEMININO__NARA_ROOM__ponto ponto = ( CATEDRAL_DO_SUL__ZONA_LESTE__DORMITORIO_FEMININO__NARA_ROOM__ponto ) _posicao.local_position.ponto_id;
                         
                         switch( ponto ){
 

@@ -42,7 +42,7 @@ public class Galeria_menu {
       public void Passar_pagina_galeria(){
 
 
-            int max =  ( Controlador_configuracoes.Pegar_instancia().galeria_imagens_liberadas.Length / 6 );
+            int max =  ( CONTROLLER__configurations.Pegar_instancia().galeria_imagens_liberadas.Length / 6 );
 
             if(  numero_pagina_galeria  +  1  > max  ){ return; }
 
@@ -72,7 +72,7 @@ public class Galeria_menu {
             // int p0 =  numero_pagina_galeria * 6;
             // for(int i = 0 ;  i < 6 ; i++){
 
-            //     bool esta_liberada = controlador_configuracoes.galeria_imagens_liberadas[i];
+            //     bool esta_liberada = CONTROLLER__configurations.galeria_imagens_liberadas[i];
             //     if( esta_liberada ){  
 
             //       // tem que passar depois para o sistema proprio

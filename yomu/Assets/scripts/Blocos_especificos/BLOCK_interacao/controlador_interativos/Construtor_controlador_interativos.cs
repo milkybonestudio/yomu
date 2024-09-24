@@ -33,8 +33,8 @@ public static class Construtor_controlador_interativos {
 
                     controlador.leitor_de_arquivos = new MODULO__leitor_de_arquivos ( 
                                                                                         _gerenciador_nome : "",
-                                                                                        _path_folder: Paths_sistema.path_arquivo__dados_estaticos__uso_parcial__interativos_logica,
-                                                                                        _numero_inicial_de_slots: 50 
+                                                                                        _path_folder: Paths_sistema.path_arquivo__dados_estaticos__uso_parcial__interativos_logica
+                                                                                        
                                                                                     );
 
                     controlador.controlador_tela_conector = Controlador_tela_conector.Pegar_instancia();

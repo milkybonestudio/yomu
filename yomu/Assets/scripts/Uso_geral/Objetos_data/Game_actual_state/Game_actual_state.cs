@@ -1,7 +1,7 @@
 using System.Runtime.InteropServices;
 
 
-public struct Game_current_state {
+unsafe public struct Game_current_state {
 
 
     public SYSTEM__current_state system;

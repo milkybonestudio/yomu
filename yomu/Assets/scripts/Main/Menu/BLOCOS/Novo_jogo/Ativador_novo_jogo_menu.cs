@@ -22,12 +22,12 @@ public static class Ativador_novo_jogo_menu {
                 int save = Pegar_save_disponivel();
 
                 if( save == -1 )
-                    { Sistema_mensagens.Alertar_player( "nao tem saves disponivel" ); return; } // *nao tem saves livres 
+                    { Console.Log( "nao tem saves disponivel" ); return; } // *nao tem saves livres 
 
 
                 Task_req task_para_carregar =   Primeiro_jogo_suporte.Pegar_task_criar_primeiro_jogo_default( save );
 
-                Controlador_tasks.Pegar_instancia().Adicionar_task( task_para_carregar );
+                CONTROLLER__tasks.Pegar_instancia().Adicionar_task( task_para_carregar );
 
                 Mono_instancia.Start_coroutine( Start_new_game_animation( task_para_carregar ) );
 

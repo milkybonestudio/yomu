@@ -1,8 +1,24 @@
 
 
 
-public static class  STRING {
+unsafe public static class  STRING {
 
+
+        public static string Get_string( char* _char_pointer , int _length ){
+
+            char[] char_array = new char[ _length ];
+
+            for( int i = 0 ; i < _length ; i++ ){
+
+                    char_array[ i ] = *( _char_pointer );
+                    _char_pointer++;
+                    continue;
+
+            }
+
+            return new string( char_array );
+
+        }
 
 
 

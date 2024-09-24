@@ -89,7 +89,9 @@ public class Controlador_navegacao {
                         Verificador_navegacao_DEVELOPMENT.Verificar_ponto_para_pegar( pontos_cidade_primaria, _posicao );
                 #endif
 
-                return pontos_cidade_primaria[ _posicao.zona_id ][ _posicao.local_id ][ _posicao.area_id][ _posicao.ponto_id ];
+                return null;
+
+                //return pontos_cidade_primaria[ _posicao.zona_id ][ _posicao.local_id ][ _posicao.area_id][ _posicao.ponto_id ];
                 
         }
 

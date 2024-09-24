@@ -8,7 +8,7 @@ using System;
         public static Ponto_DADOS_DEVELOPMENT Pegar( Locator_position _posicao ){
 
 
-            REGIAO_1__TRECHO_1__cidade_no_trecho cidade =  ( REGIAO_1__TRECHO_1__cidade_no_trecho ) _posicao.cidade_no_trecho_id;
+            REGIAO_1__TRECHO_1__cidade_no_trecho cidade =  ( REGIAO_1__TRECHO_1__cidade_no_trecho ) _posicao.global_position.cidade_no_trecho_id;
             
 
             switch( cidade ){

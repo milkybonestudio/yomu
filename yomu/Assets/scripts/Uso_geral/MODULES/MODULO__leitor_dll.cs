@@ -3,9 +3,23 @@ using System.Reflection;
 using UnityEngine;
 
 
+/*
+
+    quem precisa disso? 
+    
+    fn finaliza e coisas faz sentido
+    mas em coisas muito especificas como entidades pode nao fazer muito sentido
+    talvez deixar esse ob direto no personagem?
+    essa classe foi criada em mente como se a dll fosse managed e fosse facilmente explit. agora tem que pensar de um novo jeito
+
+    // ** nao faz sentido porque quando for plugin os pontos de entrada precisam usar static extend. entao essa funcoes precisam existir em uma classe no main 
+
+*/
+
 
 public class MODULO__leitor_dll {
 
+        
 
         private struct Dados {
 
@@ -20,7 +34,6 @@ public class MODULO__leitor_dll {
         public MODULO__leitor_dll(  string _nome_dll, int _numero_inicial_de_slots ){ 
 
                 nome_dll = _nome_dll;
-
                 dados = new Dados[ _numero_inicial_de_slots ];
                 
                 #if UNITY_EDITOR
@@ -176,7 +189,7 @@ public class MODULO__leitor_dll {
                                                                 };
 
 
-                Controlador_tasks.Pegar_instancia().Adicionar_task( task );
+                CONTROLLER__tasks.Pegar_instancia().Adicionar_task( task );
 
                 return task;
 

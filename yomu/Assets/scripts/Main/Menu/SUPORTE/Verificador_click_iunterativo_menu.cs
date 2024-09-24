@@ -4,8 +4,8 @@ public static class Verificador_click_interativo_menu {
 
     public static int Verificar( Interativo_menu[] _arr ){
      
-            float mouse_x = Controlador_dados.Pegar_instancia().posicao_mouse[0] - 960f;
-            float mouse_y = Controlador_dados.Pegar_instancia().posicao_mouse[1] - 540f;
+            float mouse_x = CONTROLLER__data.Pegar_instancia().posicao_mouse[0] - 960f;
+            float mouse_y = CONTROLLER__data.Pegar_instancia().posicao_mouse[1] - 540f;
 
             Color cor = Cores.Pegar_cor( Nome_cor.dark_2 );
 
@@ -28,7 +28,7 @@ public static class Verificador_click_interativo_menu {
                             if( Input.GetMouseButtonDown( 0 )  ) 
                                 { return menu_object_index; }
                             
-                            Controlador_cursor.Pegar_instancia().Mudar_cursor( Cor_cursor.red );
+                            Controlador_cursor.Pegar_instancia().Change_action( Cursor_action.choice ); //Mudar_cursor( Cor_cursor.red );
                              
                             
                         }
@@ -39,7 +39,7 @@ public static class Verificador_click_interativo_menu {
             }
 
 
-          Controlador_cursor.Pegar_instancia().Mudar_cursor( Cor_cursor.off );
+          Controlador_cursor.Pegar_instancia().Change_action( Cursor_action.choice ); //Mudar_cursor( Cor_cursor.off );
             return -1;
 
 

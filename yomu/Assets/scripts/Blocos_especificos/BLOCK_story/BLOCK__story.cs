@@ -147,7 +147,7 @@ public class BLOCO_story : INTERFACE__bloco {
         public void Update(){
 
 
-                Controlador_cursor.Pegar_instancia().Mudar_cursor( Cor_cursor.off );
+                Controlador_cursor.Pegar_instancia().Change_action( Cursor_action.choice ); //Mudar_cursor( Cor_cursor.off );
 
 
                 switch( modo_visual_novel_atual ){

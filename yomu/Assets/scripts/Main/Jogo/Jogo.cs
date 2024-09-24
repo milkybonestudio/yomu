@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ public class Jogo {
 
 
         public static Jogo instancia;
-        public static Jogo Pegar_instancia(){ if( instancia == null ){ throw new Exception("tentou pegar Jogo mas estava null"); } return instancia; }
+        public static Jogo Pegar_instancia(){ if( instancia == null ){ /*throw new Exception("tentou pegar Jogo mas estava null");*/ } return instancia; }
 
         public INTERFACE__bloco[] interfaces_blocos;
 
@@ -62,9 +63,18 @@ public class Jogo {
 
                 instancia = null;
 
-                // --- ZERAR BLOCOS
-                foreach( INTERFACE__bloco bloco_interface in Jogo.Pegar_instancia().interfaces_blocos )
-                    { bloco_interface.Destruir(); }
+                //mark
+                // ** ativar depois
+                // // --- ZERAR BLOCOS
+                // foreach( INTERFACE__bloco bloco_interface in Jogo.Pegar_instancia().interfaces_blocos )
+                //     { bloco_interface.Destruir(); }
+
+                if ( CONTROLLER__data.instancia != null )
+                    {
+                        if( CONTROLLER__data.instancia.pointer_general_data != IntPtr.Zero )
+                            { Marshal.FreeHGlobal( CONTROLLER__data.instancia.pointer_general_data ); }
+
+                    }
 
                 Finalizador_UI.Finalizar();
                 CONTROLLER__game_data.instancia = null;

@@ -21,7 +21,7 @@ using UnityEngine;
 
 
 
-class Controlador_compilacao_pre:IPreprocessBuildWithReport {
+class Controlador_compilacao_pre : IPreprocessBuildWithReport {
 
 
     

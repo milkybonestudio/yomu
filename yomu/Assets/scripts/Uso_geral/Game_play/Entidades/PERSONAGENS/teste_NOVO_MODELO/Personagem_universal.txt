@@ -1,0 +1,62 @@
+
+
+/*
+
+    tipo 1 :
+
+        8 bits representam 1 valor com 256 possibilidades ( normal 1,2,25, 57, ... 255 )
+    
+    tipo 2 :
+
+        8 bits representam 8 valores com 2 possibilidades ( pensar como [ flag, flag, flag... ] ainda tem 256 possibilidades )
+                => é bom para verificar valores completos
+                    ( byte & filter) > 0 => tem algum valor e (byte & filter) == filter => tem todos os valores
+            
+    tipo 3 :
+
+        8 bits representam 1 valor com 8 possibilidades com bits fixos( 0000_0001, 0000_0010, 0000_0100 ...  )
+            => é muito facil verificar se o valor esta em um filter: 
+                    valor & filter > 0 => pegou
+            ** é parecido com o 2, mas por limitar a somente 1 bit por valor a busca sempre devolve nao um estado mas um tipo
+            faria sentido usar caso esse valor fosse util para algo dentro de propria operacao:
+
+            if( valor & filtro > 0 )
+                {
+                        switch( valor ){
+
+                            case valor_1: this();
+                            case valor_2: this();
+                            case valor_3: this();
+                            ...
+
+                        }
+
+                }
+
+    
+
+
+*/
+
+
+
+
+
+    // public bool Passou( byte _race, byte _age, byte _gender, Character_sexual_data* c_data ){
+
+            
+    //         int valor = ( ( *c_data ).sexual_preference_age_flags & _age ) 
+    //                     * 
+    //                     ( ( *c_data ).sexual_preference_gender_flags & _gender )
+    //                     * 
+    //                     ( ( *c_data ).sexual_preference_race_flags & _race );
+
+    //         return ( valor > 0 );
+
+        
+    // }
+
+
+
+
+

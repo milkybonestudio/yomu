@@ -615,8 +615,6 @@ public static class Paths_sistema {
                         
                 }
 
-
-
                 return System.IO.Path.Combine( path_folder, _nome_entidade );
 
 

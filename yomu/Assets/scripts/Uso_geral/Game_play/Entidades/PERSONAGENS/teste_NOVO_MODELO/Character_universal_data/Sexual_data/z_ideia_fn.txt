@@ -1,0 +1,156 @@
+
+
+
+
+    public int Get_number_4( int _valor_personagem, int _filtro, int* _valores_estativos /* id, valor */, int _tem_function ){
+
+            // ** very good?
+
+            // ** hair
+            if(  ( _valor_personagem & _filtro ) != 0 )
+                { 
+                    if( _valor_personagem & _tem_function != 0 )
+                        { 
+                            // ** precisa ativar fn
+                            return fn( _v1 ); 
+
+                        }
+                        else
+                        {
+                            // --- tem valor estatico
+
+                            for( int i = 0 ; i < numero_maximo_hair ; i++ ){
+
+                                    if( *_valores_estativos == _valor_personagem )
+                                        { _valores_estativos++; return *_valores_estativos; } // ** achou
+
+                                    _valores_estativos += 2;
+                                    continue;
+
+                            }
+                        }
+                }
+
+
+    
+            // ----- carrega somente se necessario
+        
+            int fn( int _v1 ){
+
+                    switch( _v1 ){
+
+                        case Hair_color_chave_bit.black: return 1;
+                        case Hair_color_chave_bit.blue: return 2;
+
+                    }
+
+                    throw new System.Exception();
+
+            }
+
+
+    }
+
+
+
+
+    public int Get_number_4( int _v1, int _v2 ){
+
+            // ** good?
+
+
+            // ** hair
+            if(  ( _v1 & _v2 ) != 0 )
+                { return fn( _v1 ); }
+
+
+            
+            // ** other thing 
+            if(  ( _v1 & _v2 ) != 0 )
+                { return fn( _v1 ); }
+
+            // ...
+            // ...
+
+            
+
+
+            // ----- carrega somente se necessario
+            
+            int fn( int _v1 ){
+
+                    switch( _v1 ){
+
+                        case Hair_color_chave_bit.black: return 1;
+                        case Hair_color_chave_bit.blue: return 2;
+
+                    }
+
+                    throw new System.Exception();
+
+            }
+
+
+    }
+
+    public int Get_number_3( int _v1, int _v2 ){
+
+            // ** meh
+            // ** ainda carrega a funcao
+
+            if(  _v1 & ( Hair_color_chave_bit.black + Hair_color_chave_bit.blue ) == 0 )
+                { return 0; }
+
+            switch( _v1 ){
+
+                case Hair_color_chave_bit.black: return 1;
+                case Hair_color_chave_bit.blue: return 2;
+
+            }
+
+            throw new System.Exception();
+
+    }
+
+
+
+
+
+    public int Get_number_2( int _v1, int _v2 ){
+
+            //** bad
+
+            switch( _v1 ){
+
+                case Hair_color_chave_bit.black: return 1;
+                case Hair_color_chave_bit.blue: return 2;
+
+            }
+
+            return 0;
+
+    }
+
+
+
+
+
+    public int Get_number_1( int _v1, int _v2 ){
+
+            //** very bad
+
+            if( _v1 & ( Hair_color_chave_bit.black ) )
+                {
+                    // ---- black hair
+                    return 1;
+                }
+
+            if( _v1 & ( Hair_color_chave_bit.blue ) )
+                {
+                    // ---- blue hair
+                    return 2;
+                }
+
+            return 0;
+
+    }

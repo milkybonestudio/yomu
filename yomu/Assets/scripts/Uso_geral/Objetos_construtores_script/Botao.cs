@@ -376,9 +376,11 @@ public class Botao{
 
             
 
-            Controlador_cursor.Pegar_instancia().Mudar_cursor( cursor_hover );
+            //mark 
+            //** mudou
+            Controlador_cursor.Pegar_instancia().Change_action( Cursor_action.choice  ); // cursor_hover
 
-            if(som_click != null && is_click) Controlador_audio.Pegar_instancia().Acrecentar_sfx( som_click );
+            if(som_click != null && is_click) CONTROLLER__audio.Pegar_instancia().Acrecentar_sfx( som_click );
             
             if(this.tipo_botao == Tipo_botao.cor){
 
