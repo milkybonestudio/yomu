@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Assertions.Must;
 
 // criado quando o save é instanciado
-public class Controlador_navegacao {
+unsafe public class Controlador_navegacao {
 
         // --- RESPONSAVEL SOMENTE PELA CIDADE DO PRIMEIRO PLANO 
 
@@ -19,7 +19,7 @@ public class Controlador_navegacao {
         public static Controlador_navegacao Pegar_instancia(){ return instancia; }
 
 
-        public Cidade cidade_atual_player;
+        public City* cidade_atual_player;
         public int cidade_atual_id; // ( regiao, trecho, id )
 
 

@@ -7,7 +7,7 @@ unsafe public class MODULO__buffer_entidade {
 
         // ** a funcao principal por hora é guardar o buffer e salvar
 
-        public MODULO__buffer_entidade( Tipo_entidade _tipo ){ 
+        public MODULO__buffer_entidade( Entity_type _tipo ){ 
 
             tipo_entidade = _tipo; 
 
@@ -16,9 +16,9 @@ unsafe public class MODULO__buffer_entidade {
         public Buffer buffer = new Buffer( 10_000 );
 
 
-        public Tipo_entidade tipo_entidade;
+        public Entity_type tipo_entidade;
         
-        //[ tipo_entidade ( 1byte ) ] [ personagem_id[ 4 bytes ] | posicao( 2 bytes ) | length( 2 bytes ) | length bytes ]
+        // [ tipo_entidade ( 1byte ) ] [ personagem_id[ 4 bytes ] | posicao( 2 bytes ) | length( 2 bytes ) | length bytes ]
         public byte[] entidades_instrucoes_stack = new byte[ 500 ]; // usado para 
         public int index_instrucao_atual_stack;
 
@@ -32,6 +32,7 @@ unsafe public class MODULO__buffer_entidade {
         // ** entidade id
         // ** fn : oque vai fazer ( interpretado na hora da reconstrucao )
         // ** dados
+
 
 
 

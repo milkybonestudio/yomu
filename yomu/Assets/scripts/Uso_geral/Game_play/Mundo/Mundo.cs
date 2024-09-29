@@ -8,7 +8,7 @@ public class Mundo {
 
 
         //public Controlador_reinos controlador_reinos;
-        public Controlador_cidades controlador_cidades;
+        public CONTROLLER__cities controlador_cidades;
         public Controlador_plots controlador_plots;
 
 

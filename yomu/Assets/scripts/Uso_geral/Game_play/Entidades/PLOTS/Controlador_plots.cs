@@ -179,26 +179,26 @@ public class Controlador_plots {
         public void Terminar_plot( int _plot_id ){
 
 
-                        // MOVO PARA A LIXEIRA
+                        // // MOVO PARA A LIXEIRA
 
-                        Plot plot = plots[ _plot_id ];
+                        // Plot plot = plots[ _plot_id ];
 
-                        if( plot == null )
-                                { throw new Exception( "nao tinha plot para excluir" ); }
-
-                        
-
-
-                        if ( ! ( INT.Tem_valor_no_array( plots_ativos_ids, _plot_id ) ) )
-                                { 
-                                        string plot_nome = (( Plot_nome ) _plot_id ).ToString();
-                                        throw new Exception(  $" Foi excluir o plot <color=red>{ plot_nome } </color>"  );
-                                }
+                        // if( plot == null )
+                        //         { throw new Exception( "nao tinha plot para excluir" ); }
 
                         
-                        INT.Tirar_valor_COMPLETO_GARANTIDO( ref plots_ativos_ids , _plot_id );
-                        plots[ _plot_id ] = null;
-                        return;
+
+
+                        // if ( ! ( INT.Tem_valor_no_array( plots_ativos_ids, _plot_id ) ) )
+                        //         { 
+                        //                 string plot_nome = (( Plot_nome ) _plot_id ).ToString();
+                        //                 throw new Exception(  $" Foi excluir o plot <color=red>{ plot_nome } </color>"  );
+                        //         }
+
+                        
+                        // INT.Tirar_valor_COMPLETO_GARANTIDO( ref plots_ativos_ids , _plot_id );
+                        // plots[ _plot_id ] = null;
+                        // return;
 
 
         }
@@ -212,12 +212,12 @@ public class Controlador_plots {
         public Plot Pegar_plot ( int _plot_id ){
 
         
-                if( plots[ _plot_id ] == null  )
-                    { 
-                        string plot_nome = (( Plot_nome ) _plot_id ).ToString();
-                        Console.LogError( $"Sistema pediu o plot { plot_nome } mas ele nao foi criado" );
-                        throw new Exception( "" ); 
-                    }
+                // if( plots[ _plot_id ] == null  )
+                //     { 
+                //         string plot_nome = (( Plot_nome ) _plot_id ).ToString();
+                //         Console.LogError( $"Sistema pediu o plot { plot_nome } mas ele nao foi criado" );
+                //         throw new Exception( "" ); 
+                //     }
 
                 return plots[ _plot_id ];
 

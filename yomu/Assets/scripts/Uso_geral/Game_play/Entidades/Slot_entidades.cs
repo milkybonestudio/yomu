@@ -1,7 +1,13 @@
 
-    public class Slot_entities {
+    public class Slot_entities_to_unload {
 
-        public int[] entidades_ids_para_excluir;
+        public Slot_entities_to_unload( int _number_slots ){
+
+            entidades_ids = new int[ _number_slots ];
+
+        }
+
+        public int[] entidades_ids;
         public int pointer_read;
         public int pointer_write;
 
@@ -11,13 +17,31 @@
 
         }
 
+
+
+        public void Add_entity_ids( int[] _entities ){
+
+
+                if( ( pointer_write + _entities.Length ) > entidades_ids.Length )
+                    { System.Array.Resize( ref entidades_ids, ( entidades_ids.Length + 20 + _entities.Length) ); }
+
+                
+                for( int i = 0 ; i < _entities.Length ; i++ ){
+
+                    entidades_ids[ pointer_write++ ] = _entities[ i ];
+                    return;
+
+                }
+
+
+        }
         
         public void Add_entity_id( int _entity_id ){
 
-                if( pointer_write == entidades_ids_para_excluir.Length )
-                    { System.Array.Resize( ref entidades_ids_para_excluir, ( entidades_ids_para_excluir.Length + 20) ); }
+                if( pointer_write == entidades_ids.Length )
+                    { System.Array.Resize( ref entidades_ids, ( entidades_ids.Length + 20) ); }
 
-                entidades_ids_para_excluir[ pointer_write++ ] = _entity_id;
+                entidades_ids[ pointer_write++ ] = _entity_id;
                 return;
 
         }
@@ -31,8 +55,8 @@
                 //** em teoria sempre vai ter um mas né
                 while( pointer_read < pointer_write ){
 
-                    if( entidades_ids_para_excluir[ pointer_read ] != 0 )
-                        { return entidades_ids_para_excluir[ pointer_read++ ]; }
+                    if( entidades_ids[ pointer_read ] != 0 )
+                        { return entidades_ids[ pointer_read++ ]; }
                         
                     pointer_read++;
                     continue;

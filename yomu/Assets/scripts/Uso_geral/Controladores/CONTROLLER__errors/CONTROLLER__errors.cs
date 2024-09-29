@@ -10,6 +10,12 @@ public class CONTROLLER__errors {
     public bool is_checking_pointer_length = true;
     public bool is_checking_dll_data = true;
 
+    public void Throw( string _message ){
+
+        throw new Exception( _message );
+
+    }
+
     public void Check_pointer_length( bool _check, string _message ){
 
         if( is_checking_pointer_length && _check )

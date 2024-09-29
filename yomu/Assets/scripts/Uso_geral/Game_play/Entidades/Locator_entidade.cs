@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 
 [StructLayout(LayoutKind.Explicit)]        
-public struct Locator_entidade {
+public struct Locator_entity {
 
         [FieldOffset(0)]
         public byte a_1;
