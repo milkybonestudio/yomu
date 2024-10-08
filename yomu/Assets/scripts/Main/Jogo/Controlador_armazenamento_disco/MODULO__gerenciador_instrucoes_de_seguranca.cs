@@ -48,10 +48,10 @@ public class MODULO__gerenciador_instrucoes_de_seguranca {
         public MODULO__gerenciador_instrucoes_de_seguranca(){
 
             
-                if( ! ( File.Exists( Paths_sistema.path_arquivo__stack ) ) )
-                        {  throw new Exception( $"stack nao foi encontrada no path { Paths_sistema.path_arquivo__stack }" );  }
+                if( ! ( File.Exists( Paths_system.path_arquivo__stack ) ) )
+                        {  throw new Exception( $"stack nao foi encontrada no path { Paths_system.path_arquivo__stack }" );  }
 
-                strem_stack =  FILE_STREAM.Criar_stream( _path : Paths_sistema.path_arquivo__stack, _tamanho_buffer: tamanho_buffer );
+                strem_stack =  FILE_STREAM.Criar_stream( _path : Paths_system.path_arquivo__stack, _tamanho_buffer: tamanho_buffer );
 
         }
 
@@ -195,16 +195,16 @@ public class MODULO__gerenciador_instrucoes_de_seguranca {
             Debug.Log( "Precisou extender a stack" );
 
             byte[] stack_redimensionada = new byte[ strem_stack.Length + 100_000 ];
-            byte[] dados = System.IO.File.ReadAllBytes( Paths_sistema.path_arquivo__stack );
+            byte[] dados = System.IO.File.ReadAllBytes( Paths_system.path_arquivo__stack );
 
             BYTE.Copiar_elementos_de_array( stack_redimensionada, 0, dados, dados.Length );
 
             // ** nao sei se consegue sobre escrever, acho que sim
-            System.IO.File.WriteAllBytes( Paths_sistema.path_arquivo__stack, stack_redimensionada );
+            System.IO.File.WriteAllBytes( Paths_system.path_arquivo__stack, stack_redimensionada );
 
             strem_stack.Close();
 
-            strem_stack = FILE_STREAM.Criar_stream( _path : Paths_sistema.path_arquivo__stack, _tamanho_buffer:  tamanho_buffer );
+            strem_stack = FILE_STREAM.Criar_stream( _path : Paths_system.path_arquivo__stack, _tamanho_buffer:  tamanho_buffer );
 
             return;
 

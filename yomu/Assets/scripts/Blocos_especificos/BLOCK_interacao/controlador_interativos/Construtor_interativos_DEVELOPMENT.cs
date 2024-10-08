@@ -80,7 +80,7 @@ using UnityEngine;
                                 { throw new Exception( $"formato de interativo_enum_nome_DESENVOLVIMENTO nao aceito. Veio: { interativo_enum_nome_DESENVOLVIMENTO }" ); }
                         
                                                                        
-                        string path_imagens_interativos = Paths_sistema.path_folder_imagens_pontos_DEVELOPMENT;
+                        string path_imagens_interativos = null; //Paths_system.path_folder_imagens_pontos_DEVELOPMENT;
 
 
                         string cidade = STRING.Deixar_somente_a_primeira_letra_maiuscula( folders_ate_interativos[ 0 ] );

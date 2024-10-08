@@ -26,6 +26,8 @@ public static class Construtor_controlador {
                 Application.targetFrameRate = 60;
                 Application.runInBackground = true;
 
+                CONSTRUCTOR__paths_system.Construct();
+
 
                 // --- CONSTRUIR CONTROLADORES GERAIS
 

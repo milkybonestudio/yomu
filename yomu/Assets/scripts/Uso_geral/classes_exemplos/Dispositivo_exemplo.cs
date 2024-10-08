@@ -7,9 +7,11 @@ public class Dispositivo__exemplo : INTERFACE__dispositivo {
 
         
         // --- CONSTRUTOR
-        public static Dispositivo Construir(){ return new Dispositivo( new Dispositivo_que_nao_pode_ser_instanciado() ); }
+        public static Dispositivo Construir(){ return CONSTRUCTOR__device.Construct( new Dispositivo_que_nao_pode_ser_instanciado() ); }
+
 
         public string nome = "COLOCAR_NOME";
+
 
         // ** aponta para onde vao estar os folders com as imagens no editor, o nome do container na build e a primeira pasta da lista indica a pasta com o prefab
         // ** a ultima pasta semre vai ser com o nome do dispositivo
@@ -71,6 +73,13 @@ public class Dispositivo__exemplo : INTERFACE__dispositivo {
 
                 return; 
                 
+        }
+
+
+        public void Declare_components( Dispositivo _device ){
+
+
+
         }
 
 

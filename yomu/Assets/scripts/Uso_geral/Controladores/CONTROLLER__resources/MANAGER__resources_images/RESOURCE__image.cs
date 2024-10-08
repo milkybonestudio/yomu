@@ -2,9 +2,17 @@
 using UnityEngine;
 
 
+public enum Image_context {
+
+    not_given,
+    character, 
+    
+}
 
 
 unsafe public class RESOURCE__image {
+
+        public Image_context image_context;
 
         public Type_image type;
         

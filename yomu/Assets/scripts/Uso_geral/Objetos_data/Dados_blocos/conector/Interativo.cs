@@ -76,7 +76,7 @@ public enum Tipo_get_interativo {
         public bool hover_esta_ativo;
 
 
-        public Script_jogo_nome script_jogo_nome = Script_jogo_nome.nada; 
+        public Script_localizador script_jogo_nome; 
 
 
         //  especificos

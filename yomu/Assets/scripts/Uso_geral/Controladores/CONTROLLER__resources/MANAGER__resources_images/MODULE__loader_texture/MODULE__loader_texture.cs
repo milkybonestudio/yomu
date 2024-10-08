@@ -33,8 +33,6 @@ unsafe public class MODULE__loader_texture {
 
                 }
 
-
-
         }
 
 
@@ -84,7 +82,7 @@ unsafe public class MODULE__loader_texture {
                 Bitmap bm = new Bitmap( System.Drawing.Image.FromStream( new MemoryStream( _png )) );
 
                 BitmapData bitmapData = bm.LockBits (
-                                                        new Rectangle(0, 0, bm.Width, bm.Height),
+                                                        new System.Drawing.Rectangle(0, 0, bm.Width, bm.Height),
                                                         ImageLockMode.ReadOnly,
                                                         PixelFormat.Format32bppArgb // ** talvez trenha que inverter
                                                     );

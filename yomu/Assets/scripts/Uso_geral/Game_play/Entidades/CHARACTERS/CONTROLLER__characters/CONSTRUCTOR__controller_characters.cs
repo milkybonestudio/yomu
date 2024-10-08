@@ -18,7 +18,7 @@ public static class CONSTRUCTOR__controller_characters {
 
 					controlador.leitor_de_arquivos = new MODULO__leitor_de_arquivos (
 																						_gerenciador_nome : "" ,
-																						_path_folder: Paths_sistema.path_folder__dados_save_personagens
+																						_path_folder: Paths_system.Get_path_folder__entities_type( Tipo_entidade.personagem )
 																					);
 
 					

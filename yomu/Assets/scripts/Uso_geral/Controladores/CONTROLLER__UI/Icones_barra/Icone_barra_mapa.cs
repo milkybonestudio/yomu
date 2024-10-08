@@ -67,7 +67,7 @@ public static class Icone_barra_mapa {
                     Mapa_ponto ponto = pontos[ ponto_index ] ;
                     float[] min_max = ponto.min_max_rect ;
 
-                    bool passou = Mat.Verificar_ponto_dentro_retangulo ( posicao[ 0 ] , posicao[ 1 ] , min_max[ 0 ] , min_max[ 1 ] , min_max[ 2 ] , min_max[ 3 ] ) ;
+                    bool passou = Rectangle.Check_point_inside ( posicao[ 0 ] , posicao[ 1 ] , min_max[ 0 ] , min_max[ 1 ] , min_max[ 2 ] , min_max[ 3 ] ) ;
 
                     if( passou ){
 

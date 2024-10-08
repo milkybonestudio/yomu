@@ -138,7 +138,7 @@ public static class Icone_barra_mochila {
                             
                             float[] min_max = slot.generico.min_max_rect ;
 
-                            bool passou  =  Mat.Verificar_ponto_dentro_retangulo ( posicao[ 0 ] , posicao[ 1 ] , min_max[ 0 ] , min_max[ 1 ] , min_max[ 2 ] , min_max[ 3 ] ) ;
+                            bool passou  =  Rectangle.Check_point_inside ( posicao[ 0 ] , posicao[ 1 ] , min_max[ 0 ] , min_max[ 1 ] , min_max[ 2 ] , min_max[ 3 ] ) ;
 
                             if( passou ){
 
@@ -197,7 +197,7 @@ public static class Icone_barra_mochila {
                     
                     float[] min_max = slot.generico.min_max_rect ;
 
-                    bool passou  =  Mat.Verificar_ponto_dentro_retangulo ( posicao[ 0 ] , posicao[ 1 ] , min_max[ 0 ] , min_max[ 1 ] , min_max[ 2 ] , min_max[ 3 ] ) ;
+                    bool passou  =  Rectangle.Check_point_inside ( posicao[ 0 ] , posicao[ 1 ] , min_max[ 0 ] , min_max[ 1 ] , min_max[ 2 ] , min_max[ 3 ] ) ;
 
                     if( passou ){
 

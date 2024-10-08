@@ -15,7 +15,7 @@ public class Req_transicao {
 
     public bool pega_ui;
 
-    public Tipo_UI novo_tipo_UI;
+    //public Tipo_UI novo_tipo_UI;
     public bool[] UI_partes;
 
 

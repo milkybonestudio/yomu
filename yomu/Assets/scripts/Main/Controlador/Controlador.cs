@@ -39,16 +39,39 @@ unsafe public class Controlador : MonoBehaviour {
 
 
  
-
         public void Start(){
+            
 
                 Construtor_controlador.Construir();
 
-                // S s = new S();
-                // //s.b = 1;
-                // byte* s_pointer = ( byte* )( &s );
+
+                void Create_character_images( Personagem_nome _personagem ){
 
 
+                    // string path = Paths_system.Get_instance().Get_character_images_path__DEVELOPMENT( _personagem );
+                    // Images_container_result container =  Images_container_creator.Construct( path );
+
+                    //System.IO.File.WriteAllBytes( Paths_system.Get_instance().Get_character_images_container_path( _personagem ) );
+                    
+
+                }
+
+
+                Dispositivo d = Dispositivo__teste.Construir();
+
+
+                //Images_container_result container =  Images_container_creator.Construct( "C:\\Users\\User\\Desktop\\yomu_things\\teste" );
+
+                // if( Verifier_image_container.Verify( "C:\\Users\\User\\Desktop\\yomu_things\\teste", System.IO.File.ReadAllLines("C:\\Users\\User\\Desktop\\yomu_things\\container.txt") ))
+                //     {  Debug.Log( "Esta diferente" ); }
+                
+
+                //System.IO.File.WriteAllLines( "C:\\Users\\User\\Desktop\\yomu_things\\container.txt", container.localizadores );
+
+
+                // foreach( string s in container.localizadores )
+                //     { Debug.Log( s ); }
+                
 
 
         }

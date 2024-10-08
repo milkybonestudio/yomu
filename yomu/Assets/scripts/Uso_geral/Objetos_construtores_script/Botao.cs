@@ -370,7 +370,7 @@ public class Botao{
         if( botao_esta_trancado  ) return false;
         
 
-        bool ver = Mat.Verificar_ponto_dentro_retangulo(_posicao_mouse[0] , _posicao_mouse[1] , this.x_min ,this.x_max,  this.y_min, this.y_max );
+        bool ver = Rectangle.Check_point_inside(_posicao_mouse[0] , _posicao_mouse[1] , this.x_min ,this.x_max,  this.y_min, this.y_max );
 
         if(ver){
 

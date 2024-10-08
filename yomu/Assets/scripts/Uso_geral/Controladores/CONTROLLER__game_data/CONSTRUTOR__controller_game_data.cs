@@ -26,11 +26,11 @@ unsafe public static class CONSTRUCTOR__controller_game_data {
 
                     fixed( Game_current_state* game_current_state_pointer = &(controlador.game_current_state) ){
 
-                        TOOLS__pointers_data_transfer.Transfer  (  
-                                                                    ( byte* ) data_pointer_origin, 
-                                                                    ( byte* ) game_current_state_pointer,
-                                                                    sizeof( Game_current_state )
-                                                                );
+                        Pointers_data_transfer.Transfer (  
+                                                            ( byte* ) data_pointer_origin, 
+                                                            ( byte* ) game_current_state_pointer,
+                                                            sizeof( Game_current_state )
+                                                        );
 
 
                     }

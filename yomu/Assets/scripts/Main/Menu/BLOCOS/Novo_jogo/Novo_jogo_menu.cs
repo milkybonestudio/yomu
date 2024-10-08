@@ -41,7 +41,7 @@ public class Novo_jogo_menu {
 
 
 
-            if(Mat.Verificar_ponto_dentro_retangulo(  mouse_x,  mouse_y   , x_min, x_max, y_min , y_max   )   ){
+            if( Rectangle.Check_point_inside(  mouse_x,  mouse_y   , x_min, x_max, y_min , y_max   )   ){
 
                 novo_jogo.image.color = Color.white;
                 if(  Input.GetMouseButtonDown( 0 ) )

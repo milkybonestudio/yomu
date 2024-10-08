@@ -8,9 +8,10 @@ public class RESOURCE__image_data {
         public Type_image type;
 
         // ** LOCATOR
-        public int data_container_id;
-        public int image_id;
+        public string data_container_path;
+        public Image_localizers image_localizers;
 
+        
         // --- ORIGINAL IMAGE
 
         public int height;

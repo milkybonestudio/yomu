@@ -61,7 +61,7 @@ public class Icone_barra {
         // Debug.Log("mouse_x: " +  posicao_mouse[ 0 ]);
         // Debug.Log("mouse_y: " + posicao_mouse[ 1 ]);
 
-        bool mouse_esta_dentro =  Mat.Verificar_ponto_dentro_retangulo( posicao_mouse[ 0 ] , posicao_mouse [ 1 ] , x_min, x_max, y_min, y_max );
+        bool mouse_esta_dentro =  Rectangle.Check_point_inside( posicao_mouse[ 0 ] , posicao_mouse [ 1 ] , x_min, x_max, y_min, y_max );
 
 
         if( !mouse_esta_dentro ) { 

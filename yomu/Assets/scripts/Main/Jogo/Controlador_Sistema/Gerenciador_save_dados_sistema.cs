@@ -38,7 +38,7 @@ public class GERENCIADOR__save_dados_sistema {
                 // ** isso nao faz sentido nenhum 
                 // ** isso teria que voltar um byte* da struct e a length
                 File_to_save dados = new File_to_save();
-                dados.path = Paths_sistema.path_arquivo__dados_dinamicos__uso_completo__dados_sistema;
+                dados.path = Paths_system.path_file__complete_use__system_data;
                 dados.dados = buffer.data;
                 dados.length = buffer.pointer;
 

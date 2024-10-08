@@ -3,7 +3,7 @@ using UnityEngine;
 
 public static class COLOR {
 
-    public static Color Pegar_cor_media( Color _cor_1, Color _cor_2, float _rate ){
+    public static Color Blend_color_with_rate( Color _cor_1, Color _cor_2, float _rate ){
 
         return new Color(
 

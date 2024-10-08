@@ -16,7 +16,7 @@
                         // ** tem que deixar o jogo na posicao "0"
                         // personagem inicial : nara 
                         // posicao inicial: ( 0 , 0  , 0 ) ( cidade:  )
-                        Paths_sistema.Colocar_save( 0 );      
+                        Paths_system.Colocar_save( 0 );      
                         Dados_blocos.Resetar();
                         Controlador_timer.Construir_teste( null );
                         //Controlador_dados_dinamicos.Construir_teste( null );

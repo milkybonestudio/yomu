@@ -103,7 +103,7 @@ public static class Atualizar_imagens_personagens_especificos {
                                                 pointer_alocador_imagens++;
 
                                                 
-                                                string path_imagem =  Paths_sistema.path_folder_dados_DEVELOPMENT + "/Personagens/" + nome_personagem_str + "/Imagens_in_game/" +  nova_string  + ".png";
+                                                string path_imagem =  null; // Paths_system.path_folder_dados_DEVELOPMENT + "/Personagens/" + nome_personagem_str + "/Imagens_in_game/" +  nova_string  + ".png";
                                                 //
                                                 bool arquivo_existe = System.IO.File.Exists( path_imagem );
 
@@ -202,7 +202,7 @@ public static class Atualizar_imagens_personagens_especificos {
 
 
 
-                        string path_folder_dados_producao  = Paths_sistema.path_folder_dados_DEVELOPMENT;
+                        string path_folder_dados_producao  = null; // Paths_system.path_folder_dados_DEVELOPMENT;
                         //aponta para o folder do personagem que vai construir o container.dat com as imagens 
                         string path_folder_personagem = path_folder_dados_producao + "/Personagens/" + nome_personagem_str;
 

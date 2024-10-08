@@ -80,12 +80,16 @@ public static class Gerenciador_imagens_MENU {
 
         static Gerenciador_imagens_MENU(){
 
-                localizador_imagens = System.IO.File.ReadAllBytes( Paths_sistema.path_arquivo__localizador__menu_imagens );
-                desmembrador_de_arquivo  =  new MODULO__desmembrador_de_arquivo( 
-                                                                                                        _gerenciador_nome: "",
-                                                                                                        _path_arquivo: Paths_sistema.path_arquivo__dados_estaticos__uso_parcial__menu_imagens,
-                                                                                                        _numero_inicial_de_slots: 50
-                                                                                                );
+
+                //mark
+                // ** tem que refazer isso aqui
+
+                // localizador_imagens = System.IO.File.ReadAllBytes( Paths_system.path_arquivo__localizador__menu_imagens );
+                // desmembrador_de_arquivo  =  new MODULO__desmembrador_de_arquivo( 
+                //                                                                                         _gerenciador_nome: "",
+                //                                                                                         _path_arquivo: Paths_system.path_arquivo__dados_estaticos__uso_parcial__menu_imagens,
+                //                                                                                         _numero_inicial_de_slots: 50
+                //                                                                                 );
                 return;
         }
 
@@ -214,19 +218,19 @@ public static class Gerenciador_imagens_MENU {
             //     // --- SAVE
 
 
-            //             string path_save_1 = Paths_sistema.Pegar_path_imagem_save( 1 );
+            //             string path_save_1 = Paths_system.Pegar_path_imagem_save( 1 );
             //             sprites_interativos[ ( int ) Interativo_menu_nome.save_slot_1  ] = SPRITE.Transformar_png_TO_sprite( System.IO.File.ReadAllBytes( path_save_1 ) );
             //             sprites_interativos_nomes[ ( int ) Interativo_menu_nome.save_slot_1  ] = Interativo_menu_nome.save_slot_1.ToString();
 
-            //             string path_save_2 = Paths_sistema.Pegar_path_imagem_save( 2 );
+            //             string path_save_2 = Paths_system.Pegar_path_imagem_save( 2 );
             //             sprites_interativos[ ( int ) Interativo_menu_nome.save_slot_2  ] = SPRITE.Transformar_png_TO_sprite( System.IO.File.ReadAllBytes( path_save_2 ) );
             //             sprites_interativos_nomes[ ( int ) Interativo_menu_nome.save_slot_2  ] = Interativo_menu_nome.save_slot_2.ToString();
 
-            //             string path_save_3 = Paths_sistema.Pegar_path_imagem_save( 3 );
+            //             string path_save_3 = Paths_system.Pegar_path_imagem_save( 3 );
             //             sprites_interativos[ ( int ) Interativo_menu_nome.save_slot_3  ] = SPRITE.Transformar_png_TO_sprite( System.IO.File.ReadAllBytes( path_save_3 ) );
             //             sprites_interativos_nomes[ ( int ) Interativo_menu_nome.save_slot_3  ] = Interativo_menu_nome.save_slot_3.ToString();
 
-            //             string path_save_4 = Paths_sistema.Pegar_path_imagem_save( 4 );
+            //             string path_save_4 = Paths_system.Pegar_path_imagem_save( 4 );
             //             sprites_interativos[ ( int ) Interativo_menu_nome.save_slot_4  ] = SPRITE.Transformar_png_TO_sprite( System.IO.File.ReadAllBytes( path_save_4 ) );
             //             sprites_interativos_nomes[ ( int ) Interativo_menu_nome.save_slot_4  ] = Interativo_menu_nome.save_slot_4.ToString();
                         
@@ -258,7 +262,7 @@ public static class Gerenciador_imagens_MENU {
 
             //     // --- GALERIA
 
-            //             string folder_galeria = Paths_sistema.path_folder__imagens_galeria;
+            //             string folder_galeria = Paths_system.path_folder__imagens_galeria;
 
             //             string[] nomes_arquivos = System.IO.Directory.GetFiles( folder_galeria );
 

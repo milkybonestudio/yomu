@@ -22,7 +22,6 @@ public class CONTROLLER__transition {
                 if( _transition_request_block.tipo != Transition_type.block )
                     { throw new Exception( "Tentou colocar a transition req no BLOCK mas era tipo MODO" ); }
 
-
                 Put_transition_request(  _transition_request_block,  _transition_request_visual );
                 return;
         }
@@ -90,6 +89,8 @@ public class CONTROLLER__transition {
                 yield break; // --- TERMINOU TRANSICAO
 
         }
+
+        
 
 }
 

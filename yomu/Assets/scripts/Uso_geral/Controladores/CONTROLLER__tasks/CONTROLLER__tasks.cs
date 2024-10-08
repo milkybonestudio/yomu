@@ -28,6 +28,14 @@ public class CONTROLLER__tasks  {
 
         }
 
+        public Task_req Get_task_request( string _name ){
+
+                Task_req req = new Task_req( _name );
+                Adicionar_task( req );
+                return req;
+
+        }
+
         public long tempo_maximo_em_single_thread_ms;
 
         public MODULO__multithread modulo_multithread;

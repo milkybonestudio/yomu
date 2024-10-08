@@ -21,8 +21,9 @@ public static class Conversor_imagens_dispositivos{
 
         byte[][] pngs = new byte[ nomes.Length][];
 
-
-        string path_folder = GERENCIADOR__imagens_dispositivo.Pegar_path_imagens_DEVELOPMENT( _folders, _nome_dispositivo );
+        //mark
+        // ** tem que pegar depois
+        string path_folder = "";
 
         for( int nome_index = 0 ; nome_index < nomes.Length ; nome_index++ ){
 

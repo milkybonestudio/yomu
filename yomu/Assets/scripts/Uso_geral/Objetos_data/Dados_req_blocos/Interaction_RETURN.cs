@@ -3,7 +3,7 @@
 public class Interaction_RETURN {
 
         public int ponto_para_mover = -1 ;
-        public Script_jogo_nome script_jogo = Script_jogo_nome.nada ;
+        public Script_localizador script_jogo;
         public string exit_mode = "menu";
 
 

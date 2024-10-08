@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+
+
 
 
 public class MANAGER__resources_images {
@@ -6,8 +9,15 @@ public class MANAGER__resources_images {
 
         public MANAGER__resources_images(){}
 
+        
         public MODULE__textures_manager textures_manager;
         public MODULE__loader_texture loader_texture;
+
+
+        public MODULE__images_streams characters_images;
+        public MODULE__images_streams generic_images;
+
+
 
         private RESOURCE__image[] requests = new RESOURCE__image[ 50 ];
         public int pointer;
@@ -145,7 +155,17 @@ public class MANAGER__resources_images {
                 if( image.multiples_images == null )
                     {
                         // --- somente 1 imagem 
-                        task_getting_file = new Task_req( "task_getting_file" );
+                        task_getting_file = CONTROLLER__tasks.Pegar_instancia().Get_task_request( "task_getting_file" );
+
+                        task_getting_file.fn_multithread = ( Task_req _req ) => {
+                                                                                    switch( image.image_context ){
+
+                                                                                        case Image_context.character: characters_images.Get_data( image.single_image.data_container_path, image.single_image.image_localizers.initial_pointer, image.single_image.image_localizers.length ); break;
+                                                                                        case Image_context.not_given: generic_images.Get_data( image.single_image.data_container_path, image.single_image.image_localizers.initial_pointer, image.single_image.image_localizers.length ); break;
+                                                                                        default: throw new Exception( $"Can not handle the type { image.image_context}" );
+
+                                                                                    }
+                                                                                };
                         
 
                     }
@@ -265,3 +285,4 @@ public class MANAGER__resources_images {
 
 
 }
+;

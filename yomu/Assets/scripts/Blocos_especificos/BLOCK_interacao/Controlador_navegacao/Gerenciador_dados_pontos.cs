@@ -9,8 +9,8 @@ public class Gerenciador_dados_pontos {
 
 
 
-                path_container = Paths_sistema.path_folder__dados_save_pontos;
-                localizador = System.IO.File.ReadAllBytes( Paths_sistema.path_arquivo__localizador__pontos_save );
+                //path_container = Paths_system.path_folder__dados_save_pontos;
+                //localizador = System.IO.File.ReadAllBytes( Paths_system.path_arquivo__localizador__pontos_save );
 
                 desmembrador_de_arquivo = new MODULO__desmembrador_de_arquivo   (   
                                                                                     _gerenciador_nome: "Gerenciador_dados_pontos",

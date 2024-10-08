@@ -28,8 +28,8 @@ public class Controlador_plots {
 
                         controlador.gerenciador_objetos_dll_dinamicos = new MODULO__leitor_dll( _nome_dll: "Plot", _numero_inicial_de_slots: 10 );
                         controlador.leitor_de_arquivos = new MODULO__leitor_de_arquivos ( 
-                                                                                                _gerenciador_nome: "gerenciador_plots",
-                                                                                                _path_folder: Paths_sistema.path_folder__dados_save_plots
+                                                                                            _gerenciador_nome: "gerenciador_plots",
+                                                                                            _path_folder: Paths_system.Get_path_folder__entities_type( Tipo_entidade.plot )
                                                                                         );
 
                     

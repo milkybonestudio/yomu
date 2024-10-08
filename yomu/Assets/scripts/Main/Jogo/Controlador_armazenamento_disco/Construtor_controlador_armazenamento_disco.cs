@@ -14,7 +14,7 @@ public static class Construtor_controlador_armazenamento_disco {
 
                     // --- USO GERAL 
 
-                    Paths_sistema.Colocar_save( _save );
+                    Paths_system.Colocar_save( _save );
 
                     controlador.encoder = new System.Text.UTF8Encoding( true );
 
@@ -27,8 +27,8 @@ public static class Construtor_controlador_armazenamento_disco {
                     if( _novo_jogo )
                             { controlador.Criar_arquivos_novo_jogo( _save ); }
 
-                    if( !!! ( System.IO.File.Exists( Paths_sistema.path_arquivo__dados_dinamicos__uso_completo__dados_sistema ) ) )
-                            { throw new Exception( $"dados_programa.dat nao foi encontrado no path { Paths_sistema.path_arquivo__dados_dinamicos__uso_completo__dados_sistema }"); }
+                    if( !!! ( System.IO.File.Exists( Paths_system.path_file__complete_use__system_data ) ) )
+                            { throw new Exception( $"dados_programa.dat nao foi encontrado no path { Paths_system.path_file__complete_use__system_data }"); }
 
                     
                     
@@ -40,7 +40,7 @@ public static class Construtor_controlador_armazenamento_disco {
                     // --- DADOS SISTEMA
 
                     // dados_sistema => dados essencias entidades, estado atual 
-                    byte[] dados_sistema = System.IO.File.ReadAllBytes( Paths_sistema.path_arquivo__dados_dinamicos__uso_completo__dados_sistema );
+                    byte[] dados_sistema = System.IO.File.ReadAllBytes( Paths_system.path_file__complete_use__system_data );
                     
 
 

@@ -20,7 +20,7 @@ public static class Verificador_click_interativo_menu {
                 float y_max  = ( _arr[ menu_object_index ].rect.localPosition[ 1 ] + ( _arr[ menu_object_index ].rect.rect.height / 2f ) );
 
 
-                if(  Mat.Verificar_ponto_dentro_retangulo(  mouse_x,  mouse_y   , x_min, x_max, y_min , y_max   ) )
+                if(  Rectangle.Check_point_inside(  mouse_x,  mouse_y   , x_min, x_max, y_min , y_max   ) )
                         { 
 
                             _arr[ menu_object_index ].image.color = Color.white;
@@ -35,7 +35,6 @@ public static class Verificador_click_interativo_menu {
 
                             // return ;
                             
-
             }
 
 

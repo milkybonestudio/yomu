@@ -8,6 +8,23 @@ public static class IMAGE {
 
 
 
+        public static Image Get_component( GameObject _game_object, string _message_on_not_find, bool _throw_exception ){
+
+            Image image = _game_object.GetComponent<Image>();
+
+            if( image == null )
+                { 
+                    if( _throw_exception )
+                        { throw new System.Exception(_message_on_not_find ); }
+                        else
+                        { Console.LogError( _message_on_not_find ); }
+                     
+                }
+                
+            return image;
+
+        }
+
         public static IEnumerator Get_IEn_change_alpha_image( Image _image, float _alpha_destino, float _tempo_ms ){
 
                 if( _alpha_destino > 1f || _alpha_destino < 0f )

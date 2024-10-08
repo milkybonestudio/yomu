@@ -6,5 +6,4 @@ public static class System_enums {
     public static Bloco[] blocks_arr = ( Bloco[] ) Enum.GetValues( typeof( Bloco ) );
     
     
-
 }

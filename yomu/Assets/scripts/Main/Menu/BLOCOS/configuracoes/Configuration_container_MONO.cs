@@ -194,7 +194,7 @@ public class Configuration_container : MonoBehaviour {
                 volume_is_pressionado = false; 
                 
 
-                if( Mat.Verificar_ponto_dentro_retangulo(  mouse_x + x_position,  mouse_y + y_position  , x_min, x_max, y_min , y_max  )  ){
+                if( Rectangle.Check_point_inside(  mouse_x + x_position,  mouse_y + y_position  , x_min, x_max, y_min , y_max  )  ){
 
                         if(  Input.GetMouseButtonDown( 0 )  ){ volume_is_pressionado = true; }
                         return true;
@@ -226,7 +226,7 @@ public class Configuration_container : MonoBehaviour {
 
 
 
-                if( Mat.Verificar_ponto_dentro_retangulo(  mouse_x + x_position,  mouse_y + y_position  , x_min, x_max, y_min , y_max   )   ){
+                if( Rectangle.Check_point_inside(  mouse_x + x_position,  mouse_y + y_position  , x_min, x_max, y_min , y_max   )   ){
 
                         if(   Input.GetMouseButtonDown( 0 ) ){ Trocar_modo_texto( Tipo_construcao_texto.fade); }
                         return true;
@@ -243,7 +243,7 @@ public class Configuration_container : MonoBehaviour {
                 y_max = text_instant_rect.localPosition[1] + (text_instant_rect.rect.height / 2) ;
 
 
-                if( Mat.Verificar_ponto_dentro_retangulo(  mouse_x + x_position,  mouse_y + y_position  , x_min, x_max, y_min , y_max   )   ){
+                if( Rectangle.Check_point_inside(  mouse_x + x_position,  mouse_y + y_position  , x_min, x_max, y_min , y_max   )   ){
 
                         if( Input.GetMouseButtonDown( 0 ) ){ Trocar_modo_texto( Tipo_construcao_texto.instant );}
 
@@ -260,7 +260,7 @@ public class Configuration_container : MonoBehaviour {
 
 
 
-                if( Mat.Verificar_ponto_dentro_retangulo(  mouse_x,  mouse_y   , x_min, x_max, y_min , y_max   )   ){
+                if( Rectangle.Check_point_inside(  mouse_x,  mouse_y   , x_min, x_max, y_min , y_max   )   ){
 
                         if( Input.GetMouseButtonDown( 0 ) ){ Trocar_modo_texto( Tipo_construcao_texto.typewrite ); }
                         return true;
@@ -283,7 +283,7 @@ public class Configuration_container : MonoBehaviour {
                 float y_max = full_screen_ativa.localPosition[1] + (full_screen_ativa.rect.height / 2) ;
 
                 
-                if( Mat.Verificar_ponto_dentro_retangulo(  mouse_x,  mouse_y   , x_min, x_max, y_min , y_max   )   ){
+                if( Rectangle.Check_point_inside(  mouse_x,  mouse_y   , x_min, x_max, y_min , y_max   )   ){
 
                         if( Input.GetMouseButtonDown( 0 ) ){ Trocar_full_screen(); }
                         return true;

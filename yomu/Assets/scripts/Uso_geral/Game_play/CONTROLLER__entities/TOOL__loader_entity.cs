@@ -40,7 +40,7 @@ unsafe public static class TOOL__loader_entity {
 
                 // --- PEGAR PATHS
 
-                string path_folder = System.IO.Path.Combine( Paths_sistema.path_folder__dados_save_personagens, _character_id.ToString() );
+                string path_folder = Paths_system.Get_file_path__entity( Tipo_entidade.personagem, ( ( Personagem_nome ) _character_id ).ToString() );
                 string dados_path = System.IO.Path.Combine( path_folder, "fix.dat" );
                 string dados_path_heap = System.IO.Path.Combine( path_folder, "heap.dat" );
 
@@ -107,7 +107,7 @@ unsafe public static class TOOL__loader_entity {
                 city.fundamental_data = &( _controller.fundamental_data.cities[ _city_id ] );
 
                 // --- PEGA PATH FOLDER
-                string path_folder = System.IO.Path.Combine( Paths_sistema.path_folder__dados_save_cidades, _city_id.ToString() );
+                string path_folder = Paths_system.Get_file_path__entity( Tipo_entidade.cidade, ( ( Cidade_nome ) _city_id ).ToString() );
 
                 // --- PEGA DADOS FIXOS
                     string dados_path = System.IO.Path.Combine( path_folder, "fix.dat" );

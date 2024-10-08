@@ -19,7 +19,7 @@ public static class Construtor_MENU {
             GameObject canvas = GameObject.Find("Tela/Canvas"); 
 
             // --- PEGA MENU
-            string nome_prefab = Paths_sistema.path_folder__prefabs_tipos_de_menu  + "/" +  ( _dados_menu.tipo_menu_background ).ToString() + "_prefab";
+            string nome_prefab = Paths_system.path_folder__prefabs  + "/Menu/" +  ( _dados_menu.tipo_menu_background ).ToString() + "_prefab";
             GameObject menu_prefab = Resources.Load<GameObject>( nome_prefab );
 
             menu_prefab.transform.SetParent( canvas.transform, false );
