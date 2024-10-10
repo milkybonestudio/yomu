@@ -9,13 +9,13 @@ public static class TOOL__device {
 
                 // --- VERIFICACOES
                 if( _device.dispositivo_prefab == null )
-                    { throw new Exception( $"Tentou Anexar o dipositivo { _device.interface_dispositivo.Pegar_nome() } mas o prefab estava null"); }
+                    { throw new Exception( $"Tentou Anexar o dipositivo { _device.interface_dispositivo.Get_name() } mas o prefab estava null"); }
 
 
                 _device.dispositivo_game_object = GameObject.Instantiate( _device.dispositivo_prefab );
                 _device.dispositivo_game_object.name = _device.dispositivo_prefab.name;
 
-                if( _device.dispositivo_game_object.name != ( _device.interface_dispositivo.Pegar_nome() + "_dispositivo" ) )
+                if( _device.dispositivo_game_object.name != ( _device.interface_dispositivo.Get_name() + "_dispositivo" ) )
                     { throw new Exception( $"Prefab estava com o nome errado no container. Estava: { _device.dispositivo_game_object.name }" ); }
 
 

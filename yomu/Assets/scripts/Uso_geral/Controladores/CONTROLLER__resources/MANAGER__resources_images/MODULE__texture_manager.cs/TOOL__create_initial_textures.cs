@@ -14,7 +14,7 @@ public static class TOOL__create_initial_textures {
                 
                 int length = Enum.GetValues( typeof( Texture_sizes ) ).Length;
                 _module.textures = new Texture2D[ length ][];
-                _module.textures_locks = new bool[ length ][];
+                _module.textures_locks = new Texture_allocated_flags[ length ][];
                 _module.indentificadores = new string[ length ][];
 
 
@@ -52,10 +52,10 @@ public static class TOOL__create_initial_textures {
 
 
         [ MethodImpl( MethodImplOptions.AggressiveInlining ) ]
-        private static void Get_textures_start( Texture2D[][] textures, bool[][] textures_locks, string[][] indentificadores, int slot, int _number, int _height, int _width  ){
+        private static void Get_textures_start( Texture2D[][] textures, Texture_allocated_flags[][] textures_locks, string[][] indentificadores, int slot, int _number, int _height, int _width  ){
 
                 textures[ slot ] = new Texture2D[ _number ];
-                textures_locks[ slot ] = new bool[ _number ];
+                textures_locks[ slot ] = new Texture_allocated_flags[ _number ];
                 indentificadores[ slot ] = new string[ _number ];
 
                 Texture2D[] texs = textures[ slot ];

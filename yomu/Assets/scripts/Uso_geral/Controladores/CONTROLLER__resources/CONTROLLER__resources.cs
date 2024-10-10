@@ -7,11 +7,17 @@ public class CONTROLLER__resources {
         public static CONTROLLER__resources instance;
         public static CONTROLLER__resources Get_instance(){ return instance; }
 
-        // --- MANAGERS 
-
-        public MANAGER__resources_images resources_images;
 
 
+        // --- IMAGES
+        private MANAGER__resources_images resources_images;
+
+        public RESOURCE__image_ref Get_image_reference( Resource_context _context ){ return resources_images.Get_image_request( _context ); }
+
+        public RESOURCE__image Get_image_request( Resource_context _context ){ return resources_images.Get_image_request( _context ); }
+        public void Guarantee_image_is_ready( RESOURCE__image image ){ return resources_images.Finish_image( _context ); } 
+
+        
 
 
         public void Update(){
@@ -19,6 +25,7 @@ public class CONTROLLER__resources {
             resources_images.Update();
 
         }
+
 
 
         public int Get_bytes_allocated(){
@@ -32,10 +39,6 @@ public class CONTROLLER__resources {
         }
 
         
-
-
-
-
 
 }
 

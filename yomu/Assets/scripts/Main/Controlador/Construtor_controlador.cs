@@ -42,6 +42,7 @@ public static class Construtor_controlador {
                 CONSTRUCTOR__controller_data.Construct();
                 CONSTRUCTOR__controller_configurations.Construct();
                 CONSTRUCTOR__controller_errors.Construct();
+                CONSTRUCTOR__controller_resources.Construct();
                 
 
                 controlador.controlador_development = Construtor_controlador_development.Construir();  

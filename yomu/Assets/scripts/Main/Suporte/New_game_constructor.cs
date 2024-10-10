@@ -11,7 +11,7 @@ public static class New_game_constructor {
                 string path_folder_save_DEATH = Path.Combine( path_folder_save, "Death" );
 
                 if( Directory.GetFiles( path_folder_save ).Length != 0 || Directory.GetDirectories( path_folder_save ).Length != 0 )
-                    { CONTROLLER__errors.Get_instance().Throw( $"Tentou colocar criou um save no slot { _save.ToString() } mas tinha arquivos dentro" ); }
+                    { CONTROLLER__errors.Throw( $"Tentou colocar criou um save no slot { _save.ToString() } mas tinha arquivos dentro" ); }
                                 
                 string path_folder_save_default = Paths_system.path_folder__save_default;
                 

@@ -51,14 +51,19 @@ unsafe public class Controlador : MonoBehaviour {
                     // string path = Paths_system.Get_instance().Get_character_images_path__DEVELOPMENT( _personagem );
                     // Images_container_result container =  Images_container_creator.Construct( path );
 
-                    //System.IO.File.WriteAllBytes( Paths_system.Get_instance().Get_character_images_container_path( _personagem ) );
+                    // System.IO.File.WriteAllBytes( Paths_system.Get_instance().Get_character_images_container_path( _personagem ) );
                     
 
                 }
 
 
-                Dispositivo d = Dispositivo__teste.Construir();
 
+                Dispositivo d = Dispositivo__teste.Construir(); // pega o prefab 
+                d.Define_all_components(); // 
+                d.Load_resources();
+                
+
+                
 
                 //Images_container_result container =  Images_container_creator.Construct( "C:\\Users\\User\\Desktop\\yomu_things\\teste" );
 

@@ -12,12 +12,14 @@ public static class CONSTRUCTOR__device {
 
                     device.interface_dispositivo = _interface;
 
-                    device.nome_dispositivo = _interface.Pegar_nome();
+                    device.nome_dispositivo = _interface.Get_name();
                     device.path_folder_prefab = _interface.Get_main_folder();
 
                     // --- PEGAR PREFAB
 
-                    string prefab_path = Path.Combine( "Prefabs", device.path_folder_prefab, ( device.nome_dispositivo + "_dispositivo" ) );
+                    string prefab_path = Path.Combine( "Devices", device.path_folder_prefab, ( device.nome_dispositivo + "_dispositivo" ) );
+
+                    Debug.Log( $"Path: { prefab_path }");
                     
                     device.dispositivo_prefab =  Resources.Load<GameObject>( prefab_path );
 

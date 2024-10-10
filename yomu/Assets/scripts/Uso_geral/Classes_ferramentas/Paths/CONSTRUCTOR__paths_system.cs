@@ -16,8 +16,31 @@ public static class CONSTRUCTOR__paths_system {
 
                     #if UNITY_EDITOR
 
-                        // --- TROCA PARA OS FOLDERS DE SIMULACAO
+                        // ** os dados dinamicos vao ser mais usados e criados na hora do que os estaticos
+                        // ** usar a logica de Arrumar_para_o_sistema() => usar() tem um custo inicial muito grande com o retorno de não colocar logica em paralelo 
+                        /*
 
+                            (  ------------------------------- arrumar() ---------------------------- ) ( --- usar() --- )
+
+
+                            ( --------- usar_build()  ------- )
+                            ( --- usar_editor() --- )
+
+                            ( --------- usar_build()  ------- )( --- usar_editor() --- )
+                        
+                        
+                        */
+
+                        // ** mas o arrumar vai colocar muito mais complexidade em ajustar os dados corretamente do que vai ajudar 
+                        // ** alem disso eu posso fazer depois exatamente como vai funcionar depois, por hora pode só pegar a imagem pelo path 
+                        // ** a logica depois vai ser Get_localizer( path ) => Load_stream( localizer ) => byte[] dados
+                        // ** e a logica por hora pode ser ReadAllBytes( path ) => byte[] dados
+                        // ** continua sendo fn_fechada( path ) => dados
+
+                        // ** os dados estaticos de logica( scripts ) não vão ser complicados, mas imagens nao vale a pena complicar muito o processo. 
+                        // ** se eu já tenho os paths porque nao iria somente usar ReadAllBytes?
+
+                        // --- TROCA PARA OS FOLDERS DE SIMULACAO
                         Paths_system.path_folder__static_data = Paths_development.path_folder__development_folder_for_simulations_STATIC_DATA; // images container, scripts etc in the game folder in build
                         Paths_system.path_folder__dinamic_data = Paths_development.path_folder__development_folder_for_simulations_DINAMIC_DATA; // saves and user data etc in the persistent data folder in build
 

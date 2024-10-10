@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 
+
+
 public class MODULE__textures_manager {
 
 
@@ -9,7 +11,7 @@ public class MODULE__textures_manager {
         // --- DATA
         
         public Texture2D[][] textures; 
-        public bool[][] textures_locks;
+        public Texture_allocated_flags[][] textures_locks;
         public string[][] indentificadores;
 
         public Texture2D[] textures_exclusivas = new Texture2D[ 50 ];
@@ -18,16 +20,17 @@ public class MODULE__textures_manager {
         
 
         // ** retorna se precisou criar novas
-        public bool Get_texture( string _indentificador,   RESOURCE__image_data _data ){
+        // ** pode ser chamado normalmente 
+        public bool Get_texture( RESOURCE__image_data _data ){
 
-                
+                string _indentificador = _data.image_path;
                 int _width = _data.width;
                 int _height = _data.height;
                 bool create_new_texture = false;
 
 
                 if( _width < 1 || _height < 1 )
-                    { CONTROLLER__errors.Get_instance().Throw( $"dimensions wrong. height: { _height }, width: { _width }"); }
+                    { CONTROLLER__errors.Throw( $"dimensions wrong. height: { _height }, width: { _width }"); }
 
 
                 Dimension_higher_to_low dimensions = Get_higher_number( _width, _height );
@@ -57,7 +60,7 @@ public class MODULE__textures_manager {
                         _data.texture_allocated.exclusive_texture = false;
 
                         indentificadores[ size_slot_square ][ slot_unlock_square ] = _indentificador;
-                        textures_locks[ size_slot_square ][ slot_unlock_square ] = true;
+                        textures_locks[ size_slot_square ][ slot_unlock_square ].allocated_in_image = true;
 
                         _data.texture_allocated.texture_size_slot = size_slot_square;
                         _data.texture_allocated.texture_id = slot_unlock_square;
@@ -81,7 +84,7 @@ public class MODULE__textures_manager {
                 _data.texture_allocated.exclusive_texture = false;
 
                 indentificadores[ size_slot_rect ][ slot_unlock_rect ] = _indentificador;
-                textures_locks[ size_slot_rect ][ slot_unlock_rect ] = true;
+                textures_locks[ size_slot_rect ][ slot_unlock_rect ].allocated_in_image = true;
 
                 _data.texture_allocated.texture_size_slot = size_slot_rect;
                 _data.texture_allocated.texture_id = slot_unlock_rect;
@@ -137,11 +140,11 @@ public class MODULE__textures_manager {
 
         private int Get_free_slot( int _size_slot, ref bool _create_new ){
 
-                bool[] locks = textures_locks[ _size_slot ];
+                Texture_allocated_flags[] locks = textures_locks[ _size_slot ];
 
                 for( int i = 0 ; i < locks.Length ; i++ ){
 
-                    if( !!!( locks[ i ] ) )
+                    if( !!!( locks[ i ].allocated_in_image ) )
                         { return i; }
 
                     continue;

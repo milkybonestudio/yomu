@@ -9,10 +9,8 @@ public static class Construtor_controlador_cursor {
             Controlador_cursor.instancia = controlador;
 
                     
-                Cursor.lockState = CursorLockMode.Locked; // nao sei se vai funcionar
-                Cursor.visible = false;
-
-
+                // Cursor.lockState = CursorLockMode.Locked; // nao sei se vai funcionar
+                // Cursor.visible = true;
 
 
 

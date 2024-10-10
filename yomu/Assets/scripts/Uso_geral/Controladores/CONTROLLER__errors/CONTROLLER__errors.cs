@@ -4,13 +4,15 @@ using System;
 
 public class CONTROLLER__errors {
 
+    public static void Throw( string _message ){ Get_instance().Throw_intern( _message ); }
+
     public static CONTROLLER__errors instance;
     public static CONTROLLER__errors Get_instance(){ return instance; }
 
     public bool is_checking_pointer_length = true;
     public bool is_checking_dll_data = true;
 
-    public void Throw( string _message ){
+    private void Throw_intern( string _message ){
 
         throw new Exception( _message );
 

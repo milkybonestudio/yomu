@@ -8,8 +8,16 @@ public class RESOURCE__image_data {
         public Type_image type;
 
         // ** LOCATOR
-        public string data_container_path;
-        public Image_localizers image_localizers;
+        public string image_path;
+
+
+        // ** nao faz sentido ficar aqui?
+        //mark
+        // ** resources so trabalha com paths, mas os dados vão ser pedidos pelas figures. 
+        // ** no script eles não vão pedir as imagens individualmente então não vai ficar muito grande nos scripts 
+        // ** vai ser algo como ( id personagem 2 bytes )( acao_figure 1 byte )
+        // ** e a figure vai transformar esse acao_figure em um path apropriado
+        // public Image_localizers image_localizers;
 
         
         // --- ORIGINAL IMAGE
@@ -50,6 +58,7 @@ public class RESOURCE__image_data {
                 
                 if( texture_allocated.exclusive_texture )
                     { 
+                        // --- ONLY EXCLUSIVE
                         
                         Texture2D texture = resources.resources_images.textures_manager.textures_exclusivas[ texture_allocated.exclusive_texture_id ]; 
                         resources.resources_images.textures_manager.textures_exclusivas[ texture_allocated.exclusive_texture_id ] = null;
@@ -58,11 +67,10 @@ public class RESOURCE__image_data {
 
                         return;
                     }
-                    else
-                    { 
-                        resources.resources_images.textures_manager.textures_locks[ texture_allocated.texture_size_slot ][ texture_allocated.texture_id ] = false; 
-                    }
 
+
+                // ** normal
+                resources.resources_images.textures_manager.textures_locks[ texture_allocated.texture_size_slot ][ texture_allocated.texture_id ].allocated_in_image = false; 
 
 
                 texture_allocated.texture_active = false;

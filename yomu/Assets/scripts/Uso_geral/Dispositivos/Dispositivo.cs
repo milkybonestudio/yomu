@@ -112,6 +112,10 @@ public class Dispositivo {
             public void Load_resources(){ dados_dispositivo.Load_resources(); return; }
             public void Instanciate_device( GameObject _local_para_anexar ){ TOOL__device.Instanciate_device( this, _local_para_anexar ); }
 
+
+            //mark 
+            // ** tem que fazer os metodos para o unload
+
             
 
        

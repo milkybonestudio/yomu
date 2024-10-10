@@ -9,12 +9,12 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
         // --- CONSTRUTOR
         public static Dispositivo Construir(){ return CONSTRUCTOR__device.Construct( new Dispositivo__teste() ); }
 
-        public string nome = "quadrado";
+        public string name = "quadrado";
 
         // ** aponta para onde vao estar os folders com as imagens no editor, o nome do container na build e a primeira pasta da lista indica a pasta com o prefab
         // ** a ultima pasta semre vai ser com o nome do dispositivo
 
-        public string Get_main_folder(){ return "teste"; }
+        public string Get_main_folder(){ return "shapes\\quadrado"; }
 
    
     
@@ -90,160 +90,6 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
 
 
 
-
-
-
-                // --- BOATAO QUE FECHA
-                Dados_botao_dispositivo botao_fechar_dados = new Dados_botao_dispositivo();
-                {
-
-
-                        // botao_fechar_dados.tipo_ativacao = Botao_dispositivo_tipo_ativacao.clicar;
-                        // botao_fechar_dados.nome = "a";
-                        // botao_fechar_dados.Update_secundario = Update_botao_1;
-
-
-
-
-                        //     // --- IMAGEM 1
-                        //     botao_fechar_dados.off.animacao_base.sprite_id = ( int ) Dispositivo_imagem.b_1;
-                        //     botao_fechar_dados.off.animacao_base.cor = Cores.red;
-                        //     //botao_fechar_dados.off.animacao_decoracao.cor = Cores.red;
-                        //     botao_fechar_dados.off.texto = "OFF";
-
-                        //     //botao_fechar_dados.off.animacao_base_cor = Cores.cor_clear_dispositivo;
-                        //     botao_fechar_dados.on.animacao_base.sprite_id = ( int ) Dispositivo_imagem.v_1;
-                        //     botao_fechar_dados.on.animacao_base.cor = Cores.white;
-                        //     // botao_fechar_dados.on.animacao_decoracao.cor = Cores.red;
-                        //     botao_fechar_dados.on.texto = "ON";
-
-
-                        //     // ?? 
-                        //     Botao_dispositivo_CRIAR_DADOS.Criar_decoracao_composta_simples  (
-                        //                                                                         _dados: botao_fechar_dados,
-                        //                                                                         _ids: new int[] {
-                        //                                                                                             ( int ) Dispositivo_imagem.an_2_1
-                        //                                                                                         },
-                        //                                                                         _cor_off : Cores.grey_80,
-                        //                                                                         _cor_on: Cores.white
-
-                        //                                                                     );
-
-
-                            
-                            
-
-                            // botao_fechar_dados.tipo_transicao_transicao_OFF_para_ON = Tipo_transicao_botao_OFF_ON_dispositivo.cor;
-                            // botao_fechar_dados.tipo_transicao_transicao_ON_para_OFF = Tipo_transicao_botao_OFF_ON_dispositivo.animacao_individual;
-
-                            // botao_fechar_dados.animar_atras_texto_animacao_OFF = true;
-                            // botao_fechar_dados.animar_atras_texto_animacao_ON = true;
-
-                            // botao_fechar_dados.animar_atras_texto_transicao_OFF_para_ON = true;
-                            // botao_fechar_dados.animar_atras_texto_transicao_ON_para_OFF = true;
-
-
-
-
-                            // botao_fechar_dados.sprites_ids_transicao_OFF_para_ON = new int[]{
-
-
-                            //         ( int ) Dispositivo_imagem.t_1,
-                            //         ( int ) Dispositivo_imagem.t_2,
-                            //         ( int ) Dispositivo_imagem.t_3,
-                            //         ( int ) Dispositivo_imagem.t_4,
-                            //         ( int ) Dispositivo_imagem.t_5,
-                            //         ( int ) Dispositivo_imagem.t_6
-                                    
-
-                            // };
-
-
-
-
-                            // botao_fechar_dados.sprite_id_inicial_transicao_OFF_para_ON = ( int ) Dispositivo_imagem.t_1;
-                            // botao_fechar_dados.sprite_id_final_transicao_OFF_para_ON   = ( int ) Dispositivo_imagem.t_6;
-
-
-                            // botao_fechar_dados.sprite_id_inicial_transicao_ON_para_OFF = ( int ) Dispositivo_imagem.t_1;
-                            // botao_fechar_dados.sprite_id_final_transicao_ON_para_OFF   = ( int ) Dispositivo_imagem.t_6;
-
-
-
-
-                            
-                            // ( ( int ) Dispositivo_imagem.t_1, ( int ) Dispositivo_imagem.t_6 );
-
-
-
-
-                            // botao_fechar_dados.sprites_ids_transicao_ON_para_OFF = new int[]{
-
-
-                                    
-                            //         ( int ) Dispositivo_imagem.t_6,
-                            //         ( int ) Dispositivo_imagem.t_5,
-                            //         ( int ) Dispositivo_imagem.t_4,
-                            //         ( int ) Dispositivo_imagem.t_3,
-                            //         ( int ) Dispositivo_imagem.t_2,
-                            //         ( int ) Dispositivo_imagem.t_1
-                            // };
-
-
-
-                            // botao_fechar_dados.manter_primeira_sprite_da_animacao_OFF_aparente = true;
-                            // botao_fechar_dados.sprites_ids_animacao_off = new int[]{
-
-                            //         ( int ) Dispositivo_imagem.ani_1,
-                            //         ( int ) Dispositivo_imagem.ani_2,
-                            //         ( int ) Dispositivo_imagem.ani_3,
-                            //         ( int ) Dispositivo_imagem.ani_4,
-                            //         ( int ) Dispositivo_imagem.ani_5,
-                            //         ( int ) Dispositivo_imagem.ani_6,
-                            //         ( int ) Dispositivo_imagem.ani_7,
-
-                                
-                            // };
-
-
-                            // botao_fechar_dados.sprites_ids_animacao_on = new int[]{
-
-                            //         ( int ) Dispositivo_imagem.an_2_1,
-                            //         ( int ) Dispositivo_imagem.an_2_2,
-                            //         ( int ) Dispositivo_imagem.an_2_3,
-                            //         ( int ) Dispositivo_imagem.an_2_4,
-                            //         ( int ) Dispositivo_imagem.an_2_5,
-                            //         ( int ) Dispositivo_imagem.an_2_6,
-                            //         ( int ) Dispositivo_imagem.an_2_7,
-                                
-                            // };
-
-
-                            // botao_fechar_dados.cores_animacao_imagem_off = new Color[]{
-
-                            //         Cores.red,
-                            //         Cores.red,
-                            //         Cores.red,
-                            //         Cores.red,
-                            //         Cores.red
-                                
-                            // };
-
-
-                            // --- IMAGEM 2 
-                            //botao_fechar_dados.sprite_on_id = ( int ) Dispositivo_imagem.r_1;
-                            
-
-                            // --- AUDIO
-                            // dados.audio_click: 
-                            // dados.audio_houver: 
-
-                }
-
-                
-
-
-
         }
 
         public void Update_botao_1(){}
@@ -316,10 +162,9 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
 
 
 
-        public string Pegar_nome(){ if( nome == "COLOCAR_NOME" ){ throw new System.Exception( "Nao foi alterado o nome do dispositivo" );} return nome;}
-        public static byte[] Converter_imagens(){ return Conversor_imagens_dispositivos.Converter(  (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType ) );}
+        public string Get_name(){ if( name == "COLOCAR_NOME" ){ throw new System.Exception( "Nao foi alterado o nome do dispositivo" );} return name;}
 
-
+        
 }
 
 

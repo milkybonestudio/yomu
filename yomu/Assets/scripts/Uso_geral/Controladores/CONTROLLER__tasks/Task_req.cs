@@ -30,6 +30,8 @@ public class Task_req {
         public System.Object[] dados = Task_req.ARRAY_VOID;
         public System.Object[] dados_forcar = Task_req.ARRAY_VOID; // --- para garantir que em hipotese nenhuma o mesmo array seja acessado na multi e na single. Mas ainda pode pegar/ler 
 
+
+        
         public bool pode_executar_parte_multithread = true;
         public bool pode_executar_single_thread = true;
         public bool pode_executar_parte_single_thread_fracionada = true; // precisa tambem da pode_executar_parte_single_thread

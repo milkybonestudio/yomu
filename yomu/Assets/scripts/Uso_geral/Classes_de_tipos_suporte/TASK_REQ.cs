@@ -3,6 +3,35 @@
 
 public static class TASK_REQ {
 
+
+
+
+
+
+
+    public static void Add_single_data( Task_req _req, object _data ){
+
+            if( _req.dados == null )
+                { _req.dados = new object[ 1 ]; }
+
+            _req.dados[ 0 ] = _data;
+            return;
+
+    }
+
+    public static void Add_single_data( Task_req _req, byte[] _bytes ){
+
+            if( _req.dados == null )
+                { _req.dados = new object[ 1 ]; }
+
+            _req.dados[ 0 ] = ( object ) _bytes; 
+            return;
+
+    }
+
+
+
+
     public static int Pegar_index_null( Task_req[] _array ){
 
         for( int index = 0 ; index < _array.Length ; index++ ){

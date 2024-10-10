@@ -2,6 +2,8 @@
 
 public enum Level_pre_allocation_image {
 
+    not_give,
+
     nothing, // nada
 
     compress_data, // data 
@@ -9,3 +11,4 @@ public enum Level_pre_allocation_image {
     all, // text + data
 
 }
+

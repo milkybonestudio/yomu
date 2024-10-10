@@ -77,6 +77,7 @@ public class GERENCIADOR__imagens_dispositivo {
         public void Load_resources(){
 
             // ** criar 
+            throw new Exception("tem que fazer");
 
 
 
