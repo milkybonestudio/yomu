@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class TOOL__create_initial_textures {
 
-        public static void Create( MODULE__textures_manager _module) {
+        public static void Create( MANAGER__textures_resources _module) {
 
         
                 //mark

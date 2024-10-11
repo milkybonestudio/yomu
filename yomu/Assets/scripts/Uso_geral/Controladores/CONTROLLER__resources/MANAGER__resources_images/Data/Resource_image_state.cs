@@ -1,14 +1,12 @@
 
 
-public enum Level_pre_allocation_image {
+public enum Resource_image_state {
 
     not_give,
 
     nothing, // nada
-
     compress_data, // data 
-
-    all, // text + data
+    texture, // text + data
 
 }
 

@@ -6,7 +6,8 @@ using Unity.Collections;
 using UnityEngine;
 
 
-
+//mark
+// ** acho que isso pode excluir
 public struct Data_tex {
 
     public Texture2D tex;
@@ -17,14 +18,13 @@ public struct Data_tex {
 
 
 
-unsafe public class MODULE__loader_texture {
+unsafe public static class TOOL__loader_texture {
 
 
-        public MODULE__loader_texture(){}
 
         // ** seria bom dar o apply tudo de uma vez 
 
-        public void Transfer_data( RESOURCE__image_data _image ){
+        public static void Transfer_data( RESOURCE__image_data _image ){
 
                 switch( _image.type){
 
@@ -38,7 +38,7 @@ unsafe public class MODULE__loader_texture {
 
         
 
-        private void Generate_information( RESOURCE__image_data _image_data, int _width, int _height ){
+        private static void Generate_information( RESOURCE__image_data _image_data, int _width, int _height ){
 
 
                 // ** 1 cenario, dont flip
@@ -70,9 +70,9 @@ unsafe public class MODULE__loader_texture {
 
 
     
-        public void Transfer_data_WEABP( RESOURCE__image_data _image_data ){}
+        public static void Transfer_data_WEABP( RESOURCE__image_data _image_data ){}
 
-        public void Transfer_data_PNG( RESOURCE__image_data _image_data ){
+        public static void Transfer_data_PNG( RESOURCE__image_data _image_data ){
 
 
 

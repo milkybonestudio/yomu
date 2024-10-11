@@ -7,171 +7,103 @@ using UnityEngine;
 
 public class MANAGER__resources_images {
 
+        //** os dicionarios tem que ficar dentro de cada modulo
+
 
         public MANAGER__resources_images( string path ){
 
-            characters_images = new MODULE__images_streams( _context: Resource_context.characters, _initial_capacity: 1_000, _buffer_cache: 2_000_000 );
+                Resource_context[] resource_contexts = ( Resource_context[] ) System.Enum.GetValues( typeof( Resource_context ) );
 
-            dic = new Dictionary<string,RESOURCE__image>();
-            
+                context_images_modules = new MODULE__context_images[ resource_contexts.Length ];
+
+                for( int context_index = 0 ; context_index < resource_contexts.Length ; context_index++ )
+                    { context_images_modules[ context_index ] = new MODULE__context_images( _context: resource_contexts[ context_index ], _initial_capacity: 1_000, _buffer_cache: 2_000_000 ); }
+
+                return;
+
         }
 
         
-        public MODULE__textures_manager textures_manager;
-        public MODULE__loader_texture loader_texture;
+        public MANAGER__textures_resources textures_manager;
+    
+        public MODULE__context_images[] context_images_modules;
 
-        public MODULE__images_streams characters_images;
+        private Resource_context[] contexts;
 
-
-        private Dictionary<string,RESOURCE__image> dic;
-
-        private RESOURCE__image[] requests = new RESOURCE__image[ 50 ];
 
         public int pointer;
         public bool request_tem_que_encurtar;
 
-        // --- TASK REQUESTS
 
+        // --- TASK REQUESTS
         public Task_req task_getting_file;
         public Task_req task_getting_texture; // ** somente se nao tiver o tamanho exato na pull
         public Task_req task_passing_to_texture;
 
 
 
-        public RESOURCE__image Verify_exist_request( string _main_folder,  string _path ){
+        // --- PUBLIC METHODS
+
+
+                                                            //  personagens          //     lily    //      chave
+        public RESOURCE__image_ref Get_image_reference( Resource_context _context, string _main_folder,  string _path, Resource_image_state _level_pre_allocation ){ return context_images_modules[ ( int ) _context ].Get_image_ref( _main_folder, _path, _level_pre_allocation ) ; }
 
 
 
-        }
-        
+        // --- UPDATE
 
-        public void Finish_image_single( RESOURCE__image _image ){
-
-            RESOURCE__image_data single_image = _image.single_image;
-            
-            // --- GARANTE QUE TEM COMPRESS
-            if( _image.stage == Resources_request_image_stage.waiting_to_start )
-                {  single_image.image_compress = Get_single_file( _image ); _image.stage = Resources_request_image_stage.getting_texture; }
-
-
-            // ** getting png
-            if( _image.stage == Resources_request_image_stage.getting_wait_file )
-                { task_getting_file.pode_executar_single_thread = false; } // --- nao vai mais usar 
-
-            
-            if( _image.stage == Resources_request_image_stage.getting_texture ) // ** significa que não tem texture
-                { 
-
-                    textures_manager.Get_texture( single_image );  
-
-                } 
-            
-
-            if( _image.stage == Resources_request_image_stage.passing_to_texture )
-                { 
-                    // ** esse vai ser o mais complicado porque 
-
-                    // *** AINDA PRECISA EXECUTAR A PARTE NA MAIN PARA LIBERAR A TEXTURE
-                    task_passing_to_texture.pode_executar_parte_multithread = false; 
-
-                    task_passing_to_texture = null;
-                    _image.single_image.Liberate_texture(); // ** vai pegar outra
-
-                }
-
-
-
-        }
-
-        
-        public void Finish_image_multiples( RESOURCE__image _image ){
-
-                throw new Exception("a");
-
-        }
-
-        public void Finish_image( RESOURCE__image _image ){
-
-
-                Verify_image( _image );
-
-                if( _image.single_image != null )
-                    { Finish_image_single( _image ); } // --- IMAGEM SIMPLES
-                    else
-                    { Finish_image_multiples( _image ); } // --- MULTIPLES
-
-        }
-
-
-        //                                                personagens          //     lily    //      chave
-        public RESOURCE__image Get_image_reference( Resource_context _context, string _main_folder,  string _path ){
-
-                
-
-
-
-                RESOURCE__image request = null;
-
-                switch( _context ){
-
-                    case Resource_context.characters: request = characters_images.Verify_exist_request(  _main_folder,  _path ); break; 
-
-                }
-
-
-
-                request = new RESOURCE__image( _context );
-
-                if( pointer == requests.Length )
-                    { Array.Resize( ref requests, ( requests.Length + 20 ) ); } 
-
-
-                request.request_id = pointer;
-                requests[ pointer++ ] = request;
-
-                return request;
-
-        }
-
-
-
+        private int context_frame;
         public void Update(){
 
-                if( request_tem_que_encurtar )
-                    { Reduze_image(); }
-                
+                context_frame = ( context_frame + 1 ) % contexts.Length;
 
-                for( int index = 0 ; index < requests.Length; index++ ){
+                if( Verify_tasks() )
+                    { return; }
 
-                        RESOURCE__image image = requests[ index ];
-                        if( image == null )
-                            { return; }
+                foreach(  RESOURCE__image image in  context_images_modules[ context_frame ].images_dictionary.Values ){
         
                         if( Updata_image( image ) )
                             { return; } // --- TEM QUE ESPERAR ALGO
-                        
                 }
 
         }
 
-        private bool Updata_image( RESOURCE__image image ){
+
+        private bool Verify_tasks(){
+
+                if( task_getting_file != null )
+                    { return !!!( task_getting_file.finalizado ); }
+
+                if( task_getting_texture != null )
+                    { return !!!( task_getting_texture.finalizado ); }
+
+                if( task_passing_to_texture != null )
+                    { return !!!( task_passing_to_texture.finalizado ); }
+
+                return false;
+                
+        }
+
+        private bool Updata_image( RESOURCE__image _image ){
 
                 // true => pegou uma acao, bloquear
                 // ** se veio aqui tem coisa para fazer
 
-                switch( image.stage ){
+                if( _image.final_resource_state == _image.current_state )
+                    { _image.stage_getting_resource = Resources_request_image_stage.finished; return false; }
 
-                    case Resources_request_image_stage.waiting_to_start: return Handle_waiting_to_start( image );
+                switch( _image.stage_getting_resource ){
 
+                    case Resources_request_image_stage.waiting_to_start: return Handle_waiting_to_start( _image );
 
                             // ** getting png
-                            case Resources_request_image_stage.getting_wait_file: return Handle_getting_wait_file( image );
+                            case Resources_request_image_stage.getting_wait_file: return Handle_getting_wait_file( _image );
 
                             // ** se tiver texture disponivel na pool vai para o proximo passo, se nao tiver vai criar na main thread?
-                            case Resources_request_image_stage.getting_texture: return Handle_getting_texture( image );
+                            case Resources_request_image_stage.getting_texture: return Handle_getting_texture( _image );
 
                             // ** se tiver texture disponivel na pool vai para o proximo passo
-                            case Resources_request_image_stage.passing_to_texture: return Handle_passing_to_texture( image );
+                            case Resources_request_image_stage.passing_to_texture: return Handle_passing_to_texture( _image );
 
 
                     case Resources_request_image_stage.finished: return false; // ** tem a tex com os dados já nela
@@ -183,104 +115,31 @@ public class MANAGER__resources_images {
         }
 
 
-        private void Verify_image( RESOURCE__image image ){
-
-
-                if( image.level_pre_allocation_image == Level_pre_allocation_image.not_give )
-                    { CONTROLLER__errors.Throw( $"In the image request { image.name } was not give the level of pre allocation" ); }
-                
-                if( image.multiples_images == null && image.single_image == null )
-                    { CONTROLLER__errors.Throw( $"In the image request { image.name } was not given the image data" ); }
-
-                if( image.multiples_images != null && image.single_image != null )
-                    { CONTROLLER__errors.Throw( $"In the image request { image.name } was given single and multiples images" ); }
-
-
-        }
-
 
 
         private bool Handle_waiting_to_start( RESOURCE__image _image ){
 
-                Verify_image( _image );
+                TOOL__resource_image.Verify( _image );
 
                 // ** se so precisar dos dados é isso ai
-                if( _image.level_pre_allocation_image == Level_pre_allocation_image.nothing )
-                    { _image.stage = Resources_request_image_stage.finished; return false; }
+                if( _image.final_resource_state == Resource_image_state.nothing )
+                    { _image.stage_getting_resource = Resources_request_image_stage.finished; return false; }
+                
+
+                task_getting_file = CONTROLLER__tasks.Pegar_instancia().Get_task_request( "task_getting_file" );
 
                 if( _image.single_image != null )
-                    {
-                        // --- SINGLE IMAGE
+                    { task_getting_file.fn_multithread = ( Task_req req )=> { TASK_REQ.Add_single_data( req, _image.module_images.Get_single_data( _image ) ); }; } // --- SINGLE IMAGE
+                    else
+                    { task_getting_file.fn_multithread = ( Task_req req )=> { TASK_REQ.Add_single_data( req, _image.module_images.Get_multiple_data( _image ) ); }; } // --- MULTIPLES IMAGES
 
-                        task_getting_file = CONTROLLER__tasks.Pegar_instancia().Get_task_request( "task_getting_file" );
-                        task_getting_file.fn_multithread = ( Task_req req )=> { TASK_REQ.Add_single_data( req, Get_single_file( _image ) ); };
-                        return true;
-                        
-                    }
 
-                if( _image.multiples_images != null )
-                    {
-                        // --- MULTIPLES IMAGES
-
-                        task_getting_file = CONTROLLER__tasks.Pegar_instancia().Get_task_request( "task_getting_file" );
-                        task_getting_file.fn_multithread = Get_multiples_file_task( _image );
-                        return true;
-                        
-                    }
-
-                
-
-                
-                _image.stage = Resources_request_image_stage.getting_wait_file;
+                _image.stage_getting_resource = Resources_request_image_stage.getting_wait_file;
                 return true;
             
 
         }
 
-
-    
-        private Action<Task_req> Get_single_file_task( RESOURCE__image image ){
-
-                return ( Task_req req )=> { TASK_REQ.Add_single_data( req, Get_single_file( image ) ); };
-
-        }
-
-        private byte[] Get_single_file( RESOURCE__image _image ){
-
-                byte[] image = null;
-
-                switch( _image.image_context ){
-
-                    case Resource_context.characters: return  characters_images.Get_data( _image ); 
-                    default: throw new Exception( $"Can not handle the type { _image.image_context}" ); 
-                    
-                }
-
-                return image;
-            
-        }
-
-
-
-        private Action<Task_req> Get_multiples_file_task( RESOURCE__image image ){
-
-                return ( Task_req req )=> {
-
-                    switch( image.image_context ){
-
-                        case Resource_context.characters: TASK_REQ.Add_single_data( req, ( object ) characters_images.Get_multiple_data( image ) ); break;
-                        default: throw new Exception( $"Can not handle the type { image.image_context}" ); 
-                        
-                    }
-
-                };
-
-        }
-
-
-
-
-        
 
 
         private bool Handle_getting_wait_file( RESOURCE__image image ){ 
@@ -292,7 +151,6 @@ public class MANAGER__resources_images {
                 if( image.multiples_images == null )
                     {
                         // --- somente 1 imagem 
-                        
                         image.single_image.image_compress = ( byte[] ) task_getting_file.dados[ 0 ];
                         task_getting_file = null;
                         
@@ -300,15 +158,20 @@ public class MANAGER__resources_images {
                     else
                     {
                         // multiplas
+                        throw new Exception("tem que fazer");
                     }
 
+                //mark 
+                // ** se usar somente png pode pegar height e length aqui
+
+                image.current_state = Resource_image_state.compress_data;
 
                 // ** se so precisar dos dados é isso ai
-                if( image.level_pre_allocation_image == Level_pre_allocation_image.compress_data )
-                    { image.stage = Resources_request_image_stage.finished; return false; }
+                if( image.final_resource_state == Resource_image_state.compress_data )
+                    { image.stage_getting_resource = Resources_request_image_stage.finished; }
+                    else
+                    { image.stage_getting_resource = Resources_request_image_stage.getting_texture; }
                 
-
-                image.stage = Resources_request_image_stage.getting_texture;
                 return false; // ** sem tem texture livre pode ser na mesma trhead, mas se precisar criar precisa esperar
             
         }
@@ -316,7 +179,7 @@ public class MANAGER__resources_images {
 
         private bool Handle_getting_texture( RESOURCE__image image ){ 
 
-            image.stage = Resources_request_image_stage.passing_to_texture;
+
 
             bool precisou_criar = false;
 
@@ -332,17 +195,72 @@ public class MANAGER__resources_images {
 
                 }
 
+            image.stage_getting_resource = Resources_request_image_stage.passing_to_texture;
+
             
-            return false; 
+
+            // --- CREATE TASK PASSING 
+
+            task_passing_to_texture = CONTROLLER__tasks.Pegar_instancia().Get_task_request( "task_passing_to_texture" );
+
+            // ** parte multithread => passar 
+            // ** parte main threead => indicar que já terminou e pode liberar text
+            if( image.single_image != null )
+                { 
+                    // --- SINGLE IMAGE
+                    task_passing_to_texture.fn_multithread = ( Task_req req )=> { TOOL__loader_texture.Transfer_data( image.single_image );  }; 
+                    // lock now
+                    textures_manager.Lock_image_passing_data( image.single_image );
+                    // will unlockr
+                    task_passing_to_texture.fn_single_thread = ( Task_req _req ) => { textures_manager.Unlock_image_passing_data( image.single_image ); };
+
+                } 
+                else
+                { 
+                    // --- MULTIPLES IMAGES
+                    task_passing_to_texture.fn_multithread = ( Task_req req )=> { foreach( RESOURCE__image_data data in image.multiples_images ){ TOOL__loader_texture.Transfer_data( data ); }   }; 
+                    // lock now
+                    foreach( RESOURCE__image_data data in image.multiples_images ){ textures_manager.Lock_image_passing_data( data ); }
+                    // will unlock
+                    task_passing_to_texture.fn_single_thread = ( Task_req req )=> { foreach( RESOURCE__image_data data in image.multiples_images ){ textures_manager.Unlock_image_passing_data( data ); }   }; 
+                } 
+
+
+
+            
+            return precisou_criar; 
             
         }
 
 
         private bool Handle_passing_to_texture( RESOURCE__image image ){ 
 
-            //mark
-            // ** 
-            // ** a task do passing texture tem que de algum jeito falar que uma texture esta protna para ser liberada. 
+
+                if( !!!( task_passing_to_texture.finalizado ) )
+                    { return true; }
+
+                // ** imagem foi passada para a texture
+                // ** talvez criar a scprite aqui? 
+
+                image.current_state = Resource_image_state.texture;
+                image.stage_getting_resource = Resources_request_image_stage.finished;
+                image.final_resource_state == Resource_image_state.texture;
+
+
+                if( image.single_image != null )
+                    { 
+                        // --- SINGLE IMAGE
+
+                        image.single_image.sprite = Sprite.Create( image.single_image.texture_allocated.texture, new Rect( 0f, 0f, image.single_image.width, image.single_image.height ), new Vector2(0.5f, 0.5f), 100.0f ,0, SpriteMeshType.FullRect   );
+                        
+                    } 
+                    else
+                    { 
+                        // --- MULTIPLES IMAGES
+                        foreach( RESOURCE__image_data data in image.multiples_images ){ data.sprite = Sprite.Create( data.texture_allocated.texture, new Rect( 0f, 0f, data.width, data.height ), new Vector2(0.5f, 0.5f), 100.0f ,0, SpriteMeshType.FullRect   ); }
+                    }
+
+
 
 
 
@@ -351,46 +269,10 @@ public class MANAGER__resources_images {
         }
 
 
-        private void Reduze_image(){
-
-                int pointer_atual = 0;
-                for( int index = 0 ; index < requests.Length ; index++ ){
-
-                    if( requests[ index ] == null )
-                        { continue; }
-                    
-                    requests[ pointer_atual ] = requests[ index ];
-                    requests[ pointer_atual ].request_id = pointer_atual;
-                    pointer_atual++;
-                    continue;
-                    
-                }
 
 
-        }
+        // --- EXTRA
 
-
-
-        public void Remove_request( RESOURCE__image _request ){
-
-                // ** quando fizer o sistema com a textures temq ue liberar elas aqui
-
-                switch( _request.stage ){
-
-                    case Resources_request_image_stage.waiting_to_start: break;
-                    case Resources_request_image_stage.getting_texture: task_getting_texture = null; break;
-                    case Resources_request_image_stage.getting_wait_file: task_getting_file = null; break;
-                    case Resources_request_image_stage.passing_to_texture: task_passing_to_texture = null; break;
-
-                }
-
-
-
-                requests[ _request.request_id ] = null;
-                request_tem_que_encurtar = true;
-                return;
-
-        }
 
 
         public int Get_bytes_allocated(){
@@ -398,33 +280,34 @@ public class MANAGER__resources_images {
                 int accumulator = 0;
 
                 // --- IMAGES COMPRESS
-                for( int image_index = 0 ; image_index < requests.Length ; image_index++){
+                for( int image_index = 0 ; image_index < context_images_modules.Length ; image_index++){
 
+                        accumulator += context_images_modules[ image_index ].Get_bytes();
 
-                        RESOURCE__image image = requests[ image_index ];
-                        if( image == null )
-                            { return accumulator; }
+                        // RESOURCE__image image = requests[ image_index ];
+                        // if( image == null )
+                        //     { return accumulator; }
                         
-                        if( image.multiples_images != null )
-                            {
-                                for( int multiple_iamge_index = 0 ; multiple_iamge_index < image.multiples_images.Length ; multiple_iamge_index++ ){
+                        // if( image.multiples_images != null )
+                        //     {
+                        //         for( int multiple_iamge_index = 0 ; multiple_iamge_index < image.multiples_images.Length ; multiple_iamge_index++ ){
 
-                                        if( image.multiples_images[ multiple_iamge_index ].image_compress != null )
-                                            { accumulator += image.multiples_images[ multiple_iamge_index ].image_compress.Length; } // --- have image
-                                        continue;
+                        //                 if( image.multiples_images[ multiple_iamge_index ].image_compress != null )
+                        //                     { accumulator += image.multiples_images[ multiple_iamge_index ].image_compress.Length; } // --- have image
+                        //                 continue;
 
-                                }
+                        //         }
 
-                                continue;
-                            }
+                        //         continue;
+                        //     }
 
-                        // -- SINGLE
+                        // // -- SINGLE
 
-                        if( image.single_image.image_compress == null )
-                            { continue; }
+                        // if( image.single_image.image_compress == null )
+                        //     { continue; }
 
-                        accumulator += image.single_image.image_compress.Length;
-                        continue;
+                        // accumulator += image.single_image.image_compress.Length;
+                        // continue;
                     
                 }
 

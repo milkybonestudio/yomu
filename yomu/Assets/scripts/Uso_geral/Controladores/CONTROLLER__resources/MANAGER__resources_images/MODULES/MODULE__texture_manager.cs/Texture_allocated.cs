@@ -16,7 +16,9 @@ public struct Texture_allocated {
         
         public int texture_width;
         public int texture_height;
+
         public NativeArray<Color32> native_array; // somente? 
+        public Texture2D texture;
 
 
 }

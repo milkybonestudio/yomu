@@ -10,18 +10,12 @@ public class CONTROLLER__resources {
 
 
         // --- IMAGES
-        private MANAGER__resources_images resources_images;
-
-        public RESOURCE__image_ref Get_image_reference( Resource_context _context ){ return resources_images.Get_image_request( _context ); }
-
-        public RESOURCE__image Get_image_request( Resource_context _context ){ return resources_images.Get_image_request( _context ); }
-        public void Guarantee_image_is_ready( RESOURCE__image image ){ return resources_images.Finish_image( _context ); } 
-
-        
+        public MANAGER__resources_images resources_images;
 
 
         public void Update(){
 
+            
             resources_images.Update();
 
         }

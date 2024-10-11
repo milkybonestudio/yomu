@@ -38,7 +38,7 @@ public static class CONSTRUCTOR__paths_system {
                         // ** continua sendo fn_fechada( path ) => dados
 
                         // ** os dados estaticos de logica( scripts ) não vão ser complicados, mas imagens nao vale a pena complicar muito o processo. 
-                        // ** se eu já tenho os paths porque nao iria somente usar ReadAllBytes?
+
 
                         // --- TROCA PARA OS FOLDERS DE SIMULACAO
                         Paths_system.path_folder__static_data = Paths_development.path_folder__development_folder_for_simulations_STATIC_DATA; // images container, scripts etc in the game folder in build

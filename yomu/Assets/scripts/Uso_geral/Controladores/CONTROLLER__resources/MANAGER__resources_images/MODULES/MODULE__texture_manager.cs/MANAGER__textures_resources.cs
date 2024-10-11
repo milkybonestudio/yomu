@@ -3,10 +3,10 @@ using UnityEngine;
 
 
 
-public class MODULE__textures_manager {
+public class MANAGER__textures_resources {
 
 
-        public MODULE__textures_manager(){ TOOL__create_initial_textures.Create( this ); }
+        public MANAGER__textures_resources(){ TOOL__create_initial_textures.Create( this ); }
 
         // --- DATA
         
@@ -16,7 +16,52 @@ public class MODULE__textures_manager {
 
         public Texture2D[] textures_exclusivas = new Texture2D[ 50 ];
 
+        
         // --- MAIN METHODS
+
+
+        public void Liberate_texture( RESOURCE__image_data _data ){
+
+
+                if( ( _data.texture_allocated.native_array ) == null )
+                    { return; }
+
+                
+                if( _data.texture_allocated.exclusive_texture )
+                    { 
+                        // --- ONLY EXCLUSIVE
+                        
+                        Texture2D texture = textures_exclusivas[ _data.texture_allocated.exclusive_texture_id ]; 
+                        textures_exclusivas[ _data.texture_allocated.exclusive_texture_id ] = null;
+
+                        Mono_instancia.Destroy( texture );
+                        return;
+                    }
+
+
+                // ** normal
+                textures_locks[ _data.texture_allocated.texture_size_slot ][ _data.texture_allocated.texture_id ].allocated_in_image = false; 
+
+
+                _data.texture_allocated.texture_active = false;
+                // _data.image_compress = null; ???
+
+        }
+
+        public void Lock_image_passing_data( RESOURCE__image_data _data ){
+
+            textures_locks[ _data.texture_allocated.texture_size_slot ][ _data.texture_allocated.texture_id ].allocated_in_multithread_passing_data = true; 
+
+        }
+
+        public void Unlock_image_passing_data( RESOURCE__image_data _data ){
+
+            textures_locks[ _data.texture_allocated.texture_size_slot ][ _data.texture_allocated.texture_id ].allocated_in_multithread_passing_data = true; 
+
+        }
+
+
+
         
 
         // ** retorna se precisou criar novas
@@ -43,7 +88,9 @@ public class MODULE__textures_manager {
 
                         int slot_livre = Get_free_exclusive_textures_slot();
                         textures_exclusivas[ slot_livre ] = new Texture2D( _width, _height );
+                        textures_exclusivas[ slot_livre ].filterMode = UnityEngine.FilterMode.Point;
                         
+                        _data.texture_allocated.texture = textures_exclusivas[ slot_livre ];
                         _data.texture_allocated.native_array = textures_exclusivas[ slot_livre ].GetPixelData<Color32>( 0 );
 
                         return true;
@@ -69,6 +116,7 @@ public class MODULE__textures_manager {
                         //mark
                         // limpar_text()
 
+                        _data.texture_allocated.texture = textures[ size_slot_square ][ slot_unlock_square ];
                         _data.texture_allocated.native_array = textures[ size_slot_square ][ slot_unlock_square ].GetPixelData<Color32>( 0 );
 
                         return create_new_texture;
@@ -92,6 +140,7 @@ public class MODULE__textures_manager {
                 //mark
                 // ** a texture ainda pode te pixels da ultima imagem
                 
+                _data.texture_allocated.texture = textures[ size_slot_rect ][ slot_unlock_rect ];
                 _data.texture_allocated.native_array = textures[ size_slot_rect ][ slot_unlock_rect ].GetPixelData<Color32>( 0 );
 
                 
@@ -158,6 +207,7 @@ public class MODULE__textures_manager {
 
                 // --- CREATE NEW TEXTURE
                 textures[ _size_slot ][ slot_livre ] = new Texture2D( textures[ _size_slot ][ slot_livre ].width, textures[ _size_slot ][ slot_livre ].height );
+                textures[ _size_slot ][ slot_livre ].filterMode = UnityEngine.FilterMode.Point;
                 return slot_livre;
 
 

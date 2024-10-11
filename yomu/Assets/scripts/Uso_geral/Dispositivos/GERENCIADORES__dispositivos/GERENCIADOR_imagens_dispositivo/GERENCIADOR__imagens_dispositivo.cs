@@ -79,6 +79,10 @@ public class GERENCIADOR__imagens_dispositivo {
             // ** criar 
             throw new Exception("tem que fazer");
 
+            //mark 
+
+            // ** RESOURCE__image
+
 
 
         }
