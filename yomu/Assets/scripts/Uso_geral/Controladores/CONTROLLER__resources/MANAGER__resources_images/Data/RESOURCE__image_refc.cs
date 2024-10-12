@@ -7,7 +7,14 @@ using UnityEngine;
 
 public class RESOURCE__image_ref {
 
-        public RESOURCE__image_ref( RESOURCE__image _image ){ image = _image; }
+        public RESOURCE__image_ref( RESOURCE__image _image ){ 
+
+            if( _image == null  )
+                { CONTROLLER__errors.Throw( "Tried to creat a image ref but the image comes null" ); }
+
+            image = _image;
+            module = _image.module_images;
+        }
 
         
         public string localizador; // ** localizador local
@@ -70,7 +77,7 @@ public class RESOURCE__image_ref {
         // --- PEGAR RECURSOS
 
         // ** sinaliza que a imagem pode carregar o minimo 
-        public void Load(){ module.Load( this ); }
+        public void Load(){  Debug.Log( "module: " + module ); module.Load( this ); }
 
         // ** sinaliza que pode começar a pegar a texture
         public void Get_ready(){ module.Get_ready( this ); }

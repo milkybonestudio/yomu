@@ -37,13 +37,13 @@ unsafe public class Controlador : MonoBehaviour {
         public CONTROLLER__audio controlador_audio;
 
 
-
+        public CONTROLLER__resources c =  CONTROLLER__resources.Get_instance();
+        public RESOURCE__image_ref image_ref;
  
         public void Start(){
             
 
                 Construtor_controlador.Construir();
-
 
                 void Create_character_images( Personagem_nome _personagem ){
 
@@ -53,16 +53,22 @@ unsafe public class Controlador : MonoBehaviour {
 
                     // System.IO.File.WriteAllBytes( Paths_system.Get_instance().Get_character_images_container_path( _personagem ) );
                     
-
                 }
 
 
-
-                Dispositivo d = Dispositivo__teste.Construir(); // pega o prefab 
-                d.Define_all_components(); // 
-                d.Load_resources();
                 
+                c =  CONTROLLER__resources.Get_instance();
+                image_ref = c.resources_images.Get_image_reference( Resource_context.characters, "teste", "abacate", Resource_image_content.texture );
+                Debug.Log( "iamge ref controlador: " + image_ref );
+                image_ref.Load();
+                Debug.Log( "content: " + image_ref.image.current_content );
+                Debug.Log( "minimun: " + image_ref.image.level_pre_allocation_image );
+                Debug.Log( "stage_getting_resource: " + image_ref.image.stage_getting_resource );
 
+
+                // Dispositivo d = Dispositivo__teste.Construir(); // pega o prefab 
+                // d.Define_all_components(); // 
+                // d.Load_resources();
                 
 
                 //Images_container_result container =  Images_container_creator.Construct( "C:\\Users\\User\\Desktop\\yomu_things\\teste" );
@@ -83,6 +89,12 @@ unsafe public class Controlador : MonoBehaviour {
 
         public void Update() {
 
+                return;
+
+                CONTROLLER__resources.Get_instance().Update();
+                Debug.Log( "state: " + image_ref.image.current_content );
+
+                
                 try{ Update_interno(); } catch( Exception exp ){ Debug.LogError( "Tem que fazer um modo para mandar mensagem " ); }
             
         }

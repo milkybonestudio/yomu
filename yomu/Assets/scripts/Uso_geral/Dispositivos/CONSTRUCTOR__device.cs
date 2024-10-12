@@ -19,7 +19,7 @@ public static class CONSTRUCTOR__device {
 
                     string prefab_path = Path.Combine( "Devices", device.path_folder_prefab, ( device.nome_dispositivo + "_dispositivo" ) );
 
-                    Debug.Log( $"Path: { prefab_path }");
+                    //Debug.Log( $"Path: { prefab_path }");
                     
                     device.dispositivo_prefab =  Resources.Load<GameObject>( prefab_path );
 

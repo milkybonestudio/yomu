@@ -10,14 +10,15 @@ public class MANAGER__resources_images {
         //** os dicionarios tem que ficar dentro de cada modulo
 
 
-        public MANAGER__resources_images( string path ){
+        public MANAGER__resources_images(){
 
-                Resource_context[] resource_contexts = ( Resource_context[] ) System.Enum.GetValues( typeof( Resource_context ) );
 
-                context_images_modules = new MODULE__context_images[ resource_contexts.Length ];
+                contexts = ( Resource_context[] ) System.Enum.GetValues( typeof( Resource_context ) );
 
-                for( int context_index = 0 ; context_index < resource_contexts.Length ; context_index++ )
-                    { context_images_modules[ context_index ] = new MODULE__context_images( _context: resource_contexts[ context_index ], _initial_capacity: 1_000, _buffer_cache: 2_000_000 ); }
+                context_images_modules = new MODULE__context_images[ contexts.Length ];
+
+                for( int context_index = 0 ; context_index < contexts.Length ; context_index++ )
+                    { context_images_modules[ context_index ] = new MODULE__context_images( _context: contexts[ context_index ], _initial_capacity: 1_000, _buffer_cache: 2_000_000 ); }
 
                 return;
 
@@ -46,7 +47,7 @@ public class MANAGER__resources_images {
 
 
                                                             //  personagens          //     lily    //      chave
-        public RESOURCE__image_ref Get_image_reference( Resource_context _context, string _main_folder,  string _path, Resource_image_state _level_pre_allocation ){ return context_images_modules[ ( int ) _context ].Get_image_ref( _main_folder, _path, _level_pre_allocation ) ; }
+        public RESOURCE__image_ref Get_image_reference( Resource_context _context, string _main_folder,  string _path, Resource_image_content _level_pre_allocation ){ return context_images_modules[ ( int ) _context ].Get_image_ref( _main_folder, _path, _level_pre_allocation ) ; }
 
 
 
@@ -89,7 +90,7 @@ public class MANAGER__resources_images {
                 // true => pegou uma acao, bloquear
                 // ** se veio aqui tem coisa para fazer
 
-                if( _image.final_resource_state == _image.current_state )
+                if( _image.final_resource_state == _image.current_content )
                     { _image.stage_getting_resource = Resources_request_image_stage.finished; return false; }
 
                 switch( _image.stage_getting_resource ){
@@ -122,7 +123,7 @@ public class MANAGER__resources_images {
                 TOOL__resource_image.Verify( _image );
 
                 // ** se so precisar dos dados é isso ai
-                if( _image.final_resource_state == Resource_image_state.nothing )
+                if( _image.final_resource_state == Resource_image_content.nothing )
                     { _image.stage_getting_resource = Resources_request_image_stage.finished; return false; }
                 
 
@@ -164,10 +165,10 @@ public class MANAGER__resources_images {
                 //mark 
                 // ** se usar somente png pode pegar height e length aqui
 
-                image.current_state = Resource_image_state.compress_data;
+                image.current_content = Resource_image_content.compress_data;
 
                 // ** se so precisar dos dados é isso ai
-                if( image.final_resource_state == Resource_image_state.compress_data )
+                if( image.final_resource_state == Resource_image_content.compress_data )
                     { image.stage_getting_resource = Resources_request_image_stage.finished; }
                     else
                     { image.stage_getting_resource = Resources_request_image_stage.getting_texture; }
@@ -242,9 +243,9 @@ public class MANAGER__resources_images {
                 // ** imagem foi passada para a texture
                 // ** talvez criar a scprite aqui? 
 
-                image.current_state = Resource_image_state.texture;
+                image.current_content = Resource_image_content.texture;
                 image.stage_getting_resource = Resources_request_image_stage.finished;
-                image.final_resource_state == Resource_image_state.texture;
+                image.final_resource_state = Resource_image_content.texture;
 
 
                 if( image.single_image != null )

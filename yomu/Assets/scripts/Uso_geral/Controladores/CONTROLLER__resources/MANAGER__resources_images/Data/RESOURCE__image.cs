@@ -22,6 +22,9 @@ unsafe public class RESOURCE__image {
                 module_images = _module_images;
 
                 stage_getting_resource = Resources_request_image_stage.finished;
+                current_content = Resource_image_content.nothing;
+                current_state = Resource_image_state.nothing;
+                
         }
 
 
@@ -42,16 +45,19 @@ unsafe public class RESOURCE__image {
         public string name = "NAO_COLOCOU";
 
 
-
         
-        // ** precess of getting the resource
-        public Resources_request_image_stage stage_getting_resource; 
+        // --- DATA FOR UPDATE 
+        
+        public Resources_request_image_stage stage_getting_resource; // ** precess of getting the resource
+        public Resource_image_content final_resource_state; // se estiver em uma transicao de recursos é o ponto final 
 
 
-        public Resource_image_state level_pre_allocation_image; // minimun
+        // --- IMAGE DATA 
 
-        public Resource_image_state final_resource_state; // se estiver em uma transicao de recursos é o ponto final 
-        public Resource_image_state current_state; // ** o recurso atual
+        public Resource_image_state current_state;
+        
+        public Resource_image_content level_pre_allocation_image; // minimun
+        public Resource_image_content current_content; // ** o recurso atual
     
     
         // --- DATA

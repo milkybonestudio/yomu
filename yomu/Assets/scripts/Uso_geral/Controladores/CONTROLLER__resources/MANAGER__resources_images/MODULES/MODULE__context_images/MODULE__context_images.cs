@@ -44,7 +44,7 @@ public class MODULE__context_images {
 
         
 
-        public RESOURCE__image_ref Get_image_ref(  string _main_folder, string _path, Resource_image_state _level_pre_allocation  ){
+        public RESOURCE__image_ref Get_image_ref(  string _main_folder, string _path, Resource_image_content _level_pre_allocation  ){
 
 
                 Dictionary<string, RESOURCE__image> dic = Get_dictionary( _main_folder );
@@ -72,9 +72,33 @@ public class MODULE__context_images {
 
                 // --- PEGA O PRE ALLOC MAIS ALTO
                 if( _level_pre_allocation  > image.level_pre_allocation_image )
-                    { image.level_pre_allocation_image = _level_pre_allocation; }
+                    { 
+
+                        image.level_pre_allocation_image = _level_pre_allocation; 
+
+                        if( image.current_state == Resource_image_state.minimun )
+                            {
+                                // -- precisa mudar para o novo minimo 
+                                
+                                switch( image.current_content ){
+
+                                    case Resource_image_content.nothing: image.stage_getting_resource = Resources_request_image_stage.waiting_to_start; break;
+                                    case Resource_image_content.compress_data: image.stage_getting_resource = Resources_request_image_stage.getting_wait_file; break;
+                                    // ** se estava no minimo e o minimo já era o maior não tem como o novo minimo ser maior
+                                    default: CONTROLLER__errors.Throw( $"In the image { image.name } tried to change the minimun level to { _level_pre_allocation }. But the image already have the hiest level of resources. Should not come here" ); break;
+
+                                }
+
+                            } 
+
+                        if( image.current_state == Resource_image_state.going_to_minimun )
+                            { image.final_resource_state = _level_pre_allocation;}
+
+                    }
 
                 Increase_count( image );
+
+                Debug.Log("iamge ref: "  + image_ref );
 
                 return image_ref;
                 
@@ -181,6 +205,13 @@ public class MODULE__context_images {
         public void Load( RESOURCE__image_ref _ref ){
 
 
+                RESOURCE__image image = _ref.image;
+
+                // ** verifica se tem que fazer algo
+                if( image.current_content >= image.level_pre_allocation_image )
+                    { return; }
+                
+
 
         }
 
@@ -234,22 +265,22 @@ public class MODULE__context_images {
 
         private void Increase_count( RESOURCE__image _image ){
 
-                switch( _image.current_state ){
+                switch( _image.current_content ){
 
-                    case Resource_image_state.nothing : _image.count_places_being_used_nothing++; break;
-                    case Resource_image_state.compress_data : _image.count_places_being_used_compress_data++; break;
-                    case Resource_image_state.texture : _image.count_places_being_used_texture++; break;
+                    case Resource_image_content.nothing : _image.count_places_being_used_nothing++; break;
+                    case Resource_image_content.compress_data : _image.count_places_being_used_compress_data++; break;
+                    case Resource_image_content.texture : _image.count_places_being_used_texture++; break;
                 }
 
         }
 
         private void Decrease_count( RESOURCE__image _image ){
 
-                switch( _image.current_state ){
+                switch( _image.current_content ){
 
-                    case Resource_image_state.nothing : _image.count_places_being_used_nothing--; break;
-                    case Resource_image_state.compress_data : _image.count_places_being_used_compress_data--; break;
-                    case Resource_image_state.texture : _image.count_places_being_used_texture--; break;
+                    case Resource_image_content.nothing : _image.count_places_being_used_nothing--; break;
+                    case Resource_image_content.compress_data : _image.count_places_being_used_compress_data--; break;
+                    case Resource_image_content.texture : _image.count_places_being_used_texture--; break;
                 }
 
         }
