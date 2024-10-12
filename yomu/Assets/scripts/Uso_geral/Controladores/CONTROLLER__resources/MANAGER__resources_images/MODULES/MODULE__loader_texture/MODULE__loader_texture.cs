@@ -33,6 +33,9 @@ unsafe public static class TOOL__loader_texture {
 
                 }
 
+                // talvez mudar depois
+            _image.texture_allocated.texture.Apply();
+
         }
 
 
@@ -76,7 +79,9 @@ unsafe public static class TOOL__loader_texture {
 
 
 
-                byte[] _png =  _image_data.image_compress;
+                byte[] png =  _image_data.image_compress;
+                if( png == null )
+                    { CONTROLLER__error.Throw( $"image { _image_data.name } come to transfer the png to the texture, but the png is null" ); } 
                 NativeArray<Color32> _native_arr_texture = _image_data.texture_allocated.native_array;
 
                 Bitmap bm = new Bitmap( System.Drawing.Image.FromStream( new MemoryStream( _png )) );
