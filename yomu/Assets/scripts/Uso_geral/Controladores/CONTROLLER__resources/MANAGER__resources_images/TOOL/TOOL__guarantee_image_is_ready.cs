@@ -28,16 +28,16 @@ public static class TOOL_MANAGER__guarantee_image_is_ready {
                 
                 
                 // --- GARANTE QUE TEM COMPRESS
-                if( _image.stage_getting_resource == Resources_request_image_stage.waiting_to_start )
-                    {  single_image.image_compress = TOOL__get_data_images_resources.Get( module_images, _image ); _image.stage_getting_resource = Resources_request_image_stage.getting_texture; }
+                if( _image.stage_getting_resource == Resources_getting_image_stage.waiting_to_start )
+                    {  single_image.image_compress = TOOL__get_data_images_resources.Get( module_images, _image ); _image.stage_getting_resource = Resources_getting_image_stage.getting_texture; }
 
 
                 // ** getting png
-                if( _image.stage_getting_resource == Resources_request_image_stage.getting_wait_file )
+                if( _image.stage_getting_resource == Resources_getting_image_stage.getting_wait_file )
                     { _manager.task_getting_file.pode_executar_single_thread = false; } // --- nao vai mais usar 
 
                 
-                if( _image.stage_getting_resource == Resources_request_image_stage.getting_texture ) // ** significa que não tem texture
+                if( _image.stage_getting_resource == Resources_getting_image_stage.getting_texture ) // ** significa que não tem texture
                     { 
 
                         _manager.textures_manager.Get_texture( single_image );  
@@ -45,7 +45,7 @@ public static class TOOL_MANAGER__guarantee_image_is_ready {
                     } 
                 
 
-                if( _image.stage_getting_resource == Resources_request_image_stage.passing_to_texture )
+                if( _image.stage_getting_resource == Resources_getting_image_stage.passing_to_texture )
                     { 
                         // ** esse vai ser o mais complicado porque 
 

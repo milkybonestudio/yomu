@@ -91,23 +91,37 @@ public class MANAGER__resources_images {
                 // ** se veio aqui tem coisa para fazer
 
                 if( _image.final_resource_state == _image.current_content )
-                    { _image.stage_getting_resource = Resources_request_image_stage.finished; return false; }
+                    { _image.stage_getting_resource = Resources_getting_image_stage.finished; return false; }
 
                 switch( _image.stage_getting_resource ){
 
-                    case Resources_request_image_stage.waiting_to_start: return Handle_waiting_to_start( _image );
+                    case Resources_getting_image_stage.waiting_to_start: return Handle_waiting_to_start( _image );
 
-                            // ** getting png
-                            case Resources_request_image_stage.getting_wait_file: return Handle_getting_wait_file( _image );
+                            // ** getting webp( sempre vai ter )
+                            case Resources_getting_image_stage.getting_compress_low_quality_file: return Handle_getting_compress_low_quality_file( _image );
+
+                            case Resources_getting_image_stage.waiting_to_get_compress_file: return Handle_waiting_to_get_compress_file( _image );
+
+                            // ** getting png 
+                            case Resources_getting_image_stage.getting_compress_file: return Handle_getting_compress_file( _image );
+                            
+
+                            
+
+                            case Resources_getting_image_stage.getting_wait_file: return Handle_getting_wait_file( _image );
+
+                                    case Resources_getting_image_stage.waiting_to_get_texture: return Handle_getting_wait_file( _image );
 
                             // ** se tiver texture disponivel na pool vai para o proximo passo, se nao tiver vai criar na main thread?
-                            case Resources_request_image_stage.getting_texture: return Handle_getting_texture( _image );
+                            case Resources_getting_image_stage.getting_texture: return Handle_getting_texture( _image );
+
+                                    case Resources_getting_image_stage.waiting_to_pass_data_to_texture: return Handle_getting_wait_file( _image );
 
                             // ** se tiver texture disponivel na pool vai para o proximo passo
-                            case Resources_request_image_stage.passing_to_texture: return Handle_passing_to_texture( _image );
+                            case Resources_getting_image_stage.passing_to_texture: return Handle_passing_to_texture( _image );
 
 
-                    case Resources_request_image_stage.finished: return false; // ** tem a tex com os dados já nela
+                    case Resources_getting_image_stage.finished: return false; // ** tem a tex com os dados já nela
 
                 }
 
@@ -117,14 +131,13 @@ public class MANAGER__resources_images {
 
 
 
-
         private bool Handle_waiting_to_start( RESOURCE__image _image ){
 
                 TOOL__resource_image.Verify( _image );
 
                 // ** se so precisar dos dados é isso ai
                 if( _image.final_resource_state == Resource_image_content.nothing )
-                    { _image.stage_getting_resource = Resources_request_image_stage.finished; return false; }
+                    { _image.stage_getting_resource = Resources_getting_image_stage.finished; return false; }
                 
 
                 task_getting_file = CONTROLLER__tasks.Pegar_instancia().Get_task_request( "task_getting_file" );
@@ -135,15 +148,26 @@ public class MANAGER__resources_images {
                     { task_getting_file.fn_multithread = ( Task_req req )=> { TASK_REQ.Add_single_data( req, _image.module_images.Get_multiple_data( _image ) ); }; } // --- MULTIPLES IMAGES
 
 
-                _image.stage_getting_resource = Resources_request_image_stage.getting_wait_file;
+                _image.stage_getting_resource = Resources_getting_image_stage.getting_wait_file;
                 return true;
             
 
         }
 
 
+        private bool Handle_getting_compress_low_quality_file( RESOURCE__image _image ){
 
-        private bool Handle_getting_wait_file( RESOURCE__image image ){ 
+                return false;
+
+        }
+
+        private bool Handle_waiting_to_get_compress_file( RESOURCE__image _image ){
+
+                return false;
+
+        }
+
+        private bool Handle_getting_compress_file( RESOURCE__image image ){ 
 
 
                 if( !!!( task_getting_file.finalizado ) )
@@ -169,13 +193,22 @@ public class MANAGER__resources_images {
 
                 // ** se so precisar dos dados é isso ai
                 if( image.final_resource_state == Resource_image_content.compress_data )
-                    { image.stage_getting_resource = Resources_request_image_stage.finished; }
+                    { image.stage_getting_resource = Resources_getting_image_stage.finished; }
                     else
-                    { image.stage_getting_resource = Resources_request_image_stage.getting_texture; }
+                    { image.stage_getting_resource = Resources_getting_image_stage.getting_texture; }
                 
                 return false; // ** sem tem texture livre pode ser na mesma trhead, mas se precisar criar precisa esperar
             
         }
+
+        private bool Handle_waiting_to_get_texture( RESOURCE__image _image ){
+
+                return false;
+
+        }
+
+
+
 
 
         private bool Handle_getting_texture( RESOURCE__image image ){ 
@@ -196,7 +229,7 @@ public class MANAGER__resources_images {
 
                 }
 
-            image.stage_getting_resource = Resources_request_image_stage.passing_to_texture;
+            image.stage_getting_resource = Resources_getting_image_stage.passing_to_texture;
 
             
 
@@ -233,7 +266,13 @@ public class MANAGER__resources_images {
             
         }
 
+        private bool Handle_waiting_to_pass_data_to_texture(){
 
+            return false;
+
+        }
+
+    
         private bool Handle_passing_to_texture( RESOURCE__image image ){ 
 
 
@@ -244,7 +283,7 @@ public class MANAGER__resources_images {
                 // ** talvez criar a scprite aqui? 
 
                 image.current_content = Resource_image_content.texture;
-                image.stage_getting_resource = Resources_request_image_stage.finished;
+                image.stage_getting_resource = Resources_getting_image_stage.finished;
                 image.final_resource_state = Resource_image_content.texture;
 
 
@@ -268,6 +307,34 @@ public class MANAGER__resources_images {
             return false; 
 
         }
+
+
+
+        private bool handle_waiting_to_apply_texture(){
+
+                // tem que sinalizar que alguma texture já pode ser dado o apply. cada texture grande tem que ter o controle de quantas imagens precisam dar o ok para tudo dar certo
+
+                return false;
+
+        }
+
+
+        private bool Handle_applying_texture(){
+
+                // tem que sinalizar que alguma texture já pode ser dado o apply. cada texture grande tem que ter o controle de quantas imagens precisam dar o ok para tudo dar certo
+                return false;
+
+        }
+
+        private bool Handle_waiting_to_create_sprite(){
+
+                // tem que sinalizar que alguma texture já pode ser dado o apply. cada texture grande tem que ter o controle de quantas imagens precisam dar o ok para tudo dar certo
+                return false;
+
+        }
+
+
+        
 
 
 

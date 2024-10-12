@@ -80,14 +80,16 @@ unsafe public static class TOOL__loader_texture {
 
 
                 byte[] png =  _image_data.image_compress;
+
                 if( png == null )
-                    { CONTROLLER__error.Throw( $"image { _image_data.name } come to transfer the png to the texture, but the png is null" ); } 
+                    { CONTROLLER__errors.Throw( $"image { _image_data.image.name } come to transfer the png to the texture, but the png is null" ); } 
+
                 NativeArray<Color32> _native_arr_texture = _image_data.texture_allocated.native_array;
 
-                Bitmap bm = new Bitmap( System.Drawing.Image.FromStream( new MemoryStream( _png )) );
+                Bitmap bm = new Bitmap( System.Drawing.Image.FromStream( new MemoryStream( png )) );
 
                 BitmapData bitmapData = bm.LockBits (
-                                                        new System.Drawing.Rectangle(0, 0, bm.Width, bm.Height),
+                                                        new System.Drawing.Rectangle( 0, 0, bm.Width, bm.Height ),
                                                         ImageLockMode.ReadOnly,
                                                         PixelFormat.Format32bppArgb // ** talvez trenha que inverter
                                                     );

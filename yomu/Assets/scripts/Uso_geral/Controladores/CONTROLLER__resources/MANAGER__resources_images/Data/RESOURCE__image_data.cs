@@ -5,6 +5,8 @@ using UnityEngine;
 public class RESOURCE__image_data {
 
 
+        public RESOURCE__image image;
+
         public Type_image type;
 
         // ** LOCATOR

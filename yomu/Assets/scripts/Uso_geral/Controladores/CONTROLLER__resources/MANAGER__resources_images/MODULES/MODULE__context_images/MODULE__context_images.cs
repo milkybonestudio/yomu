@@ -82,8 +82,8 @@ public class MODULE__context_images {
                                 
                                 switch( image.current_content ){
 
-                                    case Resource_image_content.nothing: image.stage_getting_resource = Resources_request_image_stage.waiting_to_start; break;
-                                    case Resource_image_content.compress_data: image.stage_getting_resource = Resources_request_image_stage.getting_wait_file; break;
+                                    case Resource_image_content.nothing: image.stage_getting_resource = Resources_getting_image_stage.waiting_to_start; break;
+                                    case Resource_image_content.compress_data: image.stage_getting_resource = Resources_getting_image_stage.getting_wait_file; break;
                                     // ** se estava no minimo e o minimo já era o maior não tem como o novo minimo ser maior
                                     default: CONTROLLER__errors.Throw( $"In the image { image.name } tried to change the minimun level to { _level_pre_allocation }. But the image already have the hiest level of resources. Should not come here" ); break;
 
@@ -98,7 +98,6 @@ public class MODULE__context_images {
 
                 Increase_count( image );
 
-                Debug.Log("iamge ref: "  + image_ref );
 
                 return image_ref;
                 
@@ -120,6 +119,9 @@ public class MODULE__context_images {
 
         }
 
+
+        //mark 
+        // ** tirar recursos tem que tomar mais cuidado sobre quantas referencias them em cada estado 
 
 
         // ** imagem vai ser deletada completamente 
@@ -191,8 +193,12 @@ public class MODULE__context_images {
         }
 
 
-
+        // ** vai para o minimo
         public void Free( RESOURCE__image_ref _ref ){
+
+
+
+
 
 
 
@@ -207,16 +213,68 @@ public class MODULE__context_images {
 
                 RESOURCE__image image = _ref.image;
 
-                // ** verifica se tem que fazer algo
-                if( image.current_content >= image.level_pre_allocation_image )
+                // ** ou já esta indo para o minimo, já esta la ou esta com nivel mais alto
+                if( image.current_final_state >= Resource_image_state.minimun )
                     { return; }
+
+
+                // -- TE QUE MUDAR 
+
+                image.stage_getting_resource = Resources_getting_image_stage.waiting_to_start;
+
+                // --- STATES
+                image.current_final_state = Resource_image_state.minimun;
+                image.current_state = Resource_image_state.going_to_minimun;
+
+
+                // --- RESOURCE
+                image.final_resource_state = image.level_pre_allocation_image;
                 
+
+                return;
 
 
         }
 
         // ** sinaliza que pode começar a pegar a texture
         public void Get_ready( RESOURCE__image_ref _ref ){
+
+
+
+                RESOURCE__image image = _ref.image;
+
+                // ** ou já esta indo para o maximo
+                if( image.current_final_state == Resource_image_state.active )
+                    { return; }
+
+
+
+                // -- TE QUE MUDAR 
+
+                switch( image.current_content ){
+
+                    case Resource_image_content.nothing: image.stage_getting_resource = Resources_getting_image_stage.waiting_to_start; break;
+                    case Resource_image_content.compress_data: image.stage_getting_resource = Resources_getting_image_stage.waiting_to_get_texture; break;
+                    default: CONTROLLER__errors.Throw( $"Image { image.name } tried to get_ready but the current_final_state was not active but the current content was { image.current_content }" ); break;
+
+                }
+
+                
+
+                
+
+                // --- STATES
+                image.current_final_state = Resource_image_state.active;
+                image.current_state = Resource_image_state.going_to_active;
+
+
+                // --- RESOURCE
+                image.final_resource_state = Resource_image_content.texture;
+                
+
+                return;
+
+
 
 
 

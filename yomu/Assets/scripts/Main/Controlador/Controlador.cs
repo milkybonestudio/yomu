@@ -47,24 +47,20 @@ unsafe public class Controlador : MonoBehaviour {
 
                 void Create_character_images( Personagem_nome _personagem ){
 
-
                     // string path = Paths_system.Get_instance().Get_character_images_path__DEVELOPMENT( _personagem );
                     // Images_container_result container =  Images_container_creator.Construct( path );
-
                     // System.IO.File.WriteAllBytes( Paths_system.Get_instance().Get_character_images_container_path( _personagem ) );
                     
                 }
 
-
                 
                 c =  CONTROLLER__resources.Get_instance();
                 image_ref = c.resources_images.Get_image_reference( Resource_context.characters, "teste", "abacate", Resource_image_content.texture );
-                Debug.Log( "iamge ref controlador: " + image_ref );
                 image_ref.Load();
+
                 Debug.Log( "content: " + image_ref.image.current_content );
                 Debug.Log( "minimun: " + image_ref.image.level_pre_allocation_image );
                 Debug.Log( "stage_getting_resource: " + image_ref.image.stage_getting_resource );
-
 
                 // Dispositivo d = Dispositivo__teste.Construir(); // pega o prefab 
                 // d.Define_all_components(); // 
