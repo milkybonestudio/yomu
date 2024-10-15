@@ -21,6 +21,8 @@ public static class TOOL_MANAGER__guarantee_image_is_ready {
 
         private static void Guarantee_image_is_ready_SINGLE( MANAGER__resources_images _manager, RESOURCE__image _image ){
 
+                // ** precisa?
+
                 RESOURCE__image_data single_image = _image.single_image;
 
 
@@ -33,8 +35,8 @@ public static class TOOL_MANAGER__guarantee_image_is_ready {
 
 
                 // ** getting png
-                if( _image.stage_getting_resource == Resources_getting_image_stage.getting_wait_file )
-                    { _manager.task_getting_file.pode_executar_single_thread = false; } // --- nao vai mais usar 
+                if( _image.stage_getting_resource == Resources_getting_image_stage.getting_compress_file )
+                    { _manager.task_getting_compress_file.pode_executar_single_thread = false; } // --- nao vai mais usar 
 
                 
                 if( _image.stage_getting_resource == Resources_getting_image_stage.getting_texture ) // ** significa que não tem texture
@@ -45,7 +47,7 @@ public static class TOOL_MANAGER__guarantee_image_is_ready {
                     } 
                 
 
-                if( _image.stage_getting_resource == Resources_getting_image_stage.passing_to_texture )
+                if( _image.stage_getting_resource == Resources_getting_image_stage.passing_data_to_texture )
                     { 
                         // ** esse vai ser o mais complicado porque 
 

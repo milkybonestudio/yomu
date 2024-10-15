@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using System.Threading;
 using UnityEngine;
 
@@ -42,8 +43,8 @@ unsafe public class Controlador : MonoBehaviour {
  
         public void Start(){
             
-
-                Construtor_controlador.Construir();
+                Dados_fundamentais_sistema.jogo_ativo = true;
+                Construtor_controlador.Construir( this );
 
                 void Create_character_images( Personagem_nome _personagem ){
 
@@ -53,14 +54,16 @@ unsafe public class Controlador : MonoBehaviour {
                     
                 }
 
-                
+
+
+
                 c =  CONTROLLER__resources.Get_instance();
-                image_ref = c.resources_images.Get_image_reference( Resource_context.characters, "teste", "abacate", Resource_image_content.texture );
+                image_ref = c.resources_images.Get_image_reference( Resource_context.characters, "teste", "abacate", Resource_image_content.compress_data );
                 image_ref.Load();
 
-                Debug.Log( "content: " + image_ref.image.current_content );
-                Debug.Log( "minimun: " + image_ref.image.level_pre_allocation_image );
-                Debug.Log( "stage_getting_resource: " + image_ref.image.stage_getting_resource );
+                // Debug.Log( "content: " + image_ref.image.current_content );
+                // Debug.Log( "minimun: " + image_ref.image.level_pre_allocation_image );
+                // Debug.Log( "stage_getting_resource: " + image_ref.image.stage_getting_resource );
 
                 // Dispositivo d = Dispositivo__teste.Construir(); // pega o prefab 
                 // d.Define_all_components(); // 
@@ -83,16 +86,66 @@ unsafe public class Controlador : MonoBehaviour {
 
         }
 
+        public System.Diagnostics.StackTrace trace = new System.Diagnostics.StackTrace( true );
+
         public void Update() {
 
+       
+                kk();
+                k();
+                g();
+                Console.Update();
                 return;
 
                 CONTROLLER__resources.Get_instance().Update();
-                Debug.Log( "state: " + image_ref.image.current_content );
-
-                
+            
+                //Console.Log_intervalado( "state: " + image_ref.image.current_content );
+                controlador_tasks.Update();
                 try{ Update_interno(); } catch( Exception exp ){ Debug.LogError( "Tem que fazer um modo para mandar mensagem " ); }
             
+        }
+
+        private void g(){
+
+                h();
+        }
+
+        private void h(){
+
+                Console.Log("b");
+        }
+
+
+
+
+        private void k(){
+
+                p();
+        }
+
+        private void p(){
+
+                _____________();
+        }
+
+        private void _____________(){
+
+                Console.Log("c");
+        }
+
+
+
+
+
+
+        private void kk(){
+
+                pp();
+        }
+
+        private void pp(){
+
+                Console.Log("f");
         }
 
 
@@ -124,6 +177,7 @@ unsafe public class Controlador : MonoBehaviour {
 
                 }
 
+                
                 controlador_tasks.Update();
                 return;
                 

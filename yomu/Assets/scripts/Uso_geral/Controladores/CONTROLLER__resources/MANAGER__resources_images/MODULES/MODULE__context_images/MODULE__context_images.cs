@@ -1,7 +1,25 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
+
+
+
+
+
+public struct Resource_image_localizer {
+
+    public int number_images;
+
+    public int pointer;
+    public int length;
+
+    public int height;
+    public int width;
+    
+}
+
 
 
 public class MODULE__context_images {
@@ -13,6 +31,7 @@ public class MODULE__context_images {
 
         //mark
         // por hora nao vai ser preocupar com os pointers, no final vai ter um arquivo  context_folder.txt na pasta com os pointers
+        // ** multiples sempre tem a mesma quantidade de images
 
 
         public MODULE__context_images( Resource_context _context, int _initial_capacity, int _buffer_cache ){
@@ -25,8 +44,8 @@ public class MODULE__context_images {
                     file_stream = FILE_STREAM.Criar_stream( _path, buffer_cache );
                 #endif
 
-                images_dictionary = new Dictionary<string, RESOURCE__image>();
-                images_dictionary.EnsureCapacity( _initial_capacity );
+                actives_images_dictionary = new Dictionary<string, RESOURCE__image>();
+                actives_images_dictionary.EnsureCapacity( _initial_capacity );
 
 
         }
@@ -40,26 +59,67 @@ public class MODULE__context_images {
         public MANAGER__resources_images manager;
 
         private FileStream file_stream;
-        public Dictionary<string, RESOURCE__image> images_dictionary;
 
         
+        public Dictionary<string, RESOURCE__image> actives_images_dictionary;
 
-        public RESOURCE__image_ref Get_image_ref(  string _main_folder, string _path, Resource_image_content _level_pre_allocation  ){
+        // ** usado somente na build
+        public Dictionary<string, Resource_image_localizer> images_locators_dictionary;
+
+
+
+
+        // sempre single
+        public RESOURCE__image_ref Get_image_ref(  string _main_folder, string _path, bool _multiples_images,  Resource_image_content _level_pre_allocation  ){
 
 
                 Dictionary<string, RESOURCE__image> dic = Get_dictionary( _main_folder );
                 string path = ( _main_folder + "\\" + _path ); // ** quando for expandir vai ser somente o _path
 
-
+                
                 RESOURCE__image image = null;
                 
                 if( !!!( dic.TryGetValue( path, out image ) ) )
                     { 
+                        
                         // ** create new 
-                        image = new RESOURCE__image( this, context, _main_folder, _path );  
-                        image.path_locator = path;
+
+                        Resource_image_localizer locator = new Resource_image_localizer();
+                        locator.number_images = 1;
+
+                        #if UNITY_EDITOR
+
+                            // ** no editor o localizador sempre esta vazio, ele tem que preencher os dados agora na parte multiples
+                            if( _multiples_images )
+                                {
+                                    string file_name = Path.GetFileName( path );
+
+                                    string path_folder = Get_folder_file( _main_folder, _path );
+                                    string[] files_names = Directory.GetFiles( path_folder );
+                                    string[] files_of_the_multiples = files_names.Where( ( str ) => { return str.Contains( file_name ); } ).ToArray();
+
+                                    CONTROLLER__errors.Verify( ( files_of_the_multiples.Length == 0 ), $"there was no files with the name { file_name } in the path { path }" );
+                                    CONTROLLER__errors.Verify( ( files_of_the_multiples.Length == 1 ), $"tried to load a sequence of images in the path { path }. But thre was only 1 image" );
+
+                                    //mark
+                                    // ** unica informacao relevante no editor
+                                    locator.number_images = files_of_the_multiples.Length;                                 
+                                }
+   
+                        #else
+
+                            // ** build
+                            // --- GET LOCATOR
+                            CONTROLLER__errors.Verify( !!!( Get_dictionary_locators(  _main_folder ).TryGetValue( path, out locator )),  $"Tried to get the locator { path } but was not find" );
+                            
+                        #endif
+
+                        image = new RESOURCE__image( this, context, _main_folder, _path, locator );  
                         dic.Add( path, image );
                     } 
+
+                
+
 
                 RESOURCE__image_ref image_ref = new RESOURCE__image_ref( image );
 
@@ -83,7 +143,7 @@ public class MODULE__context_images {
                                 switch( image.current_content ){
 
                                     case Resource_image_content.nothing: image.stage_getting_resource = Resources_getting_image_stage.waiting_to_start; break;
-                                    case Resource_image_content.compress_data: image.stage_getting_resource = Resources_getting_image_stage.getting_wait_file; break;
+                                    case Resource_image_content.compress_data: image.stage_getting_resource = Resources_getting_image_stage.waiting_to_get_texture; break;
                                     // ** se estava no minimo e o minimo já era o maior não tem como o novo minimo ser maior
                                     default: CONTROLLER__errors.Throw( $"In the image { image.name } tried to change the minimun level to { _level_pre_allocation }. But the image already have the hiest level of resources. Should not come here" ); break;
 
@@ -146,7 +206,7 @@ public class MODULE__context_images {
 
                 // --- CAN DELETE
 
-                images_dictionary.Remove( image.path_locator );
+                actives_images_dictionary.Remove( image.path_locator );
                 Unload( _ref );
                 
                 return;
@@ -292,28 +352,95 @@ public class MODULE__context_images {
                 // ** por hora vai ter somentye 1 container então só vai ter 1 dicionario. 
                 // ** depois cada _main_folder vai ter             
 
-                return images_dictionary;
+                return actives_images_dictionary;
 
         }
 
+        private Dictionary<string, Resource_image_localizer> Get_dictionary_locators( string _main_folder ){
+
+                // ** por hora vai ter somentye 1 container então só vai ter 1 dicionario. 
+                // ** depois cada _main_folder vai ter             
+
+                return images_locators_dictionary;
+
+        }
+
+        
+
+
+
+        #if UNITY_EDITOR
+
+            private string Get_path_file( string _main_folder, string _path ){
+
+                    return Path.Combine( Application.dataPath, "Resources", context_folder, _main_folder,  ( _path + ".png") ) ;     
+
+            }
+
+            private string Get_folder_file( string _main_folder, string _path ){
+
+                return Directory.GetParent( Get_path_file(_main_folder, _path) ).FullName;
+
+            }
+
+
+        #endif
 
     
-        public byte[] Get_single_data( RESOURCE__image _image ){
 
+        public byte[] Get_single_data( string _main_folder, string _path ){
+
+                // ** o jogo nao vai usar webp na build então precisa do type
+                // ** o webp vai ser path_low_quality
+
+            
                 byte[] image = null;
 
-                // switch( _image.image_context ){
+                    // **   pensar da  seguinte forma: ( path sistema(C:\\users\\user...) ) || ( container( Devices, Characters, ...  ) ) || ( chave ( "\\Lily\\normal_clothes\\arms_1.png" ) )
+                    // **   no editor path systema vai dado por Application.DataPath + "\\Resources"
+                    // **   na build vai ser Application.DataPath + "\\Static_data"
 
-                //     case Resource_context.characters: return  characters_images.Get_data( _image ); 
-                //     default: throw new Exception( $"Can not handle the type { _image.image_context}" ); 
+                    #if UNITY_EDITOR
+
+                        string path_arquivo = Get_path_file( _main_folder, _path );
+
+                        try{ return System.IO.File.ReadAllBytes( path_arquivo ); } catch( Exception e ){ Debug.LogError( $"Dont find the image <Color=lightBlue>{ path_arquivo }</Color>" ); throw e; }
+
                     
-                // }
+                    #elif !!!( UNITY_EDITOR ) && ( UNITY_STANDALONE_WIN || UNITY_STANDALONE_LINUX || UNITY_STANDALONE_OSX)
+                        
+                        
+                        thorw new Exception( "Ainda tem que fazer" );
+
+
+                        // int _initial_pointer = _image.single_image.image_localizers.initial_pointer;
+                        // int _length = _image.single_image.image_ocalizers.length;
+
+
+                        FileStream file_stream = null;
+                        
+                        if( !!!( files_streams.TryGetValue( _path, out file_stream ) ) )
+                            { files_streams.Add( _path, FILE_STREAM.Criar_stream( _path, buffer_cache )); }
+
+
+                        file_stream.Seek( _initial_pointer, SeekOrigin.Begin );
+
+                        byte[] image = new byte[ _length ];
+
+                        file_stream.Read( image, 0, _length );
+            
+                        return image;
+
+                    
+                    #endif
+
+
 
                 return image;
             
         }
 
-        public byte[][] Get_multiple_data( RESOURCE__image _image ){
+        public byte[][] Get_multiple_data( string _main_folder, string _path, int _number_images ){
 
                 throw new Exception("tem que fazerr");
 

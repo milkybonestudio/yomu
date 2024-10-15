@@ -5,6 +5,7 @@ using System;
 public class CONTROLLER__errors {
 
     public static void Throw( string _message ){ Get_instance().Throw_intern( _message ); }
+    public static void Verify( bool _bool , string _message ){ if( _bool ){ Get_instance().Throw_intern( _message ); } }
 
     public static CONTROLLER__errors instance;
     public static CONTROLLER__errors Get_instance(){ return instance; }

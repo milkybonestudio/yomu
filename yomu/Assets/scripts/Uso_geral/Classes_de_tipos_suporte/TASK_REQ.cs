@@ -68,9 +68,11 @@ public static class TASK_REQ {
 
         public static Task_req Pegar_task_com_maior_prioridade( Task_req[] _arr  ){
 
+
+            
                 Task_req req_com_maior_prioridade = null;
 
-                for( int task_index = 1 ; task_index < _arr.Length ; task_index++ ){
+                for( int task_index = 0 ; task_index < _arr.Length ; task_index++ ){
 
                         Task_req task = _arr[ task_index ];
                         

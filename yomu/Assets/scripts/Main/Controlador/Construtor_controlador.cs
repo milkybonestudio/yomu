@@ -6,9 +6,8 @@ using UnityEngine;
 public static class Construtor_controlador {
 
 
-        public static Controlador Construir(){
+        public static void Construir( Controlador controlador ){
 
-            Controlador controlador = new Controlador();
             Controlador.instancia = controlador;
 
 
@@ -49,12 +48,12 @@ public static class Construtor_controlador {
 
                 // --- VERIFICAR DESENVOLVIMENTO ** so pode ativar no editor
                 if( controlador.controlador_development.Aplicar_teste())
-                    { return controlador; } 
+                    { return ; } 
 
             
                 // --- VERIFICAR ARQUIVO DE SEGURANCA
                 if( !!!( Gerenciador_seguranca_main.Garantir_arquivo_de_seguranca()) )
-                        { return controlador; } // --- PRECISA RECONSTRUIR
+                        { return ; } // --- PRECISA RECONSTRUIR
 
 
                 
@@ -63,7 +62,7 @@ public static class Construtor_controlador {
                 // controlador.login = Login.Construir();
 
                 
-            return controlador;
+            return ;
 
         }
 

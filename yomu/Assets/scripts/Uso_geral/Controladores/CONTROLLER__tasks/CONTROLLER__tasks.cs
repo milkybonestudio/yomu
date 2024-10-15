@@ -18,7 +18,7 @@ public class CONTROLLER__tasks  {
                 modulo_multithread = new MODULO__multithread( _nome_modulo: "Modulo_multithread_controlador_tasks", _controalador_tasks: this );
                 relogio = new System.Diagnostics.Stopwatch();
 
-                int numero_inicial_de_slots = 20;
+                int numero_inicial_de_slots = 2;
 
                 tasks_em_espera_iniciar = new Task_req [ numero_inicial_de_slots ];
                 tasks_em_espera_para_ativar_multithread = new Task_req [ numero_inicial_de_slots ];
@@ -50,24 +50,34 @@ public class CONTROLLER__tasks  {
 
         public void Update(){
 
+
                 if( block_frame )
                     { block_frame = false; return; }
+
+
+                // Debug.Log( tasks_em_espera_iniciar  [ 0 ]);
+                // Debug.Log( tasks_em_espera_para_ativar_multithread  [ 0 ]);
+                // Debug.Log( tasks_em_espera_para_ativar_single_thread  [ 0 ]);
                 
 
                 relogio.Start();
 
                 Iniciar_tasks_em_espera();
+                Guarantee_second_thread();
 
                 while ( true ){
 
                         if( !!! ( Pode_continuar() ) ) 
                             { return; } // --- NAO PODE CONTINUAR
 
+
                         // --- VERIFICA SE TEM TASKS
                         Task_req task = TASK_REQ.Pegar_task_com_maior_prioridade( tasks_em_espera_para_ativar_single_thread );
 
                         if( task == null ) 
                             { relogio.Reset(); return; }  // --- NAO TEM NADA PARA FAZER
+
+                        Debug.Log( $"task: {task.nome}" );
                         
                         // --- VERIFICA SE PODE EXECUTAR
                         if( !!! ( task.pode_executar_single_thread ) || task.task_bloqueada )
@@ -87,6 +97,16 @@ public class CONTROLLER__tasks  {
                 
                 }
                 
+
+        }
+
+        private void Guarantee_second_thread(){
+
+            foreach( Task_req req in tasks_em_espera_para_ativar_multithread )
+                {
+                    if( req != null )
+                        { modulo_multithread.Garantir_thread(); return; }
+                }
 
         }
 
@@ -163,7 +183,12 @@ public class CONTROLLER__tasks  {
 
             for( int index = 0 ; index < tasks_em_espera_iniciar.Length ; index++ ){
 
+
                 Task_req task = tasks_em_espera_iniciar[ index ];
+
+                if( task == null )
+                    { continue; }
+
                 tasks_em_espera_iniciar[ index ] = null;
 
                 if( task.pode_executar_parte_multithread )

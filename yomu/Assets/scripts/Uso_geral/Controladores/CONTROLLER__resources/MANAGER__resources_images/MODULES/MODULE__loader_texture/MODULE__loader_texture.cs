@@ -16,6 +16,11 @@ public struct Data_tex {
 }
 
 
+public enum Type_image {
+
+    png, webp,
+
+}
 
 
 unsafe public static class TOOL__loader_texture {
@@ -24,14 +29,14 @@ unsafe public static class TOOL__loader_texture {
 
         // ** seria bom dar o apply tudo de uma vez 
 
-        public static void Transfer_data( RESOURCE__image_data _image ){
+        public static void Transfer_data( RESOURCE__image_data _image, Type_image _type ){
 
-                switch( _image.type){
+                // switch( _type ){
 
-                    case Type_image.png: Transfer_data_PNG( _image ); return;
-                    case Type_image.webp: Transfer_data_WEABP( _image ); return;
+                //     case Type_image.png: Transfer_data_PNG( _image.png ); return;
+                //     case Type_image.webp: Transfer_data_WEABP( _image ); return;
 
-                }
+                // }
 
                 // talvez mudar depois
             _image.texture_allocated.texture.Apply();
@@ -44,27 +49,27 @@ unsafe public static class TOOL__loader_texture {
         private static void Generate_information( RESOURCE__image_data _image_data, int _width, int _height ){
 
 
-                // ** 1 cenario, dont flip
-                if( _image_data.width <= _width && _image_data.height <= _height )
-                    {
-                        // --- PASSOU
-                        _image_data.default_rotation = 0f;
-                        _image_data.height_margin = ( _height - _image_data.height );
-                        _image_data.width_margin  = ( _width - _image_data.width );
-                        return;
+                // // ** 1 cenario, dont flip
+                // if( _image_data.width <= _width && _image_data.height <= _height )
+                //     {
+                //         // --- PASSOU
+                //         _image_data.default_rotation = 0f;
+                //         _image_data.height_margin = ( _height - _image_data.height );
+                //         _image_data.width_margin  = ( _width - _image_data.width );
+                //         return;
 
-                    }
+                //     }
 
 
-                // ** 2 cenario, dont flip
-                if( _image_data.width <= _height && _image_data.height <= _width )
-                    {
-                        // --- PASSOU
-                        _image_data.default_rotation = 0.25f;
-                        _image_data.height_margin = ( _height - _image_data.width );
-                        _image_data.width_margin  = ( _width - _image_data.height );
-                        return;
-                    }
+                // // ** 2 cenario, dont flip
+                // if( _image_data.width <= _height && _image_data.height <= _width )
+                //     {
+                //         // --- PASSOU
+                //         _image_data.default_rotation = 0.25f;
+                //         _image_data.height_margin = ( _height - _image_data.width );
+                //         _image_data.width_margin  = ( _width - _image_data.height );
+                //         return;
+                //     }
 
                 throw new System.Exception( "nao pode colocar imagem na texture, texture muito pequena" );
 
@@ -73,18 +78,15 @@ unsafe public static class TOOL__loader_texture {
 
 
     
-        public static void Transfer_data_WEABP( RESOURCE__image_data _image_data ){}
+        public static void Transfer_data_WEABP( RESOURCE__image_data _image_data ){
 
-        public static void Transfer_data_PNG( RESOURCE__image_data _image_data ){
+            // ** somente para low_quality
+
+        }
+
+        public static void Transfer_data_PNG( byte[] png,  NativeArray<Color32> _native_arr_texture ){
 
 
-
-                byte[] png =  _image_data.image_compress;
-
-                if( png == null )
-                    { CONTROLLER__errors.Throw( $"image { _image_data.image.name } come to transfer the png to the texture, but the png is null" ); } 
-
-                NativeArray<Color32> _native_arr_texture = _image_data.texture_allocated.native_array;
 
                 Bitmap bm = new Bitmap( System.Drawing.Image.FromStream( new MemoryStream( png )) );
 
@@ -95,11 +97,9 @@ unsafe public static class TOOL__loader_texture {
                                                     );
 
 
-                Generate_information( _image_data,  bitmapData.Width, bitmapData.Height );
+                // Generate_information( _image_data,  bitmapData.Width, bitmapData.Height );
 
-                int height_margin = _image_data.height_margin;
-                int width_margin  = _image_data.width_margin;
-                float rotation = _image_data.default_rotation;
+                
 
                 //mark
                 //** ver amanha

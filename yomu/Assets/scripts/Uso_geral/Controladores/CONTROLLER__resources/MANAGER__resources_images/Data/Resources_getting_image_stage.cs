@@ -2,9 +2,9 @@
 
 public enum Resources_getting_image_stage {
 
-    waiting_to_start,
-
-        getting_compress_low_quality_file, // ** webp
+    waiting_to_start, // ** get webp
+    
+            getting_compress_low_quality_file,
 
             waiting_to_get_compress_file, // ** png
 
@@ -16,7 +16,7 @@ public enum Resources_getting_image_stage {
 
             waiting_to_pass_data_to_texture,
 
-        passing_to_texture,
+        passing_data_to_texture,
 
             waiting_to_apply_texture,
 
