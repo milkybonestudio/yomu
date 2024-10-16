@@ -207,7 +207,7 @@ public class MANAGER__resources_images {
                 if( task_getting_compress_file != null )
                     { return weight; } // ** algum outro arquivo esta pegando 
                 
-                Debug.Log( "veio Handle_waiting_to_get_compress_file" );
+                Console.Log( "veio Handle_waiting_to_get_compress_file" );
                 
                 task_getting_compress_file = CONTROLLER__tasks.Pegar_instancia().Get_task_request( "task_getting_compress_file" );
 

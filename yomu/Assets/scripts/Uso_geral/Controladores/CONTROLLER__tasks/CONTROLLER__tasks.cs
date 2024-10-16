@@ -227,7 +227,7 @@ public class CONTROLLER__tasks  {
                 tasks_em_espera_iniciar[ index ] = _nova_task;
                 _nova_task.slot_id = index;
 
-                Debug.Log("task foi adicionada no index: " + _nova_task.ToString());
+                Console.Log("task foi adicionada no index: " + _nova_task.ToString());
 
                 return;
 

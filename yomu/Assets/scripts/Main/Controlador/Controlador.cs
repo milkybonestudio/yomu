@@ -90,17 +90,16 @@ unsafe public class Controlador : MonoBehaviour {
 
         public void Update() {
 
-       
-                kk();
-                k();
-                g();
-                Console.Update();
-                return;
+    
 
                 CONTROLLER__resources.Get_instance().Update();
             
                 //Console.Log_intervalado( "state: " + image_ref.image.current_content );
                 controlador_tasks.Update();
+                Console.Update();
+
+                return; 
+
                 try{ Update_interno(); } catch( Exception exp ){ Debug.LogError( "Tem que fazer um modo para mandar mensagem " ); }
             
         }
@@ -202,7 +201,7 @@ unsafe public class Controlador : MonoBehaviour {
         public void OnDisable(){
 
                 
-
+                Console.Resetar();
                 Dados_fundamentais_sistema.jogo_ativo = false;
                 Jogo.Zerar_dados();
                 
