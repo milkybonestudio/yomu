@@ -77,7 +77,7 @@ public class CONTROLLER__tasks  {
                         if( task == null ) 
                             { relogio.Reset(); return; }  // --- NAO TEM NADA PARA FAZER
 
-                        Debug.Log( $"task: {task.nome}" );
+                        Console.Log( $"task: {task.nome}" );
                         
                         // --- VERIFICA SE PODE EXECUTAR
                         if( !!! ( task.pode_executar_single_thread ) || task.task_bloqueada )
@@ -96,6 +96,9 @@ public class CONTROLLER__tasks  {
 
                 
                 }
+
+            if( modulo_multithread.exception != null )
+                { CONTROLLER__errors.Throw_exception( modulo_multithread.exception ); }
                 
 
         }

@@ -6,6 +6,7 @@ public class CONTROLLER__errors {
 
     public static void Throw( string _message ){ Get_instance().Throw_intern( _message ); }
     public static void Verify( bool _bool , string _message ){ if( _bool ){ Get_instance().Throw_intern( _message ); } }
+    public static void Throw_exception( Exception _exp ){ Get_instance().Throw_exception_internal( _exp ); }
 
     public static CONTROLLER__errors instance;
     public static CONTROLLER__errors Get_instance(){ return instance; }
@@ -36,6 +37,13 @@ public class CONTROLLER__errors {
                 // ** fazer depois 
                 throw new System.Exception( "Error: " + _message );
             }
+
+    }
+
+    private void Throw_exception_internal( Exception _exp  ){
+
+        // ** depois fazer melhor
+        throw _exp;
 
     }
 

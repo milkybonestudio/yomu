@@ -17,17 +17,17 @@ public static class Console {
 
         // --- MAIN
 
-        public static int index_atual_main = 0;
-        public static int pointer_run_time = 0;
-        public static string[] logs_main = new string[ 5 ];
-        public static Log_type[] logs_tipos_main = new Log_type[ 5 ]{ Log_type.warning,Log_type.warning, Log_type.warning, Log_type.warning,Log_type.warning };
+        public static int index_atual_main;
+        public static int pointer_run_time;
+        public static string[] logs_main;
+        public static Log_type[] logs_tipos_main;
 
         // --- MULTITHREAD
 
-        public static int index_atual_m = 0;
-        public static int pointer_run_time_m = 0;
-        public static string[] logs_m = new string[ 7 ];
-        public static Log_type[] logs_tipos_m = new Log_type[ 7 ];
+        public static int index_atual_m;
+        public static int pointer_run_time_m;
+        public static string[] logs_m;
+        public static Log_type[] logs_tipos_m;
 
 
 
@@ -65,54 +65,60 @@ public static class Console {
 
         }
 
-        public static string name = null;
+
         private static string Get_trace( string _message ){
 
 
                 System.Diagnostics.StackFrame[] frames = ( new System.Diagnostics.StackTrace( true ) ).GetFrames();
+                
+
+                // ** na multithread aparentemente tem mais frames que o necessario. Confirmar pelo nome do arquivo, se for null considera como o final
+                int numero_frames = 0;
+                foreach( System.Diagnostics.StackFrame f in frames ){
+
+                        if( f.GetFileName() != null )
+                            { numero_frames++; }
+                            else
+                            { break; }
+                        
+                        continue;
+
+                }
 
                 const int margin_message = 1;
                 const int margin_lines = 20;
+                const int remove_log_frame = 3;
+                const int message_with_link = 1;
 
-                const int remove_log_frame = 2;
-
-                string[] frames_stack = new string[ ( ( frames.Length - remove_log_frame ) + margin_message + margin_lines ) ];   
-
-                frames_stack[ 0 ] = _message;
-                int frame_stack = 1;
-
-                    for( int frame_id = remove_log_frame  ; frame_id < frames.Length ; frame_id++){
-
-                            if( name != null && Thread.CurrentThread.Name == "Main")
-                                { Debug.Log( "name: " + name ); }
-
-                            try {
-
-                                System.Diagnostics.StackFrame s_frame = frames[ frame_id ];
-
-                                string file_name = s_frame.GetFileName();
-
-                                
-                                if( name != null && Thread.CurrentThread.Name != "Main")
-                                    { name = file_name; }
-
-                                
-
-                                string assets_path = System.IO.Directory.GetParent( Application.dataPath ).FullName;
-                                string path = System.IO.Path.GetRelativePath( assets_path , file_name ).Replace( "\\", "/" );
-
-                                string className = s_frame.GetMethod().DeclaringType.Name;
-                                string methodName = s_frame.GetMethod().Name;
-                                int linha = s_frame.GetFileLineNumber();
-
-                                frames_stack[ frame_stack++ ] = $"{className}:{methodName} () (at <a href=\"{path}\" line=\"{ linha }\">{ path }:{ linha }</a> )";
-                                
-                            } catch ( Exception e ){
+                string[] frames_stack = new string[ ( ( numero_frames - remove_log_frame ) + margin_message + margin_lines + message_with_link ) ];   
 
 
+                string assets_path = System.IO.Directory.GetParent( Application.dataPath ).FullName;
 
-                            }
+                // --- MESSAGE 
 
+                string file_name_primeiro = frames[ remove_log_frame ].GetFileName();       
+                int linha_primeiro = frames[ remove_log_frame ].GetFileLineNumber();
+                string path_primeiro = System.IO.Path.GetRelativePath( assets_path , file_name_primeiro ).Replace( "\\", "/" );
+
+                int frame_stack = 0;
+                frames_stack[ frame_stack++ ] = _message;
+                frames_stack[ frame_stack++ ] =  $"<a href=\"{ path_primeiro }\" line=\"{ linha_primeiro }\">{ _message }</a>";
+
+                    // --- STACK
+
+                    for( int frame_id = remove_log_frame  ; frame_id < numero_frames ; frame_id++ ){
+
+                            System.Diagnostics.StackFrame s_frame = frames[ frame_id ];
+
+                            string file_name = s_frame.GetFileName();             
+                            string path = System.IO.Path.GetRelativePath( assets_path , file_name ).Replace( "\\", "/" );
+                            
+                            string className = s_frame.GetMethod().DeclaringType.Name;
+                            string methodName = s_frame.GetMethod().Name;
+                            int linha = s_frame.GetFileLineNumber();
+
+                            frames_stack[ frame_stack++ ] = $"{className}:{methodName} () (at <a href=\"{path}\" line=\"{ linha }\">{ path }:{ linha }</a> )";
 
                             continue;
 
@@ -195,7 +201,7 @@ public static class Console {
 
 
 
-        public static void Resetar(){
+        public static void Start(){
 
                 // --- MAIN
 

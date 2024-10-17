@@ -42,6 +42,8 @@ unsafe public class Controlador : MonoBehaviour {
         public RESOURCE__image_ref image_ref;
  
         public void Start(){
+
+                Console.Start();
             
                 Dados_fundamentais_sistema.jogo_ativo = true;
                 Construtor_controlador.Construir( this );
@@ -58,7 +60,7 @@ unsafe public class Controlador : MonoBehaviour {
 
 
                 c =  CONTROLLER__resources.Get_instance();
-                image_ref = c.resources_images.Get_image_reference( Resource_context.characters, "teste", "abacate", Resource_image_content.compress_data );
+                image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "corredor", Resource_image_content.compress_data );
                 image_ref.Load();
 
                 // Debug.Log( "content: " + image_ref.image.current_content );
@@ -104,62 +106,20 @@ unsafe public class Controlador : MonoBehaviour {
             
         }
 
-        private void g(){
-
-                h();
-        }
-
-        private void h(){
-
-                Console.Log("b");
-        }
-
-
-
-
-        private void k(){
-
-                p();
-        }
-
-        private void p(){
-
-                _____________();
-        }
-
-        private void _____________(){
-
-                Console.Log("c");
-        }
-
-
-
-
-
-
-        private void kk(){
-
-                pp();
-        }
-
-        private void pp(){
-
-                Console.Log("f");
-        }
-
 
         public void Update_interno() {
 
-            return;
 
             
-                Console.Update();
                 controlador_audio.Update();
 
 
                 CONTROLLER__data.Pegar_instancia().Atualizar_mouse_atual(); 
                 controlador_input.Update();
 
+                Console.Update();
+
+            return;
                 
                 switch (  modo_controlador_atual ){
                         
@@ -201,7 +161,6 @@ unsafe public class Controlador : MonoBehaviour {
         public void OnDisable(){
 
                 
-                Console.Resetar();
                 Dados_fundamentais_sistema.jogo_ativo = false;
                 Jogo.Zerar_dados();
                 

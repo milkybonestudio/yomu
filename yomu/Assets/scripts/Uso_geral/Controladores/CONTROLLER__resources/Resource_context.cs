@@ -8,7 +8,7 @@ public enum Resource_context {
 
         // login_AND_menu,
 
-        characters, 
+        Characters, 
 
         // devices,
         // minigames, 

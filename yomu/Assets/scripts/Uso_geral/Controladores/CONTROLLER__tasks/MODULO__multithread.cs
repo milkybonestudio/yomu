@@ -20,6 +20,7 @@ public class MODULO__multithread {
         
         public Thread thread = null;
         public CancellationTokenSource token_para_cancelar = new CancellationTokenSource();
+        public Exception exception;
 
 
         public void Update(){}
@@ -32,36 +33,48 @@ public class MODULO__multithread {
         public void Thread_secundaria_update(){
 
                 Console.Log(  "update multithread" );
+                //Debug.Log("What?");
 
                 int i = 100;
 
-                while( true ){
+                try {
 
-                        //return;
+                        while( true ){
 
-                        if( !!! ( Dados_fundamentais_sistema.jogo_ativo ) || finalizar_thread )
-                            { return; }
+                                //return;
 
-                        Task_req task = TASK_REQ.Pegar_task_com_maior_prioridade( controlador_tasks.tasks_em_espera_para_ativar_multithread );
+                                if( !!! ( Dados_fundamentais_sistema.jogo_ativo ) || finalizar_thread )
+                                    { return; }
 
-
-                        if( task == null )
-                            { Matar_thread(); return; }
-
-                        Console.Log( $"passou: { task.nome }" );
-                        controlador_tasks.tasks_em_espera_para_ativar_multithread[ task.slot_id ] = null;
+                                Task_req task = TASK_REQ.Pegar_task_com_maior_prioridade( controlador_tasks.tasks_em_espera_para_ativar_multithread );
 
 
-                        if( task.task_bloqueada || !!!( task.pode_executar_parte_multithread ) )
-                            { Console.Log( $"Nao deixou executar a task { task.nome } na multithread" ); continue; } // --- perde completamente a referencia
+                                if( task == null )
+                                    { Matar_thread(); return; }
 
-                        task.fn_multithread( task );
-                            
-                        TASK_REQ.Adicionar_task_em_array(  ref controlador_tasks.tasks_em_espera_para_ativar_single_thread, task );
+                                Console.Log( $"passou: { task.nome }" );
+                                controlador_tasks.tasks_em_espera_para_ativar_multithread[ task.slot_id ] = null;
 
-                        continue;
+
+                                if( task.task_bloqueada || !!!( task.pode_executar_parte_multithread ) )
+                                    { Console.Log( $"Nao deixou executar a task { task.nome } na multithread" ); continue; } // --- perde completamente a referencia
+
+                                task.fn_multithread( task );
+                                    
+                                TASK_REQ.Adicionar_task_em_array(  ref controlador_tasks.tasks_em_espera_para_ativar_single_thread, task );
+
+                                continue;
+
+                        }
+
+                } catch( Exception e ){
+
+                    exception = e;
+                    Matar_thread();
+                    return;
 
                 }
+
 
         }
 
@@ -72,10 +85,7 @@ public class MODULO__multithread {
                 Console.Log( "thread: " + thread );
             
                 if( thread != null  )
-                    { 
-                        Console.Log("nao vai criar thread");
-                        return; 
-                    }
+                    { Console.Log("nao vai criar thread"); return; }
 
 
                 Console.Log("vai criar a nova thread");

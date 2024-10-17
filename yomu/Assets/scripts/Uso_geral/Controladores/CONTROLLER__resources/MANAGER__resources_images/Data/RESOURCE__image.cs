@@ -21,8 +21,9 @@ unsafe public class RESOURCE__image {
 
                 image_context = _context; 
                 main_folder = _main_folder;
-                path = _path;
+                path_locator = _path;
                 module_images = _module_images;
+
 
                 stage_getting_resource = Resources_getting_image_stage.finished;
                 current_content = Resource_image_content.nothing;
@@ -42,7 +43,7 @@ unsafe public class RESOURCE__image {
                         // --- MULTIPLES
 
                         multiples_images = new RESOURCE__image_data[ locator.number_images ];
-                        CONTROLLER__errors.Verify( ( locator.number_images < 2 ), $"tried to get multiples images { path } but the length was { locator.number_images }" );
+                        CONTROLLER__errors.Verify( ( locator.number_images < 2 ), $"tried to get multiples images { path_locator } but the length was { locator.number_images }" );
                 
                         for( int i = 0 ; i < multiples_images.Length ; i++ )
                             { multiples_images[ i ] = new RESOURCE__image_data(); }
@@ -80,7 +81,6 @@ unsafe public class RESOURCE__image {
     
         public Resource_context image_context;
         public string main_folder;
-        public string path; // ?
         public string path_locator;
 
 
