@@ -60,7 +60,7 @@ unsafe public class Controlador : MonoBehaviour {
 
 
                 c =  CONTROLLER__resources.Get_instance();
-                image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "corredor", Resource_image_content.compress_data );
+                image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "corredor", Resource_image_content.texture );
                 image_ref.Load();
 
                 // Debug.Log( "content: " + image_ref.image.current_content );
@@ -88,8 +88,6 @@ unsafe public class Controlador : MonoBehaviour {
 
         }
 
-        public System.Diagnostics.StackTrace trace = new System.Diagnostics.StackTrace( true );
-
         public void Update() {
 
     
@@ -98,7 +96,18 @@ unsafe public class Controlador : MonoBehaviour {
             
                 //Console.Log_intervalado( "state: " + image_ref.image.current_content );
                 controlador_tasks.Update();
+
+                if( Input.GetKeyDown( KeyCode.A ) )
+                    {
+                        Console.Log( $"count_places_being_used_compress_data: {image_ref.image.count_places_being_used_compress_data}" );
+                        Console.Log( $"count_places_being_used_nothing: {image_ref.image.count_places_being_used_nothing}" );
+                        Console.Log( $"count_places_being_used_texture: {image_ref.image.count_places_being_used_texture}" );
+
+                    }
+
+
                 Console.Update();
+                
 
                 return; 
 

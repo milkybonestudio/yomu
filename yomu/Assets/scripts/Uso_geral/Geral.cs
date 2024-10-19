@@ -10,101 +10,92 @@ public static class Geral {
     
 
 
-                public static int trava_i= 0;
-                public static void Trava(){  
+        public static int trava_i= 0;
+        public static void Trava(){  
 
+            trava_i++;
+            //Debug.Log("tava_atual: " + trava_i);
 
-                    trava_i++;
-                    //Debug.Log("tava_atual: " + trava_i);
-
-                    if(trava_i > 5_000){ 
-
-                            throw new ArgumentException("passou do limite");
-
-                    }
-                        
-                }
+            if(trava_i > 5_000 )
+                { throw new ArgumentException("passou do limite"); }
+                
+        }
 
 
 
 
-            public static int n = 0;
-            public static bool foi_setado = false;
-            public static void erro( int _n ){
+        public static int n = 0;
+        public static bool foi_setado = false;
+        public static void erro( int _n ){
 
 
-                if( _n == -1) { 
-
+            if( _n == -1 )
+                { 
                     throw new ArgumentException("a");
                     Debug.LogError("a");
                     return;
-
-
                 }
 
-                if( ! foi_setado){
-
+            if( !!!( foi_setado ) )
+                {
                     foi_setado = true;
                     n = _n;
                     return;
-
                 }
 
-                n--;
-                if(n > 0) return;
+            n--;
 
-                //Debug.LogError("a");
-                throw new ArgumentException("a");
+            if( n > 0 ) 
+                { return; }
 
-            }
+            //Debug.LogError("a");
+            throw new ArgumentException("a");
 
-
-            public static void Salvar_string( string _text , int n = -1 ){
-
-                    string path_dir = System.IO.Directory.GetCurrentDirectory();
-
-                    string path_para_salvar = path_dir + "\\Assets\\scripts\\Main\\";
-
-                    
-
-                    string path_final = path_para_salvar + "texto_para_verificar.txt";
-
-                    if(System.IO.File.Exists( path_final )) System.IO.File.Delete( path_final );
-
-                  //  foreach( char ch in _text ) Debug.Log("|" + ( (int)ch));
-
-                    
-
-                    System.IO.File.WriteAllText( path_final ,("texto:\r\n" +   _text) );
-
-                    erro( n );
+        }
 
 
-            }
+        public static void Salvar_string( string _text , int n = -1 ){
+
+
+                string path_dir = System.IO.Directory.GetCurrentDirectory();
+
+                string path_para_salvar = path_dir + "\\Assets\\scripts\\Main\\";
+
+                string path_final = path_para_salvar + "texto_para_verificar.txt";
+
+                if( System.IO.File.Exists( path_final ) ) 
+                    { System.IO.File.Delete( path_final ); }
+
+                System.IO.File.WriteAllText( path_final ,("texto:\r\n" +   _text) );
+
+                erro( n );
+
+
+        }
 
 
 
-            public static void Salvar_string( char[] _text_c , int n = -1 ){
+        public static void Salvar_string( char[] _text_c , int n = -1 ){
 
-                    string _text = new string (_text_c );
+                string _text = new string (_text_c );
 
-                    string path_dir = System.IO.Directory.GetCurrentDirectory();
+                string path_dir = System.IO.Directory.GetCurrentDirectory();
 
-                    string path_para_salvar = path_dir + "\\Assets\\scripts\\Main\\";
+                string path_para_salvar = path_dir + "\\Assets\\scripts\\Main\\";
 
-                    
+                
 
-                    string path_final = path_para_salvar + "texto_para_verificar.txt";
+                string path_final = path_para_salvar + "texto_para_verificar.txt";
 
-                    if(System.IO.File.Exists( path_final )) System.IO.File.Delete( path_final );
+                if(System.IO.File.Exists( path_final )) System.IO.File.Delete( path_final );
 
-                    
+                
 
-                    System.IO.File.WriteAllText( path_final ,("texto:\r\n" +   _text) );
-                    erro( n );
+                System.IO.File.WriteAllText( path_final ,("texto:\r\n" +   _text) );
+                erro( n );
 
 
-            }
+        }
 
 
 

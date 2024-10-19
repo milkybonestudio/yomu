@@ -24,7 +24,7 @@ public class CONTROLLER__tasks  {
                 tasks_em_espera_para_ativar_multithread = new Task_req [ numero_inicial_de_slots ];
                 tasks_em_espera_para_ativar_single_thread = new Task_req [ numero_inicial_de_slots ];
 
-                tempo_maximo_em_single_thread_ms = 2L;
+                tempo_maximo_em_single_thread_ms = 3L;
 
         }
 
@@ -50,6 +50,15 @@ public class CONTROLLER__tasks  {
 
         public void Update(){
 
+                if( modulo_multithread.exception != null )
+                    { 
+                        Exception e = modulo_multithread.exception;
+                        modulo_multithread.exception = null;
+                        modulo_multithread.Matar_thread();
+                        CONTROLLER__errors.Throw_exception( e );
+                        return;
+                    }
+
 
                 if( block_frame )
                     { block_frame = false; return; }
@@ -62,7 +71,8 @@ public class CONTROLLER__tasks  {
 
                 relogio.Start();
 
-                Iniciar_tasks_em_espera();
+                Allocat_waiting_tasks();
+                Verify_multithread_task();
                 Guarantee_second_thread();
 
                 while ( true ){
@@ -77,7 +87,7 @@ public class CONTROLLER__tasks  {
                         if( task == null ) 
                             { relogio.Reset(); return; }  // --- NAO TEM NADA PARA FAZER
 
-                        Console.Log( $"task: {task.nome}" );
+                        Console.Log( $"task: { task.nome }" );
                         
                         // --- VERIFICA SE PODE EXECUTAR
                         if( !!! ( task.pode_executar_single_thread ) || task.task_bloqueada )
@@ -89,10 +99,13 @@ public class CONTROLLER__tasks  {
                             { Executar_fracionado( task ); }
 
                         if ( !!!( Pode_continuar() ) )
-                            { return; } // --- NAO PODE CONTINUAR
+                            { Console.Log("nao deixou continuar"); return; } // --- NAO PODE CONTINUAR
 
+                        
+                        Console.Log( "vai executar task main thread : " + task.nome );
                         task.fn_single_thread( task ); 
                         tasks_em_espera_para_ativar_single_thread[ task.slot_id ] = null;
+                        task.finalizado = true;
 
                 
                 }
@@ -105,13 +118,35 @@ public class CONTROLLER__tasks  {
 
         private void Guarantee_second_thread(){
 
-            foreach( Task_req req in tasks_em_espera_para_ativar_multithread )
-                {
+            foreach( Task_req req in tasks_em_espera_para_ativar_multithread ){
+
                     if( req != null )
                         { modulo_multithread.Garantir_thread(); return; }
-                }
+            }
 
         }
+
+
+        private void Verify_multithread_task(){
+
+            for(  int index_multithread = 0 ; index_multithread < tasks_em_espera_para_ativar_multithread.Length; index_multithread++  ){
+
+                    Task_req req = tasks_em_espera_para_ativar_multithread[ index_multithread ];
+
+                    if( req == null )
+                        { continue; }
+
+                    if( req.part_multithread_finished )
+                        { tasks_em_espera_para_ativar_multithread[ index_multithread ] = null; }
+
+                    continue;
+            }
+
+            return;
+
+        }
+
+        
 
         public Coroutine Wait_task_ends( Task_req _task_request, float _max_time_ms ){
 
@@ -171,44 +206,42 @@ public class CONTROLLER__tasks  {
 
         private bool Pode_continuar(){
 
-                bool pode_continuar = ( relogio.ElapsedMilliseconds > tempo_maximo_em_single_thread_ms );
-
-                if( pode_continuar )
+                bool pode_continuar = ( relogio.ElapsedMilliseconds < tempo_maximo_em_single_thread_ms );
+                
+                if( !!!( pode_continuar ) )
                     { relogio.Reset(); }
 
                 return pode_continuar;
 
         }
 
-        public void Iniciar_tasks_em_espera(){
+        private void Allocat_waiting_tasks(){
 
             // ** previne que inicie a segunda thread por nada
 
             for( int index = 0 ; index < tasks_em_espera_iniciar.Length ; index++ ){
 
 
-                Task_req task = tasks_em_espera_iniciar[ index ];
+                    Task_req task = tasks_em_espera_iniciar[ index ];
 
-                if( task == null )
-                    { continue; }
+                    if( task == null )
+                        { continue; }
 
-                tasks_em_espera_iniciar[ index ] = null;
+                    tasks_em_espera_iniciar[ index ] = null;
 
-                if( task.pode_executar_parte_multithread )
-                    {
-                        // --- COLOCA MULTITHREAD
-                        modulo_multithread.Garantir_thread();
-                        TASK_REQ.Adicionar_task_em_array( ref tasks_em_espera_para_ativar_multithread, task );
-                        continue;
-                    }
+                    // --- VERIFICAR MULTI THREAD
 
-                if( !!! ( task.pode_executar_single_thread ) )
-                    { continue; } // --- NADA È FEITO
+                    if( task.pode_executar_parte_multithread )
+                        { modulo_multithread.Garantir_thread();     TASK_REQ.Adicionar_task_em_array( ref tasks_em_espera_para_ativar_multithread, task );     continue; } // --- COLOCA MULTITHREAD
 
-                // --- TEM SINGLE
+                    // ---NAO TEM NADA NA MULTITRHEAD
 
-                TASK_REQ.Adicionar_task_em_array( ref tasks_em_espera_para_ativar_single_thread, task );
-                continue;
+                    if( task.pode_executar_single_thread )
+                        { TASK_REQ.Adicionar_task_em_array( ref tasks_em_espera_para_ativar_single_thread, task );     continue; } // --- COLOCA SINGLETHREAD
+                    
+                    // --- NADA È FEITO
+                    Console.Log( $"task { task.nome } nao tinha nem multi nem single thread" );
+                    continue;
 
             }
 

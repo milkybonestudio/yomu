@@ -38,6 +38,8 @@ public static class Console {
         private static void Log_intern( string _message, Log_type _type, bool _main_thread ){
 
 
+                _message = $"<Size=13>{ _message }</Size>";
+
                 string message_with_trace = Get_trace( _message );
 
                 if( !!!( _main_thread ) )
@@ -88,7 +90,7 @@ public static class Console {
                 const int margin_message = 1;
                 const int margin_lines = 20;
                 const int remove_log_frame = 3;
-                const int message_with_link = 1;
+                const int message_with_link = 1; 
 
                 string[] frames_stack = new string[ ( ( numero_frames - remove_log_frame ) + margin_message + margin_lines + message_with_link ) ];   
 
@@ -107,7 +109,7 @@ public static class Console {
 
                     // --- STACK
 
-                    for( int frame_id = remove_log_frame  ; frame_id < numero_frames ; frame_id++ ){
+                    for( int frame_id = ( remove_log_frame + 1 )  ; frame_id < numero_frames ; frame_id++ ){
 
                             System.Diagnostics.StackFrame s_frame = frames[ frame_id ];
 
@@ -124,7 +126,7 @@ public static class Console {
 
                     }
 
-                for( int i = 0; i < 20 ;i++ ){ frames_stack[ ^( i + 1 ) ] = "--------------------------"; }
+                for( int i = 0; i < 20 ;i++ ){ frames_stack[ ^( i + 1 ) ] = "---------------------------"; }
 
                 return string.Join( "\n\r", frames_stack  );
 
@@ -165,6 +167,7 @@ public static class Console {
                 }
 
                 Debug_conditional( multithread_ativado, "<b><color=lime>------------------------------</color></b>", "<b><color=FF4747 >---------- MULTI -------------</color></b>" );
+                //Debug_conditional( multithread_ativado, "<b><color=FF4747 >---------- MULTI -------------</color></b>" );
 
                 int starter_point_m = pointer_run_time_m;
                 pointer_run_time_m = index_atual_m;
@@ -177,7 +180,7 @@ public static class Console {
                         Log_unity( logs_m[ log_index_m ], logs_tipos_m[ log_index_m ] );
                 }
 
-                Debug_conditional( multithread_ativado, "<b><color=FF4747 >------------------------------</color></b>", "--" );
+                Debug_conditional( multithread_ativado, "<b><color=FF4747 >------------------------------</color></b>" );
 
                 return;
             
@@ -190,10 +193,10 @@ public static class Console {
                     { return; }
 
                 if( _message_1 != null )
-                    { Debug.Log( _message_1 ); }
+                    { Debug.Log( $"<Size=14>{ _message_1 }</Size>"); }
 
                 if( _message_2 != null )
-                    { Debug.Log( _message_2 ); }
+                    { Debug.Log( $"<Size=14>{ _message_2 }</Size>"); }
 
                 return;
 

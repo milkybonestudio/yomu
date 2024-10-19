@@ -65,7 +65,6 @@ public class MANAGER__resources_images {
                 context_frame = ( context_frame + 1 ) % contexts.Length;
 
                 int current_weight = 0;
-                //Debug.Log( $"length: { context_images_modules[ context_frame ].actives_images_dictionary.Values.ToArray().Length }" );
                 foreach(  RESOURCE__image image in  context_images_modules[ context_frame ].actives_images_dictionary.Values ){
 
                         current_weight += Updata_image( image );
@@ -225,18 +224,19 @@ public class MANAGER__resources_images {
 
         private int Handle_getting_compress_file( RESOURCE__image _image ){ 
 
-
-                //Debug.Log( "veio Handle_getting_compress_file" );
+                Console.Log( "Handle_getting_compress_file" );
 
                 CONTROLLER__errors.Verify( ( task_getting_compress_file == null ), $"the image { _image.name } was as getting_compress_file but the task_req is null" );
 
                 if( !!!( task_getting_compress_file.finalizado ) )
                     { return 0; }
 
+                // ** passa o PNG para a imagem
                 if( _image.multiples_images == null )
                     {
                         // --- somente 1 imagem 
                         _image.single_image.image_compress = ( byte[] ) task_getting_compress_file.dados[ 0 ];
+                        Console.Log( "Png length: " + _image.single_image.image_compress.Length.ToString("#,0").Replace( ".", "_" ) );
                         Dimensions dimensions = PNG.Get_dimensions( _image.single_image.image_compress );
                         _image.width = dimensions.width;
                         _image.height = dimensions.height;
@@ -264,7 +264,11 @@ public class MANAGER__resources_images {
 
                 // ** se so precisar dos dados é isso ai
                 if( _image.final_resource_state == Resource_image_content.compress_data )
-                    { _image.stage_getting_resource = Resources_getting_image_stage.finished; return 0; }
+                    { 
+                        Console.Log("terminou de pegar compress data");
+                        
+                        _image.stage_getting_resource = Resources_getting_image_stage.finished; 
+                        return 0; }
                     
                 _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_get_texture;
                 
@@ -279,6 +283,8 @@ public class MANAGER__resources_images {
 
                 // ** por hora nao vai fazer isso, vai criar 1 especifica para cada para simplificar
                 // ** o apply vai ser dado quando terminar de passar os pixels
+
+                Console.Log( "Handle_waiting_to_get_texture" );
 
                 int weight = 0;
 
@@ -363,9 +369,11 @@ public class MANAGER__resources_images {
 
         private int Handle_waiting_to_pass_data_to_texture( RESOURCE__image _image ){
 
+                Console.Log( "Handle_waiting_to_pass_data_to_texture" );
+
                 if( task_passing_to_texture != null )
                     { return 0; }
-                
+            
 
                 task_passing_to_texture = CONTROLLER__tasks.Pegar_instancia().Get_task_request( "task_passing_to_texture" );
 
@@ -404,6 +412,7 @@ public class MANAGER__resources_images {
     
         private int Handle_passing_data_to_texture( RESOURCE__image _image ){ 
 
+                Console.Log( "Handle_passing_data_to_texture" );
 
                 if( !!!( task_passing_to_texture.finalizado ) )
                     { return 0; }
@@ -426,6 +435,8 @@ public class MANAGER__resources_images {
 
                 //mark
                 // ** por hora vai ter texture individual
+
+                Console.Log( "Handle_waiting_to_apply_texture" );
 
                 int weight = 0;
                 if( _image.single_image != null )
@@ -502,12 +513,18 @@ public class MANAGER__resources_images {
 
         private int Handle_waiting_to_create_sprite( RESOURCE__image _image ){
 
+                Console.Log( "Handle_waiting_to_create_sprite" );
+
                 int weight = 0;
 
+                // ** por hora esta sendo usado a _image.single_image.texture_exclusiva
                 if( _image.single_image != null )
-                    { weight = 1; _image.single_image.sprite = Sprite.Create( _image.single_image.texture_allocated.texture, new Rect( 0f, 0f, _image.width, _image.height ), new Vector2(0.5f, 0.5f), 100.0f ,0, SpriteMeshType.FullRect   ); }  // --- SINGLE _IMAGE
+                    { weight = 1; _image.single_image.sprite = Sprite.Create( _image.single_image.texture_exclusiva, new Rect( 0f, 0f, _image.width, _image.height ), new Vector2(0.5f, 0.5f), 100.0f ,0, SpriteMeshType.FullRect   ); }  // --- SINGLE _IMAGE
                     else
                     { weight = _image.multiples_images.Length; foreach( RESOURCE__image_data data in _image.multiples_images ){ data.sprite = Sprite.Create( data.texture_allocated.texture, new Rect( 0f, 0f, _image.width, _image.height ), new Vector2(0.5f, 0.5f), 100.0f ,0, SpriteMeshType.FullRect   ); }} // --- MULTIPLES IMAGES
+
+                Console.Log( "sprite: " + _image.single_image.sprite );
+                GameObject.Find( "Tela/Image" ).GetComponent<UnityEngine.UI.Image>().sprite = _image.single_image.sprite;
 
                 // tem que sinalizar que alguma texture já pode ser dado o apply. cada texture grande tem que ter o controle de quantas imagens precisam dar o ok para tudo dar certo
                 _image.stage_getting_resource = Resources_getting_image_stage.finished;

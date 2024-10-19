@@ -82,7 +82,7 @@ public class MODULE__context_images {
                 if( !!!( dic.TryGetValue( path, out image ) ) )
                     { 
                         
-                        // ** create new 
+                        // --- CRATE NEW
 
                         Resource_image_localizer locator = new Resource_image_localizer();
                         locator.number_images = 1;
