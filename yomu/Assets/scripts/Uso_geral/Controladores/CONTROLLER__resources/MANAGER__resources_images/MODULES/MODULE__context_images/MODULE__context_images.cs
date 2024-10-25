@@ -7,21 +7,6 @@ using UnityEngine;
 
 
 
-
-public struct Resource_image_localizer {
-
-    public int number_images;
-
-    public int pointer;
-    public int length;
-
-    public int height;
-    public int width;
-    
-}
-
-
-
 public class MODULE__context_images {
 
         /*
@@ -63,7 +48,6 @@ public class MODULE__context_images {
         
         public Dictionary<string, RESOURCE__image> actives_images_dictionary;
 
-        // ** usado somente na build
         public Dictionary<string, Resource_image_localizer> images_locators_dictionary;
 
 
@@ -79,10 +63,11 @@ public class MODULE__context_images {
                 
                 RESOURCE__image image = null;
                 
+                // --- VERIFY IF IMAGE ALREADY EXISTS
                 if( !!!( dic.TryGetValue( path, out image ) ) )
                     { 
                         
-                        // --- CRATE NEW
+                        // --- DOINT EXIST
 
                         Resource_image_localizer locator = new Resource_image_localizer();
                         locator.number_images = 1;
@@ -121,7 +106,7 @@ public class MODULE__context_images {
                 
 
 
-                RESOURCE__image_ref image_ref = new RESOURCE__image_ref( image );
+                RESOURCE__image_ref image_ref = new RESOURCE__image_ref( image, _level_pre_allocation );
 
                 // --- GARANTE TAMANHO
                 if( image.refs_pointer == image.refs.Length )
@@ -129,6 +114,8 @@ public class MODULE__context_images {
 
                 // --- GURADA REF
                 image.refs[ image.refs_pointer++ ] = image_ref;
+
+
 
                 // --- PEGA O PRE ALLOC MAIS ALTO
                 if( _level_pre_allocation  > image.level_pre_allocation_image )
@@ -156,7 +143,7 @@ public class MODULE__context_images {
 
                     }
 
-                Increase_count( image );
+                Increase_count( image, _level_pre_allocation );
 
 
                 return image_ref;
@@ -189,7 +176,7 @@ public class MODULE__context_images {
 
                 RESOURCE__image image = _ref.image;
 
-                Decrease_count( image );
+                Decrease_count( image, _ref.reference_level_pre_allocation_image );
 
                 // ** perde a referencia
                 image.refs[ _ref.image_slot_index ] = null;
@@ -219,7 +206,7 @@ public class MODULE__context_images {
 
                 RESOURCE__image image = _ref.image;
 
-                Decrease_count( image );
+                Decrease_count( image, _ref.reference_level_pre_allocation_image );
 
                 if( image.count_places_being_used_texture > 1 )
                     { return; }
@@ -448,9 +435,9 @@ public class MODULE__context_images {
         }
 
 
-        private void Increase_count( RESOURCE__image _image ){
+        private void Increase_count( RESOURCE__image _image, Resource_image_content _state ){
 
-                switch( _image.current_content ){
+                switch( _state ){
 
                     case Resource_image_content.nothing : _image.count_places_being_used_nothing++; break;
                     case Resource_image_content.compress_data : _image.count_places_being_used_compress_data++; break;
@@ -459,9 +446,9 @@ public class MODULE__context_images {
 
         }
 
-        private void Decrease_count( RESOURCE__image _image ){
+        private void Decrease_count( RESOURCE__image _image, Resource_image_content _state ){
 
-                switch( _image.current_content ){
+                switch( _state ){
 
                     case Resource_image_content.nothing : _image.count_places_being_used_nothing--; break;
                     case Resource_image_content.compress_data : _image.count_places_being_used_compress_data--; break;

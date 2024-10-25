@@ -439,10 +439,6 @@ internal sealed partial class UnsafeNativeMethods
     private static extern int WebPPictureInitInternal_x64(ref WebPPicture wpic, int WEBP_DECODER_ABI_VERSION);
 
     
-    /// <param name="wpic">The WebPPicture structure</param>
-    /// <param name="bgr">Point to BGR data</param>
-    /// <param name="stride">stride of BGR data</param>
-    /// <returns>Returns 0 in case of memory error.</returns>
     internal static int WebPPictureImportBGR(ref WebPPicture wpic, IntPtr bgr, int stride)
     {
         switch (IntPtr.Size)
@@ -460,11 +456,6 @@ internal sealed partial class UnsafeNativeMethods
     [DllImport("libwebp_x64.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "WebPPictureImportBGR")]
     private static extern int WebPPictureImportBGR_x64(ref WebPPicture wpic, IntPtr bgr, int stride);
 
-    
-    /// <param name="wpic">The WebPPicture structure</param>
-    /// <param name="bgra">Point to BGRA data</param>
-    /// <param name="stride">stride of BGRA data</param>
-    /// <returns>Returns 0 in case of memory error.</returns>
     internal static int WebPPictureImportBGRA(ref WebPPicture wpic, IntPtr bgra, int stride)
     {
         switch (IntPtr.Size)
@@ -483,10 +474,6 @@ internal sealed partial class UnsafeNativeMethods
     private static extern int WebPPictureImportBGRA_x64(ref WebPPicture wpic, IntPtr bgra, int stride);
 
     
-    /// <param name="wpic">The WebPPicture structure</param>
-    /// <param name="bgr">Point to BGR data</param>
-    /// <param name="stride">stride of BGR data</param>
-    /// <returns>Returns 0 in case of memory error.</returns>
     internal static int WebPPictureImportBGRX(ref WebPPicture wpic, IntPtr bgr, int stride)
     {
         switch (IntPtr.Size)
@@ -505,18 +492,10 @@ internal sealed partial class UnsafeNativeMethods
     private static extern int WebPPictureImportBGRX_x64(ref WebPPicture wpic, IntPtr bgr, int stride);
 
     
-    /// <param name="data">Data returned</param>
-    /// <param name="data_size">Size of data returned</param>
-    /// <param name="wpic">Picture structure</param>
-    /// <returns></returns>
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate int WebPMemoryWrite([In()] IntPtr data, UIntPtr data_size, ref WebPPicture wpic);
     internal static WebPMemoryWrite OnCallback;
 
-    
-    /// <param name="config">The configuration structure for compression parameters</param>
-    /// <param name="picture">'picture' hold the source samples in both YUV(A) or ARGB input</param>
-    /// <returns>Returns 0 in case of error, 1 otherwise. In case of error, picture->error_code is updated accordingly.</returns>
     internal static int WebPEncode(ref WebPConfig config, ref WebPPicture picture)
     {
         switch (IntPtr.Size)
@@ -558,11 +537,7 @@ internal sealed partial class UnsafeNativeMethods
     private static extern void WebPPictureFree_x64(ref WebPPicture wpic);
 
     
-    /// <param name="data">Pointer to WebP image data</param>
-    /// <param name="data_size">This is the size of the memory block pointed to by data containing the image data</param>
-    /// <param name="width">The range is limited currently from 1 to 16383</param>
-    /// <param name="height">The range is limited currently from 1 to 16383</param>
-    /// <returns>1 if success, otherwise error code returned in the case of (a) formatting error(s).</returns>
+
     internal static int WebPGetInfo(IntPtr data, int data_size, out int width, out int height)
     {
         switch (IntPtr.Size)
@@ -580,12 +555,7 @@ internal sealed partial class UnsafeNativeMethods
     [DllImport("libwebp_x64.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "WebPGetInfo")]
     private static extern int WebPGetInfo_x64([InAttribute()] IntPtr data, UIntPtr data_size, out int width, out int height);
 
-    
-    /// <param name="data">Pointer to WebP image data</param>
-    /// <param name="data_size">This is the size of the memory block pointed to by data containing the image data</param>
-    /// <param name="output_buffer">Pointer to decoded WebP image</param>
-    /// <param name="output_buffer_size">Size of allocated buffer</param>
-    /// <param name="output_stride">Specifies the distance between scan lines</param>
+
     internal static void WebPDecodeBGRInto(IntPtr data, int data_size, IntPtr output_buffer, int output_buffer_size, int output_stride)
     {
         switch (IntPtr.Size)
@@ -696,12 +666,6 @@ internal sealed partial class UnsafeNativeMethods
     private static extern int WebPInitDecoderConfigInternal_x64(ref WebPDecoderConfig webPDecoderConfig, int WEBP_DECODER_ABI_VERSION);
 
     
-    /// <param name="data">WebP raw data to decode</param>
-    /// <param name="data_size">Size of WebP data </param>
-    /// <param name="webPDecoderConfig">Configuration structure</param>
-    /// <returns>VP8_STATUS_OK if the decoding was successful</returns>
-
-
     internal static VP8StatusCode WebPDecode(IntPtr data, int data_size, ref WebPDecoderConfig webPDecoderConfig)
     {
         switch (IntPtr.Size)
@@ -721,8 +685,6 @@ internal sealed partial class UnsafeNativeMethods
 
     
 
-
-    /// <param name="buffer">WebPDecBuffer</param>
     internal static void WebPFreeDecBuffer(ref WebPDecBuffer buffer)
     {
         switch (IntPtr.Size)
@@ -745,13 +707,7 @@ internal sealed partial class UnsafeNativeMethods
     
 
 
-    /// <param name="bgr">Pointer to BGR image data</param>
-    /// <param name="width">The range is limited currently from 1 to 16383</param>
-    /// <param name="height">The range is limited currently from 1 to 16383</param>
-    /// <param name="stride">Specifies the distance between scanlines</param>
-    /// <param name="quality_factor">Ranges from 0 (lower quality) to 100 (highest quality). Controls the loss and quality during compression</param>
-    /// <param name="output">output_buffer with WebP image</param>
-    /// <returns>Size of WebP Image or 0 if an error occurred</returns>
+
     internal static int WebPEncodeBGR(IntPtr bgr, int width, int height, int stride, float quality_factor, out IntPtr output)
     {
         switch (IntPtr.Size)
@@ -769,14 +725,7 @@ internal sealed partial class UnsafeNativeMethods
     [DllImport("libwebp_x64.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "WebPEncodeBGR")]
     private static extern int WebPEncodeBGR_x64([InAttribute()] IntPtr bgr, int width, int height, int stride, float quality_factor, out IntPtr output);
 
-    
-    /// <param name="bgr">Pointer to BGRA image data</param>
-    /// <param name="width">The range is limited currently from 1 to 16383</param>
-    /// <param name="height">The range is limited currently from 1 to 16383</param>
-    /// <param name="stride">Specifies the distance between scan lines</param>
-    /// <param name="quality_factor">Ranges from 0 (lower quality) to 100 (highest quality). Controls the loss and quality during compression</param>
-    /// <param name="output">output_buffer with WebP image</param>
-    /// <returns>Size of WebP Image or 0 if an error occurred</returns>
+  
     internal static int WebPEncodeBGRA(IntPtr bgra, int width, int height, int stride, float quality_factor, out IntPtr output)
     {
         switch (IntPtr.Size)

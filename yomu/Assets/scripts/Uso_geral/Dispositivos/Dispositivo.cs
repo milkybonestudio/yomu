@@ -4,28 +4,10 @@ using System;
 using System.IO;
 
 
-        /*
-
-            dispositivo tem UI modules, botoes, togglers, bars, visores etc
-
-            os dados de como um dispositivo vai se comportar vai estar na classe desse dispositivo
-
-            ordem para criar: 
-
-                --> Declare() ( passa dados para o manager dados )
-                --> com todos declarados Define() faz uma media de todos os recursos e pede os dados para o Resources
-
-        
-        */
-
-        // Dispositivo faz a ponte entre a parte visual de um componente e a parte logica. 
-        // fica resposnavel por carregar imagens, instanciar/destruir outros dispositivos e alterar dados do jogo.
-
-        //** tem que fazer um dispositivo teste que tenha tipos diferentes de botoes para garantir que quando alguma alteração seja feita eles nao percam o comportamento
-
-
 public class Dispositivo {
 
+        // ** device vai ser mais usados para coisas do sistema
+        // ** se algo for usado muito e especifico vai ter uma classe separada
 
         // --- DADOS
 
@@ -98,11 +80,9 @@ public class Dispositivo {
 
         // --- METODOS UTILIDADES CONSTRUCTIONS
 
-
             // --- DECLARE UI
             public Dados_imagem_estatica_dispositivo Declare_image( ref Imagem_estatica_dispositivo imagem_estatica ){ return dados_dispositivo.Declare_image_container( ref imagem_estatica ); }
             public Dados_botao_dispositivo Declare_button( ref Botao_dispositivo _botao_slot ){ return dados_dispositivo.Declare_button( ref _botao_slot ); }
-
             
 
             // --- FLUXO DE CONSTRUCAO

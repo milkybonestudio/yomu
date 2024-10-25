@@ -8,7 +8,6 @@ public static class SUPPORT__device_parent {
         public static void Anexar_dispositivo( GameObject _pai, Dispositivo _device ){
 
 
-
                 if( _pai == null )
                     { throw new Exception( $"Tentou Anexar o dipositivo { _device.interface_dispositivo.Get_name() } mas o game_object <color=red><b>pai</b></color> estava null"); }
 

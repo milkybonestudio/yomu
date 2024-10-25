@@ -14,11 +14,10 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
         // ** aponta para onde vao estar os folders com as imagens no editor, o nome do container na build e a primeira pasta da lista indica a pasta com o prefab
         // ** a ultima pasta semre vai ser com o nome do dispositivo
 
+             
         public string Get_main_folder(){ return "shapes\\quadrado"; }
 
    
-    
-
         // --- METODOS INTERNOS
 
         public void Update_interno( Dispositivo _dispositivo ){
@@ -28,11 +27,10 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
         }
 
 
-
-    
         public Botao_dispositivo botao_fechar;
         public Botao_dispositivo botao_novo;
         public Imagem_estatica_dispositivo img;
+
 
 
         public void Declare_components( Dispositivo dispositivo ){
@@ -40,13 +38,16 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
 
                 // --- ESTATICA
 
-                
+
+                // ** declare                
                 Dados_imagem_estatica_dispositivo dados_img =  dispositivo.Declare_image( ref img );
 
+                // ** put data
                 dados_img.imagem_id = -1;
                 dados_img.nome = "aa";
 
-                string default_folder = "t\\";
+                string default_folder = "normal_in_gamet\\";
+
 
                 // --- define 
                 Dados_botao_dispositivo botao_fechar_dados_novo = dispositivo.Declare_button( ref botao_novo );
@@ -127,6 +128,25 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
                 return; 
 
         }
+
+        public void Active_method( Dispositivo _dispositivo , string _method, System.Object _args ){
+
+
+                switch( _method ){
+
+                    case "Activate_happy": Activate_happy(); break;
+
+                }
+
+        }
+
+        private void Activate_happy(){
+
+            // ** do stuff
+
+        }
+
+
         public void Finalizar_interno( Dispositivo _dispositivo){
 
                 // --- CRIAR
@@ -155,6 +175,7 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
 
         public System.Object Enviar_dados( Dispositivo _dispositivo ){ return Enviar_dados_interno( _dispositivo ); }
         public void Receber_dados( Dispositivo _dispositivo, System.Object _dados ){ Receber_dados_interno( _dispositivo, _dados ); }
+
         public void Finalizar( Dispositivo _dispositivo){ Finalizar_interno( _dispositivo ); }
 
         public void Definir_audios( GERENCIADOR__audios_dispositivo _audios ){ Definir_audios_interno( _audios ); }

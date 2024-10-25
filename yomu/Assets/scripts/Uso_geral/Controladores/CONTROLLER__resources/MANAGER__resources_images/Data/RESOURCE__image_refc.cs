@@ -7,13 +7,15 @@ using UnityEngine;
 
 public class RESOURCE__image_ref {
 
-        public RESOURCE__image_ref( RESOURCE__image _image ){ 
+        public RESOURCE__image_ref( RESOURCE__image _image, Resource_image_content _level_pre_allocation ){ 
 
             if( _image == null  )
                 { CONTROLLER__errors.Throw( "Tried to creat a image ref but the image comes null" ); }
 
             image = _image;
             module = _image.module_images;
+            reference_level_pre_allocation_image = _level_pre_allocation;
+            
         }
 
         
@@ -27,6 +29,10 @@ public class RESOURCE__image_ref {
         // ** define se esta com os recursos completos ou minimos 
         public RESOURCE__image_ref_state ref_state;
         
+
+        public Resource_image_content reference_level_pre_allocation_image;
+
+
         
 
         // --- METODOS QUE VAO PARA O MODULO

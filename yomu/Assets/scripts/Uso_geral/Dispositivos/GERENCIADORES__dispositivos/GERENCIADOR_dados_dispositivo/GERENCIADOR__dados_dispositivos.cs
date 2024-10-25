@@ -155,7 +155,6 @@ public class GERENCIADOR__dados_dispositivo {
                 // --- VERIFICACOES
                 TOOL__device_UI_SUPPORT.Verificar_nome( dispositivo.nome_dispositivo, dados_botao.nome );
 
-                string indentificador = null; // ??
                 string nome_default = ( dispositivo.nome_dispositivo + "_BOTAO_" + dados_botao.nome );
 
                 // --- CREATE DATA

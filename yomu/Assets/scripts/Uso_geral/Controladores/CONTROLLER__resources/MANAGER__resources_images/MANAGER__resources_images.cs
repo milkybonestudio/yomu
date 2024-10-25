@@ -523,8 +523,6 @@ public class MANAGER__resources_images {
                     else
                     { weight = _image.multiples_images.Length; foreach( RESOURCE__image_data data in _image.multiples_images ){ data.sprite = Sprite.Create( data.texture_allocated.texture, new Rect( 0f, 0f, _image.width, _image.height ), new Vector2(0.5f, 0.5f), 100.0f ,0, SpriteMeshType.FullRect   ); }} // --- MULTIPLES IMAGES
 
-                Console.Log( "sprite: " + _image.single_image.sprite );
-                GameObject.Find( "Tela/Image" ).GetComponent<UnityEngine.UI.Image>().sprite = _image.single_image.sprite;
 
                 // tem que sinalizar que alguma texture já pode ser dado o apply. cada texture grande tem que ter o controle de quantas imagens precisam dar o ok para tudo dar certo
                 _image.stage_getting_resource = Resources_getting_image_stage.finished;

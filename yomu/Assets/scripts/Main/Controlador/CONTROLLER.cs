@@ -57,22 +57,42 @@ unsafe public class Controlador : MonoBehaviour {
                 }
 
 
-
-
                 c =  CONTROLLER__resources.Get_instance();
-                image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "corredor", Resource_image_content.texture );
-                image_ref.Load();
+
+                // image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.texture );
+                // image_ref.Load();
+
 
                 // Debug.Log( "content: " + image_ref.image.current_content );
                 // Debug.Log( "minimun: " + image_ref.image.level_pre_allocation_image );
                 // Debug.Log( "stage_getting_resource: " + image_ref.image.stage_getting_resource );
 
+
                 // Dispositivo d = Dispositivo__teste.Construir(); // pega o prefab 
                 // d.Define_all_components(); // 
                 // d.Load_resources();
                 
+                // Dispositivo lily_clothes = Dispositivo__teste.Construir(); // pega o prefab 
 
-                //Images_container_result container =  Images_container_creator.Construct( "C:\\Users\\User\\Desktop\\yomu_things\\teste" );
+
+
+                //mark
+                // ** tem que fazer um jeito para começar no chao
+                // ** como nao vai ter uma texture em si talvez tenha que fazer na mão, ou algum jeito para pegar todas as images ativas e fazer algum calculo com elas. 
+                // ** por exemplo para colocar algo em cima da posicao inicial seria position_Y = localPosition.y + height/2 => vai meia height para cima
+                // ** fazer com todas as textures pode representar a iamgem inteira
+                // ** pegando o minimo e o maximo e depois assumindo ela como um grande bloco
+
+                Figure lily = Teste_figure.Construct();
+            
+                lily.Instanciate( GameObject.Find( "Tela/Container_teste" ) );
+                
+
+                
+
+
+
+                // Images_container_result container =  Images_container_creator.Construct( "C:\\Users\\User\\Desktop\\yomu_things\\teste" );
 
                 // if( Verifier_image_container.Verify( "C:\\Users\\User\\Desktop\\yomu_things\\teste", System.IO.File.ReadAllLines("C:\\Users\\User\\Desktop\\yomu_things\\container.txt") ))
                 //     {  Debug.Log( "Esta diferente" ); }
@@ -99,8 +119,8 @@ unsafe public class Controlador : MonoBehaviour {
 
                 if( Input.GetKeyDown( KeyCode.A ) )
                     {
-                        Console.Log( $"count_places_being_used_compress_data: {image_ref.image.count_places_being_used_compress_data}" );
                         Console.Log( $"count_places_being_used_nothing: {image_ref.image.count_places_being_used_nothing}" );
+                        Console.Log( $"count_places_being_used_compress_data: {image_ref.image.count_places_being_used_compress_data}" );
                         Console.Log( $"count_places_being_used_texture: {image_ref.image.count_places_being_used_texture}" );
 
                     }

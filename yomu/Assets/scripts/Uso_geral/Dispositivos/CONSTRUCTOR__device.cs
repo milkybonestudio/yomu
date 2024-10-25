@@ -5,15 +5,15 @@ using UnityEngine;
 public static class CONSTRUCTOR__device {
 
 
-        public static Dispositivo Construct( INTERFACE__dispositivo _interface ){
+        public static Dispositivo Construct( INTERFACE__dispositivo _unique_device_interface ){
 
 
                 Dispositivo device = new Dispositivo();
 
-                    device.interface_dispositivo = _interface;
+                    device.interface_dispositivo = _unique_device_interface;
 
-                    device.nome_dispositivo = _interface.Get_name();
-                    device.path_folder_prefab = _interface.Get_main_folder();
+                    device.nome_dispositivo = _unique_device_interface.Get_name();
+                    device.path_folder_prefab = _unique_device_interface.Get_main_folder();
 
                     // --- PEGAR PREFAB
 
@@ -33,7 +33,7 @@ public static class CONSTRUCTOR__device {
                     device.dados_dispositivo = new GERENCIADOR__dados_dispositivo( device );
 
                     // --- DECLARE THINGS
-                    _interface.Declare_components( device );
+                    _unique_device_interface.Declare_components( device );
 
                 return device;
 
