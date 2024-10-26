@@ -56,6 +56,9 @@ public class MODULE__context_images {
         // sempre single
         public RESOURCE__image_ref Get_image_ref(  string _main_folder, string _path, bool _multiples_images,  Resource_image_content _level_pre_allocation  ){
 
+                //mark 
+                // ** nao esta verificando se conseguiu achar a imagem
+
 
                 Dictionary<string, RESOURCE__image> dic = Get_dictionary( _main_folder );
                 string path = ( _main_folder + "\\" + _path ); // ** quando for expandir vai ser somente o _path

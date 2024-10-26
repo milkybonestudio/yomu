@@ -27,7 +27,7 @@ public class RESOURCE__image_ref {
 
 
         // ** define se esta com os recursos completos ou minimos 
-        public RESOURCE__image_ref_state ref_state;
+        public RESOURCE__image_ref_state ref_state; // ** precisa?
         
 
         public Resource_image_content reference_level_pre_allocation_image;
@@ -87,6 +87,16 @@ public class RESOURCE__image_ref {
 
         // ** sinaliza que pode começar a pegar a texture
         public void Get_ready(){ module.Get_ready( this ); }
+
+
+
+
+        public void Change_level_pre_allocation( Resource_image_content _new_pre_alloc ){
+
+
+
+        }
+
 
 
  

@@ -1,24 +1,10 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 
 
-public static class FIGURE {
 
-    public static Figure_image_component Get_image( GameObject _mode, string _name_component, RESOURCE__image_ref _image ){
-
-            Figure_image_component image_component = new Figure_image_component();
-
-                    image_component.game_object = _mode.transform.Find( _name_component );
-                    CONTROLLER__errors.Verify( ( image_component.game_object == null ) , $"Tried to get the component { _name_component } in the game object { _mode.name } but was not find" );
-                    image_component.image = image_component.game_object.GameComponent<Image>();
-                    image_component.image_ref = _image;
-
-            return image_component;
-        
-    }
-
-}
 
 
 public class Teste_figure : INTERFACE__figure {
@@ -31,84 +17,95 @@ public class Teste_figure : INTERFACE__figure {
         // ** isso faz com que coisas que são muito reutilizavais possam ficar em pastas especificas
 
 
-        // ** lista imagens 
+
+        public Resource_context Get_context(){ return Resource_context.Characters; }
+        public string Get_main_folder(){ return "Lily"; }
+        public string Get_figure_name(){ return "Clothes"; }
+
+
+
+
+        // --- IMAGE LIST
+
+        // ** sempre vao ter prealloc como nada 
+        // ** cada Figure_image_component vai ter outra copia que pode mudar o recurso de acordo com a necessidade
+
+        public bool resources_loaded;
 
         public RESOURCE__image_ref body_1;
         public RESOURCE__image_ref body_2;
 
+        public RESOURCE__image_ref head_1;
+
     
+        public void Load_resources( Figure _figure,  Figure_use_context _context_figure ){
 
-        public void Load_images( Context_figure _context_figure ){
 
-
-                MANAGER__resources_images resources_images = CONTROLLER__resources.Get_instance().resources_images;
-
-                Resource_context context = Get_context();
-                string main_folder = Get_main_folder();
-
-                string path_root = ( context.ToString() + "/" + main_folder + "/" );
-            
-                Resource_image_content level_pre_alloc = Resource_image_content.nothing;
-
-                if( _context_figure == Context_figure.conversation )
-                    { level_pre_alloc = Resource_image_content.compress_data; }
+                Figure_data_getter f_getter = new Figure_data_getter();
+                f_getter.Put_data( Get_context(), Get_main_folder(), _context_figure );
                 
-                
-                body_1 = resources_images.Get_image_reference( context, main_folder, ( path_root + "Clothes/body_1" ) , level_pre_alloc );
-                body_2 = resources_images.Get_image_reference( context, main_folder, ( path_root + "Clothes/body_2" ) , level_pre_alloc );
-                
+    
+                body_1 = f_getter.Get_image_reference( "Clothes/lily_clothes_body_1" );
+                body_2 = f_getter.Get_image_reference( "Clothes/body_2" );
+
+                resources_loaded = true;
+
+                return;
 
         }
 
+
         public string figure_path;
         public GameObject current_prefab;
-        public GameObject figure_container;
+
+
+        // --- FIGURES MODES 
 
         // ** MAD
-        public GameObject mad_prefab;
-        public GameObject mad_container;
 
-            // ** os dados vao ser colocados quando o prefab for isntanciado
-            public Figure_image_component mad_body;
-            public Figure_image_component mad_head;
-            public Figure_image_component mad_top;
-            public Figure_image_component mad_arms;
-            public Figure_image_component mad_exp; // ** complemento
-            public Figure_image_component mad_eyes;
-            public Figure_image_component mad_mouth;
+            public GameObject mad_prefab;
+            public GameObject mad_container;
 
-            public void Intanciate_mad(){
 
-                    if( mad_prefab == null )
-                        { /*LOAD*/ }        
+                public Figure_image_component[] mad_figure_images = new Figure_image_component[ 10 ];
+                public Figure_audio_component[] mad_figure_audios = new Figure_audio_component[ 10 ];
 
-                    if( mad_container == null )
-                        {
 
-                            mad_container  = GameObject.Instantiate( mad_prefab );
-                            mad_container.name = mad_prefab.name;
-                            mad_container.transform.SetParent( figure_container.transform, false );
+                public void Instanciate_MAD( Figure _figure ){
 
-                            // *** INSTANCIATE
-                            mad_body = FIGURE.Get_image( mad_container, "mad_body", body_1 );
-                            mad_head = FIGURE.Get_image(  mad_container, "mad_body", body_1 );
-                            mad_top = FIGURE.Get_image(  mad_container, "mad_body", body_1 );
-                            mad_arms = FIGURE.Get_image(  mad_container, "mad_body", body_1 );
 
-                            mad_exp = FIGURE.Get_image(  mad_container, "mad_body", body_1 ); // ** complemento
-                            mad_eyes = FIGURE.Get_image(  mad_container, "mad_body", body_1 );
-                            mad_mouth = FIGURE.Get_image(  mad_container, "mad_body", body_1 );
+                        CONTROLLER__errors.Verify( !!!( resources_loaded ), $"Tried to instanciate figure { Get_figure_name() } but it was not loaded" );
 
-                        }
+                        if( mad_prefab == null )
+                            { 
+                                //mark 
+                                // ** prefabs precisam ser pegos de uma classe propria
 
-            
-                    current_prefab.SetActive( false );
-                    mad_container.SetActive( true );
-                    current_prefab = mad_container;
-                    return;
+                                string path = System.IO.Path.Combine( Get_context().ToString(), Get_main_folder(), Get_figure_name(), "Mad" );
+                                mad_prefab = Resources.Load<GameObject>( path ); 
+                                if( mad_prefab == null )
+                                    { Console.LogError( $"Nao chou prefab no path { path }" ); }
 
-            }
-            
+                            }
+
+                        if( mad_container != null )
+                            { return; }
+
+                        mad_container  = GameObject.Instantiate( mad_prefab );
+                        mad_container.name = mad_prefab.name;
+                        mad_container.transform.SetParent( _figure.figure_container.transform, false );
+
+                        // *** INSTANCIATE
+
+                        int index = 0;
+                        mad_figure_images[ index++ ] = FIGURE.Get_figure_image_component( mad_container, "Body", body_1 );
+                        //mad_figure_images[ index++ ] = FIGURE.Get_figure_image_component( mad_container, "Head", head_1 );
+                        
+                        return;
+
+                }
+
+                
 
         // ** sad 
         public GameObject sad_prefab;
@@ -116,33 +113,55 @@ public class Teste_figure : INTERFACE__figure {
 
 
 
+        public void Change_form( Figure _figure, GameObject _new_game_object ){
 
-        public Resource_context Get_context(){ return Resource_context.Characters; }
-        public string Get_main_folder(){ return "Lily"; }
-        public string Get_figure_name(){ return "Clothes"; }
+
+                // ** coroutine? 
+                // depois tem que ter uma pequena transicao
+
+                if( current_prefab == null )
+                    {
+                        // ** sem transicao
+                        _new_game_object.SetActive( true );
+                        current_prefab = _new_game_object;
+                        return;
+                    }
+
+                current_prefab.SetActive( false );
+                _new_game_object.SetActive( true );
+                current_prefab = _new_game_object;
+
+
+        }
+
+
+
+        public Figure_resources_data Get_resources_data( Figure _figure, string _form ){
+
+                switch( _form ){
+
+                    case "mad": return Figure_resources_data.Create( _game_object_form: mad_container, _instanciate: Instanciate_MAD, _images: mad_figure_images, _audios: null );
+
+                    default: CONTROLLER__errors.Throw( $"form { _form } not found in the figure { Get_figure_name() }" ); return new Figure_resources_data();;
+
+                }
+
+                
+
+        }
+        
+
 
 
         public void Update( Figure _figure  ){  }
-
-
         public void Blink( Figure _figure ){  }
         public void Speak( Figure _figure ){  }
 
 
         
 
-
-        public void Change_emotion( Figure _figure, ulong _emotion ){
-
-            switch( _emotion ){
-
-                case BIT_KEY__emotion.sadness: 
-
-            }
-
-        }
         public void Active_action( Figure _figure, string _action ){  }
-        public void Set_special( Figure _figure, string _special ){  }
+        
 
 
 }

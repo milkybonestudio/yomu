@@ -84,8 +84,11 @@ unsafe public class Controlador : MonoBehaviour {
                 // ** pegando o minimo e o maximo e depois assumindo ela como um grande bloco
 
                 Figure lily = Teste_figure.Construct();
-            
-                lily.Instanciate( GameObject.Find( "Tela/Container_teste" ) );
+                lily.Instanciate( GameObject.Find( "Tela/Container_teste" ), Figure_use_context.visual_novel );
+                
+
+                lily.Prepare_to_use_resources( "mad" );
+                lily.Change_form( "mad" );
                 
 
                 

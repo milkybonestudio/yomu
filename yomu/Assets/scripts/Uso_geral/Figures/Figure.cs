@@ -24,7 +24,7 @@ public class Figure {
         public GameObject figure_container;
 
 
-        public void Instanciate( GameObject _container_father ){
+        public void Instanciate( GameObject _container_father, Figure_use_context _context ){
 
 
                 CONTROLLER__errors.Verify( ( _container_father == null ), $"Tried to instanciate the figure { figure_interface.Get_figure_name() }, but the container was null" );
@@ -34,10 +34,20 @@ public class Figure {
                 figure_container.name = figure_container_prefab.name;
 
                 figure_container.transform.SetParent( _container_father.transform, false );
+
+                figure_interface.Load_resources( this, _context );
                 return;
 
 
         }
+
+        public void Load_resources( Figure_use_context _context_figure ){ figure_interface.Load_resources( this, _context_figure ); }
+        public void Prepare_to_use_resources( string _form ){  FIGURE.Prepare_to_use_resources( this, _form ); }
+        public void Change_form( string _new_form ){ FIGURE.Change_form( this, _new_form ); }
+        
+
+
+
 
 
         private const float move_speed_pixels_PER_second = 1_000f;
