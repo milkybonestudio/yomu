@@ -5,6 +5,8 @@ using UnityEngine;
 
 public struct Figure_resources_data {
 
+        // ** tem os recursos de uma forma em especifico
+
         public GameObject form_game_object;
 
         public Action<Figure> Instanciate;

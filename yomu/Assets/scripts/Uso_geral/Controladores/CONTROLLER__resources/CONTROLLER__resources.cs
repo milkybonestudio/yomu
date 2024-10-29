@@ -11,6 +11,7 @@ public class CONTROLLER__resources {
 
         // --- IMAGES
         public MANAGER__resources_images resources_images = new MANAGER__resources_images();
+        public MANAGER__resources_structures resources_structures = new MANAGER__resources_structures();
 
 
         public void Update(){

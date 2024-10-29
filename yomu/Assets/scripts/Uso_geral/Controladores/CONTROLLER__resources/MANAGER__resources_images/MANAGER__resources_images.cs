@@ -14,7 +14,7 @@ public class MANAGER__resources_images {
         public MANAGER__resources_images(){
 
 
-                contexts = ( Resource_context[] ) System.Enum.GetValues( typeof( Resource_context ) );
+                contexts = contexts = System_enums.resource_context;// ( Resource_context[] ) System.Enum.GetValues( typeof( Resource_context ) );
 
                 context_images_modules = new MODULE__context_images[ contexts.Length ];
 

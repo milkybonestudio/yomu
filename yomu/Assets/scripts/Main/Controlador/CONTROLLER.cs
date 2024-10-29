@@ -86,7 +86,7 @@ unsafe public class Controlador : MonoBehaviour {
                 Figure lily = Teste_figure.Construct();
                 lily.Instanciate( GameObject.Find( "Tela/Container_teste" ), Figure_use_context.visual_novel );
                 
-
+                
                 lily.Prepare_to_use_resources( "mad" );
                 lily.Change_form( "mad" );
                 
