@@ -14,10 +14,20 @@ public class CONTROLLER__resources {
         public MANAGER__resources_structures resources_structures = new MANAGER__resources_structures();
 
 
+        int count = 0;
+
         public void Update(){
 
-            
-            resources_images.Update();
+
+                count = ( count + 1 ) % 3;
+
+                switch( count ){
+
+                    case 0: resources_images.Update(); break;
+                    case 1: resources_structures.Update(); break;
+
+                }
+                
 
         }
 

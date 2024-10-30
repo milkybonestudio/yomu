@@ -3,9 +3,9 @@ using UnityEngine;
 public class RESOURCE__structure {
 
 
-        public RESOURCE__structure( MODULE__context_structures _module_structures,  Resource_context _context,  string _main_folder, string _path ){
+        public RESOURCE__structure( MODULE__context_structures _module_structures,  Resource_context _context,  string _main_folder, Structure_locators _locator ){
 
-                module_images = _module_structures
+                module_images = _module_structures;
                 context = _context;
                 main_folder = _main_folder;
 
@@ -16,12 +16,17 @@ public class RESOURCE__structure {
         public string main_folder;
 
 
+
+
         // --- DATA 
         public GameObject prefab; // ** se depois fizer pegando um .dat vai ser feito outro field
 
 
+
+
+
         // --- COMPLEX STRUCTURES
-        public RESOURCE__structure[] sub_structures;
+        public RESOURCE__structure_copy[] sub_structures;
 
 
 
@@ -34,8 +39,10 @@ public class RESOURCE__structure {
 
         // --- COPIES
 
+            public bool copies_need_to_get_instanciated;
+
             public RESOURCE__structure_copy[] copies = new RESOURCE__structure_copy[ 10 ];
-            public int refs_pointer;
+            public int copies_pointer;
             public bool need_reajust;
                         
             public int count_places_being_used_nothing; // precisa de nada

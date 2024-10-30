@@ -6,14 +6,6 @@ using System.Linq;
 using UnityEngine;
 
 
-public class Composed_structured_locators {
-
-    public string main_struct;
-    public string[] sub_structs;
-
-}
-
-
 public class MODULE__context_structures {
 
 
@@ -35,84 +27,109 @@ public class MODULE__context_structures {
 
         public int Get_bytes(){ return 0; }
 
-
         private string context_folder;
         private Resource_context context;
 
-        public MANAGER__resources_images manager;
-
-        private FileStream file_stream;
-
+        public MANAGER__resources_structures manager;
         
         public Dictionary<string, RESOURCE__structure> actives_structures_dictionary;
-        public Dictionary<string, Resource_image_localizer> structures_locators_dictionary;
-
-
         
-        public RESOURCE__structure_copy Get_structure_copy(  string _main_folder, Composed_structured_locators _locators  Resource_structure_content _level_pre_allocation  ){
 
-                RESOURCE__structure structure = null;
+        public RESOURCE__structure_copy Get_structure_copy(  string _main_folder, Structure_locators _locators, Resource_structure_content _level_pre_allocation  ){
 
-                if( !!!( Get_dictionary( _main_folder ).TryGetValue( _locators.main_struct, out structure ) ) )
-                    {
-                        // --- NEED TO CREATE NEW STRUCTURE 
-                        RESOURCE__structure new_structure = new RESOURCE__structure( this, context, _main_folder, _locators.main_struct );
+                CONTROLLER__errors.Verify( ( _locators == null ), $"Sub_struct came null" );
+                CONTROLLER__errors.Verify( ( _locators.main_struct_name == null ), $"Sub_struct doesnt has a name" );
 
-                            if( _locators.sub_structs != null )
-                                {
-                                    // --- HAVE SUB STRUCTURES
-                                    new_structure.sub_structures = new RESOURCE__structure[ _locators.sub_structs.Length ];
+                // --- GET RESOURCE
+                
+                if( !!!( Get_dictionary( _main_folder ).TryGetValue( Get_path( _main_folder, _locators.main_struct_name ),  out RESOURCE__structure structure ) ) )
+                    { structure = Create_new_structure( _main_folder, _locators, _level_pre_allocation ); }
 
-                                    for( int index = 0 ; index < _locators.sub_structs.Length ;  index++ ){
-
-                                            string sub_struct = _locators.sub_structs[ index ];
-                                            CONTROLLER__errors.Verify( ( sub_struct == null ), $"Sub_struct came null" );
-
-                                            RESOURCE__structure new_sub_structure = null;
-
-                                            if( !!! ( Get_dictionary( _main_folder ).TryGetValue( sub_struct, out new_sub_structure ) ) )
-                                                { 
-                                                    // --- NEED TO CREATE NEW SUB STRUCTURE
-                                                    new_sub_structure = new RESOURCE__structure( this, context, _main_folder, sub_struct ); 
-
-                                                }
-
-                                            //mark
-                                            // ** tem que ajustar o level_pre_allocation
-
-                                            new_structure.sub_structures[ index ] = new_sub_structure;
-
-                                    }
-                                }
-
-                        structure = new_structure;
-
-                    }
-
-
-                return null;
+                
+                return Get_copy( structure, _level_pre_allocation ); // --- CREATE COPY
+                
         }
 
 
+        private RESOURCE__structure Create_new_structure( string _main_folder, Structure_locators _locators, Resource_structure_content _level_pre_allocation ){
 
 
-        public void Delete( RESOURCE__image_ref _ref ){  return; } 
+                RESOURCE__structure new_structure = new RESOURCE__structure( this, context, _main_folder, _locators );
+                Get_dictionary( _main_folder ).Add( Get_path( _main_folder, _locators.main_struct_name ), new_structure );
+
+                if( _locators.sub_structs == null )
+                    { return new_structure; }
+
+                // --- HAVE SUB STRUCTURES
+                new_structure.sub_structures = new RESOURCE__structure_copy[ _locators.sub_structs.Length ];
+                for( int index = 0 ; index < _locators.sub_structs.Length ; index++ ) 
+                    { new_structure.sub_structures[ index ] = Get_structure_copy(  _main_folder, _locators.sub_structs[ index ], _level_pre_allocation  ); }
+
+                return new_structure;
+
+        }
+
+
+        private RESOURCE__structure_copy Get_copy( RESOURCE__structure _structure, Resource_structure_content _copy_level_pre_allocation  ){
+
+                
+                // ** verifica se precisa pegar tudo 
+                if( _copy_level_pre_allocation == Resource_structure_content.instance )
+                    { _structure.copies_need_to_get_instanciated = true; } // ** indica que tem que tem pelo menos 1 copia que precisa ser intanciado
+
+                // ** verifica se precisa pegar tudo 
+                if( _copy_level_pre_allocation >= Resource_structure_content.structure_data )
+                    {
+                        _structure.level_preallocation = Resource_structure_content.structure_data; // ** precisa de tudo 
+
+                        if( _structure.actual_content == Resource_structure_content.nothing )
+                            { _structure.stage_getting_resource = Resources_getting_structure_stage.waiting_to_start; }
+                        
+                    }
+                
+                // ** se for nada, nao precisa de nada
+
+                // --- CREATE COPY 
+                if( _structure.copies.Length == _structure.copies_pointer )
+                    { Array.Resize( ref _structure.copies, ( _structure.copies.Length + 10 ) ); }
+
+                _structure.copies[ _structure.copies_pointer++ ] = new RESOURCE__structure_copy( _structure, _copy_level_pre_allocation );
+
+                Increase_count( _structure, _copy_level_pre_allocation );
+
+                return null;
+
+
+        }
+
+
+        private string Get_path( string _main_folder, string _name ){ 
+
+                // ** quando for expandir vai ser somente o _path porque vai ter 1 dic para cada main_folder
+                return ( _main_folder + "\\" + _name );
+
+        } 
+
+
+
+
+        public void Delete( RESOURCE__structure_copy _ref ){  return; } 
 
         // ** dados vao ser perdidos, mas a referencia da imagem volta 
-        public void Unload( RESOURCE__image_ref _ref ){}
+        public void Unload( RESOURCE__structure_copy _ref ){}
 
         // ** vai para o minimo
-        public void Free( RESOURCE__image_ref _ref ){}
+        public void Free( RESOURCE__structure_copy _ref ){}
 
 
 
         // --- PEGAR RECURSOS
 
         // ** sinaliza que a imagem pode carregar o minimo 
-        public void Load( RESOURCE__image_ref _ref ){}
+        public void Load( RESOURCE__structure_copy _ref ){}
 
         // ** sinaliza que pode começar a pegar a texture
-        public void Get_ready( RESOURCE__image_ref _ref ){}
+        public void Get_ready( RESOURCE__structure_copy _ref ){}
 
 
 
@@ -120,7 +137,7 @@ public class MODULE__context_structures {
 
         // --- INTERNAL
 
-        private Dictionary<string, RESOURCE__image> Get_dictionary( string _main_folder ){
+        private Dictionary<string, RESOURCE__structure> Get_dictionary( string _main_folder ){
 
                 // ** por hora vai ter somentye 1 container então só vai ter 1 dicionario. 
                 // ** depois cada _main_folder vai ter             
@@ -134,7 +151,7 @@ public class MODULE__context_structures {
                 // ** por hora vai ter somentye 1 container então só vai ter 1 dicionario. 
                 // ** depois cada _main_folder vai ter             
 
-                return structures_locators_dictionary;
+                return null;
 
         }
 
@@ -215,24 +232,27 @@ public class MODULE__context_structures {
 
 
 
-        private void Increase_count( RESOURCE__image _image, Resource_image_content _state ){
+        private void Increase_count( RESOURCE__structure _image, Resource_structure_content _state ){
 
                 switch( _state ){
 
-                    case Resource_image_content.nothing : _image.count_places_being_used_nothing++; break;
-                    case Resource_image_content.compress_data : _image.count_places_being_used_compress_data++; break;
-                    case Resource_image_content.texture : _image.count_places_being_used_texture++; break;
+                    case Resource_structure_content.nothing : _image.count_places_being_used_nothing++; break;
+                    case Resource_structure_content.structure_data : _image.count_places_being_used_structure_data++; break;
+                    case Resource_structure_content.instance : _image.count_places_being_used_instance++; break;
+                    
                 }
 
         }
 
-        private void Decrease_count( RESOURCE__image _image, Resource_image_content _state ){
+        private void Decrease_count( RESOURCE__structure _image, Resource_structure_content _state ){
+
 
                 switch( _state ){
 
-                    case Resource_image_content.nothing : _image.count_places_being_used_nothing--; break;
-                    case Resource_image_content.compress_data : _image.count_places_being_used_compress_data--; break;
-                    case Resource_image_content.texture : _image.count_places_being_used_texture--; break;
+                    case Resource_structure_content.nothing : _image.count_places_being_used_nothing--; break;
+                    case Resource_structure_content.structure_data : _image.count_places_being_used_structure_data--; break;
+                    case Resource_structure_content.instance : _image.count_places_being_used_instance--; break;
+                    
                 }
 
         }

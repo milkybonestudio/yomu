@@ -31,7 +31,7 @@ public class MANAGER__resources_structures {
 
         // --- PUBLIC METHODS
                                                         //  personagens          //     lily    //      chave
-        public RESOURCE__structure_copy Get_structure_copy( Resource_context _context, string _main_folder,  string _path, Resource_structure_content _level_pre_allocation ){ return context_structures_modules[ ( int ) _context ].Get_structure_copy( _main_folder, _path, false, _level_pre_allocation ) ; }
+        public RESOURCE__structure_copy Get_structure_copy( Resource_context _context, string _main_folder, Structure_locators _locators, Resource_structure_content _level_pre_allocation ){ return context_structures_modules[ ( int ) _context ].Get_structure_copy( _main_folder, _locators, _level_pre_allocation ) ; }
         
 
 
@@ -40,20 +40,56 @@ public class MANAGER__resources_structures {
 
         private const int weight_to_stop = 5;
         private int context_frame;
-        public void Update(){
 
+        private System.Diagnostics.Stopwatch relogio = new System.Diagnostics.Stopwatch();
+        public void Update(){
 
                 context_frame = ( context_frame + 1 ) % contexts.Length;
 
                 int current_weight = 0;
                 
-                foreach(  RESOURCE__structure structure in  context_structures_modules[ context_frame ].actives_images_dictionary.Values ){
+                foreach(  RESOURCE__structure structure in  context_structures_modules[ context_frame ].actives_structures_dictionary.Values ){
 
                         current_weight += Updata_structure( structure );
+
+                        if( structure.copies_need_to_get_instanciated )
+                            {
+                                if( structure.actual_content != Resource_structure_content.structure_data )
+                                    { continue; } // ** NAO TEM OS RECURSOS
+
+                                relogio.Start();
+
+                                for( int index_structure = 0; index_structure < structure.copies_pointer ; index_structure++  ){
+
+                                        current_weight += Instanciate( structure, structure.copies[ index_structure ] );
+
+                                        if( current_weight >= weight_to_stop )
+                                            { relogio.Reset(); return; } 
+
+                                        continue;
+                                    
+                                }
+                            }
         
                         if( current_weight >= weight_to_stop )
                             { return; } 
                 }
+
+        }
+
+
+        private int Instanciate( RESOURCE__structure _structure, RESOURCE__structure_copy _copy ){
+
+                if( _copy == null )
+                    { return 0; }
+
+                // ** intanciate 
+                _copy.structure_game_object = GameObject.Instantiate( _structure.prefab );
+                _copy.structure_game_object.SetActive( false );
+                
+                int time = ( int )( relogio.ElapsedMilliseconds + 1l );
+                relogio.Restart();
+                return time;
 
         }
 
@@ -67,6 +103,8 @@ public class MANAGER__resources_structures {
                 switch( _structure.stage_getting_resource ){
 
                     case Resources_getting_structure_stage.waiting_to_start: return Handle_waiting_to_start( _structure );
+                        case Resources_getting_structure_stage.waiting_to_instanciate: return Handle_waiting_to_instanciate( _structure );
+                            case Resources_getting_structure_stage.finished: return 0;
               
                 }
 
@@ -83,12 +121,20 @@ public class MANAGER__resources_structures {
 
         }
 
+        
+        private int Handle_waiting_to_instanciate( RESOURCE__structure _image ){
 
+            
+
+
+            return 0;
+
+        }
+
+        
 
 
         // --- EXTRA
-
-
 
         public int Get_bytes_allocated(){
 
@@ -127,9 +173,6 @@ public class MANAGER__resources_structures {
                 }
 
 
-                // --- TEXTURES
-
-                accumulator += textures_manager.Get_bytes_allocated();
 
                 return accumulator;
             
