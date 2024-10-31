@@ -13,6 +13,9 @@ public class MANAGER__resources_structures {
                 contexts = System_enums.resource_context;  // ( Resource_context[] ) System.Enum.GetValues( typeof( Resource_context ) );
                 context_structures_modules = new MODULE__context_structures[ contexts.Length ];
 
+                container_to_instanciate = GameObject.Find( Paths_system.path_resources_structures_container );
+                CONTROLLER__errors.Verify( ( container_to_instanciate == null ), $"container_to_instanciate was not found int the path { Paths_system.path_resources_structures_container }" ); 
+
                 for( int context_index = 0 ; context_index < contexts.Length ; context_index++ )
                     { context_structures_modules[ context_index ] = new MODULE__context_structures( _context: contexts[ context_index ], _initial_capacity: 1_000, _buffer_cache: 2_000_000 ); }
 
@@ -33,6 +36,7 @@ public class MANAGER__resources_structures {
                                                         //  personagens          //     lily    //      chave
         public RESOURCE__structure_copy Get_structure_copy( Resource_context _context, string _main_folder, Structure_locators _locators, Resource_structure_content _level_pre_allocation ){ return context_structures_modules[ ( int ) _context ].Get_structure_copy( _main_folder, _locators, _level_pre_allocation ) ; }
         
+        public GameObject container_to_instanciate;
 
 
 
@@ -44,6 +48,8 @@ public class MANAGER__resources_structures {
         private System.Diagnostics.Stopwatch relogio = new System.Diagnostics.Stopwatch();
         public void Update(){
 
+                //Console.Log( "a" );
+
                 context_frame = ( context_frame + 1 ) % contexts.Length;
 
                 int current_weight = 0;
@@ -52,12 +58,15 @@ public class MANAGER__resources_structures {
 
                         current_weight += Updata_structure( structure );
 
-                        if( structure.copies_need_to_get_instanciated )
+                        if( structure.number_copies_need_to_get_instanciated > 0 )
                             {
                                 if( structure.actual_content != Resource_structure_content.structure_data )
                                     { continue; } // ** NAO TEM OS RECURSOS
 
                                 relogio.Start();
+
+
+
 
                                 for( int index_structure = 0; index_structure < structure.copies_pointer ; index_structure++  ){
 
@@ -80,15 +89,31 @@ public class MANAGER__resources_structures {
 
         private int Instanciate( RESOURCE__structure _structure, RESOURCE__structure_copy _copy ){
 
+
                 if( _copy == null )
                     { return 0; }
 
+                if( _copy.actual_content == Resource_structure_content.instance )
+                    { return 0; } // ja instanciou
+
+                Console.Log( "Vai instanciar" );
+
                 // ** intanciate 
-                _copy.structure_game_object = GameObject.Instantiate( _structure.prefab );
+                GameObject game_object = GameObject.Instantiate( _structure.prefab );
+                game_object.transform.SetParent( container_to_instanciate.transform, false ) ;
+
+                _copy.structure_game_object = game_object;
                 _copy.structure_game_object.SetActive( false );
+
+                _copy.actual_content = Resource_structure_content.instance;
+                _structure.number_copies_need_to_get_instanciated -- ;
+
+
                 
                 int time = ( int )( relogio.ElapsedMilliseconds + 1l );
-                relogio.Restart();
+
+                Console.Log( "tempo: " + time );
+                relogio.Reset();
                 return time;
 
         }
@@ -96,6 +121,9 @@ public class MANAGER__resources_structures {
 
 
         private int Updata_structure( RESOURCE__structure _structure ){
+
+
+                Console.Log( "Veio update struct" );
 
                 // true => pegou uma acao, bloquear
                 // ** se veio aqui tem coisa para fazer
@@ -114,10 +142,26 @@ public class MANAGER__resources_structures {
 
 
 
-        private int Handle_waiting_to_start( RESOURCE__structure _image ){
+        private int Handle_waiting_to_start( RESOURCE__structure _struct ){
 
+            int weight = 0;
+            
+            if( _struct.level_pre_allocation == Resource_structure_content.structure_data )
+                {
+                    Console.Log( "Vai pegar prefab" );
+                    //mark
+                    // ** por hora esta ok
+                    string path = ( _struct.context.ToString() + "/" + _struct.main_folder + "/" + _struct.locators.main_struct_name );
+                    _struct.prefab = Resources.Load<GameObject>( path );
+                    CONTROLLER__errors.Verify( ( _struct.prefab == null ), $"Not found prefab <Color=lightBlue>{ path }</Color>" );
+                    _struct.actual_content = Resource_structure_content.structure_data;
+                    weight = 2;
 
-            return 0;
+                }
+            
+            Console.Log( "Finished" );
+            _struct.stage_getting_resource = Resources_getting_structure_stage.finished;
+            return weight;
 
         }
 
@@ -125,7 +169,6 @@ public class MANAGER__resources_structures {
         private int Handle_waiting_to_instanciate( RESOURCE__structure _image ){
 
             
-
 
             return 0;
 

@@ -54,16 +54,17 @@ public class MODULE__context_structures {
         private RESOURCE__structure Create_new_structure( string _main_folder, Structure_locators _locators, Resource_structure_content _level_pre_allocation ){
 
 
-                RESOURCE__structure new_structure = new RESOURCE__structure( this, context, _main_folder, _locators );
+                RESOURCE__structure new_structure = new RESOURCE__structure( this, context, _main_folder, _locators, _level_pre_allocation );
                 Get_dictionary( _main_folder ).Add( Get_path( _main_folder, _locators.main_struct_name ), new_structure );
 
                 if( _locators.sub_structs == null )
                     { return new_structure; }
 
                 // --- HAVE SUB STRUCTURES
-                new_structure.sub_structures = new RESOURCE__structure_copy[ _locators.sub_structs.Length ];
-                for( int index = 0 ; index < _locators.sub_structs.Length ; index++ ) 
-                    { new_structure.sub_structures[ index ] = Get_structure_copy(  _main_folder, _locators.sub_structs[ index ], _level_pre_allocation  ); }
+
+                    new_structure.sub_structures = new RESOURCE__structure_copy[ _locators.sub_structs.Length ];
+                    for( int index = 0 ; index < _locators.sub_structs.Length ; index++ ) 
+                        { new_structure.sub_structures[ index ] = Get_structure_copy(  _main_folder, _locators.sub_structs[ index ], _level_pre_allocation  ); }
 
                 return new_structure;
 
@@ -75,12 +76,12 @@ public class MODULE__context_structures {
                 
                 // ** verifica se precisa pegar tudo 
                 if( _copy_level_pre_allocation == Resource_structure_content.instance )
-                    { _structure.copies_need_to_get_instanciated = true; } // ** indica que tem que tem pelo menos 1 copia que precisa ser intanciado
+                    { _structure.number_copies_need_to_get_instanciated++; }
 
                 // ** verifica se precisa pegar tudo 
                 if( _copy_level_pre_allocation >= Resource_structure_content.structure_data )
                     {
-                        _structure.level_preallocation = Resource_structure_content.structure_data; // ** precisa de tudo 
+                        _structure.level_pre_allocation = Resource_structure_content.structure_data; // ** precisa de tudo 
 
                         if( _structure.actual_content == Resource_structure_content.nothing )
                             { _structure.stage_getting_resource = Resources_getting_structure_stage.waiting_to_start; }
@@ -93,11 +94,13 @@ public class MODULE__context_structures {
                 if( _structure.copies.Length == _structure.copies_pointer )
                     { Array.Resize( ref _structure.copies, ( _structure.copies.Length + 10 ) ); }
 
-                _structure.copies[ _structure.copies_pointer++ ] = new RESOURCE__structure_copy( _structure, _copy_level_pre_allocation );
+                
+                RESOURCE__structure_copy copy = new RESOURCE__structure_copy( _structure, _copy_level_pre_allocation );
+                _structure.copies[ _structure.copies_pointer++ ] = copy;
 
                 Increase_count( _structure, _copy_level_pre_allocation );
 
-                return null;
+                return copy;
 
 
         }

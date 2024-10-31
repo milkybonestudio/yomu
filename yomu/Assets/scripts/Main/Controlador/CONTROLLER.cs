@@ -40,6 +40,7 @@ unsafe public class Controlador : MonoBehaviour {
 
         public CONTROLLER__resources c =  CONTROLLER__resources.Get_instance();
         public RESOURCE__image_ref image_ref;
+        public RESOURCE__structure_copy copy;
  
         public void Start(){
 
@@ -83,12 +84,20 @@ unsafe public class Controlador : MonoBehaviour {
                 // ** fazer com todas as textures pode representar a iamgem inteira
                 // ** pegando o minimo e o maximo e depois assumindo ela como um grande bloco
 
-                Figure lily = Teste_figure.Construct();
-                lily.Instanciate( GameObject.Find( "Tela/Container_teste" ), Figure_use_context.visual_novel );
+
+                Structure_locators locators = new Structure_locators();
+                locators.main_struct_name = "Teste";
+                copy = c.resources_structures.Get_structure_copy(Resource_context.Characters, "Lily", locators, Resource_structure_content.instance );
+
+
+
+
+                // Figure lily = Teste_figure.Construct();
+                // lily.Instanciate( GameObject.Find( "Tela/Container_teste" ), Figure_use_context.visual_novel );
                 
                 
-                lily.Prepare_to_use_resources( "mad" );
-                lily.Change_form( "mad" );
+                // lily.Prepare_to_use_resources( "mad" );
+                // lily.Change_form( "mad" );
                 
 
                 
@@ -116,6 +125,8 @@ unsafe public class Controlador : MonoBehaviour {
     
 
                 CONTROLLER__resources.Get_instance().Update();
+
+                Console.Log( copy.structure.actual_content );
             
                 //Console.Log_intervalado( "state: " + image_ref.image.current_content );
                 controlador_tasks.Update();

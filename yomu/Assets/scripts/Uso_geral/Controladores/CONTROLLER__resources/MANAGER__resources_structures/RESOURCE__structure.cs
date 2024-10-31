@@ -3,17 +3,23 @@ using UnityEngine;
 public class RESOURCE__structure {
 
 
-        public RESOURCE__structure( MODULE__context_structures _module_structures,  Resource_context _context,  string _main_folder, Structure_locators _locator ){
+        public RESOURCE__structure( MODULE__context_structures _module_structures,  Resource_context _context,  string _main_folder, Structure_locators _locator, Resource_structure_content _level_pre_allocation ){
 
                 module_images = _module_structures;
                 context = _context;
                 main_folder = _main_folder;
+                locators = _locator;
+
+                level_pre_allocation = _level_pre_allocation;
+                actual_content = Resource_structure_content.nothing;
+                stage_getting_resource = Resources_getting_structure_stage.waiting_to_start;
 
         }
 
         public MODULE__context_structures module_images;
         public Resource_context context;
         public string main_folder;
+        public Structure_locators locators;
 
 
 
@@ -30,7 +36,7 @@ public class RESOURCE__structure {
 
 
 
-        public Resource_structure_content level_preallocation;
+        public Resource_structure_content level_pre_allocation;
         public Resource_structure_content actual_content;
 
 
@@ -39,7 +45,7 @@ public class RESOURCE__structure {
 
         // --- COPIES
 
-            public bool copies_need_to_get_instanciated;
+            public int number_copies_need_to_get_instanciated;
 
             public RESOURCE__structure_copy[] copies = new RESOURCE__structure_copy[ 10 ];
             public int copies_pointer;

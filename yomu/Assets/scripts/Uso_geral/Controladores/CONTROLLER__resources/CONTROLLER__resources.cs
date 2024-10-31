@@ -23,7 +23,7 @@ public class CONTROLLER__resources {
 
                 switch( count ){
 
-                    case 0: resources_images.Update(); break;
+                    //case 0: resources_images.Update(); break;
                     case 1: resources_structures.Update(); break;
 
                 }
