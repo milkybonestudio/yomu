@@ -10,12 +10,17 @@ public class RESOURCE__structure {
                 main_folder = _main_folder;
                 locators = _locator;
 
-                // level_pre_allocation = _level_pre_allocation;
                 actual_content = Resource_structure_content.nothing;
+                content_going_to = Resource_structure_content.nothing;
+
                 stage_getting_resource = Resources_getting_structure_stage.finished;
+
 
                 current_state = Resource_state.nothing;
                 current_final_state = Resource_state.nothing;
+
+
+                resource_path = ( context.ToString() + "/" + main_folder + "/" + locators.main_struct_name );
 
         }
 
@@ -23,6 +28,8 @@ public class RESOURCE__structure {
         public Resource_context context;
         public string main_folder;
         public Structure_locators locators;
+
+        public string resource_path;
 
 
 
@@ -59,7 +66,8 @@ public class RESOURCE__structure {
 
             public RESOURCE__structure_copy[] copies = new RESOURCE__structure_copy[ 10 ];
             public int copies_pointer;
-            public bool need_reajust;
+            //public bool need_reajust;
+            public int copies_deleted; 
                         
             public int count_places_being_used_nothing; // precisa de nada
             public int count_places_being_used_structure_data; // precisa do minimo

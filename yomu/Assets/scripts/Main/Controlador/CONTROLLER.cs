@@ -41,6 +41,8 @@ unsafe public class Controlador : MonoBehaviour {
         public CONTROLLER__resources c =  CONTROLLER__resources.Get_instance();
         public RESOURCE__image_ref image_ref;
         public RESOURCE__structure_copy copy;
+        public RESOURCE__structure_copy copy_2;
+        
  
         public void Start(){
 
@@ -88,7 +90,9 @@ unsafe public class Controlador : MonoBehaviour {
                 Structure_locators locators = new Structure_locators();
                 locators.main_struct_name = "Teste";
                 
-                copy = c.resources_structures.Get_structure_copy( Resource_context.Characters, "Lily", locators, Resource_structure_content.instance );
+                copy = c.resources_structures.Get_structure_copy( Resource_context.Characters, "Lily", locators, Resource_structure_content.structure_data );
+                //copy.Load();
+                
 
 
 
@@ -124,20 +128,31 @@ unsafe public class Controlador : MonoBehaviour {
         public void Update() {
 
     
-
                 CONTROLLER__resources.Get_instance().Update();
-
-                Console.Log( copy.structure.actual_content );
             
                 //Console.Log_intervalado( "state: " + image_ref.image.current_content );
                 controlador_tasks.Update();
 
                 if( Input.GetKeyDown( KeyCode.A ) )
                     {
-                        Console.Log( $"count_places_being_used_nothing: {image_ref.image.count_places_being_used_nothing}" );
-                        Console.Log( $"count_places_being_used_compress_data: {image_ref.image.count_places_being_used_compress_data}" );
-                        Console.Log( $"count_places_being_used_texture: {image_ref.image.count_places_being_used_texture}" );
+                        copy.Change_pre_alloc( Resource_structure_content.instance );
+                    }
 
+                
+                if( Input.GetKeyDown( KeyCode.B ) )
+                    {
+                        copy.Change_pre_alloc( Resource_structure_content.structure_data );
+                    }
+
+                if( Input.GetKeyDown( KeyCode.C ) )
+                    {
+                        copy.Change_pre_alloc( Resource_structure_content.nothing );
+                    }
+
+                
+                if( Input.GetKeyDown( KeyCode.D ) )
+                    {
+                        copy.Load();
                     }
 
 

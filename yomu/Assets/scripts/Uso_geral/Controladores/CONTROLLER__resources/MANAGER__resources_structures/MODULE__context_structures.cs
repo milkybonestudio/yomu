@@ -75,14 +75,18 @@ public class MODULE__context_structures {
 
                 
                 // --- CREATE COPY 
-                RESOURCE__structure_copy copy = new RESOURCE__structure_copy( _structure, _copy_level_pre_allocation );
+                RESOURCE__structure_copy copy = new RESOURCE__structure_copy( _structure, _copy_level_pre_allocation, _structure.copies_pointer );
 
                 TOOL__resources_structures.Increase_count( _structure, Resource_structure_content.nothing );
 
                 if( _structure.copies.Length == _structure.copies_pointer )
                     { Array.Resize( ref _structure.copies, ( _structure.copies.Length + 10 ) ); }
 
+                //Console.Log( $"a: { _structure.copies_pointer }" );
+
                 _structure.copies[ _structure.copies_pointer++ ] = copy;
+
+                // Console.Log( $"b: { _structure.copies_pointer }" );
 
                 return copy;
 
@@ -101,14 +105,195 @@ public class MODULE__context_structures {
 
 
 
+        public void Change_pre_alloc( RESOURCE__structure_copy _copy, Resource_structure_content _new_pre_alloc ){
 
-        public void Delete( RESOURCE__structure_copy _ref ){  return; } 
+
+                // --- CHANGE
+                Resource_structure_content old_pre_alloc = _copy.level_pre_allocation;
+                _copy.level_pre_allocation = _new_pre_alloc;
+
+                Console.Log( "novo level: " + _copy.level_pre_allocation );
+
+
+                if( _copy.state != Resource_state.minimun )
+                    { return; } // ** nao vai importar
+
+                if( old_pre_alloc == _new_pre_alloc )
+                    { return; } // ** eh o mesmo
+
+                // ** IS IN MINIMUN AND IS DIFERENT
+
+                _copy.actual_need_content = _new_pre_alloc;
+
+                RESOURCE__structure structure = _copy.structure;
+        
+                // ** so muda se estiver usando o minimo
+                TOOL__resources_structures.Decrease_count( structure, old_pre_alloc );
+                TOOL__resources_structures.Increase_count( structure, _new_pre_alloc );
+                
+                
+                if( ( structure.stage_getting_resource != Resources_getting_structure_stage.finished ) && ( structure.stage_getting_resource != Resources_getting_structure_stage.waiting_to_start ) )  
+                    { CONTROLLER__errors.Throw( "No" ); } // ** ARE IN TRANSITION
+
+
+                // --- SIMPLE, NOT ON A RESOURCE TRANSITION
+
+                if( old_pre_alloc == Resource_structure_content.instance )
+                    {
+                        // ** REMOVE INSTANCE
+                        if( _copy.structure_game_object != null )
+                            { GameObject.Destroy( _copy.structure_game_object ); _copy.structure_game_object = null; }
+                            else 
+                            { structure.number_copies_need_to_get_instanciated--; } // ** tinha pedido apra instanciar mas nao foi instanciado. Agora nao precisa mais
+                    }
+
+                if( _new_pre_alloc == Resource_structure_content.instance )
+                    { structure.number_copies_need_to_get_instanciated++; }
+
+
+                if( _new_pre_alloc > old_pre_alloc )
+                    {
+            
+                        // NEED TO GET NEW CONTENT
+                        structure.stage_getting_resource = Resources_getting_structure_stage.waiting_to_start;
+                        structure.content_going_to = _new_pre_alloc;
+
+                    }
+
+
+                
+
+
+                // VAI ATUALIZAR O RECURSO ORIGINAL
+                Update_resource_level( structure );
+
+        }
+
+
+
+
+        public void Delete( RESOURCE__structure_copy _copy ){ 
+
+                if( _copy.state == Resource_state.active )
+                    { Deactivate( _copy ); }
+
+                if( _copy.state == Resource_state.minimun )
+                    { Unload( _copy ); }
+
+
+                RESOURCE__structure structure = _copy.structure;
+                structure.copies_deleted++;
+                structure.copies[ _copy.RESOURCE_index ] = null;
+                _copy.structure = null;
+
+                // ** copy lost everything
+
+                return; 
+        } 
+
+
 
         // ** dados vao ser perdidos, mas a referencia da imagem volta 
-        public void Unload( RESOURCE__structure_copy _ref ){}
+        public void Unload( RESOURCE__structure_copy _copy ){
+
+                if( _copy.state == Resource_state.nothing )
+                    { return; } // ** nao tem nada para remover
+
+                if( _copy.state == Resource_state.active )
+                    { Deactivate( _copy ); }
+                
+                
+                RESOURCE__structure structure = _copy.structure;
+            
+                Resource_structure_content old_need_content = _copy.actual_need_content;
+                Resource_structure_content new_need_content = Resource_structure_content.nothing;
+
+                if( old_need_content == Resource_structure_content.nothing )
+                    { Console.Log( "foi dar unload mas structure nao tinha nada" ); return; } // ** nao tinha nada
+
+
+                _copy.actual_need_content = new_need_content;
+
+                // ** VERIFY IF WAS INSTANCE
+                if( _copy.structure_game_object == null && old_need_content == Resource_structure_content.instance )
+                    { structure.number_copies_need_to_get_instanciated--; } // ** tinha pedido apra instanciar mas nao foi instanciado. Agora nao precisa mais
+
+                if( _copy.structure_game_object != null )
+                    {
+                        GameObject.Destroy( _copy.structure_game_object );
+                        _copy.structure_game_object = null;
+                    }
+
+
+                
+                TOOL__resources_structures.Decrease_count( structure, old_need_content );
+                TOOL__resources_structures.Increase_count( structure, new_need_content );
+
+                // VAI ATUALIZAR O RECURSO ORIGINAL
+                Update_resource_level( structure );
+
+                return;
+
+
+
+
+
+        }
 
         // ** vai para o minimo
-        public void Free( RESOURCE__structure_copy _ref ){}
+        public void Deactivate( RESOURCE__structure_copy _copy ){
+
+
+                if( ( _copy.state == Resource_state.minimun ) || ( _copy.state == Resource_state.nothing ) )
+                    { return; } // ** nao tem recursos para remover
+
+                _copy.state = Resource_state.minimun;
+
+                RESOURCE__structure structure = _copy.structure;
+            
+                Resource_structure_content old_need_content = _copy.actual_need_content;
+                Resource_structure_content new_need_content = _copy.level_pre_allocation;
+
+                CONTROLLER__errors.Verify( ( old_need_content != Resource_structure_content.instance ), $"a copy is marked as { _copy.state } but the resources is not teh isntance" );
+
+
+                // --- VERIFICA SE JA EH IGUAL OU MAIOR REFERENCE A COPIA
+                if( new_need_content == old_need_content )
+                    { Console.Log( "nao precisou tirar nada" ); return; } // ** ja com o pre_alloc ou algo maior, vai ignorar essa chamada
+
+                // ** a partir daqui perde a isntancia
+
+                _copy.actual_need_content = new_need_content;
+
+                if( _copy.structure_game_object == null )
+                    
+
+                // ** se o minimo for instncia nao vai chegar aqui
+                if( _copy.structure_game_object != null )
+                    {
+                        GameObject.Destroy( _copy.structure_game_object );
+                        _copy.structure_game_object = null;
+                    }
+                    else
+                    {  
+                        // ** tinha pedido apra instanciar mas nao foi instanciado. Agora nao precisa mais
+                        structure.number_copies_need_to_get_instanciated--; 
+                    }
+
+
+                
+                TOOL__resources_structures.Decrease_count( structure, old_need_content );
+                TOOL__resources_structures.Increase_count( structure, new_need_content );
+
+                // VAI ATUALIZAR O RECURSO ORIGINAL
+                Update_resource_level( structure );
+
+                return;
+
+
+
+
+        }
 
 
 
@@ -118,21 +303,30 @@ public class MODULE__context_structures {
         public void Load( RESOURCE__structure_copy _copy ){
 
 
+                if( _copy.state == Resource_state.minimun || _copy.state == Resource_state.active )
+                    { return; }
+
+                CONTROLLER__errors.Verify( ( _copy.actual_need_content != Resource_structure_content.nothing ), $"Tentou dar Load na copia { _copy.structure.locators.main_struct_name } mas o state estava como { _copy.state } mas o actua_need_content como nothing" );
+                
+
+                _copy.state = Resource_state.minimun;
+                
+
                 RESOURCE__structure structure = _copy.structure;
 
                 Resource_structure_content old_need_content = _copy.actual_need_content;
                 Resource_structure_content new_need_content = _copy.level_pre_allocation;
 
 
-                // --- VERIFICA SE JA EH IGUAL OU MAIOR
-                if( new_need_content <= old_need_content )
-                    { return; } // ** ja com o pre_alloc ou algo maior, vai ignorar essa chamada
-
+                if( new_need_content == Resource_structure_content.nothing )
+                    { return; } // ** sem minimo
 
                 // ** ATUALIZOU RECURSO DA COPIA 
 
+                _copy.actual_need_content = new_need_content;
+
                 if( new_need_content == Resource_structure_content.instance )
-                    { structure.number_copies_need_to_get_instanciated++; } // --- NEED TO GET EVRYTHING + INSTANCE
+                    { structure.number_copies_need_to_get_instanciated++; }  // --- NEED TO GET EVRYTHING + INSTANCE
 
                 TOOL__resources_structures.Decrease_count( structure, old_need_content );
                 TOOL__resources_structures.Increase_count( structure, new_need_content ); 
@@ -144,6 +338,90 @@ public class MODULE__context_structures {
 
         }
 
+        public void Activate( RESOURCE__structure_copy _copy ){
+
+
+                if( _copy.state == Resource_state.active )
+                    { return; } // ** already active
+
+                _copy.state = Resource_state.active;
+
+                if( _copy.actual_need_content == Resource_structure_content.instance )
+                    { return; } // ** o minimo estava como o maximo
+
+
+                RESOURCE__structure structure = _copy.structure;
+
+                Resource_structure_content old_need_content = _copy.actual_need_content;
+                Resource_structure_content new_need_content = Resource_structure_content.instance;
+
+                // ** ATUALIZOU RECURSO DA COPIA 
+                _copy.actual_need_content = new_need_content;
+                structure.number_copies_need_to_get_instanciated++;
+
+
+                TOOL__resources_structures.Decrease_count( structure, old_need_content );
+                TOOL__resources_structures.Increase_count( structure, new_need_content );
+
+                // VAI ATUALIZAR O RECURSO ORIGINAL
+                Update_resource_level( structure );
+
+                return;
+
+
+        }
+
+
+        public void Force_instanciation( RESOURCE__structure_copy _copy ){
+
+
+                RESOURCE__structure structure = _copy.structure;
+
+                Resource_structure_content old_need_content = _copy.actual_need_content;
+                Resource_structure_content final_countent   = Resource_structure_content.instance;
+
+                if( _copy.structure_game_object != null )
+                    { return; } // ** already instanciated
+
+                if( old_need_content == Resource_structure_content.instance )
+                    {
+                        // ** nao vai precisar
+                        structure.number_copies_need_to_get_instanciated--;
+                    }
+                    else
+                    {
+                        
+                        TOOL__resources_structures.Decrease_count( structure, old_need_content );
+                        TOOL__resources_structures.Increase_count( structure, final_countent );
+                    }
+                
+
+                if( structure.actual_content != Resource_structure_content.structure_data )
+                    {
+                        // --- FORCE LOAD STRUCTURE
+
+                        structure.content_going_to = Resource_structure_content.structure_data;
+                        structure.actual_content = Resource_structure_content.structure_data;
+                        structure.stage_getting_resource = Resources_getting_structure_stage.finished;
+
+                        structure.prefab = Resources.Load<GameObject>( structure.resource_path );
+
+                    }
+
+                if( _copy.structure_game_object == null )
+                    {
+                        // --- FORCE ISNTANCIATE
+
+                        _copy.structure_game_object = GameObject.Instantiate( structure.prefab );
+                        _copy.structure_game_object.name = structure.prefab.name;
+
+                        _copy.actual_need_content = Resource_structure_content.instance;
+                        
+                    }
+
+
+        }
+
 
 
         public void Update_resource_level( RESOURCE__structure _structure ){
@@ -151,9 +429,12 @@ public class MODULE__context_structures {
                 // ** CHAMADO DOTA VEZ QUE ALGUMA COPIA TIVER O NIVEL DE RECURSO MODIFICADO
                 // ** VAI SEMPRE DEIXAR COMO O NIVEL MAIS ALTO
 
+                Console.Log( $"Veiop Update_resource_level" );
+
                 if( ( _structure.count_places_being_used_instance > 0 ) || ( _structure.count_places_being_used_structure_data > 0 ) )
                     {
                         // --- TEM ALGO
+                        Console.Log( $"Veiop Update_resource_level e tem algo " );
 
                         if( _structure.content_going_to == Resource_structure_content.structure_data )
                             { return; } // ** nivel já nivelado
@@ -168,6 +449,7 @@ public class MODULE__context_structures {
                 if( _structure.count_places_being_used_nothing >= 0  )
                     {
                         // --- NAO TEM QUE TER NADA
+                        Console.Log( $"Veiop Update_resource_level e nao tem nada " );
 
                         if( _structure.actual_content == Resource_structure_content.nothing )
                             { return; } // ** nivelado
@@ -188,7 +470,7 @@ public class MODULE__context_structures {
 
 
         
-        public void Get_ready( RESOURCE__structure_copy _ref ){}
+    
 
 
 

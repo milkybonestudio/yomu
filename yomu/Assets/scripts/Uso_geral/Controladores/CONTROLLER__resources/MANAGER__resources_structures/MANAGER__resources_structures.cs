@@ -58,6 +58,8 @@ public class MANAGER__resources_structures {
 
                         current_weight += Update_structure( structure );
                         current_weight += Update_structure_copy( structure, current_weight );
+
+
              
                         if( current_weight >= weight_to_stop )
                             { return; } 
@@ -71,6 +73,10 @@ public class MANAGER__resources_structures {
     
                 if( structure.number_copies_need_to_get_instanciated > 0 )
                     {
+
+                        Console.Log( "numero para instanciar: " + structure.number_copies_need_to_get_instanciated );
+                        
+
                         if( structure.actual_content != Resource_structure_content.structure_data )
                             { return 0; } // ** NAO TEM OS RECURSOS
 
@@ -80,12 +86,16 @@ public class MANAGER__resources_structures {
                         for( int index_structure = 0; index_structure < structure.copies_pointer ; index_structure++  ){
 
                                 RESOURCE__structure_copy copy = structure.copies[ index_structure ];
-                                                
+                                Console.Log( $"name: { structure.locators.main_struct_name }" );
+
+                                Console.Log( "need content: " + copy.actual_need_content );
+                                Console.Log( "state: " + copy.state );
+
                                 if( copy == null )
                                     { continue; }
 
                                 if ( copy.actual_need_content != Resource_structure_content.instance )
-                                    { continue; } // ** nao tem 
+                                    { continue; } // ** nao tem instancia
 
                                 if( copy.structure_game_object != null)
                                     { continue; } // ja instanciou
@@ -111,10 +121,13 @@ public class MANAGER__resources_structures {
         private int Update_structure( RESOURCE__structure _structure ){
 
 
-                Console.Log( "Veio update struct" );
+                // Console.Log( "Veio update struct" );
+                // Console.Log( $"_structure.content_going_to: { _structure.content_going_to }" );
+                // Console.Log( $"_structure.actual_content: { _structure.actual_content }" );
+                
 
                 if( _structure.content_going_to == _structure.actual_content )
-                    { _structure.stage_getting_resource = Resources_getting_structure_stage.finished; }
+                    {  _structure.stage_getting_resource = Resources_getting_structure_stage.finished; }
 
                 switch( _structure.stage_getting_resource ){
 
@@ -148,12 +161,12 @@ public class MANAGER__resources_structures {
                 if( _structure.content_going_to == Resource_structure_content.structure_data )
                     {
                         
-                        string path = ( _structure.context.ToString() + "/" + _structure.main_folder + "/" + _structure.locators.main_struct_name );
+                        
 
                         // --- PEGOU O PREFAB 
-                        _structure.prefab = Resources.Load<GameObject>( path );
+                        _structure.prefab = Resources.Load<GameObject>( _structure.resource_path );
 
-                        CONTROLLER__errors.Verify( ( _structure.prefab == null ), $"Not found prefab <Color=lightBlue>{ path }</Color>" );
+                        CONTROLLER__errors.Verify( ( _structure.prefab == null ), $"Not found prefab <Color=lightBlue>{ _structure.resource_path }</Color>" );
                         _structure.actual_content = Resource_structure_content.structure_data;
                         weight = 2;
 
@@ -173,6 +186,7 @@ public class MANAGER__resources_structures {
 
         private int Instanciate( RESOURCE__structure _structure, RESOURCE__structure_copy _copy ){
 
+                Console.Log( "Veio Instanciate" );
 
                 GameObject game_object = GameObject.Instantiate( _structure.prefab );
                 game_object.transform.SetParent( container_to_instanciate.transform, false ) ;
@@ -181,7 +195,9 @@ public class MANAGER__resources_structures {
                 _copy.structure_game_object.SetActive( false );
 
                 _copy.actual_need_content = Resource_structure_content.instance;
+
                 _structure.number_copies_need_to_get_instanciated -- ;
+                Debug.Log( "structure number: " + _structure.number_copies_need_to_get_instanciated );
                 
                 int time = ( int )( relogio.ElapsedMilliseconds + 1l );
 
