@@ -3,16 +3,19 @@ using UnityEngine;
 public class RESOURCE__structure {
 
 
-        public RESOURCE__structure( MODULE__context_structures _module_structures,  Resource_context _context,  string _main_folder, Structure_locators _locator, Resource_structure_content _level_pre_allocation ){
+        public RESOURCE__structure( MODULE__context_structures _module_structures,  Resource_context _context,  string _main_folder, Structure_locators _locator ){
 
                 module_images = _module_structures;
                 context = _context;
                 main_folder = _main_folder;
                 locators = _locator;
 
-                level_pre_allocation = _level_pre_allocation;
+                // level_pre_allocation = _level_pre_allocation;
                 actual_content = Resource_structure_content.nothing;
-                stage_getting_resource = Resources_getting_structure_stage.waiting_to_start;
+                stage_getting_resource = Resources_getting_structure_stage.finished;
+
+                current_state = Resource_state.nothing;
+                current_final_state = Resource_state.nothing;
 
         }
 
@@ -23,11 +26,8 @@ public class RESOURCE__structure {
 
 
 
-
         // --- DATA 
         public GameObject prefab; // ** se depois fizer pegando um .dat vai ser feito outro field
-
-
 
 
 
@@ -36,11 +36,21 @@ public class RESOURCE__structure {
 
 
 
-        public Resource_structure_content level_pre_allocation;
-        public Resource_structure_content actual_content;
+        // --- IMAGE DATA 
+
+        public Resource_state current_final_state; // ** can not have going_to 
+        public Resource_state current_state;
+        
+
+        //public Resource_structure_content level_pre_allocation;
 
 
-        public Resources_getting_structure_stage stage_getting_resource;
+                public Resource_structure_content content_going_to;
+                public Resource_structure_content actual_content;
+
+                public Resources_getting_structure_stage stage_getting_resource;
+
+
 
 
         // --- COPIES

@@ -126,7 +126,7 @@ public class MODULE__context_images {
 
                         image.level_pre_allocation_image = _level_pre_allocation; 
 
-                        if( image.current_state == Resource_image_state.minimun )
+                        if( image.current_state == Resource_state.minimun )
                             {
                                 // -- precisa mudar para o novo minimo 
                                 
@@ -141,7 +141,7 @@ public class MODULE__context_images {
 
                             } 
 
-                        if( image.current_state == Resource_image_state.going_to_minimun )
+                        if( image.current_state == Resource_state.going_to_minimun )
                             { image.final_resource_state = _level_pre_allocation;}
 
                     }
@@ -264,7 +264,7 @@ public class MODULE__context_images {
                 RESOURCE__image image = _ref.image;
 
                 // ** ou já esta indo para o minimo, já esta la ou esta com nivel mais alto
-                if( image.current_final_state >= Resource_image_state.minimun )
+                if( image.current_final_state >= Resource_state.minimun )
                     { return; }
 
 
@@ -273,8 +273,8 @@ public class MODULE__context_images {
                 image.stage_getting_resource = Resources_getting_image_stage.waiting_to_start;
 
                 // --- STATES
-                image.current_final_state = Resource_image_state.minimun;
-                image.current_state = Resource_image_state.going_to_minimun;
+                image.current_final_state = Resource_state.minimun;
+                image.current_state = Resource_state.going_to_minimun;
 
 
                 // --- RESOURCE
@@ -294,7 +294,7 @@ public class MODULE__context_images {
                 RESOURCE__image image = _ref.image;
 
                 // ** ou já esta indo para o maximo
-                if( image.current_final_state == Resource_image_state.active )
+                if( image.current_final_state == Resource_state.active )
                     { return; }
 
 
@@ -314,8 +314,8 @@ public class MODULE__context_images {
                 
 
                 // --- STATES
-                image.current_final_state = Resource_image_state.active;
-                image.current_state = Resource_image_state.going_to_active;
+                image.current_final_state = Resource_state.active;
+                image.current_state = Resource_state.going_to_active;
 
 
                 // --- RESOURCE

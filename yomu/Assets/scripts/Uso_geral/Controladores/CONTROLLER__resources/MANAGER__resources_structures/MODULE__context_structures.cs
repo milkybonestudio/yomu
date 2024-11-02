@@ -54,7 +54,7 @@ public class MODULE__context_structures {
         private RESOURCE__structure Create_new_structure( string _main_folder, Structure_locators _locators, Resource_structure_content _level_pre_allocation ){
 
 
-                RESOURCE__structure new_structure = new RESOURCE__structure( this, context, _main_folder, _locators, _level_pre_allocation );
+                RESOURCE__structure new_structure = new RESOURCE__structure( this, context, _main_folder, _locators );
                 Get_dictionary( _main_folder ).Add( Get_path( _main_folder, _locators.main_struct_name ), new_structure );
 
                 if( _locators.sub_structs == null )
@@ -74,36 +74,22 @@ public class MODULE__context_structures {
         private RESOURCE__structure_copy Get_copy( RESOURCE__structure _structure, Resource_structure_content _copy_level_pre_allocation  ){
 
                 
-                // ** verifica se precisa pegar tudo 
-                if( _copy_level_pre_allocation == Resource_structure_content.instance )
-                    { _structure.number_copies_need_to_get_instanciated++; }
-
-                // ** verifica se precisa pegar tudo 
-                if( _copy_level_pre_allocation >= Resource_structure_content.structure_data )
-                    {
-                        _structure.level_pre_allocation = Resource_structure_content.structure_data; // ** precisa de tudo 
-
-                        if( _structure.actual_content == Resource_structure_content.nothing )
-                            { _structure.stage_getting_resource = Resources_getting_structure_stage.waiting_to_start; }
-                        
-                    }
-                
-                // ** se for nada, nao precisa de nada
-
                 // --- CREATE COPY 
+                RESOURCE__structure_copy copy = new RESOURCE__structure_copy( _structure, _copy_level_pre_allocation );
+
+                TOOL__resources_structures.Increase_count( _structure, Resource_structure_content.nothing );
+
                 if( _structure.copies.Length == _structure.copies_pointer )
                     { Array.Resize( ref _structure.copies, ( _structure.copies.Length + 10 ) ); }
 
-                
-                RESOURCE__structure_copy copy = new RESOURCE__structure_copy( _structure, _copy_level_pre_allocation );
                 _structure.copies[ _structure.copies_pointer++ ] = copy;
-
-                Increase_count( _structure, _copy_level_pre_allocation );
 
                 return copy;
 
-
         }
+
+
+
 
 
         private string Get_path( string _main_folder, string _name ){ 
@@ -128,10 +114,80 @@ public class MODULE__context_structures {
 
         // --- PEGAR RECURSOS
 
-        // ** sinaliza que a imagem pode carregar o minimo 
-        public void Load( RESOURCE__structure_copy _ref ){}
+        // ** sinaliza que a imagem pode carregar o pre alloc
+        public void Load( RESOURCE__structure_copy _copy ){
 
-        // ** sinaliza que pode começar a pegar a texture
+
+                RESOURCE__structure structure = _copy.structure;
+
+                Resource_structure_content old_need_content = _copy.actual_need_content;
+                Resource_structure_content new_need_content = _copy.level_pre_allocation;
+
+
+                // --- VERIFICA SE JA EH IGUAL OU MAIOR
+                if( new_need_content <= old_need_content )
+                    { return; } // ** ja com o pre_alloc ou algo maior, vai ignorar essa chamada
+
+
+                // ** ATUALIZOU RECURSO DA COPIA 
+
+                if( new_need_content == Resource_structure_content.instance )
+                    { structure.number_copies_need_to_get_instanciated++; } // --- NEED TO GET EVRYTHING + INSTANCE
+
+                TOOL__resources_structures.Decrease_count( structure, old_need_content );
+                TOOL__resources_structures.Increase_count( structure, new_need_content ); 
+
+                // VAI ATUALIZAR O RECURSO ORIGINAL
+                Update_resource_level( structure );
+
+                return;
+
+        }
+
+
+
+        public void Update_resource_level( RESOURCE__structure _structure ){
+
+                // ** CHAMADO DOTA VEZ QUE ALGUMA COPIA TIVER O NIVEL DE RECURSO MODIFICADO
+                // ** VAI SEMPRE DEIXAR COMO O NIVEL MAIS ALTO
+
+                if( ( _structure.count_places_being_used_instance > 0 ) || ( _structure.count_places_being_used_structure_data > 0 ) )
+                    {
+                        // --- TEM ALGO
+
+                        if( _structure.content_going_to == Resource_structure_content.structure_data )
+                            { return; } // ** nivel já nivelado
+
+                        _structure.content_going_to = Resource_structure_content.structure_data;
+                        _structure.stage_getting_resource = Resources_getting_structure_stage.waiting_to_start;
+                    
+                        return;
+                    }
+
+            
+                if( _structure.count_places_being_used_nothing >= 0  )
+                    {
+                        // --- NAO TEM QUE TER NADA
+
+                        if( _structure.actual_content == Resource_structure_content.nothing )
+                            { return; } // ** nivelado
+
+                        // ** se estivber aqui cada copia também vai estar sem o prefab. Fica por responsabilidades deles de deletarem
+
+                        // --- TEM QUE LIMPAR
+                        _structure.prefab = null;
+                        _structure.content_going_to = Resource_structure_content.nothing;
+                        _structure.actual_content   = Resource_structure_content.nothing;
+                        
+                        return;
+                    }
+
+        }
+
+
+
+
+        
         public void Get_ready( RESOURCE__structure_copy _ref ){}
 
 
@@ -235,30 +291,7 @@ public class MODULE__context_structures {
 
 
 
-        private void Increase_count( RESOURCE__structure _image, Resource_structure_content _state ){
 
-                switch( _state ){
-
-                    case Resource_structure_content.nothing : _image.count_places_being_used_nothing++; break;
-                    case Resource_structure_content.structure_data : _image.count_places_being_used_structure_data++; break;
-                    case Resource_structure_content.instance : _image.count_places_being_used_instance++; break;
-                    
-                }
-
-        }
-
-        private void Decrease_count( RESOURCE__structure _image, Resource_structure_content _state ){
-
-
-                switch( _state ){
-
-                    case Resource_structure_content.nothing : _image.count_places_being_used_nothing--; break;
-                    case Resource_structure_content.structure_data : _image.count_places_being_used_structure_data--; break;
-                    case Resource_structure_content.instance : _image.count_places_being_used_instance--; break;
-                    
-                }
-
-        }
 
 
 

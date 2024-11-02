@@ -24,8 +24,13 @@ public class Figure {
         public GameObject figure_container;
 
 
+        public RESOURCE__structure_copy figure_structure;
+
+
         public void Instanciate( GameObject _container_father, Figure_use_context _context ){
 
+
+                figure_structure.Instanciate();
 
                 CONTROLLER__errors.Verify( ( _container_father == null ), $"Tried to instanciate the figure { figure_interface.Get_figure_name() }, but the container was null" );
                 CONTROLLER__errors.Verify( ( figure_container_prefab == null ), $"Tried to instanciate the figure { figure_interface.Get_figure_name() }, but the prefab was null" );

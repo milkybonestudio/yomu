@@ -11,3 +11,5 @@ public enum Resource_structure_content {
 
 
 }
+
+

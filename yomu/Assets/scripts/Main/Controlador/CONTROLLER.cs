@@ -87,7 +87,8 @@ unsafe public class Controlador : MonoBehaviour {
 
                 Structure_locators locators = new Structure_locators();
                 locators.main_struct_name = "Teste";
-                copy = c.resources_structures.Get_structure_copy(Resource_context.Characters, "Lily", locators, Resource_structure_content.instance );
+                
+                copy = c.resources_structures.Get_structure_copy( Resource_context.Characters, "Lily", locators, Resource_structure_content.instance );
 
 
 

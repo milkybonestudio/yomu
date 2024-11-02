@@ -1,6 +1,6 @@
 
 
-public enum Resource_image_state {
+public enum Resource_state {
 
     nothing, // nada
     going_to_minimun,

@@ -56,30 +56,9 @@ public class MANAGER__resources_structures {
                 
                 foreach(  RESOURCE__structure structure in  context_structures_modules[ context_frame ].actives_structures_dictionary.Values ){
 
-                        current_weight += Updata_structure( structure );
-
-                        if( structure.number_copies_need_to_get_instanciated > 0 )
-                            {
-                                if( structure.actual_content != Resource_structure_content.structure_data )
-                                    { continue; } // ** NAO TEM OS RECURSOS
-
-                                relogio.Start();
-
-
-
-
-                                for( int index_structure = 0; index_structure < structure.copies_pointer ; index_structure++  ){
-
-                                        current_weight += Instanciate( structure, structure.copies[ index_structure ] );
-
-                                        if( current_weight >= weight_to_stop )
-                                            { relogio.Reset(); return; } 
-
-                                        continue;
-                                    
-                                }
-                            }
-        
+                        current_weight += Update_structure( structure );
+                        current_weight += Update_structure_copy( structure, current_weight );
+             
                         if( current_weight >= weight_to_stop )
                             { return; } 
                 }
@@ -87,51 +66,59 @@ public class MANAGER__resources_structures {
         }
 
 
-        private int Instanciate( RESOURCE__structure _structure, RESOURCE__structure_copy _copy ){
+        private int Update_structure_copy( RESOURCE__structure structure, int _current_weight ){
+
+    
+                if( structure.number_copies_need_to_get_instanciated > 0 )
+                    {
+                        if( structure.actual_content != Resource_structure_content.structure_data )
+                            { return 0; } // ** NAO TEM OS RECURSOS
+
+                        relogio.Start();
 
 
-                if( _copy == null )
-                    { return 0; }
+                        for( int index_structure = 0; index_structure < structure.copies_pointer ; index_structure++  ){
 
-                if( _copy.actual_content == Resource_structure_content.instance )
-                    { return 0; } // ja instanciou
+                                RESOURCE__structure_copy copy = structure.copies[ index_structure ];
+                                                
+                                if( copy == null )
+                                    { continue; }
 
-                Console.Log( "Vai instanciar" );
+                                if ( copy.actual_need_content != Resource_structure_content.instance )
+                                    { continue; } // ** nao tem 
 
-                // ** intanciate 
-                GameObject game_object = GameObject.Instantiate( _structure.prefab );
-                game_object.transform.SetParent( container_to_instanciate.transform, false ) ;
+                                if( copy.structure_game_object != null)
+                                    { continue; } // ja instanciou
 
-                _copy.structure_game_object = game_object;
-                _copy.structure_game_object.SetActive( false );
+                                _current_weight += Instanciate( structure, copy );
 
-                _copy.actual_content = Resource_structure_content.instance;
-                _structure.number_copies_need_to_get_instanciated -- ;
+                                if( _current_weight >= weight_to_stop )
+                                    { relogio.Reset(); return _current_weight; } 
 
+                                continue;
+                            
+                        }
+                    }
 
-                
-                int time = ( int )( relogio.ElapsedMilliseconds + 1l );
-
-                Console.Log( "tempo: " + time );
-                relogio.Reset();
-                return time;
+                return _current_weight;
 
         }
 
 
 
-        private int Updata_structure( RESOURCE__structure _structure ){
+
+
+        private int Update_structure( RESOURCE__structure _structure ){
 
 
                 Console.Log( "Veio update struct" );
 
-                // true => pegou uma acao, bloquear
-                // ** se veio aqui tem coisa para fazer
+                if( _structure.content_going_to == _structure.actual_content )
+                    { _structure.stage_getting_resource = Resources_getting_structure_stage.finished; }
 
                 switch( _structure.stage_getting_resource ){
 
                     case Resources_getting_structure_stage.waiting_to_start: return Handle_waiting_to_start( _structure );
-                        case Resources_getting_structure_stage.waiting_to_instanciate: return Handle_waiting_to_instanciate( _structure );
                             case Resources_getting_structure_stage.finished: return 0;
               
                 }
@@ -142,83 +129,75 @@ public class MANAGER__resources_structures {
 
 
 
-        private int Handle_waiting_to_start( RESOURCE__structure _struct ){
+        private int Handle_waiting_to_start( RESOURCE__structure _structure ){
 
-            int weight = 0;
-            
-            if( _struct.level_pre_allocation == Resource_structure_content.structure_data )
-                {
-                    Console.Log( "Vai pegar prefab" );
-                    //mark
-                    // ** por hora esta ok
-                    string path = ( _struct.context.ToString() + "/" + _struct.main_folder + "/" + _struct.locators.main_struct_name );
-                    _struct.prefab = Resources.Load<GameObject>( path );
-                    CONTROLLER__errors.Verify( ( _struct.prefab == null ), $"Not found prefab <Color=lightBlue>{ path }</Color>" );
-                    _struct.actual_content = Resource_structure_content.structure_data;
-                    weight = 2;
+                // ** mudar para o relogio talvez? 
 
-                }
-            
-            Console.Log( "Finished" );
-            _struct.stage_getting_resource = Resources_getting_structure_stage.finished;
-            return weight;
+                int weight = 0;
+
+                if( _structure.content_going_to == Resource_structure_content.nothing )
+                    { 
+                        _structure.prefab = null;
+                        _structure.actual_content = Resource_structure_content.nothing;
+                        _structure.stage_getting_resource = Resources_getting_structure_stage.finished; 
+                        return weight; 
+                    }
+                
+
+                // ** MAXIMUN
+                if( _structure.content_going_to == Resource_structure_content.structure_data )
+                    {
+                        
+                        string path = ( _structure.context.ToString() + "/" + _structure.main_folder + "/" + _structure.locators.main_struct_name );
+
+                        // --- PEGOU O PREFAB 
+                        _structure.prefab = Resources.Load<GameObject>( path );
+
+                        CONTROLLER__errors.Verify( ( _structure.prefab == null ), $"Not found prefab <Color=lightBlue>{ path }</Color>" );
+                        _structure.actual_content = Resource_structure_content.structure_data;
+                        weight = 2;
+
+                        _structure.stage_getting_resource = Resources_getting_structure_stage.finished;
+                        return weight;
+
+                    }
+                
+                CONTROLLER__errors.Throw( $"Can not handle { _structure.content_going_to }" );
+                
+                return weight;
 
         }
 
-        
-        private int Handle_waiting_to_instanciate( RESOURCE__structure _image ){
 
-            
 
-            return 0;
+
+        private int Instanciate( RESOURCE__structure _structure, RESOURCE__structure_copy _copy ){
+
+
+                GameObject game_object = GameObject.Instantiate( _structure.prefab );
+                game_object.transform.SetParent( container_to_instanciate.transform, false ) ;
+
+                _copy.structure_game_object = game_object;
+                _copy.structure_game_object.SetActive( false );
+
+                _copy.actual_need_content = Resource_structure_content.instance;
+                _structure.number_copies_need_to_get_instanciated -- ;
+                
+                int time = ( int )( relogio.ElapsedMilliseconds + 1l );
+
+                relogio.Reset();
+                return time;
 
         }
 
+
+
         
-
-
         // --- EXTRA
 
         public int Get_bytes_allocated(){
 
-                int accumulator = 0;
-
-                // --- IMAGES COMPRESS
-                for( int image_index = 0 ; image_index < context_structures_modules.Length ; image_index++){
-
-                        accumulator += context_structures_modules[ image_index ].Get_bytes();
-
-                        // RESOURCE__image image = requests[ image_index ];
-                        // if( image == null )
-                        //     { return accumulator; }
-                        
-                        // if( image.multiples_images != null )
-                        //     {
-                        //         for( int multiple_iamge_index = 0 ; multiple_iamge_index < image.multiples_images.Length ; multiple_iamge_index++ ){
-
-                        //                 if( image.multiples_images[ multiple_iamge_index ].image_compress != null )
-                        //                     { accumulator += image.multiples_images[ multiple_iamge_index ].image_compress.Length; } // --- have image
-                        //                 continue;
-
-                        //         }
-
-                        //         continue;
-                        //     }
-
-                        // // -- SINGLE
-
-                        // if( image.single_image.image_compress == null )
-                        //     { continue; }
-
-                        // accumulator += image.single_image.image_compress.Length;
-                        // continue;
-                    
-                }
-
-
-
-                return accumulator;
-            
+                return 0;     
 
         }
 
