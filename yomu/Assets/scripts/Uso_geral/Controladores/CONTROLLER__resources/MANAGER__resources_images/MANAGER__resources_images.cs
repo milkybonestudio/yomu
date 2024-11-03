@@ -19,7 +19,7 @@ public class MANAGER__resources_images {
                 context_images_modules = new MODULE__context_images[ contexts.Length ];
 
                 for( int context_index = 0 ; context_index < contexts.Length ; context_index++ )
-                    { context_images_modules[ context_index ] = new MODULE__context_images( _context: contexts[ context_index ], _initial_capacity: 1_000, _buffer_cache: 2_000_000 ); }
+                    { context_images_modules[ context_index ] = new MODULE__context_images( _manager: this, _context: contexts[ context_index ], _initial_capacity: 1_000, _buffer_cache: 2_000_000 ); }
 
                 return;
 

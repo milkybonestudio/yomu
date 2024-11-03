@@ -11,19 +11,25 @@ public class RESOURCE__structure_copy {
             level_pre_allocation = _level_pre_allocation;
             actual_need_content = Resource_structure_content.nothing; // ** nothing / instanciate
 
+            name = _structure.resource_path;
+
             RESOURCE_index = _RESOURCE_index;
 
         }
 
 
         public int RESOURCE_index; 
+        public bool deleted;
+        public string name;
 
         public RESOURCE__structure structure;
 
+
         public Resource_state state;
 
-
+        
         public Resource_structure_content level_pre_allocation; // minimun 
+
 
         public Resource_structure_content actual_need_content;
 
@@ -41,12 +47,81 @@ public class RESOURCE__structure_copy {
 
         }
 
-        public void Load(){ structure.module_images.Load( this ); }
-        public void Unload(){ structure.module_images.Unload( this ); }
-        public void Activate(){ structure.module_images.Activate( this ); }
-        public void Deactivate(){ structure.module_images.Deactivate( this ); }
 
-        public void Change_pre_alloc( Resource_structure_content _new_level ){  structure.module_images.Change_pre_alloc( this, _new_level );}
+        /*
+            //testes: 
+
+            -> mudar minimo estando sem estar load: ok
+            -> mudar minimo estando com load: ok
+
+
+            testes saindo no nothing
+
+            -> load: ok
+            -> activate: ok
+            -> instanciate: ok
+
+            teste saindo instanciado :
+
+                -> unload : ok
+                -> deactivate : ok
+                -> deinstanciate :  ok
+                -> delete : ok
+
+
+            teste saindo Active :
+
+                -> unload : ok
+                -> deinstanciate : ok
+                -> deactivate : ok
+                -> delete : ok
+
+            
+            teste saindo load :
+
+                -> unload : ok
+                -> deinstanciate : ok
+                -> deactivate : ok
+                -> delete : ok
+
+
+
+         erros: 
+            instanciate -> deinstanciate ( ok ) -> instanciate ( not ) RESOLVIDO
+            instanciate -> unload : gameobject is return to container but the pre_alloc_level is nothing RESOLVED
+
+            instanciate -> instanciate -> unload -> load ( nao carrega minimo ) resolvido
+            instanciated -> unload -> load [ ok (agora) ] -> instanciated -> unload -> load ( nao carrega )  revolvido
+
+
+
+        
+        */
+
+        
+
+
+
+        // ** up resources
+
+        private void Guaranty_copy(){ if( deleted ){ CONTROLLER__errors.Throw( $"Tried to use the structure copy <Color=white><b>${ name }</b></Color> but the copy was deleted" ); } }
+
+        public void Load(){ Guaranty_copy(); structure.module_structures.Load( this ); }
+        public void Activate(){ Guaranty_copy(); structure.module_structures.Activate( this ); }
+        public void Instanciate( GameObject _container ){ structure.module_structures.Instanciate( this, _container ); }
+
+
+
+        // ** down resources
+        public void Delete(){ Guaranty_copy(); structure.module_structures.Delete( this ); }
+        public void Delete( ref RESOURCE__structure_copy _copy_ref ){ Guaranty_copy(); structure.module_structures.Delete( this ); _copy_ref = null; }
+        public void Unload(){ Guaranty_copy(); structure.module_structures.Unload( this ); }
+        public void Deactivate(){ Guaranty_copy(); structure.module_structures.Deactivate( this ); }
+        public void Deinstanciate(){ Guaranty_copy(); structure.module_structures.Deinstanciate( this ); }
+
+        
+        // ** suporte
+        public void Change_pre_alloc( Resource_structure_content _new_level ){  Guaranty_copy(); structure.module_structures.Change_pre_alloc( this, _new_level );}
 
 
 }

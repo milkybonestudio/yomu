@@ -8,6 +8,8 @@ public enum Resource_state {
     going_to_active,
     active, // text + data
 
+    instanciated,
+
 }
 
 

@@ -19,11 +19,12 @@ public class MODULE__context_images {
         // ** multiples sempre tem a mesma quantidade de images
 
 
-        public MODULE__context_images( Resource_context _context, int _initial_capacity, int _buffer_cache ){
+        public MODULE__context_images( MANAGER__resources_images _manager, Resource_context _context, int _initial_capacity, int _buffer_cache ){
 
 
                 context = _context;
                 context_folder = _context.ToString();
+                manager = _manager;
 
                 #if !!! UNITY_EDITOR
                     file_stream = FILE_STREAM.Criar_stream( _path, buffer_cache );

@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using System.Threading;
 using UnityEngine;
 
@@ -34,6 +35,14 @@ public static class Console {
         public static void Log( string _message ){ Log_intern( _message, Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }
         public static void Log( object _message ){ Log_intern( Convert.ToString(  _message ), Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }
         public static void LogError( string _message ){ Log_intern( _message, Log_type.error, ( Thread.CurrentThread.Name == "Main" ) ); return; }
+
+
+        public static void Clear(){
+
+            Assembly asm = Assembly.GetAssembly( typeof( UnityEditor.Editor ) );
+            asm.GetType( "UnityEditor.LogEntries" ).GetMethod( "Clear" ).Invoke( null, null );
+
+        }
 
 
         private static void Log_intern( string _message, Log_type _type, bool _main_thread ){

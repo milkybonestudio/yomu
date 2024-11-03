@@ -5,7 +5,7 @@ public class RESOURCE__structure {
 
         public RESOURCE__structure( MODULE__context_structures _module_structures,  Resource_context _context,  string _main_folder, Structure_locators _locator ){
 
-                module_images = _module_structures;
+                module_structures = _module_structures;
                 context = _context;
                 main_folder = _main_folder;
                 locators = _locator;
@@ -24,7 +24,7 @@ public class RESOURCE__structure {
 
         }
 
-        public MODULE__context_structures module_images;
+        public MODULE__context_structures module_structures;
         public Resource_context context;
         public string main_folder;
         public Structure_locators locators;
@@ -63,6 +63,20 @@ public class RESOURCE__structure {
         // --- COPIES
 
             public int number_copies_need_to_get_instanciated;
+
+            // { 
+
+            //         get{  return n; }
+            //         set { 
+
+            //             Console.Log( "novo valor: " + value ); 
+            //             if( value < 0 ){ throw new System.Exception("v<0") ;}
+            //             n = value; 
+            //         } 
+                
+            // }
+
+            private int n = 0;
 
             public RESOURCE__structure_copy[] copies = new RESOURCE__structure_copy[ 10 ];
             public int copies_pointer;
