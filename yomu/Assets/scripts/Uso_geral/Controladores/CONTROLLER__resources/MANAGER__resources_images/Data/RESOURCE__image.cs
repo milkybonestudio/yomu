@@ -17,8 +17,6 @@ unsafe public class RESOURCE__image {
         public RESOURCE__image( MODULE__context_images _module_images,  Resource_context _context,  string _main_folder, string _path, Resource_image_localizer locator ) { 
 
 
-
-
                 image_context = _context; 
                 main_folder = _main_folder;
                 path_locator = _path;
@@ -26,15 +24,16 @@ unsafe public class RESOURCE__image {
 
 
                 stage_getting_resource = Resources_getting_image_stage.finished;
-                current_content = Resource_image_content.nothing;
-                current_state = Resource_state.nothing;
+                actual_content = Resource_image_content.nothing;
+                //current_state = Resource_state.nothing;
 
 
                 width = locator.width;
                 height = locator.height;
                 pointer_container = locator.pointer;
-                length = locator.length;
+                data_size = locator.length;
                 number_images = locator.number_images;
+                
 
 
                 // --- CREATE DATA
@@ -56,8 +55,7 @@ unsafe public class RESOURCE__image {
 
                     }
 
-
-
+                return;
 
                 
         }
@@ -75,7 +73,7 @@ unsafe public class RESOURCE__image {
         public int width;
         public int height;
         public int pointer_container;
-        public int length;
+        public int data_size;
         public int number_images;
 
     
@@ -95,19 +93,23 @@ unsafe public class RESOURCE__image {
         
         public Resources_getting_image_stage stage_getting_resource; // ** precess of getting the resource
 
-        // ???
-        public Resource_image_content final_resource_state; // se estiver em uma transicao de recursos é o ponto final 
-
-
+        
         // --- IMAGE DATA 
 
         public Resource_state current_final_state; // ** can not have going_to 
-        public Resource_state current_state;  
+        // public Resource_state current_state;  
         
 
-        public Resource_image_content level_pre_allocation_image; // minimun
-        public Resource_image_content current_content; // ** o recurso atual
 
+        public Resource_image_content content_going_to; // se estiver em uma transicao de recursos é o ponto final 
+        public Resource_image_content actual_content; // ** o recurso atual
+
+
+
+        // public Resource_structure_content content_going_to;
+        // public Resource_structure_content actual_content;
+
+        // public Resources_getting_structure_stage stage_getting_resource;
 
 
 
@@ -129,7 +131,7 @@ unsafe public class RESOURCE__image {
                    
         public int count_places_being_used_nothing; // precisa de nada
         public int count_places_being_used_compress_data; // precisa do minimo
-        public int count_places_being_used_texture; // precisa de tudo
+        public int count_places_being_used_sprite; // precisa de tudo
 
 
 

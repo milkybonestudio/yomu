@@ -206,8 +206,7 @@ public class MODULE__context_structures {
 
 
                 Console.Log( "Veio Unload()" );
-                Console.Log( _copy.state );
-
+                
                 if( _copy.state == Resource_state.nothing )
                     { Console.Log( "state menor" ); return; } // ** nao tem nada para remover
 

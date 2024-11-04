@@ -2,9 +2,14 @@ public enum Resource_image_content {
 
     not_give,
 
-    nothing, // nada
-    compress_data, // data 
-    texture, // text + data
+    /*pre_alloc*/ nothing, 
+    /*pre_alloc*/ compress_data, 
+
+                        texture, // text + data
+                        texture_with_pixels,
+                        texture_with_pixels_applied,
+
+    /*pre_alloc*/ sprite,
 
 }
 

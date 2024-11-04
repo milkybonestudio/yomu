@@ -7,7 +7,7 @@ public static class TOOL_MANAGER__guarantee_image_is_ready {
         public static void Guarantee( MANAGER__resources_images _manager, RESOURCE__image_ref _ref ){
 
                 
-                TOOL__resource_image.Verify( _ref.image );
+                TOOL__resource_image.Verify_image( _ref.image );
 
                 if( _ref.image.single_image != null )
                     { Guarantee_image_is_ready_SINGLE( _manager, _ref.image ); } // --- IMAGEM SIMPLES
@@ -26,12 +26,10 @@ public static class TOOL_MANAGER__guarantee_image_is_ready {
                 RESOURCE__image_data single_image = _image.single_image;
 
 
-                MODULE__context_images module_images = _manager.context_images_modules[ ( int ) _image.image_context ];
-                
                 
                 // --- GARANTE QUE TEM COMPRESS
                 if( _image.stage_getting_resource == Resources_getting_image_stage.waiting_to_start )
-                    {  single_image.image_compress = TOOL__get_data_images_resources.Get( module_images, _image ); _image.stage_getting_resource = Resources_getting_image_stage.getting_texture; }
+                    {  single_image.image_compress = TOOL__get_data_images_resources.Get_single( _image ); _image.stage_getting_resource = Resources_getting_image_stage.getting_texture; }
 
 
                 // ** getting png

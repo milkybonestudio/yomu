@@ -16,8 +16,8 @@ public class RESOURCE__structure {
                 stage_getting_resource = Resources_getting_structure_stage.finished;
 
 
-                current_state = Resource_state.nothing;
-                current_final_state = Resource_state.nothing;
+                //current_state = Resource_state.nothing;
+                //current_final_state = Resource_state.nothing;
 
 
                 resource_path = ( context.ToString() + "/" + main_folder + "/" + locators.main_struct_name );
@@ -39,23 +39,18 @@ public class RESOURCE__structure {
 
 
         // --- COMPLEX STRUCTURES
+        //mark
+        // ** ainda nao foram usadas em lugar nenhum
         public RESOURCE__structure_copy[] sub_structures;
 
 
 
-        // --- IMAGE DATA 
+        // --- DATA
 
-        public Resource_state current_final_state; // ** can not have going_to 
-        public Resource_state current_state;
-        
+        public Resource_structure_content content_going_to;
+        public Resource_structure_content actual_content;
 
-        //public Resource_structure_content level_pre_allocation;
-
-
-                public Resource_structure_content content_going_to;
-                public Resource_structure_content actual_content;
-
-                public Resources_getting_structure_stage stage_getting_resource;
+        public Resources_getting_structure_stage stage_getting_resource;
 
 
 

@@ -62,8 +62,8 @@ unsafe public class Controlador : MonoBehaviour {
 
                 c =  CONTROLLER__resources.Get_instance();
 
-                // image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.texture );
-                // image_ref.Load();
+                image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.texture );
+                image_ref.Load();
 
 
                 // Debug.Log( "content: " + image_ref.image.current_content );
@@ -90,12 +90,9 @@ unsafe public class Controlador : MonoBehaviour {
                 Structure_locators locators = new Structure_locators();
                 locators.main_struct_name = "Teste";
                 
-                copy = c.resources_structures.Get_structure_copy( Resource_context.Characters, "Lily", locators, Resource_structure_content.nothing );
+                //copy = c.resources_structures.Get_structure_copy( Resource_context.Characters, "Lily", locators, Resource_structure_content.nothing );
                 //copy.Load();
                 
-
-
-
 
                 // Figure lily = Teste_figure.Construct();
                 // lily.Instanciate( GameObject.Find( "Tela/Container_teste" ), Figure_use_context.visual_novel );
@@ -106,7 +103,6 @@ unsafe public class Controlador : MonoBehaviour {
                 
 
                 
-
 
 
                 // Images_container_result container =  Images_container_creator.Construct( "C:\\Users\\User\\Desktop\\yomu_things\\teste" );
@@ -129,106 +125,24 @@ unsafe public class Controlador : MonoBehaviour {
 
                 
                 
-                
                 CONTROLLER__resources.Get_instance().Update();
             
-                //Console.Log_intervalado( "state: " + image_ref.image.current_content );
                 controlador_tasks.Update();
 
                 int i = 0;
                 
-                if( Input.GetKeyDown( KeyCode.Alpha3 ) )
-                    { i++; copy.Change_pre_alloc( Resource_structure_content.instance ); }
-
-                if( Input.GetKeyDown( KeyCode.Alpha2 ) )
-                    { i++; copy.Change_pre_alloc( Resource_structure_content.structure_data ); }
-
                 if( Input.GetKeyDown( KeyCode.Alpha1 ) )
-                    { i++; copy.Change_pre_alloc( Resource_structure_content.nothing ); }
-
-
-
-
-
-                // ** up
-
-                if( Input.GetKeyDown( KeyCode.Q ) )
-                    { i++; copy.Load(); }
-
-                if( Input.GetKeyDown( KeyCode.W ) )
-                    { i++; copy.Activate(); }
-                
-                if( Input.GetKeyDown( KeyCode.E ) )
-                    { i++; copy.Instanciate( GameObject.Find( "Tela/Container_teste" ) ); }
-
-                
-
-                // ** down
-
-
-                if( Input.GetKeyDown( KeyCode.A ) )
-                    { i++; copy.Unload(); }
-
-                if( Input.GetKeyDown( KeyCode.S ) )
-                    { i++; copy.Deactivate(); }
-                
-                if( Input.GetKeyDown( KeyCode.D ) )
-                    { i++; copy.Deinstanciate(); }
-
-
-                // ** delete
-
-                if( Input.GetKeyDown( KeyCode.Z ) )
-                    { i++; copy.Delete(); }
-
-
-
-                if( Input.GetKeyDown( KeyCode.X ) )
-                    { i++; }
+                    { i++; Console.Log( image_ref.localizador ); }
 
                 
 
                 if( i > 0 )
                     { 
 
-                        
-                        
+                    
                         Console.Clear();
                         Console.Log( "<Color=lightBlue>-------------------</Color>" );
-
-                        if( copy.deleted )
-                            {
-                                Console.Log("copy deleted");
-                            }
-                            else
-                            {
-                                RESOURCE__structure str = copy.structure;
-                                Console.Log( $"state: { copy.state }" );
-                                Console.Log( $"actual_need_content: { copy.actual_need_content }" );
-                                Console.Log( $"level_pre_allocation: { copy.level_pre_allocation }" );
-                                Console.Log( $"structure_game_object: { copy.structure_game_object }" );
-
-                                
-
-                                if( copy?.structure_game_object != null )
-                                    {
-                                            Console.Log( $"     structure_game_object parent is container_to_instanciate: { copy.structure_game_object.transform.parent.gameObject == str.module_structures.manager.container_to_instanciate }" );
-                                            Console.Log( $" structure_game_object is active : { copy.structure_game_object.activeInHierarchy }" );
-                                    }
-
-
-
-                                Console.Log( $"      str.actual_content: { str.actual_content }" );
-                                Console.Log( $"      str.content_going_to: { str.content_going_to }" );
-                                Console.Log( $"      str.stage_getting_resource: { str.stage_getting_resource }" );
-                                Console.Log( $"      str.copies_deleted: { str.copies_deleted }" );
-                                Console.Log( $"      str.copies_deleted: { str.copies_deleted }" );
-                                Console.Log( $"      structure counts:" );
-                                Console.Log( $"            str.count_places_being_used_nothing: { str.count_places_being_used_nothing }" );
-                                Console.Log( $"            str.count_places_being_used_structure_data: { str.count_places_being_used_structure_data }" );
-                                Console.Log( $"            str.count_places_being_used_instance: { str.count_places_being_used_instance }" );
-
-                            }
+                        
 
 
                     }

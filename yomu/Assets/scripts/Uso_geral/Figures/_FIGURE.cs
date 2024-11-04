@@ -9,8 +9,8 @@ public static class FIGURE {
 
                 CONTROLLER__errors.Verify( ( _image == null ), $"Tried to get the figure image in the component { _name_component } but the image was null" );
 
-                if( _image.reference_level_pre_allocation_image == Resource_image_content.nothing )
-                    { _image.reference_level_pre_allocation_image = Resource_image_content.compress_data; }
+                if( _image.level_pre_allocation == Resource_image_content.nothing )
+                    { _image.level_pre_allocation = Resource_image_content.compress_data; }
 
                 Figure_image_component image_component = new Figure_image_component();
 

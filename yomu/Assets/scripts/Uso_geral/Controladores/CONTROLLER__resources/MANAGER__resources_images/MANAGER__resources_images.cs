@@ -98,7 +98,6 @@ public class MANAGER__resources_images {
 
 
 
-
                 switch( _image.stage_getting_resource ){
                     case Resources_getting_image_stage.waiting_to_start: return Handle_waiting_to_start( _image );
                         case Resources_getting_image_stage.getting_compress_low_quality_file: return Handle_getting_compress_low_quality_file( _image );
@@ -121,16 +120,18 @@ public class MANAGER__resources_images {
 
 
 
+
+
         private int Handle_waiting_to_start( RESOURCE__image _image ){
 
 
-                TOOL__resource_image.Verify( _image );
+                TOOL__resource_image.Verify_image( _image );
 
                 #if UNITY_EDITOR
 
                     //** no editor nao tem low_quality
 
-                    if( _image.final_resource_state == Resource_image_content.nothing )
+                    if( _image.content_going_to == Resource_image_content.nothing )
                         { _image.stage_getting_resource = Resources_getting_image_stage.finished;  } 
                         else 
                         { _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_get_compress_file; }
@@ -140,8 +141,22 @@ public class MANAGER__resources_images {
                 #endif
 
 
+                // --- VERIFICA SE PRECISA TER
+                if( _image.data_size < 2_000 )
+                    {
+                        // --- TOO SMALL 
+                        if( _image.content_going_to == Resource_image_content.nothing )
+                            { _image.stage_getting_resource = Resources_getting_image_stage.finished; } 
+                            else 
+                            { _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_get_compress_file; }
+
+                        return 0;
+
+                    }
+
+
                 if ( task_getting_compress_low_quality_file != null )
-                    { return 0; }
+                    { return 0; } // fica esperando?
 
 
                 // --- GET WEBP
@@ -154,7 +169,7 @@ public class MANAGER__resources_images {
                 if( _image.single_image != null )
                     { task_getting_compress_low_quality_file.fn_multithread = ( Task_req req ) => { TASK_REQ.Add_single_data( req, _image.module_images.Get_single_data( _image.main_folder, ( _image.path_locator + "_low_quality" )  ) ); }; }  // --- SINGLE IMAGE
                     else
-                    { task_getting_compress_low_quality_file.fn_multithread = ( Task_req req )=> { TASK_REQ.Add_single_data( req, _image.module_images.Get_multiple_data( _image.main_folder, ( _image.path_locator + "_low_quality" ), _image.number_images ) ); }; } // --- MULTIPLES IMAGES
+                    { task_getting_compress_low_quality_file.fn_multithread = ( Task_req req ) => { TASK_REQ.Add_single_data( req, _image.module_images.Get_multiple_data( _image.main_folder, ( _image.path_locator + "_low_quality" ), _image.number_images ) ); }; } // --- MULTIPLES IMAGES
 
                 _image.stage_getting_resource = Resources_getting_image_stage.getting_compress_low_quality_file;
 
@@ -163,12 +178,27 @@ public class MANAGER__resources_images {
         }
 
 
+        public byte[] Get_low_quality_bytes_single( RESOURCE__image _image ){
+
+            return _image.module_images.Get_single_data( _image.main_folder, ( _image.path_locator + "_low_quality" ) );
+
+        }
+
+        public byte[][] Get_low_quality_byte_arrays_multiples( RESOURCE__image _image ){
+
+            return _image.module_images.Get_multiple_data( _image.main_folder, ( _image.path_locator + "_low_quality" ), _image.number_images );
+
+        }
+
+        
+
+
         private int Handle_getting_compress_low_quality_file( RESOURCE__image _image ){
 
 
                 CONTROLLER__errors.Verify( ( task_getting_compress_low_quality_file == null ), $"the image { _image.name } was as getting_compress_low_quality_file but the task_req is null" );
 
-                if( !!!(task_getting_compress_low_quality_file.finalizado) )
+                if( !!!( task_getting_compress_low_quality_file.finalizado ) )
                     { return 0; }
 
                 // --- JA PEGOU A IMAGEM
@@ -184,14 +214,15 @@ public class MANAGER__resources_images {
                         byte[][] webps = ( byte[][] ) task_getting_compress_low_quality_file.dados[ 0 ];
                         for( int webp_index = 0 ; webp_index < _image.multiples_images.Length ; webp_index++ )
                             { _image.multiples_images[ webp_index ].image_low_quality_compress = webps[ webp_index ]; }
+
                     } 
 
                 task_getting_compress_low_quality_file = null;
 
 
                 // ** se so precisar dos dados é isso ai
-                if( _image.final_resource_state == Resource_image_content.nothing )
-                    { _image.stage_getting_resource = Resources_getting_image_stage.finished; return 0; } // ** sempre tem o webp
+                if( _image.content_going_to == Resource_image_content.nothing )
+                    { _image.stage_getting_resource = Resources_getting_image_stage.finished; return 0; } // ** sempre tem o webp?
                 
                 _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_get_compress_file;
 
@@ -260,10 +291,10 @@ public class MANAGER__resources_images {
                 //mark 
                 // ** se usar somente png pode pegar height e length aqui
 
-                _image.current_content = Resource_image_content.compress_data;
+                _image.actual_content = Resource_image_content.compress_data;
 
                 // ** se so precisar dos dados é isso ai
-                if( _image.final_resource_state == Resource_image_content.compress_data )
+                if( _image.content_going_to == Resource_image_content.compress_data )
                     { 
                         Console.Log("terminou de pegar compress data");
                         
@@ -315,38 +346,6 @@ public class MANAGER__resources_images {
                 return weight;
 
 
-
-
-                // // ** se precisar criar uma nova texture grande a imagem vai para getting texture, se o sistema conseguir colocar essa imagem em uma texture já exisstente ela vai direto para waiting to pass e locka a texture aqui 
-
-                // if( task_getting_texture != null )
-                //     { return 0; }
-
-                // bool precisa_criar = false;
-
-                // if( _image.multiples_images == null )
-                //     { precisa_criar = textures_manager.Get_texture( _image.single_image ); } // --- SINGLE
-                //     else
-                //     { for( int texture_index = 0 ; texture_index < _image.multiples_images.Length ; texture_index++ ){ precisa_criar |= textures_manager.Get_texture( _image.multiples_images[ texture_index ] ); }} // --- MULTIPLES
-
-                // // ** isso indica que tem uma texture quye precisa ser feita
-                // if( !!!( precisa_criar ) )
-                //     { 
-                //         _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_apply_texture;  
-                //         return 0; 
-                //     }
-
-                // // --- PRECISA CRIAR 
-
-
-                // task_getting_texture = CONTROLLER__tasks.Pegar_instancia().Get_task_request( "task_getting_texture" ); 
-                // task_getting_texture.fn_single_thread = ( Task_req req ) => { textures_manager.Create_textures(); };
-
-                // _image.stage_getting_resource = Resources_getting_image_stage.getting_texture;
-
-                // return 1;
-                
-
         }
 
 
@@ -378,9 +377,9 @@ public class MANAGER__resources_images {
                 task_passing_to_texture = CONTROLLER__tasks.Pegar_instancia().Get_task_request( "task_passing_to_texture" );
 
                 if( _image.single_image != null )
-                    { task_passing_to_texture.fn_multithread = ( Task_req req )=> { TOOL__loader_texture.Transfer_data_PNG( _image.single_image.image_compress, _image.single_image.texture_exclusiva_native_array );  }; }  // --- SINGLE IMAGE
+                    { task_passing_to_texture.fn_multithread = ( Task_req req ) => { TOOL__loader_texture.Transfer_data_PNG( _image.single_image.image_compress, _image.single_image.texture_exclusiva_native_array );  }; }  // --- SINGLE IMAGE
                     else
-                    { task_passing_to_texture.fn_multithread = ( Task_req req )=> { foreach( RESOURCE__image_data data in _image.multiples_images ){ TOOL__loader_texture.Transfer_data_PNG( data.image_compress, data.texture_exclusiva_native_array );   }; }; } // --- MULTIPLES _IMAGES
+                    { task_passing_to_texture.fn_multithread = ( Task_req req ) => { foreach( RESOURCE__image_data data in _image.multiples_images ){ TOOL__loader_texture.Transfer_data_PNG( data.image_compress, data.texture_exclusiva_native_array );   }; }; } // --- MULTIPLES _IMAGES
 
                 _image.stage_getting_resource = Resources_getting_image_stage.passing_data_to_texture;
 
@@ -420,7 +419,7 @@ public class MANAGER__resources_images {
                 // ** imagem foi passada para a texture
 
                 task_passing_to_texture = null;
-                _image.current_content = Resource_image_content.texture;
+                _image.actual_content = Resource_image_content.texture;
                 _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_apply_texture;
 
                 return 0; 

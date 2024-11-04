@@ -1,20 +1,18 @@
 using UnityEngine;
 
-/*      ref_1 ----
-                    |_______  image
-        ref_2 ----                       */
-
 
 public class RESOURCE__image_ref {
 
+
+
         public RESOURCE__image_ref( RESOURCE__image _image, Resource_image_content _level_pre_allocation ){ 
 
-            if( _image == null  )
-                { CONTROLLER__errors.Throw( "Tried to creat a image ref but the image comes null" ); }
 
-            image = _image;
-            module = _image.module_images;
-            reference_level_pre_allocation_image = _level_pre_allocation;
+                CONTROLLER__errors.Verify( ( _image == null  ), "Tried to creat a image ref but the image comes null" ); 
+            
+                image = _image;
+                module = _image.module_images;
+                level_pre_allocation = _level_pre_allocation;
             
         }
 
@@ -23,79 +21,47 @@ public class RESOURCE__image_ref {
         public RESOURCE__image image;
         public MODULE__context_images module;
         public int image_slot_index;
+
+        public bool ref_deleted;
         
 
-
-        // ** define se esta com os recursos completos ou minimos 
-        public RESOURCE__image_ref_state ref_state; // ** precisa?
-        
-
-        public Resource_image_content reference_level_pre_allocation_image;
+        // public Resource_image_content reference_level_pre_allocation_image;
 
 
-        
 
+        public Resource_state state;
+
+        public Resource_image_content level_pre_allocation; // minimun 
+        public Resource_image_content actual_need_content;
+
+
+
+    
         // --- METODOS QUE VAO PARA O MODULO
 
 
-        public UnityEngine.Sprite Get_sprite(){ return module.Get_sprite( this );
+        public UnityEngine.Sprite Get_sprite(){ return module.Get_sprite( this ); }
+        public Texture Get_texture(){ return module.Get_texture( this ); }
 
-                // // ** talvez devolver uma sprite normal
-                // if( ref_state == RESOURCE__image_ref_state.ref_closed )
-                //     { CONTROLLER__errors.Throw( $"try to get the sprite in { localizador } but the ref is closed" ); }
-                
-                // return null;
-                // //return image.Get_sprite();
-            
-        }
+
+        private void Guaranty_ref(){ if( ref_deleted ){ CONTROLLER__errors.Throw( $"Tried to use ref { localizador } but the ref was deleted" ); } }
+
+        // ** DOWN
 
         
-        public Texture Get_texture(){ return module.Get_texture( this );
+        public void Delete(){ Guaranty_ref(); module.Delete( this ); } 
+        public void Unload(){ Guaranty_ref(); module.Unload( this ); }
+        public void Deactivate(){ Guaranty_ref(); module.Deactivate( this ); }
+        public void Deinstanciate(){ Guaranty_ref(); module.Deinstanciate( this ); }
 
-            
-            // // ** talvez devolver uma sprite normal
-            // if( ref_state == RESOURCE__image_ref_state.ref_closed )
-            //     { CONTROLLER__errors.Throw( $"try to get the sprite in { localizador } but the ref is closed" ); }
-            
-            //     //return image.Get_texture();
+        // ** UP
 
-            // return null;
-
-        }
-
-        
-
-        // ** imagem vai ser deletada completamente 
-        public void Delete(){ module.Delete( this );
-
-            // image.Delete( this ); 
-            // ref_state = RESOURCE__image_ref_state.ref_closed;
-
-        } 
-
-        // ** dados vao ser perdidos, mas a referencia da imagem volta 
-        public void Unload(){ module.Unload( this ); }
-
-        // ** volta para o minimo 
-        public void Free(){ module.Free( this ); }
-
-
-        // --- PEGAR RECURSOS
-
-        // ** sinaliza que a imagem pode carregar o minimo 
         public void Load(){ module.Load( this ); }
+        public void Activate(){ module.Activate( this ); }
+        public void Instanciate(){ module.Instanciate( this ); }
 
-        // ** sinaliza que pode começar a pegar a texture
-        public void Get_ready(){ module.Get_ready( this ); }
-
-
-
-
-        public void Change_level_pre_allocation( Resource_image_content _new_pre_alloc ){
-
-
-
-        }
+    
+        public void Change_level_pre_allocation( Resource_image_content _new_pre_alloc ){}
 
 
 

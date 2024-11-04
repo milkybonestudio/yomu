@@ -13,12 +13,17 @@ public class RESOURCE__image_data {
 
             
 
+
+
             // ** por hora nao vai ter texture alloc, vai ser somente 1 texture para cada 
             // ** depois começar a usar 
             public byte[] image_compress;
             public Texture2D texture_exclusiva;
             public NativeArray<Color32> texture_exclusiva_native_array;
             public Sprite sprite;
+
+
+
 
             // ** usar depois
             public Texture_allocated texture_allocated;

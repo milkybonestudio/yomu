@@ -3,12 +3,9 @@
 public static class TOOL__resource_image {
 
 
-        public static void Verify( RESOURCE__image image ){
+        public static void Verify_image( RESOURCE__image image ){
 
 
-                if( image.level_pre_allocation_image == Resource_image_content.not_give )
-                    { CONTROLLER__errors.Throw( $"In the image request { image.name } was not give the level of pre allocation" ); }
-                
                 if( image.multiples_images == null && image.single_image == null )
                     { CONTROLLER__errors.Throw( $"In the image request { image.name } was not given the image data" ); }
 
@@ -16,7 +13,7 @@ public static class TOOL__resource_image {
                     { CONTROLLER__errors.Throw( $"In the image request { image.name } was given single and multiples images" ); }
 
 
-                if( image.current_content == Resource_image_content.nothing )
+                if( image.actual_content == Resource_image_content.nothing )
                     {
                         if( image.single_image!= null )
                             { 
@@ -37,6 +34,38 @@ public static class TOOL__resource_image {
                 return;
 
         }
+
+
+        public static void Verify_image_ref ( RESOURCE__image_ref image_ref ){
+
+
+
+                return;
+
+        }
+        
+
+
+
+
+
+        public static void Increase_count( RESOURCE__image _image, Resource_image_content _content ){ Change( _image, _content, 1 ); }
+        public static void Decrease_count( RESOURCE__image _image, Resource_image_content _content ){ Change( _image, _content, -1 ); }
+
+
+        public static void Change( RESOURCE__image _image, Resource_image_content _content, int _value ){
+
+                
+                switch( _content ){
+
+                    case Resource_image_content.compress_data: _image.count_places_being_used_compress_data += _value; return;
+                    case Resource_image_content.nothing: _image.count_places_being_used_compress_data += _value; return;
+                    case Resource_image_content.sprite: _image.count_places_being_used_sprite += _value; return;
+                    
+                }
+
+        }
+
 
 
 

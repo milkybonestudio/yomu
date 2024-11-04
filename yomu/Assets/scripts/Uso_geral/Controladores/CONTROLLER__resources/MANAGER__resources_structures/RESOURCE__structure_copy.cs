@@ -5,6 +5,11 @@ using UnityEngine;
 public class RESOURCE__structure_copy {
 
 
+        //mark
+        // ** tem que ver o reajuste depois
+        // ** e usar o delete do dic quando acabar as referencias 
+
+
         public RESOURCE__structure_copy( RESOURCE__structure _structure, Resource_structure_content _level_pre_allocation, int _RESOURCE_index ){
 
             structure = _structure;
@@ -27,10 +32,7 @@ public class RESOURCE__structure_copy {
 
         public Resource_state state;
 
-        
         public Resource_structure_content level_pre_allocation; // minimun 
-
-
         public Resource_structure_content actual_need_content;
 
 
@@ -83,18 +85,6 @@ public class RESOURCE__structure_copy {
                 -> deinstanciate : ok
                 -> deactivate : ok
                 -> delete : ok
-
-
-
-         erros: 
-            instanciate -> deinstanciate ( ok ) -> instanciate ( not ) RESOLVIDO
-            instanciate -> unload : gameobject is return to container but the pre_alloc_level is nothing RESOLVED
-
-            instanciate -> instanciate -> unload -> load ( nao carrega minimo ) resolvido
-            instanciated -> unload -> load [ ok (agora) ] -> instanciated -> unload -> load ( nao carrega )  revolvido
-
-
-
         
         */
 
