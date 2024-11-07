@@ -16,6 +16,8 @@ public class CONTROLLER__errors {
 
     private void Throw_intern( string _message ){
 
+        Console.LogError( "ERROR UPDATE LOG" );
+        Console.Update();
         throw new Exception( _message );
 
     }

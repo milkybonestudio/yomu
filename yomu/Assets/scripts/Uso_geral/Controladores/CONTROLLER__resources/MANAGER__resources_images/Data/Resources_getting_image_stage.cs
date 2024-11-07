@@ -2,6 +2,7 @@
 
 public enum Resources_getting_image_stage {
 
+    // ** waiting to start start in the sequence of recources. Need to have nothing to be here
     waiting_to_start, // ** get webp
     
             getting_compress_low_quality_file,
@@ -24,8 +25,12 @@ public enum Resources_getting_image_stage {
 
             waiting_to_create_sprite, // main
 
-
-
     finished,
+
+
+    // ** only down
+        waiting_to_destroy_current_resource,
+
+        //destroying_texture,
 
 }

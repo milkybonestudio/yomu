@@ -25,8 +25,8 @@ unsafe public class RESOURCE__image {
 
                 stage_getting_resource = Resources_getting_image_stage.finished;
                 actual_content = Resource_image_content.nothing;
-                //current_state = Resource_state.nothing;
-
+                content_going_to = Resource_image_content.nothing;
+                
 
                 width = locator.width;
                 height = locator.height;
@@ -96,22 +96,9 @@ unsafe public class RESOURCE__image {
         
         // --- IMAGE DATA 
 
-        public Resource_state current_final_state; // ** can not have going_to 
-        // public Resource_state current_state;  
-        
-
 
         public Resource_image_content content_going_to; // se estiver em uma transicao de recursos é o ponto final 
         public Resource_image_content actual_content; // ** o recurso atual
-
-
-
-        // public Resource_structure_content content_going_to;
-        // public Resource_structure_content actual_content;
-
-        // public Resources_getting_structure_stage stage_getting_resource;
-
-
 
     
     
@@ -131,6 +118,7 @@ unsafe public class RESOURCE__image {
                    
         public int count_places_being_used_nothing; // precisa de nada
         public int count_places_being_used_compress_data; // precisa do minimo
+        public int count_places_being_used_compress_low_quality_data; // precisa do minimo
         public int count_places_being_used_sprite; // precisa de tudo
 
 

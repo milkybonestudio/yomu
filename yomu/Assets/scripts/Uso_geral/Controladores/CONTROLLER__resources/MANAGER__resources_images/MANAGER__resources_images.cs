@@ -96,29 +96,95 @@ public class MANAGER__resources_images {
                 // true => pegou uma acao, bloquear
                 // ** se veio aqui tem coisa para fazer
 
+                // ** VERIFY IF HAVE SOMEWHERE TO GO
+                if( _image.content_going_to == _image.actual_content )
+                    { CONTROLLER__errors.Verify( (_image.stage_getting_resource != Resources_getting_image_stage.finished), "what" ); return 0; }
 
 
-                switch( _image.stage_getting_resource ){
-                    case Resources_getting_image_stage.waiting_to_start: return Handle_waiting_to_start( _image );
-                        case Resources_getting_image_stage.getting_compress_low_quality_file: return Handle_getting_compress_low_quality_file( _image );
-                            case Resources_getting_image_stage.waiting_to_get_compress_file: return Handle_waiting_to_get_compress_file( _image );
-                                case Resources_getting_image_stage.getting_compress_file: return Handle_getting_compress_file( _image );
-                                    case Resources_getting_image_stage.waiting_to_get_texture: return Handle_waiting_to_get_texture( _image );
-                                        case Resources_getting_image_stage.getting_texture: return Handle_getting_texture( _image );
-                                            case Resources_getting_image_stage.waiting_to_pass_data_to_texture: return Handle_waiting_to_pass_data_to_texture( _image );
-                                                case Resources_getting_image_stage.passing_data_to_texture: return Handle_passing_data_to_texture( _image );
-                                                    case Resources_getting_image_stage.waiting_to_apply_texture: return Handle_waiting_to_apply_texture( _image );
-                                                        case Resources_getting_image_stage.applying_texture: return Handle_applying_texture( _image );
-                                                            case Resources_getting_image_stage.waiting_to_create_sprite: return Handle_waiting_to_create_sprite( _image );
-                                                                case Resources_getting_image_stage.finished: return 0; // ** tem a tex com os dados já nela
+                // ** o ponto final sempre vai ser nothing, compress_data, sprite
 
-                }
+                
+                if( _image.content_going_to > _image.actual_content )
+                    {
+                        // --- GET RESOURCE
+
+                        switch( _image.stage_getting_resource ){
+                            case Resources_getting_image_stage.waiting_to_start: return Handle_waiting_to_start( _image );
+                                case Resources_getting_image_stage.getting_compress_low_quality_file: return Handle_getting_compress_low_quality_file( _image );
+                                    case Resources_getting_image_stage.waiting_to_get_compress_file: return Handle_waiting_to_get_compress_file( _image );
+                                        case Resources_getting_image_stage.getting_compress_file: return Handle_getting_compress_file( _image );
+                                            case Resources_getting_image_stage.waiting_to_get_texture: return Handle_waiting_to_get_texture( _image );
+                                                case Resources_getting_image_stage.getting_texture: return Handle_getting_texture( _image );
+                                                    case Resources_getting_image_stage.waiting_to_pass_data_to_texture: return Handle_waiting_to_pass_data_to_texture( _image );
+                                                        case Resources_getting_image_stage.passing_data_to_texture: return Handle_passing_data_to_texture( _image );
+                                                            case Resources_getting_image_stage.waiting_to_apply_texture: return Handle_waiting_to_apply_texture( _image );
+                                                                case Resources_getting_image_stage.applying_texture: return Handle_applying_texture( _image );
+                                                                    case Resources_getting_image_stage.waiting_to_create_sprite: return Handle_waiting_to_create_sprite( _image );
+                                                                        case Resources_getting_image_stage.finished: return 0; // ** tem a tex com os dados já nela
+                                                                           default: CONTROLLER__errors.Throw( $"Nao foi achado { _image.stage_getting_resource }" ); break;
+
+                        }
+
+                    }
+                    else
+                    {
+                        // --- DOWN RESOURCE
+
+                        int weight = 0;
+
+                        if( _image.actual_content == Resource_image_content.sprite )
+                            { 
+
+                                Destroy_texture( _image ); 
+                                weight += 1;
+
+                                _image.actual_content = Resource_image_content.compress_data;
+
+                                if( _image.content_going_to == _image.actual_content )
+                                    { return weight; }
+
+                            }
+
+                        if( Resource_image_content.sprite > _image.actual_content  && _image.actual_content > Resource_image_content.nothing )
+                            {
+                                Remove_compress_data( _image );
+
+                                _image.actual_content = Resource_image_content.nothing;
+
+                                if( _image.content_going_to == _image.actual_content )
+                                    { return weight; }
+
+                            }
+
+
+                    }
+
 
                 return 0;
 
         }
 
 
+        private void Remove_compress_data( RESOURCE__image _image ){
+
+        }
+
+
+        private void Destroy_texture( RESOURCE__image _image ){
+
+                if( _image.single_image != null )
+                    {
+                        Console.Log( "Veio destruir texture" );
+                        GameObject.Destroy( _image.single_image.texture_exclusiva );
+                        _image.single_image.texture_exclusiva_native_array.Dispose();
+                    }
+                    else
+                    {
+
+                    }
+                
+
+        }
 
 
 
@@ -160,6 +226,8 @@ public class MANAGER__resources_images {
 
 
                 // --- GET WEBP
+                
+                _image.stage_getting_resource = Resources_getting_image_stage.getting_compress_low_quality_file;
 
                 task_getting_compress_low_quality_file = CONTROLLER__tasks.Pegar_instancia().Get_task_request( "task_getting_compress_low_quality_file" );
                 task_getting_compress_low_quality_file.prioridade = 1000;
@@ -171,7 +239,6 @@ public class MANAGER__resources_images {
                     else
                     { task_getting_compress_low_quality_file.fn_multithread = ( Task_req req ) => { TASK_REQ.Add_single_data( req, _image.module_images.Get_multiple_data( _image.main_folder, ( _image.path_locator + "_low_quality" ), _image.number_images ) ); }; } // --- MULTIPLES IMAGES
 
-                _image.stage_getting_resource = Resources_getting_image_stage.getting_compress_low_quality_file;
 
                 return weight;
 
@@ -299,7 +366,8 @@ public class MANAGER__resources_images {
                         Console.Log("terminou de pegar compress data");
                         
                         _image.stage_getting_resource = Resources_getting_image_stage.finished; 
-                        return 0; }
+                        return 0; 
+                    }
                     
                 _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_get_texture;
                 
@@ -340,6 +408,7 @@ public class MANAGER__resources_images {
 
                     }
 
+                _image.actual_content = Resource_image_content.texture;
                 _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_pass_data_to_texture;
 
 
@@ -351,16 +420,6 @@ public class MANAGER__resources_images {
 
 
         private int Handle_getting_texture( RESOURCE__image image ){ 
-
-            //mark 
-            // ** por hora nao vai usar
-
-            // if( !!!( task_getting_texture.finalizado ) )
-            //     { return 0; }
-
-            // task_getting_texture = null;
-
-            // image.stage_getting_resource = Resources_getting_image_stage.waiting_to_pass_data_to_texture;
                         
             throw new Exception( "nao era para usar" );
             
@@ -383,28 +442,8 @@ public class MANAGER__resources_images {
 
                 _image.stage_getting_resource = Resources_getting_image_stage.passing_data_to_texture;
 
-                // if( _image.single_image != null )
-                //     { 
-                //         // --- SINGLE IMAGE
-                //         task_passing_to_texture.fn_multithread = ( Task_req req )=> { TOOL__loader_texture.Transfer_data_PNG( _image.single_image.image_compress, _image.single_image.texture_exclusiva_native_array );  }; 
-                //         // lock now
-                //         textures_manager.Lock_image_passing_data( _image.single_image );
-                //         // will unlockr
-                //         task_passing_to_texture.fn_single_thread = ( Task_req _req ) => { textures_manager.Unlock_image_passing_data( _image.single_image ); };
-
-                //     } 
-                //     else
-                //     { 
-                //         // --- MULTIPLES _IMAGES
-                //         task_passing_to_texture.fn_multithread = ( Task_req req )=> { foreach( RESOURCE__image_data data in _image.multiples_images ){ TOOL__loader_texture.Transfer_data( data, Type_image.png ); }   }; 
-                //         // lock now
-                //         foreach( RESOURCE__image_data data in _image.multiples_images ){ textures_manager.Lock_image_passing_data( data ); }
-                //         // will unlock
-                //         task_passing_to_texture.fn_single_thread = ( Task_req req )=> { foreach( RESOURCE__image_data data in _image.multiples_images ){ textures_manager.Unlock_image_passing_data( data ); }   }; 
-                //     } 
-
-
-                return 0;
+ 
+                   return 0;
 
         }
 
@@ -419,7 +458,7 @@ public class MANAGER__resources_images {
                 // ** imagem foi passada para a texture
 
                 task_passing_to_texture = null;
-                _image.actual_content = Resource_image_content.texture;
+                _image.actual_content = Resource_image_content.texture_with_pixels_applied;
                 _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_apply_texture;
 
                 return 0; 
@@ -429,11 +468,6 @@ public class MANAGER__resources_images {
 
 
         private int Handle_waiting_to_apply_texture( RESOURCE__image _image ){
-
-                // tem que sinalizar que alguma texture já pode ser dado o apply. cada texture grande tem que ter o controle de quantas imagens precisam dar o ok para tudo dar certo
-
-                //mark
-                // ** por hora vai ter texture individual
 
                 Console.Log( "Handle_waiting_to_apply_texture" );
 
@@ -454,43 +488,12 @@ public class MANAGER__resources_images {
 
                     }
 
-                // ** por hora nao tem applying, como vao ser pequenas acredito que vai ser mais rapido
+                _image.actual_content = Resource_image_content.texture_with_pixels_applied;
                 _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_create_sprite;
                 return weight;
 
 
-                // if( task_applying_texture != null )
-                //     { return 0; }
-
-
-                // bool can_apply = false;
-                // RESOURCE__image_data data_ref = null;
-
-                // if( _image.single_image != null )
-                //     { data_ref = _image.single_image; }
-                //     else
-                //     { data_ref = _image.multiples_images[ 0 ]; }
-
-
-
-                // if( !!!( textures_manager.Verify_if_can_apply( data_ref ) ) )
-                //     { return 0; }
-
-
-                // //mark
-                // // eu nao sei o quao demorado vai ser para dar um apply em uma texture de 8k
-                // // a maior parte do tempo para uma texture pequena é a do sync com a gpu
-                // // ver depois e tomar uma decisao
-
-                // task_applying_texture = CONTROLLER__tasks.Pegar_instancia().Get_task_request( "task_applying_texture" );
-
-                // // ** vai garantir que mesmo que alguma outra imagem quiser passar dados ela não pode para garantir o estado
-                // textures_manager.Prepare_apply( data_ref );
-                // task_applying_texture.fn_single_thread = ( Task_req _req )=>{ data_ref.texture_allocated.texture.Apply(); textures_manager.Unlock_texture_apply( data_ref ); };
-                // _image.stage_getting_resource = Resources_getting_image_stage.applying_texture;
-
-                
-                
+                            
                 return 10;
 
         }
@@ -503,6 +506,7 @@ public class MANAGER__resources_images {
 
 
                 task_applying_texture = null;
+                _image.actual_content = Resource_image_content.texture_with_pixels_applied;
                 _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_create_sprite;
 
                 // tem que sinalizar que alguma texture já pode ser dado o apply. cada texture grande tem que ter o controle de quantas imagens precisam dar o ok para tudo dar certo
@@ -523,7 +527,7 @@ public class MANAGER__resources_images {
                     { weight = _image.multiples_images.Length; foreach( RESOURCE__image_data data in _image.multiples_images ){ data.sprite = Sprite.Create( data.texture_allocated.texture, new Rect( 0f, 0f, _image.width, _image.height ), new Vector2(0.5f, 0.5f), 100.0f ,0, SpriteMeshType.FullRect   ); }} // --- MULTIPLES IMAGES
 
 
-                // tem que sinalizar que alguma texture já pode ser dado o apply. cada texture grande tem que ter o controle de quantas imagens precisam dar o ok para tudo dar certo
+                _image.actual_content = Resource_image_content.sprite;
                 _image.stage_getting_resource = Resources_getting_image_stage.finished;
 
                 return weight;

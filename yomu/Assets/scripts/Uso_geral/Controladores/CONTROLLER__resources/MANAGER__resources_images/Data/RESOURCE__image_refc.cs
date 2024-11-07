@@ -9,10 +9,16 @@ public class RESOURCE__image_ref {
 
 
                 CONTROLLER__errors.Verify( ( _image == null  ), "Tried to creat a image ref but the image comes null" ); 
+                CONTROLLER__errors.Verify( ( ( _level_pre_allocation & ( Resource_image_content.compress_data | Resource_image_content.sprite | Resource_image_content.nothing  | Resource_image_content.compress_low_quality_data ) ) == 0   ), $"Resource not accept: { _level_pre_allocation }" ); 
+                
             
                 image = _image;
                 module = _image.module_images;
+
+                state = Resource_state.nothing;
+
                 level_pre_allocation = _level_pre_allocation;
+                actual_need_content = Resource_image_content.nothing;
             
         }
 
@@ -44,6 +50,49 @@ public class RESOURCE__image_ref {
         public Texture Get_texture(){ return module.Get_texture( this ); }
 
 
+
+        //teste
+
+        /*
+
+            getting slot: ok
+            not let create off level pre alloc: ok
+
+            create:
+                nothing: ok
+                //mark
+                low quality: 
+                compress: ok
+                sprite: ok
+
+            load: 
+                nothing: ok
+                low quality: 
+                compress data: ok
+                sprite: ok
+
+            
+            minimun: 
+                nothing: 
+                compress: 
+                sprite: 
+
+            Activate: 
+            Instanciate: 
+
+
+
+
+
+
+        
+        */
+
+
+
+
+
+
         private void Guaranty_ref(){ if( ref_deleted ){ CONTROLLER__errors.Throw( $"Tried to use ref { localizador } but the ref was deleted" ); } }
 
         // ** DOWN
@@ -58,7 +107,7 @@ public class RESOURCE__image_ref {
 
         public void Load(){ module.Load( this ); }
         public void Activate(){ module.Activate( this ); }
-        public void Instanciate(){ module.Instanciate( this ); }
+        public Sprite Instanciate(){ return module.Instanciate( this ); }
 
     
         public void Change_level_pre_allocation( Resource_image_content _new_pre_alloc ){}

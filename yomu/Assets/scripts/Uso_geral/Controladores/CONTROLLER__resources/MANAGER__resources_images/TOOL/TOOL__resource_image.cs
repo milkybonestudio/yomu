@@ -58,8 +58,9 @@ public static class TOOL__resource_image {
                 
                 switch( _content ){
 
+                    case Resource_image_content.nothing: _image.count_places_being_used_nothing += _value; return;
+                    case Resource_image_content.compress_low_quality_data: _image.count_places_being_used_compress_low_quality_data += _value; return;
                     case Resource_image_content.compress_data: _image.count_places_being_used_compress_data += _value; return;
-                    case Resource_image_content.nothing: _image.count_places_being_used_compress_data += _value; return;
                     case Resource_image_content.sprite: _image.count_places_being_used_sprite += _value; return;
                     
                 }

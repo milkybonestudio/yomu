@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 
@@ -59,11 +60,14 @@ unsafe public class Controlador : MonoBehaviour {
                     
                 }
 
+                image = GameObject.Find( "Tela/Container_teste/Image" ).GetComponent<Image>();
+
 
                 c =  CONTROLLER__resources.Get_instance();
 
-                image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.texture );
-                image_ref.Load();
+                c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.nothing );
+                image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.sprite );
+                //image_ref.Load();
 
 
                 // Debug.Log( "content: " + image_ref.image.current_content );
@@ -121,6 +125,8 @@ unsafe public class Controlador : MonoBehaviour {
 
         }
 
+        Image image;
+
         public void Update() {
 
                 
@@ -130,9 +136,47 @@ unsafe public class Controlador : MonoBehaviour {
                 controlador_tasks.Update();
 
                 int i = 0;
-                
-                if( Input.GetKeyDown( KeyCode.Alpha1 ) )
-                    { i++; Console.Log( image_ref.localizador ); }
+
+
+                // --- CHANGE PRE ALLOC
+
+
+
+
+                if( Input.GetKeyDown( KeyCode.X ) )
+                    { i++; }
+
+                // --- UP
+
+                if( Input.GetKeyDown( KeyCode.Q ) )
+                    { i++; image_ref.Load(); }
+
+               if( Input.GetKeyDown( KeyCode.W ) )
+                    { i++; image_ref.Activate(); }
+
+               if( Input.GetKeyDown( KeyCode.E ) )
+                    { i++; image.sprite = image_ref.Instanciate(); }
+
+
+                // --- DOWN
+
+
+                if( Input.GetKeyDown( KeyCode.A ) )
+                    { i++; image_ref.Unload(); }
+
+               if( Input.GetKeyDown( KeyCode.S ) )
+                    { i++; image_ref.Deactivate(); }
+
+               if( Input.GetKeyDown( KeyCode.D ) )
+                    { i++; image_ref.Deinstanciate(); image.sprite = null; }
+
+
+
+
+
+               if( Input.GetKeyDown( KeyCode.I ) )
+                    { i++; image.sprite = image_ref.image.single_image.sprite; }
+
 
                 
 
@@ -142,6 +186,46 @@ unsafe public class Controlador : MonoBehaviour {
                     
                         Console.Clear();
                         Console.Log( "<Color=lightBlue>-------------------</Color>" );
+
+                        Console.Log( $" state: { image_ref.state } " );
+                        Console.Log( $" actual_need_content: { image_ref.actual_need_content } " );
+                        Console.Log( $" level_pre_allocation: { image_ref.level_pre_allocation } " );
+                        Console.Log( $" ref_deleted: { image_ref.ref_deleted } " );
+                        Console.Log( $" module: { image_ref.module } " );
+                        Console.Log( $" image: { image_ref.image } " );
+                        Console.Log( $" image_slot_index: { image_ref.image_slot_index } " );
+
+                        RESOURCE__image image = image_ref.image;
+
+                        if( image != null )
+                            {
+                                Console.Log( "Image:" );
+                                Console.Log( $"   actual_content: { image.actual_content }" );
+                                Console.Log( $"   content_going_to: { image.content_going_to }" );
+                                Console.Log( $"   stage_getting_resource: { image.stage_getting_resource }" );
+
+                                // -- image 
+
+                                if( image.single_image != null )
+                                    {
+
+                                        if(  image.single_image.image_compress != null )
+                                            { Console.Log( $"     image_compress.Length:  { image.single_image.image_compress.Length }" ); }
+
+
+                                        Console.Log( $"     single_image.sprite: { image.single_image.sprite }" );
+
+                                        if( image.single_image.texture_exclusiva != null )
+                                            { Console.Log( $"     tamanho: { image.single_image.texture_exclusiva.width * image.single_image.texture_exclusiva.height }" ); }
+                                
+                                    }
+
+                                Console.Log( $"     counts: " );
+                                Console.Log( $"         image.count_places_being_used_nothing: { image.count_places_being_used_nothing }" );
+                                Console.Log( $"         image.count_places_being_used_compress_data: { image.count_places_being_used_compress_data }" );
+                                Console.Log( $"         image.count_places_being_used_sprite: { image.count_places_being_used_sprite }" );
+                            }
+                        
                         
 
 
