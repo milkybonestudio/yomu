@@ -6,6 +6,12 @@ public static class TASK_REQ {
 
 
 
+    public static void Cancel_task( ref Task_req _req_ref ){
+
+            _req_ref.task_bloqueada = true;
+            _req_ref = null;
+    }
+
 
 
 

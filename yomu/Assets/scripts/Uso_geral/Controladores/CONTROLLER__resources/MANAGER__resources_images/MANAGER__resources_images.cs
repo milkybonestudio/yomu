@@ -38,11 +38,19 @@ public class MANAGER__resources_images {
 
 
         // --- TASK REQUESTS
+
+        //mark
+        // ** por hora assumir que task_getting_texture, e task_applying_texture nao sao tasks e váo ser feitas aqui
+        // ** o sistema tem que aceitar mudacas, entáo depois quando precisar implementar náo vai ser muito complicado
+
         public Task_req task_getting_compress_low_quality_file;
         public Task_req task_getting_compress_file;
-        public Task_req task_getting_texture; // ** somente se nao tiver o tamanho exato na pull
+
+            // public Task_req task_getting_texture; // ** somente se nao tiver o tamanho exato na pull
+
         public Task_req task_passing_to_texture;
-        public Task_req task_applying_texture;
+
+            public Task_req task_applying_texture;
 
 
 
@@ -80,9 +88,6 @@ public class MANAGER__resources_images {
 
                 if( task_getting_compress_file != null )
                     { return !!!( task_getting_compress_file.finalizado ); }
-
-                if( task_getting_texture != null )
-                    { return !!!( task_getting_texture.finalizado ); }
 
                 if( task_passing_to_texture != null )
                     { return !!!( task_passing_to_texture.finalizado ); }

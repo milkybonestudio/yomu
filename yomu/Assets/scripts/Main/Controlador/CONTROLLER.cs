@@ -66,7 +66,7 @@ unsafe public class Controlador : MonoBehaviour {
                 c =  CONTROLLER__resources.Get_instance();
 
                 c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.nothing );
-                image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.sprite );
+                image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.compress_low_quality_data );
                 //image_ref.Load();
 
 
@@ -107,8 +107,6 @@ unsafe public class Controlador : MonoBehaviour {
                 
 
                 
-
-
                 // Images_container_result container =  Images_container_creator.Construct( "C:\\Users\\User\\Desktop\\yomu_things\\teste" );
 
                 // if( Verifier_image_container.Verify( "C:\\Users\\User\\Desktop\\yomu_things\\teste", System.IO.File.ReadAllLines("C:\\Users\\User\\Desktop\\yomu_things\\container.txt") ))
@@ -137,10 +135,7 @@ unsafe public class Controlador : MonoBehaviour {
 
                 int i = 0;
 
-
                 // --- CHANGE PRE ALLOC
-
-
 
 
                 if( Input.GetKeyDown( KeyCode.X ) )

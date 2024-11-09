@@ -142,11 +142,6 @@ public class MODULE__context_images {
 
 
 
-
-
-
-
-
         public Sprite Get_sprite( RESOURCE__image_ref _ref ){ 
             
             //Instanciate();
@@ -228,10 +223,10 @@ public class MODULE__context_images {
                     { 
                         // --- MULTIPLES
 
-                        for( int index_iamge_data = 0 ; index_iamge_data < image.multiples_images.Length ; index_iamge_data++ )
+                        for( int index_image_data = 0 ; index_image_data < image.multiples_images.Length ; index_image_data++ )
                             { 
-                                image.multiples_images[ index_iamge_data ].image_compress = null;
-                                manager.textures_manager.Liberate_texture( image.multiples_images[ index_iamge_data ] );
+                                image.multiples_images[ index_image_data ].image_compress = null;
+                                manager.textures_manager.Liberate_texture( image.multiples_images[ index_image_data ] );
                             } 
                     }
                 
@@ -249,8 +244,9 @@ public class MODULE__context_images {
 
             // ** FORCE TO GO TO 
 
-
         }
+
+
 
 
         public void Update_resource_level( RESOURCE__image _image ){
@@ -258,220 +254,86 @@ public class MODULE__context_images {
 
                 Console.Log( "veio: { Update_resource_level }" );
 
+                Verify_stage_for_content( _image );
+
+                Resources_getting_image_stage blocked_for_now = ( Resources_getting_image_stage.getting_texture | Resources_getting_image_stage.applying_texture );
+
+                CONTROLLER__errors.Verify( ( int ) ( _image.stage_getting_resource & blocked_for_now  ), $"Tried to update resources level, but the current resources stage is not allowed: { _image.stage_getting_resource }" );
 
                 if( _image.count_places_being_used_sprite > 0 )
-                    { Update_resource_level_SPRITE( _image ); return; }
+                    { Going_to_resource_level_SPRITE( _image ); return; }
 
                 if( _image.count_places_being_used_compress_data > 0 )
                     {  Update_resource_level_COMPRESS_LOW_QUALITY_DATA( _image ); return; }
 
 
                 if( _image.count_places_being_used_compress_data > 0 )
-                    {  Update_resource_level_COMPRESS_DATA( _image ); return; }
+                    {  Going_to_resource_level_COMPRESS_DATA( _image ); return; }
 
                 
                 if( _image.count_places_being_used_nothing > 0 )
-                    { Update_resource_level_NOTHING( _image ); return; }
+                    { Going_to_resource_level_NOTHING( _image ); return; }
 
                 // ** imagem perdeu todas as referencias, tem que deletar tudo
                 
 
         }
 
-
-        private void Update_resource_level_COMPRESS_LOW_QUALITY_DATA( RESOURCE__image _image ){}
-
-
+        
+        private int Going_to_resource_level_NOTHING( RESOURCE__image _image ){
 
 
+                if( _image.content_going_to == Resource_image_content.nothing )
+                    { return 0; } // ** ja nivelado
+
+                _image.content_going_to = Resource_image_content.nothing;
+
+                // --- UP                
+                // --- EQUAL
+
+                    if( _image.actual_content == Resource_image_content.nothing )
+                        { return Set_stage( _image, Resources_getting_image_stage.finished ); }
+
+                // --- DOWN
+
+                    Stop_task( _image );
+                    return Set_stage( _image, Resources_getting_image_stage.waiting_to_destroy_current_resource );
 
 
+        }
 
 
+       private int Update_resource_level_COMPRESS_LOW_QUALITY_DATA( RESOURCE__image _image ){
 
 
+                if( _image.content_going_to == Resource_image_content.compress_low_quality_data )
+                    { return 0; } // ** ja nivelado
+
+                _image.content_going_to = Resource_image_content.compress_low_quality_data;
 
 
+                // ** UP
 
-        private void Update_resource_level_SPRITE( RESOURCE__image _image ){
+                    if( _image.actual_content == Resource_image_content.nothing )
+                        { return Set_stage( _image, Resources_getting_image_stage.waiting_to_start ); }
 
 
-                Console.Log( "a" );
-            
-                // ** TEM QUE TER SPRITE 
-                if( _image.content_going_to == Resource_image_content.sprite )
-                    { return; } // ** ja nivelado
+                // ** EQUAL
 
-                Resource_image_content __FINAL_RESOURCE__ = Resource_image_content.sprite;
+                    if( _image.actual_content == Resource_image_content.compress_low_quality_data )
+                        {
+                            if( _image.stage_getting_resource == Resources_getting_image_stage.getting_compress_file )
+                                { return Set_stage_cancelling_task( _image, Resources_getting_image_stage.finished, ref manager.task_getting_compress_file ); }
 
+                            if( Verify_stage( _image, ( Resources_getting_image_stage.waiting_to_get_compress_file | Resources_getting_image_stage.waiting_to_destroy_current_resource ) ) )
+                                { return Set_stage( _image, Resources_getting_image_stage.finished ); }
+                        }
+
+                    
+                // ** DOWN
                 
-                if( _image.actual_content == Resource_image_content.sprite )
-                    {
-
-                        if( _image.stage_getting_resource == Resources_getting_image_stage.waiting_to_destroy_current_resource )
-                            {
-                                _image.stage_getting_resource = Resources_getting_image_stage.finished;
-                                _image.content_going_to = __FINAL_RESOURCE__;
-                                return;
-                            }   
-
-                        
-                        // _image.stage_getting_resource == Resources_getting_image_stage.finished;
-                        // _image.content_going_to = __FINAL_RESOURCE__;
-                        // return;
-
-                    }
-
-            
-                if( _image.actual_content == Resource_image_content.texture_with_pixels_applied )
-                    {
-
-                    }
-
-                    {
-
-                        if( _image.stage_getting_resource == Resources_getting_image_stage.waiting_to_destroy_current_resource )
-                            {
-                                _image.stage_getting_resource = Resources_getting_image_stage.finished;
-                                _image.content_going_to = __FINAL_RESOURCE__;
-                                return;
-                            }                        
-                        
-                        // _image.stage_getting_resource == Resources_getting_image_stage.finished;
-                        // _image.content_going_to = __FINAL_RESOURCE__;
-                        // return;
-
-                    }
-
-
-
-                // --- NOTHING
-                if( _image.actual_content == Resource_image_content.nothing )
-                    {
-
-                        if( _image.stage_getting_resource == Resources_getting_image_stage.waiting_to_start )
-                            { 
-                                // ** ja esta pegando a texture
-                                _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_start;
-                                _image.content_going_to = __FINAL_RESOURCE__;
-                                return; 
-                            } 
-                        
-                        if( _image.stage_getting_resource == Resources_getting_image_stage.finished )
-                            { 
-                                _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_start;
-                                _image.content_going_to = __FINAL_RESOURCE__;
-                                return; 
-                            } 
-
-                        
-                        if( _image.stage_getting_resource == Resources_getting_image_stage.getting_compress_low_quality_file )
-                            { 
-                                _image.stage_getting_resource = Resources_getting_image_stage.getting_compress_low_quality_file;
-                                _image.content_going_to = __FINAL_RESOURCE__;
-                                return; 
-                            } 
-
-                    }
-
-
-
-                // --- COMPRESS LOW QUALITY DATA
-                if( _image.actual_content == Resource_image_content.compress_low_quality_data )
-                    {
-
-                        if( _image.stage_getting_resource == Resources_getting_image_stage.getting_compress_file )
-                            { 
-                                // ** ja esta pegando a texture
-                                _image.content_going_to = __FINAL_RESOURCE__;
-                                return; 
-                            } 
-
-                        _image.stage_getting_resource = Resources_getting_image_stage.getting_compress_file;
-                        _image.content_going_to = __FINAL_RESOURCE__;
-                        return;
-                    }
-
-
-                // --- COMPRESS DATA
-                if( _image.actual_content == Resource_image_content.compress_data )
-                    {
-
-                        if( _image.stage_getting_resource == Resources_getting_image_stage.finished )
-                            { 
-                                // ** ja esta pegando a texture
-                                _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_get_texture;
-                                _image.content_going_to = __FINAL_RESOURCE__;
-                                return;
-                            } 
-
-
-
-                        if( _image.stage_getting_resource == Resources_getting_image_stage.getting_texture )
-                            { 
-                                // ** ja esta pegando a texture
-                                _image.content_going_to = __FINAL_RESOURCE__;
-                                return;
-                            } 
-
-
-
-                        if( _image.stage_getting_resource == Resources_getting_image_stage.waiting_to_get_texture )
-                            {
-                                _image.content_going_to = __FINAL_RESOURCE__;
-                                return;
-                            }
-                        
-
-                    }
-
-
-
-
-                // ** IF THIS EXIST IT IS SET TO GET DESTROYed
-
-                // --- TEXTURE
-                if( _image.actual_content == Resource_image_content.texture )
-                    {
-                        if( _image.stage_getting_resource == Resources_getting_image_stage.waiting_to_destroy_current_resource )
-                            {
-                                
-                                _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_pass_data_to_texture;
-                                _image.content_going_to = __FINAL_RESOURCE__;
-                                return;
-                            } 
-
-                    }
-
-                // --- TEXTURE WITH PIXELS
-                if( _image.actual_content == Resource_image_content.texture_with_pixels )
-                    {
-                        if( _image.stage_getting_resource == Resources_getting_image_stage.waiting_to_destroy_current_resource )
-                            { 
-                                // ** ja esta pegando a texture
-                                _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_apply_texture;
-                                _image.content_going_to = __FINAL_RESOURCE__;
-                                return;
-                            }
-
-                    }
-                
-                // --- TEXTURE APPLIED
-                if( _image.actual_content == Resource_image_content.texture_with_pixels_applied )
-                    {
-                        if( _image.stage_getting_resource == Resources_getting_image_stage.waiting_to_destroy_current_resource )
-                            { 
-                                // ** ja esta pegando a texture
-                                _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_create_sprite;
-                                _image.content_going_to = __FINAL_RESOURCE__;
-                                return;
-                            } 
-
-                    }
-
-
-
-                CONTROLLER__errors.Throw( $"The image { _image.path_locator } need to change to Sprite, but the actual content is: { _image.actual_content }, the going-to_content is : { _image.content_going_to } and the stage_getting_resource is: { _image.stage_getting_resource }" );
+                    Stop_task( _image );
+                    return Set_stage( _image, Resources_getting_image_stage.waiting_to_destroy_current_resource );
 
         }
 
@@ -479,165 +341,114 @@ public class MODULE__context_images {
 
 
 
-
-
-
-
-
-        private void Update_resource_level_COMPRESS_DATA( RESOURCE__image _image ){
-
-            
-
-                Console.Log( "Entrou compress data" );
-
-                // ** TEM QUE TER COMPRESS
-                if( _image.content_going_to == Resource_image_content.compress_data )
-                    { Console.Log( " content_going_to is already compress_data" ); return; } // ** ja nivelado
-
-                Resource_image_content __FINAL_RESOURCE__ = Resource_image_content.compress_data;
-
-                if( _image.actual_content == Resource_image_content.compress_data )
-                    { 
-                        Console.Log( "PP" );
-                        // --- ALREADY WITH RESOURCE ( but going to other )
-
-                        if( _image.stage_getting_resource == Resources_getting_image_stage.getting_texture )
-                            {
-                                Console.Log( "PP" );
-                                Console.Log( "Ja tinha o png e estava pegando a texture, mas foi interrompido" ); 
-                                manager.task_getting_texture.task_bloqueada = true;
-                                manager.task_getting_texture = null;
-                                _image.stage_getting_resource = Resources_getting_image_stage.finished;
-                                _image.content_going_to = __FINAL_RESOURCE__ ;
-                                return;
-                            }
-
-                        
-                        if( _image.stage_getting_resource == Resources_getting_image_stage.waiting_to_get_texture )
-                            {
-                                Console.Log( "PP" );
-                                Console.Log( "Ja tinha o png e estava indo pegar a texture, mas foi interrompido" ); 
-                                _image.stage_getting_resource = Resources_getting_image_stage.finished;
-                                _image.content_going_to = __FINAL_RESOURCE__ ;
-                                return;
-                            }
-
-                        return;
-
-                    } // ** ja nivelado
-
-
-
-                
-                if( _image.actual_content < Resource_image_content.compress_data )
-                    {
-                        // ** NEED GET MORE CONTENT
-                        Console.Log( "PP" );
-
-                        // --- NOTHING
-                        if( _image.actual_content == Resource_image_content.nothing )
-                            {
-                                Console.Log( "PP" );
-                                // ** DONT HAVE ANYTHING
-
-                                if( _image.stage_getting_resource == Resources_getting_image_stage.finished )
-                                    {
-                                        Console.Log( "PP" );
-                                        _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_start;
-                                        _image.content_going_to = __FINAL_RESOURCE__ ;
-                                        return;
-                                    }
-
-
-                                if( _image.stage_getting_resource == Resources_getting_image_stage.waiting_to_start )
-                                    {
-                                        Console.Log( "PP" );
-                                        _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_start;
-                                        _image.content_going_to = __FINAL_RESOURCE__ ;
-                                        return;
-                                    }
-
-                                if( _image.stage_getting_resource == Resources_getting_image_stage.getting_compress_low_quality_file )
-                                    { 
-                                        Console.Log( "PP" );
-                                        manager.task_getting_compress_low_quality_file.task_bloqueada = true; 
-                                        manager.task_getting_compress_low_quality_file = null; 
-                                        _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_start;
-                                        _image.content_going_to = __FINAL_RESOURCE__ ;
-                                        return;
-                                    }
-                                
-                            }
-
-
-
-                        // --- LOW QUALITY
-                        if( _image.actual_content == Resource_image_content.compress_low_quality_data )
-                            {
-                                // ** 
-                                Console.Log( "PP" );
-
-                                if( _image.stage_getting_resource == Resources_getting_image_stage.getting_compress_file )
-                                    {
-                                        Console.Log( "PP" );
-                                        _image.content_going_to = __FINAL_RESOURCE__ ;
-                                        return;
-                                    }
-                                Console.Log( "PP" );
-
-                                _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_get_compress_file;
-                                _image.content_going_to = __FINAL_RESOURCE__ ;
-                                return;
-                                
-                            }
-                    
-                    }
-                    else
-                    {
-                        Console.Log( "PP" );
-                        if( _image.actual_content == Resource_image_content.sprite )
-                            { 
-                                Console.Log( "PP" );
-                                _image.single_image.sprite = null; 
-                                _image.actual_content = Resource_image_content.texture_with_pixels_applied;
-                            }
-
-                        Console.Log( "PP" );
-                        if( _image.actual_content >= Resource_image_content.texture )
-                            {
-                                // --- DELETE TEXTURE
-                                Console.Log( "PP" );
-
-                                if( _image.stage_getting_resource == Resources_getting_image_stage.waiting_to_destroy_current_resource )
-                                    {
-                                        Console.Log( "PP" );
-                                        // ** já esta setado
-                                        _image.content_going_to = __FINAL_RESOURCE__ ;
-                                        return;
-
-                                    }
-                                
-                                Console.Log( "PP" );
-                                _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_destroy_current_resource;
-                                _image.content_going_to = __FINAL_RESOURCE__ ;
-                                return;
-
-                            }
-
-                    }
-                    
-
-                CONTROLLER__errors.Throw( "a" );
-
-        }
-
+        private int Going_to_resource_level_COMPRESS_DATA( RESOURCE__image _image ){
 
         
-        private void Update_resource_level_NOTHING( RESOURCE__image _image ){
+                // ** TEM QUE TER COMPRESS
+                if( _image.content_going_to == Resource_image_content.compress_data )
+                    { return 0; } // ** ja nivelado
 
+                _image.content_going_to = Resource_image_content.compress_data;
+
+
+                // UP
+
+                    if( _image.actual_content == Resource_image_content.nothing )
+                        { 
+                            if( Verify_stage( _image, ( Resources_getting_image_stage.getting_compress_low_quality_file | Resources_getting_image_stage.waiting_to_start | Resources_getting_image_stage.finished ) ) )
+                                { return 0; }
+                        }
+
+                    if( _image.actual_content == Resource_image_content.compress_low_quality_data )
+                        { 
+                            if( Verify_stage( _image, ( Resources_getting_image_stage.getting_compress_file | Resources_getting_image_stage.waiting_to_get_compress_file ) ) )
+                                { return 0; }
+
+                            if( Verify_stage( _image, ( Resources_getting_image_stage.finished | Resources_getting_image_stage.waiting_to_destroy_current_resource ) ) )
+                                { return Set_stage( _image, Resources_getting_image_stage.waiting_to_get_compress_file ); }
+                        }
+
+
+                // EQUAL
+
+                    if( _image.actual_content == Resource_image_content.compress_data )
+                        { 
+                            if(  Verify_stage( _image, ( Resources_getting_image_stage.waiting_to_destroy_current_resource | Resources_getting_image_stage.waiting_to_get_texture ) ) )
+                                { return Set_stage( _image, Resources_getting_image_stage.finished ); }
+
+                        }
+
+                // DOWN
+
+                    Stop_task( _image );
+                    return Set_stage( _image, Resources_getting_image_stage.waiting_to_destroy_current_resource );                
 
 
         }
+
+
+
+        private int Going_to_resource_level_SPRITE( RESOURCE__image _image ){
+
+
+                // ** TEM QUE TER COMPRESS
+                if( _image.content_going_to == Resource_image_content.sprite )
+                    { return 0; } // ** ja nivelado
+
+                _image.content_going_to = Resource_image_content.sprite;
+
+
+                // UP
+
+                    if( _image.actual_content == Resource_image_content.nothing )
+                        { 
+                            if( Verify_stage( _image, ( Resources_getting_image_stage.getting_compress_low_quality_file | Resources_getting_image_stage.waiting_to_start | Resources_getting_image_stage.finished ) ) )
+                                { return 0; }
+                        }
+
+                    if( _image.actual_content == Resource_image_content.compress_low_quality_data )
+                        { 
+                            if( Verify_stage( _image, ( Resources_getting_image_stage.getting_compress_file | Resources_getting_image_stage.waiting_to_get_compress_file ) ) )
+                                { return 0; }
+
+                            if( Verify_stage( _image, ( Resources_getting_image_stage.finished | Resources_getting_image_stage.waiting_to_destroy_current_resource ) ) )
+                                { return Set_stage( _image, Resources_getting_image_stage.waiting_to_get_compress_file ); }
+                        }
+
+
+                    if( _image.actual_content == Resource_image_content.all_textures_possibilities )
+                        { 
+                            if( Verify_stage( _image, ( Resources_getting_image_stage.waiting_to_destroy_current_resource ) ) )
+                                { 
+                                    switch( _image.actual_content ){
+
+                                        case Resource_image_content.texture: return Set_stage( _image, Resources_getting_image_stage.waiting_to_pass_data_to_texture ); 
+                                        case Resource_image_content.texture_with_pixels: return Set_stage( _image, Resources_getting_image_stage.waiting_to_apply_texture ); 
+                                        case Resource_image_content.texture_with_pixels_applied: return Set_stage( _image, Resources_getting_image_stage.waiting_to_create_sprite ); 
+
+                                    }
+
+                                }
+
+                        }
+
+                // EQUAL
+
+                    if( _image.actual_content == Resource_image_content.sprite )
+                        { 
+                            if(  Verify_stage( _image, Resources_getting_image_stage.waiting_to_destroy_current_resource ) )
+                                { return Set_stage( _image, Resources_getting_image_stage.finished ); }
+
+                        }
+
+                // DOWN
+
+                CONTROLLER__errors.Throw( $"The image { _image.path_locator } need to change to Sprite, but the actual content is: { _image.actual_content }, the going-to_content is : { _image.content_going_to } and the stage_getting_resource is: { _image.stage_getting_resource }" );
+                return -1;
+
+        }
+
+
 
 
         // --- PEGAR RECURSOS
@@ -722,21 +533,6 @@ public class MODULE__context_images {
 
 
 
-        // f   : x -> y 
-        // f-1 : y -> x
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         // --- INTERNAL
@@ -759,7 +555,80 @@ public class MODULE__context_images {
 
         }
 
-        
+
+        private bool Verify_stage( RESOURCE__image _image, Resources_getting_image_stage _stage ){
+
+            return ( ( _image.stage_getting_resource & _stage ) != 0 );
+
+        }
+
+    
+        private bool Verify_actual_content( RESOURCE__image _image, Resource_image_content _content ){
+
+            return ( ( _image.actual_content & _content ) != 0 );
+
+        }
+
+    
+        private int Set_stage( RESOURCE__image _image,  Resources_getting_image_stage _stage ){
+
+            _image.stage_getting_resource = _stage;
+            return 0;
+
+        }
+
+        private int Set_stage_cancelling_task( RESOURCE__image _image,  Resources_getting_image_stage _stage, ref Task_req _task_ref ){
+
+            _image.stage_getting_resource = _stage;
+            TASK_REQ.Cancel_task( ref _task_ref );
+            return 0;
+
+        }
+
+    
+        private void Stop_task( RESOURCE__image _image ){
+
+            
+            switch( _image.stage_getting_resource ){
+
+                case Resources_getting_image_stage.getting_compress_file: TASK_REQ.Cancel_task( ref manager.task_getting_compress_file ); return;
+                case Resources_getting_image_stage.getting_compress_low_quality_file: TASK_REQ.Cancel_task( ref manager.task_getting_compress_low_quality_file ); return;
+                case Resources_getting_image_stage.passing_data_to_texture: TASK_REQ.Cancel_task( ref manager.task_passing_to_texture ); return;
+
+                case Resources_getting_image_stage.applying_texture: CONTROLLER__errors.Throw( $"Came on Stop_task for the image { _image.name }, but can not handle { _image.stage_getting_resource }" ); return;
+                case Resources_getting_image_stage.getting_texture: CONTROLLER__errors.Throw( $"Came on Stop_task for the image { _image.name }, but can not handle { _image.stage_getting_resource }" ); return;
+                                
+            }
+
+        }
+
+        private void Verify_stage_for_content( RESOURCE__image _image ){
+
+
+                Resources_getting_image_stage possible_stages = Resources_getting_image_stage.not_give;
+
+                switch( _image.actual_content ){
+
+                    case Resource_image_content.nothing: possible_stages = Resources_getting_image_stage.nothing_acceptable_stages; break;
+                    case Resource_image_content.compress_low_quality_data: possible_stages = Resources_getting_image_stage.compress_low_quality_data_acceptable_stages; break;
+                    case Resource_image_content.compress_data: possible_stages = Resources_getting_image_stage.compress_data_acceptable_stages; break;
+                    case Resource_image_content.texture: possible_stages = Resources_getting_image_stage.texture_acceptable_stages; break;
+                    case Resource_image_content.texture_with_pixels: possible_stages = Resources_getting_image_stage.texture_with_pixels_acceptable_stages; break;
+                    case Resource_image_content.texture_with_pixels_applied: possible_stages = Resources_getting_image_stage.texture_with_pixels_applied_acceptable_stages; break;
+                    case Resource_image_content.sprite: possible_stages = Resources_getting_image_stage.texture_with_pixels_applied_acceptable_stages; break;
+                    
+                }
+
+                if( !!!( Verify_stage( _image, possible_stages ) ) )
+                    { CONTROLLER__errors.Throw( $"Image { _image.name } is with content { _image.actual_content } but the stage is { _image.stage_getting_resource }" ); }
+                    
+                return;
+
+        }
+
+
+
+
 
 
 

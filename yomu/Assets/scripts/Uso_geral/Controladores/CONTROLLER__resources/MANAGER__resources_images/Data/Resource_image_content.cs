@@ -10,6 +10,8 @@ public enum Resource_image_content {
                         texture_with_pixels = 0b_0000_0000__0000_0000__0000_0000__0001_0000,
                         texture_with_pixels_applied = 0b_0000_0000__0000_0000__0000_0000__0010_0000,
 
+                        all_textures_possibilities = ( Resource_image_content.texture | Resource_image_content.texture_with_pixels | Resource_image_content.texture_with_pixels_applied ),
+
     /*pre_alloc*/ sprite = 0b_0000_0000__0000_0000__0000_0000__0100_0000,
 
 }
