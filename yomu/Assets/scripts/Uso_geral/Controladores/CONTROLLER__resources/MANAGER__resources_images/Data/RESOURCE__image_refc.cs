@@ -60,30 +60,25 @@ public class RESOURCE__image_ref {
 
             create:
                 nothing: ok
-                //mark
-                low quality: 
+                low quality: ok
                 compress: ok
                 sprite: ok
 
             load: 
                 nothing: ok
-                low quality: 
-                compress data: ok
-                sprite: ok
 
-            
-            minimun: 
-                nothing: 
-                compress: 
-                sprite: 
+                // ** por hora nao esta mudando o actual_content para compress_low_quality
+                low quality: ok
+
+                compress data: ok
+                sprite:  ok
+
 
             Activate: 
+
             Instanciate: 
 
-
-
-
-
+            switches: 
 
         
         */

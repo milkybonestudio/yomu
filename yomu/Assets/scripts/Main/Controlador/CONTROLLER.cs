@@ -66,14 +66,8 @@ unsafe public class Controlador : MonoBehaviour {
                 c =  CONTROLLER__resources.Get_instance();
 
                 c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.nothing );
-                image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.compress_low_quality_data );
-                //image_ref.Load();
-
-
-                // Debug.Log( "content: " + image_ref.image.current_content );
-                // Debug.Log( "minimun: " + image_ref.image.level_pre_allocation_image );
-                // Debug.Log( "stage_getting_resource: " + image_ref.image.stage_getting_resource );
-
+                image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.sprite );
+                
 
                 // Dispositivo d = Dispositivo__teste.Construir(); // pega o prefab 
                 // d.Define_all_components(); // 
@@ -217,6 +211,7 @@ unsafe public class Controlador : MonoBehaviour {
 
                                 Console.Log( $"     counts: " );
                                 Console.Log( $"         image.count_places_being_used_nothing: { image.count_places_being_used_nothing }" );
+                                Console.Log( $"         image.count_places_being_used_compress_low_quality_data: { image.count_places_being_used_compress_low_quality_data }" );
                                 Console.Log( $"         image.count_places_being_used_compress_data: { image.count_places_being_used_compress_data }" );
                                 Console.Log( $"         image.count_places_being_used_sprite: { image.count_places_being_used_sprite }" );
                             }

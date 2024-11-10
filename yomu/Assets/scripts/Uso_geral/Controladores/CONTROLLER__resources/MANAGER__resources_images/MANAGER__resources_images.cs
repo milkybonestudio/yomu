@@ -109,76 +109,100 @@ public class MANAGER__resources_images {
                 // ** o ponto final sempre vai ser nothing, compress_data, sprite
 
                 
-                if( _image.content_going_to > _image.actual_content )
+                switch( _image.stage_getting_resource ){
+
+                    // --- GET RESOURCE
+                    case Resources_getting_image_stage.waiting_to_start: return Handle_waiting_to_start( _image );
+                        case Resources_getting_image_stage.getting_compress_low_quality_file: return Handle_getting_compress_low_quality_file( _image );
+                            case Resources_getting_image_stage.waiting_to_get_compress_file: return Handle_waiting_to_get_compress_file( _image );
+                                case Resources_getting_image_stage.getting_compress_file: return Handle_getting_compress_file( _image );
+                                    case Resources_getting_image_stage.waiting_to_get_texture: return Handle_waiting_to_get_texture( _image );
+                                        case Resources_getting_image_stage.getting_texture: return Handle_getting_texture( _image );
+                                            case Resources_getting_image_stage.waiting_to_pass_data_to_texture: return Handle_waiting_to_pass_data_to_texture( _image );
+                                                case Resources_getting_image_stage.passing_data_to_texture: return Handle_passing_data_to_texture( _image );
+                                                    case Resources_getting_image_stage.waiting_to_apply_texture: return Handle_waiting_to_apply_texture( _image );
+                                                        case Resources_getting_image_stage.applying_texture: return Handle_applying_texture( _image );
+                                                            case Resources_getting_image_stage.waiting_to_create_sprite: return Handle_waiting_to_create_sprite( _image );
+                                                                case Resources_getting_image_stage.finished: return 0; // ** tem a tex com os dados já nela
+
+                                                
+                // --- DOWN RESOURCE
+                    
+                    case Resources_getting_image_stage.waiting_to_destroy_current_resource: return Handle_waiting_to_destroy_current_resource( _image );
+                    
+                    
+                    default: CONTROLLER__errors.Throw( $"Nao foi achado { _image.stage_getting_resource }" ); break;
+
+                }
+       
+                return 0;
+
+        }
+
+        private int Handle_waiting_to_destroy_current_resource( RESOURCE__image _image ){
+
+                int weight = 0;
+
+                if( _image.content_going_to <= Resource_image_content.compress_data )
+                    { weight += Destroy_resource_texture( _image ); }
+
+                if( _image.content_going_to <= Resource_image_content.compress_low_quality_data )
+                    { weight += Destroy_compress_data( _image ); }
+                
+                if( _image.content_going_to == Resource_image_content.nothing )
+                    { weight += Destroy_compress_low_quality_data( _image ); }
+
+                return weight;
+
+        }
+
+
+
+        private int Destroy_compress_low_quality_data( RESOURCE__image _image ){
+
+
+                if( _image.single_image != null )
                     {
-                        // --- GET RESOURCE
+                        _image.single_image.image_low_quality_compress = null;
+                    }
+                    else
+                    {
 
-                        switch( _image.stage_getting_resource ){
-                            case Resources_getting_image_stage.waiting_to_start: return Handle_waiting_to_start( _image );
-                                case Resources_getting_image_stage.getting_compress_low_quality_file: return Handle_getting_compress_low_quality_file( _image );
-                                    case Resources_getting_image_stage.waiting_to_get_compress_file: return Handle_waiting_to_get_compress_file( _image );
-                                        case Resources_getting_image_stage.getting_compress_file: return Handle_getting_compress_file( _image );
-                                            case Resources_getting_image_stage.waiting_to_get_texture: return Handle_waiting_to_get_texture( _image );
-                                                case Resources_getting_image_stage.getting_texture: return Handle_getting_texture( _image );
-                                                    case Resources_getting_image_stage.waiting_to_pass_data_to_texture: return Handle_waiting_to_pass_data_to_texture( _image );
-                                                        case Resources_getting_image_stage.passing_data_to_texture: return Handle_passing_data_to_texture( _image );
-                                                            case Resources_getting_image_stage.waiting_to_apply_texture: return Handle_waiting_to_apply_texture( _image );
-                                                                case Resources_getting_image_stage.applying_texture: return Handle_applying_texture( _image );
-                                                                    case Resources_getting_image_stage.waiting_to_create_sprite: return Handle_waiting_to_create_sprite( _image );
-                                                                        case Resources_getting_image_stage.finished: return 0; // ** tem a tex com os dados já nela
-                                                                           default: CONTROLLER__errors.Throw( $"Nao foi achado { _image.stage_getting_resource }" ); break;
+                    }
 
-                        }
+                _image.actual_content = Resource_image_content.nothing;
+                return 0;
+
+        }
+
+        
+
+        private int Destroy_compress_data( RESOURCE__image _image ){
+
+                _image.actual_content = Resource_image_content.compress_low_quality_data;
+
+                if( _image.single_image != null )
+                    {
+                        _image.single_image.image_compress = null;
+                        if( _image.single_image.image_low_quality_compress == null )
+                            { _image.actual_content = Resource_image_content.nothing; }
 
                     }
                     else
                     {
-                        // --- DOWN RESOURCE
-
-                        int weight = 0;
-
-                        if( _image.actual_content == Resource_image_content.sprite )
-                            { 
-
-                                Destroy_texture( _image ); 
-                                weight += 1;
-
-                                _image.actual_content = Resource_image_content.compress_data;
-
-                                if( _image.content_going_to == _image.actual_content )
-                                    { return weight; }
-
-                            }
-
-                        if( Resource_image_content.sprite > _image.actual_content  && _image.actual_content > Resource_image_content.nothing )
-                            {
-                                Remove_compress_data( _image );
-
-                                _image.actual_content = Resource_image_content.nothing;
-
-                                if( _image.content_going_to == _image.actual_content )
-                                    { return weight; }
-
-                            }
-
 
                     }
-
 
                 return 0;
 
         }
 
+        private int Destroy_resource_texture( RESOURCE__image _image ){
 
-        private void Remove_compress_data( RESOURCE__image _image ){
-
-        }
-
-
-        private void Destroy_texture( RESOURCE__image _image ){
-
+                int weight = 0;
                 if( _image.single_image != null )
                     {
+                        weight += 1;
                         Console.Log( "Veio destruir texture" );
                         GameObject.Destroy( _image.single_image.texture_exclusiva );
                         _image.single_image.texture_exclusiva_native_array.Dispose();
@@ -187,7 +211,10 @@ public class MANAGER__resources_images {
                     {
 
                     }
-                
+                        
+                _image.actual_content = Resource_image_content.compress_data;
+                return weight;
+
 
         }
 
@@ -325,6 +352,7 @@ public class MANAGER__resources_images {
 
         }
 
+
         private int Handle_getting_compress_file( RESOURCE__image _image ){ 
 
                 Console.Log( "Handle_getting_compress_file" );
@@ -333,6 +361,11 @@ public class MANAGER__resources_images {
 
                 if( !!!( task_getting_compress_file.finalizado ) )
                     { return 0; }
+
+                Console.Log( "Pegou o arquivo" );
+
+                if( _image.content_going_to < Resource_image_content.compress_data )
+                    { CONTROLLER__errors.Throw( $"Get the png for the image { _image.name }, but the content_going_to is { _image.content_going_to }" ); }
 
                 // ** passa o PNG para a imagem
                 if( _image.multiples_images == null )
@@ -360,10 +393,8 @@ public class MANAGER__resources_images {
 
                 task_getting_compress_file = null;
 
-                //mark 
-                // ** se usar somente png pode pegar height e length aqui
-
                 _image.actual_content = Resource_image_content.compress_data;
+                Console.Log( "_image.content_going_to: " + _image.content_going_to );
 
                 // ** se so precisar dos dados é isso ai
                 if( _image.content_going_to == Resource_image_content.compress_data )
@@ -541,6 +572,23 @@ public class MANAGER__resources_images {
 
 
         
+
+
+        public void Stop_task( RESOURCE__image _image ){
+
+            
+            switch( _image.stage_getting_resource ){
+
+                case Resources_getting_image_stage.getting_compress_file: TASK_REQ.Cancel_task( ref task_getting_compress_file ); return;
+                case Resources_getting_image_stage.getting_compress_low_quality_file: TASK_REQ.Cancel_task( ref task_getting_compress_low_quality_file ); return;
+                case Resources_getting_image_stage.passing_data_to_texture: TASK_REQ.Cancel_task( ref task_passing_to_texture ); return;
+
+                case Resources_getting_image_stage.applying_texture: CONTROLLER__errors.Throw( $"Came on Stop_task for the image { _image.name }, but can not handle { _image.stage_getting_resource }" ); return;
+                case Resources_getting_image_stage.getting_texture: CONTROLLER__errors.Throw( $"Came on Stop_task for the image { _image.name }, but can not handle { _image.stage_getting_resource }" ); return;
+                                
+            }
+
+        }
 
 
 

@@ -2,36 +2,37 @@
 
 public enum Resources_getting_image_stage {
 
-    not_give,
+
+    not_give = 0b_0000_0000__0000_0000__0000_0000__0000_0000,
 
     // ** waiting to start start in the sequence of recources. Need to have nothing to be here
-    waiting_to_start, // ** get webp
+    waiting_to_start = 0b_0000_0000__0000_0000__0000_0000__0000_0001, // ** get webp
     
-            getting_compress_low_quality_file,
+            getting_compress_low_quality_file = 0b_0000_0000__0000_0000__0000_0000__0000_0010,
 
-            waiting_to_get_compress_file, // ** png
+            waiting_to_get_compress_file = 0b_0000_0000__0000_0000__0000_0000__0000_0100, // ** png
 
-        getting_compress_file, // ** task req ativada 
+        getting_compress_file = 0b_0000_0000__0000_0000__0000_0000__0000_1000, // ** task req ativada 
 
-            waiting_to_get_texture, 
+            waiting_to_get_texture = 0b_0000_0000__0000_0000__0000_0000__0001_0000, 
 
-        getting_texture, // ** 
+        getting_texture = 0b_0000_0000__0000_0000__0000_0000__0010_0000, // ** 
 
-            waiting_to_pass_data_to_texture,
+            waiting_to_pass_data_to_texture = 0b_0000_0000__0000_0000__0000_0000__0100_0000,
 
-        passing_data_to_texture,
+        passing_data_to_texture = 0b_0000_0000__0000_0000__0000_0000__1000_0000,
 
-            waiting_to_apply_texture,
+            waiting_to_apply_texture = 0b_0000_0000__0000_0000__0000_0001__0000_0000,
 
-        applying_texture, // ** vale a pena esperar varias textures colocarem os pixels na texture antes de dar o apply
+        applying_texture = 0b_0000_0000__0000_0000__0000_0010__0000_0000, // ** vale a pena esperar varias textures colocarem os pixels na texture antes de dar o apply
 
-            waiting_to_create_sprite, // main
+            waiting_to_create_sprite = 0b_0000_0000__0000_0000__0000_0100__0000_0000, // main
 
-    finished,
+    finished = 0b_0000_0000__0000_0000__0000_1000__0000_0000,
 
 
     // ** only down
-        waiting_to_destroy_current_resource,
+        waiting_to_destroy_current_resource = 0b_0000_0000__0000_0000__0001_0000__0000_0000,
 
         //destroying_texture,
 
