@@ -142,194 +142,6 @@ public class MODULE__context_images {
 
 
 
-        public Sprite Get_sprite( RESOURCE__image_ref _ref ){ 
-            
-            //Instanciate();
-            return null; 
-        }
-
-        // ** ????
-        public Texture2D Get_texture( RESOURCE__image_ref _ref ){ return null; }
-
-
-        //mark 
-        // ** tirar recursos tem que tomar mais cuidado sobre quantas referencias them em cada estado 
-
-
-
-
-
-
-
-        // --- DOWN
-
-
-        // ** imagem vai ser deletada completamente 
-        public void Delete( RESOURCE__image_ref _ref ){ 
-
-                RESOURCE__image image = _ref.image;
-
-                TOOL__resource_image.Decrease_count( image, _ref.level_pre_allocation ); // ?????
-
-                // ** perde a referencia
-                image.refs[ _ref.image_slot_index ] = null;
-                image.need_reajust = true;
-
-                if( image.count_places_being_used_sprite > 1 )
-                    { return; }
-
-                if( image.count_places_being_used_compress_data > 1 )
-                    { return; }
-
-                if( image.count_places_being_used_nothing > 1 )
-                    { return; } 
-
-                // --- CAN DELETE
-
-                actives_images_dictionary.Remove( image.path_locator );
-                Unload( _ref );
-                
-                return;
-
-        } 
-
-        
-        public void Unload( RESOURCE__image_ref _ref ){
-
-                // ** VAI PARA O NADA
-
-                RESOURCE__image image = _ref.image;
-
-                TOOL__resource_image.Decrease_count( image, _ref.level_pre_allocation );
-
-                if( image.count_places_being_used_sprite > 1 )
-                    { return; }
-
-                if( image.count_places_being_used_compress_data > 1 )
-                    { return; }
-
-                if( image.count_places_being_used_nothing > 1 )
-                    {}
-
-
-                if( image.single_image != null )
-                    { 
-                        // --- SINGLE 
-
-                        image.single_image.image_compress = null;
-                        manager.textures_manager.Liberate_texture( image.single_image ); 
-                    }
-                    else
-                    { 
-                        // --- MULTIPLES
-
-                        for( int index_image_data = 0 ; index_image_data < image.multiples_images.Length ; index_image_data++ )
-                            { 
-                                image.multiples_images[ index_image_data ].image_compress = null;
-                                manager.textures_manager.Liberate_texture( image.multiples_images[ index_image_data ] );
-                            } 
-                    }
-                
-
-        }
-
-        public void Deactivate( RESOURCE__image_ref _image_ref ){
-
-            // ** GO BACK TO MINIMUN
-
-
-        }
-
-        public void Deinstanciate( RESOURCE__image_ref _image_ref ){
-
-            // ** FORCE TO GO TO 
-
-        }
-
-
-
-
-        // --- PEGAR RECURSOS
-
-        // ** sinaliza que a imagem pode carregar o minimo 
-        public void Load( RESOURCE__image_ref _ref ){
-
-                Console.Log( "Veio Load()" );
-
-                if( _ref.state > Resource_state.nothing )
-                    { return; }
-
-                _ref.state = Resource_state.minimun;
-
-                if( _ref.actual_need_content == _ref.level_pre_allocation )
-                    { Console.Log( "actual_need_content is equal to level_pre_allocation" ); return; } // ** mesmo nivel
-
-                
-                RESOURCE__image image = _ref.image;
-
-                TOOL__resource_image.Increase_count( image, _ref.level_pre_allocation );
-                TOOL__resource_image.Decrease_count( image, _ref.actual_need_content  );
-
-                _ref.actual_need_content = _ref.level_pre_allocation;
-
-                Console.Log( image.stage_getting_resource );
-
-                TOOL__module_context_images.Update_resource_level( image );
-
-                return;
-
-        }
-
-        // ** sinaliza que pode começar a pegar a texture
-        public void Activate( RESOURCE__image_ref _ref ){
-
-
-                RESOURCE__image image = _ref.image;
-
-                // ** ou já esta indo para o maximo
-                if( _ref.state == Resource_state.active )
-                    { return; }
-
-
-
-                // -- TE QUE MUDAR 
-
-                switch( image.actual_content ){
-
-                    case Resource_image_content.nothing: image.stage_getting_resource = Resources_getting_image_stage.waiting_to_start; break;
-                    case Resource_image_content.compress_data: image.stage_getting_resource = Resources_getting_image_stage.waiting_to_get_texture; break;
-                    default: CONTROLLER__errors.Throw( $"Image { image.name } tried to get_ready but the current_final_state was not active but the current content was { image.actual_content }" ); break;
-
-                }
-
-                
-                // --- STATES
-                //image.current_final_state = Resource_state.active;
-                // image.current_state = Resource_state.going_to_active;
-
-
-                // --- RESOURCE
-                image.content_going_to = Resource_image_content.texture;
-                
-
-                return;
-
-
-        }
-
-        public Sprite Instanciate( RESOURCE__image_ref _ref ){
-
-                // ** FORCE TO CREATE SPRITE 
-
-                return null;
-
-
-
-        }
-
-
-
-
 
 
 
@@ -380,64 +192,70 @@ public class MODULE__context_images {
 
     
 
-        public byte[] Get_single_data( string _main_folder, string _path ){
 
-                // ** o jogo nao vai usar webp na build então precisa do type
-                // ** o webp vai ser path_low_quality
+
+
+
+
+
+        // public byte[] Get_single_data( string _main_folder, string _path ){
+
+        //         // ** o jogo nao vai usar webp na build então precisa do type
+        //         // ** o webp vai ser path_low_quality
 
             
-                byte[] image = null;
+        //         byte[] image = null;
 
-                    // **   pensar da  seguinte forma: ( path sistema(C:\\users\\user...) ) || ( container( Devices, Characters, ...  ) ) || ( chave ( "\\Lily\\normal_clothes\\arms_1.png" ) )
-                    // **   no editor path systema vai dado por Application.DataPath + "\\Resources"
-                    // **   na build vai ser Application.DataPath + "\\Static_data"
+        //             // **   pensar da  seguinte forma: ( path sistema(C:\\users\\user...) ) || ( container( Devices, Characters, ...  ) ) || ( chave ( "\\Lily\\normal_clothes\\arms_1.png" ) )
+        //             // **   no editor path systema vai dado por Application.DataPath + "\\Resources"
+        //             // **   na build vai ser Application.DataPath + "\\Static_data"
 
-                    #if UNITY_EDITOR
+        //             #if UNITY_EDITOR
 
-                        string path_arquivo = Get_path_file( _main_folder, _path );
+        //                 string path_arquivo = Get_path_file( _main_folder, _path );
 
-                        try{ return System.IO.File.ReadAllBytes( path_arquivo ); } catch( Exception e ){ Debug.LogError( $"Dont find the image <Color=lightBlue>{ path_arquivo }</Color>" ); throw e; }
+        //                 try{ return System.IO.File.ReadAllBytes( path_arquivo ); } catch( Exception e ){ Debug.LogError( $"Dont find the image <Color=lightBlue>{ path_arquivo }</Color>" ); throw e; }
 
                     
-                    #elif !!!( UNITY_EDITOR ) && ( UNITY_STANDALONE_WIN || UNITY_STANDALONE_LINUX || UNITY_STANDALONE_OSX )
+        //             #elif !!!( UNITY_EDITOR ) && ( UNITY_STANDALONE_WIN || UNITY_STANDALONE_LINUX || UNITY_STANDALONE_OSX )
                         
                         
-                        thorw new Exception( "Ainda tem que fazer" );
+        //                 thorw new Exception( "Ainda tem que fazer" );
 
 
-                        // int _initial_pointer = _image.single_image.image_localizers.initial_pointer;
-                        // int _length = _image.single_image.image_ocalizers.length;
+        //                 // int _initial_pointer = _image.single_image.image_localizers.initial_pointer;
+        //                 // int _length = _image.single_image.image_ocalizers.length;
 
 
-                        FileStream file_stream = null;
+        //                 FileStream file_stream = null;
                         
-                        if( !!!( files_streams.TryGetValue( _path, out file_stream ) ) )
-                            { files_streams.Add( _path, FILE_STREAM.Criar_stream( _path, buffer_cache )); }
+        //                 if( !!!( files_streams.TryGetValue( _path, out file_stream ) ) )
+        //                     { files_streams.Add( _path, FILE_STREAM.Criar_stream( _path, buffer_cache )); }
 
 
-                        file_stream.Seek( _initial_pointer, SeekOrigin.Begin );
+        //                 file_stream.Seek( _initial_pointer, SeekOrigin.Begin );
 
-                        byte[] image = new byte[ _length ];
+        //                 byte[] image = new byte[ _length ];
 
-                        file_stream.Read( image, 0, _length );
+        //                 file_stream.Read( image, 0, _length );
             
-                        return image;
+        //                 return image;
 
                     
-                    #endif
+        //             #endif
 
 
 
-                return image;
+        //         return image;
             
-        }
+        // }
 
-        public byte[][] Get_multiple_data( string _main_folder, string _path, int _number_images ){
+        // public byte[][] Get_multiple_data( string _main_folder, string _path, int _number_images ){
 
-                throw new Exception("tem que fazerr");
+        //         throw new Exception("tem que fazerr");
 
 
-        }
+        // }
 
 
 }

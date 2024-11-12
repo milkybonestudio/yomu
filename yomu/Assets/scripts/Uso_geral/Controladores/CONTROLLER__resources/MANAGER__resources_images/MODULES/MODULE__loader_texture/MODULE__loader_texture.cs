@@ -77,10 +77,23 @@ unsafe public static class TOOL__loader_texture {
         }
 
 
+        public static WebP w = new WebP();
     
-        public static void Transfer_data_WEABP( RESOURCE__image_data _image_data ){
+        public static void Transfer_data_WEABP( RESOURCE__image _image,  RESOURCE__image_data _image_data ){
 
-            // ** somente para low_quality
+                // ** somente para low_quality
+
+                byte[] webp =  _image_data.image_low_quality_compress;
+                try{
+
+                    w.Transfer_data( webp, _image.width, _image.height, _image_data.texture_exclusiva_native_array );
+
+                } catch ( Exception E ){
+
+                    Console.Log( E.Message );
+                }
+                
+                return;
 
         }
 

@@ -42,15 +42,6 @@ public class RESOURCE__image_ref {
 
 
 
-    
-        // --- METODOS QUE VAO PARA O MODULO
-
-
-        public UnityEngine.Sprite Get_sprite(){ return module.Get_sprite( this ); }
-        public Texture Get_texture(){ return module.Get_texture( this ); }
-
-
-
         //teste
 
         /*
@@ -64,27 +55,67 @@ public class RESOURCE__image_ref {
                 compress: ok
                 sprite: ok
 
+
+
+            nothing -> thing
+
             load: 
                 nothing: ok
 
                 // ** por hora nao esta mudando o actual_content para compress_low_quality
                 low quality: ok
-
                 compress data: ok
                 sprite:  ok
 
+            Activate:  ok
+            Instanciate:  
 
-            Activate: 
+
+                
+
+
+
+            partindo minimo: 
+                partindo nothing: 
+                partindo compress_low_quality: 
+                partindo compress: 
+
+                partindo texture:
+                partindo texture_com_pixels: 
+                partindo texture_com_pixels_applyed: 
+
+                partindo sprite: 
+
 
             Instanciate: 
 
+                partindo nothing: 
+
+                                partindo minimo: 
+                                    partindo nothing: 
+                                    partindo compress_low_quality: 
+                                    partindo compress: 
+
+                                    partindo texture:
+                                    partindo texture_com_pixels: 
+                                    partindo texture_com_pixels_applyed: 
+
+                                    partindo sprite: 
+
+
+
             switches: 
+
+
 
         
         */
 
 
 
+
+        public Sprite Get_sprite(){ Guaranty_ref(); return TOOL__module_context_images_actions.Get_sprite( this );  }
+        public Sprite[] Get_sprites(){ Guaranty_ref(); return TOOL__module_context_images_actions.Get_sprites( this );  }
 
 
 
@@ -93,16 +124,16 @@ public class RESOURCE__image_ref {
         // ** DOWN
 
         
-        public void Delete(){ Guaranty_ref(); module.Delete( this ); } 
-        public void Unload(){ Guaranty_ref(); module.Unload( this ); }
-        public void Deactivate(){ Guaranty_ref(); module.Deactivate( this ); }
-        public void Deinstanciate(){ Guaranty_ref(); module.Deinstanciate( this ); }
+        public void Delete(){ Guaranty_ref(); TOOL__module_context_images_actions.Delete( this ); } 
+        public void Unload(){ Guaranty_ref(); TOOL__module_context_images_actions.Unload( this ); }
+        public void Deactivate(){ Guaranty_ref(); TOOL__module_context_images_actions.Deactivate( this ); }
+        public void Deinstanciate(){ Guaranty_ref(); TOOL__module_context_images_actions.Deinstanciate( this ); }
 
         // ** UP
 
-        public void Load(){ module.Load( this ); }
-        public void Activate(){ module.Activate( this ); }
-        public Sprite Instanciate(){ return module.Instanciate( this ); }
+        public void Load(){ TOOL__module_context_images_actions.Load( this ); }
+        public void Activate(){ TOOL__module_context_images_actions.Activate( this ); }
+        public void Instanciate(){ TOOL__module_context_images_actions.Instanciate( this ); }
 
     
         public void Change_level_pre_allocation( Resource_image_content _new_pre_alloc ){}

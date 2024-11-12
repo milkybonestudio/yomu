@@ -3,14 +3,280 @@ using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
+using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 
 
-public sealed class WebP : IDisposable{
+unsafe public sealed class WebP : IDisposable{
 
 
     private const int WEBP_MAX_DIMENSION = 16383;
+
+
+
+    public void Transfer_data( byte[] rawWebP,  int _width, int _height, NativeArray<Color32> _native_arr_texture ){
+
+     
+
+          VP8StatusCode result;
+
+            GetInfo( rawWebP, out int imgWidth, out int imgHeight, out bool hasAlpha, out bool hasAnimation, out string format );
+
+            if( _width != imgWidth || _height != imgHeight )
+                {
+
+                    // ** somente editor
+                    CONTROLLER__errors.Verify( (  _native_arr_texture.Length != ( _height * _width ) ) , "deu ruim" );
+
+                    byte[] webp_default =  Get_bytes( rawWebP );
+
+                    Console.Log( "_width: " + _width );
+                    Console.Log( "_height: " + _height );
+
+                    int index = 0;
+
+                    for( int h = 0 ; h < _height ; h++ ){
+
+                            int p0 = ( h * imgWidth * 4  );
+
+                            for( int width_pixel = 0; width_pixel< _width ; width_pixel++ ){
+
+                                          
+                                    Color32 color = new Color32();
+
+                                    color.r = webp_default[ p0 + ( width_pixel * 4 ) + 0 ] ;
+                                    color.g = webp_default[ p0 + ( width_pixel * 4 ) + 1 ] ;
+                                    color.b = webp_default[ p0 + ( width_pixel * 4 ) + 2 ] ;
+                                    color.a = webp_default[ p0 + ( width_pixel * 4 ) + 3 ] ;
+                                    
+                                    _native_arr_texture[ ( h * _width ) + width_pixel ] = color;
+
+
+                            }
+
+
+                    }
+
+                    // for( int i = 0 ; i < _native_arr_texture.Length ; i++ ){
+
+                    //         Color32 color = new Color32();
+
+                    //         color.r = webp_default[ index + 0 ] ;
+                    //         color.g = webp_default[ index + 1 ] ;
+                    //         color.b = webp_default[ index + 2 ] ;
+                    //         color.a = webp_default[ index + 3 ] ;
+                    //         index = ( index + 4 ) % webp_default.Length;
+
+                    //         _native_arr_texture[ i ] = color;
+
+                    // }
+
+                    return;
+
+                }
+
+
+            WebPDecoderOptions options = new WebPDecoderOptions();
+            WebPDecoderConfig config = new WebPDecoderConfig();
+
+
+            Console.Log( "width: " + imgWidth );
+            Console.Log( "height: " + imgHeight );
+
+            byte[] bytes = new byte[ imgHeight * imgWidth * 4 ];
+
+            GCHandle pinnedWebP = GCHandle.Alloc(rawWebP, GCHandleType.Pinned);
+            GCHandle handle = GCHandle.Alloc( bytes, GCHandleType.Pinned);
+            
+
+
+
+
+            IntPtr ptrRawWebP = pinnedWebP.AddrOfPinnedObject();
+            // IntPtr pointer_dados =  handle.AddrOfPinnedObject();
+            IntPtr pointer_dados = ( IntPtr ) _native_arr_texture.GetUnsafePtr();
+
+            
+
+
+            if (UnsafeNativeMethods.WebPInitDecoderConfig(ref config) == 0)
+            {  throw new Exception("WebPInitDecoderConfig failed. Wrong version?");}
+            // Read the .webp input file information
+
+            config.options.bypass_filtering = options.bypass_filtering;
+            config.options.no_fancy_upsampling = options.no_fancy_upsampling;
+            config.options.use_cropping = options.use_cropping;
+            config.options.crop_left = options.crop_left;
+            config.options.crop_top = options.crop_top;
+            config.options.crop_width = options.crop_width;
+            config.options.crop_height = options.crop_height;
+            config.options.use_scaling = options.use_scaling;
+            config.options.scaled_width = options.scaled_width;
+            config.options.scaled_height = options.scaled_height;
+            config.options.use_threads = options.use_threads;
+            config.options.dithering_strength = options.dithering_strength;
+            config.options.flip = 1;
+            config.options.alpha_dithering_strength = options.alpha_dithering_strength;
+
+
+            //Create a BitmapData and Lock all pixels to be written
+            if ( config.input.Has_alpha == 1)
+                { config.output.colorspace = WEBP_CSP_MODE.MODE_RGBA; }
+                else
+                { Console.Log( " veio dentro has_alh"); config.output.colorspace = WEBP_CSP_MODE.MODE_RGBA; }
+
+
+
+
+            // Specify the output format
+            config.output.u.RGBA.rgba = pointer_dados;
+            config.output.u.RGBA.stride = ( imgWidth * ( 4  ) );
+            config.output.u.RGBA.size = (UIntPtr)( imgHeight * ( imgWidth * 4 ) );
+            config.output.height = imgHeight;
+            config.output.width = imgWidth;
+            config.output.is_external_memory = 1;
+
+
+
+            // Decode
+            result = UnsafeNativeMethods.WebPDecode(  ptrRawWebP, rawWebP.Length, ref config);
+
+
+            if (result != VP8StatusCode.VP8_STATUS_OK)
+                { throw new Exception("Failed WebPDecode with error " + result); }
+
+            UnsafeNativeMethods.WebPFreeDecBuffer(ref config.output);
+
+
+            
+            Console.Log( bytes.Length );
+            Console.Log( "10: " + bytes[ 10 ] );
+            Console.Log( "1000: " + bytes[ 1000 ] );
+
+
+
+            Console.Log( "Length: " + bytes.Length );
+            Console.Log( "Length / 4 : " + ( bytes.Length / 4 ) );
+            Console.Log( "arr length : " + _native_arr_texture.Length );
+
+            if( _native_arr_texture.Length == ( bytes.Length / 4 ) )
+                {
+
+
+                }
+            
+
+
+            if (handle.IsAllocated)
+                handle.Free();
+
+            if (pinnedWebP.IsAllocated)
+                pinnedWebP.Free();
+            
+
+
+
+            return ;
+
+
+
+
+        
+
+    }
+
+
+    public byte[] Get_bytes( byte[] rawWebP ){
+
+
+            
+
+            VP8StatusCode result;
+
+            GetInfo( rawWebP, out int imgWidth, out int imgHeight, out bool hasAlpha, out bool hasAnimation, out string format );
+
+            byte[] bytes = new byte[ imgHeight * imgWidth * 4 ];
+   
+            WebPDecoderOptions options = new WebPDecoderOptions();
+            WebPDecoderConfig config = new WebPDecoderConfig();
+
+            GCHandle pinnedWebP = GCHandle.Alloc(rawWebP, GCHandleType.Pinned);
+            GCHandle handle = GCHandle.Alloc( bytes, GCHandleType.Pinned);
+            
+
+
+            IntPtr ptrRawWebP = pinnedWebP.AddrOfPinnedObject();
+            IntPtr pointer_dados =  handle.AddrOfPinnedObject();            
+
+            
+            if (UnsafeNativeMethods.WebPInitDecoderConfig(ref config) == 0 )
+                {  throw new Exception("WebPInitDecoderConfig failed. Wrong version?"); }
+
+            // Read the .webp input file information
+            config.options.bypass_filtering = options.bypass_filtering;
+            config.options.no_fancy_upsampling = options.no_fancy_upsampling;
+            config.options.use_cropping = options.use_cropping;
+            config.options.crop_left = options.crop_left;
+            config.options.crop_top = options.crop_top;
+            config.options.crop_width = options.crop_width;
+            config.options.crop_height = options.crop_height;
+            config.options.use_scaling = options.use_scaling;
+            config.options.scaled_width = options.scaled_width;
+            config.options.scaled_height = options.scaled_height;
+            config.options.use_threads = options.use_threads;
+            config.options.dithering_strength = options.dithering_strength;
+            config.options.flip = 1;
+            config.options.alpha_dithering_strength = options.alpha_dithering_strength;
+
+
+            //Create a BitmapData and Lock all pixels to be written
+            if ( config.input.Has_alpha == 1)
+                { config.output.colorspace = WEBP_CSP_MODE.MODE_RGBA; }
+                else
+                { config.output.colorspace = WEBP_CSP_MODE.MODE_RGBA; }
+
+
+
+
+            // Specify the output format
+            config.output.u.RGBA.rgba = pointer_dados;
+            config.output.u.RGBA.stride = ( imgWidth * ( 4  ) );
+            config.output.u.RGBA.size = (UIntPtr)( imgHeight * ( imgWidth * 4 ) );
+            config.output.height = imgHeight;
+            config.output.width = imgWidth;
+            config.output.is_external_memory = 1;
+
+
+            try{
+
+                result = UnsafeNativeMethods.WebPDecode(  ptrRawWebP, rawWebP.Length, ref config);
+                if (result != VP8StatusCode.VP8_STATUS_OK)
+                    { throw new Exception("Failed WebPDecode with error " + result); }
+
+                UnsafeNativeMethods.WebPFreeDecBuffer(ref config.output);
+
+            } catch( Exception e ){
+
+                    Console.Log( e.Message );
+
+            } finally {
+
+                if (handle.IsAllocated)
+                    handle.Free();
+
+                if (pinnedWebP.IsAllocated)
+                    pinnedWebP.Free();
+
+            }
+
+
+            return bytes;
+
+
+    }
+
 
 
 

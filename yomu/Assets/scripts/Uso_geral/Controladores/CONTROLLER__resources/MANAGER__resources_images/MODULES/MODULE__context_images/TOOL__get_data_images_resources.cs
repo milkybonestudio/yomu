@@ -5,61 +5,120 @@ using UnityEngine;
 public static class TOOL__get_data_images_resources {
 
 
+            // ** somente editor
+            public static byte[] webp_generico;
+
+            // ** single
+            public static byte[] Get_single_low_quality( RESOURCE__image _image ){ 
+
+                if( Application.isEditor )
+                    {
+
+                        byte[] image = Get_single_generico_EDITOR( _image, "png" );
+                    
+                        if( webp_generico == null ){
+
+                            // ** carregar
+
+                            string path = System.IO.Path.Combine( Application.dataPath, "Resources", "Development", "Webp_default.webp" );
+                            webp_generico = System.IO.File.ReadAllBytes( path );
+                            CONTROLLER__errors.Verify( ( webp_generico == null ), "nao achou" );
+
+                        }
+
+                        Dimensions dimensions = PNG.Get_dimensions( image );
+                        _image.width = dimensions.width;
+                        _image.height = dimensions.height;
+                        _image.data_size = image.Length;
+                        _image.pointer_container = -1; // ** nao tem
+                        _image.number_images = 1;
+
+                        return webp_generico; 
+
+                    }
+                    else
+                    { return Get_single_generico( _image, "webp" );   }
+
+                
+
+            }
+            public static byte[] Get_single( RESOURCE__image _image ){ 
 
 
-            public static byte[] Get_single_low_quality(  RESOURCE__image _image ){ return Get_single_generico( _image, "webp" );  }
-            public static byte[] Get_single( RESOURCE__image _image ){ return Get_single_generico( _image, "png" ); }
+                byte[] png = Get_single_generico( _image, "png" );
 
+                if( Application.isEditor )
+                    {
+                        Dimensions dimensions = PNG.Get_dimensions( png );
+                        _image.width = dimensions.width;
+                        _image.height = dimensions.height;
+                        _image.data_size = png.Length;
+                        _image.pointer_container = -1; // ** nao tem
+                        _image.number_images = 1;
+
+                        return webp_generico; 
+
+                    }
+                
+                
+
+                return png; 
+
+            }
 
 
 
             private static byte[] Get_single_generico(  RESOURCE__image _image, string _extensao ){
 
-
-                    MODULE__context_images _module = _image.module_images;
-
-                        // **   pensar da  seguinte forma: ( path sistema(C:\\users\\user...) ) || ( container( Devices, Characters, ...  ) ) || ( chave ( "\\Lily\\normal_clothes\\arms_1.png" ) )
+                    // **   pensar da  seguinte forma: ( path sistema(C:\\users\\user...) ) || ( container( Devices, Characters, ...  ) ) || ( chave ( "\\Lily\\normal_clothes\\arms_1.png" ) )
                     // **   no editor path systema vai dado por Application.DataPath + "\\Resources"
                     // **   na build vai ser Application.DataPath + "\\Static_data"
 
-                    #if UNITY_EDITOR
 
-                        string path_arquivo = System.IO.Path.Combine( Application.dataPath, "Resources", _module.context_folder, ( _image.path_locator + "." + _extensao  ) ) ;
+                    if( Application.isEditor )
+                        { return Get_single_generico_EDITOR( _image, _extensao ); }
+                        else
+                        { return Get_single_generico_BUILD( _image, _extensao ); }
 
-                        try{ return File.ReadAllBytes( path_arquivo ); } catch( System.Exception e ){ Console.LogError( $"Dont find the image { path_arquivo }" ); throw e; }
+            }
 
+
+
+
+        
+            private static byte[] Get_single_generico_EDITOR( RESOURCE__image _image, string _extensao ){
+
+                    string path_arquivo = System.IO.Path.Combine( Application.dataPath, "Resources", _image.image_context.ToString(), _image.main_folder, ( _image.path_locator + "." + _extensao  ) ) ;
+
+                    try{ return File.ReadAllBytes( path_arquivo ); } catch( System.Exception e ){ Console.LogError( $"Dont find the image { path_arquivo }" ); throw e; }
                     
-                    #elif !!!( UNITY_EDITOR ) && ( UNITY_STANDALONE_WIN || UNITY_STANDALONE_LINUX || UNITY_STANDALONE_OSX)
-                        
-                        
-                        thorw new Exception( "Ainda tem que fazer" );
+                    return null;
+
+            }
 
 
-                        // int _initial_pointer = _image.single_image.image_localizers.initial_pointer;
-                        // int _length = _image.single_image.image_ocalizers.length;
+            private static byte[] Get_single_generico_BUILD( RESOURCE__image _image, string _extensao ){
+
+                    CONTROLLER__game_current_state.Get_instance().Verify_plataform();
+                    return null;
+                                                  
+            }
 
 
-                        FileStream file_stream = null;
-                        
-                        if( !!!( files_streams.TryGetValue( _path, out file_stream ) ) )
-                            { files_streams.Add( _path, FILE_STREAM.Criar_stream( _path, buffer_cache )); }
-
-
-                        file_stream.Seek( _initial_pointer, SeekOrigin.Begin );
-
-                        byte[] image = new byte[ _length ];
-
-                        file_stream.Read( image, 0, _length );
-            
-                        return image;
-
-                    
-                    #endif
-
+            public static byte[][] Get_multiples_data( string _main_folder, string _path, int _number_images ){
 
                     return null;
 
             }
+
+
+            // ** multiples
+
+            public static byte[] Get_multiples_low_quality(  RESOURCE__image _image ){ return Get_single_generico( _image, "webp" );  }
+            public static byte[] Get_multiples( RESOURCE__image _image ){ return Get_single_generico( _image, "png" ); }
+
+            public static byte[] Get_multiples_low_quality_EDITOR( RESOURCE__image _image ){ return Get_single_generico( _image, "png" ); }
+            public static byte[] Get_multiples_EDITOR( RESOURCE__image _image ){ return Get_single_generico( _image, "png" ); }
 
 
 

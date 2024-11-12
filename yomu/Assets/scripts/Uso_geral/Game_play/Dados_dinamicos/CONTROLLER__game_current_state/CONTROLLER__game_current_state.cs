@@ -1,4 +1,4 @@
-
+using UnityEngine;
 
 unsafe public class CONTROLLER__game_current_state {
 
@@ -12,6 +12,18 @@ unsafe public class CONTROLLER__game_current_state {
         public int modo_atual;
         public Input_device input_device_atual;
 
+
+
+        public void Verify_plataform(){
+
+            
+                switch( Application.platform ){
+
+                    case RuntimePlatform.WindowsPlayer: break;
+                    default: CONTROLLER__errors.Throw( $"application can not handle { Application.platform }" ); break;
+                }
+
+        }
 
 
     

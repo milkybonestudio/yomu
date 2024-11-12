@@ -144,7 +144,7 @@ unsafe public class Controlador : MonoBehaviour {
                     { i++; image_ref.Activate(); }
 
                if( Input.GetKeyDown( KeyCode.E ) )
-                    { i++; image.sprite = image_ref.Instanciate(); }
+                    { i++; image.sprite = image_ref.Get_sprite(); }
 
 
                 // --- DOWN
@@ -175,6 +175,8 @@ unsafe public class Controlador : MonoBehaviour {
                     
                         Console.Clear();
                         Console.Log( "<Color=lightBlue>-------------------</Color>" );
+                        Console.Log( "<Color=lightBlue>REF:</Color>" );
+
 
                         Console.Log( $" state: { image_ref.state } " );
                         Console.Log( $" actual_need_content: { image_ref.actual_need_content } " );
@@ -188,7 +190,7 @@ unsafe public class Controlador : MonoBehaviour {
 
                         if( image != null )
                             {
-                                Console.Log( "Image:" );
+                                Console.Log( "<Color=lightBlue>  IMAGE:</Color>" );
                                 Console.Log( $"   actual_content: { image.actual_content }" );
                                 Console.Log( $"   content_going_to: { image.content_going_to }" );
                                 Console.Log( $"   stage_getting_resource: { image.stage_getting_resource }" );

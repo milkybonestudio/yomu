@@ -215,6 +215,10 @@ public static class TOOL__module_context_images {
         private static void Verify_stage_for_content( RESOURCE__image _image ){
 
 
+                if( _image.stage_getting_resource == Resources_getting_image_stage.all_reajust_stages )
+                    { throw new System.Exception(""); }
+
+
                 Resources_getting_image_stage possible_stages = Resources_getting_image_stage.not_give;
 
                 switch( _image.actual_content ){
