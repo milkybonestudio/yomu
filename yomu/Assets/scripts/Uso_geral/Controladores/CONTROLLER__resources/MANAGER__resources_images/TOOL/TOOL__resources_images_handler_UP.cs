@@ -10,16 +10,24 @@ public static class TOOL__resources_images_handler_UP {
 
                 TOOL__resource_image.Verify_image( _image );
 
+                CONTROLLER__errors.Verify( ( _image.actual_content != Resource_image_content.nothing ), $"the image { _image.name } came to the Handle_waiting_to_start() but the actual content is { _image.actual_content }" );
+
                 int weight = 0;
 
-                // --- VERIFICA SE PRECISA TER
-                if( _image.data_size < 2_000 )
+                if( _image.content_going_to == Resource_image_content.nothing )
+                    { _image.stage_getting_resource = Resources_getting_image_stage.finished; return weight; } 
+
+
+                if( !!!( _image.have_low_quality ) )
                     {
-                        // --- TOO SMALL 
-                        if( _image.content_going_to == Resource_image_content.nothing )
-                            { _image.stage_getting_resource = Resources_getting_image_stage.finished; } 
-                            else 
-                            { _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_get_compress_file; }
+                        // --- TOO SMALL TO LOL QUALITY
+                        // ** sempre que for usar a imagem tem que verificar se ela existe
+                        _image.actual_content = Resource_image_content.compress_low_quality_data;
+                        
+                            if( _image.content_going_to > Resource_image_content.compress_low_quality_data )
+                                { _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_get_compress_file; }
+                                else
+                                { _image.stage_getting_resource = Resources_getting_image_stage.finished; }
 
                         return weight;
 
@@ -35,9 +43,9 @@ public static class TOOL__resources_images_handler_UP {
                 _image.stage_getting_resource = Resources_getting_image_stage.getting_compress_low_quality_file;
 
                 _manager.task_getting_compress_low_quality_file = CONTROLLER__tasks.Pegar_instancia().Get_task_request( "task_getting_compress_low_quality_file" );
-                _manager.task_getting_compress_low_quality_file.prioridade = 1000;
                 
-                _manager.task_getting_compress_low_quality_file.fn_multithread = ( Task_req req ) => { TASK_REQ.Add_single_data( req, TOOL__get_data_images_resources.Get_single_low_quality( _image ) ); };
+                    _manager.task_getting_compress_low_quality_file.prioridade = 1000;
+                    _manager.task_getting_compress_low_quality_file.fn_multithread = ( Task_req req ) => { TASK_REQ.Add_single_data( req, TOOL__get_data_images_resources.Get_single_low_quality( _image ) ); };
 
                 return weight;
 

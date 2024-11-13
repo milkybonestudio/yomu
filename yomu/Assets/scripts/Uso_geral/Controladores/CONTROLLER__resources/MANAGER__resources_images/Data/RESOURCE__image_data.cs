@@ -21,29 +21,9 @@ public struct RESOURCE__image_data {
             public Sprite sprite;
 
 
-
             // ** usar depois
             public Texture_allocated texture_allocated;
 
-
-
-            public void Reset(){
-
-                    used = true;
-
-                    image_compress = null;
-
-                    have_low_quality_compress = false; // false => can not have the webp
-                    image_low_quality_compress = null;
-
-                    // ** Nao deveria ter
-                    CONTROLLER__errors.Verify( ( texture_exclusiva != null ), "deu um reset na image_data mas a texture ainda estava aqui" );
-
-                    texture_exclusiva = null;
-                    texture_exclusiva_native_array.Dispose();
-                    sprite = null;
-
-            }
 
 
 }

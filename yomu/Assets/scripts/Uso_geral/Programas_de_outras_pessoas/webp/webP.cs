@@ -53,7 +53,7 @@ unsafe public sealed class WebP : IDisposable{
 
     public void Transfer_data( byte[] rawWebP,  int _width, int _height, NativeArray<Color32> _native_arr_texture ){
 
-     
+
 
           VP8StatusCode result;
 

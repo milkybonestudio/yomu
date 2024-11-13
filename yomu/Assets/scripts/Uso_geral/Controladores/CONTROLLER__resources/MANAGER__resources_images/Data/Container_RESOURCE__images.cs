@@ -74,7 +74,10 @@ public class Container_RESOURCE__images {
 
             Console.Log( "veiuo Put_data_image()" );
 
-                _image.single_image.Reset();
+
+                // ** IMAGE DATA
+                _image.single_image.used = true;
+
 
                 _image.image_context = _context; 
                 _image.main_folder = _main_folder;
@@ -99,20 +102,35 @@ public class Container_RESOURCE__images {
                 _image.data_size = locator.length;
 
                 if( _image.data_size > 2_000 )
-                    { _image.single_image.have_low_quality_compress = true; }
+                    { _image.have_low_quality = true; }
+                    else
+                    { _image.have_low_quality = false; }
 
 
         }
 
         private void Reset_data( RESOURCE__image _image ){
 
-                _image.single_image.Reset();
+                // ** RESET DATA
+                    _image.single_image.used = false;
+                    _image.single_image.image_compress = null;
+
+                    _image.single_image.have_low_quality_compress = false; // false => can not have the webp
+                    _image.single_image.image_low_quality_compress = null;
+
+                    // ** Nao deveria ter
+                    CONTROLLER__errors.Verify( ( _image.single_image.texture_exclusiva != null ), "deu um reset na image_data mas a texture ainda estava aqui" );
+
+                    _image.single_image.texture_exclusiva = null;
+                    _image.single_image.texture_exclusiva_native_array.Dispose();
+                    _image.single_image.sprite = null;
 
                 _image.image_context = Resource_context.not_given; 
                 _image.main_folder = null;
                 _image.local_path = null;
                 _image.image_key = null;
                 _image.module_images = null;
+                _image.have_low_quality = false;
 
 
                 _image.stage_getting_resource = Resources_getting_image_stage.not_give;

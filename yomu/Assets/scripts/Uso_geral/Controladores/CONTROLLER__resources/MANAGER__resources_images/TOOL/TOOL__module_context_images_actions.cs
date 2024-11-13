@@ -10,12 +10,8 @@ public static class TOOL__module_context_images_actions {
 
                 RESOURCE__image image = _ref.image;
 
-                if( !!!( image.single_image.used ) )
-                    {
-                        CONTROLLER__errors.Verify( ( image.multiples_images == null ), "Called Get_sprite() but the image dont have the single_image or even the multiples_images data" );
-                        CONTROLLER__errors.Throw( "Called Get_sprite() but the image dont have the single_image data" );
-                    }
-
+                CONTROLLER__errors.Verify(  !!!( image.single_image.used ),  "Called Get_sprite() but the image dont have the single_image data" );
+                
                 if( _ref.state != Resource_state.instanciated )
                     { Instanciate( _ref  ); }
 
@@ -24,39 +20,6 @@ public static class TOOL__module_context_images_actions {
                 return image.single_image.sprite;
 
         }
-
-
-        public static Sprite[] Get_sprites( RESOURCE__image_ref _ref  ){
-
-                RESOURCE__image image = _ref.image;
-
-                if( image.multiples_images == null )
-                    {
-                        if( image.multiples_images == null )
-                            { CONTROLLER__errors.Throw( "Called Get_sprites() but the image dont have the multiples_images or even the single_image data" ); }
-
-                        CONTROLLER__errors.Throw( "Called Get_sprites() but the image dont have the multiples_images data" );
-                    }
-
-
-
-                if( _ref.state != Resource_state.instanciated )
-                    { Instanciate( _ref  ); }
-
-                int index = 0;
-                Sprite[] sprites = new Sprite[ image.multiples_images.Length ];
-
-                foreach( RESOURCE__image_data image_data in image.multiples_images ){ 
-                        sprites[ index++ ] = image_data.sprite;
-                        CONTROLLER__errors.Verify( ( image_data.sprite == null ), $"One sprite of the image { image.name } was null" ); 
-                }
-
-            
-                return sprites;
-
-        }
-
-
 
 
         // --- DOWN
@@ -108,25 +71,8 @@ public static class TOOL__module_context_images_actions {
                 if( image.count_places_being_used_nothing > 1 )
                     {}
 
-
-                if( image.multiples_images == null )
-                    { 
-                        // --- SINGLE 
-
-                        image.single_image.image_compress = null;
-                        image.module_images.manager.textures_manager.Liberate_texture( image.single_image ); 
-                    }
-                    else
-                    { 
-                        // --- MULTIPLES
-
-                        for( int index_image_data = 0 ; index_image_data < image.multiples_images.Length ; index_image_data++ )
-                            { 
-                                image.multiples_images[ index_image_data ].image_compress = null;
-                                image.module_images.manager.textures_manager.Liberate_texture( image.multiples_images[ index_image_data ] );
-                            } 
-                    }
-                
+                image.single_image.image_compress = null;
+                image.module_images.manager.textures_manager.Liberate_texture( image.single_image );                 
 
         }
 
@@ -212,11 +158,88 @@ public static class TOOL__module_context_images_actions {
                 RESOURCE__image image = _ref.image;
 
                 Console.Log( "actual content: " + image.actual_content );
-                
-                if( image.multiples_images == null )
-                    { Instanciate_SINGLE( image ); }
-                    else 
-                    { Instanciate_MULTI( image ); }
+
+
+
+
+                image.module_images.manager.Stop_task( image );
+
+                    // ** GUARANTY IMAGE COMPRESS
+                    
+                        if( image.actual_content == Resource_image_content.nothing )
+                            { 
+                                
+                                image.single_image.image_low_quality_compress =  TOOL__get_data_images_resources.Get_single_low_quality( image );
+
+                                //single_image.image_low_quality_compress =  System.IO.File.ReadAllBytes( System.IO.Path.Combine( Application.dataPath, "Resources", "Development", "Webp_default_1.webp" ) ) ;
+
+                                // ** se nao tiver nada vai primeiro pegar o low quality e depois ir pegando o normal. Quando tiver o normal fazer o flip
+                                image.actual_content = Resource_image_content.compress_low_quality_data;
+  
+                            } 
+
+                        if( image.actual_content == Resource_image_content.compress_low_quality_data )
+                            {  image.stage_getting_resource = Resources_getting_image_stage.waiting_to_get_compress_file_REAJUST; }  // ** setar para pegar o compress 
+
+                        if( image.actual_content == Resource_image_content.compress_data )
+                            { /* nao precisa fazer nada */ } 
+
+                        
+                    // --- GUARANTY TEXTURE
+                        if( image.actual_content < Resource_image_content.texture )
+                            { 
+                                CONTROLLER__errors.Verify( ( image.width * image.height == 0 ), $"Image { image.name } is with height { image.height } and width { image.width }" );
+                                
+                                image.single_image.texture_exclusiva = new Texture2D( image.width, image.height, TextureFormat.RGBA32, false );
+                                image.single_image.texture_exclusiva_native_array = image.single_image.texture_exclusiva.GetPixelData<Color32>( 0 );
+                                image.single_image.texture_exclusiva.filterMode = UnityEngine.FilterMode.Point;
+                                image.actual_content = Resource_image_content.texture;
+                            }
+
+
+                        if( image.actual_content < Resource_image_content.texture_with_pixels )
+                            {
+
+                                     if( image.single_image.image_compress != null )
+                                        { 
+                                            TOOL__loader_texture.Transfer_data_PNG( image.single_image.image_compress, image.single_image.texture_exclusiva_native_array );
+                                        }           
+                                else if( image.single_image.image_low_quality_compress != null )
+                                        { 
+                                            Console.Log( "Veio aqui" );
+                                            TOOL__loader_texture.Transfer_data_WEABP( image, image.single_image ); 
+                                        }
+                                else if( true )
+                                        { 
+                                            CONTROLLER__errors.Throw( "nao tinha nem a compress normal nem a webp" ); 
+                                        } 
+
+                                image.actual_content = Resource_image_content.texture_with_pixels;
+
+                            }
+
+                    
+                        if( image.actual_content < Resource_image_content.texture_with_pixels_applied )
+                            {
+                                Console.Log( "Vai dar o apply" );
+                                image.single_image.texture_exclusiva.Apply( false, false );
+                                image.actual_content = Resource_image_content.texture_with_pixels_applied;
+
+                            }
+
+                        // --- GUARANTY SPRITE
+                        if( image.actual_content < Resource_image_content.sprite )
+                            {
+                                Console.Log( "Vai criar a sprite" );
+                                image.single_image.sprite = Sprite.Create( image.single_image.texture_exclusiva, new Rect( 0f, 0f, image.width, image.height ), new Vector2(0.5f, 0.5f), 100.0f ,0, SpriteMeshType.FullRect   );
+                                Console.Log( "sprite: " + image.single_image.sprite );
+                                Console.Log( "texture: " + image.single_image.texture_exclusiva );
+                                image.actual_content = Resource_image_content.sprite;
+                            }
+
+
+                CONTROLLER__errors.Verify( ( image.single_image.sprite == null ), $"Tried to get the sprite of the image { image.name }, but do not construct after the fall. actual content: { image.actual_content }" );
+
 
 
                 image.actual_content = Resource_image_content.sprite;
@@ -232,101 +255,6 @@ public static class TOOL__module_context_images_actions {
                 return;
 
         }
-
-        private static void Instanciate_SINGLE( RESOURCE__image _image ){
-
-
-                _image.module_images.manager.Stop_task( _image );
-
-                    // ** GUARANTY IMAGE COMPRESS
-                    
-                        if( _image.actual_content == Resource_image_content.nothing )
-                            { 
-                                
-                                _image.single_image.image_low_quality_compress =  TOOL__get_data_images_resources.Get_single_low_quality( _image );
-
-                                //single_image.image_low_quality_compress =  System.IO.File.ReadAllBytes( System.IO.Path.Combine( Application.dataPath, "Resources", "Development", "Webp_default_1.webp" ) ) ;
-
-                                // ** se nao tiver nada vai primeiro pegar o low quality e depois ir pegando o normal. Quando tiver o normal fazer o flip
-                                _image.actual_content = Resource_image_content.compress_low_quality_data;
-  
-                            } 
-
-                        if( _image.actual_content == Resource_image_content.compress_low_quality_data )
-                            {  _image.stage_getting_resource = Resources_getting_image_stage.waiting_to_get_compress_file_REAJUST; }  // ** setar para pegar o compress 
-
-                        if( _image.actual_content == Resource_image_content.compress_data )
-                            { /* nao precisa fazer nada */ } 
-
-                        
-                    // --- GUARANTY TEXTURE
-                        if( _image.actual_content < Resource_image_content.texture )
-                            { 
-                                CONTROLLER__errors.Verify( ( _image.width * _image.height == 0 ), $"Image { _image.name } is with height { _image.height } and width { _image.width }" );
-                                
-                                _image.single_image.texture_exclusiva = new Texture2D( _image.width, _image.height, TextureFormat.RGBA32, false );
-                                _image.single_image.texture_exclusiva_native_array = _image.single_image.texture_exclusiva.GetPixelData<Color32>( 0 );
-                                _image.single_image.texture_exclusiva.filterMode = UnityEngine.FilterMode.Point;
-                                _image.actual_content = Resource_image_content.texture;
-                            }
-
-
-                        if( _image.actual_content < Resource_image_content.texture_with_pixels )
-                            {
-
-                                     if( _image.single_image.image_compress != null )
-                                        { 
-                                            TOOL__loader_texture.Transfer_data_PNG( _image.single_image.image_compress, _image.single_image.texture_exclusiva_native_array );
-                                        }           
-                                else if( _image.single_image.image_low_quality_compress != null )
-                                        { 
-                                            Console.Log( "Veio aqui" );
-                                            TOOL__loader_texture.Transfer_data_WEABP( _image, _image.single_image ); 
-                                        }
-                                else if( true )
-                                        { 
-                                            CONTROLLER__errors.Throw( "nao tinha nem a compress normal nem a webp" ); 
-                                        } 
-
-                                _image.actual_content = Resource_image_content.texture_with_pixels;
-
-                            }
-
-                    
-                        if( _image.actual_content < Resource_image_content.texture_with_pixels_applied )
-                            {
-                                Console.Log( "Vai dar o apply" );
-                                _image.single_image.texture_exclusiva.Apply( false, false );
-                                _image.actual_content = Resource_image_content.texture_with_pixels_applied;
-
-                            }
-
-                        // --- GUARANTY SPRITE
-                        if( _image.actual_content < Resource_image_content.sprite )
-                            {
-                                Console.Log( "Vai criar a sprite" );
-                                _image.single_image.sprite = Sprite.Create( _image.single_image.texture_exclusiva, new Rect( 0f, 0f, _image.width, _image.height ), new Vector2(0.5f, 0.5f), 100.0f ,0, SpriteMeshType.FullRect   );
-                                Console.Log( "sprite: " + _image.single_image.sprite );
-                                Console.Log( "texture: " + _image.single_image.texture_exclusiva );
-                                _image.actual_content = Resource_image_content.sprite;
-                            }
-
-                CONTROLLER__errors.Verify( ( _image.single_image.sprite == null ), $"Tried to get the sprite of the image { _image.name }, but do not construct after the fall. actual content: { _image.actual_content }" );
-
-
-                return ;
-
-
-
-        }
-
-
-        private static void Instanciate_MULTI( RESOURCE__image _image ){
-
-                return;
-
-        }
-
 
 
 }

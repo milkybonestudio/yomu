@@ -22,12 +22,11 @@ unsafe public class RESOURCE__image {
 
         // ** pegar no localizador
 
-    
-        public int width;
-        public int height;
-        public int pointer_container;
-        public int data_size;
-        public int number_images;
+        public int width; 
+        public int height; 
+        public int pointer_container; 
+        public int data_size; 
+        public int number_images; 
 
     
         public Resource_context image_context;
@@ -37,33 +36,30 @@ unsafe public class RESOURCE__image {
         public string image_key;
 
 
-
-
-
-
         public int request_id;
         public string name = "NAO_COLOCOU";
 
 
         
-        // --- DATA FOR GETTING RESOURCES
-        
+        // --- DATA FOR GETTING RESOURCES    
+
         public Resources_getting_image_stage stage_getting_resource; // ** precess of getting the resource
 
-        
+    
         // --- IMAGE DATA 
-
 
         public Resource_image_content content_going_to; // se estiver em uma transicao de recursos é o ponto final 
         public Resource_image_content actual_content; // ** o recurso atual
 
     
     
-        // --- DATA
+        // --- DATAs;
 
+
+        public bool have_low_quality;
         public RESOURCE__image_data single_image;
-        public RESOURCE__image_data[] multiples_images;
-
+        
+        // public RESOURCE__image_data[] multiples_image
 
 
 

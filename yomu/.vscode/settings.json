@@ -5,7 +5,7 @@
         "**/.git": true,
         "**/.vs": true,
         "**/.gitmodules": true,
-        "**/.vsconfig": true,
+        "**/.vsconfig": false,
         "**/*.booproj": true,
         "**/*.pidb": true,
         "**/*.suo": true,

@@ -106,9 +106,7 @@ public class RESOURCE__image_ref {
 
 
         public Sprite Get_sprite(){ Guaranty_ref(); return TOOL__module_context_images_actions.Get_sprite( this );  }
-        public Sprite[] Get_sprites(){ Guaranty_ref(); return TOOL__module_context_images_actions.Get_sprites( this );  }
-
-
+    
 
         private void Guaranty_ref(){ if( ref_state == RESOURCE__image_ref_state.deleted ){ CONTROLLER__errors.Throw( $"Tried to use ref { localizador } but the ref was deleted" ); } if( ref_state == RESOURCE__image_ref_state.no_instanciated ){ CONTROLLER__errors.Throw( $"Tried to use ref { localizador } but the ref was not instanciated" ); } }
 
