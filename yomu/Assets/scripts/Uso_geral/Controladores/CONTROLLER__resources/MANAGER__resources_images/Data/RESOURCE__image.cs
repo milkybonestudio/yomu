@@ -11,57 +11,10 @@ using UnityEngine;
     // ** o nivel minimo de prealocation sempre vai ser definido pelo maior das referencias
 
 
+
 unsafe public class RESOURCE__image {
 
         
-        public RESOURCE__image( MODULE__context_images _module_images,  Resource_context _context,  string _main_folder, string _path, Resource_image_localizer locator ) { 
-
-
-                image_context = _context; 
-                main_folder = _main_folder;
-                path_locator = _path;
-                module_images = _module_images;
-
-
-                stage_getting_resource = Resources_getting_image_stage.finished;
-                actual_content = Resource_image_content.nothing;
-                content_going_to = Resource_image_content.nothing;
-                
-
-                width = locator.width;
-                height = locator.height;
-                pointer_container = locator.pointer;
-                data_size = locator.length;
-                number_images = locator.number_images;
-                
-
-
-                // --- CREATE DATA
-                if( number_images > 1 )
-                    {
-                        // --- MULTIPLES
-
-                        multiples_images = new RESOURCE__image_data[ locator.number_images ];
-                        CONTROLLER__errors.Verify( ( locator.number_images < 2 ), $"tried to get multiples images { path_locator } but the length was { locator.number_images }" );
-                
-                        for( int i = 0 ; i < multiples_images.Length ; i++ )
-                            { multiples_images[ i ] = new RESOURCE__image_data(); }
-                        
-                    }
-                    else
-                    { 
-                        // --- SINLGE
-                        single_image = new RESOURCE__image_data(); 
-
-                    }
-
-                return;
-
-                
-        }
-
-
-
         // --- IMAGE DATA
 
         public MODULE__context_images module_images;
@@ -79,7 +32,11 @@ unsafe public class RESOURCE__image {
     
         public Resource_context image_context;
         public string main_folder;
-        public string path_locator;
+        public string local_path;
+
+        public string image_key;
+
+
 
 
 

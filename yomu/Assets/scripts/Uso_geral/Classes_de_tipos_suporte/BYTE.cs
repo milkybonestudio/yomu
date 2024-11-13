@@ -6,6 +6,7 @@ public static class BYTE {
 
 
 
+
         public static void Copiar_elementos_de_array( byte[] _array_para_colocar, int _index_para_iniciar, byte[] _array_com_os_dados, int _length ){
 
                 if( _length > 150 )

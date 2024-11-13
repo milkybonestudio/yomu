@@ -205,7 +205,7 @@ public static class TOOL__module_context_images {
 
                 // DOWN
 
-                CONTROLLER__errors.Throw( $"The image { _image.path_locator } need to change to Sprite, but the actual content is: { _image.actual_content }, the going-to_content is : { _image.content_going_to } and the stage_getting_resource is: { _image.stage_getting_resource }" );
+                CONTROLLER__errors.Throw( $"The image { _image.local_path } need to change to Sprite, but the actual content is: { _image.actual_content }, the going-to_content is : { _image.content_going_to } and the stage_getting_resource is: { _image.stage_getting_resource }" );
                 return -1;
 
         }

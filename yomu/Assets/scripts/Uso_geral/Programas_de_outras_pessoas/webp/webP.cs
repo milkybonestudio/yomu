@@ -14,6 +14,41 @@ unsafe public sealed class WebP : IDisposable{
 
     private const int WEBP_MAX_DIMENSION = 16383;
 
+    public static bool Verify_is_webp( byte[] _bytes ){
+
+            int i = 1;
+
+            if( _bytes[ 0 ] != 82 )
+                { i = i * 0; }
+            
+            if( _bytes[ 1 ] != 49 )
+                { i = i * 0; }
+
+            if( _bytes[ 2 ] != 46 )
+                { i = i * 0; }
+
+            if( _bytes[ 3 ] != 46 )
+                { i = i * 0; }
+
+            // ** size 4 bytes
+
+
+
+
+            if( _bytes[ 4 ] != 87 )
+                { i = i * 0; }
+            if( _bytes[ 5 ] != 69 )
+                { i = i * 0; }
+            if( _bytes[ 6 ] != 66 )
+                { i = i * 0; }
+            if( _bytes[ 7 ] != 80 )
+                { i = i * 0; }
+
+            return i > 0 ;
+
+
+    }
+
 
 
     public void Transfer_data( byte[] rawWebP,  int _width, int _height, NativeArray<Color32> _native_arr_texture ){
@@ -28,6 +63,7 @@ unsafe public sealed class WebP : IDisposable{
                 {
 
                     // ** somente editor
+                    CONTROLLER__errors.Verify( !!!( Application.isEditor ) , "This can only happens in the editor" );
                     CONTROLLER__errors.Verify( (  _native_arr_texture.Length != ( _height * _width ) ) , "deu ruim" );
 
                     byte[] webp_default =  Get_bytes( rawWebP );

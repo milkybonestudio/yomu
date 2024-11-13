@@ -44,38 +44,7 @@ unsafe public static class TOOL__loader_texture {
         }
 
 
-        
-
-        private static void Generate_information( RESOURCE__image_data _image_data, int _width, int _height ){
-
-
-                // // ** 1 cenario, dont flip
-                // if( _image_data.width <= _width && _image_data.height <= _height )
-                //     {
-                //         // --- PASSOU
-                //         _image_data.default_rotation = 0f;
-                //         _image_data.height_margin = ( _height - _image_data.height );
-                //         _image_data.width_margin  = ( _width - _image_data.width );
-                //         return;
-
-                //     }
-
-
-                // // ** 2 cenario, dont flip
-                // if( _image_data.width <= _height && _image_data.height <= _width )
-                //     {
-                //         // --- PASSOU
-                //         _image_data.default_rotation = 0.25f;
-                //         _image_data.height_margin = ( _height - _image_data.width );
-                //         _image_data.width_margin  = ( _width - _image_data.height );
-                //         return;
-                //     }
-
-                throw new System.Exception( "nao pode colocar imagem na texture, texture muito pequena" );
-
-                
-        }
-
+    
 
         public static WebP w = new WebP();
     
@@ -100,22 +69,22 @@ unsafe public static class TOOL__loader_texture {
         public static void Transfer_data_PNG( byte[] png,  NativeArray<Color32> _native_arr_texture ){
 
                 Console.Log( "Veio Transfer_data_PNG" );
-
-                Bitmap bm = new Bitmap( System.Drawing.Image.FromStream( new MemoryStream( png )) );
                 
+                CONTROLLER__errors.Verify( ( png == null ) , "png veio null" );
+                CONTROLLER__errors.Verify( !!!( PNG.Verify_is_png( png ) ), "Nao era um png" );
+
+                MemoryStream m_s = new MemoryStream( png );
+                
+                Image image = null;
+
+                try { image = System.Drawing.Image.FromStream( m_s ); } catch( Exception e ){ CONTROLLER__errors.Throw( $"Could not pass the data of the png { png }, length: { png.Length }" ); }
+
+                Bitmap bm = new Bitmap( image );
                 BitmapData bitmapData = bm.LockBits (
                                                         new System.Drawing.Rectangle( 0, 0, bm.Width, bm.Height ),
                                                         ImageLockMode.ReadOnly,
                                                         PixelFormat.Format32bppArgb // ** talvez trenha que inverter
                                                     );
-
-
-                // Generate_information( _image_data,  bitmapData.Width, bitmapData.Height );
-
-                
-
-                //mark
-                //** ver amanha
 
 
                 
@@ -263,159 +232,14 @@ unsafe public static class TOOL__loader_texture {
 
                         }
 
-
-
                 }
-
-
 
                 // for( int index = ( _native_arr_texture.Length - 1 ) ; index > 0 ; index-- ){
                 for( int index = 0 ; index < _native_arr_texture.Length ; index++ ){
 
-                        // u = ( u + 1 ) % 1_000;
-                        // if( u == 0 )
-                        //     { Console.Log( "index: " + index ); }
-
-                        // // ** reseta container
-                        // p_container_1 = ( p_container + 0 )  ;
-                        // p_container_2 = ( p_container + 1 )  ;
-                        // p_container_3 = ( p_container + 2 )  ;
-                        // p_container_4 = ( p_container + 3 )  ;
-
-
-                        // p_data_1 += 4;
-                        // p_data_2 += 4;
-                        // p_data_3 += 4;
-                        // p_data_4 += 4;
-
-                        // *p_container_1 = *p_data_3;
-                        // *p_container_2 = *p_data_2;
-                        // *p_container_3 = *p_data_1;
-
-                        // *p_container_4 = *p_data_4;
-
-                
-                        // _native_arr_texture[ index ] =  *( Color32* ) ( p_container_origin );
-            
-
-                        // // ** reseta container
-                        // p_container_1 = ( p_container + 0 )  ;
-                        // p_container_2 = ( p_container + 1 )  ;
-                        // p_container_3 = ( p_container + 2 )  ;
-                        // p_container_4 = ( p_container + 3 )  ;
-
-
-                        // p_data_1 += 4;
-                        // p_data_2 += 4;
-                        // p_data_3 += 4;
-                        // p_data_4 += 4;
-
-                        // *p_container_1 = *p_data_2;
-                        // *p_container_2 = *p_data_3;
-                        // *p_container_3 = *p_data_4;
-                        // *p_container_4 = *p_data_1;
-
-                
-                        // // --- LEU B1
-
-
-                        // p_container_1 += 4 ;
-                        // p_container_2 += 4 ;
-                        // p_container_3 += 4 ;
-                        // p_container_4 += 4 ;
-
-                        // p_data_1 += 4;
-                        // p_data_2 += 4;
-                        // p_data_3 += 4;
-                        // p_data_4 += 4;
-
-
-                        // *p_container_1 = *p_data_2;
-                        // *p_container_2 = *p_data_3;
-                        // *p_container_3 = *p_data_4;
-                        // *p_container_4 = *p_data_1;
-
-                        // // --- LEU B2
-
-
-                        // p_container_1 += 4 ;
-                        // p_container_2 += 4 ;
-                        // p_container_3 += 4 ;
-                        // p_container_4 += 4 ;
-
-                        // p_data_1 += 4;
-                        // p_data_2 += 4;
-                        // p_data_3 += 4;
-                        // p_data_4 += 4;
-
-
-                        // *p_container_1 = *p_data_2;
-                        // *p_container_2 = *p_data_3;
-                        // *p_container_3 = *p_data_4;
-                        // *p_container_4 = *p_data_1;
-                        // // --- LEU B3
-
-
-                        // p_container_1 += 4 ;
-                        // p_container_2 += 4 ;
-                        // p_container_3 += 4 ;
-                        // p_container_4 += 4 ;
-
-                        // p_data_1 += 4;
-                        // p_data_2 += 4;
-                        // p_data_3 += 4;
-                        // p_data_4 += 4;
-
-
-                        // *p_container_1 = *p_data_2;
-                        // *p_container_2 = *p_data_3;
-                        // *p_container_3 = *p_data_4;
-                        // *p_container_4 = *p_data_1;
-
-                        // // --- LEU B4
-
-
-                        // // --- PASSA 4 PIXELS DE 1 VEZ
-                        // _native_arr_texture[ index + 0 ] =  *( Color32* ) ( p_container_origin + 0 );
-                        // _native_arr_texture[ index + 1 ] =  *( Color32* ) ( p_container_origin + 1 );
-                        // _native_arr_texture[ index + 2 ] =  *( Color32* ) ( p_container_origin + 2 );
-                        // _native_arr_texture[ index + 3 ] =  *( Color32* ) ( p_container_origin + 3 );
-
                         continue;
-
-
                 }
 
-                Console.Log( "terminou loop das cores" );
-
-
-                // int ponto_inicial_final  = _native_arr_texture.Length - ( _native_arr_texture.Length % 4 );
-
-                // for( int i = ponto_inicial_final ; i < _native_arr_texture.Length ; i++ ){
-
-
-                //         p_container_1 += 4 ;
-                //         p_container_2 += 4 ;
-                //         p_container_3 += 4 ;
-                //         p_container_4 += 4 ;
-
-                //         p_data_1 += 4;
-                //         p_data_2 += 4;
-                //         p_data_3 += 4;
-                //         p_data_4 += 4;
-
-
-                //         *p_container_1 = *p_data_4;
-                //         *p_container_2 = *p_data_3;
-                //         *p_container_3 = *p_data_2;
-                //         *p_container_4 = *p_data_1;
-
-                //         _native_arr_texture[ i ] = *( Color32* ) p_container_origin ;
-                //         continue;
-
-                // }
-
-            Console.Log( "terminou" );
 
             return;
 

@@ -2,7 +2,7 @@
 public enum Resource_context {
 
 
-        // not_given, // tem que dar erro
+        not_given, // tem que dar erro
 
         // generic, // ** mais usado para audios e sfx 
 

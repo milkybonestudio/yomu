@@ -41,6 +41,34 @@ public static class PNG {
 
         }
 
+        public static bool Verify_is_png( byte[] _bytes ){
+
+            int i = 10;
+
+            if( _bytes[ 0 ] != 137 )
+                { i = i * 0; }
+            
+            if( _bytes[ 1 ] != 80 )
+                { i = i * 0; }
+
+            
+            if( _bytes[ 2 ] != 78 )
+                { i = i * 0; }
+            if( _bytes[ 3 ] != 71 )
+                { i = i * 0; }
+            if( _bytes[ 4 ] != 13 )
+                { i = i * 0; }
+            if( _bytes[ 5 ] != 10 )
+                { i = i * 0; }
+            if( _bytes[ 6 ] != 26 )
+                { i = i * 0; }
+            if( _bytes[ 7 ] != 10 )
+                { i = i * 0; }
+
+            return i > 0;
+
+        }
+
 
         public static Dimensions Get_dimensions( byte[] _png_byte_arr ){
 

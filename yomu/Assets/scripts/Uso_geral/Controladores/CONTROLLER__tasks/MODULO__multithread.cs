@@ -44,11 +44,15 @@ public class MODULO__multithread {
                                 if( !!! ( Dados_fundamentais_sistema.jogo_ativo ) || finalizar_thread )
                                     { Console.Log( "Vai encerrar a thread" ); return; }
 
+
+                                Console.Log( "controlador_tasks: " + controlador_tasks );
+
                                 Task_req task = TASK_REQ.Pegar_task_com_maior_prioridade( controlador_tasks.tasks_em_espera_para_ativar_multithread );
 
 
                                 if( task == null )
                                     { Matar_thread(); return; }
+
 
                                 Console.Log( $"passou: { task.nome }" );
                                 controlador_tasks.tasks_em_espera_para_ativar_multithread[ task.slot_id ] = null;
@@ -59,6 +63,8 @@ public class MODULO__multithread {
 
                                 task.fn_multithread( task );
                                 task.part_multithread_finished = true;
+
+                                Console.Log( "controlador_tasks.tasks_em_espera_para_ativar_single_thread: " + controlador_tasks.tasks_em_espera_para_ativar_single_thread );
                                 
                                 TASK_REQ.Adicionar_task_em_array(  ref controlador_tasks.tasks_em_espera_para_ativar_single_thread, task );
 
@@ -67,6 +73,8 @@ public class MODULO__multithread {
                         }
 
                 } catch( Exception e ){
+
+                    Console.LogError( e.Message );
 
                     exception = e;
                     Matar_thread();

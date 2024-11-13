@@ -1,6 +1,6 @@
 public struct Resource_image_localizer {
 
-    public int number_images;
+    //public int number_images;
 
     public int pointer;
     public int length;

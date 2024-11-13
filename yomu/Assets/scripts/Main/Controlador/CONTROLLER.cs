@@ -181,7 +181,7 @@ unsafe public class Controlador : MonoBehaviour {
                         Console.Log( $" state: { image_ref.state } " );
                         Console.Log( $" actual_need_content: { image_ref.actual_need_content } " );
                         Console.Log( $" level_pre_allocation: { image_ref.level_pre_allocation } " );
-                        Console.Log( $" ref_deleted: { image_ref.ref_deleted } " );
+                        Console.Log( $" ref_state: { image_ref.ref_state } " );
                         Console.Log( $" module: { image_ref.module } " );
                         Console.Log( $" image: { image_ref.image } " );
                         Console.Log( $" image_slot_index: { image_ref.image_slot_index } " );
@@ -197,19 +197,17 @@ unsafe public class Controlador : MonoBehaviour {
 
                                 // -- image 
 
-                                if( image.single_image != null )
-                                    {
+                                if(  image.single_image.image_compress != null )
+                                    { Console.Log( $"     image_compress.Length:  { image.single_image.image_compress.Length }" ); }
+                                    
+                                if(  image.single_image.image_low_quality_compress != null )
+                                    { Console.Log( $"     image_low_quality_compress.Length:  { image.single_image.image_low_quality_compress.Length }" ); }
 
-                                        if(  image.single_image.image_compress != null )
-                                            { Console.Log( $"     image_compress.Length:  { image.single_image.image_compress.Length }" ); }
 
+                                Console.Log( $"     single_image.sprite: { image.single_image.sprite }" );
 
-                                        Console.Log( $"     single_image.sprite: { image.single_image.sprite }" );
-
-                                        if( image.single_image.texture_exclusiva != null )
-                                            { Console.Log( $"     tamanho: { image.single_image.texture_exclusiva.width * image.single_image.texture_exclusiva.height }" ); }
-                                
-                                    }
+                                if( image.single_image.texture_exclusiva != null )
+                                    { Console.Log( $"     tamanho: { image.single_image.texture_exclusiva.width * image.single_image.texture_exclusiva.height }" ); }
 
                                 Console.Log( $"     counts: " );
                                 Console.Log( $"         image.count_places_being_used_nothing: { image.count_places_being_used_nothing }" );

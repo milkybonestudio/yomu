@@ -1,54 +1,63 @@
 using System;
+using System.Threading;
 
 
 
 public class CONTROLLER__errors {
 
-    public static void Throw( string _message ){ Get_instance().Throw_intern( _message ); }
-    public static void Verify( bool _bool , string _message ){ if( _bool ){ Get_instance().Throw_intern( _message ); } }
-    public static void Verify( int _bool_int , string _message ){ if( _bool_int != 0 ){ Get_instance().Throw_intern( _message ); } }
-    public static void Throw_exception( Exception _exp ){ Get_instance().Throw_exception_internal( _exp ); }
 
-    public static CONTROLLER__errors instance;
-    public static CONTROLLER__errors Get_instance(){ return instance; }
 
-    public bool is_checking_pointer_length = true;
-    public bool is_checking_dll_data = true;
+        public static void Throw( string _message ){ Get_instance().Throw_intern( _message ); }
+        public static void Verify( bool _bool , string _message ){ if( _bool ){ Get_instance().Throw_intern( _message ); } }
+        public static void Verify( int _bool_int , string _message ){ if( _bool_int != 0 ){ Get_instance().Throw_intern( _message ); } }
+        public static void Throw_exception( Exception _exp ){ Get_instance().Throw_exception_internal( _exp ); }
 
-    private void Throw_intern( string _message ){
+        public static CONTROLLER__errors instance;
+        public static CONTROLLER__errors Get_instance(){ return instance; }
 
-        Console.LogError( "ERROR UPDATE LOG" );
-        Console.Update();
-        throw new Exception( _message );
+        public bool is_checking_pointer_length = true;
+        public bool is_checking_dll_data = true;
 
-    }
 
-    public void Check_pointer_length( bool _check, string _message ){
+        public static string exception_trace_multithread;
 
-        if( is_checking_pointer_length && _check )
-            {
-                // ** fazer depois 
-                throw new System.Exception( "Error: " + _message );
-            }
+        private void Throw_intern( string _message ){
 
-    }
+                Console.Update();
+                // ** garante 
+                CONTROLLER__tasks.Pegar_instancia().modulo_multithread.Matar_thread();
 
-    public void Check_dll_data( bool _check, string _message ){
+                throw new Exception( _message );
 
-        if( is_checking_dll_data && _check )
-            {
-                // ** fazer depois 
-                throw new System.Exception( "Error: " + _message );
-            }
+        }
 
-    }
+        public void Check_pointer_length( bool _check, string _message ){
 
-    private void Throw_exception_internal( Exception _exp  ){
+            if( is_checking_pointer_length && _check )
+                {
+                    // ** fazer depois 
+                    throw new System.Exception( "Error: " + _message );
+                }
 
-        // ** depois fazer melhor
-        throw _exp;
+        }
 
-    }
+        public void Check_dll_data( bool _check, string _message ){
+
+            if( is_checking_dll_data && _check )
+                {
+                    // ** fazer depois 
+                    throw new System.Exception( "Error: " + _message );
+                }
+
+        }
+
+        private void Throw_exception_internal( Exception _exp  ){
+
+            
+            // ** depois fazer melhor
+            throw _exp;
+
+        }
 
 
 }

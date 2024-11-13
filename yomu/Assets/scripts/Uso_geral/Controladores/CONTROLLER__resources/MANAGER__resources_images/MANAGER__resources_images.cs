@@ -4,16 +4,15 @@ using System.Linq;
 using UnityEngine;
 
 
-
-
 public class MANAGER__resources_images {
 
-        //** os dicionarios tem que ficar dentro de cada modulo
-
+        
         public MANAGER__resources_images(){
 
                 contexts = contexts = System_enums.resource_context;// ( Resource_context[] ) System.Enum.GetValues( typeof( Resource_context ) );
 
+                container_images = new Container_RESOURCE__images();
+                container_image_refs = new Container_RESOURCE__image_refs();
                 context_images_modules = new MODULE__context_images[ contexts.Length ];
 
                 for( int context_index = 0 ; context_index < contexts.Length ; context_index++ )
@@ -25,6 +24,9 @@ public class MANAGER__resources_images {
 
         
         public MANAGER__textures_resources textures_manager;
+
+        public Container_RESOURCE__images container_images;
+        public Container_RESOURCE__image_refs container_image_refs;
     
         public MODULE__context_images[] context_images_modules;
 
@@ -37,18 +39,11 @@ public class MANAGER__resources_images {
 
         // --- TASK REQUESTS
 
-        //mark
-        // ** por hora assumir que task_getting_texture, e task_applying_texture nao sao tasks e váo ser feitas aqui
-        // ** o sistema tem que aceitar mudacas, entáo depois quando precisar implementar náo vai ser muito complicado
-
         public Task_req task_getting_compress_low_quality_file;
         public Task_req task_getting_compress_file;
-
-            // public Task_req task_getting_texture; // ** somente se nao tiver o tamanho exato na pull
-
+            // public Task_req task_getting_texture;  // ** por hora assumir que task_getting_texture, e task_applying_texture nao sao tasks e váo ser feitas aqui
         public Task_req task_passing_to_texture;
-
-            public Task_req task_applying_texture;
+            // public Task_req task_applying_texture;
 
 
 
@@ -56,8 +51,8 @@ public class MANAGER__resources_images {
 
         // ** single
                                                             //  personagens          //     lily    //      chave
-        public RESOURCE__image_ref Get_image_reference( Resource_context _context, string _main_folder,  string _path, Resource_image_content _level_pre_allocation ){ return context_images_modules[ ( int ) _context ].Get_image_ref( _main_folder, _path, false, _level_pre_allocation ) ; }
-        public RESOURCE__image_ref Get_image_reference_multiples( Resource_context _context, string _main_folder,  string _path, Resource_image_content _level_pre_allocation ){ return context_images_modules[ ( int ) _context ].Get_image_ref( _main_folder, _path, true, _level_pre_allocation ) ; }
+        public RESOURCE__image_ref Get_image_reference( Resource_context _context, string _main_folder,  string _path, Resource_image_content _level_pre_allocation ){ return context_images_modules[ ( int ) _context ].Get_image_ref( _main_folder, _path, _level_pre_allocation ) ; }
+        public RESOURCE__image_ref Get_image_reference_multiples( Resource_context _context, string _main_folder,  string _path, Resource_image_content _level_pre_allocation ){ return context_images_modules[ ( int ) _context ].Get_image_ref( _main_folder, _path, _level_pre_allocation ) ; }
 
 
 
@@ -84,12 +79,10 @@ public class MANAGER__resources_images {
 
         private int Updata_image( RESOURCE__image _image ){
 
+
                 // ** VERIFY IF HAVE SOMEWHERE TO GO
                 if( ( _image.content_going_to == _image.actual_content ) && ( ( _image.stage_getting_resource & Resources_getting_image_stage.all_reajust_stages ) == 0 ) )
-                    { 
-                        //Console.Log( _image.stage_getting_resource );
-                        CONTROLLER__errors.Verify( (_image.stage_getting_resource != Resources_getting_image_stage.finished), "what" ); return 0; 
-                    }
+                    { CONTROLLER__errors.Verify( (_image.stage_getting_resource != Resources_getting_image_stage.finished ), $"stage is not acceptable: { _image.stage_getting_resource }" ); return 0; }
 
                 switch( _image.stage_getting_resource ){
 

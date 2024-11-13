@@ -8,6 +8,8 @@ using UnityEngine;
 public static class Console {
 
 
+
+
         public static int i = 0;
         public const int i_m = 10;
 
@@ -78,7 +80,7 @@ public static class Console {
         }
 
 
-        private static string Get_trace( string _message ){
+        public static string Get_trace( string _message ){
 
 
                 System.Diagnostics.StackFrame[] frames = ( new System.Diagnostics.StackTrace( true ) ).GetFrames();

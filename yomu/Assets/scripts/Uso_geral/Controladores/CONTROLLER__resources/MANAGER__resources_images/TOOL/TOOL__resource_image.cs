@@ -6,16 +6,17 @@ public static class TOOL__resource_image {
         public static void Verify_image( RESOURCE__image image ){
 
 
-                if( image.multiples_images == null && image.single_image == null )
-                    { CONTROLLER__errors.Throw( $"In the image request { image.name } was not given the image data" ); }
+                // what?
+                // if( image.multiples_images == null && !!!( image.single_image.used ) )
+                //     { CONTROLLER__errors.Throw( $"In the image request { image.name } was not given the image data" ); }
 
-                if( image.multiples_images != null && image.single_image != null )
+                if( image.multiples_images != null && !!!( image.single_image.used ) )
                     { CONTROLLER__errors.Throw( $"In the image request { image.name } was given single and multiples images" ); }
 
 
                 if( image.actual_content == Resource_image_content.nothing )
                     {
-                        if( image.single_image!= null )
+                        if( image.multiples_images == null )
                             { 
                                 // single
                                 if ( image.single_image.image_compress != null )

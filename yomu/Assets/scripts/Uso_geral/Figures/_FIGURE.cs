@@ -4,13 +4,13 @@ using UnityEngine.UI;
 public static class FIGURE {
 
 
-        public static Figure_image_component Get_figure_image_component( GameObject _mode, string _name_component, RESOURCE__image_ref _image ){
+        public static Figure_image_component Get_figure_image_component( GameObject _mode, string _name_component, RESOURCE__image_ref _image_ref ){
 
 
-                CONTROLLER__errors.Verify( ( _image == null ), $"Tried to get the figure image in the component { _name_component } but the image was null" );
+                CONTROLLER__errors.Verify( ( _image_ref.ref_state == RESOURCE__image_ref_state.deleted ), $"Tried to get the figure image in the component { _name_component } but the image was null" );
 
-                if( _image.level_pre_allocation == Resource_image_content.nothing )
-                    { _image.level_pre_allocation = Resource_image_content.compress_data; }
+                if( _image_ref.level_pre_allocation == Resource_image_content.nothing )
+                    { _image_ref.level_pre_allocation = Resource_image_content.compress_data; }
 
                 Figure_image_component image_component = new Figure_image_component();
 
@@ -20,7 +20,7 @@ public static class FIGURE {
                         image_component.game_object = transform.gameObject;
                         CONTROLLER__errors.Verify( ( image_component.game_object == null ) , $"Tried to get the component { _name_component } in the game object { _mode.name } but was not find" );
                         image_component.image = image_component.game_object.GetComponent<Image>();
-                        image_component.image_ref = _image;
+                        image_component.image_ref = _image_ref;
 
                 return image_component;
             

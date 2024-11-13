@@ -9,7 +9,7 @@ public static class TOOL_MANAGER__guarantee_image_is_ready {
                 
                 TOOL__resource_image.Verify_image( _ref.image );
 
-                if( _ref.image.single_image != null )
+                if( _ref.image.multiples_images == null )
                     { Guarantee_image_is_ready_SINGLE( _manager, _ref.image ); } // --- IMAGEM SIMPLES
                     else
                     { Guarantee_image_is_ready_MULTIPLE( _manager, _ref.image ); } // --- MULTIPLES

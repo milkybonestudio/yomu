@@ -25,38 +25,23 @@ public static class TOOL__resource_images_handler_DOWN {
 
         private static int Destroy_compress_low_quality_data( MANAGER__resources_images _manager, RESOURCE__image _image ){
 
+                Console.Log( "Veio Destroy_compress_low_quality_data()" );
 
-                if( _image.single_image != null )
-                    {
-                        _image.single_image.image_low_quality_compress = null;
-                    }
-                    else
-                    {
-
-                    }
-
+                // --- DESTROY
+                _image.single_image.image_low_quality_compress = null;
                 _image.actual_content = Resource_image_content.nothing;
                 return 0;
 
         }
 
         
-
         private static int Destroy_compress_data( MANAGER__resources_images _manager, RESOURCE__image _image ){
 
+                Console.Log( "Veio Destroy_compress_data()" );
+
+                // --- DESTROY
+                _image.single_image.image_compress = null;
                 _image.actual_content = Resource_image_content.compress_low_quality_data;
-
-                if( _image.single_image != null )
-                    {
-                        _image.single_image.image_compress = null;
-                        if( _image.single_image.image_low_quality_compress == null )
-                            { _image.actual_content = Resource_image_content.nothing; }
-
-                    }
-                    else
-                    {
-
-                    }
 
                 return 0;
 
@@ -64,21 +49,15 @@ public static class TOOL__resource_images_handler_DOWN {
 
         private static int Destroy_resource_texture( MANAGER__resources_images _manager, RESOURCE__image _image ){
 
-                int weight = 0;
-                if( _image.single_image != null )
-                    {
-                        weight += 1;
-                        Console.Log( "Veio destruir texture" );
-                        GameObject.Destroy( _image.single_image.texture_exclusiva );
-                        _image.single_image.texture_exclusiva_native_array.Dispose();
-                    }
-                    else
-                    {
+                Console.Log( "Destroy_resource_texture" );
 
-                    }
-                        
+                // --- DESTROY
+                GameObject.Destroy( _image.single_image.texture_exclusiva );
+
+                _image.single_image.texture_exclusiva_native_array.Dispose();
                 _image.actual_content = Resource_image_content.compress_data;
-                return weight;
+
+                return 1;
 
 
         }

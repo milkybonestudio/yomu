@@ -10,11 +10,9 @@ public static class TOOL__module_context_images_actions {
 
                 RESOURCE__image image = _ref.image;
 
-                if( image.single_image == null )
+                if( !!!( image.single_image.used ) )
                     {
-                        if( image.multiples_images == null )
-                            { CONTROLLER__errors.Throw( "Called Get_sprite() but the image dont have the single_image or even the multiples_images data" ); }
-
+                        CONTROLLER__errors.Verify( ( image.multiples_images == null ), "Called Get_sprite() but the image dont have the single_image or even the multiples_images data" );
                         CONTROLLER__errors.Throw( "Called Get_sprite() but the image dont have the single_image data" );
                     }
 
@@ -34,7 +32,7 @@ public static class TOOL__module_context_images_actions {
 
                 if( image.multiples_images == null )
                     {
-                        if( image.single_image == null )
+                        if( image.multiples_images == null )
                             { CONTROLLER__errors.Throw( "Called Get_sprites() but the image dont have the multiples_images or even the single_image data" ); }
 
                         CONTROLLER__errors.Throw( "Called Get_sprites() but the image dont have the multiples_images data" );
@@ -71,7 +69,7 @@ public static class TOOL__module_context_images_actions {
                 TOOL__resource_image.Decrease_count( image, _ref.level_pre_allocation ); // ?????
 
                 // ** perde a referencia
-                image.refs[ _ref.image_slot_index ] = null;
+                image.refs[ _ref.image_slot_index ].ref_state = RESOURCE__image_ref_state.deleted;
                 image.need_reajust = true;
 
                 if( image.count_places_being_used_sprite > 1 )
@@ -85,7 +83,7 @@ public static class TOOL__module_context_images_actions {
 
                 // --- CAN DELETE
 
-                image.module_images.actives_images_dictionary.Remove( image.path_locator );
+                image.module_images.actives_images_dictionary.Remove( image.local_path );
                 Unload( _ref );
                 
                 return;
@@ -111,7 +109,7 @@ public static class TOOL__module_context_images_actions {
                     {}
 
 
-                if( image.single_image != null )
+                if( image.multiples_images == null )
                     { 
                         // --- SINGLE 
 
@@ -212,8 +210,10 @@ public static class TOOL__module_context_images_actions {
             
                 
                 RESOURCE__image image = _ref.image;
+
+                Console.Log( "actual content: " + image.actual_content );
                 
-                if( image.single_image != null )
+                if( image.multiples_images == null )
                     { Instanciate_SINGLE( image ); }
                     else 
                     { Instanciate_MULTI( image ); }
@@ -238,23 +238,18 @@ public static class TOOL__module_context_images_actions {
 
                 _image.module_images.manager.Stop_task( _image );
 
-                RESOURCE__image_data single_image = _image.single_image;
-
                     // ** GUARANTY IMAGE COMPRESS
                     
                         if( _image.actual_content == Resource_image_content.nothing )
                             { 
-
                                 
-                                single_image.image_low_quality_compress =  TOOL__get_data_images_resources.Get_single_low_quality( _image );
+                                _image.single_image.image_low_quality_compress =  TOOL__get_data_images_resources.Get_single_low_quality( _image );
 
                                 //single_image.image_low_quality_compress =  System.IO.File.ReadAllBytes( System.IO.Path.Combine( Application.dataPath, "Resources", "Development", "Webp_default_1.webp" ) ) ;
 
                                 // ** se nao tiver nada vai primeiro pegar o low quality e depois ir pegando o normal. Quando tiver o normal fazer o flip
                                 _image.actual_content = Resource_image_content.compress_low_quality_data;
-
-
-                                
+  
                             } 
 
                         if( _image.actual_content == Resource_image_content.compress_low_quality_data )
@@ -269,9 +264,9 @@ public static class TOOL__module_context_images_actions {
                             { 
                                 CONTROLLER__errors.Verify( ( _image.width * _image.height == 0 ), $"Image { _image.name } is with height { _image.height } and width { _image.width }" );
                                 
-                                single_image.texture_exclusiva = new Texture2D( _image.width, _image.height, TextureFormat.RGBA32, false );
-                                single_image.texture_exclusiva_native_array = single_image.texture_exclusiva.GetPixelData<Color32>( 0 );
-                                single_image.texture_exclusiva.filterMode = UnityEngine.FilterMode.Point;
+                                _image.single_image.texture_exclusiva = new Texture2D( _image.width, _image.height, TextureFormat.RGBA32, false );
+                                _image.single_image.texture_exclusiva_native_array = _image.single_image.texture_exclusiva.GetPixelData<Color32>( 0 );
+                                _image.single_image.texture_exclusiva.filterMode = UnityEngine.FilterMode.Point;
                                 _image.actual_content = Resource_image_content.texture;
                             }
 
@@ -279,14 +274,14 @@ public static class TOOL__module_context_images_actions {
                         if( _image.actual_content < Resource_image_content.texture_with_pixels )
                             {
 
-                                     if( single_image.image_compress != null )
+                                     if( _image.single_image.image_compress != null )
                                         { 
-                                            TOOL__loader_texture.Transfer_data_PNG( single_image.image_compress, single_image.texture_exclusiva_native_array );
+                                            TOOL__loader_texture.Transfer_data_PNG( _image.single_image.image_compress, _image.single_image.texture_exclusiva_native_array );
                                         }           
-                                else if( single_image.image_low_quality_compress != null )
+                                else if( _image.single_image.image_low_quality_compress != null )
                                         { 
                                             Console.Log( "Veio aqui" );
-                                            TOOL__loader_texture.Transfer_data_WEABP( _image, single_image ); 
+                                            TOOL__loader_texture.Transfer_data_WEABP( _image, _image.single_image ); 
                                         }
                                 else if( true )
                                         { 
@@ -301,7 +296,7 @@ public static class TOOL__module_context_images_actions {
                         if( _image.actual_content < Resource_image_content.texture_with_pixels_applied )
                             {
                                 Console.Log( "Vai dar o apply" );
-                                single_image.texture_exclusiva.Apply( false, false );
+                                _image.single_image.texture_exclusiva.Apply( false, false );
                                 _image.actual_content = Resource_image_content.texture_with_pixels_applied;
 
                             }
@@ -310,11 +305,13 @@ public static class TOOL__module_context_images_actions {
                         if( _image.actual_content < Resource_image_content.sprite )
                             {
                                 Console.Log( "Vai criar a sprite" );
-                                single_image.sprite = Sprite.Create( _image.single_image.texture_exclusiva, new Rect( 0f, 0f, _image.width, _image.height ), new Vector2(0.5f, 0.5f), 100.0f ,0, SpriteMeshType.FullRect   );
+                                _image.single_image.sprite = Sprite.Create( _image.single_image.texture_exclusiva, new Rect( 0f, 0f, _image.width, _image.height ), new Vector2(0.5f, 0.5f), 100.0f ,0, SpriteMeshType.FullRect   );
+                                Console.Log( "sprite: " + _image.single_image.sprite );
+                                Console.Log( "texture: " + _image.single_image.texture_exclusiva );
                                 _image.actual_content = Resource_image_content.sprite;
                             }
 
-                CONTROLLER__errors.Verify( ( single_image.sprite == null ), $"Tried to get the sprite of the image { _image.name }, but do not construct after the fall" );
+                CONTROLLER__errors.Verify( ( _image.single_image.sprite == null ), $"Tried to get the sprite of the image { _image.name }, but do not construct after the fall. actual content: { _image.actual_content }" );
 
 
                 return ;

@@ -1,26 +1,16 @@
 using UnityEngine;
 
 
+
+public enum RESOURCE__image_ref_state {
+
+        no_instanciated,
+        instanciated,
+        deleted,
+
+}
+
 public class RESOURCE__image_ref {
-
-
-
-        public RESOURCE__image_ref( RESOURCE__image _image, Resource_image_content _level_pre_allocation ){ 
-
-
-                CONTROLLER__errors.Verify( ( _image == null  ), "Tried to creat a image ref but the image comes null" ); 
-                CONTROLLER__errors.Verify( ( ( _level_pre_allocation & ( Resource_image_content.compress_data | Resource_image_content.sprite | Resource_image_content.nothing  | Resource_image_content.compress_low_quality_data ) ) == 0   ), $"Resource not accept: { _level_pre_allocation }" ); 
-                
-            
-                image = _image;
-                module = _image.module_images;
-
-                state = Resource_state.nothing;
-
-                level_pre_allocation = _level_pre_allocation;
-                actual_need_content = Resource_image_content.nothing;
-            
-        }
 
         
         public string localizador; // ** localizador local
@@ -28,12 +18,8 @@ public class RESOURCE__image_ref {
         public MODULE__context_images module;
         public int image_slot_index;
 
-        public bool ref_deleted;
+        public RESOURCE__image_ref_state ref_state;
         
-
-        // public Resource_image_content reference_level_pre_allocation_image;
-
-
 
         public Resource_state state;
 
@@ -43,6 +29,11 @@ public class RESOURCE__image_ref {
 
 
         //teste
+
+
+        //mark
+
+        // ** ainda precisa resolver como lidar quando não tem webp
 
         /*
 
@@ -61,11 +52,11 @@ public class RESOURCE__image_ref {
 
             load: 
                 nothing: ok
-
                 // ** por hora nao esta mudando o actual_content para compress_low_quality
                 low quality: ok
                 compress data: ok
-                sprite:  ok
+
+                Get_sprite:  ok?
 
             Activate:  ok
             Instanciate:  
@@ -119,7 +110,7 @@ public class RESOURCE__image_ref {
 
 
 
-        private void Guaranty_ref(){ if( ref_deleted ){ CONTROLLER__errors.Throw( $"Tried to use ref { localizador } but the ref was deleted" ); } }
+        private void Guaranty_ref(){ if( ref_state == RESOURCE__image_ref_state.deleted ){ CONTROLLER__errors.Throw( $"Tried to use ref { localizador } but the ref was deleted" ); } if( ref_state == RESOURCE__image_ref_state.no_instanciated ){ CONTROLLER__errors.Throw( $"Tried to use ref { localizador } but the ref was not instanciated" ); } }
 
         // ** DOWN
 
