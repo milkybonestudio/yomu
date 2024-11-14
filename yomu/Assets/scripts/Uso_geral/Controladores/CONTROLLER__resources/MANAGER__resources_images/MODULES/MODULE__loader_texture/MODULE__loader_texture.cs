@@ -44,8 +44,6 @@ unsafe public static class TOOL__loader_texture {
         }
 
 
-    
-
         public static WebP w = new WebP();
     
         public static void Transfer_data_WEABP( RESOURCE__image _image,  RESOURCE__image_data _image_data ){
@@ -73,13 +71,14 @@ unsafe public static class TOOL__loader_texture {
                 CONTROLLER__errors.Verify( ( png == null ) , "png veio null" );
                 CONTROLLER__errors.Verify( !!!( PNG.Verify_is_png( png ) ), "Nao era um png" );
 
-                MemoryStream m_s = new MemoryStream( png );
-                
                 Image image = null;
+                MemoryStream m_s = null; 
 
-                try { image = System.Drawing.Image.FromStream( m_s ); } catch( Exception e ){ CONTROLLER__errors.Throw( $"Could not pass the data of the png { png }, length: { png.Length }" ); }
+                try { m_s = new MemoryStream( png ); image = System.Drawing.Image.FromStream( m_s ); } catch( Exception e ){ CONTROLLER__errors.Throw( $"Could not pass the data of the png { png }, length: { png.Length }" ); }
+
 
                 Bitmap bm = new Bitmap( image );
+
                 BitmapData bitmapData = bm.LockBits (
                                                         new System.Drawing.Rectangle( 0, 0, bm.Width, bm.Height ),
                                                         ImageLockMode.ReadOnly,
@@ -88,6 +87,8 @@ unsafe public static class TOOL__loader_texture {
 
 
                 
+
+
                 int* p_container_origin = stackalloc int[ 4 ];
                 
 
@@ -104,103 +105,89 @@ unsafe public static class TOOL__loader_texture {
                 byte* p_data_3 = ( p_data + 2 ) - 4 ;
                 byte* p_data_4 = ( p_data + 3 ) - 4 ;
 
-                // tem muitas variaveis sendo usadas para passar como funcao
-                // tentar pensar em um jeito melhor depois
-
                 // int u = 0;
 
-
-                for( int height = ( bm.Height - 1 ) ; height > 0  ; height-- ){
-
-                    // ** imagem esta inversa no bitmap. tem que fazer a height ao contrario
-
-                    for( int height_pixel = 0 ; height_pixel < bm.Width ; height_pixel += 4 ){
-
-
-                            // ** reseta container
-                            p_container_1 = ( p_container + 0 )  ;
-                            p_container_2 = ( p_container + 1 )  ;
-                            p_container_3 = ( p_container + 2 )  ;
-                            p_container_4 = ( p_container + 3 )  ;
+                Console.Log( "vai iniciar" );
+                Console.Log( "png width: " +  PNG.Get_dimensions( png ).width );
+                Console.Log( "bm width: " +  bm.Width );
+                Console.Log( "png height: " +  PNG.Get_dimensions( png ).height );
+                Console.Log( "bm height: " +  bm.Height );
+                Console.Log( "Native array length: " + _native_arr_texture.Length );
 
 
-                            p_data_1 += 4;
-                            p_data_2 += 4;
-                            p_data_3 += 4;
-                            p_data_4 += 4;
+                for( int height = ( bm.Height - 1 ) ; height > -1  ; height-- ){
 
-                            *p_container_1 = *p_data_3;
-                            *p_container_2 = *p_data_2;
-                            *p_container_3 = *p_data_1;
-                            *p_container_4 = *p_data_4;
+                        // ** imagem esta inversa no bitmap. tem que fazer a height ao contrario
 
-                    
-                            // --- LEU B1
+                        int teste_length = ( bm.Width / 4 ) * 4 ;
 
+                        for( int height_pixel = 0 ; height_pixel < teste_length ; height_pixel += 4 ){
 
-                            p_container_1 += 4 ;
-                            p_container_2 += 4 ;
-                            p_container_3 += 4 ;
-                            p_container_4 += 4 ;
+                                
+                                // ** reseta container
+                                p_container_1 = ( p_container + 0 ) ;
+                                p_container_2 = ( p_container + 1 ) ;
+                                p_container_3 = ( p_container + 2 ) ;
+                                p_container_4 = ( p_container + 3 ) ;
+                                    p_data_1 += 4;
+                                    p_data_2 += 4;
+                                    p_data_3 += 4;
+                                    p_data_4 += 4;
+                                        *p_container_1 = *p_data_3;
+                                        *p_container_2 = *p_data_2;
+                                        *p_container_3 = *p_data_1;
+                                        *p_container_4 = *p_data_4;
+                        
+                                // --- LEU B1
+                                p_container_1 += 4 ;
+                                p_container_2 += 4 ;
+                                p_container_3 += 4 ;
+                                p_container_4 += 4 ;
+                                    p_data_1 += 4;
+                                    p_data_2 += 4;
+                                    p_data_3 += 4;
+                                    p_data_4 += 4;
+                                        *p_container_1 = *p_data_3;
+                                        *p_container_2 = *p_data_2;
+                                        *p_container_3 = *p_data_1;
+                                        *p_container_4 = *p_data_4;
 
-                            p_data_1 += 4;
-                            p_data_2 += 4;
-                            p_data_3 += 4;
-                            p_data_4 += 4;
-
-
-                            *p_container_1 = *p_data_3;
-                            *p_container_2 = *p_data_2;
-                            *p_container_3 = *p_data_1;
-                            *p_container_4 = *p_data_4;
-
-                            // --- LEU B2
-
-
-                            p_container_1 += 4 ;
-                            p_container_2 += 4 ;
-                            p_container_3 += 4 ;
-                            p_container_4 += 4 ;
-
-                            p_data_1 += 4;
-                            p_data_2 += 4;
-                            p_data_3 += 4;
-                            p_data_4 += 4;
-
-
-                            *p_container_1 = *p_data_3;
-                            *p_container_2 = *p_data_2;
-                            *p_container_3 = *p_data_1;
-                            *p_container_4 = *p_data_4;
-                            // --- LEU B3
-
-
-                            p_container_1 += 4 ;
-                            p_container_2 += 4 ;
-                            p_container_3 += 4 ;
-                            p_container_4 += 4 ;
-
-                            p_data_1 += 4;
-                            p_data_2 += 4;
-                            p_data_3 += 4;
-                            p_data_4 += 4;
-
-
-                            *p_container_1 = *p_data_3;
-                            *p_container_2 = *p_data_2;
-                            *p_container_3 = *p_data_1;
-                            *p_container_4 = *p_data_4;
-
-                            // --- LEU B4
+                                // --- LEU B2
+                                p_container_1 += 4 ;
+                                p_container_2 += 4 ;
+                                p_container_3 += 4 ;
+                                p_container_4 += 4 ;
+                                    p_data_1 += 4;
+                                    p_data_2 += 4;
+                                    p_data_3 += 4;
+                                    p_data_4 += 4;
+                                        *p_container_1 = *p_data_3;
+                                        *p_container_2 = *p_data_2;
+                                        *p_container_3 = *p_data_1;
+                                        *p_container_4 = *p_data_4;
+                                // --- LEU B3
+                                p_container_1 += 4 ;
+                                p_container_2 += 4 ;
+                                p_container_3 += 4 ;
+                                p_container_4 += 4 ;
+                                    p_data_1 += 4;
+                                    p_data_2 += 4;
+                                    p_data_3 += 4;
+                                    p_data_4 += 4;
+                                        *p_container_1 = *p_data_3;
+                                        *p_container_2 = *p_data_2;
+                                        *p_container_3 = *p_data_1;
+                                        *p_container_4 = *p_data_4;
+                                // --- LEU B4
 
 
-                            int ponto_pixel = ( height * bm.Width ) + height_pixel;
+                                int ponto_pixel = ( height * bm.Width ) + height_pixel;
 
-                            // --- PASSA 4 PIXELS DE 1 VEZ
-                            _native_arr_texture[ ponto_pixel + 0 ] =  *( Color32* ) ( p_container_origin + 0 );
-                            _native_arr_texture[ ponto_pixel + 1 ] =  *( Color32* ) ( p_container_origin + 1 );
-                            _native_arr_texture[ ponto_pixel + 2 ] =  *( Color32* ) ( p_container_origin + 2 );
-                            _native_arr_texture[ ponto_pixel + 3 ] =  *( Color32* ) ( p_container_origin + 3 );
+                                // --- PASSA 4 PIXELS DE 1 VEZ
+                                _native_arr_texture[ ponto_pixel + 0 ] =  *( Color32* ) ( p_container_origin + 0 );
+                                _native_arr_texture[ ponto_pixel + 1 ] =  *( Color32* ) ( p_container_origin + 1 );
+                                _native_arr_texture[ ponto_pixel + 2 ] =  *( Color32* ) ( p_container_origin + 2 );
+                                _native_arr_texture[ ponto_pixel + 3 ] =  *( Color32* ) ( p_container_origin + 3 );
                         
 
                         }
@@ -234,13 +221,15 @@ unsafe public static class TOOL__loader_texture {
 
                 }
 
-                // for( int index = ( _native_arr_texture.Length - 1 ) ; index > 0 ; index-- ){
-                for( int index = 0 ; index < _native_arr_texture.Length ; index++ ){
+                Console.Log( "finalizou" );
 
-                        continue;
-                }
+                // --- CLEAN 
 
+                m_s.Dispose();
+                bm.Dispose();
+                image.Dispose();
 
+        
             return;
 
 

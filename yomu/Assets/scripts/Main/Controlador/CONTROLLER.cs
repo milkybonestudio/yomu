@@ -66,7 +66,7 @@ unsafe public class Controlador : MonoBehaviour {
                 c =  CONTROLLER__resources.Get_instance();
 
                 c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.nothing );
-                image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.sprite );
+                image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_exp_1", Resource_image_content.sprite );
                 
 
                 // Dispositivo d = Dispositivo__teste.Construir(); // pega o prefab 

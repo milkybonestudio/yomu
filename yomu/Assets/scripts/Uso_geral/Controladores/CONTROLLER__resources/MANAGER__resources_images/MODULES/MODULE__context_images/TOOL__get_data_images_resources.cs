@@ -2,9 +2,61 @@ using System;
 using System.IO;
 using UnityEngine;
 
+
+
+
 public static class TOOL__get_data_images_resources {
 
 
+            private enum Webp_size{
+
+
+                    webp_25_25,
+                    webp_25_50,
+
+
+                    webp_50_25,
+                    webp_50_50,
+                    webp_50_75,
+
+                    webp_75_50,
+                    webp_75_75,
+                    webp_75_100,
+                    webp_75_150,
+
+                    webp_100_100,               
+
+                    webp_150_150,
+
+                    webp_250_250,
+                    webp_250_350,
+                    webp_250_500,
+                    webp_250_600,
+
+                    webp_300_500,
+                    webp_300_600,
+                    webp_300_700,
+
+                    
+                    webp_400_750,
+
+                    webp_500_250,
+                    webp_500_500,
+                    webp_500_750,
+
+                    webp_750_500,
+                    webp_750_750,
+                    webp_750_1000,
+
+                    webp_1000_500,
+                    webp_1000_750,
+                    webp_1000_1000,
+                    
+                    webp_2000_1000,
+                    webp_2000_2000,
+
+            }
+            public static byte[][] webps;
 
             // ** single
             public static byte[] Get_single_low_quality( RESOURCE__image _image ){ 
@@ -17,48 +69,17 @@ public static class TOOL__get_data_images_resources {
             }
 
             // ** somente editor
-            public static bool webp_start;
 
 
+            public static string path_default = System.IO.Path.Combine( Application.dataPath, "Resources", "Development", "Webps_default\\" );
 
             private static byte[] Get_single_low_quality_EDITOR( RESOURCE__image _image ){
 
                     byte[] png = Get_single_generico_EDITOR( _image );
                 
-                    if( !!!( webp_start ) )
-                        {
-                            // ** carregar
-                            try
-                                {
-                                    string path_default = System.IO.Path.Combine( Application.dataPath, "Resources", "Development", "Webps_default\\" );
+                    if( webps == null )
+                        { Start_webps(); }
 
-
-                                    Console.Log( path_default );
-                                    Console.Log( path_default + "2000_2000.webp" );
-                                    Console.Log( System.IO.File.Exists( path_default + "2000_2000.webp" ) );
-
-                                    // ** ainda tem que pegar mais 
-                                    // ** lily tinha 225 x 580
-                                    // ** isso jogou ela para o 1k x 1k
-                                    webp_generico_2000_2000 = System.IO.File.ReadAllBytes( path_default + "2000_2000.webp" );
-                                    webp_generico_2000_1000 = System.IO.File.ReadAllBytes( path_default + "2000_1000.webp" );
-                                    webp_generico_1000_1000 = System.IO.File.ReadAllBytes( path_default + "1000_1000.webp" );
-                                    webp_generico_1000_500 = System.IO.File.ReadAllBytes( path_default + "1000_500.webp" );
-                                    webp_generico_500_500 = System.IO.File.ReadAllBytes( path_default + "500_500.webp" );
-                                    webp_generico_500_250 = System.IO.File.ReadAllBytes( path_default + "500_250.webp" );
-                                    webp_generico_250_250 = System.IO.File.ReadAllBytes( path_default + "250_250.webp" );
-                                    webp_generico_150_150 = System.IO.File.ReadAllBytes( path_default + "150_150.webp" );
-                                    webp_generico_100_100 = System.IO.File.ReadAllBytes( path_default + "100_100.webp" );
-                                    
-                                }
-                                catch( Exception )
-                                {
-                                    CONTROLLER__errors.Throw( "Could not get the images webps defaults" );
-                                }
-                            
-                        }
-
-                    
 
                     Dimensions dimensions = PNG.Get_dimensions( png );
                     _image.width = dimensions.width;
@@ -76,65 +97,185 @@ public static class TOOL__get_data_images_resources {
 
             }
 
-            // ** width_height
-            public static byte[] webp_generico_2000_2000;
-            public static byte[] webp_generico_2000_1000;
-            public static byte[] webp_generico_1000_1000;
-            public static byte[] webp_generico_1000_500;
+            private static void Start_webps(){
 
-            public static byte[] webp_generico_500_500;
-            public static byte[] webp_generico_500_250;
-            public static byte[] webp_generico_250_250;
-            public static byte[] webp_generico_150_150;
-            public static byte[] webp_generico_100_100;
+                Webp_size[] sizes = ( Webp_size[] ) Enum.GetValues( typeof( Webp_size ) );
+
+                webps = new byte[ sizes.Length ][];
+
+            } 
+
+
+            private static int i;
+
+            private static byte[] Get_webp( Webp_size _size ){
+
+                Console.Log( "vai pegar webp: " + _size );
+
+                // --- TIME SIMULATION 
+
+
+                    for( int n = 0 ; n < 200_000 ; n++ ){
+
+                        i += 5;
+                        if( ( i % 4570 ) == 3500 )
+                            { i = 27; }
+
+                    }
+
+                if( webps[ ( int ) _size ] != null )
+                    { return webps[ ( int ) _size ]; }
+
+                string path = ( path_default + _size.ToString() + ".webp" ) ;
+                byte[] webp = null;
+
+                try { webp = System.IO.File.ReadAllBytes( path ); } catch( Exception ){ CONTROLLER__errors.Throw( $"Could not get the webp_default in the path { path }" ); }
+
+                webps[ ( int ) _size ] = webp;
+                return webp;
+
+            }
+
+
 
 
 
             private static byte[] Get_web_EDITOR( Dimensions _dimensions ){
 
 
-                    if( _dimensions.height <= 100 )
+                    if( _dimensions.width <= 25 )
+                        {
+                            if( _dimensions.height <= 25 )
+                                { return Get_webp( Webp_size.webp_25_25 ) ; }
+
+                            if( _dimensions.height <= 50 )
+                                { return Get_webp( Webp_size.webp_25_50 ) ; }
+                        }
+
+
+                    if( _dimensions.width <= 50 )
+                        {
+                            if( _dimensions.height <= 25 )
+                                { return Get_webp( Webp_size.webp_50_25 ) ; }
+
+                            if( _dimensions.height <= 50 )
+                                { return Get_webp( Webp_size.webp_50_50 ) ; }
+
+                            if( _dimensions.height <= 75 )
+                                { return Get_webp( Webp_size.webp_50_75 ) ; }
+                        }
+
+
+                    if( _dimensions.width <= 75 )
+                        {
+                            if( _dimensions.height <= 50 )
+                                { return Get_webp( Webp_size.webp_75_50 ) ; }
+
+                            if( _dimensions.height <= 75 )
+                                { return Get_webp( Webp_size.webp_75_75 ) ; }
+
+                            if( _dimensions.height <= 100 )
+                                { return Get_webp( Webp_size.webp_75_100 ) ; }
+
+                            if( _dimensions.height <= 150 )
+                                { return Get_webp( Webp_size.webp_75_150 ) ; }
+                        }
+                    
+
+
+                    if( _dimensions.width <= 100 )
                         {
                             if( _dimensions.height <= 100 )
-                                { return webp_generico_100_100; }
+                                { return Get_webp( Webp_size.webp_100_100 ) ; }
                         }
                     
 
-                    if( _dimensions.height <= 150 )
+                    if( _dimensions.width <= 150 )
                         {
                             if( _dimensions.height <= 150 )
-                                { return webp_generico_150_150; }
+                                { return Get_webp( Webp_size.webp_150_150 ) ; }
                         }
                     
-                    if( _dimensions.height <= 250 )
+
+                    if( _dimensions.width <= 250 )
                         {
                             if( _dimensions.height <= 250 )
-                                { return webp_generico_250_250; }
+                                { return Get_webp( Webp_size.webp_250_250 ) ; }
                             if( _dimensions.height <= 500 )
-                                { return webp_generico_500_250; }
+                                { return Get_webp( Webp_size.webp_250_350 ) ; }
+                            if( _dimensions.height <= 500 )
+                                { return Get_webp( Webp_size.webp_250_500 ) ; }
+                            if( _dimensions.height <= 600 )
+                                { return Get_webp( Webp_size.webp_250_600 ) ; }
                         }
 
-                    if( _dimensions.height <= 500 )
+
+                    if( _dimensions.width <= 300 )
                         {
                             if( _dimensions.height <= 500 )
-                                { return webp_generico_500_500; }
-                            if( _dimensions.height <= 1_000 )
-                                { return webp_generico_1000_500; }
+                                { return Get_webp( Webp_size.webp_300_500 ) ; }
+                            if( _dimensions.height <= 600 )
+                                { return Get_webp( Webp_size.webp_300_600 ) ; }
+                            if( _dimensions.height <= 700 )
+                                { return Get_webp( Webp_size.webp_300_700 ) ; }
+
                         }
 
-                    if( _dimensions.height <= 1_000 )
+
+                    if( _dimensions.width <= 400 )
                         {
-                            if( _dimensions.height <= 1_000 )
-                                { return webp_generico_1000_1000; }
-                            if( _dimensions.height <= 2_000 )
-                                { return webp_generico_2000_1000; }
+                            if( _dimensions.height <= 750 )
+                                { return Get_webp( Webp_size.webp_400_750 ); }
+
+                        }
+
+                    if( _dimensions.width <= 500 )
+                        {
+                            if( _dimensions.height <= 250 )
+                                { return Get_webp( Webp_size.webp_500_250 ); }
+
+                            if( _dimensions.height <= 500 )
+                                { return Get_webp( Webp_size.webp_500_500 ); }
+
+                            if( _dimensions.height <= 750 )
+                                { return Get_webp( Webp_size.webp_500_750 ); }
+
                         }
                     
 
-                    if( _dimensions.height <= 2_000 )
+                    if( _dimensions.width <= 750 )
                         {
-                            if( _dimensions.height <= 2_000 )
-                                { return webp_generico_2000_2000; }
+                            if( _dimensions.height <= 500 )
+                                { return Get_webp( Webp_size.webp_750_500 ); }
+
+                            if( _dimensions.height <= 750 )
+                                { return Get_webp( Webp_size.webp_750_750 ); }
+
+                            if( _dimensions.height <= 1000 )
+                                { return Get_webp( Webp_size.webp_750_1000 ); }
+
+                        }
+
+                    if( _dimensions.width <= 1000 )
+                        {
+                            if( _dimensions.height <= 500 )
+                                { return Get_webp( Webp_size.webp_1000_500 ); }
+
+                            if( _dimensions.height <= 750 )
+                                { return Get_webp( Webp_size.webp_1000_750 ); }
+
+                            if( _dimensions.height <= 1000 )
+                                { return Get_webp( Webp_size.webp_1000_1000 ); }
+
+                        }
+
+
+                    if( _dimensions.width <= 2_000 )
+                        {
+                            if( _dimensions.height <= 1000 )
+                                { return Get_webp( Webp_size.webp_2000_1000 ); }
+                            if( _dimensions.height <= 2000 )
+                                { return Get_webp( Webp_size.webp_2000_2000 ); }
                         }
 
                     
