@@ -47,12 +47,10 @@ public class RESOURCE__image_ref {
                 sprite: ok
 
 
-
             nothing -> thing
 
             load: 
                 nothing: ok
-                // ** por hora nao esta mudando o actual_content para compress_low_quality
                 low quality: ok
                 compress data: ok
 

@@ -66,7 +66,7 @@ unsafe public class Controlador : MonoBehaviour {
                 c =  CONTROLLER__resources.Get_instance();
 
                 c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.nothing );
-                image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_exp_1", Resource_image_content.sprite );
+                image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_exp_1", Resource_image_content.compress_low_quality_data );
                 
 
                 // Dispositivo d = Dispositivo__teste.Construir(); // pega o prefab 
@@ -199,9 +199,15 @@ unsafe public class Controlador : MonoBehaviour {
 
                                 if(  image.single_image.image_compress != null )
                                     { Console.Log( $"     image_compress.Length:  { image.single_image.image_compress.Length }" ); }
+                                    else 
+                                    { Console.Log( $"     image_compress.Length:  " ); }
                                     
+
+                                Console.Log( $"     tem low_quality: "  + image.single_image.have_low_quality_compress );
                                 if(  image.single_image.image_low_quality_compress != null )
                                     { Console.Log( $"     image_low_quality_compress.Length:  { image.single_image.image_low_quality_compress.Length }" ); }
+                                    else
+                                    { Console.Log( $"     image_low_quality_compress.Length:  " ); }
 
 
                                 Console.Log( $"     single_image.sprite: { image.single_image.sprite }" );

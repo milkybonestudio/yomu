@@ -160,8 +160,6 @@ public static class TOOL__module_context_images_actions {
                 Console.Log( "actual content: " + image.actual_content );
 
 
-
-
                 image.module_images.manager.Stop_task( image );
 
                     // ** GUARANTY IMAGE COMPRESS
@@ -169,30 +167,37 @@ public static class TOOL__module_context_images_actions {
                         if( image.actual_content == Resource_image_content.nothing )
                             { 
                                 
-                                image.single_image.image_low_quality_compress =  TOOL__get_data_images_resources.Get_single_low_quality( image );
-
-                                //single_image.image_low_quality_compress =  System.IO.File.ReadAllBytes( System.IO.Path.Combine( Application.dataPath, "Resources", "Development", "Webp_default_1.webp" ) ) ;
-
-                                // ** se nao tiver nada vai primeiro pegar o low quality e depois ir pegando o normal. Quando tiver o normal fazer o flip
-                                image.actual_content = Resource_image_content.compress_low_quality_data;
+                                if( image.system_have_low_quality )
+                                    {
+                                        image.single_image.image_low_quality_compress =  TOOL__get_data_images_resources.Get_single_low_quality( image );
+                                        image.actual_content = Resource_image_content.compress_low_quality_data;
+                                    }
+                                    else
+                                    {
+                                        image.single_image.image_compress =  TOOL__get_data_images_resources.Get_single( image );
+                                        image.actual_content = Resource_image_content.compress_data;
+                                    }
   
                             } 
 
                         if( image.actual_content == Resource_image_content.compress_low_quality_data )
-                            {  image.stage_getting_resource = Resources_getting_image_stage.waiting_to_get_compress_file_REAJUST; }  // ** setar para pegar o compress 
+                            { image.stage_getting_resource = Resources_getting_image_stage.waiting_to_get_compress_file_REAJUST; }  // ** setar para pegar o compress 
+
 
                         if( image.actual_content == Resource_image_content.compress_data )
                             { /* nao precisa fazer nada */ } 
+
 
                         
                     // --- GUARANTY TEXTURE
                         if( image.actual_content < Resource_image_content.texture )
                             { 
-                                CONTROLLER__errors.Verify( ( image.width * image.height == 0 ), $"Image { image.name } is with height { image.height } and width { image.width }" );
+                                CONTROLLER__errors.Verify( ( ( image.width * image.height ) == 0 ), $"Image { image.name } is with height { image.height } and width { image.width }" );
                                 
                                 image.single_image.texture_exclusiva = new Texture2D( image.width, image.height, TextureFormat.RGBA32, false );
                                 image.single_image.texture_exclusiva_native_array = image.single_image.texture_exclusiva.GetPixelData<Color32>( 0 );
                                 image.single_image.texture_exclusiva.filterMode = UnityEngine.FilterMode.Point;
+
                                 image.actual_content = Resource_image_content.texture;
                             }
 
@@ -202,11 +207,12 @@ public static class TOOL__module_context_images_actions {
 
                                      if( image.single_image.image_compress != null )
                                         { 
+                                            Console.Log( "Vai carregar image_compress" );
                                             TOOL__loader_texture.Transfer_data_PNG( image.single_image.image_compress, image.single_image.texture_exclusiva_native_array );
                                         }           
                                 else if( image.single_image.image_low_quality_compress != null )
                                         { 
-                                            Console.Log( "Veio aqui" );
+                                            Console.Log( "Vai carregar image_low_quality_compress" );
                                             TOOL__loader_texture.Transfer_data_WEABP( image, image.single_image ); 
                                         }
                                 else if( true )

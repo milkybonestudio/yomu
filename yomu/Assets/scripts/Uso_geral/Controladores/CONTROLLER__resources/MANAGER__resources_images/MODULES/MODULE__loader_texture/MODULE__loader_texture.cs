@@ -105,15 +105,6 @@ unsafe public static class TOOL__loader_texture {
                 byte* p_data_3 = ( p_data + 2 ) - 4 ;
                 byte* p_data_4 = ( p_data + 3 ) - 4 ;
 
-                // int u = 0;
-
-                Console.Log( "vai iniciar" );
-                Console.Log( "png width: " +  PNG.Get_dimensions( png ).width );
-                Console.Log( "bm width: " +  bm.Width );
-                Console.Log( "png height: " +  PNG.Get_dimensions( png ).height );
-                Console.Log( "bm height: " +  bm.Height );
-                Console.Log( "Native array length: " + _native_arr_texture.Length );
-
 
                 for( int height = ( bm.Height - 1 ) ; height > -1  ; height-- ){
 

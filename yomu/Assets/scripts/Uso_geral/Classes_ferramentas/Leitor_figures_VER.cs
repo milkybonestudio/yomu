@@ -40,8 +40,8 @@ public static class Leitor_figures {
                 // os paths vao apontar diretor para as imagens.png 
                 // isso é somente usado para quando eu quero fazer testes mudando imagens sem ter que refazer todo os containers.dat
 
-                if( !( Application.isEditor ) ) { throw new Exception("veio em Pegar_dados_figure_paths() estando fora do editor"); }
 
+                CONTROLLER__errors.Verify( !!!( Application.isEditor ), "veio em Pegar_dados_figure_paths() estando fora do editor" );
 
 
             // bloco garante que inicie e que tenha slots para o personagem
@@ -86,12 +86,7 @@ public static class Leitor_figures {
                 personagens_figures_raw_data[ index_personagem ] = dados_completos_raw.Split( texto_separando_figures_no_raw );
 
 
-                
-
-
-
-
-
+            
                 string Upper( string _nome ) { 
 
                     char[] nome_char = _nome.ToCharArray();

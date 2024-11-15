@@ -101,10 +101,11 @@ public class Container_RESOURCE__images {
                 _image.pointer_container = locator.pointer;
                 _image.data_size = locator.length;
 
+
                 if( _image.data_size > 2_000 )
-                    { _image.have_low_quality = true; }
+                    { _image.system_have_low_quality = true; }
                     else
-                    { _image.have_low_quality = false; }
+                    { _image.system_have_low_quality = false; }
 
 
         }
@@ -130,7 +131,7 @@ public class Container_RESOURCE__images {
                 _image.local_path = null;
                 _image.image_key = null;
                 _image.module_images = null;
-                _image.have_low_quality = false;
+                _image.system_have_low_quality = false;
 
 
                 _image.stage_getting_resource = Resources_getting_image_stage.not_give;

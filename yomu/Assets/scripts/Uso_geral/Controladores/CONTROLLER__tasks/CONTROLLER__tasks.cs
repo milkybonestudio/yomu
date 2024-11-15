@@ -141,8 +141,7 @@ public class CONTROLLER__tasks  {
 
                             time += ( Time.deltaTime * 1000f );
 
-                            if( time > _max_time_ms )
-                                { throw new Exception( $"Passou do tempo na task { _task_request.nome }" ); }
+                            CONTROLLER__errors.Verify( ( time > _max_time_ms ), $"Passou do tempo na task { _task_request.nome }" );
 
                             if(  _task_request.finalizado )
                                 { break; }

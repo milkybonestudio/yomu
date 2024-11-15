@@ -56,7 +56,8 @@ unsafe public class RESOURCE__image {
         // --- DATAs;
 
 
-        public bool have_low_quality;
+
+        public bool system_have_low_quality;
         public RESOURCE__image_data single_image;
         
         // public RESOURCE__image_data[] multiples_image

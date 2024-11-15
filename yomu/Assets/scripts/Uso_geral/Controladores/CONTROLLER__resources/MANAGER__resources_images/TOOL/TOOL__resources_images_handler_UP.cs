@@ -18,10 +18,11 @@ public static class TOOL__resources_images_handler_UP {
                     { _image.stage_getting_resource = Resources_getting_image_stage.finished; return weight; } 
 
 
-                if( !!!( _image.have_low_quality ) )
+                if( !!!( _image.system_have_low_quality ) )
                     {
                         // --- TOO SMALL TO LOL QUALITY
                         // ** sempre que for usar a imagem tem que verificar se ela existe
+                        Console.Log( "NAO TEM LOW QUALITY" );
                         _image.actual_content = Resource_image_content.compress_low_quality_data;
                         
                             if( _image.content_going_to > Resource_image_content.compress_low_quality_data )
@@ -58,6 +59,7 @@ public static class TOOL__resources_images_handler_UP {
                 Console.Log( "veio Handle_getting_compress_low_quality_file()" );
 
                 CONTROLLER__errors.Verify( ( _manager.task_getting_compress_low_quality_file == null ), $"the image { _image.name } was as getting_compress_low_quality_file but the task_req is null" );
+                CONTROLLER__errors.Verify( !!!( _image.system_have_low_quality ), $"the image { _image.name } was as getting_compress_low_quality_file but the system dont have the image low quality" );
                 int weight = 0;
 
                 if( !!!( _manager.task_getting_compress_low_quality_file.finalizado ) )
