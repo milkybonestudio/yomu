@@ -129,6 +129,8 @@ public static class TOOL__module_context_images_actions {
 
                 _ref.state = Resource_state.active;
 
+
+                Console.Log( "State pre: " +  _ref.state );
                 RESOURCE__image image = _ref.image;
 
                     Resource_image_content actual_ref_need_content = _ref.actual_need_content;
@@ -140,6 +142,8 @@ public static class TOOL__module_context_images_actions {
                     TOOL__resource_image.Increase_count( image, new_ref_need_content );
 
                 TOOL__module_context_images.Update_resource_level( image );
+
+                Console.Log( "State pos: " +  _ref.state );
                 
                 return;
 
@@ -170,6 +174,7 @@ public static class TOOL__module_context_images_actions {
                                 if( image.system_have_low_quality )
                                     {
                                         image.single_image.image_low_quality_compress =  TOOL__get_data_images_resources.Get_single_low_quality( image );
+                                        image.stage_getting_resource = Resources_getting_image_stage.waiting_to_get_compress_file_REAJUST;
                                         image.actual_content = Resource_image_content.compress_low_quality_data;
                                     }
                                     else

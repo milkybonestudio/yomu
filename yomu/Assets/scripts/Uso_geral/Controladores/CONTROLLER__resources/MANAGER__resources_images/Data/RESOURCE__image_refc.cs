@@ -53,11 +53,12 @@ public class RESOURCE__image_ref {
                 nothing: ok
                 low quality: ok
                 compress data: ok
+                sprite:  ok
 
-                Get_sprite:  ok?
 
-            Activate:  ok
-            Instanciate:  
+
+            Activate: 
+            Instanciate:   
 
 
                 

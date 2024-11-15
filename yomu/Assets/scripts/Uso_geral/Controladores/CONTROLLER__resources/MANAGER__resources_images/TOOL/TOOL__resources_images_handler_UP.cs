@@ -21,8 +21,10 @@ public static class TOOL__resources_images_handler_UP {
                 if( !!!( _image.system_have_low_quality ) )
                     {
                         // --- TOO SMALL TO LOL QUALITY
-                        // ** sempre que for usar a imagem tem que verificar se ela existe
                         Console.Log( "NAO TEM LOW QUALITY" );
+
+                        // ** low_quality só é usado quando for instanciado no Instanciate(), se o atual_resource for low_quality o sistema não deve verijficar se a imagem existe ou não
+
                         _image.actual_content = Resource_image_content.compress_low_quality_data;
                         
                             if( _image.content_going_to > Resource_image_content.compress_low_quality_data )

@@ -70,6 +70,12 @@ public class Container_RESOURCE__images {
         }
 
 
+        public string Get_image_key( string _main_folder, string _path_local ){
+
+            return  $"{ _main_folder }\\{ _path_local }";
+        }
+
+
         private void Put_data_image( RESOURCE__image _image,  MODULE__context_images _module_images,  Resource_context _context,  string _main_folder, string _path_local, Resource_image_localizer locator ){
 
             Console.Log( "veiuo Put_data_image()" );
@@ -86,7 +92,7 @@ public class Container_RESOURCE__images {
                 //mark
                 // ** depois mudar para somente _path_local
                 Console.Log( _path_local );
-                _image.image_key = $"{ _main_folder }\\{ _path_local }";
+                _image.image_key = Get_image_key( _main_folder, _path_local );
                 _image.module_images = _module_images;
 
 
@@ -101,6 +107,7 @@ public class Container_RESOURCE__images {
                 _image.pointer_container = locator.pointer;
                 _image.data_size = locator.length;
 
+                Console.Log( "DATA SIZE: " + _image.data_size );
 
                 if( _image.data_size > 2_000 )
                     { _image.system_have_low_quality = true; }
