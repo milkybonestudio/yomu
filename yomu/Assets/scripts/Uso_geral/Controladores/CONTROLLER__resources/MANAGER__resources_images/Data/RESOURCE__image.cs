@@ -51,11 +51,8 @@ unsafe public class RESOURCE__image {
         public Resource_image_content content_going_to; // se estiver em uma transicao de recursos é o ponto final 
         public Resource_image_content actual_content; // ** o recurso atual
 
-    
-    
+        
         // --- DATAs;
-
-
 
         public bool system_have_low_quality;
         public RESOURCE__image_data single_image;
@@ -76,7 +73,7 @@ unsafe public class RESOURCE__image {
         public int count_places_being_used_sprite; // precisa de tudo
 
 
-
+        
 
 
 }

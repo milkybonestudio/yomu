@@ -17,6 +17,8 @@ public static class TOOL__resource_images_handler_DOWN {
                 if( _image.content_going_to == Resource_image_content.nothing )
                     { weight += Destroy_compress_low_quality_data( _manager, _image ); }
 
+                _image.stage_getting_resource = Resources_getting_image_stage.finished;
+
                 return weight;
 
         }

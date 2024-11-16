@@ -58,21 +58,27 @@ public static class TOOL__module_context_images_actions {
 
                 // ** VAI PARA O NADA
 
+                Console.Log( "Veio UNload()" );
+
+                if( _ref.state == Resource_state.nothing )
+                    { return; }
+
+                _ref.state = Resource_state.nothing;
+
+                if( _ref.actual_need_content == Resource_image_content.nothing )
+                    { Console.Log( "actual content ja era nada" ); return; } // ** mesmo nivel
+
+                
                 RESOURCE__image image = _ref.image;
+                
+                    TOOL__resource_image.Decrease_count( image, _ref.actual_need_content  );
+                    TOOL__resource_image.Increase_count( image, Resource_image_content.nothing );
 
-                TOOL__resource_image.Decrease_count( image, _ref.level_pre_allocation );
+                    _ref.actual_need_content = Resource_image_content.nothing;
 
-                if( image.count_places_being_used_sprite > 1 )
-                    { return; }
+                TOOL__module_context_images.Update_resource_level( image );
 
-                if( image.count_places_being_used_compress_data > 1 )
-                    { return; }
-
-                if( image.count_places_being_used_nothing > 1 )
-                    {}
-
-                image.single_image.image_compress = null;
-                image.module_images.manager.textures_manager.Liberate_texture( image.single_image );                 
+                return;            
 
         }
 
@@ -128,8 +134,7 @@ public static class TOOL__module_context_images_actions {
                     { return; }
 
                 _ref.state = Resource_state.active;
-
-
+                
                 Console.Log( "State pre: " +  _ref.state );
                 RESOURCE__image image = _ref.image;
 
@@ -157,6 +162,7 @@ public static class TOOL__module_context_images_actions {
                     { return; }
 
                 _ref.state = Resource_state.instanciated;
+                _ref.actual_need_content = Resource_image_content.sprite;
             
                 
                 RESOURCE__image image = _ref.image;
