@@ -66,7 +66,7 @@ unsafe public class Controlador : MonoBehaviour {
                 c =  CONTROLLER__resources.Get_instance();
 
                 c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.nothing );
-                image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.compress_low_quality_data );
+                image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.sprite );
                 
 
                 // Dispositivo d = Dispositivo__teste.Construir(); // pega o prefab 
@@ -95,11 +95,8 @@ unsafe public class Controlador : MonoBehaviour {
                 // Figure lily = Teste_figure.Construct();
                 // lily.Instanciate( GameObject.Find( "Tela/Container_teste" ), Figure_use_context.visual_novel );
                 
-                
                 // lily.Prepare_to_use_resources( "mad" );
                 // lily.Change_form( "mad" );
-                
-
                 
                 // Images_container_result container =  Images_container_creator.Construct( "C:\\Users\\User\\Desktop\\yomu_things\\teste" );
 
@@ -119,8 +116,8 @@ unsafe public class Controlador : MonoBehaviour {
 
         Image image;
 
-        public void Update() {
 
+        public void Update() {
                 
                 
                 CONTROLLER__resources.Get_instance().Update();
@@ -131,9 +128,9 @@ unsafe public class Controlador : MonoBehaviour {
 
                 // --- CHANGE PRE ALLOC
 
-
                 if( Input.GetKeyDown( KeyCode.X ) )
                     { i++; }
+
 
                 // --- UP
 
@@ -149,7 +146,6 @@ unsafe public class Controlador : MonoBehaviour {
 
                 // --- DOWN
 
-
                 if( Input.GetKeyDown( KeyCode.A ) )
                     { i++; image_ref.Unload(); }
 
@@ -158,7 +154,6 @@ unsafe public class Controlador : MonoBehaviour {
 
                if( Input.GetKeyDown( KeyCode.D ) )
                     { i++; image_ref.Deinstanciate(); image.sprite = null; }
-
 
 
 
@@ -173,7 +168,8 @@ unsafe public class Controlador : MonoBehaviour {
                     { 
 
                     
-                        Console.Clear();
+                        // Console.Clear();
+
                         Console.Log( "<Color=lightBlue>-------------------</Color>" );
                         Console.Log( "<Color=lightBlue>REF:</Color>" );
 
@@ -213,7 +209,7 @@ unsafe public class Controlador : MonoBehaviour {
                                 Console.Log( $"     single_image.sprite: { image.single_image.sprite }" );
 
                                 if( image.single_image.texture_exclusiva != null )
-                                    { Console.Log( $"     tamanho: { Formater.Format_number( image.single_image.texture_exclusiva.width * image.single_image.texture_exclusiva.height ) }" ); }
+                                    { Console.Log( $"     tamanho: { Formater.Format_number( image.single_image.texture_exclusiva.width * image.single_image.texture_exclusiva.height ) } px" ); }
 
                                 Console.Log( $"     counts: " );
                                 Console.Log( $"         image.count_places_being_used_nothing: { image.count_places_being_used_nothing }" );

@@ -16,7 +16,7 @@ public static class Geral {
             trava_i++;
             //Debug.Log("tava_atual: " + trava_i);
 
-            if(trava_i > 5_000 )
+            if( trava_i > 5_000 )
                 { throw new ArgumentException("passou do limite"); }
                 
         }

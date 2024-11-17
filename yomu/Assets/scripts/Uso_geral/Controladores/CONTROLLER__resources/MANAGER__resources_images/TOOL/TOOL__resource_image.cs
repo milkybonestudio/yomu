@@ -1,4 +1,4 @@
-
+using UnityEngine;
 
 public static class TOOL__resource_image {
 
@@ -20,7 +20,174 @@ public static class TOOL__resource_image {
         }
 
 
+
+        public static int Down_resources( RESOURCE__image _image ){
+
+                if( Verify_stage( _image, Resources_getting_image_stage.all_reajust_stages ) )
+                    { Remove_REAJUST( _image ); }
+                    else
+                    { Remove_getting( _image );  }
+
+                return Set_stage( _image, Resources_getting_image_stage.waiting_to_destroy_current_resource );
+
+        }
+
+
+        // ** faz nao dar merda 
+        public static void Remove_getting( RESOURCE__image _image ){
+
+                MANAGER__resources_images manager = _image.module_images.manager;
+                        
+                    if( _image.stage_getting_resource == Resources_getting_image_stage.getting_compress_file )
+                        {  
+                            if( ( manager.task_getting_compress_file.finalizado ) )
+                                { 
+                                    // --- APROVEITAR 
+                                    _image.single_image.image_compress = ( byte[] ) _image.module_images.manager.task_getting_compress_file.dados[ 0 ];
+                                    _image.actual_content = Resource_image_content.compress_data; 
+                                }
+                                else
+                                {
+                                    TASK_REQ.Cancel_task( ref manager.task_getting_compress_file );
+                                }
+
+                        }
+                else if( _image.stage_getting_resource == Resources_getting_image_stage.getting_compress_low_quality_file )
+                        {  
+
+                            if( _image.single_image.have_low_quality_compress )
+                                {
+                                    // --- APROVEITAR 
+                                    if( ( manager.task_getting_compress_low_quality_file.finalizado ) )
+                                        { 
+                                            _image.single_image.image_low_quality_compress = ( byte[] ) _image.module_images.manager.task_getting_compress_low_quality_file.dados[ 0 ];
+                                            _image.actual_content = Resource_image_content.compress_data; 
+                                        }
+                                        else
+                                        {
+                                            TASK_REQ.Cancel_task( ref manager.task_getting_compress_low_quality_file );
+                                        }
+
+                                }
+
+                        }
+                else if( _image.stage_getting_resource == Resources_getting_image_stage.passing_data_to_texture )
+                        {  
+                            
+                            if( ( manager.task_passing_to_texture.finalizado ) )
+                                { 
+                                    // --- APROVEITAR 
+                                    _image.actual_content = Resource_image_content.texture_with_pixels; 
+                                }
+                                else
+                                {
+                                    _image.actual_content = Resource_image_content.compress_data;
+                                    Lose_texture( _image, manager.task_passing_to_texture );
+                                    TASK_REQ.Cancel_task( ref manager.task_passing_to_texture );
+                                }
+
+                        }
+
+                
+        }
+
+
+
+        public static void Remove_REAJUST( RESOURCE__image _image ){
+
+
+                MANAGER__resources_images manager = _image.module_images.manager;
+
+                        if( _image.stage_getting_resource == Resources_getting_image_stage.waiting_to_get_compress_file_REAJUST )
+                        {  
+                            // TASK_REQ.Cancel_task( ref manager.task_getting_compress_file_REAJUST );
+                
+                            _image.actual_content = Resource_image_content.compress_low_quality_data; 
+                            _image.single_image.sprite = null; // not real sprite 
+                        }
+                else if( _image.stage_getting_resource == Resources_getting_image_stage.getting_compress_file_REAJUST )
+                        { 
+
+                            if( ( _image.module_images.manager.task_getting_compress_file_REAJUST.finalizado ) )
+                                { 
+                                    // --- APROVEITAR 
+                                    _image.single_image.image_compress = ( byte[] ) manager.task_getting_compress_file_REAJUST.dados[ 0 ];
+                                    CONTROLLER__errors.Verify( ( !!!( PNG.Verify_is_png( _image.single_image.image_compress ) ) ), " not a png " );
+                                    _image.actual_content = Resource_image_content.texture; 
+                                }
+                                else
+                                {
+                                    Lose_texture( _image, manager.task_getting_compress_file_REAJUST );
+                                    _image.actual_content = Resource_image_content.compress_low_quality_data;
+                                }
+
+                            manager.task_getting_compress_file_REAJUST = null;
+            
+                        }
+                else if( _image.stage_getting_resource == Resources_getting_image_stage.waiting_to_pass_data_to_texture_REAJUST )
+                        {  
+                            _image.actual_content = Resource_image_content.texture; // ** ignora os pixels que já estavam ali
+                        }
+                else if( _image.stage_getting_resource == Resources_getting_image_stage.passing_data_to_texture_REAJUST )
+                        { 
+                            if( ( manager.task_passing_to_texture_REAJUST.finalizado ) )
+                                { 
+                                    // --- APROVEITAR
+                                    _image.actual_content = Resource_image_content.texture_with_pixels;
+                                }
+                                else
+                                {
+                                    Lose_texture( _image, manager.task_passing_to_texture_REAJUST );
+                                    _image.actual_content = Resource_image_content.compress_data;
+                                }
+                            manager.task_passing_to_texture_REAJUST = null;
+
+                        }
+                else if( _image.stage_getting_resource == Resources_getting_image_stage.waiting_to_apply_texture_REAJUST )
+                        {  
+                            _image.actual_content = Resource_image_content.texture_with_pixels; 
+                        }
+
+
+        }
+
+
+        public static void Lose_texture( RESOURCE__image _image, Task_req _req ){
+
+                // ** LOSE TEXTURE
+
+                if( _image.single_image.texture_exclusiva == null )
+                    { return; } // ? 
+
+                _req.data_1 = _image.single_image.texture_exclusiva;
+                _image.single_image.texture_exclusiva = null;
+                _req.fn_single_thread = ( Task_req _req )  =>   {  try{ GameObject.Destroy( ( Texture2D ) _req.data_1 );} catch( System.Exception e ){ Console.LogError( "AAAAAAA:" + _req.dados[ 0 ] ); } };
+
+        }
+
+
+
         public static void Verify_image_ref ( RESOURCE__image_ref image_ref ){
+
+                return;
+
+        }
+
+
+        public static void Change_actual_content_count( RESOURCE__image_ref _image_ref, Resource_image_content _new_content ){
+
+
+                RESOURCE__image image = _image_ref.image;
+
+                Resource_image_content old_content = _image_ref.actual_need_content;
+                
+                if( old_content == _new_content )
+                    { return; }
+
+                Increase_count( image, _new_content );
+                Decrease_count( image, old_content );
+
+                _image_ref.actual_need_content = _new_content;
 
                 return;
 
@@ -45,6 +212,37 @@ public static class TOOL__resource_image {
         }
 
 
+
+
+
+        public static bool Verify_stage( RESOURCE__image _image, Resources_getting_image_stage _stage ){
+
+            return ( ( _image.stage_getting_resource & _stage ) != 0 );
+
+        }
+
+    
+        public static bool Verify_actual_content( RESOURCE__image _image, Resource_image_content _content ){
+
+            return ( ( _image.actual_content & _content ) != 0 );
+
+        }
+
+    
+        public static int Set_stage( RESOURCE__image _image,  Resources_getting_image_stage _stage ){
+
+            _image.stage_getting_resource = _stage;
+            return 0;
+
+        }
+
+        public static int Set_stage_cancelling_task( RESOURCE__image _image,  Resources_getting_image_stage _stage, ref Task_req _task_ref ){
+
+            _image.stage_getting_resource = _stage;
+            TASK_REQ.Cancel_task( ref _task_ref );
+            return 0;
+
+        }
 
 
 

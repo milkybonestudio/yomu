@@ -36,22 +36,26 @@ public static class TOOL__module_context_images {
         private static int Going_to_resource_level_NOTHING( RESOURCE__image _image ){
 
                 Console.Log( "Veio Going_to_resource_level_NOTHING()" );
+
                 if( _image.content_going_to == Resource_image_content.nothing )
                     { return 0; } // ** ja nivelado
-
                 _image.content_going_to = Resource_image_content.nothing;
+
 
                 // --- UP                
                 // --- EQUAL
 
                     if( _image.actual_content == Resource_image_content.nothing )
-                        { return Set_stage( _image, Resources_getting_image_stage.finished ); }
+                        { 
+                            if( _image.stage_getting_resource == Resources_getting_image_stage.getting_compress_low_quality_file )
+                                { return TOOL__resource_image.Set_stage_cancelling_task( _image, Resources_getting_image_stage.finished, ref _image.module_images.manager.task_getting_compress_low_quality_file ); }
+                                else
+                                { return TOOL__resource_image.Set_stage( _image, Resources_getting_image_stage.finished ); }
+                        }
 
                 // --- DOWN
 
-                    _image.module_images.manager.Stop_task( _image );
-                    return Set_stage( _image, Resources_getting_image_stage.waiting_to_destroy_current_resource );
-
+                    return TOOL__resource_image.Down_resources( _image );
 
         }
 
@@ -69,25 +73,29 @@ public static class TOOL__module_context_images {
                 // ** UP
 
                     if( _image.actual_content == Resource_image_content.nothing )
-                        { return Set_stage( _image, Resources_getting_image_stage.waiting_to_start ); }
-
+                        { return TOOL__resource_image.Set_stage( _image, Resources_getting_image_stage.waiting_to_start ); }
 
                 // ** EQUAL
 
                     if( _image.actual_content == Resource_image_content.compress_low_quality_data )
                         {
                             if( _image.stage_getting_resource == Resources_getting_image_stage.getting_compress_file )
-                                { return Set_stage_cancelling_task( _image, Resources_getting_image_stage.finished, ref _image.module_images.manager.task_getting_compress_file ); }
+                                { return TOOL__resource_image.Set_stage_cancelling_task( _image, Resources_getting_image_stage.finished, ref _image.module_images.manager.task_getting_compress_file ); }
 
-                            if( Verify_stage( _image, ( Resources_getting_image_stage.waiting_to_get_compress_file | Resources_getting_image_stage.waiting_to_destroy_current_resource ) ) )
-                                { return Set_stage( _image, Resources_getting_image_stage.finished ); }
+                            if( TOOL__resource_image.Verify_stage( _image, ( Resources_getting_image_stage.waiting_to_get_compress_file | Resources_getting_image_stage.waiting_to_destroy_current_resource ) ) )
+                                { return TOOL__resource_image.Set_stage( _image, Resources_getting_image_stage.finished ); }
                         }
-
                     
                 // ** DOWN
+
+                    return TOOL__resource_image.Down_resources( _image );
+
+                    // if( TOOL__resource_image.Verify_stage( _image, ( Resources_getting_image_stage.getting_compress_file | Resources_getting_image_stage.passing_data_to_texture  ) ) )
+                    //             { return TOOL__resource_image.Set_stage( _image, Resources_getting_image_stage.finished ); }
+
                 
-                    _image.module_images.manager.Stop_task( _image );
-                    return Set_stage( _image, Resources_getting_image_stage.waiting_to_destroy_current_resource );
+                    // // _image.module_images.manager.Stop_task( _image );
+                    // return TOOL__resource_image.Set_stage( _image, Resources_getting_image_stage.waiting_to_destroy_current_resource );
 
         }
 
@@ -110,20 +118,20 @@ public static class TOOL__module_context_images {
 
                     if( _image.actual_content == Resource_image_content.nothing )
                         { 
-                            if( Verify_stage( _image, ( Resources_getting_image_stage.finished ) ) )
-                                { return Set_stage( _image, Resources_getting_image_stage.waiting_to_start ); }
+                            if( TOOL__resource_image.Verify_stage( _image, ( Resources_getting_image_stage.finished ) ) )
+                                { return TOOL__resource_image.Set_stage( _image, Resources_getting_image_stage.waiting_to_start ); }
 
-                            if( Verify_stage( _image, ( Resources_getting_image_stage.getting_compress_low_quality_file | Resources_getting_image_stage.waiting_to_start ) ) )
+                            if( TOOL__resource_image.Verify_stage( _image, ( Resources_getting_image_stage.getting_compress_low_quality_file | Resources_getting_image_stage.waiting_to_start ) ) )
                                 { return 0; }
                         }
 
                     if( _image.actual_content == Resource_image_content.compress_low_quality_data )
                         { 
-                            if( Verify_stage( _image, ( Resources_getting_image_stage.getting_compress_file | Resources_getting_image_stage.waiting_to_get_compress_file ) ) )
+                            if( TOOL__resource_image.Verify_stage( _image, ( Resources_getting_image_stage.getting_compress_file | Resources_getting_image_stage.waiting_to_get_compress_file ) ) )
                                 { return 0; }
 
-                            if( Verify_stage( _image, ( Resources_getting_image_stage.finished | Resources_getting_image_stage.waiting_to_destroy_current_resource ) ) )
-                                { return Set_stage( _image, Resources_getting_image_stage.waiting_to_get_compress_file ); }
+                            if( TOOL__resource_image.Verify_stage( _image, ( Resources_getting_image_stage.finished | Resources_getting_image_stage.waiting_to_destroy_current_resource ) ) )
+                                { return TOOL__resource_image.Set_stage( _image, Resources_getting_image_stage.waiting_to_get_compress_file ); }
                         }
 
 
@@ -131,15 +139,16 @@ public static class TOOL__module_context_images {
 
                     if( _image.actual_content == Resource_image_content.compress_data )
                         { 
-                            if(  Verify_stage( _image, ( Resources_getting_image_stage.waiting_to_destroy_current_resource | Resources_getting_image_stage.waiting_to_get_texture ) ) )
-                                { return Set_stage( _image, Resources_getting_image_stage.finished ); }
+                            if(  TOOL__resource_image.Verify_stage( _image, ( Resources_getting_image_stage.waiting_to_destroy_current_resource | Resources_getting_image_stage.waiting_to_get_texture ) ) )
+                                { return TOOL__resource_image.Set_stage( _image, Resources_getting_image_stage.finished ); }
 
                         }
 
                 // DOWN
 
-                    _image.module_images.manager.Stop_task( _image );
-                    return Set_stage( _image, Resources_getting_image_stage.waiting_to_destroy_current_resource );                
+                    return TOOL__resource_image.Down_resources( _image );
+                    // _image.module_images.manager.Stop_task( _image );
+                    // return TOOL__resource_image.Set_stage( _image, Resources_getting_image_stage.waiting_to_destroy_current_resource );                
 
 
         }
@@ -161,32 +170,32 @@ public static class TOOL__module_context_images {
 
                     if( _image.actual_content == Resource_image_content.nothing )
                         { 
-                            if( Verify_stage( _image, ( Resources_getting_image_stage.finished ) ) )
-                                { return Set_stage( _image, Resources_getting_image_stage.waiting_to_start ); }
+                            if( TOOL__resource_image.Verify_stage( _image, ( Resources_getting_image_stage.finished ) ) )
+                                { return TOOL__resource_image.Set_stage( _image, Resources_getting_image_stage.waiting_to_start ); }
                                 
-                            if( Verify_stage( _image, ( Resources_getting_image_stage.getting_compress_low_quality_file | Resources_getting_image_stage.waiting_to_start | Resources_getting_image_stage.finished ) ) )
+                            if( TOOL__resource_image.Verify_stage( _image, ( Resources_getting_image_stage.getting_compress_low_quality_file | Resources_getting_image_stage.waiting_to_start | Resources_getting_image_stage.finished ) ) )
                                 { return 0; }
                         }
 
                     if( _image.actual_content == Resource_image_content.compress_low_quality_data )
                         { 
-                            if( Verify_stage( _image, ( Resources_getting_image_stage.getting_compress_file | Resources_getting_image_stage.waiting_to_get_compress_file ) ) )
+                            if( TOOL__resource_image.Verify_stage( _image, ( Resources_getting_image_stage.getting_compress_file | Resources_getting_image_stage.waiting_to_get_compress_file ) ) )
                                 { return 0; }
 
-                            if( Verify_stage( _image, ( Resources_getting_image_stage.finished | Resources_getting_image_stage.waiting_to_destroy_current_resource ) ) )
-                                { return Set_stage( _image, Resources_getting_image_stage.waiting_to_get_compress_file ); }
+                            if( TOOL__resource_image.Verify_stage( _image, ( Resources_getting_image_stage.finished | Resources_getting_image_stage.waiting_to_destroy_current_resource ) ) )
+                                { return TOOL__resource_image.Set_stage( _image, Resources_getting_image_stage.waiting_to_get_compress_file ); }
                         }
 
 
                     if( _image.actual_content == Resource_image_content.all_textures_possibilities )
                         { 
-                            if( Verify_stage( _image, ( Resources_getting_image_stage.waiting_to_destroy_current_resource ) ) )
+                            if( TOOL__resource_image.Verify_stage( _image, ( Resources_getting_image_stage.waiting_to_destroy_current_resource ) ) )
                                 { 
                                     switch( _image.actual_content ){
 
-                                        case Resource_image_content.texture: return Set_stage( _image, Resources_getting_image_stage.waiting_to_pass_data_to_texture ); 
-                                        case Resource_image_content.texture_with_pixels: return Set_stage( _image, Resources_getting_image_stage.waiting_to_apply_texture ); 
-                                        case Resource_image_content.texture_with_pixels_applied: return Set_stage( _image, Resources_getting_image_stage.waiting_to_create_sprite ); 
+                                        case Resource_image_content.texture: return TOOL__resource_image.Set_stage( _image, Resources_getting_image_stage.waiting_to_pass_data_to_texture ); 
+                                        case Resource_image_content.texture_with_pixels: return TOOL__resource_image.Set_stage( _image, Resources_getting_image_stage.waiting_to_apply_texture ); 
+                                        case Resource_image_content.texture_with_pixels_applied: return TOOL__resource_image.Set_stage( _image, Resources_getting_image_stage.waiting_to_create_sprite ); 
 
                                     }
 
@@ -198,13 +207,12 @@ public static class TOOL__module_context_images {
 
                     if( _image.actual_content == Resource_image_content.sprite )
                         { 
-                            if(  Verify_stage( _image, Resources_getting_image_stage.waiting_to_destroy_current_resource ) )
-                                { return Set_stage( _image, Resources_getting_image_stage.finished ); }
+                            if(  TOOL__resource_image.Verify_stage( _image, Resources_getting_image_stage.waiting_to_destroy_current_resource ) )
+                                { return TOOL__resource_image.Set_stage( _image, Resources_getting_image_stage.finished ); }
 
                         }
 
                 // DOWN
-
                 CONTROLLER__errors.Throw( $"The image { _image.local_path } need to change to Sprite, but the actual content is: { _image.actual_content }, the going-to_content is : { _image.content_going_to } and the stage_getting_resource is: { _image.stage_getting_resource }" );
                 return -1;
 
@@ -212,11 +220,22 @@ public static class TOOL__module_context_images {
 
 
 
+
+
+        
+        // public static void Lose_texture( RESOURCE__image _image ){
+
+        //         // ** LOSE TEXTURE
+        //         Task_req task = CONTROLLER__tasks.Pegar_instancia().Get_task_request( "ADJUSTING REAJUST" );
+        //         task.dados = new object[ 1 ]{ _image.single_image.texture_exclusiva };
+        //         _image.single_image.texture_exclusiva = null;
+        //         task.fn_single_thread = ( Task_req _req )  =>   { GameObject.Destroy( ( Texture2D ) _req.dados[ 0 ] ); };
+
+        // }
+
+
+
         private static void Verify_stage_for_content( RESOURCE__image _image ){
-
-
-                if( _image.stage_getting_resource == Resources_getting_image_stage.all_reajust_stages )
-                    { throw new System.Exception(""); }
 
 
                 Resources_getting_image_stage possible_stages = Resources_getting_image_stage.not_give;
@@ -229,12 +248,11 @@ public static class TOOL__module_context_images {
                     case Resource_image_content.texture: possible_stages = Resources_getting_image_stage.texture_acceptable_stages; break;
                     case Resource_image_content.texture_with_pixels: possible_stages = Resources_getting_image_stage.texture_with_pixels_acceptable_stages; break;
                     case Resource_image_content.texture_with_pixels_applied: possible_stages = Resources_getting_image_stage.texture_with_pixels_applied_acceptable_stages; break;
-                    case Resource_image_content.sprite: possible_stages = Resources_getting_image_stage.texture_with_pixels_applied_acceptable_stages; break;
+                    case Resource_image_content.sprite: possible_stages = Resources_getting_image_stage.sprite_acceptable_stages; break;
                     
                 }
 
-                if( !!!( Verify_stage( _image, possible_stages ) ) )
-                    { CONTROLLER__errors.Throw( $"Image { _image.name } is with content { _image.actual_content } but the stage is { _image.stage_getting_resource }" ); }
+                CONTROLLER__errors.Verify( !!!( TOOL__resource_image.Verify_stage( _image, possible_stages ) ), $"Image { _image.name } is with content { _image.actual_content } but the stage is { _image.stage_getting_resource }" );
                     
                 return;
 
@@ -244,35 +262,6 @@ public static class TOOL__module_context_images {
 
 
 
-
-        public static bool Verify_stage( RESOURCE__image _image, Resources_getting_image_stage _stage ){
-
-            return ( ( _image.stage_getting_resource & _stage ) != 0 );
-
-        }
-
-    
-        public static bool Verify_actual_content( RESOURCE__image _image, Resource_image_content _content ){
-
-            return ( ( _image.actual_content & _content ) != 0 );
-
-        }
-
-    
-        private static int Set_stage( RESOURCE__image _image,  Resources_getting_image_stage _stage ){
-
-            _image.stage_getting_resource = _stage;
-            return 0;
-
-        }
-
-        private static int Set_stage_cancelling_task( RESOURCE__image _image,  Resources_getting_image_stage _stage, ref Task_req _task_ref ){
-
-            _image.stage_getting_resource = _stage;
-            TASK_REQ.Cancel_task( ref _task_ref );
-            return 0;
-
-        }
 
     
 

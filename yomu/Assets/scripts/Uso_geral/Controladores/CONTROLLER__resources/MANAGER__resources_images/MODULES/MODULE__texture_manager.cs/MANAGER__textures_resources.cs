@@ -17,6 +17,10 @@ public class MANAGER__textures_resources {
         public Texture2D[] textures_exclusivas = new Texture2D[ 50 ];
 
 
+
+    
+
+
         //mark 
         // ** todo o sistema vai mudar
         // ** agora vao ser cirados grandes textures de 8192 x 8192 px e alocar imagens dentro dessas textures 

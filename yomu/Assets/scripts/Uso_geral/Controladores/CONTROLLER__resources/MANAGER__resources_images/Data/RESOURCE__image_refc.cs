@@ -1,20 +1,16 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 
 
-public enum RESOURCE__image_ref_state {
-
-        no_instanciated,
-        instanciated,
-        deleted,
-
-}
 
 public class RESOURCE__image_ref {
 
         
         public string localizador; // ** localizador local
+        public string identifire;
         public RESOURCE__image image;
+        public Image image_component;
         public MODULE__context_images module;
         public int image_slot_index;
 
@@ -56,51 +52,77 @@ public class RESOURCE__image_ref {
                 sprite:  ok
 
 
+            Activate: ok
 
-            Activate: 
-            Instanciate:   
+            Instanciate:  ok
 
+
+            DOWN : 
+
+                unload : 
+
+                    nothing : ok
+                    minimun : 
+                            nothing : ok
+                            compress low quality : ok
+                            compress : ok
+                            sprite : ok
+
+                    activated : ok
+                    intanciated : ok
+
+                Deactivate : 
+
+                    nothing : 
+
+                            nothing : ok
+                            compress low quality : ok
+                            compress : ok
+                            sprite : ok
+
+
+                    minimun : ok
+
+                    activated : 
+
+                            nothing : ok
+                            compress low quality : ok
+                            compress : ok
+                            sprite : ok
+
+
+                    intanciated : 
+
+                            nothing : ok
+                            compress low quality : ok
+                            compress : ok
+                            sprite : ok
+
+
+                Deinstanciate : 
+
+                    nothing : ok
+                    minimun : 
+
+                            nothing : ok
+                            compress low quality : 
+                            compress : 
+                            sprite : 
+
+                    activated : ok
+                    intanciated : ok
 
                 
 
 
+            ** teste trocas rapidas: 
 
-            partindo minimo: 
-                partindo nothing: 
-                partindo compress_low_quality: 
-                partindo compress: 
-
-                partindo texture:
-                partindo texture_com_pixels: 
-                partindo texture_com_pixels_applyed: 
-
-                partindo sprite: 
-
-
-            Instanciate: 
-
-                partindo nothing: 
-
-                                partindo minimo: 
-                                    partindo nothing: 
-                                    partindo compress_low_quality: 
-                                    partindo compress: 
-
-                                    partindo texture:
-                                    partindo texture_com_pixels: 
-                                    partindo texture_com_pixels_applyed: 
-
-                                    partindo sprite: 
+                load <-> unload
 
 
 
-            switches: 
 
-
-
-        
         */
-
 
 
 
@@ -129,4 +151,27 @@ public class RESOURCE__image_ref {
 
 
  
+}
+
+
+
+
+public class Image_container {
+
+
+        public RESOURCE__image_ref image_ref;
+        public Image image_component;
+
+        public void Put_image( Image _image_component ){
+
+            CONTROLLER__errors.Verify( ( image_component != null ), "blablabla" );
+            CONTROLLER__errors.Verify( ( _image_component != null ), "blablabla_2" );
+            image_component = _image_component;
+
+            Sprite sprite = image_ref.Get_sprite();
+            image_component.sprite = sprite;
+            
+        }
+
+
 }

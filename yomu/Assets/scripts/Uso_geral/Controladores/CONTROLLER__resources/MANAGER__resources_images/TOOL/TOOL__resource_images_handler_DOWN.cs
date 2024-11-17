@@ -4,9 +4,11 @@ using UnityEngine;
 public static class TOOL__resource_images_handler_DOWN {
 
 
+
         public static int Handle_waiting_to_destroy_current_resource( MANAGER__resources_images _manager, RESOURCE__image _image ){
 
                 int weight = 0;
+
 
                 if( _image.content_going_to <= Resource_image_content.compress_data )
                     { weight += Destroy_resource_texture( _manager, _image ); }
@@ -56,6 +58,7 @@ public static class TOOL__resource_images_handler_DOWN {
                 // --- DESTROY
                 GameObject.Destroy( _image.single_image.texture_exclusiva );
 
+                _image.single_image.sprite = null;
                 _image.single_image.texture_exclusiva_native_array.Dispose();
                 _image.actual_content = Resource_image_content.compress_data;
 

@@ -73,10 +73,15 @@ public class CONTROLLER__tasks  {
 
                     
                         if( !!! ( task.pode_executar_single_thread ) || task.task_bloqueada )
-                            { tasks_em_espera_para_ativar_single_thread[ task.slot_id ] = null; continue; }  // --- PODE EXECUTAR
+                            { 
+                                // --- NAO PODE EXECUTAR
+                                task.finalizado = true; 
+                                tasks_em_espera_para_ativar_single_thread[ task.slot_id ] = null; 
+                                continue; 
+                            }  
                             
 
-                        if( task.task_fracionada != null && task.pode_executar_parte_single_thread_fracionada )
+                        if( ( task.task_fracionada != null ) && ( task.pode_executar_parte_single_thread_fracionada ) )
                             { Executar_fracionado( task ); } // --- VAI EXECUTAR FRACIONADO
 
 
@@ -86,10 +91,12 @@ public class CONTROLLER__tasks  {
                         
                         Console.Log( "vai executar task main thread : " + task.nome );
                         task.fn_single_thread( task ); 
-                        tasks_em_espera_para_ativar_single_thread[ task.slot_id ] = null;
                         task.finalizado = true;
+                        tasks_em_espera_para_ativar_single_thread[ task.slot_id ] = null;
                 
                 }
+
+            
 
                 if( modulo_multithread.exception != null )
                     { CONTROLLER__errors.Throw_exception( modulo_multithread.exception ); }

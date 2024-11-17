@@ -35,8 +35,9 @@ public enum Resources_getting_image_stage {
 
 
     // ** DOWN
-        waiting_to_destroy_current_resource = 0b_0000_0000__0000_0000__0001_0000__0000_0000,
+        waiting_to_destroy_current_resource = 0b_0000_0000__0000_0000__0001_0000__0000_0000, 
 
+    
         //destroying_texture,
 
 
@@ -46,7 +47,7 @@ public enum Resources_getting_image_stage {
         //mark
         // ** acho que vai dar certo, uma sprite usa a texture, se mudar a texture a sprite vai mudar
 
-        // ** margem de 3 bits
+        // ** margem de 2 bits
         // ** se esta em RWAJUST significa que a imagem já esta pronta, mas com o low compress
         waiting_to_get_compress_file_REAJUST = 0b_0000_0000__0000_0001__0000_0000__0000_0000, 
         getting_compress_file_REAJUST = 0b_0000_0000__0000_0010__0000_0000__0000_0000,
@@ -66,13 +67,18 @@ public enum Resources_getting_image_stage {
 
 
 
-        nothing_acceptable_stages = ( Resources_getting_image_stage.finished | Resources_getting_image_stage.waiting_to_start ),
+        nothing_acceptable_stages = ( 
+                                           Resources_getting_image_stage.waiting_to_start 
+                                        |   Resources_getting_image_stage.getting_compress_low_quality_file 
+                                        |    Resources_getting_image_stage.finished 
+                                    
+                                    ),
 
         compress_low_quality_data_acceptable_stages  =  ( 
-                                                                Resources_getting_image_stage.finished 
-                                                            | Resources_getting_image_stage.waiting_to_destroy_current_resource
-                                                            | Resources_getting_image_stage.getting_compress_low_quality_file
-                                                            | Resources_getting_image_stage.waiting_to_get_compress_file 
+                                                                Resources_getting_image_stage.waiting_to_get_compress_file 
+                                                            |   Resources_getting_image_stage.getting_compress_file
+                                                            |   Resources_getting_image_stage.waiting_to_destroy_current_resource
+                                                            |   Resources_getting_image_stage.finished 
                                                         ),
 
         compress_data_acceptable_stages  =  ( 
@@ -106,6 +112,7 @@ public enum Resources_getting_image_stage {
         sprite_acceptable_stages =  ( 
                                             Resources_getting_image_stage.waiting_to_destroy_current_resource
                                         | Resources_getting_image_stage.finished
+                                        | Resources_getting_image_stage.all_reajust_stages
                                     ),                                                    
 
 

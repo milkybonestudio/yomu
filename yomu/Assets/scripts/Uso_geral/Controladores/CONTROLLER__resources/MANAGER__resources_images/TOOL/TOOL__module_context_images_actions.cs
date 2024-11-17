@@ -1,16 +1,19 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public static class TOOL__module_context_images_actions {
 
 
 
 
-        public static Sprite Get_sprite( RESOURCE__image_ref _ref  ){
+        public static Sprite Get_sprite( RESOURCE__image_ref _ref ){
+
 
                 RESOURCE__image image = _ref.image;
-
+                
                 CONTROLLER__errors.Verify(  !!!( image.single_image.used ),  "Called Get_sprite() but the image dont have the single_image data" );
+
                 
                 if( _ref.state != Resource_state.instanciated )
                     { Instanciate( _ref  ); }
@@ -44,6 +47,7 @@ public static class TOOL__module_context_images_actions {
                 if( image.count_places_being_used_nothing > 1 )
                     { return; } 
 
+
                 // --- CAN DELETE
 
                 image.module_images.actives_images_dictionary.Remove( image.local_path );
@@ -58,43 +62,81 @@ public static class TOOL__module_context_images_actions {
 
                 // ** VAI PARA O NADA
 
-                Console.Log( "Veio UNload()" );
+                Console.Log( "Veio Unload()" );
+                CONTROLLER__errors.Verify( ( _ref.image == null ), $"Tried to Unload ref { _ref.identifire }, but the RESOURCE__image is null" );
 
                 if( _ref.state == Resource_state.nothing )
-                    { return; }
-
-                _ref.state = Resource_state.nothing;
+                    { return; } _ref.state = Resource_state.nothing;
 
                 if( _ref.actual_need_content == Resource_image_content.nothing )
-                    { Console.Log( "actual content ja era nada" ); return; } // ** mesmo nivel
+                    { return; }
 
-                
-                RESOURCE__image image = _ref.image;
-                
-                    TOOL__resource_image.Decrease_count( image, _ref.actual_need_content  );
-                    TOOL__resource_image.Increase_count( image, Resource_image_content.nothing );
+                TOOL__resource_image.Change_actual_content_count( _ref, Resource_image_content.nothing );
 
-                    _ref.actual_need_content = Resource_image_content.nothing;
-
-                TOOL__module_context_images.Update_resource_level( image );
+                TOOL__module_context_images.Update_resource_level( _ref.image );
 
                 return;            
 
         }
 
-        public static void Deactivate( RESOURCE__image_ref _image_ref ){
+        public static void Deactivate( RESOURCE__image_ref _ref ){
 
             // ** GO BACK TO MINIMUN
 
+                // ** VAI PARA O NADA
+
+                Console.Log( "Veio Deactivate()" );
+                CONTROLLER__errors.Verify( ( _ref.image == null ), $"Tried to Deactivate ref { _ref.identifire }, but the RESOURCE__image is null" );
+
+
+                if( _ref.state <= Resource_state.minimun )
+                    { return; } _ref.state = Resource_state.minimun;
+
+                if( _ref.actual_need_content == _ref.level_pre_allocation )
+                    { return; }
+
+
+                Console.Log( "pre: " );
+                Console.Log( "content_going_to: " + _ref.image.content_going_to );
+                Console.Log( "actual_content: " + _ref.image.actual_content );
+                Console.Log( "stage_getting_resource: " + _ref.image.stage_getting_resource );
+
+                TOOL__resource_image.Change_actual_content_count( _ref, _ref.level_pre_allocation );
+
+                TOOL__module_context_images.Update_resource_level( _ref.image );
+
+                Console.Log( "pos: " );
+                Console.Log( "content_going_to: " + _ref.image.content_going_to );
+                Console.Log( "actual_content: " + _ref.image.actual_content );
+                Console.Log( "stage_getting_resource: " + _ref.image.stage_getting_resource );
+
+                return;    
+
 
         }
 
-        public static void Deinstanciate( RESOURCE__image_ref _image_ref ){
+        public static void Deinstanciate( RESOURCE__image_ref _ref ){
 
-            // ** FORCE TO GO TO 
+            // ** FORCE TO GO TO activate if isntanciate
+
+                Console.Log( "Veio Deinstanciate()" );
+                CONTROLLER__errors.Verify( ( _ref.image == null ), $"Tried to Deactivate ref { _ref.identifire }, but the RESOURCE__image is null" );
+
+
+                if( _ref.state <= Resource_state.active )
+                    { return; } _ref.state = Resource_state.active;
+
+                if( _ref.actual_need_content == Resource_image_content.sprite )
+                    { return; }
+
+
+                TOOL__resource_image.Change_actual_content_count( _ref, _ref.level_pre_allocation );
+
+                TOOL__module_context_images.Update_resource_level( _ref.image );
+
+                return;    
 
         }
-
 
 
 
@@ -103,25 +145,21 @@ public static class TOOL__module_context_images_actions {
         // ** sinaliza que a imagem pode carregar o minimo 
         public static void Load( RESOURCE__image_ref _ref ){
 
+
                 Console.Log( "Veio Load()" );
+                CONTROLLER__errors.Verify( ( _ref.image == null ), $"Tried to Load ref { _ref.identifire }, but the RESOURCE__image is null" );
 
-                if( _ref.state > Resource_state.nothing )
-                    { return; }
 
-                _ref.state = Resource_state.minimun;
+                if( _ref.state == Resource_state.minimun )
+                    { return; } _ref.state = Resource_state.minimun;
 
                 if( _ref.actual_need_content == _ref.level_pre_allocation )
-                    { Console.Log( "actual_need_content is equal to level_pre_allocation" ); return; } // ** mesmo nivel
+                    { return; }
 
-                
-                RESOURCE__image image = _ref.image;
+            
+                TOOL__resource_image.Change_actual_content_count( _ref, _ref.level_pre_allocation );
 
-                    TOOL__resource_image.Increase_count( image, _ref.level_pre_allocation );
-                    TOOL__resource_image.Decrease_count( image, _ref.actual_need_content  );
-
-                    _ref.actual_need_content = _ref.level_pre_allocation;
-
-                TOOL__module_context_images.Update_resource_level( image );
+                TOOL__module_context_images.Update_resource_level( _ref.image );
 
                 return;
 
@@ -130,53 +168,59 @@ public static class TOOL__module_context_images_actions {
         // ** sinaliza que pode começar a pegar a texture
         public static void Activate( RESOURCE__image_ref _ref ){
 
+
+                Console.Log( "veio Activate()" );
+
+                CONTROLLER__errors.Verify( ( _ref.image == null ), $"Tried to Activate ref { _ref.identifire }, but the RESOURCE__image is null" );
+
                 if( _ref.state == Resource_state.active )
+                    { return; } _ref.state = Resource_state.active;
+
+                if( _ref.actual_need_content == Resource_image_content.sprite )
                     { return; }
 
-                _ref.state = Resource_state.active;
-                
-                Console.Log( "State pre: " +  _ref.state );
-                RESOURCE__image image = _ref.image;
 
-                    Resource_image_content actual_ref_need_content = _ref.actual_need_content;
-                    Resource_image_content new_ref_need_content = Resource_image_content.sprite;
+                TOOL__resource_image.Change_actual_content_count( _ref, Resource_image_content.sprite );
 
-                    _ref.actual_need_content = new_ref_need_content;
-
-                    TOOL__resource_image.Decrease_count( image, actual_ref_need_content );
-                    TOOL__resource_image.Increase_count( image, new_ref_need_content );
-
-                TOOL__module_context_images.Update_resource_level( image );
-
-                Console.Log( "State pos: " +  _ref.state );
+                TOOL__module_context_images.Update_resource_level( _ref.image );
                 
                 return;
 
         }
 
+    
         public static void Instanciate( RESOURCE__image_ref _ref ){
 
                 // ** FORCE TO CREATE SPRITE 
 
+                CONTROLLER__errors.Verify( ( _ref.image == null ), $"Tried to Activate ref { _ref.identifire }, but the RESOURCE__image is null" );
+
+                Console.Log( "REF STATE: " + _ref.state );
+
                 if( _ref.state == Resource_state.instanciated )
-                    { return; }
+                    { return; } _ref.state = Resource_state.instanciated;
 
-                _ref.state = Resource_state.instanciated;
-                _ref.actual_need_content = Resource_image_content.sprite;
-            
-                
+
+                            
                 RESOURCE__image image = _ref.image;
+                MANAGER__resources_images manager = image.module_images.manager;
 
-                Console.Log( "actual content: " + image.actual_content );
 
 
-                image.module_images.manager.Stop_task( image );
+                // --- ALL NORMAL
+
+
+                // image.module_images.manager.Stop_task( image );
+
+
+
+                image.stage_getting_resource = Resources_getting_image_stage.finished;
+                image.content_going_to = Resource_image_content.sprite;
 
                     // ** GUARANTY IMAGE COMPRESS
-                    
+    
                         if( image.actual_content == Resource_image_content.nothing )
                             { 
-                                
                                 if( image.system_have_low_quality )
                                     {
                                         image.single_image.image_low_quality_compress =  TOOL__get_data_images_resources.Get_single_low_quality( image );
@@ -188,7 +232,6 @@ public static class TOOL__module_context_images_actions {
                                         image.single_image.image_compress =  TOOL__get_data_images_resources.Get_single( image );
                                         image.actual_content = Resource_image_content.compress_data;
                                     }
-  
                             } 
 
                         if( image.actual_content == Resource_image_content.compress_low_quality_data )
@@ -197,7 +240,6 @@ public static class TOOL__module_context_images_actions {
 
                         if( image.actual_content == Resource_image_content.compress_data )
                             { /* nao precisa fazer nada */ } 
-
 
                         
                     // --- GUARANTY TEXTURE
@@ -247,28 +289,31 @@ public static class TOOL__module_context_images_actions {
                         // --- GUARANTY SPRITE
                         if( image.actual_content < Resource_image_content.sprite )
                             {
+                                if( ( image.stage_getting_resource & Resources_getting_image_stage.all_reajust_stages ) != 0  )
+                                    {
+                                        // ** handle 
+
+                                    }
+
                                 Console.Log( "Vai criar a sprite" );
                                 image.single_image.sprite = Sprite.Create( image.single_image.texture_exclusiva, new Rect( 0f, 0f, image.width, image.height ), new Vector2(0.5f, 0.5f), 100.0f ,0, SpriteMeshType.FullRect   );
-                                Console.Log( "sprite: " + image.single_image.sprite );
-                                Console.Log( "texture: " + image.single_image.texture_exclusiva );
                                 image.actual_content = Resource_image_content.sprite;
                             }
 
 
                 CONTROLLER__errors.Verify( ( image.single_image.sprite == null ), $"Tried to get the sprite of the image { image.name }, but do not construct after the fall. actual content: { image.actual_content }" );
 
+                TOOL__resource_image.Change_actual_content_count( _ref, Resource_image_content.sprite );
 
 
-                image.actual_content = Resource_image_content.sprite;
-                image.content_going_to = Resource_image_content.sprite;
+                Console.Log( " ACTUAL CONTENT:  " + image.actual_content );
+
+                Console.Log( "content_going_to: " + image.content_going_to );
+                Console.Log( "actual_content: " + image.actual_content );
+                Console.Log( "stage_getting_resource: " + image.stage_getting_resource );
+
+
                 
-                    Resource_image_content actual_ref_need_content = _ref.actual_need_content;
-                    Resource_image_content new_ref_need_content = Resource_image_content.sprite;
-
-
-                    TOOL__resource_image.Decrease_count( image, actual_ref_need_content );
-                    TOOL__resource_image.Increase_count( image, new_ref_need_content );
-
                 return;
 
         }

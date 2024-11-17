@@ -1,6 +1,7 @@
 
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 
     // ** a imagem so tem 2 modelos, ou esta no minimo ou esta ativo, se um dispositivo tiver mais hierarquias e pode ter multiplas layers e precisar mudar na hora o minimo de uma imagem isso tem que ser feito no dispositivo. 
@@ -19,6 +20,14 @@ unsafe public class RESOURCE__image {
 
         public MODULE__context_images module_images;
 
+
+        // // ** 
+        //     public Resource_image_content final_resource_waiting_task;
+        //     public Resource_image_content resource_waiting_task_on_force_stop;
+        //     public Action<RESOURCE__image> fn_to_force_stop;
+
+        //     public Task_req task_waiting_to_remove; // ** se estiver esperando para destruir a texture tem que primeiro remover esse?
+        
 
         // ** pegar no localizador
 

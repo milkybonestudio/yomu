@@ -30,6 +30,8 @@ public class MANAGER__resources_images {
     
         public MODULE__context_images[] context_images_modules;
 
+
+
         private Resource_context[] contexts;
 
 
@@ -44,6 +46,11 @@ public class MANAGER__resources_images {
             // public Task_req task_getting_texture;  // ** por hora assumir que task_getting_texture, e task_applying_texture nao sao tasks e váo ser feitas aqui
         public Task_req task_passing_to_texture;
             // public Task_req task_applying_texture;
+
+            // ** reajust
+
+            public Task_req task_getting_compress_file_REAJUST;
+            public Task_req task_passing_to_texture_REAJUST;
 
 
 
@@ -83,7 +90,7 @@ public class MANAGER__resources_images {
 
                 // ** VERIFY IF HAVE SOMEWHERE TO GO
                 if( ( _image.content_going_to == _image.actual_content ) && ( ( _image.stage_getting_resource & Resources_getting_image_stage.all_reajust_stages ) == 0 ) )
-                    { CONTROLLER__errors.Verify( (_image.stage_getting_resource != Resources_getting_image_stage.finished ), $"stage is not acceptable: { _image.stage_getting_resource }" ); return 0; }
+                    { CONTROLLER__errors.Verify( ( _image.stage_getting_resource != Resources_getting_image_stage.finished ), $"stage is not acceptable: { _image.stage_getting_resource } and the actual content is: { _image.actual_content }" ); return 0; }
 
                 switch( _image.stage_getting_resource ){
 
@@ -105,12 +112,13 @@ public class MANAGER__resources_images {
                 // --- DOWN RESOURCE
                     
                     case Resources_getting_image_stage.waiting_to_destroy_current_resource: return TOOL__resource_images_handler_DOWN.Handle_waiting_to_destroy_current_resource( this, _image );
+                    
 
                 // --- REAJUSTING
-                    case Resources_getting_image_stage.getting_compress_file_REAJUST: return TOOL__resources_images_handler_REAJUST.Handle_getting_compress_file_REAJUST( this, _image );
-                        case Resources_getting_image_stage.waiting_to_get_compress_file_REAJUST: return TOOL__resources_images_handler_REAJUST.Handle_waiting_to_get_compress_file_REAJUST( this, _image );
-                            case Resources_getting_image_stage.passing_data_to_texture_REAJUST: return TOOL__resources_images_handler_REAJUST.Handle_passing_data_to_texture_REAJUST( this, _image );
-                                case Resources_getting_image_stage.waiting_to_pass_data_to_texture_REAJUST: return TOOL__resources_images_handler_REAJUST.Handle_waiting_to_pass_data_to_texture_REAJUST( this, _image );
+                    case Resources_getting_image_stage.waiting_to_get_compress_file_REAJUST: return TOOL__resources_images_handler_REAJUST.Handle_waiting_to_get_compress_file_REAJUST( this, _image );
+                        case Resources_getting_image_stage.getting_compress_file_REAJUST: return TOOL__resources_images_handler_REAJUST.Handle_getting_compress_file_REAJUST( this, _image );
+                            case Resources_getting_image_stage.waiting_to_pass_data_to_texture_REAJUST: return TOOL__resources_images_handler_REAJUST.Handle_waiting_to_pass_data_to_texture_REAJUST( this, _image );
+                                case Resources_getting_image_stage.passing_data_to_texture_REAJUST: return TOOL__resources_images_handler_REAJUST.Handle_passing_data_to_texture_REAJUST( this, _image );
                                     case Resources_getting_image_stage.waiting_to_apply_texture_REAJUST: return TOOL__resources_images_handler_REAJUST.Handle_waiting_to_apply_texture_REAJUST( this, _image );
 
                                         
@@ -122,17 +130,26 @@ public class MANAGER__resources_images {
 
         }
 
+
+        
         public void Stop_task( RESOURCE__image _image ){
 
+                // ** acho que nao faz mais sentido
             
                 switch( _image.stage_getting_resource ){
 
+                    
+                    // ** REAJUST
+                    case Resources_getting_image_stage.getting_compress_file_REAJUST: TASK_REQ.Cancel_task( ref task_getting_compress_file_REAJUST ); return;
+                    case Resources_getting_image_stage.passing_data_to_texture_REAJUST: TASK_REQ.Cancel_task( ref task_passing_to_texture_REAJUST ); return;
+
+                    // ** NORMAL
                     case Resources_getting_image_stage.getting_compress_file: TASK_REQ.Cancel_task( ref task_getting_compress_file ); return;
                     case Resources_getting_image_stage.getting_compress_low_quality_file: TASK_REQ.Cancel_task( ref task_getting_compress_low_quality_file ); return;
                     case Resources_getting_image_stage.passing_data_to_texture: TASK_REQ.Cancel_task( ref task_passing_to_texture ); return;
 
-                    case Resources_getting_image_stage.applying_texture: CONTROLLER__errors.Throw( $"Came on Stop_task for the image { _image.name }, but can not handle { _image.stage_getting_resource }" ); return;
-                    case Resources_getting_image_stage.getting_texture: CONTROLLER__errors.Throw( $"Came on Stop_task for the image { _image.name }, but can not handle { _image.stage_getting_resource }" ); return;
+
+                    default: CONTROLLER__errors.Throw( $"Came on Stop_task for the image { _image.name }, but can not handle { _image.stage_getting_resource }" ); return;
                                     
                 }
 
