@@ -3,30 +3,58 @@ using UnityEngine;
 public static class TOOL__resource_image {
 
 
-        public static void Verify_image( RESOURCE__image image ){
+
+        public static void Verify_image( RESOURCE__image _image ){
 
 
-                CONTROLLER__errors.Verify( !!!( image.single_image.used ),  $"In the image request { image.name } was given single and multiples images" );
+
+
+                CONTROLLER__errors.Verify( !!!( _image.single_image.used ),  $"In the image request { _image.name } was given single and multiples images" );
                 
-                if( image.actual_content == Resource_image_content.nothing )
+                if( _image.actual_content == Resource_image_content.nothing )
                     {
-                        if ( image.single_image.image_compress != null )
-                            { throw new System.Exception( $"current state was \"nothing\" but there is a compress image in the image ${ image.name }" ); }
+                        if ( _image.single_image.image_compress != null )
+                            { throw new System.Exception( $"current state was \"nothing\" but there is a compress image in the image ${ _image.name }" ); }
 
                     }
+
 
                 return;
 
         }
 
 
+        public static bool Need_to_update( RESOURCE__image _image ){
+
+                bool need_update = ( _image.content_going_to != _image.actual_content ) || ( ( _image.stage_getting_resource & Resources_getting_image_stage.all_reajust_stages ) != 0 );
+
+
+                if( !!!( need_update ) && ( _image.stage_getting_resource != Resources_getting_image_stage.finished ) )
+                    {
+
+                        Console.LogError( $"Image is tecnicly finished, but the stage is not in the image { _image.name }" );
+                        Console.LogError( $"   stage_getting_resource: { _image.stage_getting_resource }" );
+                        Console.LogError( $"   actual_content: { _image.actual_content }" );
+                        Console.LogError( $"   content_going_to: { _image.content_going_to }" );
+                    
+                        CONTROLLER__errors.Throw( $"" ); 
+                    }
+                    
+
+                return need_update;
+        
+        }
+
+
 
         public static int Down_resources( RESOURCE__image _image ){
+
+                Console.Log( "Veio down resources" );
 
                 if( Verify_stage( _image, Resources_getting_image_stage.all_reajust_stages ) )
                     { Remove_REAJUST( _image ); }
                     else
-                    { Remove_getting( _image );  }
+                    { Remove_getting( _image ); }
 
                 return Set_stage( _image, Resources_getting_image_stage.waiting_to_destroy_current_resource );
 
@@ -241,6 +269,69 @@ public static class TOOL__resource_image {
             _image.stage_getting_resource = _stage;
             TASK_REQ.Cancel_task( ref _task_ref );
             return 0;
+
+        }
+
+
+
+
+        public static void Print_image_data( RESOURCE__image_ref _image_ref ){
+
+
+                if( _image_ref == null )
+                    { return; }
+
+                RESOURCE__image image = _image_ref.image;
+
+                Console.Clear();
+
+                Console.Log( "<Color=lightBlue>-------------------</Color>" );
+                Console.Log( "<Color=lightBlue>REF:</Color>" );
+
+
+                Console.Log( $" state: { _image_ref.state } " );
+                Console.Log( $" actual_need_content: { _image_ref.actual_need_content } " );
+                Console.Log( $" level_pre_allocation: { _image_ref.level_pre_allocation } " );
+                Console.Log( $" ref_state: { _image_ref.ref_state } " );
+                Console.Log( $" module: { _image_ref.module } " );
+                Console.Log( $" image: { _image_ref.image } " );
+                Console.Log( $" image_slot_index: { _image_ref.image_slot_index } " );
+
+                if( image == null )
+                    {  return; }
+
+                Console.Log( "<Color=lightBlue>  IMAGE:</Color>" );
+                Console.Log( $"   actual_content: { image.actual_content }" );
+                Console.Log( $"   content_going_to: { image.content_going_to }" );
+                Console.Log( $"   stage_getting_resource: { image.stage_getting_resource }" );
+
+                // -- image 
+
+                if(  image.single_image.image_compress != null )
+                    { Console.Log( $"     image_compress.Length:  { Formater.Format_number(  image.single_image.image_compress.Length ) }" ); }
+                    else 
+                    { Console.Log( $"     image_compress.Length:  " ); }
+                    
+
+                Console.Log( $"     tem low_quality: "  + image.single_image.have_low_quality_compress );
+                if(  image.single_image.image_low_quality_compress != null )
+                    { Console.Log( $"     image_low_quality_compress.Length:  {  Formater.Format_number( image.single_image.image_low_quality_compress.Length ) }" ); }
+                    else
+                    { Console.Log( $"     image_low_quality_compress.Length:  " ); }
+
+
+                Console.Log( $"     single_image.sprite: { image.single_image.sprite }" );
+
+                if( image.single_image.texture_exclusiva != null )
+                    { Console.Log( $"     tamanho: { Formater.Format_number( image.single_image.texture_exclusiva.width * image.single_image.texture_exclusiva.height ) } px" ); }
+
+                Console.Log( $"     counts: " );
+                Console.Log( $"         image.count_places_being_used_nothing: { image.count_places_being_used_nothing }" );
+                Console.Log( $"         image.count_places_being_used_compress_low_quality_data: { image.count_places_being_used_compress_low_quality_data }" );
+                Console.Log( $"         image.count_places_being_used_compress_data: { image.count_places_being_used_compress_data }" );
+                Console.Log( $"         image.count_places_being_used_sprite: { image.count_places_being_used_sprite }" );
+            
+                
 
         }
 

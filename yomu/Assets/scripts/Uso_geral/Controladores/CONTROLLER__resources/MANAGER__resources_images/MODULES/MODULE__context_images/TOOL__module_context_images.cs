@@ -28,8 +28,14 @@ public static class TOOL__module_context_images {
                     { Going_to_resource_level_NOTHING( _image ); return; }
 
                 // ** imagem perdeu todas as referencias, tem que deletar tudo
-                
 
+                // ** DELETE IMAGE
+
+                
+                _image.module_images.actives_images_dictionary.Remove( _image.image_key ); // ** nao tem mais update
+                _image.module_images.manager.container_images.Return_image( _image ); 
+                
+         
         }
 
         
@@ -90,13 +96,6 @@ public static class TOOL__module_context_images {
 
                     return TOOL__resource_image.Down_resources( _image );
 
-                    // if( TOOL__resource_image.Verify_stage( _image, ( Resources_getting_image_stage.getting_compress_file | Resources_getting_image_stage.passing_data_to_texture  ) ) )
-                    //             { return TOOL__resource_image.Set_stage( _image, Resources_getting_image_stage.finished ); }
-
-                
-                    // // _image.module_images.manager.Stop_task( _image );
-                    // return TOOL__resource_image.Set_stage( _image, Resources_getting_image_stage.waiting_to_destroy_current_resource );
-
         }
 
 
@@ -106,6 +105,7 @@ public static class TOOL__module_context_images {
         private static int Going_to_resource_level_COMPRESS_DATA( RESOURCE__image _image ){
 
                 Console.Log( "Veio Going_to_resource_level_COMPRESS_DATA()" );
+                Console.Log( "Actual content: " + _image.actual_content );
 
                 // ** TEM QUE TER COMPRESS
                 if( _image.content_going_to == Resource_image_content.compress_data )
@@ -147,9 +147,6 @@ public static class TOOL__module_context_images {
                 // DOWN
 
                     return TOOL__resource_image.Down_resources( _image );
-                    // _image.module_images.manager.Stop_task( _image );
-                    // return TOOL__resource_image.Set_stage( _image, Resources_getting_image_stage.waiting_to_destroy_current_resource );                
-
 
         }
 
@@ -187,6 +184,16 @@ public static class TOOL__module_context_images {
                         }
 
 
+                    if( _image.actual_content == Resource_image_content.compress_data )
+                        { 
+                            if( TOOL__resource_image.Verify_stage( _image, ( Resources_getting_image_stage.waiting_to_get_texture ) ) )
+                                { return 0; }
+
+                            if( TOOL__resource_image.Verify_stage( _image, ( Resources_getting_image_stage.finished | Resources_getting_image_stage.waiting_to_destroy_current_resource ) ) )
+                                { return TOOL__resource_image.Set_stage( _image, Resources_getting_image_stage.waiting_to_get_texture ); }
+                        }
+
+
                     if( _image.actual_content == Resource_image_content.all_textures_possibilities )
                         { 
                             if( TOOL__resource_image.Verify_stage( _image, ( Resources_getting_image_stage.waiting_to_destroy_current_resource ) ) )
@@ -212,26 +219,12 @@ public static class TOOL__module_context_images {
 
                         }
 
-                // DOWN
+                // DOWN ( what )
                 CONTROLLER__errors.Throw( $"The image { _image.local_path } need to change to Sprite, but the actual content is: { _image.actual_content }, the going-to_content is : { _image.content_going_to } and the stage_getting_resource is: { _image.stage_getting_resource }" );
                 return -1;
 
         }
 
-
-
-
-
-        
-        // public static void Lose_texture( RESOURCE__image _image ){
-
-        //         // ** LOSE TEXTURE
-        //         Task_req task = CONTROLLER__tasks.Pegar_instancia().Get_task_request( "ADJUSTING REAJUST" );
-        //         task.dados = new object[ 1 ]{ _image.single_image.texture_exclusiva };
-        //         _image.single_image.texture_exclusiva = null;
-        //         task.fn_single_thread = ( Task_req _req )  =>   { GameObject.Destroy( ( Texture2D ) _req.dados[ 0 ] ); };
-
-        // }
 
 
 
@@ -257,15 +250,6 @@ public static class TOOL__module_context_images {
                 return;
 
         }
-
-
-
-
-
-
-    
-
-
 
 
 }

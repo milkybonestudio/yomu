@@ -13,10 +13,16 @@ public class Container_RESOURCE__images {
                 for( int index = 0 ; index < images_available.Length ; index++ )
                     { images_available[ index ] = new RESOURCE__image(); }
 
+                images_waiting_to_reset = new RESOURCE__image[ 20 ];
+
         }
 
 
-        public RESOURCE__image[] images_available;
+        private RESOURCE__image[] images_available;
+        
+
+        private RESOURCE__image[] images_waiting_to_reset;
+        private int pointer_image_to_delete = 0;
 
         public RESOURCE__image Get_resource_image( MODULE__context_images _module_images,  Resource_context _context,  string _main_folder, string _path, Resource_image_localizer locator ){
 
@@ -54,18 +60,54 @@ public class Container_RESOURCE__images {
         public void Return_image( RESOURCE__image _image ){
 
 
+                _image.image_state = Resource_use_state.waiting_to_delete; 
+
+                if( images_waiting_to_reset.Length == pointer_image_to_delete )
+                    { Array.Resize( ref images_waiting_to_reset, ( images_waiting_to_reset.Length + 10 ) );  }
+
+                images_waiting_to_reset[ pointer_image_to_delete++ ] = _image;
+
+        }
+
+
+        public int Update( int _weight_to_stop, int _current_weight ){
+
+                for( int slot = 0 ; slot < pointer_image_to_delete ; slot++ ){
+
+                        if( images_waiting_to_reset[ slot ] == null )
+                            { continue; }
+
+                        _current_weight += Return_image_to_available( images_waiting_to_reset[ slot ] );
+                        images_waiting_to_reset[ slot ] = null;
+
+                        if( _current_weight >= _weight_to_stop )
+                            { return _current_weight; }
+
+                        continue;
+                    
+                }
+
+                return _current_weight;
+
+        }
+
+
+
+        private int Return_image_to_available( RESOURCE__image _image ){
+
+
                 for( int image_slot = 0 ; image_slot < images_available.Length ; image_slot++ ){
 
                         if( images_available[ image_slot ] != null )
                             { continue; }
                         
                         images_available[ image_slot ] = _image;
-                        Reset_data( _image );
-                        return;
+                        return Reset_data( _image );
                         
                 }
 
                 CONTROLLER__errors.Throw( "tried to return a resource__image but there was no space for it" );
+                return 0;
 
         }
 
@@ -117,7 +159,10 @@ public class Container_RESOURCE__images {
 
         }
 
-        private void Reset_data( RESOURCE__image _image ){
+        private int Reset_data( RESOURCE__image _image ){
+
+
+                int weight = 0;
 
                 // ** RESET DATA
                     _image.single_image.used = false;
@@ -126,12 +171,18 @@ public class Container_RESOURCE__images {
                     _image.single_image.have_low_quality_compress = false; // false => can not have the webp
                     _image.single_image.image_low_quality_compress = null;
 
-                    // ** Nao deveria ter
-                    CONTROLLER__errors.Verify( ( _image.single_image.texture_exclusiva != null ), "deu um reset na image_data mas a texture ainda estava aqui" );
 
-                    _image.single_image.texture_exclusiva = null;
-                    _image.single_image.texture_exclusiva_native_array.Dispose();
+                    if( _image.single_image.texture_exclusiva != null )
+                        {
+                            GameObject.Destroy( _image.single_image.texture_exclusiva );
+                            _image.single_image.texture_exclusiva_native_array.Dispose();
+                            weight = 1;
+                        }
                     _image.single_image.sprite = null;
+
+                // ** IMPORTANT
+                _image.image_state = Resource_use_state.unused;
+
 
                 _image.image_context = Resource_context.not_given; 
                 _image.main_folder = null;
@@ -150,6 +201,9 @@ public class Container_RESOURCE__images {
                 _image.height = 0;
                 _image.pointer_container = 0;
                 _image.data_size = 0;
+
+
+                return weight;
         
 
         }

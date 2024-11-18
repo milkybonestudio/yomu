@@ -117,8 +117,7 @@ public class RESOURCE__image_ref {
 
             ** teste trocas rapidas: 
 
-                load <-> unload
-
+                instanciate -> activate -> instanciate : imagem fica webp
 
 
 
@@ -134,10 +133,10 @@ public class RESOURCE__image_ref {
         // ** DOWN
 
         
-        public void Delete(){ Guaranty_ref(); TOOL__module_context_images_actions.Delete( this ); } 
+        public void Delete( ref RESOURCE__image_ref _ref_ref ){ Guaranty_ref(); TOOL__module_context_images_actions.Delete( this ); _ref_ref = null; } 
         public void Unload(){ Guaranty_ref(); TOOL__module_context_images_actions.Unload( this ); }
         public void Deactivate(){ Guaranty_ref(); TOOL__module_context_images_actions.Deactivate( this ); }
-        public void Deinstanciate(){ Guaranty_ref(); TOOL__module_context_images_actions.Deinstanciate( this ); }
+        public void Deinstanciate(){ Guaranty_ref(); TOOL__module_context_images_actions.Deinstanciate( this );  }
 
         // ** UP
 
@@ -147,7 +146,6 @@ public class RESOURCE__image_ref {
 
     
         public void Change_level_pre_allocation( Resource_image_content _new_pre_alloc ){}
-
 
 
  

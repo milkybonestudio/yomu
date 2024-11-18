@@ -69,6 +69,7 @@ public class MANAGER__resources_images {
         private int context_frame;
         public void Update(){
 
+                //** fazer para dar preferencia pelo tipo depois a ordem
 
                 context_frame = ( context_frame + 1 ) % contexts.Length;
 
@@ -88,9 +89,11 @@ public class MANAGER__resources_images {
         private int Updata_image( RESOURCE__image _image ){
 
 
-                // ** VERIFY IF HAVE SOMEWHERE TO GO
-                if( ( _image.content_going_to == _image.actual_content ) && ( ( _image.stage_getting_resource & Resources_getting_image_stage.all_reajust_stages ) == 0 ) )
-                    { CONTROLLER__errors.Verify( ( _image.stage_getting_resource != Resources_getting_image_stage.finished ), $"stage is not acceptable: { _image.stage_getting_resource } and the actual content is: { _image.actual_content }" ); return 0; }
+                TOOL__resource_image.Verify_image( _image );
+
+                if( !!!( TOOL__resource_image.Need_to_update( _image ) ) )
+                    { return 0; }
+
 
                 switch( _image.stage_getting_resource ){
 

@@ -66,7 +66,7 @@ unsafe public class Controlador : MonoBehaviour {
                 c =  CONTROLLER__resources.Get_instance();
 
                 c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.nothing );
-                image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.sprite );
+                image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_exp_1", Resource_image_content.compress_data );
                 
 
                 // Dispositivo d = Dispositivo__teste.Construir(); // pega o prefab 
@@ -155,6 +155,14 @@ unsafe public class Controlador : MonoBehaviour {
                if( Input.GetKeyDown( KeyCode.D ) )
                     { i++; image_ref.Deinstanciate(); image.sprite = null; }
 
+                
+                if( Input.GetKeyDown( KeyCode.F ) )
+                    { i++; image_ref.Delete( ref image_ref );  }
+
+                
+
+
+
 
 
 
@@ -165,63 +173,7 @@ unsafe public class Controlador : MonoBehaviour {
                 
 
                 if( i > 0 )
-                    { 
-
-                    
-                        // Console.Clear();
-
-                        Console.Log( "<Color=lightBlue>-------------------</Color>" );
-                        Console.Log( "<Color=lightBlue>REF:</Color>" );
-
-
-                        Console.Log( $" state: { image_ref.state } " );
-                        Console.Log( $" actual_need_content: { image_ref.actual_need_content } " );
-                        Console.Log( $" level_pre_allocation: { image_ref.level_pre_allocation } " );
-                        Console.Log( $" ref_state: { image_ref.ref_state } " );
-                        Console.Log( $" module: { image_ref.module } " );
-                        Console.Log( $" image: { image_ref.image } " );
-                        Console.Log( $" image_slot_index: { image_ref.image_slot_index } " );
-
-                        RESOURCE__image image = image_ref.image;
-
-                        if( image != null )
-                            {
-                                Console.Log( "<Color=lightBlue>  IMAGE:</Color>" );
-                                Console.Log( $"   actual_content: { image.actual_content }" );
-                                Console.Log( $"   content_going_to: { image.content_going_to }" );
-                                Console.Log( $"   stage_getting_resource: { image.stage_getting_resource }" );
-
-                                // -- image 
-
-                                if(  image.single_image.image_compress != null )
-                                    { Console.Log( $"     image_compress.Length:  { Formater.Format_number(  image.single_image.image_compress.Length ) }" ); }
-                                    else 
-                                    { Console.Log( $"     image_compress.Length:  " ); }
-                                    
-
-                                Console.Log( $"     tem low_quality: "  + image.single_image.have_low_quality_compress );
-                                if(  image.single_image.image_low_quality_compress != null )
-                                    { Console.Log( $"     image_low_quality_compress.Length:  {  Formater.Format_number( image.single_image.image_low_quality_compress.Length ) }" ); }
-                                    else
-                                    { Console.Log( $"     image_low_quality_compress.Length:  " ); }
-
-
-                                Console.Log( $"     single_image.sprite: { image.single_image.sprite }" );
-
-                                if( image.single_image.texture_exclusiva != null )
-                                    { Console.Log( $"     tamanho: { Formater.Format_number( image.single_image.texture_exclusiva.width * image.single_image.texture_exclusiva.height ) } px" ); }
-
-                                Console.Log( $"     counts: " );
-                                Console.Log( $"         image.count_places_being_used_nothing: { image.count_places_being_used_nothing }" );
-                                Console.Log( $"         image.count_places_being_used_compress_low_quality_data: { image.count_places_being_used_compress_low_quality_data }" );
-                                Console.Log( $"         image.count_places_being_used_compress_data: { image.count_places_being_used_compress_data }" );
-                                Console.Log( $"         image.count_places_being_used_sprite: { image.count_places_being_used_sprite }" );
-                            }
-                        
-                        
-
-
-                    }
+                    { TOOL__resource_image.Print_image_data( image_ref ); }
 
 
                 Console.Update();

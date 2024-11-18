@@ -6,7 +6,6 @@ public static class TOOL__module_context_images_actions {
 
 
 
-
         public static Sprite Get_sprite( RESOURCE__image_ref _ref ){
 
 
@@ -30,28 +29,17 @@ public static class TOOL__module_context_images_actions {
         // ** imagem vai ser deletada completamente 
         public static void Delete( RESOURCE__image_ref _ref ){ 
 
+
                 RESOURCE__image image = _ref.image;
 
-                TOOL__resource_image.Decrease_count( image, _ref.level_pre_allocation ); // ?????
-
-                // ** perde a referencia
-                image.refs[ _ref.image_slot_index ].ref_state = RESOURCE__image_ref_state.deleted;
+                // ** LOSE REF
                 image.need_reajust = true;
+                image.refs[ _ref.image_slot_index ] = null;
 
-                if( image.count_places_being_used_sprite > 1 )
-                    { return; }
-
-                if( image.count_places_being_used_compress_data > 1 )
-                    { return; }
-
-                if( image.count_places_being_used_nothing > 1 )
-                    { return; } 
-
-
-                // --- CAN DELETE
-
-                image.module_images.actives_images_dictionary.Remove( image.local_path );
-                Unload( _ref );
+                TOOL__resource_image.Decrease_count( image, _ref.actual_need_content ); 
+                _ref.image.module_images.manager.container_image_refs.Return_image_ref( _ref );
+                
+                TOOL__module_context_images.Update_resource_level( image );
                 
                 return;
 
@@ -95,20 +83,9 @@ public static class TOOL__module_context_images_actions {
                 if( _ref.actual_need_content == _ref.level_pre_allocation )
                     { return; }
 
-
-                Console.Log( "pre: " );
-                Console.Log( "content_going_to: " + _ref.image.content_going_to );
-                Console.Log( "actual_content: " + _ref.image.actual_content );
-                Console.Log( "stage_getting_resource: " + _ref.image.stage_getting_resource );
-
                 TOOL__resource_image.Change_actual_content_count( _ref, _ref.level_pre_allocation );
 
                 TOOL__module_context_images.Update_resource_level( _ref.image );
-
-                Console.Log( "pos: " );
-                Console.Log( "content_going_to: " + _ref.image.content_going_to );
-                Console.Log( "actual_content: " + _ref.image.actual_content );
-                Console.Log( "stage_getting_resource: " + _ref.image.stage_getting_resource );
 
                 return;    
 
@@ -140,7 +117,7 @@ public static class TOOL__module_context_images_actions {
 
 
 
-        // --- PEGAR RECURSOS
+        // --- UP
 
         // ** sinaliza que a imagem pode carregar o minimo 
         public static void Load( RESOURCE__image_ref _ref ){
@@ -150,10 +127,13 @@ public static class TOOL__module_context_images_actions {
                 CONTROLLER__errors.Verify( ( _ref.image == null ), $"Tried to Load ref { _ref.identifire }, but the RESOURCE__image is null" );
 
 
-                if( _ref.state == Resource_state.minimun )
+                Console.Log(  "_ref.state: " + _ref.state  );
+                Console.Log(  "_ref.actual_need_content: " + _ref.actual_need_content  );
+
+                if( _ref.state >= Resource_state.minimun )
                     { return; } _ref.state = Resource_state.minimun;
 
-                if( _ref.actual_need_content == _ref.level_pre_allocation )
+                if( _ref.actual_need_content >= _ref.level_pre_allocation )
                     { return; }
 
             
@@ -173,7 +153,7 @@ public static class TOOL__module_context_images_actions {
 
                 CONTROLLER__errors.Verify( ( _ref.image == null ), $"Tried to Activate ref { _ref.identifire }, but the RESOURCE__image is null" );
 
-                if( _ref.state == Resource_state.active )
+                if( _ref.state >= Resource_state.active )
                     { return; } _ref.state = Resource_state.active;
 
                 if( _ref.actual_need_content == Resource_image_content.sprite )
@@ -192,6 +172,9 @@ public static class TOOL__module_context_images_actions {
         public static void Instanciate( RESOURCE__image_ref _ref ){
 
                 // ** FORCE TO CREATE SPRITE 
+
+
+                Console.Log( "Veio Instanciate()" );
 
                 CONTROLLER__errors.Verify( ( _ref.image == null ), $"Tried to Activate ref { _ref.identifire }, but the RESOURCE__image is null" );
 
@@ -212,6 +195,9 @@ public static class TOOL__module_context_images_actions {
 
                 // image.module_images.manager.Stop_task( image );
 
+                if(  ( image.stage_getting_resource & Resources_getting_image_stage.all_reajust_stages ) != 0 )
+                    { return; } // ** already going to switch the sprite
+
 
 
                 image.stage_getting_resource = Resources_getting_image_stage.finished;
@@ -224,7 +210,6 @@ public static class TOOL__module_context_images_actions {
                                 if( image.system_have_low_quality )
                                     {
                                         image.single_image.image_low_quality_compress =  TOOL__get_data_images_resources.Get_single_low_quality( image );
-                                        image.stage_getting_resource = Resources_getting_image_stage.waiting_to_get_compress_file_REAJUST;
                                         image.actual_content = Resource_image_content.compress_low_quality_data;
                                     }
                                     else
@@ -235,7 +220,17 @@ public static class TOOL__module_context_images_actions {
                             } 
 
                         if( image.actual_content == Resource_image_content.compress_low_quality_data )
-                            { image.stage_getting_resource = Resources_getting_image_stage.waiting_to_get_compress_file_REAJUST; }  // ** setar para pegar o compress 
+                            { 
+                                if( !!!( image.system_have_low_quality ) )
+                                    {
+                                        image.single_image.image_compress =  TOOL__get_data_images_resources.Get_single( image );
+                                        image.actual_content = Resource_image_content.compress_data;
+                                    }
+                                    else
+                                    {
+                                        image.stage_getting_resource = Resources_getting_image_stage.waiting_to_get_compress_file_REAJUST;
+                                    }
+                            }  
 
 
                         if( image.actual_content == Resource_image_content.compress_data )
