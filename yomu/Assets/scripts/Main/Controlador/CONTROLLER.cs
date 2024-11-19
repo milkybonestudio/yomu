@@ -66,7 +66,7 @@ unsafe public class Controlador : MonoBehaviour {
                 c =  CONTROLLER__resources.Get_instance();
 
                 c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.nothing );
-                image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_exp_1", Resource_image_content.compress_data );
+                image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
                 
 
                 // Dispositivo d = Dispositivo__teste.Construir(); // pega o prefab 
@@ -120,60 +120,6 @@ unsafe public class Controlador : MonoBehaviour {
         public void Update() {
                 
                 
-                CONTROLLER__resources.Get_instance().Update();
-            
-                controlador_tasks.Update();
-
-                int i = 0;
-
-                // --- CHANGE PRE ALLOC
-
-                if( Input.GetKeyDown( KeyCode.X ) )
-                    { i++; }
-
-
-                // --- UP
-
-                if( Input.GetKeyDown( KeyCode.Q ) )
-                    { i++; image_ref.Load(); }
-
-               if( Input.GetKeyDown( KeyCode.W ) )
-                    { i++; image_ref.Activate(); }
-
-               if( Input.GetKeyDown( KeyCode.E ) )
-                    { i++; image.sprite = image_ref.Get_sprite(); }
-
-
-                // --- DOWN
-
-                if( Input.GetKeyDown( KeyCode.A ) )
-                    { i++; image_ref.Unload(); }
-
-               if( Input.GetKeyDown( KeyCode.S ) )
-                    { i++; image_ref.Deactivate(); }
-
-               if( Input.GetKeyDown( KeyCode.D ) )
-                    { i++; image_ref.Deinstanciate(); image.sprite = null; }
-
-                
-                if( Input.GetKeyDown( KeyCode.F ) )
-                    { i++; image_ref.Delete( ref image_ref );  }
-
-                
-
-
-
-
-
-
-               if( Input.GetKeyDown( KeyCode.I ) )
-                    { i++; image.sprite = image_ref.image.single_image.sprite; }
-
-
-                
-
-                if( i > 0 )
-                    { TOOL__resource_image.Print_image_data( image_ref ); }
 
 
                 Console.Update();

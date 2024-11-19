@@ -1,6 +1,25 @@
 using System;
 
 
+
+/*
+
+    recursos tem 4 estado basicos: 
+    -> nothign 
+    -> minimo 
+    -> active
+    -> instanciate
+        **( depois mudar ativo / instanciate )
+
+    é possivel mudar o minimo de acordo com a necessidade
+
+
+
+
+*/
+
+
+
 public class CONTROLLER__resources {
 
 

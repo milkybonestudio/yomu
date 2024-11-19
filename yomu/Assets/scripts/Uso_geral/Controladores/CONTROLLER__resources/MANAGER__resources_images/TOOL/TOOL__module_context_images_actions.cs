@@ -6,6 +6,30 @@ public static class TOOL__module_context_images_actions {
 
 
 
+        public static void Change_level_pre_allocation( RESOURCE__image_ref _ref, Resource_image_content _new_pre_alloc ){
+
+                Console.Log( "Veio Change_pre_alloc()" );
+
+                // --- CHANGE
+                Resource_image_content old_pre_alloc = _ref.level_pre_allocation;
+                _ref.level_pre_allocation = _new_pre_alloc;
+
+                if( _ref.state != Resource_state.minimun )
+                    { return; } // ** nao vai importar
+
+                if( old_pre_alloc == _new_pre_alloc )
+                    { Console.Log( "Mesmo alloc" ); return; } // ** eh o mesmo
+
+                // ** IS IN MINIMUN AND IS DIFERENT
+                TOOL__resource_image.Change_actual_content_count( _ref, _new_pre_alloc );
+                
+                TOOL__module_context_images.Update_resource_level( _ref.image );
+                
+                return;
+
+        }
+
+
         public static Sprite Get_sprite( RESOURCE__image_ref _ref ){
 
 

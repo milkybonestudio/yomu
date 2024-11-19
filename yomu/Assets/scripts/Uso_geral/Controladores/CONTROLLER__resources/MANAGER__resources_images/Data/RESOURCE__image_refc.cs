@@ -24,107 +24,6 @@ public class RESOURCE__image_ref {
 
 
 
-        //teste
-
-
-        //mark
-
-        // ** ainda precisa resolver como lidar quando não tem webp
-
-        /*
-
-            getting slot: ok
-            not let create off level pre alloc: ok
-
-            create:
-                nothing: ok
-                low quality: ok
-                compress: ok
-                sprite: ok
-
-
-            nothing -> thing
-
-            load: 
-                nothing: ok
-                low quality: ok
-                compress data: ok
-                sprite:  ok
-
-
-            Activate: ok
-
-            Instanciate:  ok
-
-
-            DOWN : 
-
-                unload : 
-
-                    nothing : ok
-                    minimun : 
-                            nothing : ok
-                            compress low quality : ok
-                            compress : ok
-                            sprite : ok
-
-                    activated : ok
-                    intanciated : ok
-
-                Deactivate : 
-
-                    nothing : 
-
-                            nothing : ok
-                            compress low quality : ok
-                            compress : ok
-                            sprite : ok
-
-
-                    minimun : ok
-
-                    activated : 
-
-                            nothing : ok
-                            compress low quality : ok
-                            compress : ok
-                            sprite : ok
-
-
-                    intanciated : 
-
-                            nothing : ok
-                            compress low quality : ok
-                            compress : ok
-                            sprite : ok
-
-
-                Deinstanciate : 
-
-                    nothing : ok
-                    minimun : 
-
-                            nothing : ok
-                            compress low quality : 
-                            compress : 
-                            sprite : 
-
-                    activated : ok
-                    intanciated : ok
-
-                
-
-
-            ** teste trocas rapidas: 
-
-                instanciate -> activate -> instanciate : imagem fica webp
-
-
-
-        */
-
-
-
         public Sprite Get_sprite(){ Guaranty_ref(); return TOOL__module_context_images_actions.Get_sprite( this );  }
     
 
@@ -145,7 +44,7 @@ public class RESOURCE__image_ref {
         public void Instanciate(){ TOOL__module_context_images_actions.Instanciate( this ); }
 
     
-        public void Change_level_pre_allocation( Resource_image_content _new_pre_alloc ){}
+        public void Change_level_pre_allocation( Resource_image_content _new_pre_alloc ){ Guaranty_ref(); TOOL__module_context_images_actions.Change_level_pre_allocation( this, _new_pre_alloc ); }
 
 
  
