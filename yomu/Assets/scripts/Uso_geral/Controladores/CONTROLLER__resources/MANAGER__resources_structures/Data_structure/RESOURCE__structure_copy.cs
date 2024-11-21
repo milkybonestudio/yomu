@@ -24,8 +24,11 @@ public class RESOURCE__structure_copy {
 
 
         public int RESOURCE_index; 
-        public bool deleted;
+
         public string name;
+
+        // ** trocar por estado ( use, unused, waitign to delete )
+        public bool deleted;
 
         public RESOURCE__structure structure;
 
@@ -35,20 +38,8 @@ public class RESOURCE__structure_copy {
         public Resource_structure_content level_pre_allocation; // minimun 
         public Resource_structure_content actual_need_content;
 
-
-
         
         public GameObject structure_game_object; // proprio
-
-        public void Instanciate(){
-
-            if( structure_game_object != null )
-                { return; }
-            
-            
-
-        }
-
 
         /*
             //testes: 
@@ -112,6 +103,7 @@ public class RESOURCE__structure_copy {
         
         // ** suporte
         public void Change_pre_alloc( Resource_structure_content _new_level ){  Guaranty_copy(); structure.module_structures.Change_pre_alloc( this, _new_level );}
+        public void Flag_need_to_instanciate( bool _value ){ structure.copies[ RESOURCE_index ].need_to_get_instanciate = _value; }
 
 
 }

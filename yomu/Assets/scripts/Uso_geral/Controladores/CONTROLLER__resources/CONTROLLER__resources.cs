@@ -5,15 +5,31 @@ using System;
 /*
 
     recursos tem 4 estado basicos: 
-    -> nothign 
-    -> minimo 
-    -> active
-    -> instanciate
-        **( depois mudar ativo / instanciate )
+        -> nothing 
+        -> minimo 
+        -> active
+        -> instanciate
+            **( depois mudar ativo / instanciate )
+
+
+    tem 3 acoes de aumentar os recursos ( se menor ) :
+        -> Load() -> vai para o minimo
+        -> Activate() -> vai para o active 
+        -> instanciate - > garante recurso final
+        
+    tem 3 acoes de diminuir os recursos ( se maior ) :
+        -> Unload() -> reduz para nothing 
+        -> Deactivate() -> reduz para o minimo
+        -> Deinstanciate() -> reduz para active 
 
     é possivel mudar o minimo de acordo com a necessidade
+        -> Change_pre_alloc( new_level )
+    
+    delete() -> perde a referencia
 
 
+
+    image_ref = CONTROLLER__resources.Get_instance().resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
 
 
 */
@@ -25,7 +41,6 @@ public class CONTROLLER__resources {
 
         public static CONTROLLER__resources instance;
         public static CONTROLLER__resources Get_instance(){ return instance; }
-
 
 
         // --- IMAGES
@@ -43,8 +58,8 @@ public class CONTROLLER__resources {
 
                 switch( count ){
 
-                    case 0: resources_images.Update(); break;
-                    //case 1: resources_structures.Update(); break;
+                    //case 0: resources_images.Update(); break;
+                    case 1: resources_structures.Update(); break;
                     //case 2: resources_images_sequences.Update(); break;
 
                 }

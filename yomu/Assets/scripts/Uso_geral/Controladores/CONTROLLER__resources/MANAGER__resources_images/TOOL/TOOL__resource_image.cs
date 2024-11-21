@@ -225,7 +225,7 @@ public static class TOOL__resource_image {
         public static void Decrease_count( RESOURCE__image _image, Resource_image_content _content ){ Change( _image, _content, -1 ); }
 
 
-        public static void Change( RESOURCE__image _image, Resource_image_content _content, int _value ){
+        private static void Change( RESOURCE__image _image, Resource_image_content _content, int _value ){
 
                 
                 switch( _content ){

@@ -39,7 +39,7 @@ unsafe public class Controlador : MonoBehaviour {
         public CONTROLLER__audio controlador_audio;
 
 
-        public CONTROLLER__resources c =  CONTROLLER__resources.Get_instance();
+        public CONTROLLER__resources c;
         public RESOURCE__image_ref image_ref;
         public RESOURCE__structure_copy copy;
         public RESOURCE__structure_copy copy_2;
@@ -60,13 +60,12 @@ unsafe public class Controlador : MonoBehaviour {
                     
                 }
 
-                image = GameObject.Find( "Tela/Container_teste/Image" ).GetComponent<Image>();
-
+                //image = GameObject.Find( "Tela/Container_teste/Image" ).GetComponent<Image>();
 
                 c =  CONTROLLER__resources.Get_instance();
 
-                c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.nothing );
-                image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
+
+                //image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
                 
 
                 // Dispositivo d = Dispositivo__teste.Construir(); // pega o prefab 
@@ -88,8 +87,8 @@ unsafe public class Controlador : MonoBehaviour {
                 Structure_locators locators = new Structure_locators();
                 locators.main_struct_name = "Teste";
                 
-                //copy = c.resources_structures.Get_structure_copy( Resource_context.Characters, "Lily", locators, Resource_structure_content.nothing );
-                //copy.Load();
+                copy = c.resources_structures.Get_structure_copy( Resource_context.Characters, "Lily", locators, Resource_structure_content.structure_data );
+                copy.Load();
                 
 
                 // Figure lily = Teste_figure.Construct();
@@ -119,8 +118,9 @@ unsafe public class Controlador : MonoBehaviour {
 
         public void Update() {
                 
-                
 
+        
+                TOOL__resource_structure_testing.Test( copy, GameObject.Find( "Tela/Container_teste" ) );
 
                 Console.Update();
                 

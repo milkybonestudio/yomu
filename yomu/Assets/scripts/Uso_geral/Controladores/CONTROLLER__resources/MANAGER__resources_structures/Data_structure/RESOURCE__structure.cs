@@ -57,29 +57,28 @@ public class RESOURCE__structure {
 
         // --- COPIES
 
+
             public int number_copies_need_to_get_instanciated;
-
-            // { 
-
-            //         get{  return n; }
-            //         set { 
-
-            //             Console.Log( "novo valor: " + value ); 
-            //             if( value < 0 ){ throw new System.Exception("v<0") ;}
-            //             n = value; 
-            //         } 
-                
-            // }
 
             private int n = 0;
 
-            public RESOURCE__structure_copy[] copies = new RESOURCE__structure_copy[ 10 ];
+            // public RESOURCE__structure_copy[] copies = new RESOURCE__structure_copy[ 10 ];
+            public Structure_copy_reference[] copies = new Structure_copy_reference[ 10 ];
+            
             public int copies_pointer;
             //public bool need_reajust;
             public int copies_deleted; 
                         
             public int count_places_being_used_nothing; // precisa de nada
             public int count_places_being_used_structure_data; // precisa do minimo
-            public int count_places_being_used_instance; // precisa de tudo
+            public int count_places_being_used_game_object; // precisa de tudo
+
+}
+
+
+public struct Structure_copy_reference {
+
+    public RESOURCE__structure_copy copy;
+    public bool need_to_get_instanciate;
 
 }

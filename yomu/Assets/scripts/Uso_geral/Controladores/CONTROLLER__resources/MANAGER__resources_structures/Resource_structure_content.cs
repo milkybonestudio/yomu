@@ -7,7 +7,7 @@ public enum Resource_structure_content {
         nothing, // nada
         structure_data,
 
-        instance, // ** so pode estar na copia 
+        game_object, // ** so pode estar na copia 
 
 
 }
