@@ -202,7 +202,7 @@ public static class TOOL__resource_image {
         }
 
 
-        public static void Change_actual_content_count( RESOURCE__image_ref _image_ref, Resource_image_content _new_content ){
+        public static void Change_actual_need_content_count( RESOURCE__image_ref _image_ref, Resource_image_content _new_content ){
 
 
                 RESOURCE__image image = _image_ref.image;

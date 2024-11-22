@@ -34,18 +34,23 @@ public class MODULE__context_structures {
 
         public MANAGER__resources_structures manager;
         
+        
         public Dictionary<string, RESOURCE__structure> actives_structures_dictionary;
+        // public Dictionary<string, RESOURCE__structure> actives_structures_dictionary;
         
 
-        public RESOURCE__structure_copy Get_structure_copy(  string _main_folder, Structure_locators _locators, Resource_structure_content _level_pre_allocation  ){
 
-                CONTROLLER__errors.Verify( ( _locators == null ), $"Sub_struct came null" );
-                CONTROLLER__errors.Verify( ( _locators.main_struct_name == null ), $"Sub_struct doesnt has a name" );
+
+
+        public RESOURCE__structure_copy Get_structure_copy(  string _main_folder, string _path_local,  Resource_structure_content _level_pre_allocation  ){
 
                 // --- GET RESOURCE
                 
-                if( !!!( Get_dictionary( _main_folder ).TryGetValue( Get_path( _main_folder, _locators.main_struct_name ),  out RESOURCE__structure structure ) ) )
-                    { structure = Create_new_structure( _main_folder, _locators, _level_pre_allocation ); }
+                RESOURCE__structure structure = null;
+                string path_structure = manager.container_resources_structures.Get_structure_key( _main_folder, _path_local );
+
+                if( !!!( Get_dictionary( _main_folder ).TryGetValue( path_structure,  out structure ) ) )
+                    { structure = Create_new_structure( _main_folder, _path_local, _level_pre_allocation ); }
 
                 
                 return Get_copy( structure, _level_pre_allocation ); // --- CREATE COPY
@@ -53,22 +58,52 @@ public class MODULE__context_structures {
         }
 
 
-        private RESOURCE__structure Create_new_structure( string _main_folder, Structure_locators _locators, Resource_structure_content _level_pre_allocation ){
+        private RESOURCE__structure Create_new_structure( string _main_folder, string _path_local, Resource_structure_content _level_pre_allocation ){
+
+                
+                if( Application.isEditor )
+                    { return Create_new_structure_EDITOR( _main_folder, _path_local, _level_pre_allocation ); }
+                    else
+                    { return Create_new_structure_BUILD( _main_folder, _path_local, _level_pre_allocation ); }
 
 
-                RESOURCE__structure new_structure = new RESOURCE__structure( this, context, _main_folder, _locators );
-                Get_dictionary( _main_folder ).Add( Get_path( _main_folder, _locators.main_struct_name ), new_structure );
+                // --- EDITOR
+                RESOURCE__structure Create_new_structure_EDITOR( string _main_folder, string _path_local, Resource_structure_content _level_pre_allocation ){
 
-                if( _locators.sub_structs == null )
-                    { return new_structure; }
 
-                // --- HAVE SUB STRUCTURES
+                        // ** GET LOCATOR
+                        //mark
+                        // ** tem que fazer o parser depois
+                        Structure_locators locators = new Structure_locators();
+                        locators.current_structure_local_path = _path_local;
+                        string path_file_data = System.IO.Path.Combine( Application.dataPath, "Resources", context.ToString(), _main_folder, ( _path_local + "_DATA.txt") );
 
-                    new_structure.sub_structures = new RESOURCE__structure_copy[ _locators.sub_structs.Length ];
-                    for( int index = 0 ; index < _locators.sub_structs.Length ; index++ ) 
-                        { new_structure.sub_structures[ index ] = Get_structure_copy(  _main_folder, _locators.sub_structs[ index ], _level_pre_allocation  ); }
+                        
+                        RESOURCE__structure new_structure = manager.container_resources_structures.Get_resource_structure( this, context, _main_folder, locators  );
+                        
+                        Get_dictionary( _main_folder ).Add( new_structure.structure_key, new_structure );
 
-                return new_structure;
+
+                        if( locators.sub_structs == null )
+                            { return new_structure; }
+
+                        // --- HAVE SUB STRUCTURES
+
+                            new_structure.sub_structures = new RESOURCE__structure_copy[ locators.sub_structs.Length ];
+                            for( int index = 0 ; index < locators.sub_structs.Length ; index++ ) 
+                                { new_structure.sub_structures[ index ] = Get_structure_copy(  _main_folder, locators.sub_structs[ index ].current_structure_local_path, _level_pre_allocation ); }
+
+                        return new_structure;
+
+                }
+
+                // --- BUILD
+                RESOURCE__structure Create_new_structure_BUILD( string _main_folder, string _path_local, Resource_structure_content _level_pre_allocation ){
+
+                    CONTROLLER__errors.Throw( "ainda tme que fazer" );
+                    return null;
+
+                }
 
         }
 
@@ -76,19 +111,17 @@ public class MODULE__context_structures {
         private RESOURCE__structure_copy Get_copy( RESOURCE__structure _structure, Resource_structure_content _copy_level_pre_allocation  ){
 
                 
-                // --- CREATE COPY 
-                RESOURCE__structure_copy copy = new RESOURCE__structure_copy( _structure, _copy_level_pre_allocation, _structure.copies_pointer );
+                // --- GET COPY
+                RESOURCE__structure_copy copy = manager.container_resources_structures_copies.Get_resource_structure_copy( _structure, _copy_level_pre_allocation );
 
-                TOOL__resources_structures.Increase_count( _structure, Resource_structure_content.nothing );
 
                 if( _structure.copies.Length == _structure.copies_pointer )
                     { Array.Resize( ref _structure.copies, ( _structure.copies.Length + 10 ) ); }
 
-                //Console.Log( $"a: { _structure.copies_pointer }" );
-
+                copy.RESOURCE_index = _structure.copies_pointer;
                 _structure.copies[ _structure.copies_pointer++ ].copy = copy;
 
-                // Console.Log( $"b: { _structure.copies_pointer }" );
+                TOOL__resources_structures.Increase_count( _structure, Resource_structure_content.nothing );
 
                 return copy;
 
@@ -99,289 +132,6 @@ public class MODULE__context_structures {
 
 
 
-
-
-
-        public void Change_pre_alloc( RESOURCE__structure_copy _copy, Resource_structure_content _new_pre_alloc ){
-
-                Console.Log( "Veio Change_pre_alloc()" );
-
-                // --- CHANGE
-                Resource_structure_content old_pre_alloc = _copy.level_pre_allocation;
-                _copy.level_pre_allocation = _new_pre_alloc;
-
-                Console.Log( "novo level: " + _copy.level_pre_allocation );
-
-
-                if( _copy.state != Resource_state.minimun )
-                    { return; } // ** nao vai importar
-
-
-
-                if( old_pre_alloc == _new_pre_alloc )
-                    { Console.Log( "Mesmo alloc" ); return; } // ** eh o mesmo
-
-                // ** IS IN MINIMUN AND IS DIFERENT
-
-                _copy.actual_need_content = _new_pre_alloc;
-
-                RESOURCE__structure structure = _copy.structure;
-        
-                // ** so muda se estiver usando o minimo
-                TOOL__resources_structures.Decrease_count( structure, old_pre_alloc );
-                TOOL__resources_structures.Increase_count( structure, _new_pre_alloc );
-                
-                
-                if( ( structure.stage_getting_resource != Resources_getting_structure_stage.finished ) && ( structure.stage_getting_resource != Resources_getting_structure_stage.waiting_to_start ) )  
-                    { CONTROLLER__errors.Throw( "No" ); } // ** ARE IN TRANSITION
-
-
-                // --- SIMPLE, NOT ON A RESOURCE TRANSITION
-
-                if( old_pre_alloc == Resource_structure_content.game_object )
-                    {
-                        // ** REMOVE INSTANCE
-                        if( _copy.structure_game_object != null )
-                            { GameObject.Destroy( _copy.structure_game_object ); _copy.structure_game_object = null; }
-                            else 
-                            { structure.number_copies_need_to_get_instanciated--; } // ** tinha pedido apra instanciar mas nao foi instanciado. Agora nao precisa mais
-                    }
-
-                if( _new_pre_alloc == Resource_structure_content.game_object )
-                    { structure.number_copies_need_to_get_instanciated++; }
-
-
-                //?? 
-                if( _new_pre_alloc > old_pre_alloc )
-                    {            
-                        // NEED TO GET NEW CONTENT
-                        structure.stage_getting_resource = Resources_getting_structure_stage.waiting_to_start;
-                        structure.content_going_to = _new_pre_alloc;
-                    }
-
-                // VAI ATUALIZAR O RECURSO ORIGINAL
-                TOOL__resources_structures.Update_resource_level_structure( structure );
-
-        }
-
-
-        // --- DOWN
-
-        public void Delete( RESOURCE__structure_copy _copy ){ 
-
-                Console.Log( "Veio Delete()" );
-
-                if( _copy.state == Resource_state.instanciated )
-                    { Deinstanciate( _copy ); }
-
-                if( _copy.state == Resource_state.active )
-                    { Deactivate( _copy ); }
-
-                if( _copy.state == Resource_state.minimun )
-                    { Unload( _copy ); }
-
-
-                RESOURCE__structure structure = _copy.structure;
-                structure.copies_deleted++;
-                structure.copies[ _copy.RESOURCE_index ].copy = null;
-                _copy.structure = null;
-                _copy.deleted = true;
-
-                // ** copy lost everything
-
-                return; 
-        } 
-
-
-
-        // ** dados vao ser perdidos, mas a referencia da imagem volta 
-        public void Unload( RESOURCE__structure_copy _copy ){
-
-
-                Console.Log( "Veio Unload()" );
-                
-                if( _copy.state == Resource_state.nothing )
-                    { Console.Log( "state menor" ); return; } // ** nao tem nada para remover
-
-                Deactivate( _copy );
-                _copy.state = Resource_state.nothing;
-                
-                
-                if( _copy.actual_need_content == Resource_structure_content.nothing )
-                    {  return; } // ** nao tinha nada
-
-
-                Destroy_game_object( ref _copy.structure_game_object );
-
-
-                TOOL__resources_structures.Change_actual_content_count(  _copy , Resource_structure_content.nothing );
-
-
-
-                // VAI ATUALIZAR O RECURSO ORIGINAL
-                TOOL__resources_structures.Update_resource_level_structure( _copy.structure );
-                TOOL__resources_structures.Update_resource_level_structure_COPY( _copy );
-
-                return;
-
-
-        }
-
-
-        public void Deactivate( RESOURCE__structure_copy _copy ){
-
-                // ** vai para o minimo
-
-                Console.Log( "Veio Deactivate()" );
-
-                if( ( _copy.state < Resource_state.active ) )
-                    {  Console.Log( "state menor" ); return; } // ** nao tem recursos para remover
-
-                Deinstanciate( _copy );
-                _copy.state = Resource_state.minimun;
-
-                
-                CONTROLLER__errors.Verify( ( _copy.actual_need_content != Resource_structure_content.game_object ), $"a copy is marked as { _copy.state } but the resources is not teh isntance" );
-
-                if( _copy.level_pre_allocation < Resource_structure_content.game_object )
-                    { Destroy_game_object( ref _copy.structure_game_object ); } // ** se o minimo for instncia nao vai chegar aqui
-
-
-                TOOL__resources_structures.Change_actual_content_count(  _copy ,_copy.level_pre_allocation );
-                
-                // VAI ATUALIZAR O RECURSO ORIGINAL
-                TOOL__resources_structures.Update_resource_level_structure( _copy.structure );
-                TOOL__resources_structures.Update_resource_level_structure_COPY( _copy );
-
-                return;
-
-
-        }
-
-        private void Destroy_game_object( ref GameObject _game_object_ref ){
-
-                if( _game_object_ref != null )
-                    { GameObject.Destroy( _game_object_ref ); _game_object_ref = null; }
-
-        }
-
-
-
-        public void Deinstanciate( RESOURCE__structure_copy _copy ){
-
-                Console.Log( "Veio Deinstanciate()" );
-
-                if( _copy.state < Resource_state.instanciated )
-                    {  Console.Log( "state menor" ); return; }
-
-                _copy.state = Resource_state.active;
-                manager.Put_in_waiting_container( _copy );
-
-                return;
-
-        }
-
-        
-
-
-
-        // --- UP
-
-        // ** sinaliza que a imagem pode carregar o pre alloc
-        public void Load( RESOURCE__structure_copy _copy ){
-
-
-                Console.Log( "Veio Load()" );
-
-                if( _copy.state >= Resource_state.minimun )
-                    { return; }
-                _copy.state = Resource_state.minimun;
-
-                CONTROLLER__errors.Verify( ( _copy.actual_need_content != Resource_structure_content.nothing ), $"Tentou dar Load na copia { _copy.structure.locators.main_struct_name } mas o state estava como { _copy.state } mas o actua_need_content como nothing" );
-                
-                if( _copy.level_pre_allocation == Resource_structure_content.nothing )
-                    { return; } // ** dont need anything
-
-                TOOL__resources_structures.Change_actual_content_count(  _copy ,_copy.level_pre_allocation );
-                
-                TOOL__resources_structures.Update_resource_level_structure( _copy.structure );
-                TOOL__resources_structures.Update_resource_level_structure_COPY( _copy );
-
-                return;
-
-        }
-
-        public void Activate( RESOURCE__structure_copy _copy ){
-
-                Console.Log( "Veio Activate()" );
-
-                if( _copy.state >= Resource_state.active )
-                    { return; } // ** already active
-                _copy.state = Resource_state.active;
-                
-                if( _copy.actual_need_content == Resource_structure_content.game_object )
-                    { return; } // ** o minimo estava como o maximo
-
-
-                TOOL__resources_structures.Change_actual_content_count(  _copy ,Resource_structure_content.game_object );
-
-                _copy.Flag_need_to_instanciate( true );
-
-                TOOL__resources_structures.Update_resource_level_structure( _copy.structure );
-                TOOL__resources_structures.Update_resource_level_structure_COPY( _copy );
-
-                return;
-
-
-        }
-
-
-        public void Instanciate( RESOURCE__structure_copy _copy, GameObject _container ){
-
-                Console.Log( "Veio Instanciate()" );
-
-                if( _copy.state == Resource_state.instanciated )
-                    { return; } // ** ja instanciado
-
-                _copy.state = Resource_state.instanciated;
-                TOOL__resources_structures.Change_actual_content_count(  _copy ,Resource_structure_content.game_object );
-                
-
-                _copy.Flag_need_to_instanciate( false );
-
-                
-                RESOURCE__structure structure = _copy.structure;
-
-
-                // ** GURANTY PREFAB
-                if( structure.actual_content < Resource_structure_content.structure_data )
-                    {
-                        
-                        structure.content_going_to = Resource_structure_content.structure_data;
-                        structure.actual_content = Resource_structure_content.structure_data;
-                        structure.stage_getting_resource = Resources_getting_structure_stage.finished;
-
-                        structure.prefab = Resources.Load<GameObject>( structure.resource_path );
-
-                    }
-
-                // ** GURANTY STRUCTURE
-                if( _copy.structure_game_object == null )
-                    {
-                        // --- FORCE INSTANCIATE
-                        _copy.structure_game_object = GameObject.Instantiate( structure.prefab );
-                        _copy.structure_game_object.name = structure.prefab.name;
-
-                    }
-                
-
-                // ** set 
-                GAME_OBJECT.Colocar_parent( _container, _copy.structure_game_object );
-                _copy.structure_game_object.SetActive( true );
-
-                return;
-                
-        }
 
 
         // --- INTERNAL

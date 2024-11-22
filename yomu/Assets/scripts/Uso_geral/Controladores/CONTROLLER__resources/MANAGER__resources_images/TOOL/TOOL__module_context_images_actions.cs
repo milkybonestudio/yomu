@@ -21,13 +21,15 @@ public static class TOOL__module_context_images_actions {
                     { Console.Log( "Mesmo alloc" ); return; } // ** eh o mesmo
 
                 // ** IS IN MINIMUN AND IS DIFERENT
-                TOOL__resource_image.Change_actual_content_count( _ref, _new_pre_alloc );
+                TOOL__resource_image.Change_actual_need_content_count( _ref, _new_pre_alloc );
                 
                 TOOL__module_context_images.Update_resource_level( _ref.image );
                 
                 return;
 
         }
+
+
 
 
         public static Sprite Get_sprite( RESOURCE__image_ref _ref ){
@@ -83,7 +85,7 @@ public static class TOOL__module_context_images_actions {
                 if( _ref.actual_need_content == Resource_image_content.nothing )
                     { return; }
 
-                TOOL__resource_image.Change_actual_content_count( _ref, Resource_image_content.nothing );
+                TOOL__resource_image.Change_actual_need_content_count( _ref, Resource_image_content.nothing );
 
                 TOOL__module_context_images.Update_resource_level( _ref.image );
 
@@ -107,7 +109,7 @@ public static class TOOL__module_context_images_actions {
                 if( _ref.actual_need_content == _ref.level_pre_allocation )
                     { return; }
 
-                TOOL__resource_image.Change_actual_content_count( _ref, _ref.level_pre_allocation );
+                TOOL__resource_image.Change_actual_need_content_count( _ref, _ref.level_pre_allocation );
 
                 TOOL__module_context_images.Update_resource_level( _ref.image );
 
@@ -131,7 +133,7 @@ public static class TOOL__module_context_images_actions {
                     { return; }
 
 
-                TOOL__resource_image.Change_actual_content_count( _ref, _ref.level_pre_allocation );
+                TOOL__resource_image.Change_actual_need_content_count( _ref, _ref.level_pre_allocation );
 
                 TOOL__module_context_images.Update_resource_level( _ref.image );
 
@@ -161,7 +163,7 @@ public static class TOOL__module_context_images_actions {
                     { return; }
 
             
-                TOOL__resource_image.Change_actual_content_count( _ref, _ref.level_pre_allocation );
+                TOOL__resource_image.Change_actual_need_content_count( _ref, _ref.level_pre_allocation );
 
                 TOOL__module_context_images.Update_resource_level( _ref.image );
 
@@ -184,7 +186,7 @@ public static class TOOL__module_context_images_actions {
                     { return; }
 
 
-                TOOL__resource_image.Change_actual_content_count( _ref, Resource_image_content.sprite );
+                TOOL__resource_image.Change_actual_need_content_count( _ref, Resource_image_content.sprite );
 
                 TOOL__module_context_images.Update_resource_level( _ref.image );
                 
@@ -322,7 +324,7 @@ public static class TOOL__module_context_images_actions {
 
                 CONTROLLER__errors.Verify( ( image.single_image.sprite == null ), $"Tried to get the sprite of the image { image.name }, but do not construct after the fall. actual content: { image.actual_content }" );
 
-                TOOL__resource_image.Change_actual_content_count( _ref, Resource_image_content.sprite );
+                TOOL__resource_image.Change_actual_need_content_count( _ref, Resource_image_content.sprite );
 
 
                 Console.Log( " ACTUAL CONTENT:  " + image.actual_content );

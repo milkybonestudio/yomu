@@ -1,10 +1,10 @@
 
 
-public class Structure_locators {
+public struct Structure_locators {
 
+        public string current_structure_local_path;
         // mudar o nome
-        public string main_struct_name;
         public Structure_locators[] sub_structs;
-    
+        
 }
 

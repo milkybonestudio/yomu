@@ -2,8 +2,26 @@ using UnityEngine;
 
 public static class TOOL__resource_structure_testing {
 
+
+
+        public static void Start(){
+
+            
+                string path = "Tela/Container_teste";
+
+                canvas = GameObject.Find( path );
+                CONTROLLER__errors.Verify( ( canvas == null ), $"Dond found the canvas for the RESOURCE__image test. Path:<Color=lightBlue> { path }</Color>" );
+
+                structure_copy_test = CONTROLLER__resources.Get_instance().resources_structures.Get_structure_copy( Resource_context.Characters, "teste", "Teste", Resource_structure_content.game_object );
+            
+
+        }
+
+        public static RESOURCE__structure_copy structure_copy_test;
+        private static GameObject canvas;
+
     
-        public static void Test( RESOURCE__structure_copy _structure_copy, GameObject _game_object ){
+        public static void Test(){
 
 
 
@@ -22,49 +40,49 @@ public static class TOOL__resource_structure_testing {
                 // --- UP
 
                 if( Input.GetKeyDown( KeyCode.Q ) )
-                    { i++; _structure_copy.Load(); }
+                    { i++; structure_copy_test.Load(); }
 
                if( Input.GetKeyDown( KeyCode.W ) )
-                    { i++; _structure_copy.Activate(); }
+                    { i++; structure_copy_test.Activate(); }
 
                if( Input.GetKeyDown( KeyCode.E ) )
-                    { i++; _structure_copy.Instanciate( _game_object ); }
+                    { i++; structure_copy_test.Instanciate( canvas ); }
 
 
                 // --- DOWN
 
                 if( Input.GetKeyDown( KeyCode.A ) )
-                    { i++; _structure_copy.Unload(); }
+                    { i++; structure_copy_test.Unload(); }
 
                if( Input.GetKeyDown( KeyCode.S ) )
-                    { i++; _structure_copy.Deactivate(); }
+                    { i++; structure_copy_test.Deactivate(); }
 
                if( Input.GetKeyDown( KeyCode.D ) )
-                    { i++; _structure_copy.Deinstanciate(); }
+                    { i++; structure_copy_test.Deinstanciate(); }
 
                 
                 if( Input.GetKeyDown( KeyCode.F ) )
-                    { i++; _structure_copy.Delete( ref _structure_copy );  }
+                    { i++; structure_copy_test.Delete( ref structure_copy_test );  }
 
                 
 
                 // --- CHANGE LEVEL PRE ALLOC
                 if( Input.GetKeyDown( KeyCode.Alpha1 ) )
-                    { i++; _structure_copy.Change_pre_alloc( Resource_structure_content.nothing );  }
+                    { i++; structure_copy_test.Change_level_pre_allocation( Resource_structure_content.nothing );  }
 
                 if( Input.GetKeyDown( KeyCode.Alpha2 ) )
-                    { i++; _structure_copy.Change_pre_alloc( Resource_structure_content.structure_data );  }
+                    { i++; structure_copy_test.Change_level_pre_allocation( Resource_structure_content.structure_data );  }
 
                 if( Input.GetKeyDown( KeyCode.Alpha3 ) )
-                    { i++; _structure_copy.Change_pre_alloc( Resource_structure_content.game_object );  }
+                    { i++; structure_copy_test.Change_level_pre_allocation( Resource_structure_content.game_object );  }
 
 
 
 
                 if( i > 0 )
-                    { Print_structure_data( _structure_copy ); }
+                    { Print_structure_data( structure_copy_test ); }
 
-
+                Console.Update();
 
         }
 

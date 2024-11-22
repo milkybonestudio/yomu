@@ -56,11 +56,12 @@ public class MODULE__context_images {
 
                 // ** quando separar por _main_folder tirar
                 
-
                 RESOURCE__image image = null;
                 
+                string key = manager.container_images.Get_image_key( _main_folder, _path_local );
+
                 // --- VERIFY IF IMAGE ALREADY EXISTS
-                if( !!!( Get_dictionary( _main_folder ).TryGetValue( _path_local, out image ) ) )
+                if( !!!( Get_dictionary( _main_folder ).TryGetValue( key, out image ) ) )
                     {  image = Create_new_image( _main_folder, _path_local  );} 
 
                 return Create_image_ref( image, _level_pre_allocation );
@@ -85,8 +86,6 @@ public class MODULE__context_images {
                 
                         Resource_image_localizer locator = new Resource_image_localizer();
 
-
-                        
                         // ** no editor posso pegar a imagem e verificar o tamanho dela, nao tem problema se demorar um pouco para iniciar, depois de colocar no cache ficar verificando vai ser muito rapido. 
                         // ** provavelmente vai ser mais rapido usar streamreader para pegar somente os primeiros bytes, o os provavelmente vai copiar o png inteiro de um lugar para o outro na ram se nao fizer
                         string png_path = System.IO.Path.Combine( Application.dataPath, "Resources", context.ToString(), manager.container_images.Get_image_key( _main_folder, _path_local ) + ".png");
@@ -102,7 +101,7 @@ public class MODULE__context_images {
 
                         RESOURCE__image image = manager.container_images.Get_resource_image( this, context, _main_folder, _path_local, locator );
 
-                        Get_dictionary( _main_folder ).Add( _path_local, image );
+                        Get_dictionary( _main_folder ).Add( image.image_key, image );
 
                         return image;
 
@@ -181,6 +180,8 @@ public class MODULE__context_images {
 
 
         #if UNITY_EDITOR
+
+            // ??????
 
             private string Get_path_file( string _main_folder, string _path ){
 

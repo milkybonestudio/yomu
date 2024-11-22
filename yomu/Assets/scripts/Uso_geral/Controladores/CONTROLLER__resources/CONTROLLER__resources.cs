@@ -57,13 +57,13 @@ public class CONTROLLER__resources {
         public void Update(){
 
 
-                count = ( count + 1 ) % 5;
+                count = ( count + 1 ) % 3;
 
                 switch( count ){
 
-                    //case 0: resources_images.Update(); break;
-                    // case 1: resources_structures.Update(); break;
-                    case 4: resources_audios.Update(); break;
+                    case 0: resources_images.Update(); break;
+                    case 1: resources_structures.Update(); break;
+                    case 2: resources_audios.Update(); break;
                     
                     //case 2: resources_images_sequences.Update(); break;
 

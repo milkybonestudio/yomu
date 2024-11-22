@@ -39,14 +39,14 @@ unsafe public class Controlador : MonoBehaviour {
         public CONTROLLER__audio controlador_audio;
 
 
-        public CONTROLLER__resources c;
+
         public RESOURCE__image_ref image_ref;
+
         public RESOURCE__structure_copy copy;
         public RESOURCE__structure_copy copy_2;
 
-
         public RESOURCE__audio_ref audio_ref;
-        
+
  
         public void Start(){
 
@@ -55,19 +55,7 @@ unsafe public class Controlador : MonoBehaviour {
                 Dados_fundamentais_sistema.jogo_ativo = true;
                 Construtor_controlador.Construir( this );
 
-                void Create_character_images( Personagem_nome _personagem ){
-
-                    // string path = Paths_system.Get_instance().Get_character_images_path__DEVELOPMENT( _personagem );
-                    // Images_container_result container =  Images_container_creator.Construct( path );
-                    // System.IO.File.WriteAllBytes( Paths_system.Get_instance().Get_character_images_container_path( _personagem ) );
-                    
-                }
-
                 //image = GameObject.Find( "Tela/Container_teste/Image" ).GetComponent<Image>();
-
-                c =  CONTROLLER__resources.Get_instance();
-
-
                 //image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
                 
 
@@ -79,6 +67,7 @@ unsafe public class Controlador : MonoBehaviour {
 
 
 
+
                 //mark
                 // ** tem que fazer um jeito para começar no chao
                 // ** como nao vai ter uma texture em si talvez tenha que fazer na mão, ou algum jeito para pegar todas as images ativas e fazer algum calculo com elas. 
@@ -87,15 +76,11 @@ unsafe public class Controlador : MonoBehaviour {
                 // ** pegando o minimo e o maximo e depois assumindo ela como um grande bloco
 
 
-                // Structure_locators locators = new Structure_locators();
-                // locators.main_struct_name = "Teste";
-                
-                // copy = c.resources_structures.Get_structure_copy( Resource_context.Characters, "Lily", locators, Resource_structure_content.structure_data );
-                // copy.Load();
+                //audio_ref = CONTROLLER__resources.Get_instance().resources_audios.Get_audio_reference( Resource_context.Characters, "Lily", "teste", Resource_audio_content.nothing );
 
+                TOOL__resource_image_testing.Start();
+                TOOL__resource_structure_testing.Start();
 
-                audio_ref = c.resources_audios.Get_audio_reference( Resource_context.Characters, "Lily", "teste", Resource_audio_content.nothing );
-                
 
                 // Figure lily = Teste_figure.Construct();
                 // lily.Instanciate( GameObject.Find( "Tela/Container_teste" ), Figure_use_context.visual_novel );
@@ -119,17 +104,11 @@ unsafe public class Controlador : MonoBehaviour {
 
         }
 
-        Image image;
-
-
         public void Update() {
                 
 
-        
-                TOOL__resource_audio_testing.Test( ref audio_ref , GameObject.Find( "Tela/Container_teste" ).GetComponent<AudioSource>() );
-                Console.Update();
-                
-
+                TOOL__resource_structure_testing.Test();
+            
                 return; 
 
                 try{ Update_interno(); } catch( Exception exp ){ Debug.LogError( "Tem que fazer um modo para mandar mensagem " ); }

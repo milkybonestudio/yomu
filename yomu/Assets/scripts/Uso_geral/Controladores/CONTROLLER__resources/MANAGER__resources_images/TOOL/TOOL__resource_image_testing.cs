@@ -6,7 +6,41 @@ public static class TOOL__resource_image_testing {
 
 
 
-        public static void Test( ref RESOURCE__image_ref image_ref, Image image ){
+        public static void Start(){
+
+            string path = "Tela/Container_teste";
+
+            canvas = GameObject.Find( path );
+            CONTROLLER__errors.Verify( ( canvas == null ), $"Dond found the canvas for the RESOURCE__image test. Path:<Color=lightBlue> { path }</Color>" );
+
+            image = IMAGE.Criar_imagem_filho( "imagem teste", out image_game_object, canvas );
+            IMAGE.Resize( image_game_object, 500f, 500f );
+
+            CONTROLLER__errors.Verify( ( image == null ), $"Dond found the iamge container for the RESOURCE__image test. Path: <Color=lightBlue>{ path }<Color>" );
+
+
+            CONTROLLER__resources.Get_instance().resources_images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
+            CONTROLLER__resources.Get_instance().resources_images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
+            CONTROLLER__resources.Get_instance().resources_images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
+            CONTROLLER__resources.Get_instance().resources_images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
+            CONTROLLER__resources.Get_instance().resources_images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
+            CONTROLLER__resources.Get_instance().resources_images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
+            CONTROLLER__resources.Get_instance().resources_images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
+            CONTROLLER__resources.Get_instance().resources_images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
+            CONTROLLER__resources.Get_instance().resources_images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
+            
+            image_ref = CONTROLLER__resources.Get_instance().resources_images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
+
+        }
+
+        private static GameObject canvas;
+        private static GameObject image_game_object;
+        private static RESOURCE__image_ref image_ref;
+        private static Image image;
+
+
+
+        public static void Test(){
 
 
 
@@ -73,10 +107,10 @@ public static class TOOL__resource_image_testing {
 
 
 
-                
-
                 if( i > 0 )
                     { Print_image_data( image_ref ); }
+
+                Console.Update();
 
 
 

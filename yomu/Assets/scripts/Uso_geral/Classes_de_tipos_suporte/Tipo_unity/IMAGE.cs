@@ -120,6 +120,9 @@ public static class IMAGE {
 
                 imagem.sprite = _sprite;
 
+                if( _sprite == null )
+                    { return imagem; }
+
                 RectTransform rect = _game_object.GetComponent< RectTransform >();
 
                 rect.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, _sprite.rect.width);
@@ -150,6 +153,8 @@ public static class IMAGE {
                 
                 if( _path != null && _sprite != null )
                     { throw new Exception( "Em criar imagem veio tanto o path quanto a sprite" ); }
+                
+
 
                 
                 _game_object.transform.SetParent( _pai.transform , false);
@@ -177,6 +182,9 @@ public static class IMAGE {
 
 
         }
+
+
+
 
 
     public static void Resize(GameObject _game_object, float _width = 1920f, float _height = 1080f){

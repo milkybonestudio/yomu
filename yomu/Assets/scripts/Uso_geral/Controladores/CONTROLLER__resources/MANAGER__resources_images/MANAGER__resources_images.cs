@@ -55,11 +55,11 @@ public class MANAGER__resources_images {
 
 
         // --- PUBLIC METHODS
-
-        // ** single
-                                                            //  personagens          //     lily    //      chave
+            // context: personagens
+            // main_folder: lily
+            // local_path: "clothes/arm_2"
         public RESOURCE__image_ref Get_image_reference( Resource_context _context, string _main_folder,  string _path, Resource_image_content _level_pre_allocation ){ return context_images_modules[ ( int ) _context ].Get_image_ref( _main_folder, _path, _level_pre_allocation ) ; }
-        public RESOURCE__image_ref Get_image_reference_multiples( Resource_context _context, string _main_folder,  string _path, Resource_image_content _level_pre_allocation ){ return context_images_modules[ ( int ) _context ].Get_image_ref( _main_folder, _path, _level_pre_allocation ) ; }
+        
 
 
 
