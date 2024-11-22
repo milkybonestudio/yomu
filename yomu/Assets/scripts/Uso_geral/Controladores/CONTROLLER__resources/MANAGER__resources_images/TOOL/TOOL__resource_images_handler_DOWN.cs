@@ -31,6 +31,9 @@ public static class TOOL__resource_images_handler_DOWN {
 
                 Console.Log( "Veio Destroy_compress_low_quality_data()" );
 
+                if( _image.actual_content < Resource_image_content.compress_data )
+                    { Console.LogError( "isso era meio obvio?" ); return 0; }
+                    
                 // --- DESTROY
                 _image.single_image.image_low_quality_compress = null;
                 _image.actual_content = Resource_image_content.nothing;
@@ -43,6 +46,9 @@ public static class TOOL__resource_images_handler_DOWN {
 
                 Console.Log( "Veio Destroy_compress_data()" );
 
+                if( _image.actual_content < Resource_image_content.compress_data )
+                    { Console.LogError( "isso era meio obvio?" ); return 0; }
+
                 // --- DESTROY
                 _image.single_image.image_compress = null;
                 _image.actual_content = Resource_image_content.compress_low_quality_data;
@@ -54,6 +60,9 @@ public static class TOOL__resource_images_handler_DOWN {
         private static int Destroy_resource_texture( MANAGER__resources_images _manager, RESOURCE__image _image ){
 
                 Console.Log( "Destroy_resource_texture" );
+
+                if( _image.actual_content < Resource_image_content.texture )
+                    { Console.LogError( "isso era meio obvio?" ); return 0; }
 
                 // --- DESTROY
                 GameObject.Destroy( _image.single_image.texture_exclusiva );

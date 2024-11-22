@@ -82,17 +82,17 @@ public static class TOOL__resource_structure_testing {
                     {
                         RESOURCE__structure structure = _structure_copy.structure;
                 
-                        Console.Log( $"  structure.content_going_to: { structure.content_going_to }" );
-                        Console.Log( $"  structure.actual_content: { structure.actual_content }" );
+                        Console.Log( $"    structure.content_going_to: { structure.content_going_to }" );
+                        Console.Log( $"    structure.actual_content: { structure.actual_content }" );
 
-                        Console.Log( $"  structure.stage_getting_resource: { structure.stage_getting_resource }" );
+                        Console.Log( $"    structure.stage_getting_resource: { structure.stage_getting_resource }" );
 
                         Console.Log( $"  structure.module_structures: { structure.module_structures }" );
-                        Console.Log( $"  structure.context: { structure.context }" );
-                        Console.Log( $"  structure.main_folder: { structure.main_folder }" );
-                        Console.Log( $"  structure.structure: { structure.resource_path }" );
+                        // Console.Log( $"  structure.context: { structure.context }" );
+                        // Console.Log( $"  structure.main_folder: { structure.main_folder }" );
+                        // Console.Log( $"  structure.structure: { structure.resource_path }" );
                         Console.Log( $"  structure.prefab: { structure.prefab }" );
-                        Console.Log( $"  structure.sub_structures: { structure.sub_structures }" );
+                        //Console.Log( $"  structure.sub_structures: { structure.sub_structures }" );
 
                         Console.Log( $"   structure.count_places_being_used_nothing: { structure.count_places_being_used_nothing }" );
                         Console.Log( $"   structure.count_places_being_used_structure_data: { structure.count_places_being_used_structure_data }" );
@@ -111,9 +111,9 @@ public static class TOOL__resource_structure_testing {
                 Console.Log( "<Color=lightBlue>    COPY</Color>" );
 
                 
-                Console.Log( $"      state: { _structure_copy.state }" );
-                Console.Log( $"      level_pre_allocation: { _structure_copy.level_pre_allocation }" );
-                Console.Log( $"      actual_need_content: { _structure_copy.actual_need_content }" );
+                Console.Log( $"        state: { _structure_copy.state }" );
+                Console.Log( $"        level_pre_allocation: { _structure_copy.level_pre_allocation }" );
+                Console.Log( $"        actual_need_content: { _structure_copy.actual_need_content }" );
 
                 Console.Log( $"      structure_game_object: { _structure_copy.structure_game_object }" );
 

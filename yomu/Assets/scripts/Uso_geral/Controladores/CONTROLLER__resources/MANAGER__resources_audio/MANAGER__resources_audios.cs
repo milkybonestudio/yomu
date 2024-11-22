@@ -6,27 +6,47 @@ using UnityEngine;
 
 public class MANAGER__resources_audios {
 
+        /*
+
+            _audio: nao vale muito a pena pensar nisso agora. 
+
+            por hora todos os audios vao ser usados como stream. stremusa muita cpu e quando tiver mais sfx vai ser bem ruim.
+            o processo pode ser optimizado como é feito com as imagens mas vai ser um saco de fazer. boa sorte eu do futuro. 
+            a outra alternativa é usar descompres on load e usar loadAssync. mas por hora não tem o porque. descomprimir audio gera em torno de 2.5ms/ segundo de audio. 
+            Audios grandes seriam um problema para fazer na main thread sem ser por streaming.
+
+            LoadAsync como tudo nessa merda de unity não faz o minimo que deveria. 
+            fazer Resources.LoadAsync vai continuar pegando o resource somente quando precisar e vai ser na main thread. 
+
+            as opcoes: 
+                -> stream para qualquer audio ( mesmo na build )
+                -> sistema proprio ( vai levar muito tempo )
+
+
+
+        */
+
         
         public MANAGER__resources_audios(){
 
                 contexts = contexts = System_enums.resource_context;// ( Resource_context[] ) System.Enum.GetValues( typeof( Resource_context ) );
 
-                container_images = new Container_RESOURCE__audios();
-                container_image_refs = new Container_RESOURCE__audios_refs();
-                context_images_modules = new MODULE__context_audios[ contexts.Length ];
+                container_audios = new Container_RESOURCE__audios();
+                container_audio_refs = new Container_RESOURCE__audios_refs();
+                context_audios_modules = new MODULE__context_audios[ contexts.Length ];
 
                 for( int context_index = 0 ; context_index < contexts.Length ; context_index++ )
-                    { context_images_modules[ context_index ] = new MODULE__context_audios( _manager: this, _context: contexts[ context_index ], _initial_capacity: 1_000, _buffer_cache: 2_000_000 ); }
+                    { context_audios_modules[ context_index ] = new MODULE__context_audios( _manager: this, _context: contexts[ context_index ], _initial_capacity: 1_000, _buffer_cache: 2_000_000 ); }
 
                 return;
 
         }
 
         
-        public Container_RESOURCE__audios container_images;
-        public Container_RESOURCE__audios_refs container_image_refs;
+        public Container_RESOURCE__audios container_audios;
+        public Container_RESOURCE__audios_refs container_audio_refs;
     
-        public MODULE__context_audios[] context_images_modules;
+        public MODULE__context_audios[] context_audios_modules;
 
 
 
@@ -39,17 +59,12 @@ public class MANAGER__resources_audios {
 
         // --- TASK REQUESTS
 
-        public Task_req task_getting_compress_low_quality_file;
-        public Task_req task_getting_compress_file;
-
-
         // --- PUBLIC METHODS
 
         // ** single
                                                             //  personagens          //     lily    //      chave
-        public RESOURCE__audio_ref Get_audio_reference( Resource_context _context, string _main_folder,  string _path, Resource_audio_content _level_pre_allocation ){ return context_images_modules[ ( int ) _context ].Get_audio_ref( _main_folder, _path, _level_pre_allocation ) ; }
+        public RESOURCE__audio_ref Get_audio_reference( Resource_context _context, string _main_folder,  string _path, Resource_audio_content _level_pre_allocation ){ return context_audios_modules[ ( int ) _context ].Get_audio_ref( _main_folder, _path, _level_pre_allocation ) ; }
     
-
 
 
         // --- UPDATE
@@ -63,7 +78,7 @@ public class MANAGER__resources_audios {
                 context_frame = ( context_frame + 1 ) % contexts.Length;
 
                 int current_weight = 0;
-                foreach(  RESOURCE__audio image in  context_images_modules[ context_frame ].actives_images_dictionary.Values ){
+                foreach(  RESOURCE__audio image in  context_audios_modules[ context_frame ].actives_audios_dictionary.Values ){
 
                         current_weight += Updata_audio( image );
         
@@ -80,6 +95,8 @@ public class MANAGER__resources_audios {
 
                 TOOL__resource_audio.Verify_audio( _image );
 
+
+
                 if( !!!( TOOL__resource_audio.Need_to_update( _image ) ) )
                     { return 0; }
 
@@ -91,16 +108,15 @@ public class MANAGER__resources_audios {
                                                 
                 // --- DOWN RESOURCE
                     
-                    case Resources_getting_audio_stage.waiting_to_destroy_current_resource: return TOOL__resource_audios_handler_DOWN.Handle_waiting_to_destroy_current_resource( this, _image );
-                    
-
-                // ** um mp3 compresso tem +- 1/5 do damanho, mas a qualidade é meio merda
-                // ** andes de pensar em fazer um low_quality precisa ver se comprensa 
-                // ** tempo_recurso = ( tempo para pegar disco ) + ( tempo descompressao ) 
-                // ** se o tempo para descomprimir foi muito talvez não valha a pena
+                    // ** um mp3 compresso tem +- 1/5 do damanho, mas a qualidade é meio merda
+                    // ** andes de pensar em fazer um low_quality precisa ver se comprensa 
+                    // ** tempo_recurso = ( tempo para pegar disco ) + ( tempo descompressao ) 
+                    // ** se o tempo para descomprimir foi muito talvez não valha a pena
 
                 // --- REAJUSTING
                     
+
+                case Resources_getting_audio_stage.finished: return 0;
                                         
                     default: CONTROLLER__errors.Throw( $"Nao foi achado { _image.stage_getting_resource }" ); break;
 

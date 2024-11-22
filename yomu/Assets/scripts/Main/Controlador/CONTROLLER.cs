@@ -43,6 +43,9 @@ unsafe public class Controlador : MonoBehaviour {
         public RESOURCE__image_ref image_ref;
         public RESOURCE__structure_copy copy;
         public RESOURCE__structure_copy copy_2;
+
+
+        public RESOURCE__audio_ref audio_ref;
         
  
         public void Start(){
@@ -84,11 +87,14 @@ unsafe public class Controlador : MonoBehaviour {
                 // ** pegando o minimo e o maximo e depois assumindo ela como um grande bloco
 
 
-                Structure_locators locators = new Structure_locators();
-                locators.main_struct_name = "Teste";
+                // Structure_locators locators = new Structure_locators();
+                // locators.main_struct_name = "Teste";
                 
-                copy = c.resources_structures.Get_structure_copy( Resource_context.Characters, "Lily", locators, Resource_structure_content.structure_data );
-                copy.Load();
+                // copy = c.resources_structures.Get_structure_copy( Resource_context.Characters, "Lily", locators, Resource_structure_content.structure_data );
+                // copy.Load();
+
+
+                audio_ref = c.resources_audios.Get_audio_reference( Resource_context.Characters, "Lily", "teste", Resource_audio_content.nothing );
                 
 
                 // Figure lily = Teste_figure.Construct();
@@ -120,8 +126,7 @@ unsafe public class Controlador : MonoBehaviour {
                 
 
         
-                TOOL__resource_structure_testing.Test( copy, GameObject.Find( "Tela/Container_teste" ) );
-
+                TOOL__resource_audio_testing.Test( ref audio_ref , GameObject.Find( "Tela/Container_teste" ).GetComponent<AudioSource>() );
                 Console.Update();
                 
 

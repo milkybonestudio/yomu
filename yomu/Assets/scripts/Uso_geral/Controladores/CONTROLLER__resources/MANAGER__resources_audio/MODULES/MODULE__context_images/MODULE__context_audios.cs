@@ -20,8 +20,8 @@ public class MODULE__context_audios {
                     file_stream = FILE_STREAM.Criar_stream( _path, buffer_cache );
                 #endif
 
-                actives_images_dictionary = new Dictionary<string, RESOURCE__audio>();
-                actives_images_dictionary.EnsureCapacity( _initial_capacity );
+                actives_audios_dictionary = new Dictionary<string, RESOURCE__audio>();
+                actives_audios_dictionary.EnsureCapacity( _initial_capacity );
 
         }
 
@@ -35,10 +35,10 @@ public class MODULE__context_audios {
 
         public FileStream file_stream;
         
-        public Dictionary<string, RESOURCE__audio> actives_images_dictionary;
+        public Dictionary<string, RESOURCE__audio> actives_audios_dictionary;
     
 
-        // sempre single
+
         public RESOURCE__audio_ref Get_audio_ref(  string _main_folder, string _path_local,  Resource_audio_content _level_pre_allocation  ){
 
 
@@ -68,23 +68,8 @@ public class MODULE__context_audios {
                 // --- EDITOR
                 RESOURCE__audio Create_new_audio_EDITOR( string _main_folder, string _path_local ){
 
-                
-                        Resource_audio_localizer locator = new Resource_audio_localizer();
 
-                        // ** no editor posso pegar a imagem e verificar o tamanho dela, nao tem problema se demorar um pouco para iniciar, depois de colocar no cache ficar verificando vai ser muito rapido. 
-                        // ** provavelmente vai ser mais rapido usar streamreader para pegar somente os primeiros bytes, o os provavelmente vai copiar o png inteiro de um lugar para o outro na ram se nao fizer
-                        string png_path = System.IO.Path.Combine( Application.dataPath, "Resources", context.ToString(), manager.container_images.Get_image_key( _main_folder, _path_local ) + ".png");
-                
-                        byte[] png = System.IO.File.ReadAllBytes( png_path );
-                        Dimensions dimensions = PNG.Get_dimensions( System.IO.File.ReadAllBytes( png_path ) );
-
-                            locator.width = dimensions.width;
-                            locator.height = dimensions.height;
-                            locator.pointer = -1;
-                            locator.length = png.Length;
-
-
-                        RESOURCE__audio image = manager.container_images.Get_resource_audio( this, context, _main_folder, _path_local, locator );
+                        RESOURCE__audio image = manager.container_audios.Get_resource_audio( this, context, _main_folder, _path_local, ( new Resource_audio_localizer() ) );
 
                         Get_dictionary( _main_folder ).Add( _path_local, image );
 
@@ -96,7 +81,7 @@ public class MODULE__context_audios {
                 RESOURCE__audio Create_new_audio_BUILD( string _main_folder, string _path_local ){
 
                     
-                        RESOURCE__audio image = manager.container_images.Get_resource_audio( this, context, _main_folder, _path_local, ( new Resource_audio_localizer() ) );
+                        RESOURCE__audio image = manager.container_audios.Get_resource_audio( this, context, _main_folder, _path_local, ( new Resource_audio_localizer() ) );
 
                         Get_dictionary( _main_folder ).Add( _path_local, image );
 
@@ -112,12 +97,12 @@ public class MODULE__context_audios {
         private RESOURCE__audio_ref Create_audio_ref( RESOURCE__audio _image, Resource_audio_content _level_pre_allocation ){
 
 
-                RESOURCE__audio_ref image_ref = manager.container_image_refs.Get_resource_audio_ref( _image, _level_pre_allocation );
+                RESOURCE__audio_ref image_ref = manager.container_audio_refs.Get_resource_audio_ref( _image, _level_pre_allocation );
 
                 ARRAY.Guaranty_size( ref _image.refs, _image.refs_pointer, 1, 20 );
 
                 // --- GURADA REF
-                image_ref.image_slot_index = _image.refs_pointer;
+                image_ref.audio_slot_index = _image.refs_pointer;
                 _image.refs[ _image.refs_pointer++ ] = image_ref;
                 
                 TOOL__resource_audio.Increase_count( _image, Resource_audio_content.nothing );
@@ -136,7 +121,7 @@ public class MODULE__context_audios {
                 // ** por hora vai ter somentye 1 container então só vai ter 1 dicionario. 
                 // ** depois cada _main_folder vai ter             
 
-                return actives_images_dictionary;
+                return actives_audios_dictionary;
 
         }
 

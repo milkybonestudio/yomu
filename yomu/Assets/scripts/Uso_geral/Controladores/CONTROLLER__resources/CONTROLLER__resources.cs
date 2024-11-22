@@ -46,6 +46,9 @@ public class CONTROLLER__resources {
         // --- IMAGES
         public MANAGER__resources_images resources_images = new MANAGER__resources_images();
         public MANAGER__resources_images_sequences resources_images_sequences = new MANAGER__resources_images_sequences();
+
+        public MANAGER__resources_audios resources_audios = new MANAGER__resources_audios();
+
         public MANAGER__resources_structures resources_structures = new MANAGER__resources_structures();
 
 
@@ -54,12 +57,14 @@ public class CONTROLLER__resources {
         public void Update(){
 
 
-                count = ( count + 1 ) % 3;
+                count = ( count + 1 ) % 5;
 
                 switch( count ){
 
                     //case 0: resources_images.Update(); break;
-                    case 1: resources_structures.Update(); break;
+                    // case 1: resources_structures.Update(); break;
+                    case 4: resources_audios.Update(); break;
+                    
                     //case 2: resources_images_sequences.Update(); break;
 
                 }

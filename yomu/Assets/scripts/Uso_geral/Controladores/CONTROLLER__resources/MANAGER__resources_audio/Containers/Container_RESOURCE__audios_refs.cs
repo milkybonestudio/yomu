@@ -28,7 +28,7 @@ public class Container_RESOURCE__audios_refs {
                         if( references_available[ image_slot ] == null )
                             { continue; }
 
-                        Put_data_image_ref( reference, _image, _level_pre_allocation );
+                        Put_data_audio_ref( reference, _image, _level_pre_allocation );
                         references_available[ image_slot ] = null;
                         return reference;
                         
@@ -51,7 +51,7 @@ public class Container_RESOURCE__audios_refs {
         }
 
 
-        public void Return_image_ref( RESOURCE__audio_ref _image ){
+        public void Return_audio_ref( RESOURCE__audio_ref _image ){
 
 
                 for( int image_slot = 0 ; image_slot < references_available.Length ; image_slot++ ){
@@ -70,19 +70,17 @@ public class Container_RESOURCE__audios_refs {
         }
 
 
-        private void Put_data_image_ref( RESOURCE__audio_ref _ref,  RESOURCE__audio _image, Resource_audio_content _level_pre_allocation ){
+        private void Put_data_audio_ref( RESOURCE__audio_ref _ref,  RESOURCE__audio _audio, Resource_audio_content _level_pre_allocation ){
 
-            Console.Log( "veiuo Put_data_image_ref()" );
+            Console.Log( "veiuo Put_data_audio_ref()" );
 
                 
-
-                CONTROLLER__errors.Verify( ( _image == null  ), "Tried to creat a image ref but the image comes null" ); 
-                CONTROLLER__errors.Verify( ( ( _level_pre_allocation & ( Resource_audio_content.compress_data | Resource_audio_content.sprite | Resource_audio_content.nothing  | Resource_audio_content.compress_low_quality_data ) ) == 0   ), $"Resource not accept: { _level_pre_allocation }" ); 
-                
+                CONTROLLER__errors.Verify( ( _audio == null  ), "Tried to creat a image ref but the image comes null" ); 
+        
             
-                _ref.localizador = "NAO COLOCOU?"; // ** localizador local
-                _ref.image = _image;
-                _ref.module = _image.module_images;
+                _ref.ref_name = "NAO COLOCOU?"; // ** localizador local
+                _ref.audio = _audio;
+                _ref.module = _audio.module_audios;
 
                 _ref.state = Resource_state.nothing;
 
@@ -95,10 +93,10 @@ public class Container_RESOURCE__audios_refs {
 
         private void Reset_data( RESOURCE__audio_ref _ref ){
 
-                _ref.localizador = null; // ** localizador local
-                _ref.image = null;
+                _ref.ref_name = null; // ** localizador local
+                _ref.audio = null;
                 _ref.module = null;
-                _ref.image_slot_index = -1;
+                _ref.audio_slot_index = -1;
 
                 _ref.ref_state = RESOURCE__audio_ref_state.deleted;
                 

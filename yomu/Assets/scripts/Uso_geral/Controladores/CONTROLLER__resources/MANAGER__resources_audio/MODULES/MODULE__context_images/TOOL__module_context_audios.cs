@@ -3,71 +3,93 @@ using UnityEngine;
 public static class TOOL__module_context_audios {
 
 
-        public static void Update_resource_level( RESOURCE__audio _image ){
+        public static void Update_resource_level( RESOURCE__audio _audio ){
 
 
                 Console.Log( "veio: { Update_resource_level }" );
 
-                Verify_stage_for_content( _image );
+                Verify_stage_for_content( _audio );
 
-                Resources_getting_audio_stage blocked_for_now = ( Resources_getting_audio_stage.getting_texture | Resources_getting_audio_stage.applying_texture );
+                if( _audio.count_places_being_used_nothing > 0 )
+                    { Going_to_resource_level_NOTHING( _audio ); return; }
 
-                CONTROLLER__errors.Verify( ( int ) ( _image.stage_getting_resource & blocked_for_now  ), $"Tried to update resources level, but the current resources stage is not allowed: { _image.stage_getting_resource }" );
-                
-                if( _image.count_places_being_used_nothing > 0 )
-                    { Going_to_resource_level_NOTHING( _image ); return; }
+                if( _audio.count_places_being_used_audio_clip > 0 )
+                    { Going_to_resource_level_AUDIO_CLIP( _audio ); return; }
 
-                // ** imagem perdeu todas as referencias, tem que deletar tudo
 
                 // ** DELETE IMAGE
-
                 
-                _image.module_images.actives_images_dictionary.Remove( _image.image_key ); // ** nao tem mais update
-                _image.module_images.manager.container_images.Return_image( _image ); 
+                _audio.module_audios.actives_audios_dictionary.Remove( _audio.audio_key ); // ** nao tem mais update
+                _audio.module_audios.manager.container_audios.Return_audio( _audio ); 
                 
          
         }
 
         
-        private static int Going_to_resource_level_NOTHING( RESOURCE__audio _image ){
+        private static int Going_to_resource_level_NOTHING( RESOURCE__audio _audio ){
 
                 Console.Log( "Veio Going_to_resource_level_NOTHING()" );
 
-                if( _image.content_going_to == Resource_audio_content.nothing )
+                if( _audio.content_going_to == Resource_audio_content.nothing )
                     { return 0; } // ** ja nivelado
-                _image.content_going_to = Resource_audio_content.nothing;
+                _audio.content_going_to = Resource_audio_content.nothing;
 
 
                 // --- UP                
                 // --- EQUAL
-
-                    if( _image.actual_content == Resource_audio_content.nothing )
-                        { 
-                            if( _image.stage_getting_resource == Resources_getting_audio_stage.getting_compress_low_quality_file )
-                                { return TOOL__resource_audio.Set_stage_cancelling_task( _image, Resources_getting_audio_stage.finished, ref _image.module_images.manager.task_getting_compress_low_quality_file ); }
-                                else
-                                { return TOOL__resource_audio.Set_stage( _image, Resources_getting_audio_stage.finished ); }
-                        }
-
                 // --- DOWN
 
-                    return TOOL__resource_audio.Down_resources( _image );
+                    //if(  )
+
+                return TOOL__resource_audio.Down_resources( _audio );
 
         }
 
+        private static int Going_to_resource_level_AUDIO_CLIP( RESOURCE__audio _audio ){
 
-        private static void Verify_stage_for_content( RESOURCE__audio _image ){
+                Console.Log( "Veio Going_to_resource_level_AUDIO_CLIP()" );
+
+                
+                if( _audio.content_going_to == Resource_audio_content.audio_clip )
+                    { return 0; } // ** ja nivelado
+                _audio.content_going_to = Resource_audio_content.audio_clip;
+
+                Console.Log( _audio.actual_content );
+
+
+                // --- UP 
+                    if( _audio.actual_content == Resource_audio_content.nothing )
+                        { 
+                            _audio.stage_getting_resource = Resources_getting_audio_stage.waiting_to_start;
+                            return 0;  
+                        }
+
+                // --- EQUAL
+
+                    if( _audio.actual_content == Resource_audio_content.audio_clip )
+                        { return 0; }
+
+                // --- DOWN
+
+                return TOOL__resource_audio.Down_resources( _audio );
+
+        }
+        
+
+
+        private static void Verify_stage_for_content( RESOURCE__audio _audio ){
 
 
                 Resources_getting_audio_stage possible_stages = Resources_getting_audio_stage.not_give;
 
-                switch( _image.actual_content ){
+                switch( _audio.actual_content ){
 
                     case Resource_audio_content.nothing: possible_stages = Resources_getting_audio_stage.nothing_acceptable_stages; break;
+                    case Resource_audio_content.audio_clip: possible_stages = Resources_getting_audio_stage.audio_clip_acceptable_stages; break;
                     
                 }
 
-                CONTROLLER__errors.Verify( !!!( TOOL__resource_audio.Verify_stage( _image, possible_stages ) ), $"Image { _image.name } is with content { _image.actual_content } but the stage is { _image.stage_getting_resource }" );
+                CONTROLLER__errors.Verify( !!!( TOOL__resource_audio.Verify_stage( _audio, possible_stages ) ), $"Image { _audio.name } is with content { _audio.actual_content } but the stage is { _audio.stage_getting_resource }" );
                     
                 return;
 

@@ -6,7 +6,7 @@ public static class TOOL__resource_image_testing {
 
 
 
-        public static void Test( RESOURCE__image_ref image_ref, Image image ){
+        public static void Test( ref RESOURCE__image_ref image_ref, Image image ){
 
 
 

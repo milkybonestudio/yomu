@@ -203,51 +203,30 @@ public class MODULE__context_structures {
                 if( _copy.state == Resource_state.nothing )
                     { Console.Log( "state menor" ); return; } // ** nao tem nada para remover
 
-                if( _copy.state == Resource_state.instanciated )
-                    { Deinstanciate( _copy ); }
-
-                if( _copy.state == Resource_state.active )
-                    { Deactivate( _copy ); }
-
+                Deactivate( _copy );
                 _copy.state = Resource_state.nothing;
                 
                 
-                RESOURCE__structure structure = _copy.structure;
-            
-                Resource_structure_content old_need_content = _copy.actual_need_content;
-                Resource_structure_content new_need_content = Resource_structure_content.nothing;
-
-                if( old_need_content == Resource_structure_content.nothing )
+                if( _copy.actual_need_content == Resource_structure_content.nothing )
                     {  return; } // ** nao tinha nada
 
 
-                _copy.actual_need_content = new_need_content;
-
-                // ** VERIFY IF WAS INSTANCE
-                if( _copy.structure_game_object == null && old_need_content == Resource_structure_content.game_object )
-                    { structure.number_copies_need_to_get_instanciated--; } // ** tinha pedido apra instanciar mas nao foi instanciado. Agora nao precisa mais
-
-                if( _copy.structure_game_object != null )
-                    {
-                        GameObject.Destroy( _copy.structure_game_object );
-                        _copy.structure_game_object = null;
-                    }
+                Destroy_game_object( ref _copy.structure_game_object );
 
 
-                
-                TOOL__resources_structures.Decrease_count( structure, old_need_content );
-                TOOL__resources_structures.Increase_count( structure, new_need_content );
+                TOOL__resources_structures.Change_actual_content_count(  _copy , Resource_structure_content.nothing );
+
+
 
                 // VAI ATUALIZAR O RECURSO ORIGINAL
-                TOOL__resources_structures.Update_resource_level_structure( structure );
+                TOOL__resources_structures.Update_resource_level_structure( _copy.structure );
+                TOOL__resources_structures.Update_resource_level_structure_COPY( _copy );
 
                 return;
 
 
-
-
-
         }
+
 
         public void Deactivate( RESOURCE__structure_copy _copy ){
 
@@ -258,13 +237,10 @@ public class MODULE__context_structures {
                 if( ( _copy.state < Resource_state.active ) )
                     {  Console.Log( "state menor" ); return; } // ** nao tem recursos para remover
 
-                if( _copy.state == Resource_state.instanciated )
-                    { Deinstanciate( _copy ); } // ** traz para o active
-
+                Deinstanciate( _copy );
                 _copy.state = Resource_state.minimun;
 
-                RESOURCE__structure structure = _copy.structure;
-            
+                
                 CONTROLLER__errors.Verify( ( _copy.actual_need_content != Resource_structure_content.game_object ), $"a copy is marked as { _copy.state } but the resources is not teh isntance" );
 
                 if( _copy.level_pre_allocation < Resource_structure_content.game_object )
@@ -274,8 +250,8 @@ public class MODULE__context_structures {
                 TOOL__resources_structures.Change_actual_content_count(  _copy ,_copy.level_pre_allocation );
                 
                 // VAI ATUALIZAR O RECURSO ORIGINAL
-                TOOL__resources_structures.Update_resource_level_structure( structure );
-                TOOL__resources_structures.Update_resource_level_structure_COPY( _copy.structure );
+                TOOL__resources_structures.Update_resource_level_structure( _copy.structure );
+                TOOL__resources_structures.Update_resource_level_structure_COPY( _copy );
 
                 return;
 
@@ -329,7 +305,7 @@ public class MODULE__context_structures {
                 TOOL__resources_structures.Change_actual_content_count(  _copy ,_copy.level_pre_allocation );
                 
                 TOOL__resources_structures.Update_resource_level_structure( _copy.structure );
-                TOOL__resources_structures.Update_resource_level_structure_COPY( _copy.structure );
+                TOOL__resources_structures.Update_resource_level_structure_COPY( _copy );
 
                 return;
 
@@ -352,6 +328,7 @@ public class MODULE__context_structures {
                 _copy.Flag_need_to_instanciate( true );
 
                 TOOL__resources_structures.Update_resource_level_structure( _copy.structure );
+                TOOL__resources_structures.Update_resource_level_structure_COPY( _copy );
 
                 return;
 
@@ -368,6 +345,7 @@ public class MODULE__context_structures {
 
                 _copy.state = Resource_state.instanciated;
                 TOOL__resources_structures.Change_actual_content_count(  _copy ,Resource_structure_content.game_object );
+                
 
                 _copy.Flag_need_to_instanciate( false );
 

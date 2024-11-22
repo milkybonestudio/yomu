@@ -56,10 +56,10 @@ public class Container_RESOURCE__audios {
         }
 
 
-        public void Return_image( RESOURCE__audio _image ){
+        public void Return_audio( RESOURCE__audio _image ){
 
 
-                _image.image_state = Resource_use_state.waiting_to_delete; 
+                _image.audio_state = Resource_use_state.waiting_to_delete; 
 
                 if( images_waiting_to_reset.Length == pointer_image_to_delete )
                     { Array.Resize( ref images_waiting_to_reset, ( images_waiting_to_reset.Length + 10 ) );  }
@@ -117,24 +117,20 @@ public class Container_RESOURCE__audios {
         }
 
 
-        private void Put_data_image( RESOURCE__audio _image,  MODULE__context_audios _module_images,  Resource_context _context,  string _main_folder, string _path_local, Resource_audio_localizer locator ){
+        private void Put_data_image( RESOURCE__audio _image,  MODULE__context_audios _module_audios,  Resource_context _context,  string _main_folder, string _path_local, Resource_audio_localizer locator ){
 
             Console.Log( "veiuo Put_data_image()" );
 
 
-                // ** IMAGE DATA
-                _image.single_image.used = true;
-
-
-                _image.image_context = _context;
+                _image.audio_context = _context;
                 _image.main_folder = _main_folder;
                 _image.local_path = _path_local;
 
                 //mark
                 // ** depois mudar para somente _path_local
                 Console.Log( _path_local );
-                _image.image_key = Get_image_key( _main_folder, _path_local );
-                _image.module_images = _module_images;
+                _image.audio_key = Get_image_key( _main_folder, _path_local );
+                _image.module_audios = _module_audios;
 
 
 
@@ -143,17 +139,6 @@ public class Container_RESOURCE__audios {
                 _image.content_going_to = Resource_audio_content.nothing;
                 
 
-                _image.width = locator.width;
-                _image.height = locator.height;
-                _image.pointer_container = locator.pointer;
-                _image.data_size = locator.length;
-
-                Console.Log( "DATA SIZE: " + _image.data_size );
-
-                if( _image.data_size > 2_000 )
-                    { _image.system_have_low_quality = true; }
-                    else
-                    { _image.system_have_low_quality = false; }
 
 
         }
@@ -163,45 +148,22 @@ public class Container_RESOURCE__audios {
 
                 int weight = 0;
 
-                // ** RESET DATA
-                    _image.single_image.used = false;
-                    _image.single_image.image_compress = null;
-
-                    _image.single_image.have_low_quality_compress = false; // false => can not have the webp
-                    _image.single_image.image_low_quality_compress = null;
-
-
-                    if( _image.single_image.texture_exclusiva != null )
-                        {
-                            GameObject.Destroy( _image.single_image.texture_exclusiva );
-                            _image.single_image.texture_exclusiva_native_array.Dispose();
-                            weight = 1;
-                        }
-                    _image.single_image.sprite = null;
-
                 // ** IMPORTANT
-                _image.image_state = Resource_use_state.unused;
+                _image.audio_state = Resource_use_state.unused;
 
 
-                _image.image_context = Resource_context.not_given; 
+                _image.audio_context = Resource_context.not_given; 
                 _image.main_folder = null;
                 _image.local_path = null;
-                _image.image_key = null;
-                _image.module_images = null;
-                _image.system_have_low_quality = false;
+                _image.audio_key = null;
+                _image.module_audios = null;
+                
 
 
                 _image.stage_getting_resource = Resources_getting_audio_stage.not_give;
                 _image.actual_content = Resource_audio_content.not_give;
                 _image.content_going_to = Resource_audio_content.not_give;
                 
-
-                _image.width = 0;
-                _image.height = 0;
-                _image.pointer_container = 0;
-                _image.data_size = 0;
-
-
                 return weight;
         
 

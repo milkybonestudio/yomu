@@ -94,8 +94,9 @@ public class RESOURCE__structure_copy {
 
 
         // ** down resources
-        public void Delete(){ Guaranty_copy(); structure.module_structures.Delete( this ); }
+        //public void Delete(){ Guaranty_copy(); structure.module_structures.Delete( this ); }
         public void Delete( ref RESOURCE__structure_copy _copy_ref ){ Guaranty_copy(); structure.module_structures.Delete( this ); _copy_ref = null; }
+
         public void Unload(){ Guaranty_copy(); structure.module_structures.Unload( this ); }
         public void Deactivate(){ Guaranty_copy(); structure.module_structures.Deactivate( this ); }
         public void Deinstanciate(){ Guaranty_copy(); structure.module_structures.Deinstanciate( this ); }
