@@ -72,9 +72,6 @@ public class Container_RESOURCE__image_refs {
 
         private void Put_data_image_ref( RESOURCE__image_ref _ref,  RESOURCE__image _image, Resource_image_content _level_pre_allocation ){
 
-            Console.Log( "veiuo Put_data_image_ref()" );
-
-                
 
                 CONTROLLER__errors.Verify( ( _image == null  ), "Tried to creat a image ref but the image comes null" ); 
                 CONTROLLER__errors.Verify( ( ( _level_pre_allocation & ( Resource_image_content.compress_data | Resource_image_content.sprite | Resource_image_content.nothing  | Resource_image_content.compress_low_quality_data ) ) == 0   ), $"Resource not accept: { _level_pre_allocation }" ); 

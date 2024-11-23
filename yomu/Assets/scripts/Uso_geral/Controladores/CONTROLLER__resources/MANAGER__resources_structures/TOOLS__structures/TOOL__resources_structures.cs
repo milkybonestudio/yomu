@@ -1,6 +1,107 @@
 using UnityEngine;
+using UnityEngine.UI;
+using System.Collections.Generic;
+
+
 
 public static class TOOL__resources_structures {
+
+
+
+
+        public static void Create_dictionary( RESOURCE__structure_copy _copy ){
+
+                _copy.components_dic = new Dictionary<string,Unity_main_components>( 30 );
+                int a = Get_components(  0, null, _copy.structure_game_object, _copy.components_dic );
+                Console.Log( "number interactions: " + a );
+                
+        }
+
+
+        private static int Get_components(  int _number_interations, string _root_path, GameObject _obj, Dictionary<string,Unity_main_components> _dic ){
+
+                CONTROLLER__errors.Verify( ( _number_interations > 1000 ), $"Tried to get_component but the interation count pass 1_000" );
+                Console.Log( $"interaction { _number_interations } name: { _obj.name }" );
+                _number_interations++;
+                
+                // --- ADD CURRENT TRANSFORM
+
+                string key = null;
+                if( _root_path == null )
+                    { key = _obj.name; }
+                    else
+                    { key = ( _root_path + "/" + _obj.transform.gameObject.name ); }                        
+
+                Unity_main_components unity_main_components = new Unity_main_components();
+
+                    unity_main_components.active = true;
+                    unity_main_components.game_object = _obj;    
+                    _obj.TryGetComponent<Image>( out unity_main_components.image );
+                    
+
+                if( !!!( _dic.TryAdd( key, unity_main_components ) ) )
+                    { CONTROLLER__errors.Throw( $"Could not add in the key { key } in Get_component for structure" ); }
+
+                // --- APPLY TO CHILDREN
+                int child_count = _obj.transform.childCount;
+
+                for( int child = 0 ; child < child_count ; child++ )
+                    { _number_interations = Get_components(  _number_interations , key, _obj.transform.GetChild( child ).gameObject, _dic ); }
+
+                return _number_interations;
+
+        }
+
+
+        public static GameObject Get_component_game_object( RESOURCE__structure_copy _copy, string _component_key ){
+
+
+                Unity_main_components main_components = new Unity_main_components();
+
+                Console.Log( $"Vai tentar pegar o componente { _component_key } em game_object" );
+                
+                if( !!!( _copy.components_dic.TryGetValue( _component_key, out main_components ) ) )
+                    { CONTROLLER__errors.Throw( $"Did not found the component <Color=lightBlue>{ _component_key }</Color> in the structure <Color=lightBlue>{ _copy.name }</Color>" ); }
+
+                if( !!!( main_components.active ) )
+                    { CONTROLLER__errors.Throw( $"The component in the key <Color=lightBlue>{ _component_key }</Color> in the structure <Color=lightBlue>{ _copy.name }</Color> is not active" ); }
+
+                if( main_components.game_object == null )
+                    { CONTROLLER__errors.Throw( $"The component in the key <Color=lightBlue>{ _component_key }</Color> in the structure <Color=lightBlue>{ _copy.name }</Color> dont have the Game_object" ); }
+
+                Console.Log( "Conseguiu pegar game_object" );
+
+                return main_components.game_object;
+
+        }
+
+
+
+        public static Image Get_component_image( RESOURCE__structure_copy _copy, string _component_key ){
+
+
+                Unity_main_components main_components = new Unity_main_components();
+
+                Console.Log( $"Vai tentar pegar o componente { _component_key } em image" );
+                Console.Log( "B: " + _copy );
+                
+                if( !!!( _copy.components_dic.TryGetValue( _component_key, out main_components ) ) )
+                    { CONTROLLER__errors.Throw( $"Did not found the component <Color=lightBlue>{ _component_key }</Color> in the structure <Color=lightBlue>{ _copy.name }</Color>" ); }
+
+                if( !!!( main_components.active ) )
+                    { CONTROLLER__errors.Throw( $"The component in the key <Color=lightBlue>{ _component_key }</Color> in the structure <Color=lightBlue>{ _copy.name }</Color> is not active" ); }
+
+                if( main_components.image == null )
+                    { CONTROLLER__errors.Throw( $"The component in the key <Color=lightBlue>{ _component_key }</Color> in the structure <Color=lightBlue>{ _copy.name }</Color> dont have the Game_object" ); }
+
+                Console.Log( "Conseguiu pegar image" );
+
+                main_components.image.color = Color.red;
+
+                return main_components.image;
+
+        }
+
 
 
 
@@ -74,6 +175,8 @@ public static class TOOL__resources_structures {
 
                     GameObject game_object = GameObject.Instantiate( _structure.prefab );
                     game_object.name = _structure.prefab.name;
+
+                    TOOL__resources_structures.Create_dictionary( _copy );
 
                     GAME_OBJECT.Colocar_parent( _container, game_object );
                 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public static class TOOL__resource_structure_handler_ACTIONS {
+public static class TOOL__resource_complex_structure_handler_ACTIONS {
 
 
 
@@ -11,7 +11,7 @@ public static class TOOL__resource_structure_handler_ACTIONS {
 
 
 
-        public static void Change_level_pre_allocation( RESOURCE__structure_copy _copy, Resource_structure_content _new_pre_alloc ){
+        public static void Change_level_pre_allocation( RESOURCE__complex_structure_copy _copy, Resource_complex_structure_content _new_pre_alloc ){
 
 
                 if( _copy.level_pre_allocation == _new_pre_alloc )
@@ -23,19 +23,19 @@ public static class TOOL__resource_structure_handler_ACTIONS {
                 if( _copy.state != Resource_state.minimun )
                     { return; } // nao muda nada
 
-                TOOL__resources_structures.Change_actual_need_content_count( _copy, _copy.level_pre_allocation );
+                TOOL__resources_complex_structures.Change_actual_need_content_count( _copy, _copy.level_pre_allocation );
                 
     
                 // VAI ATUALIZAR O RECURSO ORIGINAL
-                TOOL__resources_structures.Update_resource_level_structure( _copy.structure );
-                TOOL__resources_structures.Update_resource_level_structure_COPY( _copy );
+                TOOL__resources_complex_structures.Update_resource_level_complex_structure( _copy.structure );
+                TOOL__resources_complex_structures.Update_resource_level_complex_structure_COPY( _copy );
 
         }
 
 
         // --- DOWN
 
-        public static void Delete( RESOURCE__structure_copy _copy ){ 
+        public static void Delete( RESOURCE__complex_structure_copy _copy ){ 
 
                 Console.Log( "Veio Delete()" );
 
@@ -49,13 +49,13 @@ public static class TOOL__resource_structure_handler_ACTIONS {
                     { Unload( _copy ); }
 
 
-                RESOURCE__structure structure = _copy.structure;
+                RESOURCE__complex_structure structure = _copy.structure;
     
                 structure.copies[ _copy.RESOURCE_index ].copy = null;
 
-                structure.module_structures.manager.container_resources_structures_copies.Return_structure_copy( _copy );
+                structure.module_complex_structures.manager.container_resources_complex_structures_copies.Return_complex_structure_copy( _copy );
 
-                TOOL__resources_structures.Update_resource_level_structure( structure );
+                TOOL__resources_complex_structures.Update_resource_level_complex_structure( structure );
 
                 // ** copy lost everything
 
@@ -65,7 +65,7 @@ public static class TOOL__resource_structure_handler_ACTIONS {
 
 
         // ** dados vao ser perdidos, mas a referencia da imagem volta 
-        public static void Unload( RESOURCE__structure_copy _copy ){
+        public static void Unload( RESOURCE__complex_structure_copy _copy ){
 
 
                 Console.Log( "Veio Unload()" );
@@ -77,20 +77,20 @@ public static class TOOL__resource_structure_handler_ACTIONS {
                 _copy.state = Resource_state.nothing;
                 
                 
-                if( _copy.actual_need_content == Resource_structure_content.nothing )
+                if( _copy.actual_need_content == Resource_complex_structure_content.nothing )
                     {  return; } // ** nao tinha nada
 
 
                 Destroy_game_object( ref _copy.structure_game_object );
 
 
-                TOOL__resources_structures.Change_actual_need_content_count(  _copy , Resource_structure_content.nothing );
+                TOOL__resources_complex_structures.Change_actual_need_content_count(  _copy , Resource_complex_structure_content.nothing );
 
 
 
                 // VAI ATUALIZAR O RECURSO ORIGINAL
-                TOOL__resources_structures.Update_resource_level_structure( _copy.structure );
-                TOOL__resources_structures.Update_resource_level_structure_COPY( _copy );
+                TOOL__resources_complex_structures.Update_resource_level_complex_structure( _copy.structure );
+                TOOL__resources_complex_structures.Update_resource_level_complex_structure_COPY( _copy );
 
                 return;
 
@@ -98,7 +98,7 @@ public static class TOOL__resource_structure_handler_ACTIONS {
         }
 
 
-        public static void Deactivate( RESOURCE__structure_copy _copy ){
+        public static void Deactivate( RESOURCE__complex_structure_copy _copy ){
 
                 // ** vai para o minimo
 
@@ -111,17 +111,17 @@ public static class TOOL__resource_structure_handler_ACTIONS {
                 _copy.state = Resource_state.minimun;
 
                 
-                CONTROLLER__errors.Verify( ( _copy.actual_need_content != Resource_structure_content.game_object ), $"a copy is marked as { _copy.state } but the resources is not teh isntance" );
+                CONTROLLER__errors.Verify( ( _copy.actual_need_content != Resource_complex_structure_content.game_object ), $"a copy is marked as { _copy.state } but the resources is not teh isntance" );
 
-                if( _copy.level_pre_allocation < Resource_structure_content.game_object )
+                if( _copy.level_pre_allocation < Resource_complex_structure_content.game_object )
                     { Destroy_game_object( ref _copy.structure_game_object ); } // ** se o minimo for instncia nao vai chegar aqui
 
 
-                TOOL__resources_structures.Change_actual_need_content_count(  _copy ,_copy.level_pre_allocation );
+                TOOL__resources_complex_structures.Change_actual_need_content_count(  _copy ,_copy.level_pre_allocation );
                 
                 // VAI ATUALIZAR O RECURSO ORIGINAL
-                TOOL__resources_structures.Update_resource_level_structure( _copy.structure );
-                TOOL__resources_structures.Update_resource_level_structure_COPY( _copy );
+                TOOL__resources_complex_structures.Update_resource_level_complex_structure( _copy.structure );
+                TOOL__resources_complex_structures.Update_resource_level_complex_structure_COPY( _copy );
 
                 return;
 
@@ -137,7 +137,7 @@ public static class TOOL__resource_structure_handler_ACTIONS {
 
 
 
-        public static void Deinstanciate( RESOURCE__structure_copy _copy ){
+        public static void Deinstanciate( RESOURCE__complex_structure_copy _copy ){
 
                 Console.Log( "Veio Deinstanciate()" );
 
@@ -145,7 +145,7 @@ public static class TOOL__resource_structure_handler_ACTIONS {
                     {  Console.Log( "state menor" ); return; }
 
                 _copy.state = Resource_state.active;
-                _copy.structure.module_structures.manager.Put_in_waiting_container( _copy );
+                _copy.structure.module_complex_structures.manager.Put_in_waiting_container( _copy );
 
                 return;
 
@@ -158,7 +158,7 @@ public static class TOOL__resource_structure_handler_ACTIONS {
         // --- UP
 
         // ** sinaliza que a imagem pode carregar o pre alloc
-        public static void Load( RESOURCE__structure_copy _copy ){
+        public static void Load( RESOURCE__complex_structure_copy _copy ){
 
 
                 Console.Log( "Veio Load()" );
@@ -167,21 +167,21 @@ public static class TOOL__resource_structure_handler_ACTIONS {
                     { return; }
                 _copy.state = Resource_state.minimun;
 
-                CONTROLLER__errors.Verify( ( _copy.actual_need_content != Resource_structure_content.nothing ), $"Tentou dar Load na copia { _copy.structure.structure_key } mas o state estava como { _copy.state } mas o actua_need_content como nothing" );
+                CONTROLLER__errors.Verify( ( _copy.actual_need_content != Resource_complex_structure_content.nothing ), $"Tentou dar Load na copia { _copy.structure.complex_structure_key } mas o state estava como { _copy.state } mas o actua_need_content como nothing" );
                 
-                if( _copy.level_pre_allocation == Resource_structure_content.nothing )
+                if( _copy.level_pre_allocation == Resource_complex_structure_content.nothing )
                     { return; } // ** dont need anything
 
-                TOOL__resources_structures.Change_actual_need_content_count(  _copy ,_copy.level_pre_allocation );
+                TOOL__resources_complex_structures.Change_actual_need_content_count(  _copy ,_copy.level_pre_allocation );
                 
-                TOOL__resources_structures.Update_resource_level_structure( _copy.structure );
-                TOOL__resources_structures.Update_resource_level_structure_COPY( _copy );
+                TOOL__resources_complex_structures.Update_resource_level_complex_structure( _copy.structure );
+                TOOL__resources_complex_structures.Update_resource_level_complex_structure_COPY( _copy );
 
                 return;
 
         }
 
-        public static void Activate( RESOURCE__structure_copy _copy ){
+        public static void Activate( RESOURCE__complex_structure_copy _copy ){
 
                 Console.Log( "Veio Activate()" );
 
@@ -189,16 +189,16 @@ public static class TOOL__resource_structure_handler_ACTIONS {
                     { return; } // ** already active
                 _copy.state = Resource_state.active;
                 
-                if( _copy.actual_need_content == Resource_structure_content.game_object )
+                if( _copy.actual_need_content == Resource_complex_structure_content.game_object )
                     { return; } // ** o minimo estava como o maximo
 
 
-                TOOL__resources_structures.Change_actual_need_content_count(  _copy ,Resource_structure_content.game_object );
+                TOOL__resources_complex_structures.Change_actual_need_content_count(  _copy ,Resource_complex_structure_content.game_object );
 
                 _copy.Flag_need_to_instanciate( true );
 
-                TOOL__resources_structures.Update_resource_level_structure( _copy.structure );
-                TOOL__resources_structures.Update_resource_level_structure_COPY( _copy );
+                TOOL__resources_complex_structures.Update_resource_level_complex_structure( _copy.structure );
+                TOOL__resources_complex_structures.Update_resource_level_complex_structure_COPY( _copy );
 
                 return;
 
@@ -206,7 +206,7 @@ public static class TOOL__resource_structure_handler_ACTIONS {
         }
 
 
-        public static void Instanciate( RESOURCE__structure_copy _copy, GameObject _container ){
+        public static void Instanciate( RESOURCE__complex_structure_copy _copy, GameObject _container ){
 
                 Console.Log( "Veio Instanciate()" );
 
@@ -214,23 +214,23 @@ public static class TOOL__resource_structure_handler_ACTIONS {
                     { return; } // ** ja instanciado
 
                 _copy.state = Resource_state.instanciated;
-                TOOL__resources_structures.Change_actual_need_content_count(  _copy ,Resource_structure_content.game_object );
+                TOOL__resources_complex_structures.Change_actual_need_content_count(  _copy ,Resource_complex_structure_content.game_object );
                 
 
                 _copy.Flag_need_to_instanciate( false );
 
                 
-                RESOURCE__structure structure = _copy.structure;
+                RESOURCE__complex_structure structure = _copy.structure;
                 CONTROLLER__errors.Verify( ( structure == null ), "struct null" );
 
 
                 // ** GURANTY PREFAB
-                if( structure.actual_content < Resource_structure_content.structure_data )
+                if( structure.actual_content < Resource_complex_structure_content.structure_data )
                     {
                         
-                        structure.content_going_to = Resource_structure_content.structure_data;
-                        structure.actual_content = Resource_structure_content.structure_data;
-                        structure.stage_getting_resource = Resources_getting_structure_stage.finished;
+                        structure.content_going_to = Resource_complex_structure_content.structure_data;
+                        structure.actual_content = Resource_complex_structure_content.structure_data;
+                        structure.stage_getting_resource = Resources_getting_complex_structure_stage.finished;
 
                         structure.prefab = Resources.Load<GameObject>( structure.resource_path );
 
@@ -244,7 +244,6 @@ public static class TOOL__resource_structure_handler_ACTIONS {
                         // --- FORCE INSTANCIATE
                         _copy.structure_game_object = GameObject.Instantiate( structure.prefab );
                         _copy.structure_game_object.name = structure.prefab.name;
-                        TOOL__resources_structures.Create_dictionary( _copy );
 
                     }
                 

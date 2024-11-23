@@ -4,7 +4,6 @@ using System.Linq;
 using UnityEngine;
 
 
-
 public class MANAGER__resources_structures {
 
         
@@ -35,14 +34,14 @@ public class MANAGER__resources_structures {
         
 
 
-        // --- TASK REQUESTS
-        public Task_req task;
-
-
         // --- PUBLIC METHODS
                                                         //  personagens          //     lily    //      chave
         public RESOURCE__structure_copy Get_structure_copy( Resource_context _context, string _main_folder, string _path_local, Resource_structure_content _level_pre_allocation ){ return context_structures_modules[ ( int ) _context ].Get_structure_copy( _main_folder, _path_local, _level_pre_allocation ) ; }
         
+
+
+        // --- NECESSARY DATA
+
         public GameObject container_to_instanciate;
 
 
@@ -55,8 +54,7 @@ public class MANAGER__resources_structures {
         private System.Diagnostics.Stopwatch relogio = new System.Diagnostics.Stopwatch();
         public void Update(){
 
-                //Console.Log( "a" );
-
+                
                 context_frame = ( context_frame + 1 ) % contexts.Length;
 
                 int current_weight = 0;
@@ -66,8 +64,6 @@ public class MANAGER__resources_structures {
                         current_weight += Update_structure( structure );
                         current_weight += Update_structure_copy( structure, current_weight );
 
-
-             
                         if( current_weight >= weight_to_stop )
                             { return; } 
                 }
@@ -82,10 +78,10 @@ public class MANAGER__resources_structures {
                 switch( _structure.stage_getting_resource ){
 
                     // ** UP
-                    case Resources_getting_structure_stage.waiting_to_start: return Handle_waiting_to_start( _structure );
+                    case Resources_getting_structure_stage.waiting_to_start: return TOOL__resource_structure_handler_UP.Handle_waiting_to_start( _structure );
 
                     // ** DOWN
-                    // ** talvez depois
+                        // ** talvez depois
 
                     case Resources_getting_structure_stage.finished: return 0;
                     default: CONTROLLER__errors.Throw( $"Can not handle: { _structure.stage_getting_resource } in the structure { _structure.structure_key }" ); return -1;
@@ -100,15 +96,12 @@ public class MANAGER__resources_structures {
                 if( structure.actual_content < Resource_structure_content.structure_data )
                     { return _current_weight; }
 
-                int number = 0;
-
+                
                 for( int slot = 0 ; slot < structure.copies.Length ; slot++ ){
 
 
                         if( !!!( structure.copies[ slot ].need_to_get_instanciate ) )
                             { continue; }
-
-                        number++;
 
                         structure.copies[ slot ].need_to_get_instanciate = false;
                         
@@ -139,46 +132,6 @@ public class MANAGER__resources_structures {
 
 
         }
-
-
-
-
-
-        private int Handle_waiting_to_start( RESOURCE__structure _structure ){
-
-                // ** mudar para o relogio talvez? 
-
-                int weight = 0;
-
-                if( _structure.content_going_to == Resource_structure_content.nothing )
-                    { 
-                        _structure.prefab = null;
-                        _structure.actual_content = Resource_structure_content.nothing;
-                        _structure.stage_getting_resource = Resources_getting_structure_stage.finished; 
-                        return weight; 
-                    }
-                
-
-                // ** MAXIMUN
-                if( _structure.content_going_to == Resource_structure_content.structure_data )
-                    {
-                        
-                        // --- PEGOU O PREFAB 
-                        _structure.prefab = Resources.Load<GameObject>( _structure.resource_path );
-
-                        CONTROLLER__errors.Verify( ( _structure.prefab == null ), $"Not found prefab <Color=lightBlue>{ _structure.resource_path }</Color>" );
-                        _structure.actual_content = Resource_structure_content.structure_data;
-                        weight = 2;
-
-                        _structure.stage_getting_resource = Resources_getting_structure_stage.finished;
-                        return weight;
-
-                    }
-                
-                CONTROLLER__errors.Throw( $"Can not handle { _structure.content_going_to }" ); return -1;
-
-        }
-
 
 
 

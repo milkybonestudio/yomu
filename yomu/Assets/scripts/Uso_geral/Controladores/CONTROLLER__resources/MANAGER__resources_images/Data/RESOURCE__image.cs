@@ -12,13 +12,7 @@ using UnityEngine.UI;
     // ** o nivel minimo de prealocation sempre vai ser definido pelo maior das referencias
 
 
-public enum Resource_use_state {
 
-    used, 
-    waiting_to_delete,
-    unused,
-
-}
 
 unsafe public class RESOURCE__image {
 

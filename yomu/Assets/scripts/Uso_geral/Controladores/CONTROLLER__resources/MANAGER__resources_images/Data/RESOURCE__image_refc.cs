@@ -12,6 +12,7 @@ public class RESOURCE__image_ref {
         public RESOURCE__image image;
         public Image image_component;
         public MODULE__context_images module;
+        
         public int image_slot_index;
 
         public RESOURCE__image_ref_state ref_state;

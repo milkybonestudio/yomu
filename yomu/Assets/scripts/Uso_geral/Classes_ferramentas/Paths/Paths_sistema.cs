@@ -10,6 +10,8 @@ public static class Paths_system {
         // ** ver depois:
 
         public static string path_resources_structures_container = "Tela/Container_structures";
+        public static string path_resources_complex_structures_container = "Tela/Container_structures";
+        
 
         
         // --- FOLDERS PRINCIPAIS

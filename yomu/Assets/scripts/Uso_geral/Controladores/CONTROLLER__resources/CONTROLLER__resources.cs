@@ -50,6 +50,8 @@ public class CONTROLLER__resources {
         public MANAGER__resources_audios resources_audios = new MANAGER__resources_audios();
 
         public MANAGER__resources_structures resources_structures = new MANAGER__resources_structures();
+        public MANAGER__resources_complex_structures resources_complex_structures = new MANAGER__resources_complex_structures();
+        
 
 
         int count = 0;

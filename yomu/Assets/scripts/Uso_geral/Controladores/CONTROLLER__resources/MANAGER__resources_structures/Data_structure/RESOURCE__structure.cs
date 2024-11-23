@@ -3,7 +3,6 @@ using UnityEngine;
 public class RESOURCE__structure {
 
 
-
         public MODULE__context_structures module_structures;
         public Resource_context structure_context;
         public string main_folder;
@@ -23,8 +22,7 @@ public class RESOURCE__structure {
 
 
         // --- COMPLEX STRUCTURES
-        //mark
-        // ** ainda nao foram usadas em lugar nenhum
+        
         public RESOURCE__structure_copy[] sub_structures;
 
 
@@ -56,10 +54,3 @@ public class RESOURCE__structure {
 
 }
 
-
-public struct Structure_copy_reference {
-
-    public RESOURCE__structure_copy copy;
-    public bool need_to_get_instanciate;
-
-}
