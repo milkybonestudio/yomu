@@ -81,7 +81,7 @@ unsafe public class Controlador : MonoBehaviour {
                 TOOL__resource_image_testing.Start();
                 TOOL__resource_structure_testing.Start();
 
-
+                
                 // Figure lily = Teste_figure.Construct();
                 // lily.Instanciate( GameObject.Find( "Tela/Container_teste" ), Figure_use_context.visual_novel );
                 
@@ -101,11 +101,18 @@ unsafe public class Controlador : MonoBehaviour {
                 //     { Debug.Log( s ); }
                 
 
-
         }
 
+        CONTAINER__generic container_image;
+
+
         public void Update() {
+
+
                 
+                // Console.Log(  container_image.Get( null ) );
+                // Console.Log(  container_image.objects_available.Length );
+
 
                 TOOL__resource_structure_testing.Test();
             

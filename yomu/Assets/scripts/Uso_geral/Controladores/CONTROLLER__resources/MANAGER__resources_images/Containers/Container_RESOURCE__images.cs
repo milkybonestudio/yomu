@@ -2,18 +2,32 @@ using System;
 using UnityEngine;
 
 
+public class C_resources_args {
+
+    
+            public MODULE__context_images _module_images;
+            public Resource_context _context;  
+            public string _main_folder; 
+            public string _path_local; 
+            public Resource_image_localizer locator;
+
+}
+
 
 public class Container_RESOURCE__images {
 
 
+        public static C_resources_args args = new C_resources_args();
+
+
         public Container_RESOURCE__images(){
 
-                images_available = new RESOURCE__image[ 100 ];
+                images_available = new RESOURCE__image[ 300 ];
 
                 for( int index = 0 ; index < images_available.Length ; index++ )
                     { images_available[ index ] = new RESOURCE__image(); }
 
-                images_waiting_to_reset = new RESOURCE__image[ 20 ];
+                images_waiting_to_reset = new RESOURCE__image[ 100 ];
 
         }
 
@@ -24,33 +38,37 @@ public class Container_RESOURCE__images {
         private RESOURCE__image[] images_waiting_to_reset;
         private int pointer_image_to_delete = 0;
 
+        private int pointer_object_to_verify = -1;
+
         public RESOURCE__image Get_resource_image( MODULE__context_images _module_images,  Resource_context _context,  string _main_folder, string _path, Resource_image_localizer locator ){
 
-               int image_slot = 0;
+               
 
-                while(  image_slot++ < ( images_available.Length - 1 )  ){
+                while(  pointer_object_to_verify++ < ( images_available.Length - 1 )  ){
 
-                        RESOURCE__image image = images_available[ image_slot ];
-                        if( images_available[ image_slot ] == null )
+                        RESOURCE__image image = images_available[ pointer_object_to_verify ];
+                        if( images_available[ pointer_object_to_verify ] == null )
                             { continue; }
 
                         Put_data_image( image, _module_images, _context, _main_folder, _path, locator );
-                        images_available[ image_slot ] = null;
+                        images_available[ pointer_object_to_verify ] = null;
                         return image;
                         
                 }
 
-                Console.Log( "vai entrar" );
-                Array.Resize( ref images_available, images_available.Length + 25 );
 
-                while(  image_slot++ < ( images_available.Length - 1 )  ){
+                int old_length = images_available.Length;
+                
+                Array.Resize( ref images_available, images_available.Length + 150 );
 
-                        images_available[ image_slot ] = new RESOURCE__image();
+                while(  old_length++ < ( images_available.Length - 1 )  ){
+
+                        images_available[ pointer_object_to_verify ] = new RESOURCE__image();
                         
                 }
 
-                RESOURCE__image new_image = images_available[ ^1 ];
-                images_available[ ^1 ] = null;
+                RESOURCE__image new_image = images_available[ pointer_object_to_verify ];
+                images_available[ pointer_object_to_verify ] = null;
                 return new_image;
             
 
@@ -72,12 +90,14 @@ public class Container_RESOURCE__images {
 
         public int Update( int _weight_to_stop, int _current_weight ){
 
+                int index_atual = 0;
+
                 for( int slot = 0 ; slot < pointer_image_to_delete ; slot++ ){
 
                         if( images_waiting_to_reset[ slot ] == null )
                             { continue; }
 
-                        _current_weight += Return_image_to_available( images_waiting_to_reset[ slot ] );
+                        _current_weight += Return_image_to_available( images_waiting_to_reset[ slot ], ref index_atual );
                         images_waiting_to_reset[ slot ] = null;
 
                         if( _current_weight >= _weight_to_stop )
@@ -93,16 +113,20 @@ public class Container_RESOURCE__images {
 
 
 
-        private int Return_image_to_available( RESOURCE__image _image ){
+        private int Return_image_to_available( RESOURCE__image _image, ref int _index_atual ){
 
 
-                for( int image_slot = 0 ; image_slot < images_available.Length ; image_slot++ ){
+                while( _index_atual++ < ( images_available.Length - 1 ) ){
 
-                        if( images_available[ image_slot ] != null )
+                        if( images_available[ _index_atual ] != null )
                             { continue; }
+
+                        if( pointer_object_to_verify > _index_atual )
+                            { pointer_object_to_verify = _index_atual; }
                         
-                        images_available[ image_slot ] = _image;
-                        return Reset_data( _image );
+                        images_available[ _index_atual ] = _image;
+                        Reset_data( _image );
+                        return 0;
                         
                 }
 
@@ -120,8 +144,6 @@ public class Container_RESOURCE__images {
 
         private void Put_data_image( RESOURCE__image _image,  MODULE__context_images _module_images,  Resource_context _context,  string _main_folder, string _path_local, Resource_image_localizer locator ){
 
-            Console.Log( "veiuo Put_data_image()" );
-
 
                 // ** IMAGE DATA
                 _image.single_image.used = true;
@@ -133,7 +155,6 @@ public class Container_RESOURCE__images {
 
                 //mark
                 // ** depois mudar para somente _path_local
-                Console.Log( _path_local );
                 _image.image_key = Get_image_key( _main_folder, _path_local );
                 _image.module_images = _module_images;
 
@@ -148,8 +169,6 @@ public class Container_RESOURCE__images {
                 _image.height = locator.height;
                 _image.pointer_container = locator.pointer;
                 _image.data_size = locator.length;
-
-                Console.Log( "DATA SIZE: " + _image.data_size );
 
                 if( _image.data_size > 2_000 )
                     { _image.system_have_low_quality = true; }
