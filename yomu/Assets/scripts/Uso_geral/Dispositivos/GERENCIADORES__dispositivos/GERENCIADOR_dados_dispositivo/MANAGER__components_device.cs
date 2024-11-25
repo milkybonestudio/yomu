@@ -4,30 +4,13 @@ using UnityEngine.UI;
 
 
 
-public struct Dados_para_criar_botao_localizador_imagens {
 
-        //mark
-        // ** length ainda era usado para pegar as imagens de uma sequencia, isso parece ser bom para deixar mas tem que pensar em um jeito para fazer.
-        // ** talvez deixar a struct como string path, int length
-
-        
-
-        public int sprite_id;
-        public object sprite_id_geral;
-        public int length; // ** imagens gerais => 0 == id de sequencia, nunca pode iniciar a busca em 0
-        // public Tipo_pegar_sprite tipo_pegar_sprite;
-
-
-}
-
-
-
-public class GERENCIADOR__dados_dispositivo {
+public class MANAGER__components_device {
 
 
         // ** garante que os dados estejam corretos
 
-        public GERENCIADOR__dados_dispositivo( Dispositivo _dispositivo ){
+        public MANAGER__components_device( Dispositivo _dispositivo ){
 
                 dispositivo = _dispositivo;
 
@@ -94,11 +77,17 @@ public class GERENCIADOR__dados_dispositivo {
         
         public Dados_botao_dispositivo Declare_button( ref Botao_dispositivo button ){
 
-                button = new Botao_dispositivo( new Dados_botao_dispositivo() );
+
+
+                button = new Botao_dispositivo();
+                button.data = new Dados_botao_dispositivo();
+
+
                 botoes_dispositivo[ pointer_atual_botao++ ] = button; 
 
                 if(  botoes_dispositivo.Length == pointer_atual_botao )
                     { Array.Resize( ref botoes_dispositivo, botoes_dispositivo.Length + 10 ); }
+
 
                 return button.data;
 
@@ -120,7 +109,7 @@ public class GERENCIADOR__dados_dispositivo {
                         if( botao == null  )
                             { break; }
 
-                        Define_button( botao );
+                        TOOL__UI_button.Define_button( dispositivo, botao );
                         continue;
 
                 }
@@ -147,25 +136,6 @@ public class GERENCIADOR__dados_dispositivo {
 
         }
 
-        private void Define_button( Botao_dispositivo _botao ){
-
-
-                Dados_botao_dispositivo dados_botao = _botao.data;
-
-                // --- VERIFICACOES
-                TOOL__device_UI_SUPPORT.Verificar_nome( dispositivo.nome_dispositivo, dados_botao.nome );
-
-                string nome_default = ( dispositivo.nome_dispositivo + "_BOTAO_" + dados_botao.nome );
-
-                // --- CREATE DATA
-                if( dados_botao.animacao_botao == null )
-                    { TOOL__devices_data_BUTTON.Construir_botao_simples( dispositivo,  dados_botao, _botao, nome_default ); } // --- BOTAO SIMPLES
-                    else
-                    { TOOL__devices_data_BUTTON.Construir_botao_completo( dispositivo,  dados_botao, _botao, nome_default ); } // --- BOTAO COMPLEXO
-
-                return;                    
-
-        }
 
 
 
@@ -195,7 +165,7 @@ public class GERENCIADOR__dados_dispositivo {
                     if( dados_botoes_dispositivo[ botao_index ] == null )
                         { continue; }
 
-                     botoes_dispositivo[ botao_index ].Get_data_from_prefab( path_para_o_dispositivo );
+                     botoes_dispositivo[ botao_index ].Get_data( path_para_o_dispositivo );
 
                     continue;
 

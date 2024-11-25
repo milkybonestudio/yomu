@@ -30,7 +30,7 @@ public static class CONSTRUCTOR__device {
                     // --- CRIA MODULOS
                     device.gerenciador_imagens = new GERENCIADOR__imagens_dispositivo( device );
                     device.gerenciador_audios = new GERENCIADOR__audios_dispositivo( device );
-                    device.dados_dispositivo = new GERENCIADOR__dados_dispositivo( device );
+                    device.dados_dispositivo = new MANAGER__components_device( device );
 
                     // --- DECLARE THINGS
                     _unique_device_interface.Declare_components( device );

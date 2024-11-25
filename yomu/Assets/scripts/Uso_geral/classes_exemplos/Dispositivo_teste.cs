@@ -14,8 +14,8 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
         // ** aponta para onde vao estar os folders com as imagens no editor, o nome do container na build e a primeira pasta da lista indica a pasta com o prefab
         // ** a ultima pasta semre vai ser com o nome do dispositivo
 
-             
-        public string Get_main_folder(){ return "shapes\\quadrado"; }
+
+        public string Get_main_folder(){ return "shapes/quadrado"; }
 
    
         // --- METODOS INTERNOS
@@ -33,20 +33,20 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
 
 
 
+        // ** fala os que vai precisar 
         public void Declare_components( Dispositivo dispositivo ){
-
 
                 // --- ESTATICA
 
-
                 // ** declare                
-                Dados_imagem_estatica_dispositivo dados_img =  dispositivo.Declare_image( ref img );
+                Dados_imagem_estatica_dispositivo dados_img = dispositivo.Declare_image( ref img );
 
                 // ** put data
                 dados_img.imagem_id = -1;
                 dados_img.nome = "aa";
 
-                string default_folder = "normal_in_gamet\\";
+                string default_folder = ( Resource_context.Devices.ToString() + "/" + Get_main_folder() + "/");
+
 
 
                 // --- define 
@@ -56,7 +56,6 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
                         botao_fechar_dados_novo.tipo_ativacao = Botao_dispositivo_tipo_ativacao.clicar;
                         botao_fechar_dados_novo.nome = "a";
                         botao_fechar_dados_novo.Update_secundario = Update_botao_1;
-
 
 
 
@@ -95,9 +94,7 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
 
         public void Update_botao_1(){}
 
-        //mark
 
-        // --- isso nao faz sentido. ao invez de usar disp.Definir_imagem(); disp.Definir_audios();... => disp.Definir_objetos() e dentro ele faz a divisao
 
         public void Definir_imagens_interno( GERENCIADOR__imagens_dispositivo imagens ){
 

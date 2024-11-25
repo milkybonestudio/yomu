@@ -14,10 +14,11 @@ public class Dispositivo {
         public string nome_dispositivo;
         public string path_folder_prefab;
 
-        // --- MODULOS
+        // --- GERENCIADORES
         
         public GERENCIADOR__estados_dispositivo gerenciador_estados;
-        public GERENCIADOR__dados_dispositivo  dados_dispositivo;
+
+        public MANAGER__components_device  dados_dispositivo;
 
         public GERENCIADOR__imagens_dispositivo gerenciador_imagens;
         public GERENCIADOR__audios_dispositivo gerenciador_audios;

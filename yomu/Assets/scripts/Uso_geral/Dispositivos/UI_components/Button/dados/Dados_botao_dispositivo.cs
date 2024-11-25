@@ -20,6 +20,7 @@ public class Dados_botao_dispositivo {
         }
 
 
+        public Resource_use_state state;
 
         // --- INTERNO
 
@@ -49,29 +50,23 @@ public class Dados_botao_dispositivo {
             public float tempo_transicao = 75f;  // ** USADO SOMENTE QUANDO NAO TEM "ANIMACAO BOTAO"
             
 
-        //mark
-        // ANTIGO
 
         // --- PARTE VISUAL
-
 
         // public Material material_dispositivo;
         public Material device_material;
 
         public DEVICE_button_transition_type_OFF_ON tipo_transicao;// default botao simples
 
-        // [  fixo  , variavel ]
 
-        public Sprite[,] sprites_animacoes_completas;
+        // [  fixo  , variavel ]
+        public RESOURCE__image_ref[,]  images_refs_animacoes_completas;
         public Color[,] cores_animacoes_completas;
 
 
 
-
-
-        public Dados_para_criar_botao_localizador_imagens[,] imagens_localizadores; // usado somente para construir
+        // ** faz sentido já tendo os resources?
         public string[,] imagens_localizadores_NOVO; // usado somente para construir
-
 
 
 
@@ -92,10 +87,11 @@ public class Dados_botao_dispositivo {
         public Tempos_animacao_botao_dispositivo animacao_OFF_para_ON_tempos;
 
 
+
+
         // --- DECORACAO COMPOSTA SPRITES
         public Sprite[,] sprites_decoracao_composta;
         public Color[,] cores_decoracao_composta;
-        public Dados_para_criar_botao_localizador_imagens[,] imagens_localizadores_decoracao_composta;
         public int[,] imagens_localizadores_decoracao_composta_NOVO;
 
 

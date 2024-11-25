@@ -11,6 +11,14 @@ public struct Position {
 public class Figure {
 
 
+                //mark
+                // ** tem que fazer um jeito para começar no chao
+                // ** como nao vai ter uma texture em si talvez tenha que fazer na mão, ou algum jeito para pegar todas as images ativas e fazer algum calculo com elas. 
+                // ** por exemplo para colocar algo em cima da posicao inicial seria position_Y = localPosition.y + height/2 => vai meia height para cima
+                // ** fazer com todas as textures pode representar a iamgem inteira
+                // ** pegando o minimo e o maximo e depois assumindo ela como um grande bloco
+
+
         public INTERFACE__figure figure_interface;
 
         public void Update(){ figure_interface.Update( this ); }

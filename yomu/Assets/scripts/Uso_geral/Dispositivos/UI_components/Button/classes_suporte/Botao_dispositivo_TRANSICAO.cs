@@ -205,13 +205,13 @@ public static class Botao_dispositivo_TRANSICAO {
 
 
                 // ** MUDA TRANSICAO
-                botao.TRANSITION_animation_back_image.color = cor_do_frame_atual_back;
-                botao.TRANSITION_base_image.color = cor_do_frame_atual_base;
-                botao.TRANSITION_animation_back_text_image.color = cor_do_frame_atual_atras_texto;
+                botao.TRANSITION_animation_back.image.color = cor_do_frame_atual_back;
+                botao.TRANSITION_base.image.color = cor_do_frame_atual_base;
+                botao.TRANSITION_animation_back_text.image.color = cor_do_frame_atual_atras_texto;
                 botao.TRANSITION_text.color = cor_do_frame_atual_texto;
-                botao.TRANSITION_decoration_image.color = cor_do_frame_atual_decoracao;
+                botao.TRANSITION_decoration.image.color = cor_do_frame_atual_decoracao;
                 Debug.Log( cor_do_frame_atual_decoracao );
-                botao.TRANSITION_animation_front_text_image.color = cor_do_frame_atual_frente_texto;
+                botao.TRANSITION_animation_front_text.image.color = cor_do_frame_atual_frente_texto;
 
 
 
@@ -233,12 +233,12 @@ public static class Botao_dispositivo_TRANSICAO {
 
 
                 // ** MUDA IMAGEM ATRAS 
-                botao.IMAGE_animation_back_image.color = cor_do_frame_atual_back;
-                botao.IMAGE_base_image.color = cor_do_frame_atual_base;
-                botao.IMAGE_animation_back_text_image.color = cor_do_frame_atual_atras_texto;
+                botao.IMAGE_animation_back.image.color = cor_do_frame_atual_back;
+                botao.IMAGE_base.image.color = cor_do_frame_atual_base;
+                botao.IMAGE_animation_back_text.image.color = cor_do_frame_atual_atras_texto;
                 botao.IMAGE_text.color = cor_do_frame_atual_texto;
-                botao.IMAGE_decoration_image.color = cor_do_frame_atual_decoracao;
-                botao.IMAGE_animation_front_text_image.color = cor_do_frame_atual_frente_texto;
+                botao.IMAGE_decoration.image.color = cor_do_frame_atual_decoracao;
+                botao.IMAGE_animation_front_text.image.color = cor_do_frame_atual_frente_texto;
 
 
 

@@ -8,28 +8,19 @@ public static class TOOL__device_UI_SUPPORT {
 
         public static void Verificar_tempos_sequencia( float[] _tempos, Color[] _cores, string _indentificador ){
 
-            if( _cores == null )
-                { 
-                    if( _tempos != null )
-                        { throw new Exception( $"Nao foi definido as cores no {_indentificador } mas foi definido os tempos" );}
 
-                    return; 
-                }
+            CONTROLLER__errors.Verify( ( ( _cores == null ) && ( _tempos != null ) ), $"Nao foi definido as cores no {_indentificador } mas foi definido os tempos" );
 
             if( _tempos == null )
                 { return; }
 
-            if( _tempos.Length != _cores.Length )
-                { throw new Exception($"Foi declarado {_tempos.Length} tempos para a sequencia {_indentificador }, mas tinha { _cores.Length}"); }
-
-            return;
+            CONTROLLER__errors.Verify( ( _tempos.Length != _cores.Length ), $"Foi declarado { _tempos.Length } tempos para a sequencia { _indentificador }, mas tinha { _cores.Length }" );
 
         }
 
         public static void Verificar_nome( string nome_dispositivo, string _nome ){
 
-               if( _nome == "" || _nome == null )
-                    { throw new Exception( $"Nao foi colocado o nome da imagem estatica no dispositivo <Color=lighBlue><b>{ nome_dispositivo }</b></color>" ); }
+                CONTROLLER__errors.Verify( ( ( _nome == "" ) || ( _nome == null ) ), $"Nao foi colocado o nome da imagem estatica no dispositivo <Color=lighBlue><b>{ nome_dispositivo }</b></color>" );
                 return;
         }
 
@@ -43,7 +34,6 @@ public static class TOOL__device_UI_SUPPORT {
 
                 // --- COLOCAR DEFAULT
                 return _cor_default; 
-                    
                     
         }
 

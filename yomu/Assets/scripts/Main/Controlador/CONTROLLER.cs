@@ -40,81 +40,45 @@ unsafe public class Controlador : MonoBehaviour {
 
 
 
-        public RESOURCE__image_ref image_ref;
 
-        public RESOURCE__structure_copy copy;
-        public RESOURCE__structure_copy copy_2;
 
-        public RESOURCE__audio_ref audio_ref;
-
- 
         public void Start(){
 
                 Console.Start();
             
                 Dados_fundamentais_sistema.jogo_ativo = true;
                 Construtor_controlador.Construir( this );
-
-                //image = GameObject.Find( "Tela/Container_teste/Image" ).GetComponent<Image>();
-                //image_ref = c.resources_images.Get_image_reference( Resource_context.Characters, "Lily", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
                 
+
 
                 // Dispositivo d = Dispositivo__teste.Construir(); // pega o prefab 
-                // d.Define_all_components(); // 
-                // d.Load_resources();
-                
-                // Dispositivo lily_clothes = Dispositivo__teste.Construir(); // pega o prefab 
+                // d.Define_all_components();  
+                // //d.Load_resources();
 
+                Botao_dispositivo botao = new Botao_dispositivo();
+                Dados_botao_dispositivo dados = new Dados_botao_dispositivo();
+                botao.data = dados;
 
+                // ** colocar dados
 
+                        dados.tipo_ativacao = Botao_dispositivo_tipo_ativacao.clicar;
+                        dados.nome = "a";
+                    
 
-                //mark
-                // ** tem que fazer um jeito para começar no chao
-                // ** como nao vai ter uma texture em si talvez tenha que fazer na mão, ou algum jeito para pegar todas as images ativas e fazer algum calculo com elas. 
-                // ** por exemplo para colocar algo em cima da posicao inicial seria position_Y = localPosition.y + height/2 => vai meia height para cima
-                // ** fazer com todas as textures pode representar a iamgem inteira
-                // ** pegando o minimo e o maximo e depois assumindo ela como um grande bloco
+                botao.Get_data( "Tela/Container_teste" );
 
-
-                //audio_ref = CONTROLLER__resources.Get_instance().resources_audios.Get_audio_reference( Resource_context.Characters, "Lily", "teste", Resource_audio_content.nothing );
-
-                TOOL__resource_image_testing.Start();
-                TOOL__resource_structure_testing.Start();
-
-                
-                // Figure lily = Teste_figure.Construct();
-                // lily.Instanciate( GameObject.Find( "Tela/Container_teste" ), Figure_use_context.visual_novel );
-                
-                // lily.Prepare_to_use_resources( "mad" );
-                // lily.Change_form( "mad" );
-                
-                // Images_container_result container =  Images_container_creator.Construct( "C:\\Users\\User\\Desktop\\yomu_things\\teste" );
-
-                // if( Verifier_image_container.Verify( "C:\\Users\\User\\Desktop\\yomu_things\\teste", System.IO.File.ReadAllLines("C:\\Users\\User\\Desktop\\yomu_things\\container.txt") ))
-                //     {  Debug.Log( "Esta diferente" ); }
-                
-
-                //System.IO.File.WriteAllLines( "C:\\Users\\User\\Desktop\\yomu_things\\container.txt", container.localizadores );
-
-
-                // foreach( string s in container.localizadores )
-                //     { Debug.Log( s ); }
                 
 
         }
-
-        CONTAINER__generic container_image;
 
 
         public void Update() {
 
 
-                
-                // Console.Log(  container_image.Get( null ) );
-                // Console.Log(  container_image.objects_available.Length );
 
 
-                TOOL__resource_structure_testing.Test();
+                Console.Update();
+
             
                 return; 
 
