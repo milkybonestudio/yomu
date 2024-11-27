@@ -8,7 +8,9 @@ public struct Imagem_estatica_botao_dispositivo {
         public DEVICE_button_static_image animacao_base;
         public DEVICE_button_static_image animacao_atras_texto;
         public DEVICE_button_static_image animacao_decoracao;
+
         public DEVICE_button_static_image[] decoracao_composta;
+        
         public DEVICE_button_static_image animacao_frente_texto;
 
         

@@ -25,8 +25,12 @@ public class Dados_botao_dispositivo {
         // --- INTERNO
 
         public string nome_dispositivo;
-        public Botao_dispositivo_tipo_ativacao tipo_ativacao;
+
+        public string main_folder;
         public string nome;
+        
+
+        public Botao_dispositivo_tipo_ativacao tipo_ativacao;
         public GameObject botao_game_object;
 
         // --- LOGICA
@@ -41,23 +45,46 @@ public class Dados_botao_dispositivo {
         public Action Construtor_personalizado = VOID.Metodo_nao_colocado;
 
         
-        // ** bloqueio de updates
+        // --- BLOQUEIOS 
         public bool update_visual_bloqueado;
+
 
         // --- EXCLUSIVO CRIACAO
         
-            public bool sprites_OFF_e_ON_iguais;
-            public float tempo_transicao = 75f;  // ** USADO SOMENTE QUANDO NAO TEM "ANIMACAO BOTAO"
-            
+
+        public bool sprites_OFF_e_ON_iguais;
+        public float tempo_transicao = 75f;
+        
 
 
         // --- PARTE VISUAL
-
-        // public Material material_dispositivo;
+        
         public Material device_material;
-
         public DEVICE_button_transition_type_OFF_ON tipo_transicao;// default botao simples
 
+
+        // --- GENERAL
+
+        public string text_on;
+        public string text_off;
+
+
+        // ** SIMPLE
+
+        public Button_animation_frame simple_button_ON_frame;
+        public Button_animation_frame simple_button_OFF_frame;
+
+        
+        // ** COMPLETE
+
+        public Button_animation_frame[] complete_button_ON_frames = new Button_animation_frame[ 6 ];
+        public Button_animation_frame[] complete_button_OFF_frames = new Button_animation_frame[ 6 ];
+
+
+        // ** COMPLETE WITH ANIMATION
+
+        // ** provavelmente vai usar multiplos para as transicoes ou todos de uma categoria vao ser. 
+        // ** recisa esperar multiplos
 
         // [  fixo  , variavel ]
         public RESOURCE__image_ref[,]  images_refs_animacoes_completas;
@@ -65,8 +92,7 @@ public class Dados_botao_dispositivo {
 
 
 
-        // ** faz sentido já tendo os resources?
-        public string[,] imagens_localizadores_NOVO; // usado somente para construir
+        //public string[,] imagens_localizadores_NOVO; // usado somente para construir
 
 
 
@@ -88,11 +114,11 @@ public class Dados_botao_dispositivo {
 
 
 
-
         // --- DECORACAO COMPOSTA SPRITES
         public Sprite[,] sprites_decoracao_composta;
         public Color[,] cores_decoracao_composta;
         public int[,] imagens_localizadores_decoracao_composta_NOVO;
+
 
 
 

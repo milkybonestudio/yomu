@@ -165,7 +165,7 @@ public class MANAGER__components_device {
                     if( dados_botoes_dispositivo[ botao_index ] == null )
                         { continue; }
 
-                     botoes_dispositivo[ botao_index ].Get_data( path_para_o_dispositivo );
+                        TOOL__UI_button_getter.Get_data( botoes_dispositivo[ botao_index ], path_para_o_dispositivo );
 
                     continue;
 

@@ -17,11 +17,13 @@ public static class TOOL__UI_button {
                 _botao.button_name = ( dispositivo.nome_dispositivo + "_BOTAO_" + _botao.data.nome ); // ** so pode ter o nome quando os dados forem preenchidos 
 
 
-                // --- CREATE DATA
-                if( _botao.data.animacao_botao == null )
-                    { TOOL__UI_button_constructor.Construir_botao_simples( _botao ); } // --- BOTAO SIMPLES
-                    else
-                    { TOOL__UI_button_constructor.Construir_botao_completo( _botao ); } // --- BOTAO COMPLEXO
+                switch( _botao.type ){
+
+                    case UI_button_type.simple: TOOL__UI_button_constructor.Construir_botao_SIMPLE( _botao ); break;
+                    case UI_button_type.complete: TOOL__UI_button_constructor.Construir_botao_COMPLETE( _botao ); break;
+                    default: CONTROLLER__errors.Throw( $"Can not handle type { _botao.type }" ); break;
+
+                }
 
                 return;                    
 

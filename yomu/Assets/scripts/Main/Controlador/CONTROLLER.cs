@@ -50,10 +50,10 @@ unsafe public class Controlador : MonoBehaviour {
                 Construtor_controlador.Construir( this );
                 
 
-
                 // Dispositivo d = Dispositivo__teste.Construir(); // pega o prefab 
                 // d.Define_all_components();  
                 // //d.Load_resources();
+                
 
                 Botao_dispositivo botao = new Botao_dispositivo();
                 Dados_botao_dispositivo dados = new Dados_botao_dispositivo();
@@ -65,8 +65,7 @@ unsafe public class Controlador : MonoBehaviour {
                         dados.nome = "a";
                     
 
-                botao.Get_data( "Tela/Container_teste" );
-
+                TOOL__UI_button_getter.Get_data( botao, "Tela/Container_teste" );
                 
 
         }
