@@ -9,11 +9,32 @@ public static class Polygon {
 
 
                 if( _poligono == null )
-                    { return false; }
+                    { Console.Log( "poligonos estavam null" ); return false; }
+
 
 
                 // --- AJUST VECTOR
-                _ponto -=  _off_set * ( 1080f / Screen.height );
+
+
+
+                
+
+                _ponto -=  _off_set;
+                _ponto.x *=  ( 1920f / Screen.width );
+                _ponto.y *=  ( 1080f / Screen.height );
+
+
+                // Console.Log( "alp: " +  ( 1080f / Screen.height ) );
+
+                // Console.Log( "offset: " + _off_set );
+                // Console.Log( $"Ponto principal: { _ponto }" );
+
+
+                // Console.Log( "poligonos.Length: " + _poligono.Length );
+                // for( int  i = 0 ; i < _poligono.Length ; i++ ){
+
+                //     Console.Log( $"ponto { i }: { _poligono[ i ] }" );
+                // }
 
                 
                 bool resultado = false;                
@@ -23,15 +44,14 @@ public static class Polygon {
                         Vector2 ponto_1 = _poligono[ ponto_index ];
                         Vector2 ponto_2 = _poligono[ ( ponto_index + 1 ) % _poligono.Length ];
 
-
-                        if( (  _ponto.y < ponto_1.y  ) == ( _ponto.y  < ponto_2.y   ) )
+                        if( (  _ponto.y < ponto_1.y  ) == ( _ponto.y  < ponto_2.y  ) )
                             { continue; }
-
                         
-                        if( (  _ponto.x > ( ( _ponto.y - ponto_1.y   ) * ( ponto_2.x - ponto_1.x ) / (   ponto_2.y  - ponto_1.y     )) + ponto_1.x  ) ) 
+                        if( (  _ponto.x > ( ( _ponto.y - ponto_1.y   ) * ( ponto_2.x - ponto_1.x ) / (   ponto_2.y  - ponto_1.y ) ) + ponto_1.x  ) ) 
                             { continue; }
 
-                        resultado =! resultado;
+                        resultado = !!!( resultado );
+
                         continue;
 
                 }

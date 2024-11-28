@@ -85,25 +85,24 @@ public static class GAME_OBJECT {
 
             while( true ){
 
-                trava_de_seguranca++;
-                if( trava_de_seguranca > numero_maximo )
-                    {throw new System.Exception( $"Em pegar o path _game_object a trava de seguranca foi ativada, teve { numero_maximo }" );}
+                    trava_de_seguranca++;
+                    CONTROLLER__errors.Verify( ( trava_de_seguranca > numero_maximo ), $"Em pegar o path _game_object a trava de seguranca foi ativada, teve { numero_maximo }" );
 
-                transform = transform.parent;
+                    transform = transform.parent;
 
-                if( transform == null )
-                    { 
-                        // --- NAO COLOCA O ULTIMO "/"
-                        nomes[ ( index + 1 )] = null;
-                        break; 
-                    }
+                    if( transform == null )
+                        { 
+                            // --- NAO COLOCA O ULTIMO "/"
+                            nomes[ ( index + 1 )] = null;
+                            break; 
+                        }
 
-                nomes[ index ] = transform.gameObject.name;
-                index--;
-                nomes[ index ] = "/";
-                index--;
-                
-                continue;
+                    nomes[ index ] = transform.gameObject.name;
+                    index--;
+                    nomes[ index ] = "/";
+                    index--;
+                    
+                    continue;
 
             }
 

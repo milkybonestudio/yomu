@@ -28,7 +28,7 @@ public static class Verificador_click_interativo_menu {
                             if( Input.GetMouseButtonDown( 0 )  ) 
                                 { return menu_object_index; }
                             
-                            Controlador_cursor.Pegar_instancia().Change_action( Cursor_action.choice ); //Mudar_cursor( Cor_cursor.red );
+                            CONTROLLER__input.Pegar_instancia().manager_cursor.Change_action( Cursor_action.choice ); //Mudar_cursor( Cor_cursor.red );
                              
                             
                         }
@@ -38,7 +38,7 @@ public static class Verificador_click_interativo_menu {
             }
 
 
-          Controlador_cursor.Pegar_instancia().Change_action( Cursor_action.choice ); //Mudar_cursor( Cor_cursor.off );
+            CONTROLLER__input.Pegar_instancia().manager_cursor.Change_action( Cursor_action.choice ); //Mudar_cursor( Cor_cursor.off );
             return -1;
 
 

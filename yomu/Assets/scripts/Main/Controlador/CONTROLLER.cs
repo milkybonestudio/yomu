@@ -40,42 +40,78 @@ unsafe public class Controlador : MonoBehaviour {
 
 
 
-
+        Botao_dispositivo b_up;
 
         public void Start(){
+
 
                 Console.Start();
             
                 Dados_fundamentais_sistema.jogo_ativo = true;
                 Construtor_controlador.Construir( this );
-                
 
+                
                 // Dispositivo d = Dispositivo__teste.Construir(); // pega o prefab 
                 // d.Define_all_components();  
                 // //d.Load_resources();
                 
 
+
                 Botao_dispositivo botao = new Botao_dispositivo();
+                botao.state = Resource_use_state.used;
+
                 Dados_botao_dispositivo dados = new Dados_botao_dispositivo();
+                dados.state = Resource_use_state.used;
+
                 botao.data = dados;
 
                 // ** colocar dados
 
                         dados.tipo_ativacao = Botao_dispositivo_tipo_ativacao.clicar;
                         dados.nome = "a";
-                    
 
-                TOOL__UI_button_getter.Get_data( botao, "Tela/Container_teste" );
+                        dados.simple_button_OFF_frame.path = "a";
+                        dados.OFF_and_ON_equal = true;
+                        dados.tipo_transicao = DEVICE_button_transition_type_OFF_ON.nada;
+                        dados.type = UI_button_type.simple;
+                        dados.main_folder = "teste";
+                        dados.text_on = "on";
+                        dados.text_OFF_and_ON_equal = false;
+                        dados.text_off = "off";
+
+                        //dados.image_resource_pre_allocation = Resource_image_content.sprite;
                 
+
+                // ** get resources 
+                botao.Define_button();
+
+                // ** link to game_object
+                GameObject botao_game_object = GameObject.Find( "Tela/Container_teste/a" );
+                botao.Link_to_game_object( botao_game_object ); // precisa que struct esteja ativa
+
+                // RESOURCE__structure_copy s_c = null;
+                // botao.Get_data( s_c.Get_component_game_object( "botao" ) );
+
+
+                botao.manager_resources.Load();
+
+
+                
+                botao.Activate_button();
+
+
+                b_up = botao;
 
         }
 
 
         public void Update() {
 
+                CONTROLLER__input.instancia.Update();
+                b_up.Update();
 
-
-
+                CONTROLLER__resources.Get_instance().Update();
+                CONTROLLER__tasks.Pegar_instancia().Update();
                 Console.Update();
 
             
@@ -89,6 +125,7 @@ unsafe public class Controlador : MonoBehaviour {
         public void Update_interno() {
 
 
+                
                 controlador_audio.Update();
 
                 CONTROLLER__data.Pegar_instancia().Atualizar_mouse_atual(); 

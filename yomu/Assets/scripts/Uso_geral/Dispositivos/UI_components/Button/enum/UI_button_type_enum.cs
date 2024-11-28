@@ -8,6 +8,6 @@ public enum UI_button_type {
 
     complete,
 
-    complete_with_animations,
+    complex, // complete  + animations 
     
 }

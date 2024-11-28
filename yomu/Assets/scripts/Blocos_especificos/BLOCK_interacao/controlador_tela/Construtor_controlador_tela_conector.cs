@@ -13,7 +13,6 @@ public static class Construtor_controlador_tela_conector{
 
                         controlador.posicao_mouse = CONTROLLER__data.Pegar_instancia().posicao_mouse;
                         controlador.controlador_interativos = Controlador_interativos.Pegar_instancia();
-                        controlador.controlador_cursor = Controlador_cursor.Pegar_instancia();
                         controlador.player_estado_atual = Player_estado_atual.Pegar_instancia();
 
                         // ---CRIAR TELA

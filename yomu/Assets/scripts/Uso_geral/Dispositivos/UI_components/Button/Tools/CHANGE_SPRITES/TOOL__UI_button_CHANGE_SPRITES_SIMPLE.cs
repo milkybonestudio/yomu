@@ -1,12 +1,11 @@
+using UnityEngine;
 
 
-
-public static class Botao_dispositivo_MUDAR_IMAGEM {
+public static class TOOL__UI_button_CHANGE_SPRITES_SIMPLE {
 
 
 
         public static void Mudar_imagens_TRANSICAO(  Botao_dispositivo botao, int pointer ){
-
 
 
                 // ** animacao_back_image
@@ -101,10 +100,6 @@ public static class Botao_dispositivo_MUDAR_IMAGEM {
 
 
 
-
-
-
-  
 
 
 

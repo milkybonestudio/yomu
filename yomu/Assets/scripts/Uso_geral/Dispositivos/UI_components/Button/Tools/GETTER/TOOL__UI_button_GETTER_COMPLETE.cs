@@ -3,45 +3,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public static class TOOL__UI_button_getter {
+public static class TOOL__UI_button_GETTER_COMPLETE {
 
 
-        public static void Get_data( Botao_dispositivo _button, string _path ){
+        public static void Get( Botao_dispositivo _button ){
 
-
-                switch( _button.type ){
-
-                    case UI_button_type.simple: Get_data_SIMPLE( _button, _path ); break;
-                    case UI_button_type.complete: Get_data_COMPLETE( _button, _path ); break;
-                    default : CONTROLLER__errors.Throw( "Button type not accepted: " + _button.type ); break;
-
-                }
-
-
-        }
-
-
-        private static void Get_data_SIMPLE( Botao_dispositivo _button, string _path ){
-
-
-
-        }
-
-
-        private static void Get_data_COMPLETE( Botao_dispositivo _button, string _path_dispositivo ){
-
-
-
-                // ** vai colocar os dados
-
-                
-                string path_botao = _path_dispositivo + "/" + _button.data.nome;
-
-                _button.botao_game_object = GameObject.Find( path_botao );
-                if( _button.botao_game_object == null )
-                    { throw new System.Exception( $"Botao nao foi encontrado no path { path_botao }" ); }
-
-                    // --- ACHOU O PONTO DE ENTRADA
 
                 try {
 
@@ -57,14 +23,14 @@ public static class TOOL__UI_button_getter {
 
 
                         // IMAGEM
-                            _button.IMAGEM_container = _button.botao_game_object.transform.GetChild( 1 ).gameObject;
+                            _button.IMAGE_container = _button.botao_game_object.transform.GetChild( 1 ).gameObject;
 
-                            _button.IMAGE_animation_back.game_object         =  _button.IMAGEM_container.transform.GetChild( 0 ).gameObject;
-                            _button.IMAGE_base.game_object                   =  _button.IMAGEM_container.transform.GetChild( 1 ).gameObject;
-                            _button.IMAGE_animation_back_text.game_object    =  _button.IMAGEM_container.transform.GetChild( 2 ).gameObject;
-                            _button.IMAGE_text_game_object                   =  _button.IMAGEM_container.transform.GetChild( 3 ).gameObject;
-                            _button.IMAGE_decoration.game_object             =  _button.IMAGEM_container.transform.GetChild( 4 ).gameObject;
-                            _button.IMAGE_animation_front_text.game_object   =  _button.IMAGEM_container.transform.GetChild( 5 ).gameObject;
+                            _button.IMAGE_animation_back.game_object         =  _button.IMAGE_container.transform.GetChild( 0 ).gameObject;
+                            _button.IMAGE_base.game_object                   =  _button.IMAGE_container.transform.GetChild( 1 ).gameObject;
+                            _button.IMAGE_animation_back_text.game_object    =  _button.IMAGE_container.transform.GetChild( 2 ).gameObject;
+                            _button.IMAGE_text.game_object                   =  _button.IMAGE_container.transform.GetChild( 3 ).gameObject;
+                            _button.IMAGE_decoration.game_object             =  _button.IMAGE_container.transform.GetChild( 4 ).gameObject;
+                            _button.IMAGE_animation_front_text.game_object   =  _button.IMAGE_container.transform.GetChild( 5 ).gameObject;
 
 
 
@@ -75,7 +41,7 @@ public static class TOOL__UI_button_getter {
                             _button.TRANSITION_animation_back.game_object          =   _button.TRANSITION_container.transform.GetChild( 0 ).gameObject;
                             _button.TRANSITION_base.game_object                    =   _button.TRANSITION_container.transform.GetChild( 1 ).gameObject;
                             _button.TRANSITION_animation_back_text.game_object     =   _button.TRANSITION_container.transform.GetChild( 2 ).gameObject;
-                            _button.TRANSITION_texo_game_object                    =   _button.TRANSITION_container.transform.GetChild( 3 ).gameObject;
+                            _button.TRANSITION_text.game_object                    =   _button.TRANSITION_container.transform.GetChild( 3 ).gameObject;
                             _button.TRANSITION_decoration.game_object              =   _button.TRANSITION_container.transform.GetChild( 4 ).gameObject;
                             _button.TRANSITION_animation_front_text.game_object    =   _button.TRANSITION_container.transform.GetChild( 5 ).gameObject;
                             
@@ -157,8 +123,8 @@ public static class TOOL__UI_button_getter {
 
                         // --- PEGAR TEXTO
 
-                            _button.IMAGE_text = _button.IMAGE_text_game_object.GetComponent<TMP_Text>();
-                            _button.TRANSITION_text = _button.TRANSITION_texo_game_object.GetComponent<TMP_Text>();
+                            _button.IMAGE_text.tmp_text = _button.IMAGE_text.game_object.GetComponent<TMP_Text>();
+                            _button.TRANSITION_text.tmp_text = _button.TRANSITION_text.game_object.GetComponent<TMP_Text>();
 
 
                         // --- COLIDERS
@@ -181,6 +147,10 @@ public static class TOOL__UI_button_getter {
 
                 // --- COLOCAR MATERIAL
 
+                    //mark
+                    // ** material ainda esta como device
+                    // ** depois ver como fazer
+
                     // ** OFF
 
                         _button.IMAGE_animation_back.image.material = _button.data.device_material;
@@ -188,7 +158,7 @@ public static class TOOL__UI_button_getter {
                         _button.IMAGE_decoration.image.material = _button.data.device_material;
                         _button.IMAGE_animation_back_text.image.material = _button.data.device_material;
                         _button.IMAGE_animation_front_text.image.material = _button.data.device_material;
-                        _button.IMAGE_text.material = _button.data.device_material;
+                        _button.IMAGE_text.tmp_text.material = _button.data.device_material;
 
 
                     // ** TRANSICAO
@@ -197,13 +167,13 @@ public static class TOOL__UI_button_getter {
                         _button.TRANSITION_decoration.image.material = _button.data.device_material;
                         _button.TRANSITION_animation_back_text.image.material = _button.data.device_material;
                         _button.TRANSITION_animation_front_text.image.material = _button.data.device_material;
-                        _button.TRANSITION_text.material = _button.data.device_material;
+                        _button.TRANSITION_text.tmp_text.material = _button.data.device_material;
 
                 
                 // --- LOGICA 
 
 
-                Botao_dispositivo_SETAR.SET_OFF_static( _button );
+                TOOL__UI_button_SET_COMPLEX.SET_OFF_static( _button );
             
                 return;
 

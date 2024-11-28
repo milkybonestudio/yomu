@@ -209,13 +209,13 @@ public static class Icone_barra_mochila {
                                     slot.generico.game_object.transform.SetSiblingIndex( ( slots_mochila.Length - 1 ) );
                                     hold_esta_ativado = true;
                                     hold_slot = slot_index;
-                                    Controlador_cursor.Pegar_instancia().Change_action( Cursor_action.choice ); //Mudar_cursor( Cor_cursor.blue );
+                                    CONTROLLER__input.Pegar_instancia().manager_cursor.Change_action( Cursor_action.choice ); //Mudar_cursor( Cor_cursor.blue );
                                     return false ;
 
                             }
 
 
-                            Controlador_cursor.Pegar_instancia().Change_action( Cursor_action.choice ); //Mudar_cursor( Cor_cursor.red ) ;
+                            CONTROLLER__input.Pegar_instancia().manager_cursor.Change_action( Cursor_action.choice ); //Mudar_cursor( Cor_cursor.red ) ;
                             return false ;
 
 
@@ -223,7 +223,7 @@ public static class Icone_barra_mochila {
 
             }
 
-            Controlador_cursor.Pegar_instancia().Change_action( Cursor_action.choice ); //Mudar_cursor( Cor_cursor.off );
+            CONTROLLER__input.Pegar_instancia().manager_cursor.Change_action( Cursor_action.choice ); //Mudar_cursor( Cor_cursor.off );
 
             return false ;
 

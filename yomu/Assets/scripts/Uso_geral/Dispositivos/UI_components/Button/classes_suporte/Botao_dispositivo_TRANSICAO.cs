@@ -25,7 +25,7 @@ public static class Botao_dispositivo_TRANSICAO {
 
                 // --- VERIFICA SE TEM MAIS
                 if( botao.sprite_atual_index == ( botao.data.pointers.pointer_final_transicao_OFF_para_ON - 1 ) )
-                    { Botao_dispositivo_SETAR.SET_ON_static( botao ); return; } // --- ACABOU ANIMACAO
+                    { TOOL__UI_button_SET_COMPLEX.SET_ON_static( botao ); return; } // --- ACABOU ANIMACAO
 
 
                 // --- VAI TROCAR SPRITE
@@ -63,7 +63,7 @@ public static class Botao_dispositivo_TRANSICAO {
 
                 // --- VERIFICA SE TEM MAIS SPRITES
                 if( botao.sprite_atual_index == ( botao.data.pointers.pointer_final_transicao_ON_para_OFF - 1 ) )
-                    { Botao_dispositivo_SETAR.SET_OFF_static( botao ); return; } // --- ACABOU ANIMACAO
+                    { TOOL__UI_button_SET_COMPLEX.SET_OFF_static( botao ); return; } // --- ACABOU ANIMACAO
 
 
                 // --- TEM MAIS FRAMES
@@ -96,7 +96,7 @@ public static class Botao_dispositivo_TRANSICAO {
 
 
                 if( botao.animacao_atual_tempo_ms < 0.5f )
-                    { Botao_dispositivo_SETAR.SET_ON_static( botao ); return; } // --- FINALIZAR
+                    { TOOL__UI_button_SET_COMPLEX.SET_ON_static( botao ); return; } // --- FINALIZAR
 
 
                 float rate = (  1f -  ( botao.animacao_atual_tempo_ms  / botao.data.animacao_OFF_para_ON_tempos.tempo_espera_para_ativar_ms ) );
@@ -127,7 +127,7 @@ public static class Botao_dispositivo_TRANSICAO {
 
 
                 if( botao.animacao_atual_tempo_ms < 0.5f )
-                    { Botao_dispositivo_SETAR.SET_OFF_static( botao ); return; } // --- FINALIZAR
+                    { TOOL__UI_button_SET_COMPLEX.SET_OFF_static( botao ); return; } // --- FINALIZAR
 
 
                 float rate = (  1f -  ( botao.animacao_atual_tempo_ms  / botao.data.animacao_ON_para_OFF_tempos.tempo_espera_para_ativar_ms ) );
@@ -208,7 +208,7 @@ public static class Botao_dispositivo_TRANSICAO {
                 botao.TRANSITION_animation_back.image.color = cor_do_frame_atual_back;
                 botao.TRANSITION_base.image.color = cor_do_frame_atual_base;
                 botao.TRANSITION_animation_back_text.image.color = cor_do_frame_atual_atras_texto;
-                botao.TRANSITION_text.color = cor_do_frame_atual_texto;
+                botao.TRANSITION_text.tmp_text.color = cor_do_frame_atual_texto;
                 botao.TRANSITION_decoration.image.color = cor_do_frame_atual_decoracao;
                 Debug.Log( cor_do_frame_atual_decoracao );
                 botao.TRANSITION_animation_front_text.image.color = cor_do_frame_atual_frente_texto;
@@ -236,7 +236,7 @@ public static class Botao_dispositivo_TRANSICAO {
                 botao.IMAGE_animation_back.image.color = cor_do_frame_atual_back;
                 botao.IMAGE_base.image.color = cor_do_frame_atual_base;
                 botao.IMAGE_animation_back_text.image.color = cor_do_frame_atual_atras_texto;
-                botao.IMAGE_text.color = cor_do_frame_atual_texto;
+                botao.IMAGE_text.tmp_text.color = cor_do_frame_atual_texto;
                 botao.IMAGE_decoration.image.color = cor_do_frame_atual_decoracao;
                 botao.IMAGE_animation_front_text.image.color = cor_do_frame_atual_frente_texto;
 

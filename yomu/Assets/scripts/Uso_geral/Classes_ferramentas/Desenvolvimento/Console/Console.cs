@@ -39,6 +39,7 @@ public static class Console {
         public static void LogError( string _message ){ Log_intern( _message, Log_type.error, ( Thread.CurrentThread.Name == "Main" ) ); return; }
 
 
+
         public static void Clear(){
 
             Assembly asm = Assembly.GetAssembly( typeof( UnityEditor.Editor ) );
@@ -46,6 +47,43 @@ public static class Console {
 
         }
 
+        public static void LogErrorException( string _message, string _path ){
+
+
+                _message = $"<Size=13>{ _message }</Size>";
+
+                string message_with_trace = $"{ _message }\n{ _path }";
+
+                bool _main_thread = ( Thread.CurrentThread.Name == "Main" );
+                Log_type _type = Log_type.error;
+                
+
+                if( !!!( _main_thread ) )
+                    { multithread_ativado = true; }
+
+                // --- PEGA REFS DA THREAD ATUAL
+                Log_type[] logs_tipos = _main_thread ? ( logs_tipos_main ) : ( logs_tipos_m ) ;
+                string[] logs = _main_thread ? ( logs_main ) : ( logs_m ) ;
+                int index_atual =  _main_thread ? ( index_atual_main++ ) : ( index_atual_m++ ) ;
+
+
+                if( index_atual > ( logs.Length - 10 ) )
+                        { 
+                            Array.Resize( ref logs, ( logs.Length + 2_000 ) ); Array.Resize( ref logs_tipos, ( logs_tipos.Length + 2_000 ) ); 
+                            if( _main_thread )
+                                { logs_main = logs; logs_tipos_main = logs_tipos; }
+                                else
+                                { logs_m = logs; logs_tipos_m = logs_tipos; }
+                        }
+                        
+                logs[ index_atual ] = message_with_trace;
+                logs_tipos[ index_atual ] = _type;
+
+                return;
+
+
+
+        }
 
         private static void Log_intern( string _message, Log_type _type, bool _main_thread ){
 

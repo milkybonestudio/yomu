@@ -378,7 +378,7 @@ public class Botao{
 
             //mark 
             //** mudou
-            Controlador_cursor.Pegar_instancia().Change_action( Cursor_action.choice  ); // cursor_hover
+            CONTROLLER__input.Pegar_instancia().manager_cursor.Change_action( Cursor_action.choice  ); // cursor_hover
 
             if(som_click != null && is_click) CONTROLLER__audio.Pegar_instancia().Acrecentar_sfx( som_click );
             

@@ -37,7 +37,7 @@ public class RESOURCE__structure_copy {
         // --- SUPPORT
         
                 private void Guaranty_copy(){ if( deleted ){ CONTROLLER__errors.Throw( $"Tried to use the structure copy <Color=white><b>{ name }</b></Color> but the copy was deleted" ); } }
-                private void Guaranty_dic(){ if( structure.actual_content < Resource_structure_content.structure_data ){ CONTROLLER__errors.Throw( $"Tried to get a component in structure copy <Color=white><b>{ name }</b></Color> but the structure actual content is <Color=white><b>{ structure.actual_content }</b></Color>" ); } }
+                private void Guaranty_dic(){ if( structure.actual_content < Resource_structure_content.game_object ){ CONTROLLER__errors.Throw( $"Tried to get a component in structure copy <Color=white><b>{ name }</b></Color> but the structure actual content is <Color=white><b>{ structure.actual_content }</b></Color>" ); } }
                 private void Guaranty_field( ref RESOURCE__structure_copy _copy_ref ){ if( _copy_ref == null ){ CONTROLLER__errors.Throw( $"Tried to use the structure copy <Color=white><b>{ name }</b></Color> but the field was null" ); } }
 
         // --- RESOURCE

@@ -88,10 +88,11 @@ public class MODULE__context_images {
 
                         // ** no editor posso pegar a imagem e verificar o tamanho dela, nao tem problema se demorar um pouco para iniciar, depois de colocar no cache ficar verificando vai ser muito rapido. 
                         // ** provavelmente vai ser mais rapido usar streamreader para pegar somente os primeiros bytes, o os provavelmente vai copiar o png inteiro de um lugar para o outro na ram se nao fizer
-                        string png_path = System.IO.Path.Combine( Application.dataPath, "Resources", context.ToString(), manager.container_images.Get_image_key( _main_folder, _path_local ) + ".png");
+                        string png_path = System.IO.Path.Combine( Application.dataPath, "Resources", context.ToString(), ( manager.container_images.Get_image_key( _main_folder, _path_local ) + ".png" ) );
+                        
                 
                         byte[] png = System.IO.File.ReadAllBytes( png_path );
-                        Dimensions dimensions = PNG.Get_dimensions( System.IO.File.ReadAllBytes( png_path ) );
+                        Dimensions dimensions = PNG.Get_dimensions( png );
 
                             locator.width = dimensions.width;
                             locator.height = dimensions.height;

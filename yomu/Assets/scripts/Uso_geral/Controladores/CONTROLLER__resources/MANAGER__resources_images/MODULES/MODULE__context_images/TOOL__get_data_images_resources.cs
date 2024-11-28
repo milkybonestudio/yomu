@@ -27,6 +27,7 @@ public static class TOOL__get_data_images_resources {
 
             private static byte[] Get_single_low_quality_EDITOR( RESOURCE__image _image ){
 
+
                     byte[] png = Get_single_generico_EDITOR( _image );
                 
                     if( webps == null )
@@ -40,7 +41,7 @@ public static class TOOL__get_data_images_resources {
                     _image.pointer_container = -1; // ** nao tem
                     _image.number_images = 1;
 
-                    CONTROLLER__errors.Verify( ( dimensions.width > 2_000 || dimensions.height > 2_000 ), $"Tried to get the low quality for the image{ _image.name }" );
+                    CONTROLLER__errors.Verify( ( dimensions.width > 2_000 || dimensions.height > 2_000 ), $"Image is too big. Tried to get the low quality for the image{ _image.name }" );
 
                     byte[] webp = Get_web_EDITOR( dimensions );
                     Console.Log( $"webp of the image { _image.name }: png length: { png.Length } and webp length: { webp.Length }" );

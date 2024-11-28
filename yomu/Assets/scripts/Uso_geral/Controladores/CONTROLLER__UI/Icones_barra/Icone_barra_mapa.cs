@@ -83,12 +83,12 @@ public static class Icone_barra_mapa {
 
                             }
 
-                            Controlador_cursor.Pegar_instancia().Change_action( Cursor_action.choice ); //  Mudar_cursor( Cor_cursor.red );
+                            CONTROLLER__input.Pegar_instancia().manager_cursor.Change_action( Cursor_action.choice ); //  Mudar_cursor( Cor_cursor.red );
                             break;
 
                     }
 
-                    Controlador_cursor.Pegar_instancia().Change_action( Cursor_action.choice ); // Mudar_cursor( Cor_cursor.off );
+                    CONTROLLER__input.Pegar_instancia().manager_cursor.Change_action( Cursor_action.choice ); // Mudar_cursor( Cor_cursor.off );
 
 
             }

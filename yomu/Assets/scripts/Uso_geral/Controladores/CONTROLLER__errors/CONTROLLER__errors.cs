@@ -54,7 +54,14 @@ public class CONTROLLER__errors {
         private void Throw_exception_internal( Exception _exp  ){
 
             
-            // ** depois fazer melhor
+            string[] pre = _exp.StackTrace.Split( "\n" );
+            string final_line  = ( pre.Length == 2 )? ( pre[ 1 ].Split( " in " )[ 1 ] ) : ( pre[ 0 ].Split( " in " )[ 1 ] ) ;
+            
+            string[] file_and_line = final_line.Replace( ".cs:", ".cs>>>" ).Split( ">>>" );
+
+            Console.LogErrorException( _exp.Message , $"<a href=\"{ file_and_line[ 0 ] }\" line=\"{ file_and_line[ 1 ] }\">{ _exp.Message }</a>" );
+            Console.Update();
+            
             throw _exp;
 
         }

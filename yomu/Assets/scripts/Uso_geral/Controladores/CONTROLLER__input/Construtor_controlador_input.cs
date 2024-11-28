@@ -17,6 +17,8 @@ public static class CONSTRUCTOR__controller_input {
                 controlador.interfaces_input[ ( int ) Input_device.mobile ] = new MODULO__input_mobile();
                 controlador.interfaces_input[ ( int ) Input_device.game_pad ] = new MODULO__input_game_pad();
 
+                controlador.manager_cursor = new MANAGER__cursor();
+
                 
 
                 // controlador.modulo_input_mobile = Construtor_controlador_input_mobile.Construir(); 

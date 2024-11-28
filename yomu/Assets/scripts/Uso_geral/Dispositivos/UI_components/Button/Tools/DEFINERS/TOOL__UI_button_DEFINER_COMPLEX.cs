@@ -2,77 +2,16 @@ using System;
 using UnityEngine;
 
 
-public static class TOOL__UI_button_constructor {
-
-
-
-
-        // ** padronizar logica: 
-
-        //   dados para construcao -> dados prontos para colocar            -> dados prontos 
-        //    tipo, on=off         ->  dado.txt_1 = "a", dado.txt_2 = "b"   ->   
-        // ( dados comprimiddos )      ( todos os dados )                      ( pega os dados )
-
-        //  fn = dados contrucao             ->   dados prontos para colocar
-        //  fn = dados prontos para colocar  ->   dados prontos
-
-        aaaa
+public static class TOOL__UI_button_DEFINER_COMPLEX {
 
 
         private static Device_button_animation_part[] animation_parts = ( Device_button_animation_part[] ) Enum.GetValues( typeof( Device_button_animation_part ) );
         private static int numero_de_partes = Enum.GetNames( typeof( Device_button_animation_part ) ).Length;
 
 
+        public static Botao_dispositivo Define( Botao_dispositivo botao ){
 
-
-        public static Botao_dispositivo Construir_botao_SIMPLE( Botao_dispositivo botao ){
-
-
-                Dados_botao_dispositivo _dados = botao.data;
-
-
-                // ** seta tempos
-                _dados.animacao_on_tempos.tempo_espera_para_ativar_ms = float.MaxValue;
-                _dados.animacao_off_tempos.tempo_espera_para_ativar_ms = float.MaxValue;
-
-                _dados.animacao_on_tempos.tempo_troca_sprite_ms = 0f;
-                _dados.animacao_off_tempos.tempo_troca_sprite_ms = 0f;
-                
-
-                // --- transicao cor
-                _dados.animacao_ON_para_OFF_tempos.tempo_espera_para_ativar_ms = _dados.tempo_transicao;
-                _dados.animacao_OFF_para_ON_tempos.tempo_espera_para_ativar_ms = _dados.tempo_transicao;
-
-
-                _dados.tipo_transicao = DEVICE_button_transition_type_OFF_ON.cor;
-
-                MANAGER__resources_images resources_image = CONTROLLER__resources.Get_instance().resources_images;
-                
-
-                // OFF 
-
-                    _dados.simple_button_OFF_frame.text_color = TOOL__device_UI_SUPPORT.Mudar_cor_default(  _dados.simple_button_OFF_frame.text_color, Cores.black );
-                    _dados.simple_button_OFF_frame.image_ref = resources_image.Get_image_reference( Resource_context.Devices, _dados.main_folder, _dados.simple_button_OFF_frame.path, Resource_image_content.sprite  );
-                    _dados.simple_button_OFF_frame.color = TOOL__device_UI_SUPPORT.Mudar_cor_default(  _dados.off.animacao_back.cor, Cores.grey_90 );
-
-                // ON
-
-                    _dados.simple_button_ON_frame.text_color = TOOL__device_UI_SUPPORT.Mudar_cor_default(  _dados.simple_button_ON_frame.text_color, Cores.black );
-                    _dados.simple_button_ON_frame.image_ref = resources_image.Get_image_reference( Resource_context.Devices, _dados.main_folder, _dados.simple_button_ON_frame.path, Resource_image_content.sprite  );
-                    _dados.simple_button_ON_frame.color = TOOL__device_UI_SUPPORT.Mudar_cor_default(  _dados.off.animacao_back.cor, Cores.grey_90 );
-
-
-                return botao;
-
-
-        }
-
-
-
-
-
-        public static Botao_dispositivo Construir_botao_COMPLETE( Botao_dispositivo botao ){
-
+                throw new Exception( "ainda temq ue fazer" ); 
 
                 Dados_botao_dispositivo _dados = botao.data;
 

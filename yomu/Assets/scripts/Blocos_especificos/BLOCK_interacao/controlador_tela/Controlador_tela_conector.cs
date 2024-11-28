@@ -22,8 +22,6 @@ public class Controlador_tela_conector {
 
 
             
-
-            public Controlador_cursor controlador_cursor;
             public Controlador_interativos controlador_interativos;
 
             public Coroutine background_coroutine = null;

@@ -47,6 +47,26 @@ public class RESOURCE__audio_ref {
         public void Activate(){ TOOL__module_context_audios_actions.Activate( this ); }
         public void Instanciate(){ TOOL__module_context_audios_actions.Instanciate( this ); }
 
+
+
+        public void Activate_resource_action( Resource_action _action ){
+
+            switch( _action ){
+
+                // ** UP
+                case Resource_action.load: Load(); break;
+                case Resource_action.activate: Activate(); break;
+                case Resource_action.instanciate: Instanciate(); break;
+
+                case Resource_action.unload: Unload(); break;
+                case Resource_action.deactivate: Deactivate(); break;
+                case Resource_action.deinstanciate: Deinstanciate(); break;
+                
+            }
+
+        }
+
+
     
         public void Change_level_pre_allocation( Resource_audio_content _new_pre_alloc ){}
 

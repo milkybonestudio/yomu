@@ -148,7 +148,6 @@ public static class TOOL__module_context_images_actions {
         // ** sinaliza que a imagem pode carregar o minimo 
         public static void Load( RESOURCE__image_ref _ref ){
 
-
                 Console.Log( "Veio Load()" );
                 CONTROLLER__errors.Verify( ( _ref.image == null ), $"Tried to Load ref { _ref.identifire }, but the RESOURCE__image is null" );
 
@@ -210,14 +209,10 @@ public static class TOOL__module_context_images_actions {
                     { return; } _ref.state = Resource_state.instanciated;
 
 
-                            
                 RESOURCE__image image = _ref.image;
                 MANAGER__resources_images manager = image.module_images.manager;
 
-
-
                 // --- ALL NORMAL
-
 
                 // image.module_images.manager.Stop_task( image );
 

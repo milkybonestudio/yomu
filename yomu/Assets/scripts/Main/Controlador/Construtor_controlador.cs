@@ -37,7 +37,6 @@ public static class Construtor_controlador {
                 controlador.controlador_input = CONSTRUCTOR__controller_input.Construct();
 
 
-                Construtor_controlador_cursor.Construir();
                 CONSTRUCTOR__controller_data.Construct();
                 CONSTRUCTOR__controller_configurations.Construct();
                 CONSTRUCTOR__controller_errors.Construct();

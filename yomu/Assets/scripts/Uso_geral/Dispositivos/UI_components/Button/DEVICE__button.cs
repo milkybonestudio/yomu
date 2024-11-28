@@ -6,16 +6,36 @@ using UnityEngine.UI;
 
 public class Botao_dispositivo {
 
-        // --- GAME OBEJCTS
+
+
+        // ** COLLIDERS
+
+            public GameObject COLLIDERS_container;
+
+                public GameObject OFF_collider_game_object;
+                public GameObject ON_collider_game_object;
+
+
+
+        // --- SIMPLE 
+
+                public Unity_main_components IMAGE_simple_body;
+                public Unity_main_components IMAGE_simple_text;
+
+                public Unity_main_components TRANSITION_simple_body;
+                public Unity_main_components TRANSITION_simple_text;
+
+
+        // --- COMPLETE
 
             // ** OFF 
 
-                public GameObject IMAGEM_container;
+                public GameObject IMAGE_container;
 
                 public Unity_main_components IMAGE_animation_back;
                 public Unity_main_components IMAGE_base;
                 public Unity_main_components IMAGE_animation_back_text;
-                public GameObject IMAGE_text_game_object;
+                public Unity_main_components IMAGE_text;
                 public Unity_main_components IMAGE_decoration;
                 public Unity_main_components IMAGE_animation_front_text;
                 
@@ -29,7 +49,7 @@ public class Botao_dispositivo {
                 public Unity_main_components TRANSITION_animation_back;
                 public Unity_main_components TRANSITION_base;
                 public Unity_main_components TRANSITION_animation_back_text;
-                public GameObject TRANSITION_texo_game_object;
+                public Unity_main_components TRANSITION_text;
                 public Unity_main_components TRANSITION_decoration;
                 public Unity_main_components TRANSITION_animation_front_text;
 
@@ -38,22 +58,9 @@ public class Botao_dispositivo {
 
 
 
-            // ** COLLIDERS
-
-                public GameObject COLLIDERS_container;
-
-                    public GameObject OFF_collider_game_object;
-                    public GameObject ON_collider_game_object;
-
-
                 public Image[] TRANSITION_composed_decoration_images;
                 public Image[] IMAGE_composed_decoration_images;
 
-
-        // --- TEXTO
-
-            public TMP_Text IMAGE_text;
-            public TMP_Text TRANSITION_text;
 
         // --- COLLIDERS
 
@@ -67,19 +74,30 @@ public class Botao_dispositivo {
         public float position_y;
 
 
-        public AudioClip audio_click; 
-        public AudioClip audio_houver; 
-        //public AudioClip audio_houver;
+        public Resource_state resource_state;
+
+        
+        public MANAGER__UI_button_resources manager_resources;
+
+
+        public RESOURCE__audio_ref audio_click;
+        public RESOURCE__audio_ref audio_houver;
+        
         
 
-
         public Dados_botao_dispositivo data;
+
         public GameObject botao_game_object;
+
 
         public string button_name = "Nao_colocou";
 
 
         // --- LOGICA INTERNA
+
+        public bool is_active;
+        public Resource_use_state state;
+
 
 
         public UI_button_type type;
@@ -102,18 +120,38 @@ public class Botao_dispositivo {
         public DEVICE_button_visual_state ultimo_estado_visual_botao;
 
 
+
+
+
+        public void Activate_button(){
+
+            is_active = true;
+            Update();
+
+        }
+
+
+        public void Deactivate_button(){
+
+            is_active = false;
+
+        }
+
+
+
+
+        // --- PUBLIC 
+        
         public void Update(){
 
-
+                if( !!!( is_active ) )
+                    { return; }
         
                 if( data.update_para_substituir != null )
-                    {
-                        data.update_para_substituir( this );
-                        return;
-                    }
+                    { data.update_para_substituir( this ); return; }
         
-                Update_logica(); 
-                Update_parte_visual(); 
+                TOOL__UI_button_UPDATE.Update_logica( this ); 
+                TOOL__UI_button_UPDATE.Update_parte_visual( this ); 
 
 
                 if( data.Update_secundario != null )
@@ -124,94 +162,51 @@ public class Botao_dispositivo {
         }
 
 
-        public void Update_logica(){
+        // ** declara is nothing -> creation data? 
+        // ** declare não faz parte do botao, pois declare vai de nada -> creation data e declara um botao para a estrutura
 
+        public void Define_button(){
 
-                if( data.bloquear_update_logico )
-                    { return; }
+                // creation data -> data
 
+                TOOL__UI_button_VERIFICATIONS.Verify_default( this );
+                
+                button_name = data.nome;
+                type = data.type;
 
-                // --- VERIFICAR HOUVER
-                if( esta_houver )
-                    {
-                        //mark
-                        // ** nao esta usando o colider?
+                manager_resources =  new MANAGER__UI_button_resources( this );
 
-                        // --- VERIFICA SE MOUSE CONTINUA NO BOTAO
-                        esta_houver = Polygon.Check_point_inside( ON_collider.points, ( Vector2 ) IMAGE_base.game_object.transform.position , Controlador_cursor.Pegar_instancia().posicao_cursor );
-                        if( !!!( esta_houver ) )
-                            { esta_down = false; return; } // --- SAIU
-                    }
-                    else
-                    { 
-                        // --- VERIFICA SE ENTROU
-                        esta_houver = Polygon.Check_point_inside( OFF_collider.points, ( Vector2 ) IMAGE_base.game_object.transform.position , Controlador_cursor.Pegar_instancia().posicao_cursor ); 
-                        if( !!!( esta_houver ) )
-                            { return; } // --- NAO ENTROU
-                            
-                        // --- VERIFICA SE EH TIPO ENTRADA
-                        if( data.tipo_ativacao == Botao_dispositivo_tipo_ativacao.entrar_no_botao )
-                            { data.Ativar(); return; } // --- ATIVAR BOTAO
-            
-                    } 
+                CONTROLLER__errors.Verify( ( type == UI_button_type.not_give ), $"In the button { button_name } was not put the button <Color=lightBlue><b>TYPE</b></Color>" );
 
+                switch( type ){
 
-                // --- VERIFICAR DOWN
-
-                if( Input.GetMouseButtonDown( 0 ) )
-                    { 
-
-                        esta_down = true; 
-                        if( data.tipo_ativacao == Botao_dispositivo_tipo_ativacao.clicar )
-                            { data.Ativar(); } // --- ATIVAR BOTAO
-                        
-                    }
-
-
-                if( Input.GetMouseButtonUp( 0 ) && esta_down )
-                    { 
-                        // --- ATIVA SOMENTE QUANDO DEU DOWN ANTERIORMENTE
-                        if( data.tipo_ativacao == Botao_dispositivo_tipo_ativacao.clicar_e_soltar && esta_down )
-                            { data.Ativar(); } // --- ATIVAR BOTAO
-
-                    }
-
-
-                if( !!!( Input.GetMouseButton( 0 ) ) )
-                    { esta_down = false; }
-
-
-        }
-
-
-        public void Update_parte_visual(){
-
-
-                if( data.bloquear_update_visual )
-                    { return; }
-
-
-                if( estado_visual_botao != ultimo_estado_visual_botao )
-                    { ultimo_estado_visual_botao = estado_visual_botao; }
-
-
-                switch( estado_visual_botao ){
-
-                        case DEVICE_button_visual_state.off_estatico: TOOL__UI_button_HANDLER.Handle_off_static( this ); break;
-                        case DEVICE_button_visual_state.off_animacao: TOOL__UI_button_HANDLER.Handle_off_animation( this ); break;
-                        case DEVICE_button_visual_state.on_estatico: TOOL__UI_button_HANDLER.Handle_on_static( this ); break;
-                        case DEVICE_button_visual_state.on_animacao: TOOL__UI_button_HANDLER.Handle_on_animation( this ); break;
-
-                        case DEVICE_button_visual_state.transicao_animacao_OFF_para_ON: TOOL__UI_button_HANDLER.Handle_transition_animation_OFF_to_ON( this ); break;
-                        case DEVICE_button_visual_state.transicao_animacao_ON_para_OFF: TOOL__UI_button_HANDLER.Lidar_transicao_animacao_ON_para_OFF( this ); break;
+                    case UI_button_type.simple: TOOL__UI_button_DEFINER_SIMPLE.Define( this ); break;
+                    case UI_button_type.complete: TOOL__UI_button_DEFINER_COMPLETE.Define( this ); break;
+                    case UI_button_type.complex: TOOL__UI_button_DEFINER_COMPLEX.Define( this ); break;
+                    default: CONTROLLER__errors.Throw( $"Can not handle type { type }" ); break;
 
                 }
 
-                return;
+        }
 
+
+        public void Link_to_game_object( GameObject _button_game_object ){
+
+                // data -> unity data
+
+                CONTROLLER__errors.Verify( ( _button_game_object == null ), $"The button <Color=lightBlue>{ button_name }</Color> came in <Color=lightBlue>Get_data_SIMPLE</Color> but the gameObject was null" );
+                botao_game_object = _button_game_object;
+
+                switch( type ){
+
+                    case UI_button_type.simple: TOOL__UI_button_GETTER_SIMPLE.Get( this ); break;    
+                    case UI_button_type.complete: TOOL__UI_button_GETTER_COMPLETE.Get( this ); break;
+                    case UI_button_type.complex: TOOL__UI_button_GETTER_COMPLETE.Get( this ); break;
+                    default : CONTROLLER__errors.Throw( "Button type not accepted: " + type ); break;
+
+                }
 
         }
+
         
-
-
 }

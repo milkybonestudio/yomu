@@ -5,7 +5,6 @@ public static class TOOL__device_UI_SUPPORT {
 
 
 
-
         public static void Verificar_tempos_sequencia( float[] _tempos, Color[] _cores, string _indentificador ){
 
 
@@ -18,9 +17,9 @@ public static class TOOL__device_UI_SUPPORT {
 
         }
 
-        public static void Verificar_nome( string nome_dispositivo, string _nome ){
+        public static void Verificar_nome( string _nome ){
 
-                CONTROLLER__errors.Verify( ( ( _nome == "" ) || ( _nome == null ) ), $"Nao foi colocado o nome da imagem estatica no dispositivo <Color=lighBlue><b>{ nome_dispositivo }</b></color>" );
+                CONTROLLER__errors.Verify( ( ( _nome == "" ) || ( _nome == null ) ), $"There was no name in a button" );
                 return;
         }
 
@@ -28,9 +27,8 @@ public static class TOOL__device_UI_SUPPORT {
         public static Color Mudar_cor_default( Color _cor_nos_dados, Color _cor_default ){
 
 
-                if( _cor_nos_dados != Cores.cor_default_dispositivo )
+                if( _cor_nos_dados != Color.clear )
                     { return _cor_nos_dados; }
-
 
                 // --- COLOCAR DEFAULT
                 return _cor_default; 

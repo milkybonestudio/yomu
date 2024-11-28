@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.XR;
 
 
+
+
 public class CONTROLLER__input {
 
 
@@ -15,8 +17,16 @@ public class CONTROLLER__input {
 
         public bool[] teclas_bloqueadas;
 
+        public MANAGER__cursor manager_cursor;
 
-        // --- mouse / ponteiro
+
+
+        // ** posicao ponteiro
+        // ** tipo click ( nothing, click, hold, drop )
+        // ** 
+
+        public Vector2 pointer_position;
+        public Pointer_state pointer_state;
 
         
 
@@ -40,7 +50,15 @@ public class CONTROLLER__input {
 
         public float Get_value_axis( int _axis ){ return interfaces_input[ ( int ) input_device_atual ].Get_value_axis( _axis ); }
         
-        public void Update(){ interfaces_input[ ( int ) input_device_atual ].Update(); }
+        public void Update(){ 
+
+
+            pointer_position = ( Vector2 ) Input.mousePosition;
+
+            // interfaces_input[ ( int ) input_device_atual ].Update(); 
+
+
+        }
 
         public char[] Pegar_teclas(){ return interfaces_input[ ( int ) input_device_atual ].Pegar_teclas(); }
 

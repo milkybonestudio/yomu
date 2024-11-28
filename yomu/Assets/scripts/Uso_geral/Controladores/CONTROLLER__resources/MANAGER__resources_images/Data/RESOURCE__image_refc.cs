@@ -2,6 +2,17 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
+public enum Resource_action {
+
+    load,
+    activate,
+    instanciate,
+
+    unload,
+    deactivate,
+    deinstanciate,
+
+}
 
 
 public class RESOURCE__image_ref {
@@ -43,6 +54,24 @@ public class RESOURCE__image_ref {
         public void Load(){ TOOL__module_context_images_actions.Load( this ); }
         public void Activate(){ TOOL__module_context_images_actions.Activate( this ); }
         public void Instanciate(){ TOOL__module_context_images_actions.Instanciate( this ); }
+
+
+        public void Activate_resource_action( Resource_action _action ){
+
+            switch( _action ){
+
+                // ** UP
+                case Resource_action.load: Load(); break;
+                case Resource_action.activate: Activate(); break;
+                case Resource_action.instanciate: Instanciate(); break;
+
+                case Resource_action.unload: Unload(); break;
+                case Resource_action.deactivate: Deactivate(); break;
+                case Resource_action.deinstanciate: Deinstanciate(); break;
+                
+            }
+
+        }
 
     
         public void Change_level_pre_allocation( Resource_image_content _new_pre_alloc ){ Guaranty_ref(); TOOL__module_context_images_actions.Change_level_pre_allocation( this, _new_pre_alloc ); }

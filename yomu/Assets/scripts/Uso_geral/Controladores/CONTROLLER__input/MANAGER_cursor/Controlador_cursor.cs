@@ -11,12 +11,8 @@ unsafe public struct Cursor_binding {
 }
 
 
-unsafe public class Controlador_cursor {
+unsafe public class MANAGER__cursor {
 
-
-        public static Controlador_cursor instancia;
-        public static Controlador_cursor Pegar_instancia(){ return instancia; }
-    
 
         public void Change_action( Cursor_action _action ){}
 
@@ -27,6 +23,7 @@ unsafe public class Controlador_cursor {
         // ** o player nao consegue mudar o binding mas o sistema consegue. 
         // ** se precisar mudar para algum pode mudar runtime por aqui e tem que mudar em algum lugar que va salvar
         // ** mas o binding também depende dos cursores
+        
         public void Change_binds( Cursor_binding* _binds ){
 
             // salvar mudança binds(  ( byte* )_binds, sizeof( Cursor_binding ) )

@@ -109,7 +109,7 @@ public class MANAGER__components_device {
                         if( botao == null  )
                             { break; }
 
-                        TOOL__UI_button.Define_button( dispositivo, botao );
+                        botao.Define_button();
                         continue;
 
                 }
@@ -165,7 +165,7 @@ public class MANAGER__components_device {
                     if( dados_botoes_dispositivo[ botao_index ] == null )
                         { continue; }
 
-                        TOOL__UI_button_getter.Get_data( botoes_dispositivo[ botao_index ], path_para_o_dispositivo );
+                        botoes_dispositivo[ botao_index ].Link_to_game_object( null );
 
                     continue;
 

@@ -26,7 +26,7 @@ public static class Finalizador_CONECTOR {
 
             Controlador_interativos.instancia = null;
             Controlador_tela_conector.instancia = null;
-            Controlador_cursor.instancia = null;
+            CONTROLLER__input.instancia = null;
             CONTROLLER__data.instancia = null;
 
             

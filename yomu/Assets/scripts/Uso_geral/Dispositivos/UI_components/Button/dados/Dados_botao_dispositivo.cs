@@ -7,17 +7,22 @@ using UnityEngine.UI;
 public class Dados_botao_dispositivo {
 
 
-        public Dados_botao_dispositivo(){
+        //mark 
+        // ver 
+        // public Dados_botao_dispositivo(){
 
 
-                // --- DEFAULT MULTIPLICADOR 
-                animacao_off_tempos.multiplicador_saida_padrao_animacao = 3f;
-                animacao_on_tempos.multiplicador_saida_padrao_animacao = 3f;
-                animacao_ON_para_OFF_tempos.multiplicador_saida_padrao_animacao = 3f;
-                animacao_OFF_para_ON_tempos.multiplicador_saida_padrao_animacao = 3f;
+        //         // --- DEFAULT MULTIPLICADOR 
+        //         animacao_off_tempos.multiplicador_saida_padrao_animacao = 3f;
+        //         animacao_on_tempos.multiplicador_saida_padrao_animacao = 3f;
+        //         animacao_ON_para_OFF_tempos.multiplicador_saida_padrao_animacao = 3f;
+        //         animacao_OFF_para_ON_tempos.multiplicador_saida_padrao_animacao = 3f;
 
 
-        }
+        // }
+
+
+        public UI_button_type type;
 
 
         public Resource_use_state state;
@@ -44,6 +49,12 @@ public class Dados_botao_dispositivo {
         public Action Ativar = VOID.Metodo_nao_colocado;
         public Action Construtor_personalizado = VOID.Metodo_nao_colocado;
 
+
+        // --- RESOURCES 
+
+        public Resource_audio_content audio_resource_pre_allocation;
+        public Resource_image_content image_resource_pre_allocation;
+
         
         // --- BLOQUEIOS 
         public bool update_visual_bloqueado;
@@ -52,7 +63,7 @@ public class Dados_botao_dispositivo {
         // --- EXCLUSIVO CRIACAO
         
 
-        public bool sprites_OFF_e_ON_iguais;
+        public bool OFF_and_ON_equal;
         public float tempo_transicao = 75f;
         
 
@@ -65,30 +76,38 @@ public class Dados_botao_dispositivo {
 
         // --- GENERAL
 
+        public bool text_OFF_and_ON_equal;
         public string text_on;
         public string text_off;
 
 
         // ** SIMPLE
 
+        public float time_transition_ON_to_OFF_SIMPLE;
+        public float time_transition_OFF_to_ON_SIMPLE;
+
+
         public Button_animation_frame simple_button_ON_frame;
+        public Color simple_button_ON_text_color;
+
         public Button_animation_frame simple_button_OFF_frame;
+        public Color simple_button_OFF_text_color;
 
         
         // ** COMPLETE
 
-        public Button_animation_frame[] complete_button_ON_frames = new Button_animation_frame[ 6 ];
-        public Button_animation_frame[] complete_button_OFF_frames = new Button_animation_frame[ 6 ];
+            public Button_animation_frame[] complete_button_ON_frames = new Button_animation_frame[ 6 ];
+            public Button_animation_frame[] complete_button_OFF_frames = new Button_animation_frame[ 6 ];
 
 
         // ** COMPLETE WITH ANIMATION
 
-        // ** provavelmente vai usar multiplos para as transicoes ou todos de uma categoria vao ser. 
-        // ** recisa esperar multiplos
+            // ** provavelmente vai usar multiplos para as transicoes ou todos de uma categoria vao ser. 
+            // ** recisa esperar multiplos
 
-        // [  fixo  , variavel ]
-        public RESOURCE__image_ref[,]  images_refs_animacoes_completas;
-        public Color[,] cores_animacoes_completas;
+            // [  fixo  , variavel ]
+            public RESOURCE__image_ref[,]  images_refs_animacoes_completas;
+            public Color[,] cores_animacoes_completas;
 
 
 
