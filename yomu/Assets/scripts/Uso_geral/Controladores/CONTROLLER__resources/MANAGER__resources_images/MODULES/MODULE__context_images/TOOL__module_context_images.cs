@@ -13,7 +13,8 @@ public static class TOOL__module_context_images {
                 Resources_getting_image_stage blocked_for_now = ( Resources_getting_image_stage.getting_texture | Resources_getting_image_stage.applying_texture );
 
                 
-                CONTROLLER__errors.Verify( ( int ) ( _image.stage_getting_resource & blocked_for_now  ), $"Tried to update resources level, but the current resources stage is not allowed: { _image.stage_getting_resource }" );
+                if( ( int ) ( _image.stage_getting_resource & blocked_for_now  ) != 0  )
+                    { CONTROLLER__errors.Throw( $"Tried to update resources level, but the current resources stage is not allowed: { _image.stage_getting_resource }" ); }
 
                 if( _image.count_places_being_used_sprite > 0 )
                     { Going_to_resource_level_SPRITE( _image ); return; }
@@ -245,7 +246,8 @@ public static class TOOL__module_context_images {
                     
                 }
 
-                CONTROLLER__errors.Verify( !!!( TOOL__resource_image.Verify_stage( _image, possible_stages ) ), $"Image { _image.name } is with content { _image.actual_content } but the stage is { _image.stage_getting_resource }" );
+                if( !!!( TOOL__resource_image.Verify_stage( _image, possible_stages ) ) )
+                    { CONTROLLER__errors.Throw( $"Image { _image.name } is with content { _image.actual_content } but the stage is { _image.stage_getting_resource }" ); }
                     
                 return;
 

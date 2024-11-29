@@ -74,7 +74,8 @@ public class Teste_figure : INTERFACE__figure {
                 public void Instanciate_MAD( Figure _figure ){
 
 
-                        CONTROLLER__errors.Verify( !!!( resources_loaded ), $"Tried to instanciate figure { Get_figure_name() } but it was not loaded" );
+                        if( !!!( resources_loaded ) )
+                            { CONTROLLER__errors.Throw( $"Tried to instanciate figure { Get_figure_name() } but it was not loaded" ); }
 
                         if( mad_prefab == null )
                             { 

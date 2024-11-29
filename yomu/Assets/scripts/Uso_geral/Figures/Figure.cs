@@ -39,8 +39,11 @@ public class Figure {
 
 
 
-                CONTROLLER__errors.Verify( ( _container_father == null ), $"Tried to instanciate the figure { figure_interface.Get_figure_name() }, but the container was null" );
-                CONTROLLER__errors.Verify( ( figure_container_prefab == null ), $"Tried to instanciate the figure { figure_interface.Get_figure_name() }, but the prefab was null" );
+                if( _container_father == null )
+                    { CONTROLLER__errors.Throw( $"Tried to instanciate the figure { figure_interface.Get_figure_name() }, but the container was null" ); }
+
+                if( figure_container_prefab == null )
+                    { CONTROLLER__errors.Throw( $"Tried to instanciate the figure { figure_interface.Get_figure_name() }, but the prefab was null" ); }
 
 
                 figure_structure.Instanciate( _container_father );

@@ -10,7 +10,9 @@ public static class TOOL__resource_audio {
                 if( _audio.audio_clip == null )
                     { return; }
 
-                CONTROLLER__errors.Verify( ( _audio.audio_clip.loadType != AudioClipLoadType.Streaming ), $"audio { _audio.name } have the loadType { _audio.audio_clip.loadType }. Only stream is accepted for now" );
+                if( _audio.audio_clip.loadType != AudioClipLoadType.Streaming )
+                    { CONTROLLER__errors.Throw( $"audio { _audio.name } have the loadType { _audio.audio_clip.loadType }. Only stream is accepted for now" ); }
+
         
                 return; 
                 

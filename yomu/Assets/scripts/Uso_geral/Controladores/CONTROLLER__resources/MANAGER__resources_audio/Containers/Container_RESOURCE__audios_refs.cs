@@ -75,7 +75,8 @@ public class Container_RESOURCE__audios_refs {
             Console.Log( "veiuo Put_data_audio_ref()" );
 
                 
-                CONTROLLER__errors.Verify( ( _audio == null  ), "Tried to creat a image ref but the image comes null" ); 
+                if( _audio == null )
+                    { CONTROLLER__errors.Throw( "Tried to creat a image ref but the image comes null" ); }
         
             
                 _ref.ref_name = "NAO COLOCOU?"; // ** localizador local

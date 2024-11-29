@@ -68,8 +68,12 @@ unsafe public static class TOOL__loader_texture {
 
                 Console.Log( "Veio Transfer_data_PNG" );
                 
-                CONTROLLER__errors.Verify( ( png == null ) , "png veio null" );
-                CONTROLLER__errors.Verify( !!!( PNG.Verify_is_png( png ) ), "Nao era um png" );
+                if( png == null )
+                    { CONTROLLER__errors.Throw( "png veio null" ); }
+
+                if( !!!( PNG.Verify_is_png( png ) ) )
+                    { CONTROLLER__errors.Throw( "Nao era um png" ); } 
+
 
                 Image image = null;
                 MemoryStream m_s = null; 

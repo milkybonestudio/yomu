@@ -1,15 +1,15 @@
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading;
-
 
 
 public class CONTROLLER__errors {
 
 
-
         public static int Throw( string _message ){ Get_instance().Throw_intern( _message ); return -1; }
-        public static void Verify( bool _bool , string _message ){ if( _bool ){ Get_instance().Throw_intern( _message ); } }
-        public static void Verify( int _bool_int , string _message ){ if( _bool_int != 0 ){ Get_instance().Throw_intern( _message ); } }
+
+        // public static void Verify( bool _bool , string _message ){ if( _bool ){ instance.Throw_intern( _message ); } }
+
         public static void Throw_exception( Exception _exp ){ Get_instance().Throw_exception_internal( _exp ); }
 
         public static CONTROLLER__errors instance;

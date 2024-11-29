@@ -10,7 +10,8 @@ public static class Prefab_loader {
             // ** por hora vai seomente chamar normalmente com resources. mas quando eu puder optimizar os arquivos .prefab vao ser transformados em um outro tipo para poder fazer object pooling 
             GameObject prefab = Resources.Load<GameObject>( _path );
 
-            CONTROLLER__errors.Verify( ( prefab == null ), $"nao achou o prefab no path { _path }" );
+            if( prefab == null )
+                { CONTROLLER__errors.Throw( $"nao achou o prefab no path { _path }" ); }
         
             return prefab;
 

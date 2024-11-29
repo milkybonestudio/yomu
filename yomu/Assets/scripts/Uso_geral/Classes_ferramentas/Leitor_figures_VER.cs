@@ -41,7 +41,8 @@ public static class Leitor_figures {
                 // isso é somente usado para quando eu quero fazer testes mudando imagens sem ter que refazer todo os containers.dat
 
 
-                CONTROLLER__errors.Verify( !!!( Application.isEditor ), "veio em Pegar_dados_figure_paths() estando fora do editor" );
+                if( !!!( Application.isEditor ) )
+                    { CONTROLLER__errors.Throw( "veio em Pegar_dados_figure_paths() estando fora do editor" ); } 
 
 
             // bloco garante que inicie e que tenha slots para o personagem

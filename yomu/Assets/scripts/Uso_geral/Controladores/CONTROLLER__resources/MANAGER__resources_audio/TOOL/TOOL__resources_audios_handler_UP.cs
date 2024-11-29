@@ -10,7 +10,8 @@ public static class TOOL__resources_audios_handler_UP {
 
                 TOOL__resource_audio.Verify_audio( _audio );
 
-                CONTROLLER__errors.Verify( ( _audio.actual_content != Resource_audio_content.nothing ), $"the image { _audio.name } came to the Handle_waiting_to_start() but the actual content is { _audio.actual_content }" );
+                if( _audio.actual_content != Resource_audio_content.nothing )
+                    { CONTROLLER__errors.Throw( $"the image { _audio.name } came to the Handle_waiting_to_start() but the actual content is { _audio.actual_content }" ); }
 
                 int weight = 0;
 

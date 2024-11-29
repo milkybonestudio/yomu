@@ -31,8 +31,11 @@ public static class TOOL__resources_images_handler_REAJUST {
             
                 Console.Log( "Handle_getting_compress_file_REAJUST()" );
 
-                CONTROLLER__errors.Verify( ( _manager.task_getting_compress_file_REAJUST == null ), $"the image { _image.name } was as getting_compress_file but the task_req is null" );
-                CONTROLLER__errors.Verify( ( _image.content_going_to != Resource_image_content.sprite ), $"was getting the compress file in REAJUST  { _image.name }, but the content_going_to is { _image.content_going_to }. Need to be sprite" );
+                if( _manager.task_getting_compress_file_REAJUST == null )
+                    { CONTROLLER__errors.Throw(  $"the image { _image.name } was as getting_compress_file but the task_req is null" ); }
+
+                if( _image.content_going_to != Resource_image_content.sprite )
+                    { CONTROLLER__errors.Throw(  $"was getting the compress file in REAJUST  { _image.name }, but the content_going_to is { _image.content_going_to }. Need to be sprite" ); }
 
                 int weight = 0;
 
@@ -41,7 +44,8 @@ public static class TOOL__resources_images_handler_REAJUST {
 
                 // --- TASK GET THE PNG                
 
-                CONTROLLER__errors.Verify( ( _manager.task_getting_compress_file_REAJUST.dados[ 0 ] == null ), $"the image { _image.name } was as getting_compress_file but the png is null" );
+                if( _manager.task_getting_compress_file_REAJUST.dados[ 0 ] == null )
+                    { CONTROLLER__errors.Throw( $"the image { _image.name } was as getting_compress_file but the png is null" ); }  
 
                 // --- CHANGE DATA
                 _image.single_image.image_compress = ( byte[] ) _manager.task_getting_compress_file_REAJUST.dados[ 0 ];
@@ -49,7 +53,8 @@ public static class TOOL__resources_images_handler_REAJUST {
 
                 //_image.actual_content = Resource_image_content.compress_data;
 
-                CONTROLLER__errors.Verify( ( !!!( PNG.Verify_is_png( _image.single_image.image_compress ) ) ), "was not a png NO HANLDE" );
+                if( !!!( PNG.Verify_is_png( _image.single_image.image_compress ) ) )
+                    { CONTROLLER__errors.Throw( "was not a png NO HANLDE" ); }
 
                 ARRAY.Print_length( "Png length", _image.single_image.image_compress );
 
@@ -65,15 +70,16 @@ public static class TOOL__resources_images_handler_REAJUST {
 
                 Console.Log( "Handle_waiting_to_pass_data_to_texture_REAJUST" );
 
-                CONTROLLER__errors.Verify( ( _image.content_going_to != Resource_image_content.sprite ), $"The image { _image.name } was going to create passing the data to the texture in the REAJUS, but the content_going_to is { _image.content_going_to }" );
+                if( _image.content_going_to != Resource_image_content.sprite )
+                    { CONTROLLER__errors.Throw(  $"The image { _image.name } was going to create passing the data to the texture in the REAJUS, but the content_going_to is { _image.content_going_to }" ); }
 
                 int weight = 0;
 
                 if( _manager.task_passing_to_texture_REAJUST != null )
                     { return weight; } // --- TASK ALREADY IN USE
 
-
-                CONTROLLER__errors.Verify( ( !!!( PNG.Verify_is_png( _image.single_image.image_compress ) ) ), "was not a png" );
+                if( !!!( PNG.Verify_is_png( _image.single_image.image_compress ) ) )
+                    { CONTROLLER__errors.Throw( "was not a png" ); }
 
                 // --- GET TASK
                 _manager.task_passing_to_texture_REAJUST = CONTROLLER__tasks.Pegar_instancia().Get_task_request( "task_passing_to_texture_REAJUST" );
@@ -91,8 +97,12 @@ public static class TOOL__resources_images_handler_REAJUST {
             
                 Console.Log( "Handle_passing_data_to_texture" );
 
-                CONTROLLER__errors.Verify( ( _manager.task_passing_to_texture_REAJUST == null ), $"the image { _image.name } was as passing data to the texturew but the task_req is null" );
-                CONTROLLER__errors.Verify( ( _image.content_going_to < Resource_image_content.sprite ), $"The image { _image.name } was passing the data to the texture, but the content_going_to is { _image.content_going_to }" );
+                if( _manager.task_passing_to_texture_REAJUST == null )
+                    { CONTROLLER__errors.Throw(  $"the image { _image.name } was as passing data to the texturew but the task_req is null" ); }
+
+                if( _image.content_going_to < Resource_image_content.sprite )
+                    { CONTROLLER__errors.Throw(  $"The image { _image.name } was passing the data to the texture, but the content_going_to is { _image.content_going_to }" ); }
+
 
                 if( !!!( _manager.task_passing_to_texture_REAJUST.finalizado ) )
                     { return 0; }
@@ -110,7 +120,8 @@ public static class TOOL__resources_images_handler_REAJUST {
 
                 Console.Log( "Handle_waiting_to_apply_texture_REAJUST" );
 
-                CONTROLLER__errors.Verify( ( _image.content_going_to != Resource_image_content.sprite ), $"The image { _image.name } was going to create passing the data to the texture, but the content_going_to is { _image.content_going_to }" );
+                if( _image.content_going_to != Resource_image_content.sprite )
+                    { CONTROLLER__errors.Throw( $"The image { _image.name } was going to create passing the data to the texture, but the content_going_to is { _image.content_going_to }" ); }
                 
                 int weight = 1;
 

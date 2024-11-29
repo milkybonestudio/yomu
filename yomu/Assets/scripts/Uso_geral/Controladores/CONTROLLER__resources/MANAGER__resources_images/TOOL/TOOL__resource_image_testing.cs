@@ -11,12 +11,14 @@ public static class TOOL__resource_image_testing {
             string path = "Tela/Container_teste";
 
             canvas = GameObject.Find( path );
-            CONTROLLER__errors.Verify( ( canvas == null ), $"Dond found the canvas for the RESOURCE__image test. Path:<Color=lightBlue> { path }</Color>" );
+            if( canvas == null )
+                { CONTROLLER__errors.Throw( $"Dond found the canvas for the RESOURCE__image test. Path:<Color=lightBlue> { path }</Color>" ); }
 
             image = IMAGE.Criar_imagem_filho( "imagem teste", out image_game_object, canvas );
             IMAGE.Resize( image_game_object, 500f, 500f );
 
-            CONTROLLER__errors.Verify( ( image == null ), $"Dond found the iamge container for the RESOURCE__image test. Path: <Color=lightBlue>{ path }<Color>" );
+            if( image == null )
+                { CONTROLLER__errors.Throw( $"Dond found the iamge container for the RESOURCE__image test. Path: <Color=lightBlue>{ path }<Color>" ); } 
 
 
             CONTROLLER__resources.Get_instance().resources_images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );

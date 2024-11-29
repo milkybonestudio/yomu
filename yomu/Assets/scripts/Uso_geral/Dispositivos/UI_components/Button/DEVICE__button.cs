@@ -175,8 +175,10 @@ public class Botao_dispositivo {
                 type = data.type;
 
                 manager_resources =  new MANAGER__UI_button_resources( this );
+                
 
-                CONTROLLER__errors.Verify( ( type == UI_button_type.not_give ), $"In the button { button_name } was not put the button <Color=lightBlue><b>TYPE</b></Color>" );
+                if( type == UI_button_type.not_give )
+                    { CONTROLLER__errors.Throw( $"In the button { button_name } was not put the button <Color=lightBlue><b>TYPE</b></Color>" ); }
 
                 switch( type ){
 
@@ -194,7 +196,9 @@ public class Botao_dispositivo {
 
                 // data -> unity data
 
-                CONTROLLER__errors.Verify( ( _button_game_object == null ), $"The button <Color=lightBlue>{ button_name }</Color> came in <Color=lightBlue>Get_data_SIMPLE</Color> but the gameObject was null" );
+                if( _button_game_object == null )
+                    { CONTROLLER__errors.Throw( $"The button <Color=lightBlue>{ button_name }</Color> came in <Color=lightBlue>Get_data_SIMPLE</Color> but the gameObject was null" ); }
+
                 botao_game_object = _button_game_object;
 
                 switch( type ){

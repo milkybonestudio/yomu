@@ -10,7 +10,8 @@ public static class TOOL__resources_images_handler_UP {
 
                 TOOL__resource_image.Verify_image( _image );
 
-                CONTROLLER__errors.Verify( ( _image.actual_content != Resource_image_content.nothing ), $"the image { _image.name } came to the Handle_waiting_to_start() but the actual content is { _image.actual_content }" );
+                if( _image.actual_content != Resource_image_content.nothing )
+                    { CONTROLLER__errors.Throw( $"the image { _image.name } came to the Handle_waiting_to_start() but the actual content is { _image.actual_content }" ); }
 
                 int weight = 0;
 
@@ -60,8 +61,12 @@ public static class TOOL__resources_images_handler_UP {
 
                 Console.Log( "veio Handle_getting_compress_low_quality_file()" );
 
-                CONTROLLER__errors.Verify( ( _manager.task_getting_compress_low_quality_file == null ), $"the image { _image.name } was as getting_compress_low_quality_file but the task_req is null" );
-                CONTROLLER__errors.Verify( !!!( _image.system_have_low_quality ), $"the image { _image.name } was as getting_compress_low_quality_file but the system dont have the image low quality" );
+                if( _manager.task_getting_compress_low_quality_file == null )
+                    { CONTROLLER__errors.Throw( $"the image { _image.name } was as getting_compress_low_quality_file but the task_req is null" ); }
+
+                if( !!!( _image.system_have_low_quality ) )
+                    { CONTROLLER__errors.Throw( $"the image { _image.name } was as getting_compress_low_quality_file but the system dont have the image low quality" ); }
+
                 int weight = 0;
 
                 if( !!!( _manager.task_getting_compress_low_quality_file.finalizado ) )
@@ -108,8 +113,12 @@ public static class TOOL__resources_images_handler_UP {
 
                 Console.Log( "Handle_getting_compress_file()" );
 
-                CONTROLLER__errors.Verify( ( _manager.task_getting_compress_file == null ), $"the image { _image.name } was as getting_compress_file but the task_req is null" );
-                CONTROLLER__errors.Verify( ( _image.content_going_to < Resource_image_content.compress_data ), $"Get the png for the image { _image.name }, but the content_going_to is { _image.content_going_to }" );
+                if( _manager.task_getting_compress_file == null )
+                    { CONTROLLER__errors.Throw(  $"the image { _image.name } was as getting_compress_file but the task_req is null" ); }
+
+                if( _image.content_going_to < Resource_image_content.compress_data )
+                    { CONTROLLER__errors.Throw(  $"Get the png for the image { _image.name }, but the content_going_to is { _image.content_going_to }" ); }
+
 
                 int weight = 0;
 
@@ -118,14 +127,16 @@ public static class TOOL__resources_images_handler_UP {
 
                 // --- TASK GET THE PNG                
 
-                CONTROLLER__errors.Verify( ( _manager.task_getting_compress_file.dados[ 0 ] == null ), $"the image { _image.name } was as getting_compress_file but the png is null" );
+                if( _manager.task_getting_compress_file.dados[ 0 ] == null )
+                    { CONTROLLER__errors.Throw( $"the image { _image.name } was as getting_compress_file but the png is null" ); }
 
                 // --- CHANGE DATA
                 _image.single_image.image_compress = ( byte[] ) _manager.task_getting_compress_file.dados[ 0 ];
                 _manager.task_getting_compress_file = null;
                 _image.actual_content = Resource_image_content.compress_data;
 
-                CONTROLLER__errors.Verify( ( !!!( PNG.Verify_is_png( _image.single_image.image_compress ) ) ), "was not a png NO HANLDE" );
+                if( !!!( PNG.Verify_is_png( _image.single_image.image_compress ) ) )
+                    { CONTROLLER__errors.Throw( "was not a png NO HANLDE" ); }
 
                 ARRAY.Print_length( "Png length", _image.single_image.image_compress );
 
@@ -151,8 +162,11 @@ public static class TOOL__resources_images_handler_UP {
 
                 int weight = 3;
 
-                CONTROLLER__errors.Verify( ( _image.width * _image.height == 0 ), $"Was going to get the texture for the image { _image.name }, but the width was { _image.width } and the height was { _image.height }" );
-                CONTROLLER__errors.Verify( ( _image.content_going_to < Resource_image_content.sprite ), $"The image { _image.name } was going to create the texture, but the content_going_to is { _image.content_going_to }" );
+                if( _image.width * _image.height == 0 )
+                    { CONTROLLER__errors.Throw( $"Was going to get the texture for the image { _image.name }, but the width was { _image.width } and the height was { _image.height }" ); }
+
+                if( _image.content_going_to < Resource_image_content.sprite )
+                    { CONTROLLER__errors.Throw( $"The image { _image.name } was going to create the texture, but the content_going_to is { _image.content_going_to }" ); }
 
                 // --- CREATE DATA
                 _image.single_image.texture_exclusiva = new Texture2D( _image.width, _image.height, TextureFormat.RGBA32, false );
@@ -176,8 +190,12 @@ public static class TOOL__resources_images_handler_UP {
 
                 Console.Log( "Handle_waiting_to_pass_data_to_texture" );
 
-                CONTROLLER__errors.Verify( ( _image.content_going_to < Resource_image_content.sprite ), $"The image { _image.name } was going to create passing the data to the texture, but the content_going_to is { _image.content_going_to }" );
-                CONTROLLER__errors.Verify( ( _image.actual_content != Resource_image_content.texture ), $"The image { _image.name } was going to pass data to the texture, but the actual content is { _image.actual_content }" );
+                if( _image.content_going_to < Resource_image_content.sprite )
+                    { CONTROLLER__errors.Throw( $"The image { _image.name } was going to create passing the data to the texture, but the content_going_to is { _image.content_going_to }" ); }
+
+                if( _image.actual_content != Resource_image_content.texture )
+                    { CONTROLLER__errors.Throw( $"The image { _image.name } was going to pass data to the texture, but the actual content is { _image.actual_content }" ); }  
+
 
                 int weight = 0;
 
@@ -185,7 +203,8 @@ public static class TOOL__resources_images_handler_UP {
                     { return weight; } // --- TASK ALREADY IN USE
 
 
-                CONTROLLER__errors.Verify( ( !!!( PNG.Verify_is_png( _image.single_image.image_compress ) ) ), "was not a png" );
+                if( !!!( PNG.Verify_is_png( _image.single_image.image_compress ) ) )
+                    { CONTROLLER__errors.Throw( "was not a png" ); }
 
                 // --- GET TASK
                 _manager.task_passing_to_texture = CONTROLLER__tasks.Pegar_instancia().Get_task_request( "task_passing_to_texture" );
@@ -204,12 +223,14 @@ public static class TOOL__resources_images_handler_UP {
 
                 Console.Log( "Handle_passing_data_to_texture" );
 
-                CONTROLLER__errors.Verify( ( _manager.task_passing_to_texture == null ), $"the image { _image.name } was as passing data to the texturew but the task_req is null" );
-                CONTROLLER__errors.Verify( ( _image.content_going_to < Resource_image_content.sprite ), $"The image { _image.name } was passing the data to the texture, but the content_going_to is { _image.content_going_to }" );
+                if( _manager.task_passing_to_texture == null )
+                    { CONTROLLER__errors.Throw( $"the image { _image.name } was as passing data to the texturew but the task_req is null" ); }
+
+                if( _image.content_going_to < Resource_image_content.sprite )
+                    { CONTROLLER__errors.Throw( $"The image { _image.name } was passing the data to the texture, but the content_going_to is { _image.content_going_to }" ); }
 
                 if( !!!( _manager.task_passing_to_texture.finalizado ) )
                     { return 0; }
-
                 
                 // --- NEXT STEAP
                 _manager.task_passing_to_texture = null;
@@ -226,8 +247,11 @@ public static class TOOL__resources_images_handler_UP {
 
                 Console.Log( "Handle_waiting_to_apply_texture" );
 
-                CONTROLLER__errors.Verify( ( _image.content_going_to < Resource_image_content.sprite ), $"The image { _image.name } was going to create passing the data to the texture, but the content_going_to is { _image.content_going_to }" );
-                CONTROLLER__errors.Verify( ( _image.actual_content != Resource_image_content.texture_with_pixels ), $"The image { _image.name } was going to apply the texture, but the actual content is { _image.actual_content }" );
+                if( _image.content_going_to < Resource_image_content.sprite )
+                    { CONTROLLER__errors.Throw( $"The image { _image.name } was going to create passing the data to the texture, but the content_going_to is { _image.content_going_to }" ); }
+
+                if( _image.actual_content != Resource_image_content.texture_with_pixels )
+                    { CONTROLLER__errors.Throw( $"The image { _image.name } was going to apply the texture, but the actual content is { _image.actual_content }" ); }
 
                 int weight = 1;
 

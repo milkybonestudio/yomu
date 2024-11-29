@@ -63,8 +63,11 @@ unsafe public sealed class WebP : IDisposable{
                 {
 
                     // ** somente editor
-                    CONTROLLER__errors.Verify( !!!( Application.isEditor ) , "This can only happens in the editor" );
-                    CONTROLLER__errors.Verify( (  _native_arr_texture.Length != ( _height * _width ) ) , "deu ruim" );
+                    if( !!!( Application.isEditor ) )
+                        { CONTROLLER__errors.Throw( "This can only happens in the editor" ); }
+
+                    if(  _native_arr_texture.Length != ( _height * _width ) )
+                        { CONTROLLER__errors.Throw( "deu ruim" ); }
 
                     byte[] webp_default =  Get_bytes( rawWebP );
 
@@ -138,7 +141,7 @@ unsafe public sealed class WebP : IDisposable{
 
 
             if (UnsafeNativeMethods.WebPInitDecoderConfig(ref config) == 0)
-            {  throw new Exception("WebPInitDecoderConfig failed. Wrong version?");}
+            {  CONTROLLER__errors.Throw( "WebPInitDecoderConfig failed. Wrong version?" );}
             // Read the .webp input file information
 
             config.options.bypass_filtering = options.bypass_filtering;
@@ -181,7 +184,7 @@ unsafe public sealed class WebP : IDisposable{
 
 
             if (result != VP8StatusCode.VP8_STATUS_OK)
-                { throw new Exception("Failed WebPDecode with error " + result); }
+                { CONTROLLER__errors.Throw("Failed WebPDecode with error " + result); }
 
             UnsafeNativeMethods.WebPFreeDecBuffer(ref config.output);
 

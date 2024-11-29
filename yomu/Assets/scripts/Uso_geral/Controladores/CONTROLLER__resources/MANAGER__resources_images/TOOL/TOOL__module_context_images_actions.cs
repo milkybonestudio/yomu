@@ -37,14 +37,16 @@ public static class TOOL__module_context_images_actions {
 
                 RESOURCE__image image = _ref.image;
                 
-                CONTROLLER__errors.Verify(  !!!( image.single_image.used ),  "Called Get_sprite() but the image dont have the single_image data" );
+                if( !!!( image.single_image.used ) )
+                    { CONTROLLER__errors.Throw( "Called Get_sprite() but the image dont have the single_image data" ); }
 
-                
                 if( _ref.state != Resource_state.instanciated )
                     { Instanciate( _ref  ); }
 
-                CONTROLLER__errors.Verify( ( image.single_image.sprite == null ), $"Sprite of the image { image.name } was null" );
+                if( image.single_image.sprite == null )
+                    { CONTROLLER__errors.Throw( $"Sprite of the image { image.name } was null" ); }
                 
+
                 return image.single_image.sprite;
 
         }
@@ -77,7 +79,10 @@ public static class TOOL__module_context_images_actions {
                 // ** VAI PARA O NADA
 
                 Console.Log( "Veio Unload()" );
-                CONTROLLER__errors.Verify( ( _ref.image == null ), $"Tried to Unload ref { _ref.identifire }, but the RESOURCE__image is null" );
+
+                if( _ref.image == null )
+                    { CONTROLLER__errors.Throw( $"Tried to Unload ref { _ref.identifire }, but the RESOURCE__image is null" ); }
+
 
                 if( _ref.state == Resource_state.nothing )
                     { return; } _ref.state = Resource_state.nothing;
@@ -100,7 +105,9 @@ public static class TOOL__module_context_images_actions {
                 // ** VAI PARA O NADA
 
                 Console.Log( "Veio Deactivate()" );
-                CONTROLLER__errors.Verify( ( _ref.image == null ), $"Tried to Deactivate ref { _ref.identifire }, but the RESOURCE__image is null" );
+
+                if( _ref.image == null )
+                    { CONTROLLER__errors.Throw( $"Tried to Deactivate ref { _ref.identifire }, but the RESOURCE__image is null" ); }
 
 
                 if( _ref.state <= Resource_state.minimun )
@@ -123,7 +130,9 @@ public static class TOOL__module_context_images_actions {
             // ** FORCE TO GO TO activate if isntanciate
 
                 Console.Log( "Veio Deinstanciate()" );
-                CONTROLLER__errors.Verify( ( _ref.image == null ), $"Tried to Deactivate ref { _ref.identifire }, but the RESOURCE__image is null" );
+
+                if( _ref.image == null )
+                    { CONTROLLER__errors.Throw( $"Tried to Deactivate ref { _ref.identifire }, but the RESOURCE__image is null" ); }
 
 
                 if( _ref.state <= Resource_state.active )
@@ -149,7 +158,8 @@ public static class TOOL__module_context_images_actions {
         public static void Load( RESOURCE__image_ref _ref ){
 
                 Console.Log( "Veio Load()" );
-                CONTROLLER__errors.Verify( ( _ref.image == null ), $"Tried to Load ref { _ref.identifire }, but the RESOURCE__image is null" );
+                if( _ref.image == null )
+                    { CONTROLLER__errors.Throw( $"Tried to Load ref { _ref.identifire }, but the RESOURCE__image is null" ); }
 
 
                 Console.Log(  "_ref.state: " + _ref.state  );
@@ -176,7 +186,9 @@ public static class TOOL__module_context_images_actions {
 
                 Console.Log( "veio Activate()" );
 
-                CONTROLLER__errors.Verify( ( _ref.image == null ), $"Tried to Activate ref { _ref.identifire }, but the RESOURCE__image is null" );
+            
+                if( _ref.image == null )
+                    { CONTROLLER__errors.Throw( $"Tried to Activate ref { _ref.identifire }, but the RESOURCE__image is null" ); }
 
                 if( _ref.state >= Resource_state.active )
                     { return; } _ref.state = Resource_state.active;
@@ -201,7 +213,8 @@ public static class TOOL__module_context_images_actions {
 
                 Console.Log( "Veio Instanciate()" );
 
-                CONTROLLER__errors.Verify( ( _ref.image == null ), $"Tried to Activate ref { _ref.identifire }, but the RESOURCE__image is null" );
+                if( _ref.image == null )
+                    { CONTROLLER__errors.Throw( $"Tried to Activate ref { _ref.identifire }, but the RESOURCE__image is null" ); }
 
                 Console.Log( "REF STATE: " + _ref.state );
 
@@ -261,7 +274,8 @@ public static class TOOL__module_context_images_actions {
                     // --- GUARANTY TEXTURE
                         if( image.actual_content < Resource_image_content.texture )
                             { 
-                                CONTROLLER__errors.Verify( ( ( image.width * image.height ) == 0 ), $"Image { image.name } is with height { image.height } and width { image.width }" );
+                                if( ( image.width * image.height ) == 0 )
+                                    { CONTROLLER__errors.Throw( $"Image { image.name } is with height { image.height } and width { image.width }" ); }
                                 
                                 image.single_image.texture_exclusiva = new Texture2D( image.width, image.height, TextureFormat.RGBA32, false );
                                 image.single_image.texture_exclusiva_native_array = image.single_image.texture_exclusiva.GetPixelData<Color32>( 0 );
@@ -317,7 +331,8 @@ public static class TOOL__module_context_images_actions {
                             }
 
 
-                CONTROLLER__errors.Verify( ( image.single_image.sprite == null ), $"Tried to get the sprite of the image { image.name }, but do not construct after the fall. actual content: { image.actual_content }" );
+                if( image.single_image.sprite == null )
+                    { CONTROLLER__errors.Throw( $"Tried to get the sprite of the image { image.name }, but do not construct after the fall. actual content: { image.actual_content }" ); }
 
                 TOOL__resource_image.Change_actual_need_content_count( _ref, Resource_image_content.sprite );
 

@@ -30,7 +30,8 @@ unsafe public class RESOURCE__image_sequence {
                 
 
                 multiples_images = new RESOURCE__image_data[ locator.number_images ];
-                CONTROLLER__errors.Verify( ( locator.number_images < 2 ), $"tried to get multiples images { path_locator } but the length was { locator.number_images }" );
+                if( locator.number_images < 2 )
+                    { CONTROLLER__errors.Throw( $"tried to get multiples images { path_locator } but the length was { locator.number_images }" ); }
         
                 // ** ver como vai fazer 
                 for( int i = 0 ; i < multiples_images.Length ; i++ )

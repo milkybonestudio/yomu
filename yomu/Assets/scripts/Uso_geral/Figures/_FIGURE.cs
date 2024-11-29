@@ -7,7 +7,8 @@ public static class FIGURE {
         public static Figure_image_component Get_figure_image_component( GameObject _mode, string _name_component, RESOURCE__image_ref _image_ref ){
 
 
-                CONTROLLER__errors.Verify( ( _image_ref.ref_state == RESOURCE__image_ref_state.deleted ), $"Tried to get the figure image in the component { _name_component } but the image was null" );
+                if( _image_ref.ref_state == RESOURCE__image_ref_state.deleted )
+                    { CONTROLLER__errors.Throw( $"Tried to get the figure image in the component { _name_component } but the image was null" ); }
 
                 if( _image_ref.level_pre_allocation == Resource_image_content.nothing )
                     { _image_ref.level_pre_allocation = Resource_image_content.compress_data; }
@@ -15,10 +16,14 @@ public static class FIGURE {
                 Figure_image_component image_component = new Figure_image_component();
 
                         Transform transform = _mode.transform.Find( _name_component );
+
                         if( transform == null )
                             { CONTROLLER__errors.Throw( $"Was not found the gameobject in the path <Color=lightBlue>{ _name_component }</Color>" ); }
                         image_component.game_object = transform.gameObject;
-                        CONTROLLER__errors.Verify( ( image_component.game_object == null ) , $"Tried to get the component { _name_component } in the game object { _mode.name } but was not find" );
+
+                        if( image_component.game_object == null )
+                            { CONTROLLER__errors.Throw( $"Tried to get the component { _name_component } in the game object { _mode.name } but was not find" ); }
+
                         image_component.image = image_component.game_object.GetComponent<Image>();
                         image_component.image_ref = _image_ref;
 
@@ -60,7 +65,8 @@ public static class FIGURE {
 
                 Figure_resources_data _figure_data = _figure.figure_interface.Get_resources_data( _figure, _form );
 
-                CONTROLLER__errors.Verify( ( _figure_data.form_game_object == null ), $"Tried to change form of the figure { _figure.figure_interface.Get_figure_name() } but the gameObject was null. Probably was not Pre_loaded" );
+                if( _figure_data.form_game_object == null )
+                    { CONTROLLER__errors.Throw( $"Tried to change form of the figure { _figure.figure_interface.Get_figure_name() } but the gameObject was null. Probably was not Pre_loaded" ); }
                 
 
                 // --- IMAGES

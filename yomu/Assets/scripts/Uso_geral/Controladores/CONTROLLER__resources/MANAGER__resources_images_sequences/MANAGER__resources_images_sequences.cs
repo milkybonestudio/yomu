@@ -86,8 +86,9 @@ public class MANAGER__resources_images_sequences {
                 // ** VERIFY IF HAVE SOMEWHERE TO GO
                 if( ( _image.content_going_to == _image.actual_content ) && ( ( _image.stage_getting_resource & Resources_getting_image_stage.all_reajust_stages ) == 0 ) )
                     { 
-                        //Console.Log( _image.stage_getting_resource );
-                        CONTROLLER__errors.Verify( (_image.stage_getting_resource != Resources_getting_image_stage.finished), "what" ); return 0; 
+                        if( _image.stage_getting_resource != Resources_getting_image_stage.finished )
+                            { CONTROLLER__errors.Throw( "what" ); }
+                        return 0; 
                     }
 
                 switch( _image.stage_getting_resource ){

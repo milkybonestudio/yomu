@@ -10,7 +10,8 @@ public static class TOOL__resource_complex_structure_testing {
                 string path = "Tela/Container_teste";
 
                 canvas = GameObject.Find( path );
-                CONTROLLER__errors.Verify( ( canvas == null ), $"Dond found the canvas for the RESOURCE__image test. Path:<Color=lightBlue> { path }</Color>" );
+                if( canvas == null )
+                    { CONTROLLER__errors.Throw( $"Dond found the canvas for the RESOURCE__image test. Path:<Color=lightBlue> { path }</Color>" ); }
 
                 structure_copy_test = CONTROLLER__resources.Get_instance().resources_complex_structures.Get_complex_structure_copy( Resource_context.Characters, "teste", "Teste", Resource_complex_structure_content.game_object );
             

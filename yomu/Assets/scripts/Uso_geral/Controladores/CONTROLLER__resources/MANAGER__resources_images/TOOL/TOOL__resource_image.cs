@@ -9,12 +9,13 @@ public static class TOOL__resource_image {
 
 
 
-                CONTROLLER__errors.Verify( !!!( _image.single_image.used ),  $"In the image request { _image.name } was given single and multiples images" );
+                if( !!!( _image.single_image.used ) )
+                    { CONTROLLER__errors.Throw( $"In the image request { _image.name } was given single and multiples images" ); }
                 
                 if( _image.actual_content == Resource_image_content.nothing )
                     {
                         if ( _image.single_image.image_compress != null )
-                            { throw new System.Exception( $"current state was \"nothing\" but there is a compress image in the image ${ _image.name }" ); }
+                            { CONTROLLER__errors.Throw( $"current state was \"nothing\" but there is a compress image in the image ${ _image.name }" ); }
 
                     }
 
@@ -140,7 +141,9 @@ public static class TOOL__resource_image {
                                 { 
                                     // --- APROVEITAR 
                                     _image.single_image.image_compress = ( byte[] ) manager.task_getting_compress_file_REAJUST.dados[ 0 ];
-                                    CONTROLLER__errors.Verify( ( !!!( PNG.Verify_is_png( _image.single_image.image_compress ) ) ), " not a png " );
+                                    if( !!!( PNG.Verify_is_png( _image.single_image.image_compress ) ) )
+                                        { CONTROLLER__errors.Throw( " not a png " ); }
+                                    
                                     _image.actual_content = Resource_image_content.texture; 
                                 }
                                 else

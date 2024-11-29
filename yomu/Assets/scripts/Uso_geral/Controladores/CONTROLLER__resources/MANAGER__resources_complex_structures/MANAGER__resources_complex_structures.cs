@@ -17,7 +17,8 @@ public class MANAGER__resources_complex_structures {
                 container_resources_complex_structures_copies = new CONTAINER__resource_complex_structure_copy();
 
                 container_to_instanciate = GameObject.Find( Paths_system.path_resources_complex_structures_container );
-                CONTROLLER__errors.Verify( ( container_to_instanciate == null ), $"container_to_instanciate was not found int the path { Paths_system.path_resources_complex_structures_container }" ); 
+                if( container_to_instanciate == null )
+                    { CONTROLLER__errors.Throw( $"container_to_instanciate was not found int the path { Paths_system.path_resources_complex_structures_container }" ); }
 
                 for( int context_index = 0 ; context_index < contexts.Length ; context_index++ )
                     { context_complex_structures_modules[ context_index ] = new MODULE__context_complex_structures( _manager: this, _context: contexts[ context_index ], _initial_capacity: 1_000, _buffer_cache: 2_000_000 ); }
@@ -114,9 +115,15 @@ public class MANAGER__resources_complex_structures {
                         
                         RESOURCE__complex_structure_copy copy = structure.copies[ slot ].copy;
                         
-                        CONTROLLER__errors.Verify( ( copy == null ), $"The flag to instanciate copy was true, but the structure_copy was null in the slot { slot }" );
-                        CONTROLLER__errors.Verify( ( copy.actual_need_content != Resource_complex_structure_content.game_object ) , $"The flag to instanciate copy was true, but the actual need content is { copy.actual_need_content }" );
-                        CONTROLLER__errors.Verify( ( copy.structure_game_object != null ), $"The flag to instanciate copy was true, but the structure_game_object is already instanciated" );
+                        if( copy == null )
+                            { CONTROLLER__errors.Throw(  $"The flag to instanciate copy was true. But the structure_copy was null in the slot { slot }" ); }
+
+                        if( copy.actual_need_content != Resource_complex_structure_content.game_object ) 
+                            { CONTROLLER__errors.Throw(  $"The flag to instanciate copy was true. But the actual need content is { copy.actual_need_content }" ); }
+
+                        if( copy.structure_game_object != null )
+                            { CONTROLLER__errors.Throw(  $"The flag to instanciate copy was true, but the structure_game_object is already instanciated" ); }
+
 
                         
                         relogio.Start();
@@ -166,7 +173,9 @@ public class MANAGER__resources_complex_structures {
                         // --- PEGOU O PREFAB 
                         _structure.prefab = Resources.Load<GameObject>( _structure.resource_path );
 
-                        CONTROLLER__errors.Verify( ( _structure.prefab == null ), $"Not found prefab <Color=lightBlue>{ _structure.resource_path }</Color>" );
+                        if( _structure.prefab == null )
+                            { CONTROLLER__errors.Throw( $"Not found prefab <Color=lightBlue>{ _structure.resource_path }</Color>" ); }
+
                         _structure.actual_content = Resource_complex_structure_content.structure_data;
                         weight = 2;
 
@@ -188,7 +197,8 @@ public class MANAGER__resources_complex_structures {
             Console.Log( "Veio Put_in_waiting_container()" );
 
                 
-                CONTROLLER__errors.Verify( ( _copy.structure_game_object == null ), $"Tried to deinstanciate { _copy.structure.complex_structure_key } but the structure_game_object is null" );
+                if( _copy.structure_game_object == null )
+                    { CONTROLLER__errors.Throw( $"Tried to deinstanciate { _copy.structure.complex_structure_key } but the structure_game_object is null" ); }
 
                 _copy.structure_game_object.transform.SetParent( container_to_instanciate.transform, false );
                 _copy.structure_game_object.SetActive( false );

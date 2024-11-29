@@ -46,7 +46,6 @@ public static class TOOL__module_context_audios_actions {
                 // ** VAI PARA O NADA
 
                 Console.Log( "Veio Unload()" );
-                CONTROLLER__errors.Verify( ( _ref.audio == null ), $"Tried to Unload ref { _ref.identifire }, but the RESOURCE__audio is null" );
 
                 if( _ref.state == Resource_state.nothing )
                     { return; } _ref.state = Resource_state.nothing;
@@ -69,8 +68,7 @@ public static class TOOL__module_context_audios_actions {
                 // ** VAI PARA O NADA
 
                 Console.Log( "Veio Deactivate()" );
-                CONTROLLER__errors.Verify( ( _ref.audio == null ), $"Tried to Deactivate ref { _ref.identifire }, but the RESOURCE__audio is null" );
-
+                
 
                 if( _ref.state <= Resource_state.minimun )
                     { return; } _ref.state = Resource_state.minimun;
@@ -92,8 +90,7 @@ public static class TOOL__module_context_audios_actions {
             // ** FORCE TO GO TO activate if isntanciate
 
                 Console.Log( "Veio Deinstanciate()" );
-                CONTROLLER__errors.Verify( ( _ref.audio == null ), $"Tried to Deactivate ref { _ref.identifire }, but the RESOURCE__audio is null" );
-
+                
 
                 if( _ref.state <= Resource_state.active )
                     { return; } _ref.state = Resource_state.active;
@@ -119,8 +116,7 @@ public static class TOOL__module_context_audios_actions {
 
 
                 Console.Log( "Veio Load()" );
-                CONTROLLER__errors.Verify( ( _ref.audio == null ), $"Tried to Load ref { _ref.identifire }, but the RESOURCE__audio is null" );
-
+                
 
                 Console.Log(  "_ref.state: " + _ref.state  );
                 Console.Log(  "_ref.actual_need_content: " + _ref.actual_need_content  );
@@ -146,8 +142,7 @@ public static class TOOL__module_context_audios_actions {
 
                 Console.Log( "veio Activate()" );
 
-                CONTROLLER__errors.Verify( ( _ref.audio == null ), $"Tried to Activate ref { _ref.identifire }, but the RESOURCE__audio is null" );
-
+                
                 if( _ref.state >= Resource_state.active )
                     { return; } _ref.state = Resource_state.active;
 
@@ -174,8 +169,7 @@ public static class TOOL__module_context_audios_actions {
 
                 Console.Log( "Veio Instanciate()" );
 
-                CONTROLLER__errors.Verify( ( _ref.audio == null ), $"Tried to Activate ref { _ref.identifire }, but the RESOURCE__audio is null" );
-
+                
                 if( _ref.state == Resource_state.instanciated )
                     { return; } _ref.state = Resource_state.instanciated;
 
@@ -191,7 +185,8 @@ public static class TOOL__module_context_audios_actions {
                 if( audio.actual_content == Resource_audio_content.audio_clip )
                     { /*nada*/ }
 
-                CONTROLLER__errors.Verify( ( audio.audio_clip == null ), $"There was no image in the resources: { audio.audio_key }. Actual content: { audio.actual_content }" );
+                if( audio.audio_clip == null )
+                    { CONTROLLER__errors.Throw( $"There was no image in the resources: { audio.audio_key }. Actual content: { audio.actual_content }" ); }
                                             
                 TOOL__resource_audio.Change_actual_content_count( _ref, Resource_audio_content.audio_clip );
 

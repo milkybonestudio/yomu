@@ -41,7 +41,8 @@ public static class TOOL__get_data_images_resources {
                     _image.pointer_container = -1; // ** nao tem
                     _image.number_images = 1;
 
-                    CONTROLLER__errors.Verify( ( dimensions.width > 2_000 || dimensions.height > 2_000 ), $"Image is too big. Tried to get the low quality for the image{ _image.name }" );
+                    if( dimensions.width > 2_000 || dimensions.height > 2_000 )
+                        { CONTROLLER__errors.Throw( $"Image is too big. Tried to get the low quality for the image{ _image.name }" ); }
 
                     byte[] webp = Get_web_EDITOR( dimensions );
                     Console.Log( $"webp of the image { _image.name }: png length: { png.Length } and webp length: { webp.Length }" );
@@ -280,8 +281,9 @@ public static class TOOL__get_data_images_resources {
                     try { png = File.ReadAllBytes( path_arquivo ); } catch( System.Exception e ){ CONTROLLER__errors.Throw( $"Image in the path { path_arquivo } was not found" ); }
 
                 
-                    CONTROLLER__errors.Verify( !!!( PNG.Verify_is_png( png ) ), "Nao era png UOU" );
-
+                    if( !!!( PNG.Verify_is_png( png ) ) )
+                        { CONTROLLER__errors.Throw( "Nao era png UOU" ); }
+ 
                     
                     return png;
 

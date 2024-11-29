@@ -15,34 +15,36 @@ public static class TOOL__UI_button_DEFINER_SIMPLE {
 
                 Dados_botao_dispositivo _dados = botao.data;
 
-                CONTROLLER__errors.Verify( ( _dados.tipo_transicao == DEVICE_button_transition_type_OFF_ON.animacao_individual ), $"Button { botao.button_name } came in Define_button_SIMPLE but the type was animation" );
+                // --- VERIFICATIONS
+
+                if( _dados.tipo_transicao == DEVICE_button_transition_type_OFF_ON.animacao_individual )
+                    { CONTROLLER__errors.Throw( $"Button { botao.button_name } came in Define_button_SIMPLE but the type was animation" ); }
+
+                if( _dados.simple_button_OFF_frame.path == null )
+                    { CONTROLLER__errors.Throw( $"Image path was not put in the button { botao.button_name } no OFF" ); }
+
+                if( ( _dados.simple_button_ON_frame.path != null ) && (  _dados.OFF_and_ON_equal ) )
+                    { CONTROLLER__errors.Throw( $"button { botao.button_name } is set as <Color=lightBlue>OFF_and_ON_equal</Color> but in the OFF path is <Color=lightBlue>{ _dados.simple_button_ON_frame.path }</Color>" ); }
+
+                if( ( _dados.simple_button_ON_frame.path == null ) && ( !!!( _dados.OFF_and_ON_equal ) ) )
+                    { CONTROLLER__errors.Throw(  $"Image path was not put in the button <Color=lightBlue>{ botao.button_name }</Color> on <Color=lightBlue>ON</Color>" ); }
+
 
                 _dados.animacao_ON_para_OFF_tempos.tempo_espera_para_ativar_ms = _dados.tempo_transicao;
                 _dados.animacao_OFF_para_ON_tempos.tempo_espera_para_ativar_ms = _dados.tempo_transicao;
 
                 
-
                 if( _dados.time_transition_ON_to_OFF_SIMPLE == 0 )
                     { _dados.time_transition_ON_to_OFF_SIMPLE = _dados.tempo_transicao; }
 
                 if( _dados.time_transition_OFF_to_ON_SIMPLE == 0 )
                     { _dados.time_transition_OFF_to_ON_SIMPLE = _dados.tempo_transicao; }
 
-                MANAGER__resources_images resources_image = CONTROLLER__resources.Get_instance().resources_images;
-
-                CONTROLLER__errors.Verify( ( _dados.simple_button_OFF_frame.path == null ), $"Image path was not put in the button { botao.button_name } no OFF" );
-
                 if( _dados.OFF_and_ON_equal )
-                    {
-                        CONTROLLER__errors.Verify( ( _dados.simple_button_ON_frame.path != null ), $"button { botao.button_name } is set as <Color=lightBlue>OFF_and_ON_equal</Color> but in the OFF path is <Color=lightBlue>{ _dados.simple_button_ON_frame.path }</Color>" );
-                        _dados.simple_button_ON_frame = _dados.simple_button_OFF_frame;   
-                    }
-                    else
-                    {
-                        CONTROLLER__errors.Verify( ( _dados.simple_button_ON_frame.path == null ), $"Image path was not put in the button <Color=lightBlue>{ botao.button_name }</Color> on <Color=lightBlue>ON</Color>" );
-                    }
+                    { _dados.simple_button_ON_frame = _dados.simple_button_OFF_frame; }
 
                 
+                MANAGER__resources_images resources_image = CONTROLLER__resources.Get_instance().resources_images;
 
                 // OFF 
                     _dados.simple_button_OFF_frame.image_ref = resources_image.Get_image_reference( Resource_context.Devices, _dados.main_folder, _dados.simple_button_OFF_frame.path, botao.manager_resources.minimun.image );

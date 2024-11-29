@@ -138,8 +138,11 @@ public class Container_RESOURCE__images {
 
         public string Get_image_key( string _main_folder, string _path_local ){
 
-            CONTROLLER__errors.Verify( ( _path_local == null ), $"the path_local is null" );
-            CONTROLLER__errors.Verify( ( _main_folder == null ) , $"the main_folder is null" );
+            if( _path_local == null )
+                { CONTROLLER__errors.Throw( $"the path_local is null" ); }
+
+            if( _main_folder == null )
+                { CONTROLLER__errors.Throw(  $"the main_folder is null" ); }
             
             return  $"{ _main_folder }\\{ _path_local }";
         }

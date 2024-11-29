@@ -91,8 +91,12 @@ public class Image_container {
 
         public void Put_image( Image _image_component ){
 
-            CONTROLLER__errors.Verify( ( image_component != null ), "blablabla" );
-            CONTROLLER__errors.Verify( ( _image_component != null ), "blablabla_2" );
+            if( image_component != null )
+                { CONTROLLER__errors.Throw(  "blablabla" ); }
+
+            if( _image_component != null )
+                { CONTROLLER__errors.Throw(  "blablabla_2" ); }
+                
             image_component = _image_component;
 
             Sprite sprite = image_ref.Get_sprite();

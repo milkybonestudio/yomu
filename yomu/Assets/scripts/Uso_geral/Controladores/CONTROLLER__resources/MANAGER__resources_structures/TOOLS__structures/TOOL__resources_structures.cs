@@ -20,7 +20,9 @@ public static class TOOL__resources_structures {
 
         private static int Get_components(  int _number_interations, string _root_path, GameObject _obj, Dictionary<string,Unity_main_components> _dic ){
 
-                CONTROLLER__errors.Verify( ( _number_interations > 1000 ), $"Tried to get_component but the interation count pass 1_000" );
+                if( _number_interations > 1000 )
+                    { CONTROLLER__errors.Throw( $"Tried to get_component but the interation count pass 1_000" ); }
+                    
                 Console.Log( $"interaction { _number_interations } name: { _obj.name }" );
                 _number_interations++;
                 

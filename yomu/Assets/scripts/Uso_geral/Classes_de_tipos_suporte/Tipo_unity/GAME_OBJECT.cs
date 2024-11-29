@@ -86,7 +86,8 @@ public static class GAME_OBJECT {
             while( true ){
 
                     trava_de_seguranca++;
-                    CONTROLLER__errors.Verify( ( trava_de_seguranca > numero_maximo ), $"Em pegar o path _game_object a trava de seguranca foi ativada, teve { numero_maximo }" );
+                    if( trava_de_seguranca > numero_maximo )
+                        { CONTROLLER__errors.Throw( $"Em pegar o path _game_object a trava de seguranca foi ativada, teve { numero_maximo }" ); }
 
                     transform = transform.parent;
 

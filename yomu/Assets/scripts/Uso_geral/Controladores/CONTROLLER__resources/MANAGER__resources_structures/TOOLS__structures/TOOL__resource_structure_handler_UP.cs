@@ -25,7 +25,8 @@ public static class TOOL__resource_structure_handler_UP {
                         // --- PEGOU O PREFAB 
                         _structure.prefab = Resources.Load<GameObject>( _structure.resource_path );
 
-                        CONTROLLER__errors.Verify( ( _structure.prefab == null ), $"Not found prefab <Color=lightBlue>{ _structure.resource_path }</Color>" );
+                        if( _structure.prefab == null )
+                            { CONTROLLER__errors.Throw( $"Not found prefab <Color=lightBlue>{ _structure.resource_path }</Color>" ); }
 
                         _structure.actual_content = Resource_structure_content.structure_data;
                         weight = 3;

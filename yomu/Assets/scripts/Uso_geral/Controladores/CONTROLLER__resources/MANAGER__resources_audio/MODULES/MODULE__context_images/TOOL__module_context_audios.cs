@@ -89,7 +89,8 @@ public static class TOOL__module_context_audios {
                     
                 }
 
-                CONTROLLER__errors.Verify( !!!( TOOL__resource_audio.Verify_stage( _audio, possible_stages ) ), $"Image { _audio.name } is with content { _audio.actual_content } but the stage is { _audio.stage_getting_resource }" );
+                if( !!!( TOOL__resource_audio.Verify_stage( _audio, possible_stages ) ) )
+                    { CONTROLLER__errors.Throw( $"Image { _audio.name } is with content { _audio.actual_content } but the stage is { _audio.stage_getting_resource }" ); }
                     
                 return;
 

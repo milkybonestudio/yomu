@@ -102,10 +102,14 @@ unsafe public class Controlador : MonoBehaviour {
 
                 b_up = botao;
 
+
         }
 
+        public bool aa = false;
 
         public void Update() {
+
+
 
                 CONTROLLER__input.instancia.Update();
                 b_up.Update();

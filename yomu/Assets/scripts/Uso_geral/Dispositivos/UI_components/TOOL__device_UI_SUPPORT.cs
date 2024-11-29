@@ -8,18 +8,22 @@ public static class TOOL__device_UI_SUPPORT {
         public static void Verificar_tempos_sequencia( float[] _tempos, Color[] _cores, string _indentificador ){
 
 
-            CONTROLLER__errors.Verify( ( ( _cores == null ) && ( _tempos != null ) ), $"Nao foi definido as cores no {_indentificador } mas foi definido os tempos" );
+            if( ( _cores == null ) && ( _tempos != null ) )
+                { CONTROLLER__errors.Throw( $"Nao foi definido as cores no {_indentificador } mas foi definido os tempos" ); }
 
             if( _tempos == null )
                 { return; }
 
-            CONTROLLER__errors.Verify( ( _tempos.Length != _cores.Length ), $"Foi declarado { _tempos.Length } tempos para a sequencia { _indentificador }, mas tinha { _cores.Length }" );
+            if( _tempos.Length != _cores.Length )
+                { CONTROLLER__errors.Throw( $"Foi declarado { _tempos.Length } tempos para a sequencia { _indentificador }, mas tinha { _cores.Length }" ); }
 
         }
 
         public static void Verificar_nome( string _nome ){
 
-                CONTROLLER__errors.Verify( ( ( _nome == "" ) || ( _nome == null ) ), $"There was no name in a button" );
+                if( ( _nome == "" ) || ( _nome == null ) )
+                    { CONTROLLER__errors.Throw( $"There was no name in a button" ); }
+
                 return;
         }
 
@@ -46,7 +50,7 @@ public static class TOOL__device_UI_SUPPORT {
                         // --- VERIFICAR SE CORES FAZEN SENTIDO
 
                         if( _cor_nos_dados.Length != _ids.Length )
-                            { throw new Exception( $"Declarou cores no indentificador { _indentificador } mas tinham { _cor_nos_dados.Length } cores e a sequencia tinha { _ids.Length } imagens" ); }
+                            { CONTROLLER__errors.Throw( $"Declarou cores no indentificador { _indentificador } mas tinham { _cor_nos_dados.Length } cores e a sequencia tinha { _ids.Length } imagens" ); }
 
                         return _cor_nos_dados; 
                         

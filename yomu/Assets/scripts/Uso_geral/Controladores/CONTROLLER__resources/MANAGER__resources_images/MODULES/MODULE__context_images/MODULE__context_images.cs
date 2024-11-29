@@ -116,7 +116,8 @@ public class MODULE__context_images {
 
                         RESOURCE__image image = manager.container_images.Get_resource_image( this, context, _main_folder, _path_local, locator );
 
-                        CONTROLLER__errors.Verify( !!!( Get_dictionary_locators( _main_folder ).TryGetValue( _path_local, out locator ) ), $"Locator of the path { _path_local } was not found" );
+                        if( !!!( Get_dictionary_locators( _main_folder ).TryGetValue( _path_local, out locator ) ) )
+                            { CONTROLLER__errors.Throw( $"Locator of the path { _path_local } was not found" ); }
 
                         Get_dictionary( _main_folder ).Add( _path_local, image );
 

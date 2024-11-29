@@ -19,7 +19,8 @@ public class CONTROLLER__transition {
         
         public void Put_transition_request_BLOCK( Transition_request _transition_request_block, INTERFACE__transition_request_visual _transition_request_visual ){
 
-                CONTROLLER__errors.Verify( ( _transition_request_block.tipo != Transition_type.block ), "Tentou colocar a transition req no BLOCK mas era tipo MODO" );
+                if( _transition_request_block.tipo != Transition_type.block )
+                    { CONTROLLER__errors.Throw( "Tentou colocar a transition req no BLOCK mas era tipo MODO" ); }
 
                 Put_transition_request(  _transition_request_block,  _transition_request_visual );
                 return;
@@ -29,7 +30,8 @@ public class CONTROLLER__transition {
 
         public void Put_transition_request_MODE( Transition_request _transition_request_mode, INTERFACE__transition_request_visual _transition_request_visual ){
 
-                CONTROLLER__errors.Verify( ( _transition_request_mode.tipo != Transition_type.mode ), "Tentou colocar a transition req no MODO mas era tipo BLOCK" );
+                if( _transition_request_mode.tipo != Transition_type.mode )
+                    { CONTROLLER__errors.Throw( "Tentou colocar a transition req no MODO mas era tipo BLOCK" ); }
 
                 Put_transition_request(  _transition_request_mode,  _transition_request_visual );
                 return;
@@ -41,7 +43,8 @@ public class CONTROLLER__transition {
         private void Put_transition_request( Transition_request _transition_request, INTERFACE__transition_request_visual _transition_request_visual ){
 
 
-                CONTROLLER__errors.Verify( ( transition_request != null ), "Tentou colocar 2 transicoes modo" );
+                if( transition_request != null )
+                    { CONTROLLER__errors.Throw( "Tentou colocar 2 transicoes modo" ); }
 
                 Requests_verifier.Verify_transition_request( _transition_request );
 

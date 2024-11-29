@@ -111,7 +111,8 @@ public static class TOOL__resource_complex_structure_handler_ACTIONS {
                 _copy.state = Resource_state.minimun;
 
                 
-                CONTROLLER__errors.Verify( ( _copy.actual_need_content != Resource_complex_structure_content.game_object ), $"a copy is marked as { _copy.state } but the resources is not teh isntance" );
+                if( _copy.actual_need_content != Resource_complex_structure_content.game_object )
+                    { CONTROLLER__errors.Throw( $"a copy is marked as { _copy.state } but the resources is not teh isntance" ); }
 
                 if( _copy.level_pre_allocation < Resource_complex_structure_content.game_object )
                     { Destroy_game_object( ref _copy.structure_game_object ); } // ** se o minimo for instncia nao vai chegar aqui
@@ -167,7 +168,8 @@ public static class TOOL__resource_complex_structure_handler_ACTIONS {
                     { return; }
                 _copy.state = Resource_state.minimun;
 
-                CONTROLLER__errors.Verify( ( _copy.actual_need_content != Resource_complex_structure_content.nothing ), $"Tentou dar Load na copia { _copy.structure.complex_structure_key } mas o state estava como { _copy.state } mas o actua_need_content como nothing" );
+                if( _copy.actual_need_content != Resource_complex_structure_content.nothing )
+                    { CONTROLLER__errors.Throw( $"Tentou dar Load na copia { _copy.structure.complex_structure_key } mas o state estava como { _copy.state } mas o actua_need_content como nothing" ); }
                 
                 if( _copy.level_pre_allocation == Resource_complex_structure_content.nothing )
                     { return; } // ** dont need anything
@@ -221,7 +223,8 @@ public static class TOOL__resource_complex_structure_handler_ACTIONS {
 
                 
                 RESOURCE__complex_structure structure = _copy.structure;
-                CONTROLLER__errors.Verify( ( structure == null ), "struct null" );
+                if( structure == null )
+                    { CONTROLLER__errors.Throw( "struct null" ); }
 
 
                 // ** GURANTY PREFAB

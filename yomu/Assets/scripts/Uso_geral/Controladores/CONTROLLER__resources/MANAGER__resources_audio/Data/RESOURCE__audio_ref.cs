@@ -31,12 +31,19 @@ public class RESOURCE__audio_ref {
         public AudioClip Get_audio_clip(){ Guaranty_ref(); return TOOL__module_context_audios_actions.Get_audio_clip( this );  }
     
 
-        private void Guaranty_ref(){ if( ref_state == RESOURCE__audio_ref_state.deleted ){ CONTROLLER__errors.Throw( $"Tried to use ref { ref_name } but the ref was deleted" ); } if( ref_state == RESOURCE__audio_ref_state.no_instanciated ){ CONTROLLER__errors.Throw( $"Tried to use ref { ref_name } but the ref was not instanciated" ); } }
+        private void Guaranty_ref(){
+                if( ref_state == RESOURCE__audio_ref_state.deleted )
+                    { CONTROLLER__errors.Throw( $"Tried to use ref { ref_name } but the ref was deleted" ); } 
+                if( ref_state == RESOURCE__audio_ref_state.no_instanciated )
+                    { CONTROLLER__errors.Throw( $"Tried to use ref { ref_name } but the ref was not instanciated" ); } 
+                if( audio == null )
+                    { CONTROLLER__errors.Throw( $"Tried to use ref { identifire }, but the RESOURCE__audio is null"); }
+        }
 
         // ** DOWN
 
         
-        public void Delete( ref RESOURCE__audio_ref _ref_ref ){  CONTROLLER__errors.Verify( ( _ref_ref.ref_name != ref_name ), "Not the same ref" ); Guaranty_ref(); TOOL__module_context_audios_actions.Delete( this ); _ref_ref = null; } 
+        public void Delete( ref RESOURCE__audio_ref _ref_ref ){ if( ( _ref_ref.ref_name != ref_name ) ){ CONTROLLER__errors.Throw( "Not the same ref" ); } Guaranty_ref(); TOOL__module_context_audios_actions.Delete( this ); _ref_ref = null; } 
         public void Unload(){ Guaranty_ref(); TOOL__module_context_audios_actions.Unload( this ); }
         public void Deactivate(){ Guaranty_ref(); TOOL__module_context_audios_actions.Deactivate( this ); }
         public void Deinstanciate(){ Guaranty_ref(); TOOL__module_context_audios_actions.Deinstanciate( this );  }
