@@ -93,7 +93,7 @@ public class Botao_dispositivo {
         public string button_name = "Nao_colocou";
 
 
-        // --- LOGICA INTERNA
+        // --- LOGICA
 
         public bool is_active;
         public Resource_use_state state;
@@ -107,16 +107,22 @@ public class Botao_dispositivo {
         public bool esta_houver = false;
 
 
+        // nome ta meio merda
         public float animacao_atual_tempo_ms = 0f;
         public float animacao_sprite_atual_tempo_ms = 0f;
         public int sprite_atual_index = -1;
 
     
+
+
+        // ---- VISUAL
+
+        public DEVICE_button_visual_state current_visual_state;
+        public DEVICE_button_visual_state visual_state_going_to;
+
+
+
         public DEVICE_button_visual_state estado_visual_botao;
-
-
-        // ---- SUPORTE INTERNO
-
         public DEVICE_button_visual_state ultimo_estado_visual_botao;
 
 
@@ -126,14 +132,22 @@ public class Botao_dispositivo {
         public void Activate_button(){
 
             is_active = true;
-            Update();
+
+            switch( type ){
+
+                case UI_button_type.simple: TOOL__UI_button_SET_SIMPLE.SET_OFF_static( this ); break;
+                case UI_button_type.complete: TOOL__UI_button_SET_COMPLETE.SET_OFF_static( this ); break;
+                case UI_button_type.complex: TOOL__UI_button_SET_COMPLEX.SET_OFF_static( this ); break;
+                default : CONTROLLER__errors.Throw( $"can not handle { type }" ); break;
+            }
 
         }
 
 
         public void Deactivate_button(){
 
-            is_active = false;
+            is_active = false;            
+            botao_game_object.SetActive( false );
 
         }
 

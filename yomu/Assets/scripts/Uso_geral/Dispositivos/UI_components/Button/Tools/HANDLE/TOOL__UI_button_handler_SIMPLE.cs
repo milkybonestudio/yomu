@@ -38,8 +38,9 @@ public static class TOOL__UI_button_handler_SIMPLE {
 
                      // TOOL__UI_button_SET_SIMPLE
                     case DEVICE_button_transition_type_OFF_ON.nada : TOOL__UI_button_SET_SIMPLE.SET_ON_static( _button ); break;
-                    case DEVICE_button_transition_type_OFF_ON.cor : Botao_dispositivo_TRANSICAO.Handle_transition_animation_OFF_to_ON_color( _button ); break;
-                    case DEVICE_button_transition_type_OFF_ON.animacao_individual : Botao_dispositivo_TRANSICAO.Handle_transition_animation_OFF_to_ON_individual_animation( _button ); break;
+                    case DEVICE_button_transition_type_OFF_ON.cor : TOOL__UI_button_TRANSITION_SIMPLE.Handle_transition_animation_OFF_to_ON_color( _button ); break;
+                    
+                    default: CONTROLLER__errors.Throw( $"Can not handle { _button.data.tipo_transicao } with type { _button.type }" ); break;
                 
                 }
 
@@ -54,8 +55,9 @@ public static class TOOL__UI_button_handler_SIMPLE {
                 switch( _button.data.tipo_transicao ){
 
                     case DEVICE_button_transition_type_OFF_ON.nada : TOOL__UI_button_SET_SIMPLE.SET_OFF_static( _button ); break;
-                    case DEVICE_button_transition_type_OFF_ON.cor : Botao_dispositivo_TRANSICAO.Lidar_transicao_animacao_ON_para_OFF_cor( _button ); break;
-                    case DEVICE_button_transition_type_OFF_ON.animacao_individual : Botao_dispositivo_TRANSICAO.Lidar_transicao_animacao_ON_para_OFF_animacao_individual( _button ); break;
+                    case DEVICE_button_transition_type_OFF_ON.cor : TOOL__UI_button_TRANSITION_SIMPLE.Handle_transition_animation_ON_to_OFF_color( _button ); break;
+
+                    default: CONTROLLER__errors.Throw( $"Can not handle { _button.data.tipo_transicao } with type { _button.type }" ); break;
                 
                 }
 

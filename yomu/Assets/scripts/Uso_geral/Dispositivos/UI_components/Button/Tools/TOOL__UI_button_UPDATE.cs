@@ -81,9 +81,8 @@ public static class TOOL__UI_button_UPDATE {
                     { return; }
 
 
-                // pode fazer x = y? 
-                if( _button.estado_visual_botao != _button.ultimo_estado_visual_botao )
-                    { _button.ultimo_estado_visual_botao = _button.estado_visual_botao; }
+                _button.ultimo_estado_visual_botao = _button.estado_visual_botao;
+
 
                 switch( _button.type ){
 

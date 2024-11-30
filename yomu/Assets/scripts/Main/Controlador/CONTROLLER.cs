@@ -72,7 +72,7 @@ unsafe public class Controlador : MonoBehaviour {
 
                         dados.simple_button_OFF_frame.path = "a";
                         dados.OFF_and_ON_equal = true;
-                        dados.tipo_transicao = DEVICE_button_transition_type_OFF_ON.nada;
+                        dados.tipo_transicao = DEVICE_button_transition_type_OFF_ON.cor;
                         dados.type = UI_button_type.simple;
                         dados.main_folder = "teste";
                         dados.text_on = "on";
@@ -122,6 +122,7 @@ unsafe public class Controlador : MonoBehaviour {
                 return; 
 
                 try{ Update_interno(); } catch( Exception exp ){ Debug.LogError( "Tem que fazer um modo para mandar mensagem " ); }
+                
             
         }
 

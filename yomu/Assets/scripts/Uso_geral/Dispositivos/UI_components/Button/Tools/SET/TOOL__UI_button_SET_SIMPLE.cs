@@ -4,6 +4,13 @@ using UnityEngine;
 public static class TOOL__UI_button_SET_SIMPLE {
 
 
+        public static void Hide( Botao_dispositivo botao ){
+
+                botao.IMAGE_container.SetActive( false );
+                botao.TRANSITION_container.SetActive( false );
+
+        }
+
         public static void SET_ON_static( Botao_dispositivo botao ){
 
 
@@ -15,7 +22,6 @@ public static class TOOL__UI_button_SET_SIMPLE {
                 botao.IMAGE_simple_body.image.sprite = botao.data.simple_button_ON_frame.image_ref.Get_sprite();
                 botao.IMAGE_simple_body.image.color = botao.data.simple_button_ON_frame.color;
                 
-                Debug.Log( botao.IMAGE_simple_text.tmp_text );
                 botao.IMAGE_simple_text.tmp_text.text = botao.data.text_on;
                 botao.IMAGE_simple_text.tmp_text.color = botao.data.simple_button_ON_text_color;
 
@@ -31,33 +37,22 @@ public static class TOOL__UI_button_SET_SIMPLE {
 
         public static void SET_OFF_static( Botao_dispositivo botao ){
 
-
                 // esconde outros
                 botao.IMAGE_container.SetActive( true );
                 botao.TRANSITION_container.SetActive( false );
 
-                DEVICE_button_visual_state estado = DEVICE_button_visual_state.off_estatico;
-                int pointer = Botao_dispositivo_SUPORTE.Pegar_pointer_inicial_estado( botao, estado  );
-                Botao_dispositivo_MUDAR_IMAGEM.Change_images_IMAGE( botao, pointer );
 
+                botao.IMAGE_simple_body.image.sprite = botao.data.simple_button_OFF_frame.image_ref.Get_sprite();
+                botao.IMAGE_simple_body.image.color = botao.data.simple_button_OFF_frame.color;
+                
+                botao.IMAGE_simple_text.tmp_text.text = botao.data.text_off;
+                botao.IMAGE_simple_text.tmp_text.color = botao.data.simple_button_OFF_text_color;
 
-
-                // ** mudar texto 
-                botao.IMAGE_text.tmp_text.color = botao.data.off.texto_cor;
-                botao.IMAGE_text.tmp_text.text = botao.data.off.texto;
-
-
-
-
-                // --- RESETA DADOS
-                botao.animacao_atual_tempo_ms = botao.data.animacao_off_tempos.tempo_espera_para_ativar_ms;
-                botao.sprite_atual_index = ( pointer - 1 );
-                botao.estado_visual_botao = estado;
-
+            
+                botao.estado_visual_botao = DEVICE_button_visual_state.off_estatico;
                 TOOL__UI_button_UPDATE.Update_parte_visual( botao );
 
                 return;
-
 
         }
 
@@ -67,74 +62,54 @@ public static class TOOL__UI_button_SET_SIMPLE {
 
         public static void SETAR_transicao_ON_para_OFF( Botao_dispositivo botao ){
 
-
-
+                Console.Log( "Veio SET_transition_OFF_to_ON" );
 
                      if( botao.data.tipo_transicao == DEVICE_button_transition_type_OFF_ON.cor )
                         {
                             // --- COR
 
+                            // --- MOSTRAR 2 GAME_OBJECTS
                             botao.IMAGE_container.SetActive( true );
                             botao.TRANSITION_container.SetActive( true );
 
-                    
-                            int pointer_off_cor = botao.data.pointers.pointer_imagem_estatica_OFF;
-                            int pointer_on_cor = botao.data.pointers.pointer_imagem_estatica_ON;
 
-                            Botao_dispositivo_MUDAR_IMAGEM.Change_images_IMAGE( botao, pointer_on_cor );
-                            Botao_dispositivo_MUDAR_IMAGEM.Mudar_imagens_TRANSICAO( botao, pointer_off_cor );
+                            // --- PUT SPRITES
+                            botao.IMAGE_simple_body.image.sprite = botao.data.simple_button_ON_frame.image_ref.Get_sprite();
+                            botao.IMAGE_simple_body.image.color = botao.data.simple_button_ON_frame.color;
 
-
-                            // ** mudar texto 
-                            botao.IMAGE_text.tmp_text.text = botao.data.on.texto;
-                            botao.TRANSITION_text.tmp_text.text = botao.data.off.texto;
-
-
-
-                            // --- RESETA DADOS
-                            botao.animacao_atual_tempo_ms = botao.data.animacao_ON_para_OFF_tempos.tempo_espera_para_ativar_ms;
-                            botao.sprite_atual_index = -1;
-                            botao.estado_visual_botao = DEVICE_button_visual_state.transicao_animacao_ON_para_OFF;
-
-                            TOOL__UI_button_UPDATE.Update_parte_visual( botao );
-
-                            return;
-
-                        }
-                else if( botao.data.tipo_transicao == DEVICE_button_transition_type_OFF_ON.animacao_individual )
-                        {
-                            // --- INDIVIDUAL
-
-
-                            botao.IMAGE_container.SetActive( false );
-                            botao.TRANSITION_container.SetActive( true );
-
-                            // ** quando for colocar no update ja vai colocar 
-                            // int pointer_individual = botao.data.pointers.pointer_imagem_estatica_OFF;
-                            // Botao_dispositivo_MUDAR_IMAGEM.Mudar_imagens_TRANSICAO( botao, pointer_individual );
-
-
-                            // --- RESETA DADOS
+                            botao.TRANSITION_simple_body.image.sprite = botao.data.simple_button_OFF_frame.image_ref.Get_sprite();
+                            botao.TRANSITION_simple_body.image.color = botao.data.simple_button_OFF_frame.color;
                             
-                            botao.animacao_sprite_atual_tempo_ms = 0f; // vai para o primeiro
-                            botao.sprite_atual_index = ( botao.data.pointers.pointer_inicio_transicao_ON_para_OFF - 1 );
+
+                            // --- PUT TEXT
+                            botao.IMAGE_simple_text.tmp_text.text = botao.data.text_on;
+                            botao.IMAGE_simple_text.tmp_text.color = botao.data.simple_button_ON_text_color;
+
+                            botao.TRANSITION_simple_text.tmp_text.text = botao.data.text_off;
+                            botao.TRANSITION_simple_text.tmp_text.color = botao.data.simple_button_OFF_text_color;
+
+
+
+                            // --- RESETA DADOS
+                            botao.animacao_atual_tempo_ms = botao.data.time_transition_ON_to_OFF_SIMPLE;
                             botao.estado_visual_botao = DEVICE_button_visual_state.transicao_animacao_ON_para_OFF;
 
                             TOOL__UI_button_UPDATE.Update_parte_visual( botao );
 
-
-
                             return;
 
                         }
-                    else    
+
+                else if( true )
                         {
                             // --- NADA
-                            botao.estado_visual_botao = DEVICE_button_visual_state.transicao_animacao_ON_para_OFF;
-                            TOOL__UI_button_UPDATE.Update_parte_visual( botao );
+                            SET_OFF_static( botao );
+                            botao.estado_visual_botao = DEVICE_button_visual_state.off_estatico;
                             return;
 
                         }
+
+                CONTROLLER__errors.Throw( $"Can not handle <Color=lightBlue>{ botao.data.tipo_transicao }</Color>" );
 
         }
 
@@ -142,68 +117,54 @@ public static class TOOL__UI_button_SET_SIMPLE {
 
         public static void SET_transition_OFF_to_ON( Botao_dispositivo botao ){
 
+                
                 Console.Log( "Veio SET_transition_OFF_to_ON" );
 
                      if( botao.data.tipo_transicao == DEVICE_button_transition_type_OFF_ON.cor )
                         {
                             // --- COR
 
+                            // --- MOSTRAR 2 GAME_OBJECTS
                             botao.IMAGE_container.SetActive( true );
                             botao.TRANSITION_container.SetActive( true );
 
-                    
-                            int pointer_off_cor = botao.data.pointers.pointer_imagem_estatica_OFF;
-                            int pointer_on_cor = botao.data.pointers.pointer_imagem_estatica_ON;
-
-                            Botao_dispositivo_MUDAR_IMAGEM.Change_images_IMAGE( botao, pointer_off_cor );
-                            Botao_dispositivo_MUDAR_IMAGEM.Mudar_imagens_TRANSICAO( botao, pointer_on_cor );
 
 
 
-                            // ** mudar texto 
-                            botao.IMAGE_text.tmp_text.text = botao.data.off.texto;
-                            botao.TRANSITION_text.tmp_text.text = botao.data.on.texto;
+                            // --- PUT SPRITES
+                            botao.IMAGE_simple_body.image.sprite = botao.data.simple_button_OFF_frame.image_ref.Get_sprite();
+                            botao.IMAGE_simple_body.image.color = botao.data.simple_button_OFF_frame.color;
 
-                            // --- RESETA DADOS
-                            botao.animacao_atual_tempo_ms = botao.data.animacao_OFF_para_ON_tempos.tempo_espera_para_ativar_ms;
-                            botao.sprite_atual_index = -1;
-                            botao.estado_visual_botao = DEVICE_button_visual_state.transicao_animacao_OFF_para_ON;
-
-                            TOOL__UI_button_UPDATE.Update_parte_visual( botao );
-
-                            return;
-
-                        }
-                else if( botao.data.tipo_transicao == DEVICE_button_transition_type_OFF_ON.animacao_individual )
-                        {
-                            // --- INDIVIDUAL
-
-
-                            botao.IMAGE_container.SetActive( false );
-                            botao.TRANSITION_container.SetActive( true );
-
-                            // int pointer_individual = botao.data.pointers.pointer;
-                            // Botao_dispositivo_MUDAR_IMAGEM.Mudar_imagens_TRANSICAO( botao, pointer_individual );
-
-
-                            // --- RESETA DADOS
+                            botao.TRANSITION_simple_body.image.sprite = botao.data.simple_button_ON_frame.image_ref.Get_sprite();
+                            botao.TRANSITION_simple_body.image.color = botao.data.simple_button_ON_frame.color;
                             
-                            botao.animacao_sprite_atual_tempo_ms = 0f; // vai para o primeiro
-                            botao.sprite_atual_index = ( botao.data.pointers.pointer_inicio_transicao_OFF_para_ON - 1 );
+
+                            // --- PUT TEXT
+                            botao.IMAGE_simple_text.tmp_text.text = botao.data.text_off;
+                            botao.IMAGE_simple_text.tmp_text.color = botao.data.simple_button_OFF_text_color;
+
+                            botao.TRANSITION_simple_text.tmp_text.text = botao.data.text_on;
+                            botao.TRANSITION_simple_text.tmp_text.color = botao.data.simple_button_ON_text_color;
+
+
+
+                            // --- RESETA DADOS
+                            botao.animacao_atual_tempo_ms = botao.data.time_transition_OFF_to_ON_SIMPLE;
                             botao.estado_visual_botao = DEVICE_button_visual_state.transicao_animacao_OFF_para_ON;
 
+                            Console.Log( "TIME: " + botao.animacao_atual_tempo_ms );
+                            
                             TOOL__UI_button_UPDATE.Update_parte_visual( botao );
-
-
 
                             return;
 
                         }
+
                 else if( true )
                         {
                             // --- NADA
-                            botao.estado_visual_botao = DEVICE_button_visual_state.transicao_animacao_OFF_para_ON;
-                            TOOL__UI_button_UPDATE.Update_parte_visual( botao );
+                            SET_ON_static( botao );
+                            botao.estado_visual_botao = DEVICE_button_visual_state.on_estatico;
                             return;
 
                         }
