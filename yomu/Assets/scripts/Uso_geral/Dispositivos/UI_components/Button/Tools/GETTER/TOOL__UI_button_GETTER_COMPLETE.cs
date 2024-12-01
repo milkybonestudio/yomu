@@ -85,7 +85,7 @@ public static class TOOL__UI_button_GETTER_COMPLETE {
                                         { CONTROLLER__errors.Throw(  "Dentro de decoracao tinha mais de 1 gameObject. Se a decoracao for composta ela precisa estar dentro de outro container: decoracao => container_dec_composta => gameObjects[]. O sistema vai somente copiar o gameObject para a transicao" ); }
 
                                     if( _button.data.sprites_decoracao_composta == null )
-                                        { CONTROLLER__errors.Throw(  $"Tinha um gameObject contianer na decoracao do botao <color=lightBlue><b>{ _button.data.nome }</b></color> no dispositivo <color=lightBlue><b>{ _button.data.nome_dispositivo }</b></color> MAS nao foi declarado as imagens das sprites." ); }
+                                        { CONTROLLER__errors.Throw(  $"Tinha um gameObject contianer na decoracao do botao <color=lightBlue><b>{ _button.data.path_locator }</b></color> MAS nao foi declarado as imagens das sprites." ); }
 
 
                                     _button.IMAGE_composed_decoration_game_object = _button.IMAGE_decoration.game_object.transform.GetChild( 0 ).gameObject;
@@ -97,10 +97,10 @@ public static class TOOL__UI_button_GETTER_COMPLETE {
                                     int numero_imagens_decoracao_composta = _button.IMAGE_composed_decoration_game_object.transform.childCount;
 
                                     if( numero_imagens_decoracao_composta == 0 )
-                                        { CONTROLLER__errors.Throw( $"Tinha um gameObject contianer na decoracao do botao <color=lightBlue><b>{ _button.data.nome}</b></color> no dispositivo <color=lightBlue><b>{ _button.data.nome_dispositivo }</b></color> mas ele nao tinha nenhum gameObject." );}
+                                        { CONTROLLER__errors.Throw( $"Tinha um gameObject contianer na decoracao do botao <color=lightBlue><b>{ _button.data.path_locator}</b></color> mas ele nao tinha nenhum gameObject." );}
 
                                     if( _button.data.sprites_decoracao_composta.GetLength( 0 ) > numero_imagens_decoracao_composta )
-                                        { CONTROLLER__errors.Throw( $"Tinha um gameObject contianer na decoracao do botao <color=lightBlue><b>{ _button.data.nome }</b></color> no dispositivo <color=lightBlue><b>{ _button.data.nome_dispositivo }</b></color> MAS o numero de gameObjects [ { numero_imagens_decoracao_composta } ] é menor que o numero de sprites [ { _button.data.sprites_decoracao_composta.GetLength( 0 ) } ]." );}
+                                        { CONTROLLER__errors.Throw( $"Tinha um gameObject contianer na decoracao do botao <color=lightBlue><b>{ _button.data.path_locator }</b></color> MAS o numero de gameObjects [ { numero_imagens_decoracao_composta } ] é menor que o numero de sprites [ { _button.data.sprites_decoracao_composta.GetLength( 0 ) } ]." );}
 
 
                                     _button.IMAGE_composed_decoration_images = new Image[ numero_imagens_decoracao_composta ];
@@ -143,7 +143,7 @@ public static class TOOL__UI_button_GETTER_COMPLETE {
                 }
                 catch ( System.Exception exc )
                 {
-                    Debug.LogError( $"Nao conseguiu pegar os dados do botao <color=lightBlue><b>{ _button.data.nome}</b></color> no dispositivo <color=lightBlue><b>{ _button.data.nome_dispositivo }</b></color>." );
+                    Debug.LogError( $"Nao conseguiu pegar os dados do botao <color=lightBlue><b>{ _button.data.path_locator}</b></color>." );
                     throw exc;
 
                 }

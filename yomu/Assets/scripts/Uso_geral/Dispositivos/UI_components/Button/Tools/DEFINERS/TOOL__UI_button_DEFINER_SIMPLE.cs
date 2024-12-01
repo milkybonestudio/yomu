@@ -13,7 +13,7 @@ public static class TOOL__UI_button_DEFINER_SIMPLE {
         public static Botao_dispositivo Define( Botao_dispositivo botao ){
 
 
-                Dados_botao_dispositivo _dados = botao.data;
+                ref Dados_botao_dispositivo _dados = ref botao.data;
 
                 // --- VERIFICATIONS
 

@@ -54,7 +54,7 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
                     {
 
                         botao_fechar_dados_novo.tipo_ativacao = Botao_dispositivo_tipo_ativacao.clicar;
-                        botao_fechar_dados_novo.nome = "a";
+                        botao_fechar_dados_novo.path_locator = "a";
                         botao_fechar_dados_novo.Update_secundario = Update_botao_1;
 
 

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 
 
-public class Dados_botao_dispositivo {
+public struct Dados_botao_dispositivo {
 
 
         //mark 
@@ -22,17 +22,20 @@ public class Dados_botao_dispositivo {
         // }
 
 
+
+
         public UI_button_type type;
 
 
-        public Resource_use_state state;
+        //public Resource_use_state state;
 
         // --- INTERNO
 
-        public string nome_dispositivo;
+        // public string nome_dispositivo;
+
 
         public string main_folder;
-        public string nome;
+        public string path_locator;
         
 
         public Botao_dispositivo_tipo_ativacao tipo_ativacao;
@@ -46,11 +49,13 @@ public class Dados_botao_dispositivo {
 
         public Action<Botao_dispositivo> update_para_substituir;
         public Action Update_secundario;
-        public Action Ativar = VOID.Metodo_nao_colocado;
-        public Action Construtor_personalizado = VOID.Metodo_nao_colocado;
+        public Action Ativar;
+        public Action Construtor_personalizado;
 
 
         // --- RESOURCES 
+
+        public Resource_context context;
 
         public Resource_audio_content audio_resource_pre_allocation;
         public Resource_image_content image_resource_pre_allocation;
@@ -64,7 +69,7 @@ public class Dados_botao_dispositivo {
         
 
         public bool OFF_and_ON_equal;
-        public float tempo_transicao = 75f;
+        public float tempo_transicao; // = 75f;
         
 
 
@@ -96,11 +101,11 @@ public class Dados_botao_dispositivo {
         
         // ** COMPLETE
 
-            public Button_animation_frame[] complete_button_ON_frames = new Button_animation_frame[ 6 ];
-            public Button_animation_frame[] complete_button_OFF_frames = new Button_animation_frame[ 6 ];
+            public Button_animation_frame[] complete_button_ON_frames; //  = new Button_animation_frame[ 6 ];
+            public Button_animation_frame[] complete_button_OFF_frames; //= new Button_animation_frame[ 6 ];
 
 
-        // ** COMPLETE WITH ANIMATION
+        // ** COMPLEX
 
             // ** provavelmente vai usar multiplos para as transicoes ou todos de uma categoria vao ser. 
             // ** recisa esperar multiplos

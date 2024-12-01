@@ -23,6 +23,8 @@ public class CONTROLLER__errors {
 
         private void Throw_intern( string _message ){
 
+
+                Console.Log( "AAAAAAAAAAAAAAAAAAAAAA" );
                 Console.Update();
                 // ** garante 
                 CONTROLLER__tasks.Pegar_instancia().modulo_multithread.Matar_thread();

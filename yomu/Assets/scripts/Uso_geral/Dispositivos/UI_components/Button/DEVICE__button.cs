@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class Botao_dispositivo {
 
 
+        public static Botao_dispositivo Get_button(){ return TOOL__UI_button_APPLY_DEFAULT_VALUES.Apply( new Botao_dispositivo() ); }
+
 
         // ** COLLIDERS
 
@@ -76,8 +78,12 @@ public class Botao_dispositivo {
 
         public Resource_state resource_state;
 
-        
+
+
+
         public MANAGER__UI_button_resources manager_resources;
+        public Dados_botao_dispositivo data;
+
 
 
         public RESOURCE__audio_ref audio_click;
@@ -85,7 +91,6 @@ public class Botao_dispositivo {
         
         
 
-        public Dados_botao_dispositivo data;
 
         public GameObject botao_game_object;
 
@@ -185,11 +190,9 @@ public class Botao_dispositivo {
 
                 TOOL__UI_button_VERIFICATIONS.Verify_default( this );
                 
-                button_name = data.nome;
+                button_name = data.path_locator;
                 type = data.type;
 
-                manager_resources =  new MANAGER__UI_button_resources( this );
-                
 
                 if( type == UI_button_type.not_give )
                     { CONTROLLER__errors.Throw( $"In the button { button_name } was not put the button <Color=lightBlue><b>TYPE</b></Color>" ); }

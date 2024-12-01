@@ -36,6 +36,8 @@ public class MANAGER__components_device {
 
         // --- BOTAO
         public int pointer_atual_botao;
+
+        // ** nao vai funcionar
         public Dados_botao_dispositivo[] dados_botoes_dispositivo;
         public Botao_dispositivo[] botoes_dispositivo;
 
@@ -161,8 +163,11 @@ public class MANAGER__components_device {
 
             for( int botao_index = 0 ; botao_index < dados_botoes_dispositivo.Length ; botao_index++ ){
 
+                    //mark
+                    // ** naov ai funcionar
 
-                    if( dados_botoes_dispositivo[ botao_index ] == null )
+
+                    if( botoes_dispositivo[ botao_index ] == null )
                         { continue; }
 
                         botoes_dispositivo[ botao_index ].Link_to_game_object( null );

@@ -12,16 +12,10 @@ public static class TOOL__UI_button_VERIFICATIONS {
                 if( _button.state != Resource_use_state.used )
                     { CONTROLLER__errors.Throw( $"Tried to define button { _button.button_name } but the button is with the state { _button.state }" ); }
                 
-                if( _button.data == null )
-                    { CONTROLLER__errors.Throw( $"Tried to define button { _button.button_name } but the data was null" ); }
-                
-                if( _button.data.state != Resource_use_state.used )
-                    { CONTROLLER__errors.Throw(  $"Tried to define button { _button.button_name } but the data was with state { _button.data.state }" ); }
-                
                 if( _button.data.tempo_transicao == 0f )
                     { CONTROLLER__errors.Throw( $"in the button { _button.button_name } the transition default time is 0" ); }
                 
-                TOOL__device_UI_SUPPORT.Verificar_nome( _button.data.nome );
+                TOOL__device_UI_SUPPORT.Verificar_nome( _button.data.path_locator );
 
                 // --- VERIFICACOES
 

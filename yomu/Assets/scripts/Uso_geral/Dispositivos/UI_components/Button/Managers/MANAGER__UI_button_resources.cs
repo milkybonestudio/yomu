@@ -2,25 +2,14 @@ using UnityEngine;
 
 
 // ** criado no declare
-public class MANAGER__UI_button_resources {
+public struct MANAGER__UI_button_resources {
 
 
-
-        public MANAGER__UI_button_resources( Botao_dispositivo _button ){
-
-
-            minimun.image = ( _button.data.image_resource_pre_allocation == Resource_image_content.not_give ) ? ( Resource_image_content.compress_data ) : ( _button.data.image_resource_pre_allocation );
-            minimun.audio = ( _button.data.audio_resource_pre_allocation == Resource_audio_content.not_give ) ? ( Resource_audio_content.audio_clip ) : ( _button.data.audio_resource_pre_allocation );
-
-        
-            button = _button;
-            
-            
-        }
 
         public Botao_dispositivo button;
-
         public Resources_minimun_levels minimun;
+
+
 
 
         // ** carrega minimo em todos os recursos
