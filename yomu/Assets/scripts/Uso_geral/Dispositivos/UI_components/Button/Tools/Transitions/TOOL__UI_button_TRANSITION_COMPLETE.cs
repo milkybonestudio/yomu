@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public static class TOOL__UI_button_TRANSITION_SIMPLE {
+public static class TOOL__UI_button_TRANSITION_COMPLETE {
 
 
 
@@ -45,6 +45,7 @@ public static class TOOL__UI_button_TRANSITION_SIMPLE {
 
                 float rate = (  1f -  ( botao.animacao_atual_tempo_ms  / botao.data.time_transition_ON_to_OFF_SIMPLE ) );
 
+                Debug.Log( $"rate: { rate }" );
                 
                 Change_colors( botao, botao.data.simple_button_ON_frame.color, botao.data.simple_button_ON_text_color, botao.data.simple_button_OFF_frame.color, botao.data.simple_button_OFF_text_color, rate );
                 return;

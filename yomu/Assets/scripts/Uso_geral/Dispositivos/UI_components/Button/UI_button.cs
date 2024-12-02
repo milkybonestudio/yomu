@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class Botao_dispositivo {
+public class UI_button {
 
 
-        public static Botao_dispositivo Get_button(){ return TOOL__UI_button_APPLY_DEFAULT_VALUES.Apply( new Botao_dispositivo() ); }
+        public static UI_button Get_button(){ return TOOL__UI_button_APPLY_DEFAULT_VALUES.Apply( new UI_button(), Resource_use_state.used ); }
 
 
         // ** COLLIDERS
@@ -79,15 +79,10 @@ public class Botao_dispositivo {
         public Resource_state resource_state;
 
 
-
-
         public MANAGER__UI_button_resources manager_resources;
-        public Dados_botao_dispositivo data;
+        public DATA__UI_button data;
 
 
-
-        public RESOURCE__audio_ref audio_click;
-        public RESOURCE__audio_ref audio_houver;
         
         
 

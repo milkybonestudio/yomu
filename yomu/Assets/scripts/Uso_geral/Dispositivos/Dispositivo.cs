@@ -83,7 +83,7 @@ public class Dispositivo {
 
             // --- DECLARE UI
             public Dados_imagem_estatica_dispositivo Declare_image( ref Imagem_estatica_dispositivo imagem_estatica ){ return dados_dispositivo.Declare_image_container( ref imagem_estatica ); }
-            public Dados_botao_dispositivo Declare_button( ref Botao_dispositivo _botao_slot ){ return dados_dispositivo.Declare_button( ref _botao_slot ); }
+            public DATA__UI_button Declare_button( ref UI_button _botao_slot ){ return dados_dispositivo.Declare_button( ref _botao_slot ); }
             
 
             // --- FLUXO DE CONSTRUCAO

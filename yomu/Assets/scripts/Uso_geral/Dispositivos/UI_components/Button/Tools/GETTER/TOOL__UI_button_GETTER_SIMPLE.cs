@@ -6,7 +6,7 @@ using TMPro;
 public static class TOOL__UI_button_GETTER_SIMPLE {
 
 
-        public static void Get( Botao_dispositivo _button ){
+        public static void Get( UI_button _button ){
 
 
 

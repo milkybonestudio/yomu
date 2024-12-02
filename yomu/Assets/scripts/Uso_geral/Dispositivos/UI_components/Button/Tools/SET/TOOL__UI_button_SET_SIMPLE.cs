@@ -4,14 +4,14 @@ using UnityEngine;
 public static class TOOL__UI_button_SET_SIMPLE {
 
 
-        public static void Hide( Botao_dispositivo botao ){
+        public static void Hide( UI_button botao ){
 
                 botao.IMAGE_container.SetActive( false );
                 botao.TRANSITION_container.SetActive( false );
 
         }
 
-        public static void SET_ON_static( Botao_dispositivo botao ){
+        public static void SET_ON_static( UI_button botao ){
 
 
                 // esconde outros
@@ -35,7 +35,7 @@ public static class TOOL__UI_button_SET_SIMPLE {
         }
 
 
-        public static void SET_OFF_static( Botao_dispositivo botao ){
+        public static void SET_OFF_static( UI_button botao ){
 
                 // esconde outros
                 botao.IMAGE_container.SetActive( true );
@@ -60,7 +60,7 @@ public static class TOOL__UI_button_SET_SIMPLE {
 
 
 
-        public static void SETAR_transicao_ON_para_OFF( Botao_dispositivo botao ){
+        public static void SETAR_transicao_ON_para_OFF( UI_button botao ){
 
                 Console.Log( "Veio SET_transition_OFF_to_ON" );
 
@@ -115,7 +115,7 @@ public static class TOOL__UI_button_SET_SIMPLE {
 
 
 
-        public static void SET_transition_OFF_to_ON( Botao_dispositivo botao ){
+        public static void SET_transition_OFF_to_ON( UI_button botao ){
 
                 
                 Console.Log( "Veio SET_transition_OFF_to_ON" );

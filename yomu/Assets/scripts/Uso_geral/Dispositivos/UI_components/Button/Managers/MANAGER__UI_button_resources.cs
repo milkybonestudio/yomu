@@ -6,7 +6,7 @@ public struct MANAGER__UI_button_resources {
 
 
 
-        public Botao_dispositivo button;
+        public UI_button button;
         public Resources_minimun_levels minimun;
 
 
@@ -27,16 +27,18 @@ public struct MANAGER__UI_button_resources {
 
         public void Delete(){
 
+            ref DATA__UI_button data = ref button.data;
+
             // ** AUDIO
-            button?.audio_click.Delete( ref button.audio_click );
-            button?.audio_houver.Delete( ref button.audio_houver );
+            data.audio_click?.Delete( ref data.audio_click );
+            data.audio_houver?.Delete( ref data.audio_houver );
 
             // ** IMAGES
             
                  if( button.type == UI_button_type.simple )
                     {
-                        button.data.simple_button_OFF_frame.image_ref?.Delete( ref button.data.simple_button_OFF_frame.image_ref );
-                        button.data.simple_button_ON_frame.image_ref?.Delete( ref button.data.simple_button_ON_frame.image_ref );
+                        data.simple_button_OFF_frame.image_ref?.Delete( ref data.simple_button_OFF_frame.image_ref );
+                        data.simple_button_ON_frame.image_ref?.Delete( ref data.simple_button_ON_frame.image_ref );
                     }
             else if( button.type == UI_button_type.complete )
                     {
@@ -45,8 +47,8 @@ public struct MANAGER__UI_button_resources {
                             if( ui_part == ( int ) Device_button_animation_part.animation_text )
                                 { continue; }
 
-                            button.data.complete_button_OFF_frames[ ui_part ].image_ref?.Delete( ref button.data.complete_button_OFF_frames[ ui_part ].image_ref );
-                            button.data.complete_button_ON_frames[ ui_part ].image_ref?.Delete( ref button.data.complete_button_ON_frames[ ui_part ].image_ref );
+                            data.complete_button_OFF_frames[ ui_part ].image_ref?.Delete( ref data.complete_button_OFF_frames[ ui_part ].image_ref );
+                            data.complete_button_ON_frames[ ui_part ].image_ref?.Delete( ref data.complete_button_ON_frames[ ui_part ].image_ref );
 
 
                         }
@@ -61,17 +63,20 @@ public struct MANAGER__UI_button_resources {
 
         public void Generic_action( Resource_action _action ){
 
+            ref DATA__UI_button data = ref button.data;
+
             // ** AUDIO
-            button.audio_click?.Activate_resource_action( _action );
-            button.audio_houver?.Activate_resource_action( _action );
+
+            data.audio_click?.Activate_resource_action( _action );
+            data.audio_houver?.Activate_resource_action( _action );
 
             // ** IMAGES
             
                  if( button.type == UI_button_type.simple )
                     {
                         Console.Log( "vai dar action" );
-                        button.data.simple_button_OFF_frame.image_ref?.Activate_resource_action( _action );
-                        button.data.simple_button_ON_frame.image_ref?.Activate_resource_action( _action );
+                        data.simple_button_OFF_frame.image_ref?.Activate_resource_action( _action );
+                        data.simple_button_ON_frame.image_ref?.Activate_resource_action( _action );
                     }
             else if( button.type == UI_button_type.complete )
                     {
@@ -80,8 +85,8 @@ public struct MANAGER__UI_button_resources {
                             if( ui_part == ( int ) Device_button_animation_part.animation_text )
                                 { continue; }
 
-                            button.data.complete_button_OFF_frames[ ui_part ].image_ref?.Activate_resource_action( _action );
-                            button.data.complete_button_ON_frames[ ui_part ].image_ref?.Activate_resource_action( _action );
+                            data.complete_button_OFF_frames[ ui_part ].image_ref?.Activate_resource_action( _action );
+                            data.complete_button_ON_frames[ ui_part ].image_ref?.Activate_resource_action( _action );
 
 
                         }

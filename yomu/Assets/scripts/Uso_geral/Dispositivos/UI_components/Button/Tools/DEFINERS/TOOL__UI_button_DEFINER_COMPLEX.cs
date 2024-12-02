@@ -9,11 +9,11 @@ public static class TOOL__UI_button_DEFINER_COMPLEX {
         private static int numero_de_partes = Enum.GetNames( typeof( Device_button_animation_part ) ).Length;
 
 
-        public static Botao_dispositivo Define( Botao_dispositivo botao ){
+        public static UI_button Define( UI_button botao ){
 
                 throw new Exception( "ainda temq ue fazer" ); 
 
-                Dados_botao_dispositivo _dados = botao.data;
+                DATA__UI_button _dados = botao.data;
 
                 string indentificador = null;
 

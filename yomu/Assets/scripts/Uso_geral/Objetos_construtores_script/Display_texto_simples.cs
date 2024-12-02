@@ -20,7 +20,7 @@ public class Display_texto_simples {
                 this.height = _height;
                 this.width = _width;
                 
-                game_object = new GameObject(_nome);
+                game_object = new GameObject( _nome );
 
                 text = (TMP_Text ) (  game_object.AddComponent<TextMeshProUGUI>());
                 TMP_FontAsset font_default = Resources.Load< TMP_FontAsset >( "fonts/Font_1" );

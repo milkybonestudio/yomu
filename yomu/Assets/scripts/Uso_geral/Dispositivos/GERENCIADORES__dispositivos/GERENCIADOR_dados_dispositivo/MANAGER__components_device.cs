@@ -18,11 +18,11 @@ public class MANAGER__components_device {
                     
                 // --- DADOS
                 dados_imagens_estaticas_dispositivo = new Dados_imagem_estatica_dispositivo[ numero_inicial_de_slots ];
-                dados_botoes_dispositivo = new Dados_botao_dispositivo[ numero_inicial_de_slots ];
+                dados_botoes_dispositivo = new DATA__UI_button[ numero_inicial_de_slots ];
 
                 // --- OBJETOS
                 imagens_estaticas_dispositivo = new Imagem_estatica_dispositivo[ numero_inicial_de_slots ];
-                botoes_dispositivo = new Botao_dispositivo[ numero_inicial_de_slots ];
+                botoes_dispositivo = new UI_button[ numero_inicial_de_slots ];
 
         }
 
@@ -38,8 +38,8 @@ public class MANAGER__components_device {
         public int pointer_atual_botao;
 
         // ** nao vai funcionar
-        public Dados_botao_dispositivo[] dados_botoes_dispositivo;
-        public Botao_dispositivo[] botoes_dispositivo;
+        public DATA__UI_button[] dados_botoes_dispositivo;
+        public UI_button[] botoes_dispositivo;
 
 
         // --- IMAGEM ESTATICA
@@ -76,13 +76,14 @@ public class MANAGER__components_device {
         }
 
 
-        
-        public Dados_botao_dispositivo Declare_button( ref Botao_dispositivo button ){
+        public DATA__UI_button Declare_button( ref UI_button button ){
+
+                //mark  
+                throw new Exception( "nao vai funcionar, agora dados é uma struct, vai voltar uma copia" );
 
 
-
-                button = new Botao_dispositivo();
-                button.data = new Dados_botao_dispositivo();
+                button = new UI_button();
+                button.data = new DATA__UI_button();
 
 
                 botoes_dispositivo[ pointer_atual_botao++ ] = button; 
@@ -107,7 +108,7 @@ public class MANAGER__components_device {
                 // --- DEFINE BUTTONS
                 for( int button_id = 0 ; button_id < botoes_dispositivo.Length ; button_id++ ){
 
-                        Botao_dispositivo botao = botoes_dispositivo[ button_id ];
+                        UI_button botao = botoes_dispositivo[ button_id ];
                         if( botao == null  )
                             { break; }
 

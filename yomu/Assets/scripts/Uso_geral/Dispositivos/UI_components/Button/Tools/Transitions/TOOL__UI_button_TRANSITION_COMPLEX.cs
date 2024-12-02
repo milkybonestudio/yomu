@@ -1,14 +1,109 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-
-public static class Botao_dispositivo_TRANSICAO {
-
+public static class TOOL__UI_button_TRANSITION_COMPLEX {
 
 
 
+        private const float time_seed = 2f;
+    
+    
+        public static void Handle_transition_animation_OFF_to_ON_color( UI_button botao ){
 
-        public static void Handle_transition_animation_OFF_to_ON_individual_animation( Botao_dispositivo botao ){
+
+                
+                if( !!!( botao.esta_houver ) ) 
+                    { botao.animacao_atual_tempo_ms -= ( botao.data.animacao_OFF_para_ON_tempos.multiplicador_saida_padrao_animacao * ( Time.deltaTime * 1000f ) ); }
+                    
+                botao.animacao_atual_tempo_ms -= ( Time.deltaTime * 1000f ) ; 
+
+
+                if( botao.animacao_atual_tempo_ms < 0.5f )
+                    { TOOL__UI_button_SET_COMPLEX.SET_ON_static( botao ); return; } // --- FINALIZAR
+
+
+                float rate = (  1f -  ( botao.animacao_atual_tempo_ms  / botao.data.animacao_OFF_para_ON_tempos.tempo_espera_para_ativar_ms ) );
+
+                Debug.Log( $"rate: { rate }" );
+                
+                // menos vai ser alterada, manter alpha estatico até perto do final
+
+                int pointer_off_estatico = botao.data.pointers.pointer_imagem_estatica_OFF;
+                int pointer_on_estatico = botao.data.pointers.pointer_imagem_estatica_ON;
+
+
+                Change_colors( botao, pointer_off_estatico, pointer_on_estatico, rate );
+                return;
+
+
+        }
+
+
+
+
+        public static void Handle_transition_animation_ON_to_OFF_color( UI_button botao ){
+
+                if( ( botao.esta_houver ) ) 
+                    {  botao.animacao_atual_tempo_ms -= ( time_seed * ( Time.deltaTime * 1000f ) ); }
+                    
+                botao.animacao_atual_tempo_ms -= ( Time.deltaTime * 1000f ) ; 
+
+
+                if( botao.animacao_atual_tempo_ms < 0.5f )
+                    { TOOL__UI_button_SET_SIMPLE.SET_OFF_static( botao ); return; } // --- FINALIZAR
+
+
+                float rate = (  1f -  ( botao.animacao_atual_tempo_ms  / botao.data.time_transition_ON_to_OFF_SIMPLE ) );
+
+                Debug.Log( $"rate: { rate }" );
+                
+                Change_colors( botao, botao.data.simple_button_ON_frame.color, botao.data.simple_button_ON_text_color, botao.data.simple_button_OFF_frame.color, botao.data.simple_button_OFF_text_color, rate );
+                return;
+
+        }
+
+
+        private static void Change_colors( UI_button botao,  Color _color_image, Color _color_image_text, Color _color_transition, Color _color_transition_text, float rate ){
+
+
+
+                // ** COR FRAME ATUAL
+                Color sprite_color   =  COLOR.Blend_color_with_rate(   _color_image, _color_transition, rate );
+                Color text_color   =  COLOR.Blend_color_with_rate(   _color_image_text, _color_transition_text, rate );
+
+                sprite_color.a *= rate;
+                text_color.a *= rate;
+
+
+                // ** MUDA TRANSICAO
+                botao.TRANSITION_simple_body.image.color = sprite_color;
+                botao.TRANSITION_simple_text.tmp_text.color = text_color;
+
+
+                float novo_valor = 1f;
+
+                if( rate > 0.95f )
+                    { novo_valor = ( 1.2f - rate ); } // --- QUASE NO FINAL => tem que alterar alpha 
+
+                
+                sprite_color.a  = novo_valor ;
+                text_color.a  = novo_valor ;
+
+
+                // ** MUDA IMAGEM ATRAS 
+                botao.IMAGE_simple_body.image.color = sprite_color;
+                botao.IMAGE_simple_text.tmp_text.color = text_color;
+
+
+                return;
+
+
+        }
+
+
+
+
+        public static void Handle_transition_animation_OFF_to_ON_individual_animation( UI_button botao ){
                 // --- TEM 1 ANIMACAO PARA CADA
 
 
@@ -45,7 +140,7 @@ public static class Botao_dispositivo_TRANSICAO {
 
 
 
-        public static void Lidar_transicao_animacao_ON_para_OFF_animacao_individual( Botao_dispositivo botao ){
+        public static void Lidar_transicao_animacao_ON_para_OFF_animacao_individual( UI_button botao ){
 
 
 
@@ -84,40 +179,11 @@ public static class Botao_dispositivo_TRANSICAO {
 
 
 
-    
-        public static void Handle_transition_animation_OFF_to_ON_color( Botao_dispositivo botao ){
-
-
-                
-                if( !!!( botao.esta_houver ) ) 
-                    { botao.animacao_atual_tempo_ms -= ( botao.data.animacao_OFF_para_ON_tempos.multiplicador_saida_padrao_animacao * ( Time.deltaTime * 1000f ) ); }
-                    
-                botao.animacao_atual_tempo_ms -= ( Time.deltaTime * 1000f ) ; 
-
-
-                if( botao.animacao_atual_tempo_ms < 0.5f )
-                    { TOOL__UI_button_SET_COMPLEX.SET_ON_static( botao ); return; } // --- FINALIZAR
-
-
-                float rate = (  1f -  ( botao.animacao_atual_tempo_ms  / botao.data.animacao_OFF_para_ON_tempos.tempo_espera_para_ativar_ms ) );
-
-                Debug.Log( $"rate: { rate }" );
-                
-                // menos vai ser alterada, manter alpha estatico até perto do final
-
-                int pointer_off_estatico = botao.data.pointers.pointer_imagem_estatica_OFF;
-                int pointer_on_estatico = botao.data.pointers.pointer_imagem_estatica_ON;
-
-
-                Change_colors( botao, pointer_off_estatico, pointer_on_estatico, rate );
-                return;
-
-
-        }
+        // ????
 
 
 
-        public static void Lidar_transicao_animacao_ON_para_OFF_cor( Botao_dispositivo botao ){
+        public static void Lidar_transicao_animacao_ON_para_OFF_cor( UI_button botao ){
 
                 
                 if( botao.esta_houver ) 
@@ -150,7 +216,7 @@ public static class Botao_dispositivo_TRANSICAO {
 
 
 
-        private static void Change_colors( Botao_dispositivo botao, int pointer_imagem_atual, int pointer_nova_imagem, float rate ){
+        private static void Change_colors( UI_button botao, int pointer_imagem_atual, int pointer_nova_imagem, float rate ){
 
 
 
@@ -282,7 +348,12 @@ public static class Botao_dispositivo_TRANSICAO {
 
 
         }
-                
+
+
+
+
+
+
 
 
 }

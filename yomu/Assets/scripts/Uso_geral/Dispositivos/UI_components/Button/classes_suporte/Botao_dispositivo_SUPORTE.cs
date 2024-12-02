@@ -3,8 +3,11 @@
 
 public static class  Botao_dispositivo_SUPORTE {
 
+    //mark
+    // ** vai ser usado somente no complex
 
-    public static int Pegar_pointer_inicial_estado( Botao_dispositivo botao, DEVICE_button_visual_state _estado_para_ir ){
+
+    public static int Pegar_pointer_inicial_estado( UI_button botao, DEVICE_button_visual_state _estado_para_ir ){
 
 
             

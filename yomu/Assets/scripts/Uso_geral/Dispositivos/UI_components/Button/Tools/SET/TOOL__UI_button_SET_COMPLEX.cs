@@ -3,7 +3,7 @@ using UnityEngine;
 
 public static class TOOL__UI_button_SET_COMPLEX {
 
-        public static void SET_ON_static( Botao_dispositivo botao ){
+        public static void SET_ON_static( UI_button botao ){
 
 
                 // esconde outros
@@ -35,7 +35,7 @@ public static class TOOL__UI_button_SET_COMPLEX {
 
 
 
-        public static void SETAR_ON_animacao( Botao_dispositivo botao ){
+        public static void SETAR_ON_animacao( UI_button botao ){
 
 
                 // esconde outros
@@ -72,7 +72,7 @@ public static class TOOL__UI_button_SET_COMPLEX {
 
 
 
-        public static void SETAR_transicao_ON_para_OFF( Botao_dispositivo botao ){
+        public static void SETAR_transicao_ON_para_OFF( UI_button botao ){
 
 
 
@@ -147,7 +147,7 @@ public static class TOOL__UI_button_SET_COMPLEX {
 
 
 
-        public static void SET_transition_OFF_to_ON( Botao_dispositivo botao ){
+        public static void SET_transition_OFF_to_ON( UI_button botao ){
 
 
                      if( botao.data.tipo_transicao == DEVICE_button_transition_type_OFF_ON.cor )
@@ -220,7 +220,7 @@ public static class TOOL__UI_button_SET_COMPLEX {
 
 
 
-        public static void SET_OFF_static( Botao_dispositivo botao ){
+        public static void SET_OFF_static( UI_button botao ){
 
 
                 // esconde outros
@@ -252,7 +252,7 @@ public static class TOOL__UI_button_SET_COMPLEX {
 
         }
 
-        public static void SET_OFF_animation( Botao_dispositivo botao ){
+        public static void SET_OFF_animation( UI_button botao ){
 
 
                 // esconde outros

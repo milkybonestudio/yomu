@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 
 
-public struct Dados_botao_dispositivo {
+public struct DATA__UI_button {
 
 
         //mark 
@@ -47,7 +47,7 @@ public struct Dados_botao_dispositivo {
         public bool bloquear_update_visual;
 
 
-        public Action<Botao_dispositivo> update_para_substituir;
+        public Action<UI_button> update_para_substituir;
         public Action Update_secundario;
         public Action Ativar;
         public Action Construtor_personalizado;
@@ -84,6 +84,11 @@ public struct Dados_botao_dispositivo {
         public bool text_OFF_and_ON_equal;
         public string text_on;
         public string text_off;
+
+
+        
+        public RESOURCE__audio_ref audio_click;
+        public RESOURCE__audio_ref audio_houver;
 
 
         // ** SIMPLE
@@ -150,15 +155,5 @@ public struct Dados_botao_dispositivo {
         public Dados_botao_dispositivo_animacao animacao_botao;
 
         
-
-
-
-        // --- AUDIOS
-
-            public AudioClip audio_click;
-            public AudioClip audio_houver;
-
-
-
 
 }

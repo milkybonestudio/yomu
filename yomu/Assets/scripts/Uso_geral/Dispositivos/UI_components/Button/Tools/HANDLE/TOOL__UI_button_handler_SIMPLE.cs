@@ -4,7 +4,7 @@ public static class TOOL__UI_button_handler_SIMPLE {
 
         // --- OFF
 
-        public static void Handle_off_static( Botao_dispositivo _button ){
+        public static void Handle_off_static( UI_button _button ){
 
                 
                 if(  _button.esta_houver )
@@ -16,7 +16,7 @@ public static class TOOL__UI_button_handler_SIMPLE {
 
 
         // --- ON
-        public static void Handle_on_static( Botao_dispositivo _button ){
+        public static void Handle_on_static( UI_button _button ){
 
 
                 // --- VERIFICA SE O MAUSE SAIU
@@ -31,7 +31,7 @@ public static class TOOL__UI_button_handler_SIMPLE {
 
         // --- TRANSICAO
 
-        public static void Handle_transition_animation_OFF_to_ON( Botao_dispositivo _button ){
+        public static void Handle_transition_animation_OFF_to_ON( UI_button _button ){
 
 
                 switch( _button.data.tipo_transicao ){
@@ -50,7 +50,7 @@ public static class TOOL__UI_button_handler_SIMPLE {
 
         // --- ON -> OFF
 
-        public static void Lidar_transicao_animacao_ON_para_OFF( Botao_dispositivo _button ){
+        public static void Lidar_transicao_animacao_ON_para_OFF( UI_button _button ){
             
                 switch( _button.data.tipo_transicao ){
 

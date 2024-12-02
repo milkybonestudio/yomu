@@ -10,10 +10,10 @@ public static class TOOL__UI_button_DEFINER_SIMPLE {
 
 
 
-        public static Botao_dispositivo Define( Botao_dispositivo botao ){
+        public static UI_button Define( UI_button botao ){
 
 
-                ref Dados_botao_dispositivo _dados = ref botao.data;
+                ref DATA__UI_button _dados = ref botao.data;
 
                 // --- VERIFICATIONS
 
@@ -47,12 +47,12 @@ public static class TOOL__UI_button_DEFINER_SIMPLE {
                 MANAGER__resources_images resources_image = CONTROLLER__resources.Get_instance().resources_images;
 
                 // OFF 
-                    _dados.simple_button_OFF_frame.image_ref = resources_image.Get_image_reference( Resource_context.Devices, _dados.main_folder, _dados.simple_button_OFF_frame.path, botao.manager_resources.minimun.image );
+                    _dados.simple_button_OFF_frame.image_ref = resources_image.Get_image_reference( _dados.context, _dados.main_folder, _dados.simple_button_OFF_frame.path, botao.manager_resources.minimun.image );
                     _dados.simple_button_OFF_frame.color = TOOL__device_UI_SUPPORT.Mudar_cor_default(  _dados.simple_button_OFF_frame.color, Cores.grey_90 );
                     _dados.simple_button_OFF_text_color = TOOL__device_UI_SUPPORT.Mudar_cor_default(  _dados.simple_button_OFF_text_color, Cores.black );
 
                 // ON
-                    _dados.simple_button_ON_frame.image_ref = resources_image.Get_image_reference( Resource_context.Devices, _dados.main_folder, _dados.simple_button_ON_frame.path, botao.manager_resources.minimun.image  );
+                    _dados.simple_button_ON_frame.image_ref = resources_image.Get_image_reference( _dados.context, _dados.main_folder, _dados.simple_button_ON_frame.path, botao.manager_resources.minimun.image  );
                     _dados.simple_button_ON_frame.color = TOOL__device_UI_SUPPORT.Mudar_cor_default(  _dados.simple_button_ON_frame.color, Cores.white );
                     _dados.simple_button_ON_text_color = TOOL__device_UI_SUPPORT.Mudar_cor_default(  _dados.simple_button_ON_text_color, Cores.black );
 

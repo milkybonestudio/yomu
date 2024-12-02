@@ -5,7 +5,7 @@ public static class TOOL__UI_button_CHANGE_SPRITES_SIMPLE {
 
 
 
-        public static void Mudar_imagens_TRANSICAO(  Botao_dispositivo botao, int pointer ){
+        public static void Mudar_imagens_TRANSICAO(  UI_button botao, int pointer ){
 
 
                 // ** animacao_back_image
@@ -49,7 +49,7 @@ public static class TOOL__UI_button_CHANGE_SPRITES_SIMPLE {
 
 
 
-        public static void Change_images_IMAGE(  Botao_dispositivo botao, int pointer ){
+        public static void Change_images_IMAGE(  UI_button botao, int pointer ){
 
                 
                 // ** animacao_back_image

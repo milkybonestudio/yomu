@@ -5,7 +5,7 @@ public static class Botao_dispositivo_MUDAR_IMAGEM {
 
 
 
-        public static void Mudar_imagens_TRANSICAO(  Botao_dispositivo botao, int pointer ){
+        public static void Mudar_imagens_TRANSICAO(  UI_button botao, int pointer ){
 
 
 
@@ -50,7 +50,7 @@ public static class Botao_dispositivo_MUDAR_IMAGEM {
 
 
 
-        public static void Change_images_IMAGE(  Botao_dispositivo botao, int pointer ){
+        public static void Change_images_IMAGE(  UI_button botao, int pointer ){
 
                 
                 // ** animacao_back_image

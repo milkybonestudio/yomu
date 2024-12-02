@@ -9,7 +9,7 @@ public static class TOOL__UI_button_UPDATE {
 
 
 
-        public static void Update_logica( Botao_dispositivo _button ){
+        public static void Update_logica( UI_button _button ){
 
 
                 
@@ -74,7 +74,7 @@ public static class TOOL__UI_button_UPDATE {
 
         // --- PART VISUAL
 
-        public static void Update_parte_visual( Botao_dispositivo _button ){
+        public static void Update_parte_visual( UI_button _button ){
 
                 
                 if( _button.data.bloquear_update_visual  )
@@ -97,7 +97,7 @@ public static class TOOL__UI_button_UPDATE {
 
 
 
-        public static void Update_visual_part_SIMPLE( Botao_dispositivo _button ){
+        public static void Update_visual_part_SIMPLE( UI_button _button ){
 
                 
                 switch( _button.estado_visual_botao ){
@@ -115,7 +115,7 @@ public static class TOOL__UI_button_UPDATE {
         }
 
 
-        public static void Update_visual_part_COMPLETE( Botao_dispositivo _button ){
+        public static void Update_visual_part_COMPLETE( UI_button _button ){
 
 
                 switch( _button.estado_visual_botao ){
@@ -134,18 +134,18 @@ public static class TOOL__UI_button_UPDATE {
         }
 
         
-        public static void Update_visual_part_COMPLEX( Botao_dispositivo _button ){
+        public static void Update_visual_part_COMPLEX( UI_button _button ){
 
 
                 switch( _button.estado_visual_botao ){
 
-                        case DEVICE_button_visual_state.off_estatico: TOOL__UI_button_handler_COMPLETE_WITH_ANIMATION.Handle_off_static( _button ); break;
-                        case DEVICE_button_visual_state.off_animacao: TOOL__UI_button_handler_COMPLETE_WITH_ANIMATION.Handle_off_animation( _button ); break;
-                        case DEVICE_button_visual_state.on_estatico: TOOL__UI_button_handler_COMPLETE_WITH_ANIMATION.Handle_on_static( _button ); break;
-                        case DEVICE_button_visual_state.on_animacao: TOOL__UI_button_handler_COMPLETE_WITH_ANIMATION.Handle_on_animation( _button ); break;
+                        case DEVICE_button_visual_state.off_estatico: TOOL__UI_button_handler_COMPLEX.Handle_off_static( _button ); break;
+                        case DEVICE_button_visual_state.off_animacao: TOOL__UI_button_handler_COMPLEX.Handle_off_animation( _button ); break;
+                        case DEVICE_button_visual_state.on_estatico: TOOL__UI_button_handler_COMPLEX.Handle_on_static( _button ); break;
+                        case DEVICE_button_visual_state.on_animacao: TOOL__UI_button_handler_COMPLEX.Handle_on_animation( _button ); break;
 
-                        case DEVICE_button_visual_state.transicao_animacao_OFF_para_ON: TOOL__UI_button_handler_COMPLETE_WITH_ANIMATION.Handle_transition_animation_OFF_to_ON( _button ); break;
-                        case DEVICE_button_visual_state.transicao_animacao_ON_para_OFF: TOOL__UI_button_handler_COMPLETE_WITH_ANIMATION.Lidar_transicao_animacao_ON_para_OFF( _button ); break;
+                        case DEVICE_button_visual_state.transicao_animacao_OFF_para_ON: TOOL__UI_button_handler_COMPLEX.Handle_transition_animation_OFF_to_ON( _button ); break;
+                        case DEVICE_button_visual_state.transicao_animacao_ON_para_OFF: TOOL__UI_button_handler_COMPLEX.Handle_transition_animation_ON_to_OFF( _button ); break;
 
                 }
 

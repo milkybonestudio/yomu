@@ -4,13 +4,11 @@ using UnityEngine;
 public static class EXAMPLE_UI_button {
 
 
-        public static Botao_dispositivo Simple( GameObject _button_game_object ){
+        public static UI_button Simple( GameObject _button_game_object ){
 
 
-                Botao_dispositivo botao = Botao_dispositivo.Get_button();
-                botao.state = Resource_use_state.used;
-
-                ref Dados_botao_dispositivo dados = ref botao.data;
+                UI_button botao = UI_button.Get_button();
+                ref DATA__UI_button dados = ref botao.data;
 
                 // --- PUT DATA
 

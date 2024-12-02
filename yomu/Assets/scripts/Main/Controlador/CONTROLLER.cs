@@ -40,7 +40,8 @@ unsafe public class Controlador : MonoBehaviour {
 
 
 
-        Botao_dispositivo b_up;
+        UI_button b_up;
+        UI_text_container text_container;
 
         public void Start(){
 
@@ -58,6 +59,7 @@ unsafe public class Controlador : MonoBehaviour {
 
                 
                 b_up = EXAMPLE_UI_button.Simple( GameObject.Find( "Tela/Container_teste/a" ) );
+                text_container = EXAMPLE_UI_text_container.Simple( GameObject.Find( "Tela/Container_teste/EXAMPLE_text_container" ) );
 
 
         }

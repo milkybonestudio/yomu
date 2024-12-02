@@ -3,12 +3,14 @@
 
 public static class TOOL__UI_button_APPLY_DEFAULT_VALUES {
 
-    public static Botao_dispositivo Apply( Botao_dispositivo _button  ){
+    public static UI_button Apply( UI_button _button, Resource_use_state _resource_state  ){
+
+
+            _button.state = _resource_state;
 
             // --- TIMEs
 
             _button.data.tempo_transicao = 75f;
-
             _button.data.Ativar = VOID.Metodo_nao_colocado;
 
 

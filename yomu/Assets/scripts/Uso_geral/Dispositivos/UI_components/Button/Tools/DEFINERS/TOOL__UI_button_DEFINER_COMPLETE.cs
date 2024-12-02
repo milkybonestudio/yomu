@@ -11,10 +11,10 @@ public static class TOOL__UI_button_DEFINER_COMPLETE {
 
 
 
-        public static Botao_dispositivo Define( Botao_dispositivo botao ){
+        public static UI_button Define( UI_button botao ){
 
 
-                Dados_botao_dispositivo _dados = botao.data;
+                ref DATA__UI_button _dados = ref botao.data;
 
                 string indentificador = null;
 

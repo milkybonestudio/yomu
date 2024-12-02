@@ -6,7 +6,7 @@ public static class TOOL__UI_button_VERIFICATIONS {
 
 
 
-        public static void Verify_default( Botao_dispositivo _button ){
+        public static void Verify_default( UI_button _button ){
 
 
                 if( _button.state != Resource_use_state.used )

@@ -27,8 +27,8 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
         }
 
 
-        public Botao_dispositivo botao_fechar;
-        public Botao_dispositivo botao_novo;
+        public UI_button botao_fechar;
+        public UI_button botao_novo;
         public Imagem_estatica_dispositivo img;
 
 
@@ -50,7 +50,9 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
 
 
                 // --- define 
-                Dados_botao_dispositivo botao_fechar_dados_novo = dispositivo.Declare_button( ref botao_novo );
+                //mark
+                // ** nao vai funcionar
+                DATA__UI_button botao_fechar_dados_novo = dispositivo.Declare_button( ref botao_novo );
                     {
 
                         botao_fechar_dados_novo.tipo_ativacao = Botao_dispositivo_tipo_ativacao.clicar;
@@ -73,17 +75,6 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
 
                             botao_fechar_dados_novo.on.texto = "ON";
 
-
-
-                            TOOL__button_device_composed_decoration.Create_simple  (
-                                                                                        _dados: botao_fechar_dados_novo,
-                                                                                        _paths:   new  string[] {
-                                                                                                                    "teste"
-                                                                                                                },
-                                                                                        _cor_off : Cores.grey_80,
-                                                                                        _cor_on: Cores.white
-
-                                                                                    );
 
 
                     }
