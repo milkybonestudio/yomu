@@ -105,16 +105,16 @@ public class Configuration_container : MonoBehaviour {
         }
 
 
-        public void Trocar_modo_texto( Tipo_construcao_texto _tipo ){
+        public void Trocar_modo_texto( Type_writing_construction _tipo ){
 
                 CONTROLLER__configurations.Pegar_instancia().Mudar_tipo_texto( _tipo );
 
                 Vector3 nova_posicao = new Vector3();
                 switch( _tipo ){
 
-                        case Tipo_construcao_texto.fade: nova_posicao = new Vector3( -200f , 0f,0f ); break;
-                        case Tipo_construcao_texto.instant: nova_posicao = new Vector3( 0f , 0f,0f ); break; 
-                        case Tipo_construcao_texto.typewrite: nova_posicao = new Vector3( 200f , 0f,0f ); break;
+                        case Type_writing_construction.fade: nova_posicao = new Vector3( -200f , 0f,0f ); break;
+                        case Type_writing_construction.instant: nova_posicao = new Vector3( 0f , 0f,0f ); break; 
+                        case Type_writing_construction.typewrite: nova_posicao = new Vector3( 200f , 0f,0f ); break;
 
                 }
 
@@ -228,7 +228,9 @@ public class Configuration_container : MonoBehaviour {
 
                 if( Rectangle.Check_point_inside(  mouse_x + x_position,  mouse_y + y_position  , x_min, x_max, y_min , y_max   )   ){
 
-                        if(   Input.GetMouseButtonDown( 0 ) ){ Trocar_modo_texto( Tipo_construcao_texto.fade); }
+                        if(   Input.GetMouseButtonDown( 0 ) )
+                            { Trocar_modo_texto( Type_writing_construction.fade ); }
+
                         return true;
 
                 }
@@ -245,7 +247,7 @@ public class Configuration_container : MonoBehaviour {
 
                 if( Rectangle.Check_point_inside(  mouse_x + x_position,  mouse_y + y_position  , x_min, x_max, y_min , y_max   )   ){
 
-                        if( Input.GetMouseButtonDown( 0 ) ){ Trocar_modo_texto( Tipo_construcao_texto.instant );}
+                        if( Input.GetMouseButtonDown( 0 ) ){ Trocar_modo_texto( Type_writing_construction.instant );}
 
                         return true;
                 }
@@ -262,7 +264,7 @@ public class Configuration_container : MonoBehaviour {
 
                 if( Rectangle.Check_point_inside(  mouse_x,  mouse_y   , x_min, x_max, y_min , y_max   )   ){
 
-                        if( Input.GetMouseButtonDown( 0 ) ){ Trocar_modo_texto( Tipo_construcao_texto.typewrite ); }
+                        if( Input.GetMouseButtonDown( 0 ) ){ Trocar_modo_texto( Type_writing_construction.typewrite ); }
                         return true;
                         
                 }

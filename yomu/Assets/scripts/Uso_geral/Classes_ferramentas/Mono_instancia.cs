@@ -25,7 +25,10 @@ public class Mono_instancia : MonoBehaviour {
     
         public static Coroutine Stop_coroutine( Coroutine _coroutine ){
 
-                instancia.StopCoroutine(_coroutine);
+                Debug.Log( instancia );
+
+
+                instancia.StopCoroutine( _coroutine );
                 return null;
             
         }

@@ -18,7 +18,7 @@ using System.IO;
 
 
         public float volume;
-        public Tipo_construcao_texto tipo_texto;
+        public Type_writing_construction tipo_texto;
 
         public string music_login;
 
@@ -158,7 +158,7 @@ using System.IO;
 
 
 
-        public void Mudar_tipo_texto( Tipo_construcao_texto _novo_tipo_texto ){
+        public void Mudar_tipo_texto( Type_writing_construction _novo_tipo_texto ){
 
                 /*
                 *  pode depois ter algo tipo Atualizar_controladores_texto(); dai todo novo controlador texto ficaria em um controlador_texto[];
@@ -218,7 +218,7 @@ using System.IO;
 
                 Mudar_volume(volume);
 
-                tipo_texto =   ( Tipo_construcao_texto ) ( Enum.Parse( typeof( Tipo_construcao_texto )   , lines_arr_config[i].Trim() )  ) ;       Passar(ref i);
+                tipo_texto =   ( Type_writing_construction ) ( Enum.Parse( typeof( Type_writing_construction )   , lines_arr_config[ i ].Trim() )  ) ;       Passar( ref i );
 
                 login_background = lines_arr_config[i].Trim() ;Passar(ref i);
                 

@@ -735,20 +735,16 @@ public class Leitor_visual_novel{
 
        bool verificacao_texto_pergaminho = bloco_visual_novel.controlador_tela_story.pergaminho.Aceita_clicks();
 
-        if(  !verificacao_texto_pergaminho  ){
-
-             screen_play.Diminuir_contador_cena();
-             return;
-
-        }
+        if(  !!!( verificacao_texto_pergaminho )  )
+            { screen_play.Diminuir_contador_cena(); return; }
 
         bloco_visual_novel.controlador_tela_story.pergaminho.pergaminho_texto.SetActive(true);
 
-        if(bloco_visual_novel.controlador_tela_story.pergaminho.pergaminho_is_abaixado) bloco_visual_novel.controlador_tela_story.pergaminho.Levantar_pergaminho();
+        if( bloco_visual_novel.controlador_tela_story.pergaminho.pergaminho_is_abaixado )
+            { bloco_visual_novel.controlador_tela_story.pergaminho.Levantar_pergaminho(); }
 
 
         int tipo_texto =   ( ( int ) _cena [ 2 ]  - 48 ) ; 
-
 
 
         int personagem_index =   ( ( int ) _cena [ 3 ]  - 48 ) ;
@@ -756,12 +752,12 @@ public class Leitor_visual_novel{
         int tipo_construcao_id = ( ( int ) _cena [ 5 ]  - 48 ) ;
 
 
-        Tipo_construcao_texto tipo_construcao = Tipo_construcao_texto.config_default;
+        Type_writing_construction tipo_construcao = Type_writing_construction.config_default;
 
         switch( tipo_construcao_id ){
 
-            case 0 : tipo_construcao = Tipo_construcao_texto.config_default; break;
-            case 1 : tipo_construcao = Tipo_construcao_texto.instant; break;
+            case 0 : tipo_construcao = Type_writing_construction.config_default; break;
+            case 1 : tipo_construcao = Type_writing_construction.instant; break;
             default: throw new ArgumentException("nao veio tipo aceito. veio: " + tipo_construcao_id );
             
         }

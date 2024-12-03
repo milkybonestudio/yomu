@@ -17,10 +17,7 @@ public static class EXAMPLE_UI_text_container {
                 text_container.Link_to_game_object( _text_container );
                 text_container.Activate_text_container();
 
-                text_container.game_object.SetActive( false );
-
                 
-
                 return text_container;
 
         }

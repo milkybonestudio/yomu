@@ -15,7 +15,7 @@ using TMPro;
         public bool esta_escondido = false;
          
                 
-        public Display_texto display_texto;
+        public UI_text_container display_texto;
         public Display_texto_simples nome;
 
 
@@ -128,165 +128,164 @@ using TMPro;
         public Pergaminho_modelo_1( Transform _pai  ){
 
 
-                
+                // pergaminho = this;
 
-                pergaminho = this;
-
-                // string _path = ""
-                // GameObject pai = GameObject.Find(_path);
-                // if(pai == null ) throw new ArgumentException("nao foi achado game object pergaminho");
+                // // string _path = ""
+                // // GameObject pai = GameObject.Find(_path);
+                // // if(pai == null ) throw new ArgumentException("nao foi achado game object pergaminho");
 
 
-                pergaminho_container = new GameObject("Pergaminho_container");
+                // pergaminho_container = new GameObject("Pergaminho_container");
 
-                pergaminho_container.transform.SetParent( _pai, false );
+                // pergaminho_container.transform.SetParent( _pai, false );
 
         
-                GameObject suporte_pergaminho_1 = new GameObject("Suporte_pergaminho_1");
+                // GameObject suporte_pergaminho_1 = new GameObject("Suporte_pergaminho_1");
 
-                        suporte_pergaminho_1.transform.SetParent(pergaminho_container.transform, false );
+                //         suporte_pergaminho_1.transform.SetParent(pergaminho_container.transform, false );
 
-                        Image suporte_pergaminho_1_image = suporte_pergaminho_1.AddComponent<Image>();
-                        suporte_pergaminho_1_image.sprite = Resources.Load<Sprite>("images/in_game/ui/interface/dialogo/suporte_pergaminho_modelo_1_parte_1");
-                        RectTransform    rect_suporte_pergaminho_1 = suporte_pergaminho_1.GetComponent<RectTransform>();
+                //         Image suporte_pergaminho_1_image = suporte_pergaminho_1.AddComponent<Image>();
+                //         suporte_pergaminho_1_image.sprite = Resources.Load<Sprite>("images/in_game/ui/interface/dialogo/suporte_pergaminho_modelo_1_parte_1");
+                //         RectTransform    rect_suporte_pergaminho_1 = suporte_pergaminho_1.GetComponent<RectTransform>();
                         
-                        /*
-                        *   depois mudar, a imagem esta por hora como furu hd
-                        */
+                //         /*
+                //         *   depois mudar, a imagem esta por hora como furu hd
+                //         */
                                             
-                        rect_suporte_pergaminho_1.SetSizeWithCurrentAnchors(  RectTransform.Axis.Vertical , 1080f );
-                        rect_suporte_pergaminho_1.SetSizeWithCurrentAnchors(  RectTransform.Axis.Horizontal , 1920f );
+                //         rect_suporte_pergaminho_1.SetSizeWithCurrentAnchors(  RectTransform.Axis.Vertical , 1080f );
+                //         rect_suporte_pergaminho_1.SetSizeWithCurrentAnchors(  RectTransform.Axis.Horizontal , 1920f );
                 
-                        // pergaminho_texto
+                //         // pergaminho_texto
 
-                        pergaminho_texto = new GameObject("Pergaminho_texto");
+                //         pergaminho_texto = new GameObject("Pergaminho_texto");
 
-                                pergaminho_texto.transform.SetParent(pergaminho_container.transform , false);
-                                pergaminho_texto.transform.localPosition = new Vector3(  0f, pergaminho_default_position  ,0f);
+                //                 pergaminho_texto.transform.SetParent(pergaminho_container.transform , false);
+                //                 pergaminho_texto.transform.localPosition = new Vector3(  0f, pergaminho_default_position  ,0f);
 
-                                pergaminho_texto_image = pergaminho_texto.AddComponent<Image>();
-                                pergaminho_texto_image.sprite = Resources.Load<Sprite>("images/in_game/ui/interface/dialogo/pergaminho_aberto_chao");
+                //                 pergaminho_texto_image = pergaminho_texto.AddComponent<Image>();
+                //                 pergaminho_texto_image.sprite = Resources.Load<Sprite>("images/in_game/ui/interface/dialogo/pergaminho_aberto_chao");
 
-                                RectTransform pergaminho_texto_rect = pergaminho_texto.GetComponent<RectTransform>();
-                                pergaminho_texto_rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, pergaminho_height);
-                                pergaminho_texto_rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, pergaminho_width);
+                //                 RectTransform pergaminho_texto_rect = pergaminho_texto.GetComponent<RectTransform>();
+                //                 pergaminho_texto_rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, pergaminho_height);
+                //                 pergaminho_texto_rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, pergaminho_width);
 
-                                display_texto = new Display_texto( _nome : "Texto", _width : 827f, _height : 265f, _font_size : 40f);
-                                display_texto.Setar_display(pergaminho_texto.transform, 0f, 178f);
+                //                 display_texto = new Display_texto( _nome : "Texto", _width : 827f, _height : 265f, _font_size : 40f);
 
-                                nome = new Display_texto_simples( _nome : "Nome", _width : 800f, _height : 50f, _font_size : 34f);
-                                nome.Setar_display(pergaminho_texto.transform, -15f,330f );
+                //                 display_texto.Setar_display(pergaminho_texto.transform, 0f, 178f);
+
+                //                 nome = new Display_texto_simples( _nome : "Nome", _width : 800f, _height : 50f, _font_size : 34f);
+                //                 nome.Setar_display(pergaminho_texto.transform, -15f,330f );
 
 
-                        //
-                        pergaminho_choices = new GameObject("Pergaminho_choices");
-                        pergaminho_choices.transform.SetParent(pergaminho_container.transform, false);
+                //         //
+                //         pergaminho_choices = new GameObject("Pergaminho_choices");
+                //         pergaminho_choices.transform.SetParent(pergaminho_container.transform, false);
 
-                        pergaminho_choices.transform.localPosition = new Vector3(0f, pergaminho_default_choice_position , 0f);
+                //         pergaminho_choices.transform.localPosition = new Vector3(0f, pergaminho_default_choice_position , 0f);
 
-                                pergaminho_choice_papel = new GameObject("Papel_choice");
-                                pergaminho_choice_papel.transform.SetParent(pergaminho_choices.transform, false);
-                                //pergaminho_choice_papel.transform.localPosition = new Vector3(  0f, pergaminho_default_position  ,0f);
-                                pergaminho_choice_papel.AddComponent<RectMask2D>();
-                                RectTransform rect   =  pergaminho_choice_papel.GetComponent<RectTransform>();
+                //                 pergaminho_choice_papel = new GameObject("Papel_choice");
+                //                 pergaminho_choice_papel.transform.SetParent(pergaminho_choices.transform, false);
+                //                 //pergaminho_choice_papel.transform.localPosition = new Vector3(  0f, pergaminho_default_position  ,0f);
+                //                 pergaminho_choice_papel.AddComponent<RectMask2D>();
+                //                 RectTransform rect   =  pergaminho_choice_papel.GetComponent<RectTransform>();
                                 
                                 
-                                // muda com a mask
-                                rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical  ,  0f);
-                                rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal  ,pergaminho_width  );
+                //                 // muda com a mask
+                //                 rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical  ,  0f);
+                //                 rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal  ,pergaminho_width  );
 
 
 
-                                        GameObject papel_choice_image_game_object = new GameObject("Papel_choice_image");
-                                        papel_choice_image_game_object.transform.SetParent(pergaminho_choice_papel.transform, false);
+                //                         GameObject papel_choice_image_game_object = new GameObject("Papel_choice_image");
+                //                         papel_choice_image_game_object.transform.SetParent(pergaminho_choice_papel.transform, false);
                                         
 
-                                        papel_choice_image_game_object_image = papel_choice_image_game_object.AddComponent<Image>();
+                //                         papel_choice_image_game_object_image = papel_choice_image_game_object.AddComponent<Image>();
 
-                                        papel_choice_image_game_object_image.sprite  = Resources.Load<Sprite>("images/in_game/ui/interface/dialogo/pergaminho_aberto_chao");
+                //                         papel_choice_image_game_object_image.sprite  = Resources.Load<Sprite>("images/in_game/ui/interface/dialogo/pergaminho_aberto_chao");
 
-                                        RectTransform rect_papel_choice_image_game_object   =  papel_choice_image_game_object.GetComponent<RectTransform>();
+                //                         RectTransform rect_papel_choice_image_game_object   =  papel_choice_image_game_object.GetComponent<RectTransform>();
 
-                                        // muda com a mask
-                                        rect_papel_choice_image_game_object.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical  ,  pergaminho_height);
-                                        rect_papel_choice_image_game_object.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal  ,pergaminho_width  );
+                //                         // muda com a mask
+                //                         rect_papel_choice_image_game_object.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical  ,  pergaminho_height);
+                //                         rect_papel_choice_image_game_object.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal  ,pergaminho_width  );
 
-                                        for(int i = 0 ;  i < 5 ; i++){
+                //                         for(int i = 0 ;  i < 5 ; i++){
 
-                                                choices_game_objects[i] = new GameObject("Choice_" + Convert.ToString(i + 1));
+                //                                 choices_game_objects[i] = new GameObject("Choice_" + Convert.ToString(i + 1));
                                                 
-                                                choices_game_objects[i].transform.SetParent(pergaminho_choices.transform, false);
+                //                                 choices_game_objects[i].transform.SetParent(pergaminho_choices.transform, false);
 
-                                                TMP_Text a =  choices_game_objects[i].AddComponent<TextMeshProUGUI>();
-                                                a.alignment = TextAlignmentOptions.MidlineGeoAligned;
+                //                                 TMP_Text a =  choices_game_objects[i].AddComponent<TextMeshProUGUI>();
+                //                                 a.alignment = TextAlignmentOptions.MidlineGeoAligned;
                                                 
-                                                choices_text[i] = a;
+                //                                 choices_text[i] = a;
 
 
-                                             //  choices_text[i]  = (TMP_Text)  ( choices_game_objects[i].AddComponent<TextMeshProUGUI>());
-                                                choices_text[i].fontSize = choice_font_size;
+                //                              //  choices_text[i]  = (TMP_Text)  ( choices_game_objects[i].AddComponent<TextMeshProUGUI>());
+                //                                 choices_text[i].fontSize = choice_font_size;
 
-                                                RectTransform rect_choice = choices_game_objects[i] .GetComponent<RectTransform>();
+                //                                 RectTransform rect_choice = choices_game_objects[i] .GetComponent<RectTransform>();
                                                     
-                                                rect_choice.SetSizeWithCurrentAnchors(  RectTransform.Axis.Vertical , choice_text_height );
-                                                rect_choice.SetSizeWithCurrentAnchors(  RectTransform.Axis.Horizontal , choice_text_width );
+                //                                 rect_choice.SetSizeWithCurrentAnchors(  RectTransform.Axis.Vertical , choice_text_height );
+                //                                 rect_choice.SetSizeWithCurrentAnchors(  RectTransform.Axis.Horizontal , choice_text_width );
 
 
-                                        }
+                //                         }
 
-                                pergaminho_choice_parte_1 = new GameObject("Pergaminho_fechado_parte_1");
-                                pergaminho_choice_parte_1.transform.SetParent(pergaminho_choices.transform, false);
-                                pergaminho_choice_parte_1.transform.localPosition = new Vector3(0f, pergaminho_choice_parte_1_posicao  ,0f);
+                //                 pergaminho_choice_parte_1 = new GameObject("Pergaminho_fechado_parte_1");
+                //                 pergaminho_choice_parte_1.transform.SetParent(pergaminho_choices.transform, false);
+                //                 pergaminho_choice_parte_1.transform.localPosition = new Vector3(0f, pergaminho_choice_parte_1_posicao  ,0f);
                                 
 
-                                pergaminho_choice_parte_1_image  = pergaminho_choice_parte_1.AddComponent<Image>();
-                                pergaminho_choice_parte_1_image.sprite = Resources.Load<Sprite>("images/in_game/ui/interface/dialogo/pergaminho_1");
+                //                 pergaminho_choice_parte_1_image  = pergaminho_choice_parte_1.AddComponent<Image>();
+                //                 pergaminho_choice_parte_1_image.sprite = Resources.Load<Sprite>("images/in_game/ui/interface/dialogo/pergaminho_1");
 
-                                RectTransform rect_choice_1 = pergaminho_choice_parte_1.GetComponent<RectTransform>();
+                //                 RectTransform rect_choice_1 = pergaminho_choice_parte_1.GetComponent<RectTransform>();
                                     
-                                rect_choice_1.SetSizeWithCurrentAnchors(  RectTransform.Axis.Vertical , choice_pergaminho_height );
-                                rect_choice_1.SetSizeWithCurrentAnchors(  RectTransform.Axis.Horizontal , pergaminho_width );
+                //                 rect_choice_1.SetSizeWithCurrentAnchors(  RectTransform.Axis.Vertical , choice_pergaminho_height );
+                //                 rect_choice_1.SetSizeWithCurrentAnchors(  RectTransform.Axis.Horizontal , pergaminho_width );
 
 
 
 
-                                pergaminho_choice_parte_2 = new GameObject("Pergaminho_fechado_parte_2");
-                                pergaminho_choice_parte_2.transform.SetParent(pergaminho_choices.transform, false);
-                                pergaminho_choice_parte_2.transform.localPosition = new Vector3(0f, pergaminho_choice_parte_2_posicao  ,0f);
+                //                 pergaminho_choice_parte_2 = new GameObject("Pergaminho_fechado_parte_2");
+                //                 pergaminho_choice_parte_2.transform.SetParent(pergaminho_choices.transform, false);
+                //                 pergaminho_choice_parte_2.transform.localPosition = new Vector3(0f, pergaminho_choice_parte_2_posicao  ,0f);
 
-                                pergaminho_choice_parte_2_image  = pergaminho_choice_parte_2.AddComponent<Image>();
-                                pergaminho_choice_parte_2_image.sprite = Resources.Load<Sprite>("images/in_game/ui/interface/dialogo/pergaminho_2");
+                //                 pergaminho_choice_parte_2_image  = pergaminho_choice_parte_2.AddComponent<Image>();
+                //                 pergaminho_choice_parte_2_image.sprite = Resources.Load<Sprite>("images/in_game/ui/interface/dialogo/pergaminho_2");
                                                                 
-                                RectTransform rect_choice_2 = pergaminho_choice_parte_2.GetComponent<RectTransform>();
+                //                 RectTransform rect_choice_2 = pergaminho_choice_parte_2.GetComponent<RectTransform>();
                                     
-                                rect_choice_2.SetSizeWithCurrentAnchors(  RectTransform.Axis.Vertical , choice_pergaminho_height );
-                                rect_choice_2.SetSizeWithCurrentAnchors(  RectTransform.Axis.Horizontal , pergaminho_width );
+                //                 rect_choice_2.SetSizeWithCurrentAnchors(  RectTransform.Axis.Vertical , choice_pergaminho_height );
+                //                 rect_choice_2.SetSizeWithCurrentAnchors(  RectTransform.Axis.Horizontal , pergaminho_width );
 
-                            ///
-
-
-
-
-                /// suporte_2
+                //             ///
 
 
 
-                GameObject suporte_pergaminho_2 = new GameObject("Suporte_pergaminho_2");
-                suporte_pergaminho_2.transform.SetParent(pergaminho_container.transform, false );
 
-                Image suporte_pergaminho_2_image = suporte_pergaminho_2.AddComponent<Image>();
-                suporte_pergaminho_2_image.sprite = Resources.Load<Sprite>("images/in_game/ui/interface/dialogo/suporte_pergaminho_modelo_1_parte_2");
-                RectTransform    rect_suporte_pergaminho_2 = suporte_pergaminho_2.GetComponent<RectTransform>();
+                // /// suporte_2
+
+
+
+                // GameObject suporte_pergaminho_2 = new GameObject("Suporte_pergaminho_2");
+                // suporte_pergaminho_2.transform.SetParent(pergaminho_container.transform, false );
+
+                // Image suporte_pergaminho_2_image = suporte_pergaminho_2.AddComponent<Image>();
+                // suporte_pergaminho_2_image.sprite = Resources.Load<Sprite>("images/in_game/ui/interface/dialogo/suporte_pergaminho_modelo_1_parte_2");
+                // RectTransform    rect_suporte_pergaminho_2 = suporte_pergaminho_2.GetComponent<RectTransform>();
 
                  
-                 /*
-                 *   depois mudar, a imagem esta por hora como furu hd
-                 */
+                //  /*
+                //  *   depois mudar, a imagem esta por hora como furu hd
+                //  */
                                     
-                rect_suporte_pergaminho_2.SetSizeWithCurrentAnchors(  RectTransform.Axis.Vertical , 1080f );
-                rect_suporte_pergaminho_2.SetSizeWithCurrentAnchors(  RectTransform.Axis.Horizontal , 1920f );
+                // rect_suporte_pergaminho_2.SetSizeWithCurrentAnchors(  RectTransform.Axis.Vertical , 1080f );
+                // rect_suporte_pergaminho_2.SetSizeWithCurrentAnchors(  RectTransform.Axis.Horizontal , 1920f );
 
-                pergaminho_choices.SetActive(false);
+                // pergaminho_choices.SetActive(false);
                 
           }
 
@@ -502,7 +501,7 @@ using TMPro;
                         pergaminho_container.transform.localPosition = new Vector3(   pergaminho_container_position_x, pergaminho_container_position_y ,0f  );
 
 
-                        display_texto.Mudar_tamanho(  display_width , display_height  );
+                        display_texto.Resize(  display_width , display_height  );
                         display_texto.game_object.transform.localRotation = Quaternion.Euler(  0f,  0f, display_container_rotation );
                         display_texto.game_object.transform.localPosition = new Vector3(  display_container_position_x  , display_container_position_y, 0f  );
 
@@ -661,7 +660,7 @@ using TMPro;
                         pergaminho_container.transform.localRotation = Quaternion.Euler( 0f,0f, pergaminho_container_rotation );
                         pergaminho_container.transform.localPosition = new Vector3(   pergaminho_container_position_x, pergaminho_container_position_y ,0f  );
 
-                        display_texto.Mudar_tamanho(  display_width , display_height  );
+                        display_texto.Resize(  display_width , display_height  );
                         display_texto.game_object.transform.localRotation = Quaternion.Euler(  0f,  0f, display_container_rotation );
                         display_texto.game_object.transform.localPosition = new Vector3(  display_container_position_x  , display_container_position_y, 0f  );
 
@@ -672,7 +671,7 @@ using TMPro;
                         
 
 
-                        if(pergaminho_esta_levantado) {
+                        if( pergaminho_esta_levantado ) {
 
                                  pergaminho_texto.transform.localPosition = new Vector3(  0f,  pergaminho_levantado_novo_valor ,0f);
 
@@ -861,7 +860,7 @@ using TMPro;
 
                 int i = 0;
 
-                while( i != numero_ciclos){
+                while( i != numero_ciclos ){
                         
 
                         i++;
@@ -998,8 +997,7 @@ using TMPro;
 
         public bool is_building(){
 
-                if(display_texto.texto_coroutine == null) return false;
-                return true;
+                return ( display_texto.data.texto_coroutine != null );
 
         }
 
@@ -1045,18 +1043,17 @@ using TMPro;
 
         public void Mudar_cor( Color _cor ){
 
-
-                this.nome.text.color = _cor;
-                this.display_texto.caixa_texto.color = _cor;
+                nome.text.color = _cor;
+                display_texto.simple_text.tmp_text.color = _cor;
                 return;
 
 
         }
 
 
-        public void Escrever (  string _texto ,string _personagem , Color _cor, int _tipo , Tipo_construcao_texto _tipo_construcao = Tipo_construcao_texto.config_default ){
+        public void Escrever (  string _texto ,string _personagem , Color _cor, int _tipo , Type_writing_construction _tipo_construcao = Type_writing_construction.config_default ){
 
-                display_texto.Colocar_texto(_texto, _tipo, _cor , _tipo_construcao);
+                display_texto.Put_text(_texto, _tipo, _cor );
                 
                 string nome_texto = "";
 
@@ -1084,7 +1081,7 @@ using TMPro;
 
                 Mudar_bloqueio_clicks( 0 );
 
-                display_texto.Colocar_texto("",0, Color.black, Tipo_construcao_texto.config_default );
+                display_texto.Put_text( "", 0, Color.black );
                 nome.Colocar_texto( "",  Color.black );
 
                 return;
@@ -1102,7 +1099,7 @@ using TMPro;
                 blocos_conversas_esta_ativo = true;
 
                 nome.Colocar_texto( "<>", Color.black  );
-                display_texto.Limpar_texto();
+                display_texto.Clean_text();
 
                 Levantar_pergaminho();
 

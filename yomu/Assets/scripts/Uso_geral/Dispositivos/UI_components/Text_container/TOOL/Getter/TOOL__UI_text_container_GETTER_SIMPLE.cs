@@ -17,6 +17,7 @@ public static class TOOL__UI_text_container_GETTER_SIMPLE {
 
                 try
                     {
+
                         // --- GET GAME OBJECT
                         _text_container.simple_container.game_object =  _game_object.transform.GetChild( 0 ).gameObject;
                         _text_container.simple_text.game_object =  _text_container.simple_container.game_object.transform.GetChild( 0 ).gameObject;

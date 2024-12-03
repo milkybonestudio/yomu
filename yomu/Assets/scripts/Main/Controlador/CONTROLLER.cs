@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 
@@ -48,30 +49,64 @@ unsafe public class Controlador : MonoBehaviour {
 
                 Console.Start();
             
-                Dados_fundamentais_sistema.jogo_ativo = true;
-                Construtor_controlador.Construir( this );
+                Dados_fundamentais_sistema.jogo_ativo = true; 
+                Construtor_controlador.Construir( this ); 
 
                 
                 // Dispositivo d = Dispositivo__teste.Construir(); // pega o prefab 
                 // d.Define_all_components();  
-                // //d.Load_resources();
-
+                // //d.Load_resources(); 
 
                 
-                b_up = EXAMPLE_UI_button.Simple( GameObject.Find( "Tela/Container_teste/a" ) );
-                text_container = EXAMPLE_UI_text_container.Simple( GameObject.Find( "Tela/Container_teste/EXAMPLE_text_container" ) );
+                b_up = EXAMPLE_UI_button.Simple( GameObject.Find( "Tela/Container_teste/a" ) ); 
+                text_container = EXAMPLE_UI_text_container.Simple( GameObject.Find( "Tela/Container_teste/EXAMPLE_text_container" ) ); 
 
 
-        }
+        }   
 
         public bool aa = false;
+
+        float ac = 1f;
 
         public void Update() {
 
 
 
+                if( Input.GetKeyDown( KeyCode.A ) )
+                    { text_container.Add_dimensions( 20f, 20f ); }
+
+                
+                if( Input.GetKey( KeyCode.LeftArrow ) )
+                    { text_container.Move( -200f * Time.deltaTime , 0f ); ac *= 1.05f; }
+
+
+                if( Input.GetKey( KeyCode.RightArrow ) )
+                    { text_container.Move( 200f * Time.deltaTime, 0f ); ac += 1; }
+
+
+                
+                if( Input.GetKey( KeyCode.UpArrow ) )
+                    { text_container.Move( 0f, 200f* Time.deltaTime ); ac *= 1.05f; }
+
+                
+                if( Input.GetKey( KeyCode.DownArrow ) )
+                    { text_container.Move( 0f, -200f * Time.deltaTime); ac *= 1.05f; }
+
+                if( Input.GetKey( KeyCode.B ) )
+                    { text_container.Put_text( "abacataoooo<Color=lightBlue>AAAA</Color>ooooooooo", 0, Color.red ); }
+
+                if( Input.GetKey( KeyCode.V ) )
+                    { text_container.Put_text( "olha ssom que vai vir LOL", 0, Color.green ); }
+
+
+                if( Input.GetKey( KeyCode.P ) )
+                    { text_container.Change_type_construction( Type_writing_construction.fade ); }
+
+
+
                 CONTROLLER__input.instancia.Update();
                 b_up?.Update();
+                text_container?.Update();
 
                 CONTROLLER__resources.Get_instance().Update();
                 CONTROLLER__tasks.Pegar_instancia().Update();
