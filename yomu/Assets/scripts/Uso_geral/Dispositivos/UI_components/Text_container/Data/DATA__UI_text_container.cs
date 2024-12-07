@@ -10,13 +10,10 @@ public struct DATA__UI_text_container {
 
         public Type_writing_construction tipo_texto;
 
-        public float speed ;
-        public float base_speed ;
-        public float speed_multiplier ;
-        public int characters_multiplier ;
-
-
-        public Coroutine texto_coroutine;
+        public float speed;
+        public float base_speed;
+        public float speed_multiplier;
+        public int characters_multiplier;
         
 
         public string path_locator;

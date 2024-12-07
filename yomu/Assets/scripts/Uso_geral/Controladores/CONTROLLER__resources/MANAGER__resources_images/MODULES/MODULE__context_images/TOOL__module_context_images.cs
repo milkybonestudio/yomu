@@ -6,8 +6,6 @@ public static class TOOL__module_context_images {
         public static void Update_resource_level( RESOURCE__image _image ){
 
 
-                Console.Log( "veio: { Update_resource_level }" );
-
                 TOOL__module_context_images.Verify_stage_for_content( _image );
 
                 Resources_getting_image_stage blocked_for_now = ( Resources_getting_image_stage.getting_texture | Resources_getting_image_stage.applying_texture );
@@ -42,7 +40,6 @@ public static class TOOL__module_context_images {
         
         private static int Going_to_resource_level_NOTHING( RESOURCE__image _image ){
 
-                Console.Log( "Veio Going_to_resource_level_NOTHING()" );
 
                 if( _image.content_going_to == Resource_image_content.nothing )
                     { return 0; } // ** ja nivelado
@@ -68,8 +65,6 @@ public static class TOOL__module_context_images {
 
 
        private static int Update_resource_level_COMPRESS_LOW_QUALITY_DATA( RESOURCE__image _image ){
-
-                Console.Log( "Veio Update_resource_level_COMPRESS_LOW_QUALITY_DATA()" );
 
                 if( _image.content_going_to == Resource_image_content.compress_low_quality_data )
                     { return 0; } // ** ja nivelado
@@ -104,9 +99,6 @@ public static class TOOL__module_context_images {
 
 
         private static int Going_to_resource_level_COMPRESS_DATA( RESOURCE__image _image ){
-
-                Console.Log( "Veio Going_to_resource_level_COMPRESS_DATA()" );
-                Console.Log( "Actual content: " + _image.actual_content );
 
                 // ** TEM QUE TER COMPRESS
                 if( _image.content_going_to == Resource_image_content.compress_data )
@@ -155,7 +147,6 @@ public static class TOOL__module_context_images {
 
         private static int Going_to_resource_level_SPRITE( RESOURCE__image _image ){
 
-                Console.Log( "Veio Going_to_resource_level_SPRITE()" );
 
                 // ** TEM QUE TER COMPRESS
                 if( _image.content_going_to == Resource_image_content.sprite )

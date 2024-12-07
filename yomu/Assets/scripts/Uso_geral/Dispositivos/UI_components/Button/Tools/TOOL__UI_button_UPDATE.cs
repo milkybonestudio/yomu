@@ -21,7 +21,7 @@ public static class TOOL__UI_button_UPDATE {
                 if( _button.esta_houver )
                     {
                         // --- VERIFICA SE MOUSE CONTINUA NO BOTAO
-                        _button.esta_houver = Polygon.Check_point_inside( _button.ON_collider.points, ( Vector2 ) _button.botao_game_object.transform.position , CONTROLLER__input.Pegar_instancia().pointer_position );
+                        _button.esta_houver = Polygon.Check_point_inside( _button.ON_collider.points, ( Vector2 ) _button.container.game_object.transform.position , CONTROLLER__input.Pegar_instancia().pointer_position );
                     
                         if( !!!( _button.esta_houver ) )
                             { _button.esta_down = false; return; } // --- SAIU
@@ -29,7 +29,7 @@ public static class TOOL__UI_button_UPDATE {
                     else
                     { 
                         // --- VERIFICA SE ENTROU
-                        _button.esta_houver = Polygon.Check_point_inside( _button.OFF_collider.points, ( Vector2 ) _button.botao_game_object.transform.position , CONTROLLER__input.Pegar_instancia().pointer_position ); 
+                        _button.esta_houver = Polygon.Check_point_inside( _button.OFF_collider.points, ( Vector2 ) _button.container.game_object.transform.position , CONTROLLER__input.Pegar_instancia().pointer_position ); 
                         
                         if( !!!( _button.esta_houver ) )
                             { return; } // --- NAO ENTROU

@@ -45,7 +45,7 @@ public static class TOOL__get_data_images_resources {
                         { CONTROLLER__errors.Throw( $"Image is too big. Tried to get the low quality for the image{ _image.name }" ); }
 
                     byte[] webp = Get_web_EDITOR( dimensions );
-                    Console.Log( $"webp of the image { _image.name }: png length: { png.Length } and webp length: { webp.Length }" );
+                    
 
                     return webp; 
 
@@ -64,7 +64,7 @@ public static class TOOL__get_data_images_resources {
 
             private static byte[] Get_webp( Webp_size _size ){
 
-                Console.Log( "vai pegar webp: " + _size );
+                // Console.Log( "vai pegar webp: " + _size );
 
                 // --- TIME SIMULATION 
 
@@ -255,7 +255,6 @@ public static class TOOL__get_data_images_resources {
 
             public static byte[] Get_single( RESOURCE__image _image ){ 
 
-                Console.Log( "veio aqui" );
 
                     // ** nao existe webp no editor além do default, nao tem o porque 
 
@@ -274,8 +273,7 @@ public static class TOOL__get_data_images_resources {
 
                     string path_arquivo = System.IO.Path.Combine( Application.dataPath, "Resources", _image.image_context.ToString(), _image.image_key + ".png" );
 
-                    Console.Log( "Veio Get_single_generico_EDITOR()" );
-                    Console.Log( "path: " + path_arquivo );
+
                     byte[] png = null;
 
                     try { png = File.ReadAllBytes( path_arquivo ); } catch( System.Exception e ){ CONTROLLER__errors.Throw( $"Image in the path { path_arquivo } was not found" ); }

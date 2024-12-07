@@ -71,9 +71,6 @@ unsafe public sealed class WebP : IDisposable{
 
                     byte[] webp_default =  Get_bytes( rawWebP );
 
-                    Console.Log( "_width: " + _width );
-                    Console.Log( "_height: " + _height );
-
                     int index = 0;
 
                     for( int h = 0 ; h < _height ; h++ ){

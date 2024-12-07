@@ -16,14 +16,14 @@ public static class TOOL__UI_button_GETTER_COMPLETE {
 
                         // ** COLLIDERS
 
-                            _button.COLLIDERS_container  = _button.botao_game_object.transform.GetChild( 0 ).gameObject;
+                            _button.COLLIDERS_container  = _button.container.game_object.transform.GetChild( 0 ).gameObject;
                             
                             _button.ON_collider_game_object   =  _button.COLLIDERS_container.transform.GetChild( 0 ).gameObject;
                             _button.OFF_collider_game_object  =  _button.COLLIDERS_container.transform.GetChild( 1 ).gameObject;
 
 
                         // IMAGEM
-                            _button.IMAGE_container = _button.botao_game_object.transform.GetChild( 1 ).gameObject;
+                            _button.IMAGE_container = _button.container.game_object.transform.GetChild( 1 ).gameObject;
 
                             _button.IMAGE_animation_back.game_object         =  _button.IMAGE_container.transform.GetChild( 0 ).gameObject;
                             _button.IMAGE_base.game_object                   =  _button.IMAGE_container.transform.GetChild( 1 ).gameObject;
@@ -36,7 +36,7 @@ public static class TOOL__UI_button_GETTER_COMPLETE {
 
 
                         // ** TRANSICAO
-                            _button.TRANSITION_container = _button.botao_game_object.transform.GetChild( 2 ).gameObject;
+                            _button.TRANSITION_container = _button.container.game_object.transform.GetChild( 2 ).gameObject;
 
                             _button.TRANSITION_animation_back.game_object          =   _button.TRANSITION_container.transform.GetChild( 0 ).gameObject;
                             _button.TRANSITION_base.game_object                    =   _button.TRANSITION_container.transform.GetChild( 1 ).gameObject;
@@ -136,8 +136,8 @@ public static class TOOL__UI_button_GETTER_COMPLETE {
                             _button.OFF_collider = _button.OFF_collider_game_object.GetComponent<PolygonCollider2D>();
                         
                         
-                        _button.position_x =  _button.botao_game_object.transform.localPosition.x;
-                        _button.position_y =  _button.botao_game_object.transform.localPosition.y;
+                        _button.position_x =  _button.container.game_object.transform.localPosition.x;
+                        _button.position_y =  _button.container.game_object.transform.localPosition.y;
 
 
                 }

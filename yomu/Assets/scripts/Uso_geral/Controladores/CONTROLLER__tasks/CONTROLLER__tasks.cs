@@ -86,10 +86,9 @@ public class CONTROLLER__tasks  {
 
 
                         if ( !!!( Pode_continuar() ) )
-                            { Console.Log("nao deixou continuar"); return; } // --- NAO PODE CONTINUAR
+                            { return; } // --- NAO PODE CONTINUAR
 
-                        
-                        Console.Log( "vai executar task main thread : " + task.nome );
+                    
                         task.fn_single_thread( task ); 
                         task.finalizado = true;
                         tasks_em_espera_para_ativar_single_thread[ task.slot_id ] = null;
@@ -228,7 +227,6 @@ public class CONTROLLER__tasks  {
                         { TASK_REQ.Adicionar_task_em_array( ref tasks_em_espera_para_ativar_single_thread, task );     continue; } // --- COLOCA SINGLETHREAD
                     
                     // --- NADA È FEITO
-                    Console.Log( $"task { task.nome } nao tinha nem multi nem single thread" );
                     continue;
 
             }
@@ -250,8 +248,6 @@ public class CONTROLLER__tasks  {
 
                 tasks_em_espera_iniciar[ index ] = _nova_task;
                 _nova_task.slot_id = index;
-
-                Console.Log("task foi adicionada no index: " + _nova_task.ToString());
 
                 return;
 

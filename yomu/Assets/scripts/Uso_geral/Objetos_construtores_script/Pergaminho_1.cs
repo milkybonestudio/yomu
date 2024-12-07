@@ -997,7 +997,7 @@ using TMPro;
 
         public bool is_building(){
 
-                return ( display_texto.data.texto_coroutine != null );
+                return ( display_texto.writing_state == UI_text_container_writing_state.writing );
 
         }
 

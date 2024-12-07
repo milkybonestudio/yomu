@@ -74,7 +74,6 @@ public struct MANAGER__UI_button_resources {
             
                  if( button.type == UI_button_type.simple )
                     {
-                        Console.Log( "vai dar action" );
                         data.simple_button_OFF_frame.image_ref?.Activate_resource_action( _action );
                         data.simple_button_ON_frame.image_ref?.Activate_resource_action( _action );
                     }

@@ -32,7 +32,7 @@ public static class EXAMPLE_UI_button {
                 // ** get resources 
                 botao.Define_button();
 
-                Console.Log( "Minimun image: " +  botao.manager_resources.minimun.image );
+                //Console.Log( "Minimun image: " +  botao.manager_resources.minimun.image );
 
                 // ** link to game_object
                 

@@ -10,6 +10,7 @@ public class UI_button {
         public static UI_button Get_button(){ return TOOL__UI_button_APPLY_DEFAULT_VALUES.Apply( new UI_button(), Resource_use_state.used ); }
 
 
+
         // ** COLLIDERS
 
             public GameObject COLLIDERS_container;
@@ -86,8 +87,8 @@ public class UI_button {
         
         
 
-
-        public GameObject botao_game_object;
+        public UI_container container;
+        // public GameObject botao_game_object;
 
 
         public string button_name = "Nao_colocou";
@@ -147,7 +148,7 @@ public class UI_button {
         public void Deactivate_button(){
 
             is_active = false;            
-            botao_game_object.SetActive( false );
+            container.game_object.SetActive( false );
 
         }
 
@@ -211,7 +212,7 @@ public class UI_button {
                 if( _button_game_object == null )
                     { CONTROLLER__errors.Throw( $"The button <Color=lightBlue>{ button_name }</Color> came in <Color=lightBlue>Get_data_SIMPLE</Color> but the gameObject was null" ); }
 
-                botao_game_object = _button_game_object;
+                container.game_object = _button_game_object;
 
                 switch( type ){
 

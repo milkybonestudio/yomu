@@ -62,7 +62,6 @@ public static class TOOL__UI_button_SET_SIMPLE {
 
         public static void SETAR_transicao_ON_para_OFF( UI_button botao ){
 
-                Console.Log( "Veio SET_transition_OFF_to_ON" );
 
                      if( botao.data.tipo_transicao == DEVICE_button_transition_type_OFF_ON.cor )
                         {
@@ -118,8 +117,6 @@ public static class TOOL__UI_button_SET_SIMPLE {
         public static void SET_transition_OFF_to_ON( UI_button botao ){
 
                 
-                Console.Log( "Veio SET_transition_OFF_to_ON" );
-
                      if( botao.data.tipo_transicao == DEVICE_button_transition_type_OFF_ON.cor )
                         {
                             // --- COR
@@ -151,8 +148,6 @@ public static class TOOL__UI_button_SET_SIMPLE {
                             // --- RESETA DADOS
                             botao.animacao_atual_tempo_ms = botao.data.time_transition_OFF_to_ON_SIMPLE;
                             botao.estado_visual_botao = DEVICE_button_visual_state.transicao_animacao_OFF_para_ON;
-
-                            Console.Log( "TIME: " + botao.animacao_atual_tempo_ms );
                             
                             TOOL__UI_button_UPDATE.Update_parte_visual( botao );
 

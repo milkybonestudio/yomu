@@ -157,13 +157,8 @@ public static class TOOL__module_context_images_actions {
         // ** sinaliza que a imagem pode carregar o minimo 
         public static void Load( RESOURCE__image_ref _ref ){
 
-                Console.Log( "Veio Load()" );
                 if( _ref.image == null )
                     { CONTROLLER__errors.Throw( $"Tried to Load ref { _ref.identifire }, but the RESOURCE__image is null" ); }
-
-
-                Console.Log(  "_ref.state: " + _ref.state  );
-                Console.Log(  "_ref.actual_need_content: " + _ref.actual_need_content  );
 
                 if( _ref.state >= Resource_state.minimun )
                     { return; } _ref.state = Resource_state.minimun;
@@ -173,7 +168,6 @@ public static class TOOL__module_context_images_actions {
 
             
                 TOOL__resource_image.Change_actual_need_content_count( _ref, _ref.level_pre_allocation );
-
                 TOOL__module_context_images.Update_resource_level( _ref.image );
 
                 return;
@@ -182,9 +176,6 @@ public static class TOOL__module_context_images_actions {
 
         // ** sinaliza que pode começar a pegar a texture
         public static void Activate( RESOURCE__image_ref _ref ){
-
-
-                Console.Log( "veio Activate()" );
 
             
                 if( _ref.image == null )
@@ -198,7 +189,6 @@ public static class TOOL__module_context_images_actions {
 
 
                 TOOL__resource_image.Change_actual_need_content_count( _ref, Resource_image_content.sprite );
-
                 TOOL__module_context_images.Update_resource_level( _ref.image );
                 
                 return;
@@ -210,13 +200,8 @@ public static class TOOL__module_context_images_actions {
 
                 // ** FORCE TO CREATE SPRITE 
 
-
-                Console.Log( "Veio Instanciate()" );
-
                 if( _ref.image == null )
                     { CONTROLLER__errors.Throw( $"Tried to Activate ref { _ref.identifire }, but the RESOURCE__image is null" ); }
-
-                Console.Log( "REF STATE: " + _ref.state );
 
                 if( _ref.state == Resource_state.instanciated )
                     { return; } _ref.state = Resource_state.instanciated;
@@ -231,7 +216,6 @@ public static class TOOL__module_context_images_actions {
 
                 if(  ( image.stage_getting_resource & Resources_getting_image_stage.all_reajust_stages ) != 0 )
                     { return; } // ** already going to switch the sprite
-
 
 
                 image.stage_getting_resource = Resources_getting_image_stage.finished;
@@ -290,12 +274,12 @@ public static class TOOL__module_context_images_actions {
 
                                      if( image.single_image.image_compress != null )
                                         { 
-                                            Console.Log( "Vai carregar image_compress" );
+                                            
                                             TOOL__loader_texture.Transfer_data_PNG( image.single_image.image_compress, image.single_image.texture_exclusiva_native_array );
                                         }           
                                 else if( image.single_image.image_low_quality_compress != null )
                                         { 
-                                            Console.Log( "Vai carregar image_low_quality_compress" );
+                                            
                                             TOOL__loader_texture.Transfer_data_WEABP( image, image.single_image ); 
                                         }
                                 else if( true )
@@ -310,7 +294,6 @@ public static class TOOL__module_context_images_actions {
                     
                         if( image.actual_content < Resource_image_content.texture_with_pixels_applied )
                             {
-                                Console.Log( "Vai dar o apply" );
                                 image.single_image.texture_exclusiva.Apply( false, false );
                                 image.actual_content = Resource_image_content.texture_with_pixels_applied;
 
@@ -324,8 +307,7 @@ public static class TOOL__module_context_images_actions {
                                         // ** handle 
 
                                     }
-
-                                Console.Log( "Vai criar a sprite" );
+                                    
                                 image.single_image.sprite = Sprite.Create( image.single_image.texture_exclusiva, new Rect( 0f, 0f, image.width, image.height ), new Vector2(0.5f, 0.5f), 100.0f ,0, SpriteMeshType.FullRect   );
                                 image.actual_content = Resource_image_content.sprite;
                             }
@@ -337,11 +319,11 @@ public static class TOOL__module_context_images_actions {
                 TOOL__resource_image.Change_actual_need_content_count( _ref, Resource_image_content.sprite );
 
 
-                Console.Log( " ACTUAL CONTENT:  " + image.actual_content );
+                // Console.Log( " ACTUAL CONTENT:  " + image.actual_content );
 
-                Console.Log( "content_going_to: " + image.content_going_to );
-                Console.Log( "actual_content: " + image.actual_content );
-                Console.Log( "stage_getting_resource: " + image.stage_getting_resource );
+                // Console.Log( "content_going_to: " + image.content_going_to );
+                // Console.Log( "actual_content: " + image.actual_content );
+                // Console.Log( "stage_getting_resource: " + image.stage_getting_resource );
 
 
                 

@@ -14,9 +14,9 @@ public static class TOOL__UI_button_GETTER_SIMPLE {
                     {
 
                         // ** containers 
-                        _button.COLLIDERS_container       =  _button.botao_game_object.transform.GetChild( 0 ).gameObject;
-                        _button.IMAGE_container           =  _button.botao_game_object.transform.GetChild( 1 ).gameObject;
-                        _button.TRANSITION_container      =  _button.botao_game_object.transform.GetChild( 2 ).gameObject;
+                        _button.COLLIDERS_container       =  _button.container.game_object.transform.GetChild( 0 ).gameObject;
+                        _button.IMAGE_container           =  _button.container.game_object.transform.GetChild( 1 ).gameObject;
+                        _button.TRANSITION_container      =  _button.container.game_object.transform.GetChild( 2 ).gameObject;
 
                         // ** colliders
                         _button.ON_collider_game_object   =  _button.COLLIDERS_container.transform.GetChild( 0 ).gameObject;
@@ -31,10 +31,8 @@ public static class TOOL__UI_button_GETTER_SIMPLE {
                         _button.IMAGE_simple_body.image       = _button.IMAGE_simple_body.game_object.GetComponent<Image>();
 
 
-                        Console.Log( "VAI PEGAR" );
                         _button.IMAGE_simple_text.game_object    = _button.IMAGE_container.transform.GetChild( 1 ).gameObject;
-                        Console.Log( _button.IMAGE_simple_text.game_object.name );
-                        Console.Log( _button.IMAGE_simple_text.game_object.GetComponent<TMP_Text>() );
+
                         _button.IMAGE_simple_text.tmp_text       = _button.IMAGE_simple_text.game_object.GetComponent<TMP_Text>();
 
                         // check
