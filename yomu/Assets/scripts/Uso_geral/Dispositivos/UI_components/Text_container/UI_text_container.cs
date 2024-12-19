@@ -48,7 +48,7 @@ public class UI_text_container {
 
 
 
-        // --- update data
+        // --- UPDATE DATA
 
         
         public int minRange;

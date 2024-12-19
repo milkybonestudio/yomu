@@ -82,7 +82,7 @@ public class Dispositivo {
         // --- METODOS UTILIDADES CONSTRUCTIONS
 
             // --- DECLARE UI
-            public Dados_imagem_estatica_dispositivo Declare_image( ref Imagem_estatica_dispositivo imagem_estatica ){ return dados_dispositivo.Declare_image_container( ref imagem_estatica ); }
+            public DATA__UI_visual_container Declare_image( ref UI_visual_container imagem_estatica ){ return dados_dispositivo.Declare_image_container( ref imagem_estatica ); }
             public DATA__UI_button Declare_button( ref UI_button _botao_slot ){ return dados_dispositivo.Declare_button( ref _botao_slot ); }
             
 

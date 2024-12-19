@@ -42,6 +42,8 @@ public class CONTAINER__generic {
 
         }
 
+        public int Get_length_array(){ return objects_available.Length; }
+
         private Type type;
         private Array objects_available;
         private Array objects_waiting_to_reset;

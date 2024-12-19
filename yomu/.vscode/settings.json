@@ -74,7 +74,7 @@
         "tree.indentGuidesStroke": "#6fff2d"
     },
     
-
+    "editor.cursorStyle": "line",
 
     "dotnet.preferCSharpExtension": false,
     "csharp.semanticHighlighting.enabled": true,

@@ -1,4 +1,0 @@
-
-
-toda essa pasta precisa ser removida, pois os dados que estao aqui devem ser passados para a abstracao de "dispositivo"
-

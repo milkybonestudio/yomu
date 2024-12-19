@@ -16,12 +16,8 @@ public class MANAGER__components_device {
 
                 const int numero_inicial_de_slots = 5;
                     
-                // --- DADOS
-                dados_imagens_estaticas_dispositivo = new Dados_imagem_estatica_dispositivo[ numero_inicial_de_slots ];
-                dados_botoes_dispositivo = new DATA__UI_button[ numero_inicial_de_slots ];
-
                 // --- OBJETOS
-                imagens_estaticas_dispositivo = new Imagem_estatica_dispositivo[ numero_inicial_de_slots ];
+                imagens_estaticas_dispositivo = new UI_visual_container[ numero_inicial_de_slots ];
                 botoes_dispositivo = new UI_button[ numero_inicial_de_slots ];
 
         }
@@ -44,10 +40,10 @@ public class MANAGER__components_device {
 
         // --- IMAGEM ESTATICA
         public int pointer_atual_imagem_estatica;
-        public Imagem_estatica_dispositivo[] imagens_estaticas_dispositivo;
+        public UI_visual_container[] imagens_estaticas_dispositivo;
 
         // ** dados vao ficar dentro de cada componente
-        public Dados_imagem_estatica_dispositivo[] dados_imagens_estaticas_dispositivo;
+        public DATA__UI_visual_container[] dados_imagens_estaticas_dispositivo;
 
 
         public void Load_resources(){
@@ -63,9 +59,9 @@ public class MANAGER__components_device {
         // --- DECLARATIONS 
         // ** only store what will have 
         
-        public Dados_imagem_estatica_dispositivo Declare_image_container( ref Imagem_estatica_dispositivo imagem ){
+        public DATA__UI_visual_container Declare_image_container( ref UI_visual_container imagem ){
 
-                imagem = new Imagem_estatica_dispositivo( new Dados_imagem_estatica_dispositivo() );
+                imagem = new UI_visual_container();
                 imagens_estaticas_dispositivo[ pointer_atual_imagem_estatica++ ] = imagem; 
 
                 if(  imagens_estaticas_dispositivo.Length == pointer_atual_imagem_estatica )
@@ -78,21 +74,21 @@ public class MANAGER__components_device {
 
         public DATA__UI_button Declare_button( ref UI_button button ){
 
-                //mark  
-                throw new Exception( "nao vai funcionar, agora dados é uma struct, vai voltar uma copia" );
+                // //mark  
+                // throw new Exception( "nao vai funcionar, agora dados é uma struct, vai voltar uma copia" );
 
 
-                button = new UI_button();
-                button.data = new DATA__UI_button();
+                // button = new UI_button();
+                // button.data = new DATA__UI_button();
 
 
-                botoes_dispositivo[ pointer_atual_botao++ ] = button; 
+                // botoes_dispositivo[ pointer_atual_botao++ ] = button; 
 
-                if(  botoes_dispositivo.Length == pointer_atual_botao )
-                    { Array.Resize( ref botoes_dispositivo, botoes_dispositivo.Length + 10 ); }
+                // if(  botoes_dispositivo.Length == pointer_atual_botao )
+                //     { Array.Resize( ref botoes_dispositivo, botoes_dispositivo.Length + 10 ); }
 
 
-                return button.data;
+                return new DATA__UI_button();
 
         }
 
@@ -120,7 +116,7 @@ public class MANAGER__components_device {
                 // --- DEFINE IMAGES CONTAINER
                 for( int image_container_index = 0 ; image_container_index < imagens_estaticas_dispositivo.Length ; image_container_index++ ){
 
-                        Imagem_estatica_dispositivo image_container = imagens_estaticas_dispositivo[ image_container_index ];
+                        UI_visual_container image_container = imagens_estaticas_dispositivo[ image_container_index ];
                         if( image_container == null  )
                             { break; }
 
@@ -132,7 +128,7 @@ public class MANAGER__components_device {
         }
 
 
-        private void Define_image_container( Imagem_estatica_dispositivo _imagem ){
+        private void Define_image_container( UI_visual_container _imagem ){
 
             //mark
             // ** tem que refazer todo o formato
@@ -148,12 +144,12 @@ public class MANAGER__components_device {
 
             // --- CRIA IMAGENS ESTATICAS
 
-            for( int imagem_estatica_index = 0 ; imagem_estatica_index < dados_imagens_estaticas_dispositivo.Length ; imagem_estatica_index++ ){
+            for( int imagem_estatica_index = 0 ; imagem_estatica_index < imagens_estaticas_dispositivo.Length ; imagem_estatica_index++ ){
 
-                    if( dados_imagens_estaticas_dispositivo[ imagem_estatica_index ] == null )
+                    if( imagens_estaticas_dispositivo[ imagem_estatica_index ] == null )
                         { continue; }
 
-                     imagens_estaticas_dispositivo[ imagem_estatica_index ].Get_data_from_prefab( dados_imagens_estaticas_dispositivo[ imagem_estatica_index ], path_para_o_dispositivo );
+                     imagens_estaticas_dispositivo[ imagem_estatica_index ].Link_to_game_object( dados_imagens_estaticas_dispositivo[ imagem_estatica_index ], path_para_o_dispositivo );
 
                     continue;
 

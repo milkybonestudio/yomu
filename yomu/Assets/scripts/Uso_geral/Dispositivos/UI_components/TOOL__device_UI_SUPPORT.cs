@@ -19,13 +19,6 @@ public static class TOOL__device_UI_SUPPORT {
 
         }
 
-        public static void Verificar_nome( string _nome ){
-
-                if( ( _nome == "" ) || ( _nome == null ) )
-                    { CONTROLLER__errors.Throw( $"There was no name in a button" ); }
-
-                return;
-        }
 
 
         public static Color Mudar_cor_default( Color _cor_nos_dados, Color _cor_default ){

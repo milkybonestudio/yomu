@@ -1,0 +1,269 @@
+using System;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+
+
+public class UI_button_SIMPLE : UI_button {
+
+        // ** use only for tests
+        public static UI_button_SIMPLE Get_button(){ 
+
+                UI_button_SIMPLE button = new UI_button_SIMPLE();
+                button.state = Resource_use_state.used;
+
+                    // --- TIMEs
+
+                    button.creation_data.tempo_transicao = 75f;
+                    button.data.Activate = VOID.Metodo_nao_colocado;
+
+
+                    // --- RESOURCES
+
+                    if( button.data.context == Resource_context.not_given )
+                        { button.data.context = Resource_context.Devices; }
+
+                    button.manager_resources.minimun.image = ( button.data.image_resource_pre_allocation == Resource_image_content.not_give ) ? ( Resource_image_content.compress_data ) : ( button.data.image_resource_pre_allocation );
+                    button.manager_resources.minimun.audio = ( button.data.audio_resource_pre_allocation == Resource_audio_content.not_give ) ? ( Resource_audio_content.audio_clip ) : ( button.data.audio_resource_pre_allocation );
+
+                    button.manager_resources.button = button;
+
+                return button;
+            
+        }
+
+        public UI_button_type type = UI_button_type.simple;
+
+        public DATA_CREATION__UI_button_SIMPLE creation_data;
+        public DATA__UI_button_SIMPLE data;
+
+        public MANAGER__UI_button_resources_SIMPLE manager_resources;
+        
+
+        public Unity_main_components IMAGE_body;
+        public Unity_main_components IMAGE_text;
+
+        public Unity_main_components TRANSITION_body;
+        public Unity_main_components TRANSITION_text;
+
+
+
+
+
+
+        public override void Update_parte_visual(){
+
+                    if( data.bloquear_update_visual  )
+                        { return; }
+
+                    ultimo_estado_visual_botao = estado_visual_botao;
+
+                    switch( estado_visual_botao ){
+
+                            case DEVICE_button_visual_state.off_estatico: TOOL__UI_button_handler_SIMPLE.Handle_off_static( this ); break;
+                            case DEVICE_button_visual_state.on_estatico: TOOL__UI_button_handler_SIMPLE.Handle_on_static( this ); break;
+
+                            case DEVICE_button_visual_state.transicao_animacao_OFF_para_ON: TOOL__UI_button_handler_SIMPLE.Handle_transition_animation_OFF_to_ON( this ); break;
+                            case DEVICE_button_visual_state.transicao_animacao_ON_para_OFF: TOOL__UI_button_handler_SIMPLE.Lidar_transicao_animacao_ON_para_OFF( this ); break;
+
+                            default: CONTROLLER__errors.Throw( $"can not handle stage { estado_visual_botao }" ); break;
+
+                    }
+
+            
+        }
+
+
+    public override void Define_button(){
+
+            // ** data + creation_data -> thing
+
+                // --- VERIFICATIONS
+                TOOL__UI_button_VERIFICATIONS_SIMPLE.Verify_default( this );
+
+                data.Ativar = creation_data.Activate;
+
+                // ** passing normal data
+                button_name = creation_data.name;
+                main_folder = creation_data.main_folder;
+                context = creation_data.context;
+                material = creation_data.material;
+
+                // --- TEXT
+                
+                if( creation_data.text != null )
+                    {
+                        // ** nao pode ter nenhum
+
+                        if( creation_data.text_off != null )
+                            { CONTROLLER__errors.Throw( $"button { button_name } defines a text <Color=lightBlue>{ creation_data.text }</Color> for OFF and ON but in the OFF text is <Color=lightBlue>{  creation_data.text_off }</Color>" ); }
+
+                        if( creation_data.text_on != null )
+                            { CONTROLLER__errors.Throw( $"button { button_name } defines a text <Color=lightBlue>{ creation_data.text }</Color> for OFF and ON but in the OFF text is <Color=lightBlue>{  creation_data.text_on }</Color>" ); }
+                
+                        data.text_off = creation_data.text;
+                        data.text_on  = creation_data.text;
+                    }
+                    else
+                    {
+                        // ** tem que ter os 2
+
+                        if( creation_data.text_off == null )
+                            { CONTROLLER__errors.Throw( $"button { button_name } Dont define the text for the <Color=lightBlue>OFF</Color>" ); }
+
+                        if( creation_data.text_on == null )
+                            { CONTROLLER__errors.Throw( $"button { button_name } Dont define the text for the <Color=lightBlue>ON</Color>" ); }
+
+                        data.text_off = creation_data.text_off;
+                        data.text_on  = creation_data.text_on;
+                    }
+
+
+                // --- IMAGES
+                if( creation_data.image_path != null )
+                    {
+
+                        if( creation_data.image_path_OFF != null )
+                            { CONTROLLER__errors.Throw( $"button { button_name } defines a path <Color=lightBlue>{ creation_data.image_path }</Color> for OFF and ON but in the OFF path is <Color=lightBlue>{  creation_data.image_path_OFF }</Color>" ); }
+
+                        if( creation_data.image_path_ON != null )
+                            { CONTROLLER__errors.Throw( $"button { button_name } defines a path <Color=lightBlue>{ creation_data.image_path }</Color> for OFF and ON but in the ON path is <Color=lightBlue>{ data.button_ON_frame.path }</Color>" ); }
+
+                        data.button_OFF_frame.path  = creation_data.image_path;
+                        data.button_ON_frame.path   = creation_data.image_path;
+
+
+                    }
+                    else
+                    {
+                        
+                        if( creation_data.image_path_ON == null )
+                            { CONTROLLER__errors.Throw( $"button { button_name } do not define <Color=lightBlue>path_ON</Color>" ); }
+
+                        if( creation_data.image_path_OFF == null )
+                            { CONTROLLER__errors.Throw( $"button { button_name } do not define <Color=lightBlue>path_OFF</Color>" ); }
+
+                            
+                        data.button_OFF_frame.path  = creation_data.image_path_OFF;
+                        data.button_ON_frame.path   = creation_data.image_path_ON;
+
+                    }
+
+                
+                if( data.time_transition_ON_to_OFF == 0 )
+                    { data.time_transition_ON_to_OFF = creation_data.tempo_transicao; }
+
+                if( data.time_transition_OFF_to_ON == 0 )
+                    { data.time_transition_OFF_to_ON = creation_data.tempo_transicao; }
+
+
+                
+                MANAGER__resources_images resources_image = CONTROLLER__resources.Get_instance().resources_images;
+
+                // OFF 
+                    data.button_OFF_frame.image_ref = resources_image.Get_image_reference( context, main_folder, data.button_OFF_frame.path, manager_resources.minimun.image );
+                    data.button_OFF_frame.color = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.button_OFF_frame.color, Cores.grey_90 );
+                    data.button_OFF_text_color = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.button_OFF_text_color, Cores.black );
+
+                // ON
+                    data.button_ON_frame.image_ref = resources_image.Get_image_reference( context, main_folder, data.button_ON_frame.path, manager_resources.minimun.image  );
+                    data.button_ON_frame.color = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.button_ON_frame.color, Cores.white );
+                    data.button_ON_text_color = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.button_ON_text_color, Cores.black );
+
+
+                // // --- DEFINE
+                // TOOL__UI_button_DEFINER_SIMPLE.Define( this );
+
+        }
+
+
+        public override void Link_to_game_object( GameObject _button_game_object ){
+
+                // data -> unity data
+
+                if( _button_game_object == null )
+                    { CONTROLLER__errors.Throw( $"The button <Color=lightBlue>{ button_name }</Color> came in <Color=lightBlue>Get_data_SIMPLE</Color> but the gameObject was null" ); }
+
+                container.game_object = _button_game_object;
+
+
+
+                try {
+
+                        // ** containers 
+                        COLLIDERS_container       =  container.game_object.transform.GetChild( 0 ).gameObject;
+                        IMAGE_container           =  container.game_object.transform.GetChild( 1 ).gameObject;
+                        TRANSITION_container      =  container.game_object.transform.GetChild( 2 ).gameObject;
+
+                        // ** colliders
+                        ON_collider_game_object   =  COLLIDERS_container.transform.GetChild( 0 ).gameObject;
+                        ON_collider   =  ON_collider_game_object.GetComponent<PolygonCollider2D>();
+                        
+                        OFF_collider_game_object  =  COLLIDERS_container.transform.GetChild( 1 ).gameObject;
+                        OFF_collider   =  OFF_collider_game_object.GetComponent<PolygonCollider2D>();
+
+
+                        // ** IMAGE
+                        IMAGE_body.game_object = IMAGE_container.transform.GetChild( 0 ).gameObject;
+                        IMAGE_body.image       = IMAGE_body.game_object.GetComponent<Image>();
+
+
+                        IMAGE_text.game_object    = IMAGE_container.transform.GetChild( 1 ).gameObject;
+
+                        IMAGE_text.tmp_text       = IMAGE_text.game_object.GetComponent<TMP_Text>();
+
+                        // check
+                        IMAGE_text.tmp_text.text = IMAGE_text.tmp_text.text;
+
+                        
+
+                        // ** TRANSITION
+                        TRANSITION_body.game_object = TRANSITION_container.transform.GetChild( 0 ).gameObject;
+                        TRANSITION_body.image       = TRANSITION_body.game_object.GetComponent<Image>();
+
+                        TRANSITION_text.game_object = TRANSITION_container.transform.GetChild( 1 ).gameObject;
+                        TRANSITION_text.tmp_text    = TRANSITION_text.game_object.GetComponent<TMP_Text>();
+
+                    }
+                    catch( Exception e )
+                    {
+                        Console.LogError( $"Could not link to the game object for the button { button_name }. <Color=lightBlue>PROBABLY THE PREFAB IS NOT RIGHT</Color>" );
+                        CONTROLLER__errors.Throw_exception( e );
+
+                    }
+                        
+
+                // // --- DEFINE 
+                // TOOL__UI_button_LINKER_SIMPLE.Link_to_game_object( this );
+
+        }
+
+
+
+
+        // ** nao vale a pena
+        public override void Load(){ manager_resources.Load(); }
+
+        public override void Activate_button(){
+
+            is_active = true;
+            TOOL__UI_button_SET_SIMPLE.SET_OFF_static( this );
+
+        }
+
+
+        public override void Deactivate_button(){
+
+            is_active = false;
+            container.game_object.SetActive( false );
+
+        }
+
+
+
+
+
+
+
+}

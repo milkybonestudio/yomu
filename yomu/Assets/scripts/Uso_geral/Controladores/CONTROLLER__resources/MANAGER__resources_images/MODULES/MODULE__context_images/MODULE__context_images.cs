@@ -21,6 +21,8 @@ public class MODULE__context_images {
 
         public MODULE__context_images( MANAGER__resources_images _manager, Resource_context _context, int _initial_capacity, int _buffer_cache ){
 
+                if( _context == Resource_context.not_given )
+                    { CONTROLLER__errors.Throw( "tried to create a MODULE__context_images but the context came as <Color=lightBlue>not_give</Color>" ); }
 
                 context = _context;
                 context_folder = _context.ToString();
@@ -89,9 +91,14 @@ public class MODULE__context_images {
                         // ** no editor posso pegar a imagem e verificar o tamanho dela, nao tem problema se demorar um pouco para iniciar, depois de colocar no cache ficar verificando vai ser muito rapido. 
                         // ** provavelmente vai ser mais rapido usar streamreader para pegar somente os primeiros bytes, o os provavelmente vai copiar o png inteiro de um lugar para o outro na ram se nao fizer
                         string png_path = System.IO.Path.Combine( Application.dataPath, "Resources", context.ToString(), ( manager.container_images.Get_image_key( _main_folder, _path_local ) + ".png" ) );
-                        
+                        byte[] png = null;
+
+                        try {
+
+                            png = System.IO.File.ReadAllBytes( png_path );
+                        }
+                        catch( Exception e ){ CONTROLLER__errors.Throw( "could not find the image in the path: " + png_path ) ;}
                 
-                        byte[] png = System.IO.File.ReadAllBytes( png_path );
                         Dimensions dimensions = PNG.Get_dimensions( png );
 
                             locator.width = dimensions.width;

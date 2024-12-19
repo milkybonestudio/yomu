@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
@@ -41,7 +42,7 @@ unsafe public class Controlador : MonoBehaviour {
 
 
 
-        UI_button b_up;
+        UI_button_SIMPLE b_up;
         UI_text_container text_container;
 
         public void Start(){
@@ -59,6 +60,7 @@ unsafe public class Controlador : MonoBehaviour {
 
                 
                 b_up = EXAMPLE_UI_button.Simple( GameObject.Find( "Tela/Container_teste/a" ) ); 
+            
                 text_container = EXAMPLE_UI_text_container.Simple( GameObject.Find( "Tela/Container_teste/EXAMPLE_text_container" ) ); 
 
 
@@ -68,8 +70,16 @@ unsafe public class Controlador : MonoBehaviour {
 
         float ac = 1f;
 
+        CONTAINER__UI_button_SIMPLE ccc = new CONTAINER__UI_button_SIMPLE();
+
+
+
         public void Update() {
 
+
+                //(( B )((( A )( new B() )))).f();
+
+            
 
 
                 if( Input.GetKeyDown( KeyCode.A ) )
@@ -128,7 +138,9 @@ unsafe public class Controlador : MonoBehaviour {
 
 
                 CONTROLLER__input.instancia.Update();
-                b_up?.Update();
+
+                b_up.Update();
+
                 text_container?.Update();
 
                 CONTROLLER__resources.Get_instance().Update();

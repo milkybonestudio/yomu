@@ -29,7 +29,7 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
 
         public UI_button botao_fechar;
         public UI_button botao_novo;
-        public Imagem_estatica_dispositivo img;
+        public UI_visual_container img;
 
 
 
@@ -39,7 +39,7 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
                 // --- ESTATICA
 
                 // ** declare                
-                Dados_imagem_estatica_dispositivo dados_img = dispositivo.Declare_image( ref img );
+                DATA__UI_visual_container dados_img = dispositivo.Declare_image( ref img );
 
                 // ** put data
                 dados_img.imagem_id = -1;
@@ -56,9 +56,7 @@ public class Dispositivo__teste : INTERFACE__dispositivo {
                     {
 
                         botao_fechar_dados_novo.tipo_ativacao = Botao_dispositivo_tipo_ativacao.clicar;
-                        botao_fechar_dados_novo.path_locator = "a";
                         botao_fechar_dados_novo.Update_secundario = Update_botao_1;
-
 
 
                             // --- IMAGEM 1

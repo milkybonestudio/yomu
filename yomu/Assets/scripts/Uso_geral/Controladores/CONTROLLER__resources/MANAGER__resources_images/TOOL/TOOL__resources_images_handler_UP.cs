@@ -59,7 +59,7 @@ public static class TOOL__resources_images_handler_UP {
 
         public static int Handle_getting_compress_low_quality_file( MANAGER__resources_images _manager, RESOURCE__image _image ){
 
-                Console.Log( "veio Handle_getting_compress_low_quality_file()" );
+                // Console.Log( "veio Handle_getting_compress_low_quality_file()" );
 
                 if( _manager.task_getting_compress_low_quality_file == null )
                     { CONTROLLER__errors.Throw( $"the image { _image.name } was as getting_compress_low_quality_file but the task_req is null" ); }
@@ -92,7 +92,7 @@ public static class TOOL__resources_images_handler_UP {
 
                 int weight = 0;
 
-                Console.Log( "veio Handle_waiting_to_get_compress_file" );
+                // Console.Log( "veio Handle_waiting_to_get_compress_file" );
 
                 if( _manager.task_getting_compress_file != null )
                     { return weight; } // --- TASK ALREADY IN USE
@@ -111,7 +111,7 @@ public static class TOOL__resources_images_handler_UP {
         public static int Handle_getting_compress_file( MANAGER__resources_images _manager, RESOURCE__image _image ){ 
 
 
-                Console.Log( "Handle_getting_compress_file()" );
+                // Console.Log( "Handle_getting_compress_file()" );
 
                 if( _manager.task_getting_compress_file == null )
                     { CONTROLLER__errors.Throw(  $"the image { _image.name } was as getting_compress_file but the task_req is null" ); }
@@ -138,7 +138,7 @@ public static class TOOL__resources_images_handler_UP {
                 if( !!!( PNG.Verify_is_png( _image.single_image.image_compress ) ) )
                     { CONTROLLER__errors.Throw( "was not a png NO HANLDE" ); }
 
-                ARRAY.Print_length( "Png length", _image.single_image.image_compress );
+                // ARRAY.Print_length( "Png length", _image.single_image.image_compress );
 
                 // --- NEXT STEAP
                 if( _image.content_going_to == _image.actual_content )

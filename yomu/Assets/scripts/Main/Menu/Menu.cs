@@ -47,7 +47,7 @@ public class Menu : MonoBehaviour {
 
         public GameObject opcoes_container;
         public Interativo_menu[] menu_opcoes_arr;
-        public Botao[] botoes = new Botao[ 5 ];
+        public UI_button[] botoes = new UI_button[ 5 ];
 
 
 
@@ -86,14 +86,10 @@ public class Menu : MonoBehaviour {
         public bool Update_botoes(){
 
             
-                bool is_click =  Input.GetMouseButtonUp( 0 );
+                // bool is_click =  Input.GetMouseButtonUp( 0 );
                 
-                for(int i = 0 ;    i <  botoes.Length ;   i++){
-
-                        Botao botao = botoes[i];                    
-                        if( botao.Update(  is_click, controlador_dados.posicao_mouse )) { return true; }
-
-                }
+                for( int i = 0 ;    i <  botoes.Length ;   i++)
+                    { botoes[ i ].Update(); }
 
                 return false ;
 

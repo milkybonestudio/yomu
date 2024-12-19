@@ -15,7 +15,7 @@ public class MANAGER__resources_images {
                 container_image_refs = new Container_RESOURCE__image_refs();
                 context_images_modules = new MODULE__context_images[ contexts.Length ];
 
-                for( int context_index = 0 ; context_index < contexts.Length ; context_index++ )
+                for( int context_index = ( int )( Resource_context.not_given + 1 ) ; context_index < contexts.Length ; context_index++ )
                     { context_images_modules[ context_index ] = new MODULE__context_images( _manager: this, _context: contexts[ context_index ], _initial_capacity: 1_000, _buffer_cache: 2_000_000 ); }
 
                 return;
@@ -58,7 +58,25 @@ public class MANAGER__resources_images {
             // context: personagens
             // main_folder: lily
             // local_path: "clothes/arm_2"
-        public RESOURCE__image_ref Get_image_reference( Resource_context _context, string _main_folder,  string _path, Resource_image_content _level_pre_allocation ){ return context_images_modules[ ( int ) _context ].Get_image_ref( _main_folder, _path, _level_pre_allocation ) ; }
+        public RESOURCE__image_ref Get_image_reference( Resource_context _context, string _main_folder,  string _path, Resource_image_content _level_pre_allocation ){ Verify( _context, _main_folder,  _path, _level_pre_allocation ); return context_images_modules[ ( int ) _context ].Get_image_ref( _main_folder, _path, _level_pre_allocation ) ; }
+
+
+        private void Verify( Resource_context _context, string _main_folder,  string _path, Resource_image_content _level_pre_allocation ) {
+
+
+                if( _context == Resource_context.not_given )
+                    { CONTROLLER__errors.Throw( $"" ); }
+
+                if( _main_folder == null )
+                    { CONTROLLER__errors.Throw( $"" ); }
+
+                if( _path == null )
+                    { CONTROLLER__errors.Throw( $"" ); }
+
+                if( _level_pre_allocation == Resource_image_content.not_give )
+                    { CONTROLLER__errors.Throw( $"" ); }
+
+        }
         
 
 
@@ -72,9 +90,11 @@ public class MANAGER__resources_images {
                 //** fazer para dar preferencia pelo tipo depois a ordem
 
                 context_frame = ( context_frame + 1 ) % contexts.Length;
+                if( context_frame == 0 )
+                    { context_frame++; }
 
                 int current_weight = 0;
-                foreach(  RESOURCE__image image in  context_images_modules[ context_frame ].actives_images_dictionary.Values ){
+                foreach(  RESOURCE__image image in context_images_modules[ context_frame ].actives_images_dictionary.Values ){
 
                         current_weight += Updata_image( image );
         

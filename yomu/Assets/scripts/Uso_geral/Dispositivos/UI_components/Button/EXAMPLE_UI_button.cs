@@ -4,45 +4,44 @@ using UnityEngine;
 public static class EXAMPLE_UI_button {
 
 
-        public static UI_button Simple( GameObject _button_game_object ){
+
+        // define -> usa os dados de criação para criar o objeto principal com os objetos recursos já pegos.
+        //           se em algum momento der problema optimizar o quao rapido pega os recursos 
+        // link   -> quem tom o botao sinaliza que já foi carregado a struct 
+        // load   -> fala que pode carregar os minimos do botao
 
 
-                UI_button botao = UI_button.Get_button();
-                ref DATA__UI_button dados = ref botao.data;
+        public static UI_button_SIMPLE Simple( GameObject _button_game_object ){
+
+
+                UI_button_SIMPLE botao = UI_button_SIMPLE.Get_button();
+
+                ref DATA_CREATION__UI_button_SIMPLE data_creation = ref botao.creation_data;
 
                 // --- PUT DATA
 
-                        dados.tipo_ativacao = Botao_dispositivo_tipo_ativacao.clicar;
+                        data_creation.name = "Botao_exemplo";
+                        data_creation.main_folder = "teste";
+                        data_creation.context = Resource_context.Devices;
 
-                        dados.simple_button_OFF_frame.path = "a";
-                        dados.OFF_and_ON_equal = true;
-                        dados.tipo_transicao = DEVICE_button_transition_type_OFF_ON.cor;
-                        dados.type = UI_button_type.simple;
                         
-                        dados.path_locator = "a";
-                        dados.main_folder = "teste";
+                        data_creation.tipo_ativacao = Botao_dispositivo_tipo_ativacao.clicar;
 
-                        dados.text_on = "on";
-                        dados.text_off = "off";
-                        dados.text_OFF_and_ON_equal = false;
+                        data_creation.image_path_OFF = "a";
+                        data_creation.image_path_ON = "b";
 
-                        dados.image_resource_pre_allocation = Resource_image_content.compress_data;
+                        data_creation.text = "TESTE";
+
+                        data_creation.tipo_transicao = DEVICE_button_transition_type_OFF_ON.cor;
+                        
+                        
+                        data_creation.image_resource_pre_allocation = Resource_image_content.compress_data;
+
                 
-
-                // ** get resources 
+                
                 botao.Define_button();
-
-                //Console.Log( "Minimun image: " +  botao.manager_resources.minimun.image );
-
-                // ** link to game_object
-                
                 botao.Link_to_game_object( _button_game_object ); // precisa que struct esteja ativa
-
-                // RESOURCE__structure_copy s_c = null;
-                // botao.Get_data( s_c.Get_component_game_object( "botao" ) );
-
-                botao.manager_resources.Load();
-
+                botao.Load();
                 botao.Activate_button();
 
 

@@ -25,8 +25,6 @@ public class CONTROLLER__errors {
 
 
                 CONTROLLER__tasks.Pegar_instancia().modulo_multithread.Matar_thread();
-                
-                Console.Log( "AAAAAAAAAAAAAAAAAAAAAA" );
                 Console.Update();
                 // ** garante 
 
