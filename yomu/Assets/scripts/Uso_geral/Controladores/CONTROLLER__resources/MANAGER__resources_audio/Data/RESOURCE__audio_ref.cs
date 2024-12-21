@@ -75,7 +75,7 @@ public class RESOURCE__audio_ref {
 
 
     
-        public void Change_level_pre_allocation( Resource_audio_content _new_pre_alloc ){}
+        public void Change_level_pre_allocation( Resource_audio_content _new_pre_alloc ){ TOOL__module_context_audios_actions.Change_level_pre_allocation( this, _new_pre_alloc ); }
 
 
  

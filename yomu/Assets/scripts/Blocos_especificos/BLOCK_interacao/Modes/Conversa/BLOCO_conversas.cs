@@ -50,7 +50,7 @@ public class Blocos_conversa_info {
 
 
 
-public class BLOCO_conversas : INTERFACE__bloco {
+public class BLOCO_conversas : Block {
 
 
         public static BLOCO_conversas instancia;
@@ -75,9 +75,14 @@ public class BLOCO_conversas : INTERFACE__bloco {
 
         // --- INTERFACE
 
+
         
-        public void Finalizar(){}
-        public Task_req Carregar_dados(){ return null; }
+        public override void Finalizar(){}
+        public override void Destruir(){}
+
+
+    
+        public override Task_req Carregar_dados(){ return null; }
 
 
 
@@ -94,7 +99,7 @@ public class BLOCO_conversas : INTERFACE__bloco {
         }    
         
 
-        public void Iniciar(){
+        public override void Iniciar(){
 
             //mark
             // ** vai ter que re fazer tudo
@@ -145,7 +150,7 @@ public class BLOCO_conversas : INTERFACE__bloco {
 
 
 
-        public void Update(){
+        public override void Update(){
 
 
                 if(  Input.GetKeyDown( KeyCode.Escape)){ 

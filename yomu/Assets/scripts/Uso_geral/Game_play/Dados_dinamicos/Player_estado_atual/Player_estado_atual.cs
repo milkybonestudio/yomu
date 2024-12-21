@@ -39,9 +39,9 @@ public class Player_estado_atual {
 
 
 
-    public Bloco[] blocos_anteriores = new Bloco[10];
+    public Block_type[] blocos_anteriores = new Block_type[ 10 ];
 
-    public Bloco bloco_atual;
+    public Block_type bloco_atual;
 
 
 
@@ -64,12 +64,12 @@ public class Player_estado_atual {
 
 
 
-    public void Adicionar_modo_tela( Bloco _novo_bloco ){
+    public void Adicionar_modo_tela( Block_type _novo_bloco ){
 
 
         for(int  i = 0 ;   i < blocos_anteriores.Length ; i++){
 
-            if(blocos_anteriores[i] == Bloco.nada) { 
+            if(blocos_anteriores[i] == Block_type.nada) { 
 
                 this.blocos_anteriores[i] = _novo_bloco;
                 this.bloco_atual = _novo_bloco;
@@ -87,24 +87,19 @@ public class Player_estado_atual {
 
 
 
-    public Bloco Pegar_bloco_anterior(){
+    public Block_type Pegar_bloco_anterior(){
 
         int index_modo_tela_atual_int = -1;
 
-        for(int  i = 0 ;   i < blocos_anteriores.Length ; i++){
+        for( int  i = 0 ; i < blocos_anteriores.Length ; i++ ){
 
+            if( blocos_anteriores[ i ] == Block_type.nada ) {
 
-            if( blocos_anteriores[i] == Bloco.nada ) {
-
-                if(i < 2) {
-
-
-                    return Bloco.nada;
-                    
-                }
+                if( i < 2 )
+                    { return Block_type.nada; }
 
                 int modo_tela_vazio_int = i;
-                index_modo_tela_atual_int = modo_tela_vazio_int - 1; 
+                index_modo_tela_atual_int = ( modo_tela_vazio_int - 1 ); 
                 break;
 
             }
@@ -113,26 +108,26 @@ public class Player_estado_atual {
 
         int index_modo_tela_anterior_int = index_modo_tela_atual_int - 1; 
 
-        Bloco modo_tela_anterior =  blocos_anteriores[ index_modo_tela_anterior_int ];
+        Block_type modo_tela_anterior =  blocos_anteriores[ index_modo_tela_anterior_int ];
 
         return modo_tela_anterior;
 
     }
 
 
-    public Bloco Pegar_bloco_atual(){ return bloco_atual;}
+    public Block_type Pegar_bloco_atual(){ return bloco_atual;}
 
 
 
 
     public void Voltar_modo_tela( ) {
 
-        Bloco novo_bloco = Pegar_bloco_anterior();
+        Block_type novo_bloco = Pegar_bloco_anterior();
         bloco_atual = novo_bloco;
 
         for(int  i = 0 ;   i < blocos_anteriores.Length ; i++){
 
-            if( blocos_anteriores[ i ] == Bloco.nada ) { blocos_anteriores[ i - 1 ] = Bloco.nada;  return;}
+            if( blocos_anteriores[ i ] == Block_type.nada ) { blocos_anteriores[ i - 1 ] = Block_type.nada;  return;}
 
         }
 

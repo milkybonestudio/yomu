@@ -3,10 +3,10 @@ using System;
 using UnityEngine;
 
 
-public class CONTAINER__resource_complex_structure_copy {
+public class CONTAINER__RESOURCE__complex_structure_copy {
 
 
-        public CONTAINER__resource_complex_structure_copy(){
+        public CONTAINER__RESOURCE__complex_structure_copy(){
 
                 copies_available = new RESOURCE__complex_structure_copy[ 100 ];
 

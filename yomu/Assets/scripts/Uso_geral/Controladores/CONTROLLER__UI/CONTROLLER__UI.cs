@@ -10,7 +10,6 @@ public class CONTROLLER__UI {
 
 
 
-        public Dispositivo[] dispositivos_ui;
         public Localizador_UI[] localizadores;
 
         public GameObject container;

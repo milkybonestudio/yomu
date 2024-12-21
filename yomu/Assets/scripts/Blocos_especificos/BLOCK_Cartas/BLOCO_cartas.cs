@@ -3,7 +3,7 @@ using UnityEngine;
 
 
 
-public class BLOCO_cartas : INTERFACE__bloco {
+public class BLOCO_cartas : Block {
 
         public static BLOCO_cartas instancia;
         public static BLOCO_cartas Pegar_instancia(){ return instancia; }
@@ -21,6 +21,13 @@ public class BLOCO_cartas : INTERFACE__bloco {
                 
         }
 
+
+
+        public override void Destruir(){}
+
+        public override Task_req Carregar_dados(){ return null; }
+
+
         // nao é UI, vai star no espaço 3d 
         // ** lembrar que Tela senpre vai estar na frente por ser canvas/UI
 
@@ -30,12 +37,12 @@ public class BLOCO_cartas : INTERFACE__bloco {
         public Controlador_tela_cartas controlador_tela_cartas;
 
 
-        public void Iniciar(){
+        public override void Iniciar(){
 
                 controlador_tela_cartas = Controlador_tela_cartas.Construir();
         }
 
-        public void Finalizar(){
+        public override void Finalizar(){
 
                 instancia = null;
 
@@ -45,9 +52,8 @@ public class BLOCO_cartas : INTERFACE__bloco {
 
         }
 
-        public void Update(){}
+        public override void Update(){}
 
-        public Action Lidar_retorno;
         public Action Lidar_saida;
 
 

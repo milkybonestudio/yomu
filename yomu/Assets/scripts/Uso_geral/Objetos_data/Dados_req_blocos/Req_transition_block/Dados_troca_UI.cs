@@ -27,7 +27,7 @@ public class Dados_troca_UI {
         public Localizador_UI[] UIs_para_criar;
         public object[] dados_UI;
 
-        public Dispositivo[] UIs_para_manter;
+        // public Dispositivo[] UIs_para_manter;
 
         // ** isso pode ser dentro do dispositivo
         public bool ignorar_transicao_tirada_UI = false;

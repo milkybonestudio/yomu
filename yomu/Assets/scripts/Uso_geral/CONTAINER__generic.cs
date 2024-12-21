@@ -5,56 +5,50 @@ using UnityEngine;
 
 
 
-public class CONTAINER__generic {
 
-        // ** especifico vs generico: 
-        /*
+    // ** especifico vs generico: 
+    /*
 
-                // ** usar até que causae problemas 
+            // ** usar até que causae problemas 
 
-                ir pegando sem usar 3_000 e extendendo:
-                    generico: +- 1250ms
-                    especifico: 11ms
+            ir pegando sem usar 3_000 e extendendo:
+                generico: +- 1250ms
+                especifico: 11ms
 
-                expandir e criar é uma merda
+            expandir e criar é uma merda
 
-                pegar sem extender 30_000:
-                    generico: 25ms => 1_200k/seg ( varia muito 11ms - 30ms )
-                    especifico: 7ms => 4_300k/segundo
+            pegar sem extender 30_000:
+                generico: 25ms => 1_200k/seg ( varia muito 11ms - 30ms )
+                especifico: 7ms => 4_300k/segundo
 
-        */
+    */
 
 
-        public CONTAINER__generic( Type _type, int _start_length, Action<object> _put_data_structure, Action<object> _reset_data ){
+public abstract class CONTAINER__generic : CONTAINER {
 
-                type = _type;
-                Put_data_structure = _put_data_structure;
-                Reset_data = _reset_data;
 
-                // --- CREATE AVAILABLE 
+        public void Start( int _start_length ){
 
-                objects_available = Array.CreateInstance( _type, _start_length );
+                objects_available = Array.CreateInstance( type, _start_length );
                 for( int index = 0 ; index < objects_available.Length ; index++ )
-                    { objects_available.SetValue( Activator.CreateInstance( _type ), index ); }
+                    { objects_available.SetValue( Activator.CreateInstance( type ), index ); }
                     
                 // --- CREATE WAITING
-                objects_waiting_to_reset = Array.CreateInstance( _type, 100 );
+                objects_waiting_to_reset = Array.CreateInstance( type, 100 );
 
         }
 
+
         public int Get_length_array(){ return objects_available.Length; }
 
-        private Type type;
+        public Type type;
         private Array objects_available;
         private Array objects_waiting_to_reset;
 
-        
-        private Action<object> Put_data_structure;
-        private Action<object> Reset_data;
-
-
+                
         private int pointer_object_to_delete = 0;
         private int pointer_object_guaranty_is_null_before = -1;
+
 
 
         public object Get(){
@@ -66,7 +60,7 @@ public class CONTAINER__generic {
                         if( ob == null )
                             { continue; }
 
-                        Put_data_structure( ob );
+
                         objects_available.SetValue( null, pointer_object_guaranty_is_null_before );
 
                         return ob;
@@ -88,9 +82,6 @@ public class CONTAINER__generic {
 
                 object new_object = objects_available.GetValue( pointer_object_guaranty_is_null_before );
                 objects_available.SetValue( null, pointer_object_guaranty_is_null_before );
-
-                Reset_data( new_object );
-                Put_data_structure( new_object );
             
                 return new_object;
             
@@ -117,8 +108,7 @@ public class CONTAINER__generic {
         }
 
 
-        // ** in actions? 
-        public int Update( int _weight_to_stop, int _current_weight ){
+        public override int Update( int _weight_to_stop, int _current_weight ){
             
 
                 int current_index = 0;

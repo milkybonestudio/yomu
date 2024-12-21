@@ -3,7 +3,7 @@ using UnityEngine;
 public static class Construtor_bloco_INTERACAO {
     
 
-        public static INTERFACE__bloco Construir( GameObject _container ){
+        public static Block Construir( GameObject _container ){
 
 
                     // --- VERIFICAR SE O BLOCO JA NAO FOI CRIADO
@@ -27,7 +27,7 @@ public static class Construtor_bloco_INTERACAO {
                     // --- COISAS
                     
 
-                    return ( INTERFACE__bloco ) bloco;
+                    return ( Block ) bloco;
 
         }
 

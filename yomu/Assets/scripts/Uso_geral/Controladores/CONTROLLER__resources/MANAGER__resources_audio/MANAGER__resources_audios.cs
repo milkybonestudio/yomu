@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 
-public class MANAGER__resources_audios {
+public class MANAGER__resources_audios : MANAGER__RESOURCES {
 
         /*
 
@@ -29,10 +29,10 @@ public class MANAGER__resources_audios {
         
         public MANAGER__resources_audios(){
 
-                contexts = contexts = System_enums.resource_context;// ( Resource_context[] ) System.Enum.GetValues( typeof( Resource_context ) );
+                contexts = contexts = System_enums.resource_context; // ( Resource_context[] ) System.Enum.GetValues( typeof( Resource_context ) );
 
-                container_audios = new Container_RESOURCE__audios();
-                container_audio_refs = new Container_RESOURCE__audios_refs();
+                container_audios = new CONTAINER__RESOURCE__audios();
+                container_audio_refs = new CONTAINER__RESOURCE__audios_refs();
                 context_audios_modules = new MODULE__context_audios[ contexts.Length ];
 
                 for( int context_index = 0 ; context_index < contexts.Length ; context_index++ )
@@ -43,8 +43,8 @@ public class MANAGER__resources_audios {
         }
 
         
-        public Container_RESOURCE__audios container_audios;
-        public Container_RESOURCE__audios_refs container_audio_refs;
+        public CONTAINER__RESOURCE__audios container_audios;
+        public CONTAINER__RESOURCE__audios_refs container_audio_refs;
     
         public MODULE__context_audios[] context_audios_modules;
 
@@ -71,14 +71,14 @@ public class MANAGER__resources_audios {
 
         private const int weight_to_stop = 5;
         private int context_frame;
-        public void Update(){
+        public override void Update(){
 
                 //** fazer para dar preferencia pelo tipo depois a ordem
 
                 context_frame = ( context_frame + 1 ) % contexts.Length;
 
                 int current_weight = 0;
-                foreach(  RESOURCE__audio image in  context_audios_modules[ context_frame ].actives_audios_dictionary.Values ){
+                foreach(  RESOURCE__audio image in context_audios_modules[ context_frame ].actives_audios_dictionary.Values ){
 
                         current_weight += Updata_audio( image );
         
@@ -109,7 +109,7 @@ public class MANAGER__resources_audios {
                 // --- DOWN RESOURCE
                     
                     // ** um mp3 compresso tem +- 1/5 do damanho, mas a qualidade é meio merda
-                    // ** andes de pensar em fazer um low_quality precisa ver se comprensa 
+                    // ** antes de pensar em fazer um low_quality precisa ver se compensa 
                     // ** tempo_recurso = ( tempo para pegar disco ) + ( tempo descompressao ) 
                     // ** se o tempo para descomprimir foi muito talvez não valha a pena
 
@@ -130,7 +130,7 @@ public class MANAGER__resources_audios {
 
         // --- EXTRA
 
-        public int Get_bytes_allocated(){
+        public override int Get_bytes_allocated(){
 
                 int accumulator = 0;
 

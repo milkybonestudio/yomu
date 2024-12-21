@@ -33,7 +33,7 @@ public class Cursor_default : INTERFACE__cursor {
             // ** parte especifica se tiver
             switch( controlador_contexto.current_block ){
 
-                case Bloco.interacao: Cursor_default_interacao_update.Ativar( controlador_contexto.modo_atual ); return;
+                case Block_type.interacao: Cursor_default_interacao_update.Ativar( controlador_contexto.modo_atual ); return;
                 default: Update_generico(); return;
 
             }

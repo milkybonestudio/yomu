@@ -6,62 +6,6 @@ using UnityEngine.UI;
 using System.Text.RegularExpressions;
 
 
-/*
-
-        Controlador_UI => geral 
-        mas iniciar vai ser pelo bloco 
-
-        Controlador_UI {
-
-                // so vai ser chamado uma vez 
-                // vai passar todos os possiveis Actions que essa parte de UI pode ter 
-
-                                        //  ja vai estar em player
-                public Colocar_dados(    Bloco  ,  byte[] , Action[]  ){
-
-                }
-
-        }
-
-*/
-
-
-
-/*
-
-
-    Figures: 
-
-
-    Para construir uma figure eu preciso dos dados_figure. Esses dados vão ser adiquiridos de jeitos diferentes dependendo se for o modo producao ou se for na build 
-
-        build => vai ter um dic com os dados de cada figure_id, esse dic vai importar 2 arquivos e deixar na memoria se forem pequenos os Figure_localizador e Figure_dados;
-        editor(teste) => os dados vao ser pegos diretamente nos Personagem_figure_dados
-
-    Oque eu preciso mudar: 
-
-        1 opcao: 
-            - set vai ter 2 propriedades: figures_ids e figures_nomes. 
-                    => figures ids => so estao presentes na build
-                    => figures_nomes => so vao estar presentes no editor(teste) 
-            
-
-
-
-*/
-
-
-
-/*
-
-
-    continua sendo instanciado no controlador
-    precisa ser instanciado somente no jogo;
-
-
-*/
-
-
 
 
 public enum Tipo_mudanca {
@@ -73,12 +17,7 @@ public enum Tipo_mudanca {
 
 
 
-
-
-public class BLOCO_story : INTERFACE__bloco {
-
-       // ** UPDATE DE LOGICA :
-       // um plot sempre tem que ser encerrado, VN nao pode iniciar outra VN
+public class BLOCO_story : Block {
 
       
         // --- INSTANCIA
@@ -89,11 +28,12 @@ public class BLOCO_story : INTERFACE__bloco {
 
         // --- INTERFACE
 
-        // public void Pegar_bloco(){ return Bloco.visual_novel; }
-        // public void Update(){}
-        // public void Finalizar(){}
-        // public void Iniciar(){}
-        // public void Destruir(){}
+        
+        public override void Finalizar(){}
+        public override void Iniciar(){}
+        public override void Destruir(){}
+        public override Task_req Carregar_dados(){ return null; }
+
 
         // --- DEFAULT BLOCOS
 
@@ -144,7 +84,7 @@ public class BLOCO_story : INTERFACE__bloco {
 
 
 
-        public void Update(){
+        public override void Update(){
 
 
                 CONTROLLER__input.Pegar_instancia().manager_cursor.Change_action( Cursor_action.choice ); //Mudar_cursor( Cor_cursor.off );

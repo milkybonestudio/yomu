@@ -23,13 +23,13 @@ public static class Construtor_jogo {
 
                         // --- BLOCOS
 
-                        jogo.interfaces_blocos = new INTERFACE__bloco[ System_enums.blocks_arr.Length ];
+                        jogo.interfaces_blocos = new Block[ System_enums.blocks_arr.Length ];
 
-                        jogo.interfaces_blocos[ ( int ) Bloco.interacao ]     =  Construtor_bloco_INTERACAO.Construir( jogo.gerenciador_tela_jogo.interaction_block_container );
-                        jogo.interfaces_blocos[ ( int ) Bloco.story ] = Construtor_bloco_STORY.Construir( jogo.gerenciador_tela_jogo.story_block_container );
+                        jogo.interfaces_blocos[ ( int ) Block_type.interacao ]     =  Construtor_bloco_INTERACAO.Construir( jogo.gerenciador_tela_jogo.interaction_block_container );
+                        jogo.interfaces_blocos[ ( int ) Block_type.story ] = Construtor_bloco_STORY.Construir( jogo.gerenciador_tela_jogo.story_block_container );
 
-                        jogo.interfaces_blocos[ ( int ) Bloco.minigames ]    = Construtor_bloco_MINIGAMES.Construir( jogo.gerenciador_tela_jogo.minigames_block_container );
-                        jogo.interfaces_blocos[ ( int ) Bloco.cartas ]       = Construtor_bloco_CARTAS.Construir( jogo.gerenciador_tela_jogo.cards_block_container );
+                        jogo.interfaces_blocos[ ( int ) Block_type.minigames ]    = Construtor_bloco_MINIGAMES.Construir( jogo.gerenciador_tela_jogo.minigames_block_container );
+                        jogo.interfaces_blocos[ ( int ) Block_type.cartas ]       = Construtor_bloco_CARTAS.Construir( jogo.gerenciador_tela_jogo.cards_block_container );
 
                         // ---- CONTROLADORES
                         

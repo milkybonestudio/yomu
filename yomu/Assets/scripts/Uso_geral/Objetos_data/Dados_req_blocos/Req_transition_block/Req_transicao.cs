@@ -8,7 +8,7 @@ public class Req_transicao {
     public Dados_troca_input dados_troca_input;
 
 
-    public Bloco novo_bloco = Bloco.nada;
+    public Block_type novo_bloco = Block_type.nada;
     
     public Tipo_transicao tipo_transicao = Tipo_transicao.cor; 
     public Tipo_troca_bloco tipo_troca_bloco = Tipo_troca_bloco.OUT;

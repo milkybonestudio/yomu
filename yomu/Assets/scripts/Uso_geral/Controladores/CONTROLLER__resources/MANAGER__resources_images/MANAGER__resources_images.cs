@@ -4,15 +4,15 @@ using System.Linq;
 using UnityEngine;
 
 
-public class MANAGER__resources_images {
+public class MANAGER__resources_images : MANAGER__RESOURCES {
 
         
         public MANAGER__resources_images(){
 
                 contexts = contexts = System_enums.resource_context;// ( Resource_context[] ) System.Enum.GetValues( typeof( Resource_context ) );
 
-                container_images = new Container_RESOURCE__images();
-                container_image_refs = new Container_RESOURCE__image_refs();
+                container_images = new CONTAINER__RESOURCE__images();
+                container_image_refs = new CONTAINER__RESOURCE__image_refs();
                 context_images_modules = new MODULE__context_images[ contexts.Length ];
 
                 for( int context_index = ( int )( Resource_context.not_given + 1 ) ; context_index < contexts.Length ; context_index++ )
@@ -25,8 +25,8 @@ public class MANAGER__resources_images {
         
         public MANAGER__textures_resources textures_manager;
 
-        public Container_RESOURCE__images container_images;
-        public Container_RESOURCE__image_refs container_image_refs;
+        public CONTAINER__RESOURCE__images container_images;
+        public CONTAINER__RESOURCE__image_refs container_image_refs;
     
         public MODULE__context_images[] context_images_modules;
 
@@ -85,7 +85,7 @@ public class MANAGER__resources_images {
 
         private const int weight_to_stop = 5;
         private int context_frame;
-        public void Update(){
+        public override void Update(){
 
                 //** fazer para dar preferencia pelo tipo depois a ordem
 
@@ -181,7 +181,7 @@ public class MANAGER__resources_images {
 
         // --- EXTRA
 
-        public int Get_bytes_allocated(){
+        public override int Get_bytes_allocated(){
 
                 int accumulator = 0;
 

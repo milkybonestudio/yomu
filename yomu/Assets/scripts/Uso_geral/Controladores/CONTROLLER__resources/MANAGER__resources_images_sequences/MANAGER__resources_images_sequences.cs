@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 
-public class MANAGER__resources_images_sequences {
+public class MANAGER__resources_images_sequences : MANAGER__RESOURCES {
 
         //** os dicionarios tem que ficar dentro de cada modulo
 
@@ -64,7 +64,7 @@ public class MANAGER__resources_images_sequences {
 
         private const int weight_to_stop = 5;
         private int context_frame;
-        public void Update(){
+        public override void Update(){
 
 
                 context_frame = ( context_frame + 1 ) % contexts.Length;
@@ -147,7 +147,7 @@ public class MANAGER__resources_images_sequences {
 
         // --- EXTRA
 
-        public int Get_bytes_allocated(){
+        public override int Get_bytes_allocated(){
 
                 int accumulator = 0;
 

@@ -49,7 +49,7 @@ public class Controlador_development {
 
           public bool Aplicar_teste(){
 
-                if( teste_development_atual.bloco == ( int ) Bloco.nada )
+                if( teste_development_atual.bloco == ( int ) Block_type.nada )
                     { return false; }
 
                 // --- VAI TESTAR

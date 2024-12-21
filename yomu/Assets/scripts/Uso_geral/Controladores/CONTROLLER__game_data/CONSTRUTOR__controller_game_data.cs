@@ -10,7 +10,7 @@ unsafe public static class CONSTRUCTOR__controller_game_data {
         public static byte* b_p;
         public static byte[] b_arr_s = new byte[ 100 ];
 
-        public static CONTROLLER__game_data Construir( INTERFACE__bloco[] _blocos ){
+        public static CONTROLLER__game_data Construir( Block[] _blocos ){
 
             CONTROLLER__game_data controlador = new CONTROLLER__game_data();
             CONTROLLER__game_data.instancia = controlador;

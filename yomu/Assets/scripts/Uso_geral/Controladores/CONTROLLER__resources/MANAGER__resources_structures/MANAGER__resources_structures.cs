@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 
-public class MANAGER__resources_structures {
+public class MANAGER__resources_structures : MANAGER__RESOURCES {
 
         
         public MANAGER__resources_structures(){
@@ -54,7 +54,7 @@ public class MANAGER__resources_structures {
         private int context_frame;
 
         private System.Diagnostics.Stopwatch relogio = new System.Diagnostics.Stopwatch();
-        public void Update(){
+        public override void Update(){
 
                 
                 context_frame = ( context_frame + 1 ) % contexts.Length;
@@ -160,7 +160,7 @@ public class MANAGER__resources_structures {
         
         // --- EXTRA
 
-        public int Get_bytes_allocated(){
+        public override int Get_bytes_allocated(){
 
                 return 0;     
 

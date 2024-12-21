@@ -87,7 +87,10 @@ public class Display_texto_simples {
 
         public void Centralizar_texto(){
 
+            
             text.alignment = TextAlignmentOptions.MidlineGeoAligned;
+            
+            
             return;
 
 

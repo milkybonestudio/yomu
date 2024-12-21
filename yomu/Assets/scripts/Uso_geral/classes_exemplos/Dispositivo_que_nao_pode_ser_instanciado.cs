@@ -1,9 +1,9 @@
 
 
-public class Dispositivo_que_nao_pode_ser_instanciado : INTERFACE__dispositivo{ 
+// public class Dispositivo_que_nao_pode_ser_instanciado : INTERFACE__dispositivo{ 
 
-    public Dispositivo_que_nao_pode_ser_instanciado(){ throw new System.Exception( "Nao foi mudado a class no construtor dispositivo_exemplo que vai construir o objeto"); }
+//     public Dispositivo_que_nao_pode_ser_instanciado(){ throw new System.Exception( "Nao foi mudado a class no construtor dispositivo_exemplo que vai construir o objeto"); }
     
-    public void Declare_components( Dispositivo _device ){}
+//     public void Declare_components( Dispositivo _device ){}
 
- }
+//  }

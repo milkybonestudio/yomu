@@ -5,6 +5,29 @@ using UnityEngine.UI;
 public static class TOOL__module_context_audios_actions {
 
 
+        public static void Change_level_pre_allocation( RESOURCE__audio_ref _ref, Resource_audio_content _new_pre_alloc ){
+
+
+                Console.Log( "Veio Change_pre_alloc()" );
+
+                // --- CHANGE
+                Resource_audio_content old_pre_alloc = _ref.level_pre_allocation;
+                _ref.level_pre_allocation = _new_pre_alloc;
+
+                if( _ref.state != Resource_state.minimun )
+                    { return; } // ** nao vai importar
+
+                if( old_pre_alloc == _new_pre_alloc )
+                    { Console.Log( "Mesmo alloc" ); return; } // ** eh o mesmo
+
+                // ** IS IN MINIMUN AND IS DIFERENT
+                TOOL__resource_audio.Change_actual_content_count( _ref, _new_pre_alloc );
+                
+                TOOL__module_context_audios.Update_resource_level( _ref.audio );
+
+
+        }
+
 
         public static AudioClip Get_audio_clip( RESOURCE__audio_ref _ref ){
 
@@ -174,6 +197,8 @@ public static class TOOL__module_context_audios_actions {
                     { return; } _ref.state = Resource_state.instanciated;
 
                 RESOURCE__audio audio = _ref.audio;
+
+                audio.stage_getting_resource = Resources_getting_audio_stage.finished;
 
 
                 if( audio.actual_content == Resource_audio_content.nothing )

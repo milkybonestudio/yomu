@@ -12,7 +12,7 @@ public class Jogo {
         public static Jogo instancia;
         public static Jogo Pegar_instancia(){ if( instancia == null ){ /*throw new Exception("tentou pegar Jogo mas estava null");*/ } return instancia; }
 
-        public INTERFACE__bloco[] interfaces_blocos;
+        public Block[] interfaces_blocos;
 
         // --- CONTROLADORES
         public Controlador_armazenamento_disco controlador_armazenamento_disco;
@@ -25,7 +25,7 @@ public class Jogo {
         
 
         // ** isso ficaria em controlador_sistema_estado_atual
-        public Bloco bloco_atual = Bloco.nada;
+        public Block_type bloco_atual = Block_type.nada;
         public Game_update_mode game_update_mode;
 
 

@@ -10,7 +10,7 @@ using System;
 //** controladores nao podem ter referencias, o finalizar sempre limpa os campos estaticos
 
 
-public class BLOCO_interacao : INTERFACE__bloco {
+public class BLOCO_interacao : Block {
 
 
         // --- INSTANCIA
@@ -20,15 +20,19 @@ public class BLOCO_interacao : INTERFACE__bloco {
 
         // --- INTERFACE 
 
-        public void Finalizar(){ Finalizador_CONECTOR.Finalizar(); } // ** fianliza jogo
+        public override void Finalizar(){ Finalizador_CONECTOR.Finalizar(); } // ** fianliza jogo
 
-        public void Lidar_retorno(){ Lidar_retorno_blocos.Ativar( ( INTERFACE__bloco ) this,  Dados_blocos.localizador_lidar_retorno_interaction ); } // ** vai sempre se chamado na transicao entre blocos
+        // public void Lidar_retorno(){ Lidar_retorno_blocos.Ativar( ( INTERFACE__bloco ) this,  Dados_blocos.localizador_lidar_retorno_interaction ); } // ** vai sempre se chamado na transicao entre blocos
 
         public BLOCK_INTERACTION__mode update_tipo_atual = BLOCK_INTERACTION__mode.connector; // default
 
+        public override void Destruir(){}
+        public override void Iniciar(){}
+        public override Task_req Carregar_dados(){ return null; }
 
 
-        public void Update(){ 
+
+        public override void Update(){ 
 
 
                 // --- VERIFICA SE TEM QUE MUDAR TELA

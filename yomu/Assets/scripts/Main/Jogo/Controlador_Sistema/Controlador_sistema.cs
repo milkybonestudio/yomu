@@ -62,7 +62,7 @@ public class Controlador_sistema {
                 if( job_handler_passada_dia.IsCompleted )
                         {
                                 // *** destruir animacao 
-                                Jogo.Pegar_instancia().bloco_atual = Bloco.interacao;
+                                Jogo.Pegar_instancia().bloco_atual = Block_type.interacao;
                                 return;
                         }
 

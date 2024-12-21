@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 
-public class MANAGER__resources_complex_structures {
+public class MANAGER__resources_complex_structures : MANAGER__RESOURCES {
 
         
         public MANAGER__resources_complex_structures(){
@@ -13,10 +13,11 @@ public class MANAGER__resources_complex_structures {
                 contexts = System_enums.resource_context;  // ( Resource_context[] ) System.Enum.GetValues( typeof( Resource_context ) );
                 context_complex_structures_modules = new MODULE__context_complex_structures[ contexts.Length ];
 
-                container_resources_complex_structures = new CONTAINER__resource_complex_structure();
-                container_resources_complex_structures_copies = new CONTAINER__resource_complex_structure_copy();
+                container_resources_complex_structures = new CONTAINER__RESOURCE__complex_structure();
+                container_resources_complex_structures_copies = new CONTAINER__RESOURCE__complex_structure_copy();
 
                 container_to_instanciate = GameObject.Find( Paths_system.path_resources_complex_structures_container );
+
                 if( container_to_instanciate == null )
                     { CONTROLLER__errors.Throw( $"container_to_instanciate was not found int the path { Paths_system.path_resources_complex_structures_container }" ); }
 
@@ -31,8 +32,8 @@ public class MANAGER__resources_complex_structures {
 
         private Resource_context[] contexts;
 
-        public CONTAINER__resource_complex_structure container_resources_complex_structures;
-        public CONTAINER__resource_complex_structure_copy container_resources_complex_structures_copies;
+        public CONTAINER__RESOURCE__complex_structure container_resources_complex_structures;
+        public CONTAINER__RESOURCE__complex_structure_copy container_resources_complex_structures_copies;
         
 
 
@@ -54,7 +55,7 @@ public class MANAGER__resources_complex_structures {
         private int context_frame;
 
         private System.Diagnostics.Stopwatch relogio = new System.Diagnostics.Stopwatch();
-        public void Update(){
+        public override void Update(){
 
                 //Console.Log( "a" );
 
@@ -210,7 +211,7 @@ public class MANAGER__resources_complex_structures {
         
         // --- EXTRA
 
-        public int Get_bytes_allocated(){
+        public override int Get_bytes_allocated(){
 
                 return 0;     
 

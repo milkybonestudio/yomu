@@ -15,7 +15,7 @@ using TMPro;
         public bool esta_escondido = false;
          
                 
-        public UI_text_container display_texto;
+        public UI_text_container_SIMPLE display_texto;
         public Display_texto_simples nome;
 
 
@@ -501,9 +501,9 @@ using TMPro;
                         pergaminho_container.transform.localPosition = new Vector3(   pergaminho_container_position_x, pergaminho_container_position_y ,0f  );
 
 
-                        display_texto.Resize(  display_width , display_height  );
-                        display_texto.game_object.transform.localRotation = Quaternion.Euler(  0f,  0f, display_container_rotation );
-                        display_texto.game_object.transform.localPosition = new Vector3(  display_container_position_x  , display_container_position_y, 0f  );
+                        // display_texto.Resize(  display_width , display_height  );
+                        // display_texto.game_object.transform.localRotation = Quaternion.Euler(  0f,  0f, display_container_rotation );
+                        // display_texto.game_object.transform.localPosition = new Vector3(  display_container_position_x  , display_container_position_y, 0f  );
 
 
                         nome.game_object.transform.localRotation = Quaternion.Euler(  0f,  0f, nome_container_rotation );
@@ -543,143 +543,143 @@ using TMPro;
 
 
                       
-                        bool  pergaminho_esta_levantado = !pergaminho_is_abaixado;
+                        // bool  pergaminho_esta_levantado = !pergaminho_is_abaixado;
 
 
-                        float pergaminho_container_rotation = 0f;
-                        float pergaminho_container_position_x = 0f;
-                        float pergaminho_container_position_y = 0f;
+                        // float pergaminho_container_rotation = 0f;
+                        // float pergaminho_container_position_x = 0f;
+                        // float pergaminho_container_position_y = 0f;
 
 
-                        float display_width  = 0f; 
-                        float display_height = 0f;
+                        // float display_width  = 0f; 
+                        // float display_height = 0f;
 
-                        float display_container_rotation = 0f;
-                        float display_container_position_x = 0f;
-                        float display_container_position_y = 0f;
+                        // float display_container_rotation = 0f;
+                        // float display_container_position_x = 0f;
+                        // float display_container_position_y = 0f;
 
-                        float nome_container_rotation = 0f;
-                        float nome_container_position_x = 0f;
-                        float nome_container_position_y = 0f;
+                        // float nome_container_rotation = 0f;
+                        // float nome_container_position_x = 0f;
+                        // float nome_container_position_y = 0f;
 
-                        float pergaminho_levantado_novo_valor = 0;
+                        // float pergaminho_levantado_novo_valor = 0;
 
 
-                        if(lado_pergaminho_atual == Lado.cima){
+                        // if(lado_pergaminho_atual == Lado.cima){
                                                         
-                                pergaminho_container_rotation = 180f;
-                                pergaminho_container_position_x = 0f;
-                                pergaminho_container_position_y = 0f;
+                        //         pergaminho_container_rotation = 180f;
+                        //         pergaminho_container_position_x = 0f;
+                        //         pergaminho_container_position_y = 0f;
 
-                                display_width  = 827f; 
-                                display_height = 265f;
+                        //         display_width  = 827f; 
+                        //         display_height = 265f;
 
-                                display_container_rotation = 180f;
-                                display_container_position_x = 0f;
-                                display_container_position_y = 230f;
-
-
-                                nome_container_rotation = 180f;
-                                nome_container_position_x = 300f;
-                                nome_container_position_y = 75f;
-
-                                pergaminho_levantado_novo_valor = -550;
-
-                        } else 
-
-                        if(lado_pergaminho_atual == Lado.baixo) {
-
-                                pergaminho_container_rotation = 0f;
-                                pergaminho_container_position_x = 0f;
-                                pergaminho_container_position_y = 0f;
-
-                                display_width  = 827f; 
-                                display_height = 265f;
-
-                                display_container_rotation = 0f;
-                                display_container_position_x = 0f;
-                                display_container_position_y = 178f;
+                        //         display_container_rotation = 180f;
+                        //         display_container_position_x = 0f;
+                        //         display_container_position_y = 230f;
 
 
-                                nome_container_rotation = 0f;
-                                nome_container_position_x = -300f;
-                                nome_container_position_y = 330f;
+                        //         nome_container_rotation = 180f;
+                        //         nome_container_position_x = 300f;
+                        //         nome_container_position_y = 75f;
 
-                                pergaminho_levantado_novo_valor = -550f;                                
+                        //         pergaminho_levantado_novo_valor = -550;
 
+                        // } else 
 
-                        } else
-                        if(lado_pergaminho_atual == Lado.direita) {
+                        // if(lado_pergaminho_atual == Lado.baixo) {
 
-                                pergaminho_container_rotation = 90f;
-                                pergaminho_container_position_x = 422f;
-                                pergaminho_container_position_y = 0f;
+                        //         pergaminho_container_rotation = 0f;
+                        //         pergaminho_container_position_x = 0f;
+                        //         pergaminho_container_position_y = 0f;
 
-                                display_width  = 550f; 
-                                display_height = 827f;
+                        //         display_width  = 827f; 
+                        //         display_height = 265f;
 
-                                display_container_rotation = -90f;
-                                display_container_position_x = -84f;
-                                display_container_position_y = 75f;
-
-
-                                nome_container_rotation = -90f;
-                                nome_container_position_x = 360f;
-                                nome_container_position_y = 230f;
-
-                                pergaminho_levantado_novo_valor = -300f;
+                        //         display_container_rotation = 0f;
+                        //         display_container_position_x = 0f;
+                        //         display_container_position_y = 178f;
 
 
-                        } else
+                        //         nome_container_rotation = 0f;
+                        //         nome_container_position_x = -300f;
+                        //         nome_container_position_y = 330f;
 
-                        if(lado_pergaminho_atual == Lado.esquerda) {
-
-                                pergaminho_container_rotation = -90f;
-                                pergaminho_container_position_x = -422f;
-                                pergaminho_container_position_y = 0f;
-
-                                display_width  = 550f; 
-                                display_height = 827f;
-
-                                display_container_rotation = 90f;
-                                display_container_position_x = 84f;
-                                display_container_position_y = 95f;
+                        //         pergaminho_levantado_novo_valor = -550f;                                
 
 
-                                nome_container_rotation = 90f;
-                                nome_container_position_x = -360f;
-                                nome_container_position_y = -85f;
+                        // } else
+                        // if(lado_pergaminho_atual == Lado.direita) {
 
-                                pergaminho_levantado_novo_valor = -300;
+                        //         pergaminho_container_rotation = 90f;
+                        //         pergaminho_container_position_x = 422f;
+                        //         pergaminho_container_position_y = 0f;
 
-                        } 
+                        //         display_width  = 550f; 
+                        //         display_height = 827f;
+
+                        //         display_container_rotation = -90f;
+                        //         display_container_position_x = -84f;
+                        //         display_container_position_y = 75f;
 
 
-                        pergaminho_texto.transform.localPosition = new Vector3(  0f,  pergaminho_abaixado ,0f);
+                        //         nome_container_rotation = -90f;
+                        //         nome_container_position_x = 360f;
+                        //         nome_container_position_y = 230f;
 
-                        pergaminho_container.transform.localRotation = Quaternion.Euler( 0f,0f, pergaminho_container_rotation );
-                        pergaminho_container.transform.localPosition = new Vector3(   pergaminho_container_position_x, pergaminho_container_position_y ,0f  );
+                        //         pergaminho_levantado_novo_valor = -300f;
 
-                        display_texto.Resize(  display_width , display_height  );
-                        display_texto.game_object.transform.localRotation = Quaternion.Euler(  0f,  0f, display_container_rotation );
-                        display_texto.game_object.transform.localPosition = new Vector3(  display_container_position_x  , display_container_position_y, 0f  );
 
-                        nome.game_object.transform.localRotation = Quaternion.Euler(  0f,  0f, nome_container_rotation );
-                        nome.game_object.transform.localPosition = new Vector3(  nome_container_position_x , nome_container_position_y, 0f  );
+                        // } else
 
-                        pergaminho_levantado = pergaminho_levantado_novo_valor;
+                        // if(lado_pergaminho_atual == Lado.esquerda) {
+
+                        //         pergaminho_container_rotation = -90f;
+                        //         pergaminho_container_position_x = -422f;
+                        //         pergaminho_container_position_y = 0f;
+
+                        //         display_width  = 550f; 
+                        //         display_height = 827f;
+
+                        //         display_container_rotation = 90f;
+                        //         display_container_position_x = 84f;
+                        //         display_container_position_y = 95f;
+
+
+                        //         nome_container_rotation = 90f;
+                        //         nome_container_position_x = -360f;
+                        //         nome_container_position_y = -85f;
+
+                        //         pergaminho_levantado_novo_valor = -300;
+
+                        // } 
+
+
+                        // pergaminho_texto.transform.localPosition = new Vector3(  0f,  pergaminho_abaixado ,0f);
+
+                        // pergaminho_container.transform.localRotation = Quaternion.Euler( 0f,0f, pergaminho_container_rotation );
+                        // pergaminho_container.transform.localPosition = new Vector3(   pergaminho_container_position_x, pergaminho_container_position_y ,0f  );
+
+                        // display_texto.Resize(  display_width , display_height  );
+                        // display_texto.game_object.transform.localRotation = Quaternion.Euler(  0f,  0f, display_container_rotation );
+                        // display_texto.game_object.transform.localPosition = new Vector3(  display_container_position_x  , display_container_position_y, 0f  );
+
+                        // nome.game_object.transform.localRotation = Quaternion.Euler(  0f,  0f, nome_container_rotation );
+                        // nome.game_object.transform.localPosition = new Vector3(  nome_container_position_x , nome_container_position_y, 0f  );
+
+                        // pergaminho_levantado = pergaminho_levantado_novo_valor;
                         
 
 
-                        if( pergaminho_esta_levantado ) {
+                        // if( pergaminho_esta_levantado ) {
 
-                                 pergaminho_texto.transform.localPosition = new Vector3(  0f,  pergaminho_levantado_novo_valor ,0f);
+                        //          pergaminho_texto.transform.localPosition = new Vector3(  0f,  pergaminho_levantado_novo_valor ,0f);
 
-                        } else {
+                        // } else {
 
-                                 pergaminho_texto.transform.localPosition = new Vector3(  0f,  pergaminho_abaixado ,0f);
+                        //          pergaminho_texto.transform.localPosition = new Vector3(  0f,  pergaminho_abaixado ,0f);
 
-                        };
+                        // };
                                 
                         
 
@@ -1044,7 +1044,7 @@ using TMPro;
         public void Mudar_cor( Color _cor ){
 
                 nome.text.color = _cor;
-                display_texto.simple_text.tmp_text.color = _cor;
+                display_texto.text.tmp_text.color = _cor;
                 return;
 
 
@@ -1109,7 +1109,7 @@ using TMPro;
 
                 GameObject conversas_blocos_textos = new GameObject("blocos_conversas");
 
-                conversas_blocos_textos.transform.SetParent( display_texto.game_object.transform , false  );
+                conversas_blocos_textos.transform.SetParent( display_texto.text.game_object.transform , false  );
                 
 
                 int numero_blocos = _blocos_textos.Length;
@@ -1149,8 +1149,8 @@ using TMPro;
         public void Finalizar_conversas(){
 
 
-                GameObject c_go = display_texto.game_object.transform.GetChild( 0 ).gameObject;
-                Mono_instancia.Destroy( c_go );
+                // GameObject c_go = display_texto.game_object.transform.GetChild( 0 ).gameObject;
+                // Mono_instancia.Destroy( c_go );
 
                 blocos_textos = null;
                 blocos_numeros = null;

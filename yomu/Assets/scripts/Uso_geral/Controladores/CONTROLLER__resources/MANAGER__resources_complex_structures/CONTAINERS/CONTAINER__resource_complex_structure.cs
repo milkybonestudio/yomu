@@ -4,10 +4,10 @@ using UnityEngine;
 
 
 
-public class CONTAINER__resource_complex_structure {
+public class CONTAINER__RESOURCE__complex_structure {
 
 
-        public CONTAINER__resource_complex_structure(){
+        public CONTAINER__RESOURCE__complex_structure(){
 
                 structures_available = new RESOURCE__complex_structure[ 100 ];
 

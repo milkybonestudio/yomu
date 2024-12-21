@@ -7,8 +7,8 @@ public static class TOOL__resource_audio_testing {
 
         public static void Test( ref RESOURCE__audio_ref _audio_ref, AudioSource _audio_source  ){
 
-
-                CONTROLLER__resources.Get_instance().Update();
+                Process_weight p = new (){ weight = 10 };
+                CONTROLLER__resources.Get_instance().Update( ref p );
             
                 CONTROLLER__tasks.Pegar_instancia().Update();
 

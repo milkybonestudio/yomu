@@ -32,10 +32,10 @@ using System.IO;
         
         public bool[] saves_ativados;
 
-        public Bloco[] save_tela_atual = new Bloco[5];
+        public Block_type[] save_tela_atual = new Block_type[ 5 ];
 
 
-        public bool[] characters_liberados = new bool[7];
+        public bool[] characters_liberados = new bool[ 7 ];
 
         public enum Characters_liberados{
 

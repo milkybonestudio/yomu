@@ -3,7 +3,7 @@ using UnityEngine;
 public static class Construtor_bloco_CARTAS {
     
 
-        public static INTERFACE__bloco Construir( GameObject _container ){
+        public static Block Construir( GameObject _container ){
 
 
                     // --- VERIFICAR SE O BLOCO JA NAO FOI CRIADO
@@ -17,7 +17,7 @@ public static class Construtor_bloco_CARTAS {
                     BLOCO_cartas.instancia = bloco;
 
 
-                    return ( INTERFACE__bloco ) bloco;
+                    return ( Block ) bloco;
 
         }
 

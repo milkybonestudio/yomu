@@ -63,6 +63,9 @@ unsafe public class Controlador : MonoBehaviour {
             
                 text_container = EXAMPLE_UI_text_container.Simple( GameObject.Find( "Tela/Container_teste/EXAMPLE_text_container" ) ); 
 
+                r_l = CONTROLLER__resources.Get_instance().resources_logics.Get_logic_reference( Resource_context.Characters, "LOGIC__lily_1", "Get_number", Resource_logic_content.method_info );
+
+                
 
         }   
 
@@ -72,65 +75,68 @@ unsafe public class Controlador : MonoBehaviour {
 
         CONTAINER__UI_button_SIMPLE ccc = new CONTAINER__UI_button_SIMPLE();
 
+        RESOURCE__logic_ref r_l;
 
-
+    
         public void Update() {
 
 
-                //(( B )((( A )( new B() )))).f();
 
-            
-
-
-                if( Input.GetKeyDown( KeyCode.A ) )
-                    { text_container.Add_dimensions( 20f, 20f ); }
-
-                
-                if( Input.GetKey( KeyCode.LeftArrow ) )
-                    { b_up.container.Move( -200f * Time.deltaTime , 0f ); ac *= 1.05f; }
+                //TOOL__resource_logic_testing.Test( ref r_l, new object[]{ 1, "a" } );
 
 
-                if( Input.GetKey( KeyCode.RightArrow ) )
-                    { b_up.container.Move( 200f * Time.deltaTime, 0f ); ac += 1; }
+                // return;
 
-                if( Input.GetKey( KeyCode.UpArrow ) )
-                    { b_up.container.Move( 0f, 200f* Time.deltaTime ); ac *= 1.05f; }
+        
+                // if( Input.GetKeyDown( KeyCode.A ) )
+                //     { text_container.Add_dimensions( 20f, 20f ); }
 
                 
-                if( Input.GetKey( KeyCode.DownArrow ) )
-                    { b_up.container.Move( 0f, -200f * Time.deltaTime); ac *= 1.05f; }
+                // if( Input.GetKey( KeyCode.LeftArrow ) )
+                //     { b_up.container.Move( -200f * Time.deltaTime , 0f ); ac *= 1.05f; }
+
+
+                // if( Input.GetKey( KeyCode.RightArrow ) )
+                //     { b_up.container.Move( 200f * Time.deltaTime, 0f ); ac += 1; }
+
+                // if( Input.GetKey( KeyCode.UpArrow ) )
+                //     { b_up.container.Move( 0f, 200f* Time.deltaTime ); ac *= 1.05f; }
+
+                
+                // if( Input.GetKey( KeyCode.DownArrow ) )
+                //     { b_up.container.Move( 0f, -200f * Time.deltaTime); ac *= 1.05f; }
 
 
 
-                if( Input.GetKey( KeyCode.B ) )
-                    { text_container.Put_text( "abacataoooo<Color=lightBlue>AAAA</Color>ooooooooo", 0, Color.red ); }
+                // if( Input.GetKey( KeyCode.B ) )
+                //     { text_container.Put_text( "abacataoooo<Color=lightBlue>AAAA</Color>ooooooooo", 0, Color.red ); }
 
-                if( Input.GetKey( KeyCode.V ) )
-                    { text_container.Put_text( "olha ssom que vai vir LOL", 0, Color.green ); }
+                // if( Input.GetKey( KeyCode.V ) )
+                //     { text_container.Put_text( "olha ssom que vai vir LOL", 0, Color.green ); }
 
 
-                if( Input.GetKey( KeyCode.P ) )
-                    { text_container.Change_type_construction( Type_writing_construction.fade ); }
+                // if( Input.GetKey( KeyCode.P ) )
+                //     { text_container.Change_type_construction( Type_writing_construction.fade ); }
 
 
                     
 
-                if( Input.GetKeyDown( KeyCode.U ) )
-                    { b_up.container.Add_scale( 0.5f ); }
+                // if( Input.GetKeyDown( KeyCode.U ) )
+                //     { b_up.container.Add_scale( 0.5f ); }
 
-                if( Input.GetKeyDown( KeyCode.O ) )
-                    { b_up.container.Add_scale( -0.5f ); }
+                // if( Input.GetKeyDown( KeyCode.O ) )
+                //     { b_up.container.Add_scale( -0.5f ); }
 
 
 
-                if( Input.GetKey( KeyCode.H ) )
-                    { b_up.container.Add_rotation_Z( 50f * Time.deltaTime ); }
+                // if( Input.GetKey( KeyCode.H ) )
+                //     { b_up.container.Add_rotation_Z( 50f * Time.deltaTime ); }
 
-                if( Input.GetKey( KeyCode.J ) )
-                    { b_up.container.Add_rotation_X( 50f * Time.deltaTime ); }
+                // if( Input.GetKey( KeyCode.J ) )
+                //     { b_up.container.Add_rotation_X( 50f * Time.deltaTime ); }
 
-                if( Input.GetKey( KeyCode.K ) )
-                    { b_up.container.Add_rotation_Y( 50f * Time.deltaTime ); }
+                // if( Input.GetKey( KeyCode.K ) )
+                //     { b_up.container.Add_rotation_Y( 50f * Time.deltaTime ); }
 
 
                 
@@ -143,7 +149,9 @@ unsafe public class Controlador : MonoBehaviour {
 
                 text_container?.Update();
 
-                CONTROLLER__resources.Get_instance().Update();
+                // ** aqui seria o real, ver certo depois
+                Process_weight p = new (){ weight = 10 };
+                CONTROLLER__resources.Get_instance().Update( ref p );
                 CONTROLLER__tasks.Pegar_instancia().Update();
                 Console.Update();
 

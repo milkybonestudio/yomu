@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 
 
@@ -35,6 +36,17 @@ using System;
 */
 
 
+public struct Process_weight {
+
+    public int weight;
+
+}
+
+public abstract class _CONTROLLER {
+
+    public abstract void Update( ref Process_weight _process_weight );
+
+}
 
 public class CONTROLLER__resources {
 
@@ -47,30 +59,22 @@ public class CONTROLLER__resources {
         public MANAGER__resources_images resources_images = new MANAGER__resources_images();
         public MANAGER__resources_images_sequences resources_images_sequences = new MANAGER__resources_images_sequences();
 
+        // --- AUDIOS
         public MANAGER__resources_audios resources_audios = new MANAGER__resources_audios();
 
+        // --- STRUCTURES
         public MANAGER__resources_structures resources_structures = new MANAGER__resources_structures();
         public MANAGER__resources_complex_structures resources_complex_structures = new MANAGER__resources_complex_structures();
-        
+
+        // --- LOGICS
+        public MANAGER__resources_logics resources_logics = new MANAGER__resources_logics();
 
 
-        int count = 0;
+        public Circular_list<MANAGER__RESOURCES> managers;
 
-        public void Update(){
+        public void Update( ref Process_weight _precess_weight ){
 
-
-                count = ( count + 1 ) % 3;
-
-                switch( count ){
-
-                    case 0: resources_images.Update(); break;
-                    case 1: resources_structures.Update(); break;
-                    case 2: resources_audios.Update(); break;
-                    
-                    //case 2: resources_images_sequences.Update(); break;
-
-                }
-                
+                managers.Get().Update();
 
         }
 
@@ -93,12 +97,12 @@ public class CONTROLLER__resources {
 
 
 
-public enum Resources_type {
+// public enum Resources_type {
 
-    image, 
-    audio, 
-    dat_files,
+//     image, 
+//     audio, 
+//     dat_files,
 
-}
+// }
 
 

@@ -60,8 +60,12 @@ public class CONTROLLER__errors {
             
             string[] file_and_line = final_line.Replace( ".cs:", ".cs>>>" ).Split( ">>>" );
 
-            Console.LogErrorException( _exp.Message , $"<a href=\"{ file_and_line[ 0 ] }\" line=\"{ file_and_line[ 1 ] }\">{ _exp.Message }</a>" );
-            Console.Update();
+        
+            if( file_and_line.Length == 2 )
+                {
+                    Console.LogErrorException( _exp.Message , $"<a href=\"{ file_and_line[ 0 ] }\" line=\"{ file_and_line[ 1 ] }\">{ _exp.Message }</a>" );
+                    Console.Update();
+                }
             
             throw _exp;
 

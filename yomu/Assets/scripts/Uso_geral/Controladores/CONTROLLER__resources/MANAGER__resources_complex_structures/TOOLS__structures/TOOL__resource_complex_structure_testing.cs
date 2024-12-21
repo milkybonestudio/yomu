@@ -25,8 +25,8 @@ public static class TOOL__resource_complex_structure_testing {
         public static void Test(){
 
 
-
-                CONTROLLER__resources.Get_instance().Update();
+                Process_weight p = new (){ weight = 10 };
+                CONTROLLER__resources.Get_instance().Update( ref p );
                 CONTROLLER__tasks.Pegar_instancia().Update();
 
 

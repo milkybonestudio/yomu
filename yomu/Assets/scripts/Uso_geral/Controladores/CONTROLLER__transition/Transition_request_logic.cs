@@ -5,7 +5,7 @@ public class Transition_request {
 
 
         // --- blocks 
-        public Bloco block_to_go; // nada => assume que é transicao entre modos
+        public Block_type block_to_go; // nada => assume que é transicao entre modos
         public int modo = -1;
         public Transition_type tipo;
 

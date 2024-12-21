@@ -9,7 +9,6 @@ public class CONTROLLER__message {
 
 
         public bool is_showing_message_system;
-        public Dispositivo message_system_device;
 
 
         
@@ -38,15 +37,12 @@ public class CONTROLLER__message {
         public void Activate_system_error( string _message ){
 
             // ** precisa esperar o dispositivo ficar mais maduro
-            if( message_system_device != null )
-                { /* criar dispositivo*/ }
-
                 
             Message message = new Message();
+            
             message.message = _message;
             message.type = Type_message.system_error;
 
-            message_system_device.Ativar_metodo( ( int ) Messages_method.activate_message , new object[]{message} );
 
         }
 
