@@ -237,10 +237,8 @@ public static class Cenas_inversas_construtor {
         public static string Construir_text_inverso( string _cena_texto , char _auto , Screen_play _screen_play  ){
 
 
-                  
-        /*                 oque é       auto       tipo     personagem     cor-id        forcar_modelo_construcao            texto   */ 
-        //   esperado:      0            t          1           3          'id'                 'id'            's' + 't' + 'a' + 'r' + 't' ...
-
+        /*               what is       auto       type      character    color_id     force_construction_model            texto   */ 
+        //   waiting:      0            t          1           3          'id'                 'id'             's' + 't' + 'a' + 'r' + 't' ...
 
                 
                 int personagem_index = _screen_play.personagem_texto_atual ;
@@ -253,7 +251,7 @@ public static class Cenas_inversas_construtor {
 
 
                 bool eh_o_primeiro_text = ( personagem_index == -1 );
-                bool pergaminho_abaixado = Controlador_tela_story.Pegar_instancia().pergaminho.pergaminho_is_abaixado ;
+                bool pergaminho_abaixado = false ;// Controlador_tela_story.Pegar_instancia().pergaminho.pergaminho_is_abaixado ;
 
 
 

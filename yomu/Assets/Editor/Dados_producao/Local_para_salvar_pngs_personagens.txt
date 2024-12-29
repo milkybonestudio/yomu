@@ -1,9 +1,0 @@
-==
-
-O arquivo final vai ser uma lista simples com os index dos 
-
-==
-
-
-lily : catedral_1
-nara : catedral_1

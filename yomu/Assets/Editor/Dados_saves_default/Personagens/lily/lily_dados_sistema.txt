@@ -1,7 +1,0 @@
-nome : lily
-foi colocado no jogo : false
-triggers : loli, ninfo, rape_jokes, zoo_jokes, pedo_jokes, incest_jokes
-caracteristicas:
-interesse_player : 00@100
-
-

@@ -1,9 +1,0 @@
-nada  : UP_quarto_nara,Cathedral, New_ground,  San_sebastian, Human, central 
-Nara  : UP_quarto_nara,Cathedral, New_ground,  San_sebastian, Human, central 
-Lily  : UP_quarto_nara,Cathedral, New_ground,  San_sebastian, Human, central 
-Eden  : UP_quarto_nara,Cathedral, New_ground,  San_sebastian, Human, central 
-Nia  : UP_quarto_nara,Cathedral, New_ground,  San_sebastian, Human, central 
-Connor  : UP_quarto_nara,Cathedral, New_ground,  San_sebastian, Human, central 
-Maki  : UP_quarto_nara,Cathedral, New_ground,  San_sebastian, Human, central 
-Jayden  : UP_quarto_nara,Cathedral, New_ground,  San_sebastian, Human, central 
-Ruby  : UP_quarto_nara,Cathedral, New_ground,  San_sebastian, Human, central 

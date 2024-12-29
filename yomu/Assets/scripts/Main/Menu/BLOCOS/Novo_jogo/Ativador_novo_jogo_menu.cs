@@ -55,7 +55,7 @@ public static class Ativador_novo_jogo_menu {
                 Image imagem = IMAGE.Criar_imagem  (
                     
                                                         _game_object: canvas,
-                                                        _pai : Controlador.Pegar_instancia().canvas,
+                                                        _pai : CONTROLLER__main.Pegar_instancia().canvas,
                                                         _width: 1920f,
                                                         _height: 1080f,
                                                         _path : null,

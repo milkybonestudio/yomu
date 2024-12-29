@@ -25,10 +25,6 @@
                         TESTE__jogo_estado_atual.Construir();
 
                         
-                        // nao vai construir nenhum personagem além da nara
-                        TESTE_controlador_personagens.Construir_controlador();
-                        // TESTE_controlador_cidades.Construir_controlador();
-                        // TESTE_controlador_plots.Construir_controlador();
                         TESTE_controlador_sistema.Construir_controlador();
 
                     return controlador;          

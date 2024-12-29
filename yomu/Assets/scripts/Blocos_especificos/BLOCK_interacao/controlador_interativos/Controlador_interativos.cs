@@ -47,17 +47,17 @@ public class Controlador_interativos {
 
             // --- ITENS 
 
-            public void Acrescentar_itens( Ponto _ponto, Item_localizador[] _itens ){
+            //public void Acrescentar_itens( Ponto _ponto, Item_localizador[] _itens ){
 
 
 
-            }
+            // }
 
-            public void Remover_itens( Ponto _ponto, Item_localizador[] _itens ){
+            // public void Remover_itens( Ponto _ponto, Item_localizador[] _itens ){
 
 
 
-            }
+            // }
 
 
             // --- PERSONAGENS

@@ -59,8 +59,6 @@ public class BLOCO_conversas : Block {
 
         public bool tem_opcoes = false;
 
-        public Pergaminho_modelo_1 pergaminho;
-
 
         //public BLOCO_jogo bloco_jogo;
         public Conversas_leitor conversas_leitor;
@@ -246,7 +244,7 @@ public class BLOCO_conversas : Block {
 
                 if( nome != personagem_nome ){ cor = Color.black; }
 
-                this.pergaminho.Escrever( texto , personagem_nome, cor, 0 );
+                //this.pergaminho.Escrever( texto , personagem_nome, cor, 0 );
 
 
             
@@ -397,7 +395,7 @@ public class BLOCO_conversas : Block {
 
                 
 
-                pergaminho.Iniciar_conversas( textos , numero_blocos );
+                // pergaminho.Iniciar_conversas( textos , numero_blocos );
 
                 return;
 
@@ -411,7 +409,7 @@ public class BLOCO_conversas : Block {
         public void Encerrar_conversa(){
 
 
-                pergaminho.Abaixar_pergaminho();
+                // pergaminho.Abaixar_pergaminho();
 
                 //BLOCO_jogo.Pegar_instancia().update_tipo_atual = Jogo_update_tipo.movimento;
 
@@ -484,7 +482,7 @@ public class BLOCO_conversas : Block {
 
                                                                         );
 
-                this.pergaminho  = new Pergaminho_modelo_1( container_conversa.transform );
+                //this.pergaminho  = new Pergaminho_modelo_1( container_conversa.transform );
 
         }
 

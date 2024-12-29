@@ -80,7 +80,8 @@ public class Controlador_tela_story {
         public float[]   posicao_mouse;
 
 
-        public Pergaminho_modelo_1 pergaminho;
+        
+        // public Pergaminho_modelo_1 pergaminho;
         public Animacao_visual_novel animacao_visual_novel;
         public Coroutine animacao_coroutine;
 
@@ -158,7 +159,7 @@ public class Controlador_tela_story {
                 // "Tela/Canvas/Visual_novel"
 
                 // tem que trocar
-                pergaminho = new Pergaminho_modelo_1( canvas_visual_novel.transform );
+                // pergaminho = new Pergaminho_modelo_1( canvas_visual_novel.transform );
 
 
                 posicao_mouse = CONTROLLER__data.Pegar_instancia().posicao_mouse;

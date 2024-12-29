@@ -19,11 +19,11 @@ public class Controlador_sistema {
 
         // --- CONTROLADORES
 
-        public INTERFACE__controlador_entidade[] controladores_entidades;
+        // public INTERFACE__controlador_entidade[] controladores_entidades;
 
         public CONTROLLER__characters controlador_personagens;
         public CONTROLLER__cities controlador_cidades;
-        public Controlador_plots controlador_plots;
+        
 
 
         // --- GERENCIADORES 

@@ -12,7 +12,7 @@ public static class Construtor_controlador_sistema {
 
                     // --- ENTIDADES
 
-                            controlador.controladores_entidades = new INTERFACE__controlador_entidade[  System.Enum.GetNames( typeof( Tipo_entidade ) ).Length ];
+                            // controlador.controladores_entidades = new INTERFACE__controlador_entidade[  System.Enum.GetNames( typeof( Tipo_entidade ) ).Length ];
 
 
 

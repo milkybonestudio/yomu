@@ -18,7 +18,7 @@ public static class Fn_construtor_inverso {
                         ( char ) (( int )  Tipo_cena.fn  + 48 ) ,
                         _auto,
                         ( char ) (( int ) Nome_fn.mudar_cor_pergaminho + 48) ,
-                        ( char ) (  ( int )  Controlador_tela_story.Pegar_instancia().pergaminho.cor_pergaminho_atual     + 48 )
+                        // ( char ) (  ( int )  Controlador_tela_story.Pegar_instancia().pergaminho.cor_pergaminho_atual     + 48 )
 
                     }
                 );
@@ -569,9 +569,9 @@ public static class Fn_construtor_inverso {
 
     public static string CRIAR_abaixar_texto_inverso ( string _cena_texto , char _auto , Screen_play _screen_play ){
 
-        bool esta_abaixado = Controlador_tela_story.Pegar_instancia().pergaminho.pergaminho_is_abaixado;
+        // bool esta_abaixado = Controlador_tela_story.Pegar_instancia().pergaminho.pergaminho_is_abaixado;
 
-        if( esta_abaixado )  { return CRIAR_nada_inverso(); }
+        // if( esta_abaixado )  { return CRIAR_nada_inverso(); }
 
         char tipo_cena = ( char )  (  ( int ) Tipo_cena.fn + 48 );
         char auto = _auto;
@@ -590,7 +590,7 @@ public static class Fn_construtor_inverso {
 
     public static string CRIAR_levantar_texto_inverso ( string _cena_texto , char _auto , Screen_play _screen_play ){
 
-        bool esta_levantado = !Controlador_tela_story.Pegar_instancia().pergaminho.pergaminho_is_abaixado;
+        bool esta_levantado = false ; // !Controlador_tela_story.Pegar_instancia().pergaminho.pergaminho_is_abaixado;
 
         if( esta_levantado )  { return CRIAR_nada_inverso(); }
 

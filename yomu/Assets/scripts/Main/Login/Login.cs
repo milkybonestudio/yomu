@@ -21,7 +21,7 @@ public  class Login {
             posicao_mouse = CONTROLLER__data.Pegar_instancia().posicao_mouse;
 
             // Menu e login vão sempre mudar diretamente o modo do controlador
-            Controlador.Pegar_instancia().modo_controlador_atual = Controlador_modo.login;
+            CONTROLLER__main.Pegar_instancia().modo_controlador_atual = Controlador_modo.login;
 
             Iniciar_login();
             return;
@@ -43,8 +43,6 @@ public  class Login {
 
 
         public  float[] posicao_mouse;
-        // todas vão ser deletadas quando o mobjeto for destruido
-        public Chave_cache[] chaves_imagens;
 
         
         public GameObject canvas;
@@ -187,11 +185,11 @@ public  class Login {
                         }
 
 
-                        Controlador.Pegar_instancia().menu = Menu.Construir();
-                        Debug.Log( Controlador.Pegar_instancia().menu );
-                        Controlador.Pegar_instancia().login = null;
+                        CONTROLLER__main.Pegar_instancia().menu = Menu.Construir();
+                        Debug.Log( CONTROLLER__main.Pegar_instancia().menu );
+                        CONTROLLER__main.Pegar_instancia().login = null;
 
-                        Controlador.Pegar_instancia().modo_controlador_atual = Controlador_modo.menu; 
+                        CONTROLLER__main.Pegar_instancia().modo_controlador_atual = Controlador_modo.menu; 
 
                         
                         // colocar depois

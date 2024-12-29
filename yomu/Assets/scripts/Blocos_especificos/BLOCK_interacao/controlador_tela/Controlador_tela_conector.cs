@@ -28,7 +28,7 @@ public class Controlador_tela_conector {
 
             public Player_estado_atual player_estado_atual;
 
-            public Pergaminho_modelo_1 pergaminho;
+            //public Pergaminho_modelo_1 pergaminho;
 
 
             public GameObject container_conector;

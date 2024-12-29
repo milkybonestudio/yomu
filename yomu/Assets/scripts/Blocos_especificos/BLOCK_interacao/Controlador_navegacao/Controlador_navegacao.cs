@@ -19,7 +19,7 @@ unsafe public class Controlador_navegacao {
         public static Controlador_navegacao Pegar_instancia(){ return instancia; }
 
 
-        public City* cidade_atual_player;
+        public City cidade_atual_player;
         public int cidade_atual_id; // ( regiao, trecho, id )
 
 

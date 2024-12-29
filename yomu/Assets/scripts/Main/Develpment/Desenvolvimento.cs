@@ -53,7 +53,7 @@ public class Controlador_development {
                     { return false; }
 
                 // --- VAI TESTAR
-                Controlador.Pegar_instancia().modo_controlador_atual = Controlador_modo.desenvolvimento;
+                CONTROLLER__main.Pegar_instancia().modo_controlador_atual = Controlador_modo.desenvolvimento;
 
                 // --- SETA TUDO COMO DEFAULT
                 //mark

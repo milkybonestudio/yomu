@@ -57,9 +57,6 @@ public  class Controlador_builder_pre :IPreprocessBuildWithReport {
         public void OnPreprocessBuild( BuildReport _reporta ){
 
 
-                if( !( Controlador_directives.modo_build ) )
-                    { throw new Exception( "asm atual nao estava no modo build" ); }
-
 
                 // SE FALHAR DENTRO ELES VOLTAM AO ESTADO ORIGINAL 
                 Builder_verificacoes.Ativar();
@@ -86,10 +83,6 @@ public  class Controlador_builder_pos :IPostprocessBuildWithReport {
 
 
         public  void Buildar_pre(){
-
-
-                if( !( Controlador_directives.modo_build ) )
-                    { throw new Exception( "asm atual nao estava no modo build" ); }
 
 
                 Builder_dados_estaticos.Ativar();

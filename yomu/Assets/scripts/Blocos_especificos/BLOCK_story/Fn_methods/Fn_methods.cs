@@ -354,16 +354,16 @@ public static class Fn_methods{
             
 
 
-            Controlador_tela_story.Pegar_instancia().pergaminho.Escrever( 
+            // Controlador_tela_story.Pegar_instancia().pergaminho.Escrever( 
 
-                  _texto: "",
-                  _personagem: "",
-                  _cor: Color.black,
-                  _tipo: 0
+            //       _texto: "",
+            //       _personagem: "",
+            //       _cor: Color.black,
+            //       _tipo: 0
 
-            );
+            // );
 
-            Controlador_tela_story.Pegar_instancia().pergaminho.Abaixar_pergaminho();
+            // Controlador_tela_story.Pegar_instancia().pergaminho.Abaixar_pergaminho();
 
             return;
 
@@ -381,7 +381,7 @@ public static class Fn_methods{
 
             Nome_cor nome =  ( Nome_cor )  cor_int;
 
-            Controlador_tela_story.Pegar_instancia().pergaminho.Mudar_cor_pergaminho( nome );
+            // Controlador_tela_story.Pegar_instancia().pergaminho.Mudar_cor_pergaminho( nome );
 
             return;
 
@@ -404,7 +404,7 @@ public static class Fn_methods{
 
             int numero_personagem =  ( ( args.Length - 3 ) / 2 ) ;
 
-            string nome_display_atual = Controlador_tela_story.Pegar_instancia().pergaminho.Pegar_nome_atual();
+            string nome_display_atual = null; //*Controlador_tela_story.Pegar_instancia().pergaminho.Pegar_nome_atual();
 
             for(  int index = 0; index < numero_personagem ;index++ ){
 
@@ -442,7 +442,7 @@ public static class Fn_methods{
 
                   if( nome_display_atual == nome_display ){
 
-                        Controlador_tela_story.Pegar_instancia().pergaminho.Mudar_cor( nova_cor );
+                        //Controlador_tela_story.Pegar_instancia().pergaminho.Mudar_cor( nova_cor );
 
                   }
 
@@ -455,58 +455,45 @@ public static class Fn_methods{
       }
 
 
-      public static void Trocar_modelo_pergaminho( string args ){}
+        public static void Trocar_modelo_pergaminho( string args ){}
 
-      public static   void Abaixar_texto(){
+        public static   void Abaixar_texto(){return;}
 
-                  
-            Controlador_tela_story.Pegar_instancia().pergaminho.Abaixar_pergaminho();
+        public static  void Levantar_texto(){return;}
 
-            return;
 
-      }
+
     
-    public static  void Levantar_texto(){
 
-        Controlador_tela_story.Pegar_instancia().pergaminho.Levantar_pergaminho();
+
+
+
+
+        public static void Tremer_texto( string args  ){}
+
+
+    public static void Mudar_posicao_pergaminho(string _args){
+
+        char dir_c = _args[ 3 ] ;
+        string direcao = null;
+
+        switch ( dir_c ){
+
+                case '0': direcao = "baixo"; break;
+                case '1': direcao = "cima"; break;
+                case '2': direcao = "esquerda"; break;
+                case '3': direcao = "direita"; break;
+                
+        }
+
+
+        // BLOCO_story.Pegar_instancia().screen_play.posicao_pergaminho_atual_id =   ( ( int ) dir_c - 48  );
+        // BLOCO_story.Pegar_instancia().controlador_tela_story.pergaminho.Mudar_posicao_pergaminho(direcao);
 
         return;
 
+
     }
-
-
-
-    
-
-
-
-
-
-public static void Tremer_texto( string args  ){}
-
-
-   public static void Mudar_posicao_pergaminho(string _args){
-
-      char dir_c = _args[ 3 ] ;
-      string direcao = null;
-
-      switch ( dir_c ){
-
-            case '0': direcao = "baixo"; break;
-            case '1': direcao = "cima"; break;
-            case '2': direcao = "esquerda"; break;
-            case '3': direcao = "direita"; break;
-            
-      }
-
-
-      BLOCO_story.Pegar_instancia().screen_play.posicao_pergaminho_atual_id =   ( ( int ) dir_c - 48  );
-      BLOCO_story.Pegar_instancia().controlador_tela_story.pergaminho.Mudar_posicao_pergaminho(direcao);
-
-      return;
-
-
-   }
 
 
 
@@ -1063,17 +1050,17 @@ public static void Tremer_texto( string args  ){}
 
             personagem.nome_display = novo_nome; 
 
-            Pergaminho_modelo_1 pergaminho = Controlador_tela_story.Pegar_instancia().pergaminho;
+            // Pergaminho_modelo_1 pergaminho = Controlador_tela_story.Pegar_instancia().pergaminho;
 
-            if(  pergaminho == null  ) { return ; }
-
-
-            if(  pergaminho.Pegar_nome_atual() == nome_antigo ){
-
-                  pergaminho.Mudar_nome( novo_nome );
+            // if(  pergaminho == null  ) { return ; }
 
 
-            }
+            // if(  pergaminho.Pegar_nome_atual() == nome_antigo ){
+
+            //       pergaminho.Mudar_nome( novo_nome );
+
+
+            // }
 
             return;
 

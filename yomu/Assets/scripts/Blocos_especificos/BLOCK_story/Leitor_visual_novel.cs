@@ -733,15 +733,15 @@ public class Leitor_visual_novel{
 
 
 
-       bool verificacao_texto_pergaminho = bloco_visual_novel.controlador_tela_story.pergaminho.Aceita_clicks();
+    //    bool verificacao_texto_pergaminho = bloco_visual_novel.controlador_tela_story.pergaminho.Aceita_clicks();
 
-        if(  !!!( verificacao_texto_pergaminho )  )
-            { screen_play.Diminuir_contador_cena(); return; }
+    //     if(  !!!( verificacao_texto_pergaminho )  )
+    //         { screen_play.Diminuir_contador_cena(); return; }
 
-        bloco_visual_novel.controlador_tela_story.pergaminho.pergaminho_texto.SetActive(true);
+        //bloco_visual_novel.controlador_tela_story.pergaminho.pergaminho_texto.SetActive(true);
 
-        if( bloco_visual_novel.controlador_tela_story.pergaminho.pergaminho_is_abaixado )
-            { bloco_visual_novel.controlador_tela_story.pergaminho.Levantar_pergaminho(); }
+        // if( bloco_visual_novel.controlador_tela_story.pergaminho.pergaminho_is_abaixado )
+        //     { bloco_visual_novel.controlador_tela_story.pergaminho.Levantar_pergaminho(); }
 
 
         int tipo_texto =   ( ( int ) _cena [ 2 ]  - 48 ) ; 
@@ -837,7 +837,7 @@ public class Leitor_visual_novel{
 
 
 
-        bloco_visual_novel.controlador_tela_story.pergaminho.Escrever(  _texto: texto,  _personagem: nome_display , _cor: cor ,  _tipo: tipo_texto, _tipo_construcao: tipo_construcao );
+        // bloco_visual_novel.controlador_tela_story.pergaminho.Escrever(  _texto: texto,  _personagem: nome_display , _cor: cor ,  _tipo: tipo_texto, _tipo_construcao: tipo_construcao );
 
         return;
     
@@ -885,7 +885,7 @@ public class Leitor_visual_novel{
 
 
 
-        bloco_visual_novel.controlador_tela_story.pergaminho.Iniciar_choices( _pergunta: pergunta, _pergunta_index: pergunta_index , _possiveis_respostas: possiveis_respostas );
+        // bloco_visual_novel.controlador_tela_story.pergaminho.Iniciar_choices( _pergunta: pergunta, _pergunta_index: pergunta_index , _possiveis_respostas: possiveis_respostas );
 
         
 
@@ -1135,7 +1135,7 @@ public class Leitor_visual_novel{
                 screen_play.esta_ativo = false;
 
 
-                bloco_visual_novel.controlador_tela_story.pergaminho.Resetar();
+                // bloco_visual_novel.controlador_tela_story.pergaminho.Resetar();
 
             
                 //    set sempre é responavel por resetar os valores                
