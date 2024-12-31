@@ -13,10 +13,8 @@ using UnityEngine.UI;
 // ** talvez mudar para Program?
 
 
-
-
-
 unsafe public class CONTROLLER__main : MonoBehaviour {
+
 
 
         public static CONTROLLER__main Pegar_instancia() { return instancia; }
@@ -47,9 +45,10 @@ unsafe public class CONTROLLER__main : MonoBehaviour {
 
 
 
-
         UI_button_SIMPLE b_up;
         UI_text_container text_container;
+
+        public int[] teste;
 
         public void Start(){
 
@@ -66,10 +65,40 @@ unsafe public class CONTROLLER__main : MonoBehaviour {
 
                 r_l = CONTROLLER__resources.Get_instance().resources_logics.Get_logic_reference( Resource_context.Characters, "LOGIC__lily_1", "Get_number", Resource_logic_content.method_info );
 
+
+                RESOURCE__structure_copy s_c = CONTROLLER__resources.Get_instance().resources_structures.Get_structure_copy(Resource_context.Characters, "Lily", "Clothes/Clothes_prefab", Resource_structure_content.game_object );
+
+                // s_c.Instanciate( GameObject.Find( "Tela/Container_teste" ) );
+
+
+                Figure.Set_context( Figure_use_context.visual_novel );
+
+                    figure = new Teste_figure();
+                    Debug.Log( figure.figure_emotions[ ( int ) Visual_figure.mad ].figure_emotion );
+
+                figure.figure_emotions[ ( int ) Visual_figure.mad ].figure_emotion.Instanciate( GameObject.Find( "Tela/Container_teste" ) );
+
+                Figure.Clean_context();
+
+
+
+
+                // System.Diagnostics.Stopwatch st = System.Diagnostics.Stopwatch.StartNew();
+
+                //     int k = 0;
+                //     for( int i = 0 ; i < 50_000_000 ; i++ ){
+                        
+                            
+
+                //     }
+
+                // Debug.Log( st.ElapsedMilliseconds );
+
+
                     
         }   
 
-
+        public Figure figure;
 
 
         public bool aa = false;
@@ -144,9 +173,7 @@ unsafe public class CONTROLLER__main : MonoBehaviour {
                 //     { b_up.container.Add_rotation_Y( 50f * Time.deltaTime ); }
 
 
-                
-                return;
-
+            
 
                 CONTROLLER__input.instancia.Update();
 

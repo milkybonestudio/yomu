@@ -24,7 +24,6 @@ public class MODULE__context_structures {
                 actives_structures_dictionary = new Dictionary<string, RESOURCE__structure>();
                 actives_structures_dictionary.EnsureCapacity( _initial_capacity );
 
-
         }
 
         public int Get_bytes(){ return 0; }
@@ -47,7 +46,7 @@ public class MODULE__context_structures {
                 // --- GET RESOURCE
                 
                 RESOURCE__structure structure = null;
-                string path_structure = manager.container_resources_structures.Get_structure_key( _main_folder, _path_local );
+                string path_structure = Get_structure_key( _main_folder, _path_local );
 
                 if( !!!( Get_dictionary( _main_folder ).TryGetValue( path_structure,  out structure ) ) )
                     { structure = Create_new_structure( _main_folder, _path_local, _level_pre_allocation ); }
@@ -57,10 +56,40 @@ public class MODULE__context_structures {
                 
         }
 
+        private string Get_structure_key( string _main_folder, string _path_local ){
+
+            return  $"{ _main_folder }\\{ _path_local }";
+        }
+
+
+
+
+        private void Put_data_structure( RESOURCE__structure _structure,  Resource_context _context,  string _main_folder, Structure_locators _locator ){
+
+                // ** structure DATA
+                
+                _structure.main_folder = _main_folder;
+                
+                _structure.structure_context = _context; 
+                _structure.structure_key = Get_structure_key( _main_folder, _locator.current_structure_local_path );
+                _structure.module_structures = this;
+                _structure.locators = _locator;
+
+                _structure.resource_path = ( _context.ToString() + "\\" + _main_folder + "\\" + _locator.current_structure_local_path );
+
+
+
+                _structure.stage_getting_resource = Resources_getting_structure_stage.finished;
+                _structure.actual_content = Resource_structure_content.nothing;
+                _structure.content_going_to = Resource_structure_content.nothing;
+                
+
+            
+        }
+
 
         private RESOURCE__structure Create_new_structure( string _main_folder, string _path_local, Resource_structure_content _level_pre_allocation ){
 
-                
                 if( Application.isEditor )
                     { return Create_new_structure_EDITOR( _main_folder, _path_local, _level_pre_allocation ); }
                     else
@@ -70,16 +99,22 @@ public class MODULE__context_structures {
                 // --- EDITOR
                 RESOURCE__structure Create_new_structure_EDITOR( string _main_folder, string _path_local, Resource_structure_content _level_pre_allocation ){
 
-
                         // ** GET LOCATOR
                         //mark
                         // ** tem que fazer o parser depois
                         Structure_locators locators = new Structure_locators();
                         locators.current_structure_local_path = _path_local;
+
+                        // ????
                         string path_file_data = System.IO.Path.Combine( Application.dataPath, "Resources", context.ToString(), _main_folder, ( _path_local + "_DATA.txt") );
 
                         
-                        RESOURCE__structure new_structure = manager.container_resources_structures.Get_resource_structure( this, context, _main_folder, locators  );
+                        RESOURCE__structure new_structure = manager.container_resources_structures.Get_resource_structure();
+                        Put_data_structure( new_structure, context, _main_folder, locators );
+
+                        if(  Resources.Load<GameObject>( new_structure.resource_path ) == null )
+                            { CONTROLLER__errors.Throw( $"Could not find the prefab int he path: <Color=lightBlue>{ new_structure.resource_path }</Color>" ); }
+
                         
                         Get_dictionary( _main_folder ).Add( new_structure.structure_key, new_structure );
 
@@ -96,6 +131,7 @@ public class MODULE__context_structures {
                         return new_structure;
 
                 }
+                
 
                 // --- BUILD
                 RESOURCE__structure Create_new_structure_BUILD( string _main_folder, string _path_local, Resource_structure_content _level_pre_allocation ){

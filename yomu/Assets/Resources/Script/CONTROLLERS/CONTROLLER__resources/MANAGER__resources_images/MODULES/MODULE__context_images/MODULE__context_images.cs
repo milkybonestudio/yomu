@@ -93,11 +93,14 @@ public class MODULE__context_images {
                         string png_path = System.IO.Path.Combine( Application.dataPath, "Resources", context.ToString(), ( manager.container_images.Get_image_key( _main_folder, _path_local ) + ".png" ) );
                         byte[] png = null;
 
-                        try {
-
-                            png = System.IO.File.ReadAllBytes( png_path );
-                        }
-                        catch( Exception e ){ CONTROLLER__errors.Throw( "could not find the image in the path: " + png_path ) ;}
+                        try 
+                            { 
+                                png = System.IO.File.ReadAllBytes( png_path );
+                            }
+                            catch( Exception e )
+                            { 
+                                CONTROLLER__errors.Throw( $"could not find the image in the path: <Color=lightBlue><b>{ png_path }</b></Color>"  ) ;
+                            }
                 
                         Dimensions dimensions = PNG.Get_dimensions( png );
 

@@ -1,34 +1,74 @@
 using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.UI;
 
-public struct Position {
 
-    public float x;
-    public float y;
-
-}
 
 public abstract class Figure {
 
 
-        public Resource_context resources_context =  Resource_context.Characters;
-        public string main_folder = "Lily";
-        public string figure_name = "Clothes";
+        public static void Put_data( string _main_folder, string _figure_name, Resource_context _resources_context = Resource_context.Characters  ){
+
+                // ** to get the resources the figure_getter is the only necessary. 
+                // ** the Linear dic is only later
+                figure_getter_static.Put_data( _resources_context, _main_folder, _figure_name, Figure.context_static );
+
+        }
+
+        public Figure(){
+
+                figure_getter_object = figure_getter_static;
+                
+                figure_container = new GameObject( figure_getter_object.path_root );
+                figure_emotions = new Linear_dictionary_figure_emotions( figure_getter_object );
+
+        }
 
 
-        public abstract void Update();
+        public static RESOURCE__image_ref Get_image_reference( string _name ){ return figure_getter_static.Get_image_reference( _name ); }
+        public static RESOURCE__image_ref Get_image_reference_not_root( string _name ){return figure_getter_static.Get_image_reference_not_root( _name ); }
 
-        // public void Blink(){ figure_interface.Blink( this ); }
-        // public void Speak(){ figure_interface.Blink( this ); }
-        // public void Change_emotion( ulong _emotion ){ figure_interface.Change_emotion( this, _emotion ); }
+        public static void Set_context( Figure_use_context _new_context ){
 
 
-        public GameObject figure_container_prefab;
+                if( context_static != Figure_use_context.not_give )
+                    { CONTROLLER__errors.Throw( $"Tried to change the contex to <Color=lightBlue>{ _new_context }</Color>, but the old contex \"<Color=lightBlue>{ context_static }</Color>\" was not cleared" ); }
+
+                context_static = _new_context;
+
+        }
+
+
+        public static void Clean_context(){ context_static = Figure_use_context.not_give; }
+
+        public static Figure_data_getter figure_getter_static;
+        public static Figure_use_context context_static;
+
+
+        public Figure_data_getter figure_getter_object;
+
+ 
         public GameObject figure_container;
 
 
-        public RESOURCE__structure_copy structure;
+        public Linear_dictionary_figure_emotions figure_emotions;
+        public Emotion_figure[] valid_figures_emotions;
+        protected void Finalize_emotions(){ valid_figures_emotions = figure_emotions.Seal();  }
+        
 
+        public virtual void Update(){
+
+                if( valid_figures_emotions == null )
+                    { Finalize_emotions(); }
+
+                foreach( Emotion_figure emotion in valid_figures_emotions )
+                    { emotion.Update();}
+            
+        }
+
+    
 
         private const float move_speed_pixels_PER_second = 1_000f;
         
@@ -42,6 +82,23 @@ public abstract class Figure {
 
 
         }
+
+
+        public Visual_figure current_visual;
+
+        public virtual void Change_form( Visual_figure _visual ){
+
+
+                figure_emotions[ ( int ) _visual ].Activate();
+                figure_emotions[ ( int ) current_visual ].Deactivate();
+
+                current_visual = _visual;
+                
+                
+        }
+
+
+
 
         public void Put_focus(){}
 

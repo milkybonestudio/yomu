@@ -9019,6 +9019,7 @@ MonoBehaviour:
   modo_controlador_atual: 0
   canvas: {fileID: 0}
   menu: {fileID: 0}
+  teste: 
   aa: 0
 --- !u!114 &376972138
 MonoBehaviour:

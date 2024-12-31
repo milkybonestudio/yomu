@@ -33,25 +33,25 @@ public class MODULE__context_logics {
 
             Assembly assembly = null;
 
-            if( Application.isEditor )
-                {  
+            // if( Application.isEditor )
+            //     {
 
-                    try { assembly = Assembly.Load( _context.ToString() ); } 
-                        catch( Exception e ) 
-                        { CONTROLLER__errors.Throw( $"Could not find the dll of the context <Color=lightBlue>{ _context.ToString() }</Color>" ); }
+            //         try { assembly = Assembly.Load( _context.ToString() ); } 
+            //             catch( Exception e ) 
+            //             { CONTROLLER__errors.Throw( $"Could not find the dll of the context <Color=lightBlue>{ _context.ToString() }</Color>" ); }
 
-                    if( assembly == null )
-                        { CONTROLLER__errors.Throw( $"Could not find the dll of the context <Color=lightBlue>{ _context.ToString() }</Color>" ); };
+            //         if( assembly == null )
+            //             { CONTROLLER__errors.Throw( $"Could not find the dll of the context <Color=lightBlue>{ _context.ToString() }</Color>" ); };
 
-                }
-                else
-                { 
-                    string path = System.IO.Path.Combine( Application.dataPath, ( _context.ToString() + ".dll" ) );
+            //     }
+            //     else
+            //     { 
+            //         string path = System.IO.Path.Combine( Application.dataPath, ( _context.ToString() + ".dll" ) );
 
-                    try { assembly = Assembly.LoadFrom( path ); } 
-                        catch( Exception e ) 
-                        { CONTROLLER__errors.Throw( $"Could not find the dll of the context <Color=lightBlue>{ _context.ToString() }</Color>" ); }
-                }
+            //         try { assembly = Assembly.LoadFrom( path ); } 
+            //             catch( Exception e ) 
+            //             { CONTROLLER__errors.Throw( $"Could not find the dll of the context <Color=lightBlue>{ _context.ToString() }</Color>" ); }
+            //     }
 
             return assembly;            
 

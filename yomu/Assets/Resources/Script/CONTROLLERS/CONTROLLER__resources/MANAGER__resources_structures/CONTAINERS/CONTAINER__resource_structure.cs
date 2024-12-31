@@ -24,7 +24,7 @@ public class CONTAINER__resource_structure {
         private RESOURCE__structure[] structures_waiting_to_reset;
         private int pointer_structure_to_delete = 0;
 
-        public RESOURCE__structure Get_resource_structure( MODULE__context_structures _module_structures,  Resource_context _context,  string _main_folder, Structure_locators locator ){
+        public RESOURCE__structure Get_resource_structure(){
 
                int structure_slot = 0;
 
@@ -34,7 +34,6 @@ public class CONTAINER__resource_structure {
                         if( structures_available[ structure_slot ] == null )
                             { continue; }
 
-                        Put_data_structure( structure, _module_structures, _context, _main_folder, locator );
                         structure.structure_state = Resource_use_state.used;
 
                         structures_available[ structure_slot ] = null;
@@ -114,37 +113,7 @@ public class CONTAINER__resource_structure {
         }
 
 
-        public string Get_structure_key( string _main_folder, string _path_local ){
 
-            return  $"{ _main_folder }\\{ _path_local }";
-        }
-
-
-        private void Put_data_structure( RESOURCE__structure _structure,  MODULE__context_structures _module_structures,  Resource_context _context,  string _main_folder, Structure_locators _locator ){
-
-            Console.Log( "veiuo Put_data_structure()" );
-
-
-                // ** structure DATA
-                
-                _structure.main_folder = _main_folder;
-                
-                _structure.structure_context = _context; 
-                _structure.structure_key = Get_structure_key( _main_folder, _locator.current_structure_local_path );
-                _structure.module_structures = _module_structures;
-                _structure.locators = _locator;
-
-                _structure.resource_path = ( _context.ToString() + "\\" + _main_folder + "\\" + _locator.current_structure_local_path );
-
-
-
-                _structure.stage_getting_resource = Resources_getting_structure_stage.finished;
-                _structure.actual_content = Resource_structure_content.nothing;
-                _structure.content_going_to = Resource_structure_content.nothing;
-                
-
-            
-        }
 
 
 

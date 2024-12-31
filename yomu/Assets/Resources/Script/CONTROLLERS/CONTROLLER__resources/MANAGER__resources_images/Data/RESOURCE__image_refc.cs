@@ -2,20 +2,25 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public enum Resource_action {
 
-    load,
-    activate,
-    instanciate,
+public abstract class RESOURCE__ref {
 
-    unload,
-    deactivate,
-    deinstanciate,
+    
+        // public abstract void Unload(){ Guaranty_ref(); TOOL__module_context_images_actions.Unload( this ); }
+        // public abstract void Deactivate(){ Guaranty_ref(); TOOL__module_context_images_actions.Deactivate( this ); }
+        // public abstract void Deinstanciate(){ Guaranty_ref(); TOOL__module_context_images_actions.Deinstanciate( this );  }
 
+        // // ** UP
+
+        // public abstract void Load(){ TOOL__module_context_images_actions.Load( this ); }
+        // public abstract void Activate(){ TOOL__module_context_images_actions.Activate( this ); }
+        // public abstract void Instanciate(){ TOOL__module_context_images_actions.Instanciate( this ); }
 }
 
 
-public class RESOURCE__image_ref {
+
+
+public class RESOURCE__image_ref : RESOURCE__ref {
 
         
         public string localizador; // ** localizador local
