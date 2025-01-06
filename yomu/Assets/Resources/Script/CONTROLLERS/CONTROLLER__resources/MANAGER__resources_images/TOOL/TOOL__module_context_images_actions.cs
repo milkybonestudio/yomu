@@ -157,6 +157,8 @@ public static class TOOL__module_context_images_actions {
         // ** sinaliza que a imagem pode carregar o minimo 
         public static void Load( RESOURCE__image_ref _ref ){
 
+                Console.Log( "level: " + _ref.level_pre_allocation );
+
                 if( _ref.image == null )
                     { CONTROLLER__errors.Throw( $"Tried to Load ref { _ref.identifire }, but the RESOURCE__image is null" ); }
 

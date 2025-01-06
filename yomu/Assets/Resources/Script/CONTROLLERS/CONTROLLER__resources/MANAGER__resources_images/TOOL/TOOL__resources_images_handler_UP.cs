@@ -5,8 +5,13 @@ using UnityEngine;
 public static class TOOL__resources_images_handler_UP {
 
 
+        private const bool show_logs = false;
+
+
         public static int Handle_waiting_to_start( MANAGER__resources_images _manager, RESOURCE__image _image ){
 
+                if( show_logs ) 
+                    { Console.Log( "image " + _image.name + " came to Handle_waiting_to_start" ); }
 
                 TOOL__resource_image.Verify_image( _image );
 
@@ -21,9 +26,11 @@ public static class TOOL__resources_images_handler_UP {
 
                 if( !!!( _image.system_have_low_quality ) )
                     {
+                                
                         // --- TOO SMALL TO LOL QUALITY
-                        Console.Log( "NAO TEM LOW QUALITY" );
-
+                        if( show_logs ) 
+                            { Console.Log( "NAO TEM LOW QUALITY" ); }
+                        
                         // ** low_quality só é usado quando for instanciado no Instanciate(), se o atual_resource for low_quality o sistema não deve verijficar se a imagem existe ou não
 
                         _image.actual_content = Resource_image_content.compress_low_quality_data;
@@ -59,8 +66,11 @@ public static class TOOL__resources_images_handler_UP {
 
         public static int Handle_getting_compress_low_quality_file( MANAGER__resources_images _manager, RESOURCE__image _image ){
 
-                // Console.Log( "veio Handle_getting_compress_low_quality_file()" );
+                
+                if( show_logs ) 
+                    { Console.Log( "veio Handle_getting_compress_low_quality_file()" ); }
 
+                
                 if( _manager.task_getting_compress_low_quality_file == null )
                     { CONTROLLER__errors.Throw( $"the image { _image.name } was as getting_compress_low_quality_file but the task_req is null" ); }
 
@@ -92,7 +102,10 @@ public static class TOOL__resources_images_handler_UP {
 
                 int weight = 0;
 
-                // Console.Log( "veio Handle_waiting_to_get_compress_file" );
+                
+                if( show_logs ) 
+                    { Console.Log( "veio Handle_waiting_to_get_compress_file" ); }
+
 
                 if( _manager.task_getting_compress_file != null )
                     { return weight; } // --- TASK ALREADY IN USE
@@ -110,8 +123,9 @@ public static class TOOL__resources_images_handler_UP {
 
         public static int Handle_getting_compress_file( MANAGER__resources_images _manager, RESOURCE__image _image ){ 
 
-
-                // Console.Log( "Handle_getting_compress_file()" );
+                
+                if( show_logs ) 
+                    { Console.Log( "Handle_getting_compress_file()" ); }
 
                 if( _manager.task_getting_compress_file == null )
                     { CONTROLLER__errors.Throw(  $"the image { _image.name } was as getting_compress_file but the task_req is null" ); }
@@ -158,8 +172,8 @@ public static class TOOL__resources_images_handler_UP {
                 // ** por hora nao vai fazer isso, vai criar 1 especifica para cada para simplificar
                 // ** o apply vai ser dado quando terminar de passar os pixels
 
-                Console.Log( "Handle_waiting_to_get_texture" );
-
+                if( show_logs ) 
+                    { Console.Log( "Handle_waiting_to_get_texture" ); }
                 int weight = 3;
 
                 if( _image.width * _image.height == 0 )
@@ -188,7 +202,10 @@ public static class TOOL__resources_images_handler_UP {
 
         public static int Handle_waiting_to_pass_data_to_texture( MANAGER__resources_images _manager, RESOURCE__image _image ){
 
-                Console.Log( "Handle_waiting_to_pass_data_to_texture" );
+                
+                if( show_logs ) 
+                    { Console.Log( "Handle_waiting_to_pass_data_to_texture" ); }
+
 
                 if( _image.content_going_to < Resource_image_content.sprite )
                     { CONTROLLER__errors.Throw( $"The image { _image.name } was going to create passing the data to the texture, but the content_going_to is { _image.content_going_to }" ); }
@@ -221,7 +238,8 @@ public static class TOOL__resources_images_handler_UP {
         public static int Handle_passing_data_to_texture( MANAGER__resources_images _manager, RESOURCE__image _image ){ 
 
 
-                Console.Log( "Handle_passing_data_to_texture" );
+                if( show_logs ) 
+                    { Console.Log( "Handle_passing_data_to_texture" ); }
 
                 if( _manager.task_passing_to_texture == null )
                     { CONTROLLER__errors.Throw( $"the image { _image.name } was as passing data to the texturew but the task_req is null" ); }
@@ -245,7 +263,8 @@ public static class TOOL__resources_images_handler_UP {
         public static int Handle_waiting_to_apply_texture( MANAGER__resources_images _manager, RESOURCE__image _image ){
 
 
-                Console.Log( "Handle_waiting_to_apply_texture" );
+                if( show_logs ) 
+                    { Console.Log( "Handle_waiting_to_apply_texture" ); }
 
                 if( _image.content_going_to < Resource_image_content.sprite )
                     { CONTROLLER__errors.Throw( $"The image { _image.name } was going to create passing the data to the texture, but the content_going_to is { _image.content_going_to }" ); }
@@ -271,8 +290,9 @@ public static class TOOL__resources_images_handler_UP {
 
         public static int Handle_waiting_to_create_sprite( MANAGER__resources_images _manager, RESOURCE__image _image ){
 
-                Console.Log( "Handle_waiting_to_create_sprite" );
-
+                
+                if( show_logs ) 
+                    { Console.Log( "Handle_waiting_to_create_sprite" ); }
                 int weight = 1;
 
                 // --- CREATE SPRITE

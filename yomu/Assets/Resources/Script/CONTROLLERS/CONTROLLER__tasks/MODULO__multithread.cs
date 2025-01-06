@@ -68,7 +68,9 @@ public class MODULO__multithread {
 
                 } catch( Exception e ){
 
+                    CONTROLLER__errors.Throw_exception(e);
                     Console.LogError( e.Message );
+
 
                     exception = e;
                     Matar_thread();

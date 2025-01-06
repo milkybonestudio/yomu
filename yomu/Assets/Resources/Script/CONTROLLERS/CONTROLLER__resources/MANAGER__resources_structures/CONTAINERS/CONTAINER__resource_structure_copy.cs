@@ -124,8 +124,6 @@ public class CONTAINER__resource_structure_copy {
 
         private void Put_data_copy( RESOURCE__structure_copy _copy, RESOURCE__structure _structure,  Resource_structure_content _level_pre_allocation ){
 
-            Console.Log( "veiuo Put_data_structure()" );
-
                 _copy.structure = _structure;
                 _copy.level_pre_allocation = _level_pre_allocation;
                 _copy.actual_need_content = Resource_structure_content.nothing;

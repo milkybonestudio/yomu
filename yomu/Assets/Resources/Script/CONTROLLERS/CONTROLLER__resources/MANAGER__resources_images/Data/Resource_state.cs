@@ -1,5 +1,8 @@
 
 
+
+//mark
+// ** passar active -> full
 public enum Resource_state {
 
     nothing, // nada

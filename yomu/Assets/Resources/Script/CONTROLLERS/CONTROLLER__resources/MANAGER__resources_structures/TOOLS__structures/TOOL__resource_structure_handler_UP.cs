@@ -3,6 +3,9 @@ using UnityEngine.UI;
 
 public static class TOOL__resource_structure_handler_UP {
 
+
+        private const int weight_getting_prefab = 3;
+
         public static int Handle_waiting_to_start( RESOURCE__structure _structure ){
 
                 // ** mudar para o relogio talvez? 
@@ -29,9 +32,10 @@ public static class TOOL__resource_structure_handler_UP {
                             { CONTROLLER__errors.Throw( $"Not found prefab <Color=lightBlue>{ _structure.resource_path }</Color>" ); }
 
                         _structure.actual_content = Resource_structure_content.structure_data;
-                        weight = 3;
 
                         _structure.stage_getting_resource = Resources_getting_structure_stage.finished;
+
+                        weight = weight_getting_prefab;
                         return weight;
 
                     }

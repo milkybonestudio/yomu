@@ -20,12 +20,16 @@ public class MANAGER__resources_structures : MANAGER__RESOURCES {
                 if( container_to_instanciate == null )
                     { CONTROLLER__errors.Throw( $"container_to_instanciate was not found int the path { Paths_system.path_resources_structures_container }" ); }
 
+
                 for( int context_index = 0 ; context_index < contexts.Length ; context_index++ )
                     { context_structures_modules[ context_index ] = new MODULE__context_structures( _manager: this, _context: contexts[ context_index ], _initial_capacity: 1_000, _buffer_cache: 2_000_000 ); }
+
+
 
                 return;
 
         }
+        public int a = 10;
         
         public MODULE__context_structures[] context_structures_modules;
 

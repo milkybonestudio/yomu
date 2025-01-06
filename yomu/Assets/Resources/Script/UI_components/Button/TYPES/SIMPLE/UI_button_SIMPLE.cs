@@ -161,11 +161,13 @@ public class UI_button_SIMPLE : UI_button {
 
                 // OFF 
                     data.button_OFF_frame.image_ref = resources_image.Get_image_reference( context, main_folder, data.button_OFF_frame.path, manager_resources.minimun.image );
+                    data.button_OFF_frame.image_ref.image.name = "button_OFF";
                     data.button_OFF_frame.color = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.button_OFF_frame.color, Cores.grey_90 );
                     data.button_OFF_text_color = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.button_OFF_text_color, Cores.black );
 
                 // ON
                     data.button_ON_frame.image_ref = resources_image.Get_image_reference( context, main_folder, data.button_ON_frame.path, manager_resources.minimun.image  );
+                    data.button_ON_frame.image_ref.image.name = "button_ON";
                     data.button_ON_frame.color = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.button_ON_frame.color, Cores.white );
                     data.button_ON_text_color = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.button_ON_text_color, Cores.black );
 

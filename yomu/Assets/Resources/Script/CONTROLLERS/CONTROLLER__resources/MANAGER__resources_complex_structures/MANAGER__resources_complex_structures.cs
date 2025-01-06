@@ -16,10 +16,10 @@ public class MANAGER__resources_complex_structures : MANAGER__RESOURCES {
                 container_resources_complex_structures = new CONTAINER__RESOURCE__complex_structure();
                 container_resources_complex_structures_copies = new CONTAINER__RESOURCE__complex_structure_copy();
 
-                container_to_instanciate = GameObject.Find( Paths_system.path_resources_complex_structures_container );
+                // container_to_instanciate = GameObject.Find( Paths_system.path_resources_complex_structures_container );
 
-                if( container_to_instanciate == null )
-                    { CONTROLLER__errors.Throw( $"container_to_instanciate was not found int the path { Paths_system.path_resources_complex_structures_container }" ); }
+                // if( container_to_instanciate == null )
+                //     { CONTROLLER__errors.Throw( $"container_to_instanciate was not found int the path { Paths_system.path_resources_complex_structures_container }" ); }
 
                 for( int context_index = 0 ; context_index < contexts.Length ; context_index++ )
                     { context_complex_structures_modules[ context_index ] = new MODULE__context_complex_structures( _manager: this, _context: contexts[ context_index ], _initial_capacity: 1_000, _buffer_cache: 2_000_000 ); }

@@ -64,6 +64,7 @@ unsafe public static class TOOL__loader_texture {
 
         }
 
+        
         public static void Transfer_data_PNG( byte[] png,  NativeArray<Color32> _native_arr_texture ){
 
                 
@@ -87,7 +88,6 @@ unsafe public static class TOOL__loader_texture {
                                                         ImageLockMode.ReadOnly,
                                                         PixelFormat.Format32bppArgb // ** talvez trenha que inverter
                                                     );
-
 
                 
 
@@ -123,6 +123,7 @@ unsafe public static class TOOL__loader_texture {
                                 p_container_2 = ( p_container + 1 ) ;
                                 p_container_3 = ( p_container + 2 ) ;
                                 p_container_4 = ( p_container + 3 ) ;
+
                                     p_data_1 += 4;
                                     p_data_2 += 4;
                                     p_data_3 += 4;
@@ -188,27 +189,35 @@ unsafe public static class TOOL__loader_texture {
 
                         int ponto_inicial_final  = bm.Width - ( bm.Width % 4 );
 
+                        // Console.Log( "bm.Width % 4: " + (bm.Width % 4 ));
+                        // Console.Log( "ponto_inicial_final: " + (ponto_inicial_final ));
+                        // Console.Log( "bm.Width: " + (bm.Width ));
+                        
                         for( int i = ponto_inicial_final ; i < bm.Width ; i++ ){
 
 
-                                p_container_1 += 4 ;
-                                p_container_2 += 4 ;
-                                p_container_3 += 4 ;
-                                p_container_4 += 4 ;
+                        
+                                p_container_1 = ( p_container + 0 ) ;
+                                p_container_2 = ( p_container + 1 ) ;
+                                p_container_3 = ( p_container + 2 ) ;
+                                p_container_4 = ( p_container + 3 ) ;
 
-                                p_data_1 += 4;
-                                p_data_2 += 4;
-                                p_data_3 += 4;
-                                p_data_4 += 4;
+                                    p_data_1 += 4;
+                                    p_data_2 += 4;
+                                    p_data_3 += 4;
+                                    p_data_4 += 4;
 
-                                *p_container_1 = *p_data_4;
-                                *p_container_2 = *p_data_3;
-                                *p_container_3 = *p_data_2;
-                                *p_container_4 = *p_data_1;
+
+                                        *p_container_1 = *p_data_3;
+                                        *p_container_2 = *p_data_2;
+                                        *p_container_3 = *p_data_1;
+                                        *p_container_4 = *p_data_4;
+
 
                                 int ponto_pixel = ( height * bm.Width ) + i;
 
-                                _native_arr_texture[ ponto_pixel ] = *( Color32* ) p_container_origin ;
+                                _native_arr_texture[ ponto_pixel ] = *( Color32* ) ( p_container_origin ) ; // UnityEngine.Color.red;
+                                //_native_arr_texture[ ponto_pixel ] = UnityEngine.Color.red;
                                 continue;
 
                         }

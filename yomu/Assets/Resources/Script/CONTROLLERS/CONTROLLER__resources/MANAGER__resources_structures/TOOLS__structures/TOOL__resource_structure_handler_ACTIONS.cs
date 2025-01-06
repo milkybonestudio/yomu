@@ -209,7 +209,6 @@ public static class TOOL__resource_structure_handler_ACTIONS {
 
         public static void Instanciate( RESOURCE__structure_copy _copy, GameObject _container ){
 
-                Console.Log( "Veio Instanciate()" );
 
                 if( _copy.state == Resource_state.instanciated )
                     { return; } // ** ja instanciado
@@ -236,23 +235,28 @@ public static class TOOL__resource_structure_handler_ACTIONS {
                         structure.stage_getting_resource = Resources_getting_structure_stage.finished;
 
                         structure.prefab = Resources.Load<GameObject>( structure.resource_path );
-
-                        Console.Log( "AAA: " + structure.resource_path );
                         
                     }
 
                 // ** GURANTY STRUCTURE
-                if( _copy.structure_game_object == null )
+                if( structure.actual_content < Resource_structure_content.game_object )
                     {
                         // --- FORCE INSTANCIATE
                         _copy.structure_game_object = GameObject.Instantiate( structure.prefab );
+                        structure.actual_content = Resource_structure_content.game_object;
                         _copy.structure_game_object.name = structure.prefab.name;
                         TOOL__resources_structures.Create_dictionary( _copy );
 
                     }
                 
 
+
                 // ** set 
+                // ** null -> nao pode parecer -> default
+
+                if( _container == null )
+                    { _container = structure.module_structures.manager.container_to_instanciate; }
+
                 GAME_OBJECT.Colocar_parent( _container, _copy.structure_game_object );
                 _copy.structure_game_object.SetActive( true );
 

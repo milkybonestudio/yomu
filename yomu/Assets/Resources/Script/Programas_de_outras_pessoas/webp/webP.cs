@@ -16,32 +16,31 @@ unsafe public sealed class WebP : IDisposable{
 
     public static bool Verify_is_webp( byte[] _bytes ){
 
+            
             int i = 1;
 
             if( _bytes[ 0 ] != 82 )
                 { i = i * 0; }
             
-            if( _bytes[ 1 ] != 49 )
+            if( _bytes[ 1 ] != 73 )
                 { i = i * 0; }
 
-            if( _bytes[ 2 ] != 46 )
+            if( _bytes[ 2 ] != 70 )
                 { i = i * 0; }
 
-            if( _bytes[ 3 ] != 46 )
+            if( _bytes[ 3 ] != 70 )
                 { i = i * 0; }
 
             // ** size 4 bytes
 
 
-
-
-            if( _bytes[ 4 ] != 87 )
+            if( _bytes[ 8 ] != 87 )
                 { i = i * 0; }
-            if( _bytes[ 5 ] != 69 )
+            if( _bytes[ 9 ] != 69 )
                 { i = i * 0; }
-            if( _bytes[ 6 ] != 66 )
+            if( _bytes[ 10 ] != 66 )
                 { i = i * 0; }
-            if( _bytes[ 7 ] != 80 )
+            if( _bytes[ 11 ] != 80 )
                 { i = i * 0; }
 
             return i > 0 ;

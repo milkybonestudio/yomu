@@ -28,6 +28,7 @@ public static class TOOL__get_data_images_resources {
             private static byte[] Get_single_low_quality_EDITOR( RESOURCE__image _image ){
 
 
+                    // ** garante que tem o png
                     byte[] png = Get_single_generico_EDITOR( _image );
                 
                     if( webps == null )
@@ -44,7 +45,7 @@ public static class TOOL__get_data_images_resources {
                     if( dimensions.width > 2_000 || dimensions.height > 2_000 )
                         { CONTROLLER__errors.Throw( $"Image is too big. Tried to get the low quality for the image{ _image.name }" ); }
 
-                    byte[] webp = Get_web_EDITOR( dimensions );
+                    byte[] webp = Get_webp_EDITOR( dimensions );
                     
 
                     return webp; 
@@ -53,9 +54,9 @@ public static class TOOL__get_data_images_resources {
 
             private static void Start_webps(){
 
-                Webp_size[] sizes = ( Webp_size[] ) Enum.GetValues( typeof( Webp_size ) );
+                    Webp_size[] sizes = ( Webp_size[] ) Enum.GetValues( typeof( Webp_size ) );
 
-                webps = new byte[ sizes.Length ][];
+                    webps = new byte[ sizes.Length ][];
 
             } 
 
@@ -79,7 +80,7 @@ public static class TOOL__get_data_images_resources {
                     
 
                 if( webps[ ( int ) _size ] != null )
-                    { return webps[ ( int ) _size ]; }
+                    {  return webps[ ( int ) _size ]; }
 
                 string path = ( path_default + _size.ToString() + ".webp" ) ;
                 byte[] webp = null;
@@ -95,7 +96,7 @@ public static class TOOL__get_data_images_resources {
 
 
 
-            private static byte[] Get_web_EDITOR( Dimensions _dimensions ){
+            private static byte[] Get_webp_EDITOR( Dimensions _dimensions ){
 
 
                     if( _dimensions.width <= 25 )
@@ -272,8 +273,7 @@ public static class TOOL__get_data_images_resources {
             private static byte[] Get_single_generico_EDITOR( RESOURCE__image _image ){
 
                     string path_arquivo = System.IO.Path.Combine( Application.dataPath, "Resources", _image.image_context.ToString(), _image.image_key + ".png" );
-
-
+                    
                     byte[] png = null;
 
                     try { png = File.ReadAllBytes( path_arquivo ); } catch( System.Exception e ){ CONTROLLER__errors.Throw( $"Image in the path { path_arquivo } was not found" ); }

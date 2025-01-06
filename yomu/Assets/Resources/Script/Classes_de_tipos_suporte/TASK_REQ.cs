@@ -10,6 +10,7 @@ public static class TASK_REQ {
 
             _req_ref.task_bloqueada = true;
             _req_ref = null;
+            
     }
 
 

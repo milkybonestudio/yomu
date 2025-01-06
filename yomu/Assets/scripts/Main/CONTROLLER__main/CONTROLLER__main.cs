@@ -8,6 +8,9 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+using System.Runtime.InteropServices;
+using System.Numerics;
+
 
 
 // ** talvez mudar para Program?
@@ -50,20 +53,27 @@ unsafe public class CONTROLLER__main : MonoBehaviour {
 
         public int[] teste;
 
+
         public void Start(){
 
 
                 Console.Start();
             
+                
                 Dados_fundamentais_sistema.jogo_ativo = true; 
                 Construtor_controlador.Construir( this ); 
 
-                
-                b_up = EXAMPLE_UI_button.Simple( GameObject.Find( "Tela/Container_teste/a" ) ); 
-            
-                text_container = EXAMPLE_UI_text_container.Simple( GameObject.Find( "Tela/Container_teste/EXAMPLE_text_container" ) ); 
+                CONTROLLER__resources.Get_instance().resources_structures.container_to_instanciate.SetActive( false );
 
-                r_l = CONTROLLER__resources.Get_instance().resources_logics.Get_logic_reference( Resource_context.Characters, "LOGIC__lily_1", "Get_number", Resource_logic_content.method_info );
+                // ** pra testar é bom deixar aqui, se tiver algum erro e nao tiver auqi vai travar quando tentar setar o contexto
+                Figure_creation_data.Clean_context();
+
+                
+                // b_up = EXAMPLE_UI_button.Simple( GameObject.Find( "Tela/Container_teste/a" ) ); 
+            
+                // text_container = EXAMPLE_UI_text_container.Simple( GameObject.Find( "Tela/Container_teste/EXAMPLE_text_container" ) ); 
+
+                // r_l = CONTROLLER__resources.Get_instance().resources_logics.Get_logic_reference( Resource_context.Characters, "LOGIC__lily_1", "Get_number", Resource_logic_content.method_info );
 
 
                 RESOURCE__structure_copy s_c = CONTROLLER__resources.Get_instance().resources_structures.Get_structure_copy(Resource_context.Characters, "Lily", "Clothes/Clothes_prefab", Resource_structure_content.game_object );
@@ -71,34 +81,42 @@ unsafe public class CONTROLLER__main : MonoBehaviour {
                 // s_c.Instanciate( GameObject.Find( "Tela/Container_teste" ) );
 
 
-                Figure.Set_context( Figure_use_context.visual_novel );
-
-                    figure = new Teste_figure();
-                    Debug.Log( figure.figure_emotions[ ( int ) Visual_figure.mad ].figure_emotion );
-
-                figure.figure_emotions[ ( int ) Visual_figure.mad ].figure_emotion.Instanciate( GameObject.Find( "Tela/Container_teste" ) );
-
-                Figure.Clean_context();
+                Figure_creation_data.Set_context( Figure_use_context.conversation );
 
 
+                    figure = Teste_figure.Construct().Set( GameObject.Find( "Tela/Container_teste" ) );
 
 
-                // System.Diagnostics.Stopwatch st = System.Diagnostics.Stopwatch.StartNew();
+                    figure.Prepare( Figure_mode_type.mad );
+                    figure.Get( Figure_mode_type.mad ).Instanciate();
+                    // figure.Rescale_to( 200f );
 
-                //     int k = 0;
-                //     for( int i = 0 ; i < 50_000_000 ; i++ ){
-                        
-                            
+                    // figure.Get( Figure_mode_type.mad ).Prepare();
 
-                //     }
 
-                // Debug.Log( st.ElapsedMilliseconds );
+                Figure_creation_data.Clean_context();
+
+
+                System.Diagnostics.Stopwatch st = System.Diagnostics.Stopwatch.StartNew();
+
+                    
+                    for( int i = 0 ; i < 100 ; i += 1 ){
+
+                            var t  = new Texture2D( 2_000, 2_000, TextureFormat.RGBA32, false );
+                            t.SetPixel( 50,50, Color.blue );
+                            t.SetPixel( 500,500, Color.blue );
+                            t.SetPixel( 1500,1500, Color.blue );
+                            t.Apply();
+
+                    }
+
+                Debug.Log( st.ElapsedMilliseconds );
 
 
                     
         }   
 
-        public Figure figure;
+        public Figure figure;   
 
 
         public bool aa = false;
@@ -111,6 +129,11 @@ unsafe public class CONTROLLER__main : MonoBehaviour {
 
     
         public void Update() {
+
+
+
+
+                figure.Update();
 
 
                 //Lettlece l = new();  
@@ -177,7 +200,7 @@ unsafe public class CONTROLLER__main : MonoBehaviour {
 
                 CONTROLLER__input.instancia.Update();
 
-                b_up.Update();
+                b_up?.Update();
 
                 text_container?.Update();
 

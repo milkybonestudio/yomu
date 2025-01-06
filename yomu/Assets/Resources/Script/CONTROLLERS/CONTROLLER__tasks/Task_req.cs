@@ -3,12 +3,13 @@ using System;
 
 public class Task_req {
 
+
         public static void VOID( Task_req _req ){}
-        public static object[] ARRAY_VOID = new object[ 1 ];
+        
+        public Task_req ( string _nome, int _length_data = 2 ){
 
-        public Task_req ( string _nome ){ 
-
-                this.nome = _nome;
+                nome = _nome;
+                dados = new object[ _length_data ];
 
         }
 
@@ -27,8 +28,8 @@ public class Task_req {
 
 
         public int prioridade = 0 ;
-        public System.Object[] dados = Task_req.ARRAY_VOID;
-        public System.Object[] dados_forcar = Task_req.ARRAY_VOID; // --- para garantir que em hipotese nenhuma o mesmo array seja acessado na multi e na single. Mas ainda pode pegar/ler 
+        public System.Object[] dados;
+        public System.Object[] dados_forcar; // --- para garantir que em hipotese nenhuma o mesmo array seja acessado na multi e na single. Mas ainda pode pegar/ler 
 
         public System.Object data_1;
         public System.Object data_2;

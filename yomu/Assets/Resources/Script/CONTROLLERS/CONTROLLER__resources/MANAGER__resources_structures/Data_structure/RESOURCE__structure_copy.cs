@@ -45,7 +45,8 @@ public class RESOURCE__structure_copy {
                 // ** up resources
                 public void Load(){ Guaranty_copy(); TOOL__resource_structure_handler_ACTIONS.Load( this ); }
                 public void Activate(){ Guaranty_copy(); TOOL__resource_structure_handler_ACTIONS.Activate( this ); }
-                public void Instanciate( GameObject _container ){ TOOL__resource_structure_handler_ACTIONS.Instanciate( this, _container ); }
+
+                public void Instanciate( GameObject _container = null, bool _set = true ){ TOOL__resource_structure_handler_ACTIONS.Instanciate( this, _container ); structure_game_object.SetActive( _set ); }
 
                 // ** down resources
 

@@ -26,6 +26,7 @@ public static class Construtor_controlador {
                 Application.runInBackground = true;
 
                 CONSTRUCTOR__paths_system.Construct();
+                // Shaders.Get_shaders();
 
 
                 // --- CONSTRUIR CONTROLADORES GERAIS

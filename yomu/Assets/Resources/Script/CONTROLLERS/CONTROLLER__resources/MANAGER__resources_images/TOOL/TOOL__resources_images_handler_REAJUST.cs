@@ -19,12 +19,10 @@ public static class TOOL__resources_images_handler_REAJUST {
 
                 return weight;
 
-            return 0; 
-
         }
 
 
-
+        // **    usou o webp -> vai pegar o compress
         public static int Handle_getting_compress_file_REAJUST( MANAGER__resources_images _manager,  RESOURCE__image _image ){ 
             
 
@@ -49,9 +47,22 @@ public static class TOOL__resources_images_handler_REAJUST {
                 _manager.task_getting_compress_file_REAJUST = null;
 
                 //_image.actual_content = Resource_image_content.compress_data;
+                        // for( int k = 0 ; k < 20 ; k++ )
+                        //     { Console.Log( $"{ k }: { (  _image.single_image.image_compress[ k ] ) }" ); }
 
                 if( !!!( PNG.Verify_is_png( _image.single_image.image_compress ) ) )
-                    { CONTROLLER__errors.Throw( "was not a png NO HANLDE" ); }
+                    { 
+                        Console.Log( "is webp: " + ( WebP.Verify_is_webp( _image.single_image.image_compress ) ) );
+
+
+                        // Console.Log( "2: " + (  _image.single_image.image_compress[ 1 ] ) );
+                        // Console.Log( "3: " + (  _image.single_image.image_compress[ 2 ] ) );
+                        // Console.Log( "4: " + (  _image.single_image.image_compress[ 3 ] ) );
+
+                        Console.Log( "Length: " + _image.single_image.image_compress.Length );
+                        CONTROLLER__errors.Throw( "was not a png NO HANLDE" ); 
+
+                    }
 
                 // ARRAY.Print_length( "Png length", _image.single_image.image_compress );
 

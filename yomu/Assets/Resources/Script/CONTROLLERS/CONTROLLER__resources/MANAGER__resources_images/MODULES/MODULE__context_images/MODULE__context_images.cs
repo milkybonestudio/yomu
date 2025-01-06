@@ -56,6 +56,7 @@ public class MODULE__context_images {
         // sempre single
         public RESOURCE__image_ref Get_image_ref(  string _main_folder, string _path_local,  Resource_image_content _level_pre_allocation  ){
 
+
                 // ** quando separar por _main_folder tirar
                 
                 RESOURCE__image image = null;
