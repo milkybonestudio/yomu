@@ -5,16 +5,17 @@ using UnityEngine.UI;
 
 public abstract class RESOURCE__ref {
 
+        public string n; // ** pode excluir depois
     
-        // public abstract void Unload(){ Guaranty_ref(); TOOL__module_context_images_actions.Unload( this ); }
-        // public abstract void Deactivate(){ Guaranty_ref(); TOOL__module_context_images_actions.Deactivate( this ); }
-        // public abstract void Deinstanciate(){ Guaranty_ref(); TOOL__module_context_images_actions.Deinstanciate( this );  }
+        public abstract void Unload();
+        public abstract void Deactivate();
+        public abstract void Deinstanciate();
 
-        // // ** UP
+        // ** UP
 
-        // public abstract void Load(){ TOOL__module_context_images_actions.Load( this ); }
-        // public abstract void Activate(){ TOOL__module_context_images_actions.Activate( this ); }
-        // public abstract void Instanciate(){ TOOL__module_context_images_actions.Instanciate( this ); }
+        public abstract void Load();
+        public abstract void Activate();
+        public abstract void Instanciate();
 }
 
 
@@ -50,15 +51,15 @@ public class RESOURCE__image_ref : RESOURCE__ref {
 
         
         public void Delete( ref RESOURCE__image_ref _ref_ref ){ Guaranty_ref(); TOOL__module_context_images_actions.Delete( this ); _ref_ref = null; } 
-        public void Unload(){ Guaranty_ref(); TOOL__module_context_images_actions.Unload( this ); }
-        public void Deactivate(){ Guaranty_ref(); TOOL__module_context_images_actions.Deactivate( this ); }
-        public void Deinstanciate(){ Guaranty_ref(); TOOL__module_context_images_actions.Deinstanciate( this );  }
+        public override void Unload(){ Guaranty_ref(); TOOL__module_context_images_actions.Unload( this ); }
+        public override void Deactivate(){ Guaranty_ref(); TOOL__module_context_images_actions.Deactivate( this ); }
+        public override void Deinstanciate(){ Guaranty_ref(); TOOL__module_context_images_actions.Deinstanciate( this );  }
 
         // ** UP
 
-        public void Load(){ TOOL__module_context_images_actions.Load( this ); }
-        public void Activate(){ TOOL__module_context_images_actions.Activate( this ); }
-        public void Instanciate(){ TOOL__module_context_images_actions.Instanciate( this ); }
+        public override void Load(){ TOOL__module_context_images_actions.Load( this ); }
+        public override void Activate(){ TOOL__module_context_images_actions.Activate( this ); }
+        public override void Instanciate(){ TOOL__module_context_images_actions.Instanciate( this ); }
 
 
         public void Activate_resource_action( Resource_action _action ){

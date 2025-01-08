@@ -10,6 +10,7 @@ using UnityEngine.Rendering;
 using UnityEngine.UI;
 using System.Runtime.InteropServices;
 using System.Numerics;
+using System.Diagnostics;
 
 
 
@@ -97,20 +98,74 @@ unsafe public class CONTROLLER__main : MonoBehaviour {
                 Figure_creation_data.Clean_context();
 
 
-                System.Diagnostics.Stopwatch st = System.Diagnostics.Stopwatch.StartNew();
+
+
+                // // ** to string -> 3m/seg
+
+                // string s = "";
+
+                // Stopwatch sttt = System.Diagnostics.Stopwatch.StartNew();
 
                     
-                    for( int i = 0 ; i < 100 ; i += 1 ){
+                //     for( int i = 0 ; i < 500_000 ; i += 1 ){
 
-                            var t  = new Texture2D( 2_000, 2_000, TextureFormat.RGBA32, false );
-                            t.SetPixel( 50,50, Color.blue );
-                            t.SetPixel( 500,500, Color.blue );
-                            t.SetPixel( 1500,1500, Color.blue );
-                            t.Apply();
 
-                    }
+                //             // s = st[ i % 15 ] + "a";
+                //             s = (i % 15).ToString()  + "a";
 
-                Debug.Log( st.ElapsedMilliseconds );
+                            
+                //     }
+
+                // UnityEngine.Debug.Log( sttt.ElapsedMilliseconds );
+
+
+        //         UnityEngine.Debug.Log( "memory: " + SystemInfo.graphicsMemorySize );
+
+
+
+
+
+        //         Process process = new Process();
+        //         process.StartInfo.FileName = "nvidia-smi";
+        //         process.StartInfo.Arguments = "--query-gpu=memory.used,memory.free --format=csv,noheader,nounits";
+        //         process.StartInfo.RedirectStandardOutput = true;
+        //         process.StartInfo.UseShellExecute = false;
+        //         process.StartInfo.CreateNoWindow = true;
+                
+        //         process.Start();
+        //         string output = process.StandardOutput.ReadToEnd();
+        //         process.WaitForExit();
+
+        //         UnityEngine.Debug.Log("VRAM Usage: " + output);
+
+
+        // // The output will look like this:
+        // // "1234 MiB, 3456 MiB"
+        // // We will split it by comma and parse the values
+        // string[] memoryValues = output.Split(',');
+
+        // if (memoryValues.Length >= 2)
+        // {
+        //     // Parse used and free memory
+        //     string usedMemoryStr = memoryValues[0].Trim(); // "1234 MiB"
+        //     string freeMemoryStr = memoryValues[1].Trim(); // "3456 MiB"
+
+        //     // You can convert these strings to integers or floats for further use, if needed.
+        //     UnityEngine.Debug.Log("Used VRAM: " + usedMemoryStr);
+        //     UnityEngine.Debug.Log("Free VRAM: " + freeMemoryStr);
+
+        //     // Optionally, display total memory as well if needed (Total VRAM is used + free memory)
+        //     int usedMemory = int.Parse(usedMemoryStr.Replace(" MiB", ""));
+        //     int freeMemory = int.Parse(freeMemoryStr.Replace(" MiB", ""));
+        //     int totalMemory = usedMemory + freeMemory;
+        //     UnityEngine.Debug.Log("Total VRAM: " + totalMemory + " MiB");
+        // }
+        // else
+        // {
+        //     UnityEngine.Debug.LogError("Failed to parse VRAM usage data.");
+        // }
+
+
 
 
                     
@@ -213,7 +268,7 @@ unsafe public class CONTROLLER__main : MonoBehaviour {
             
                 return; 
 
-                try{ Update_interno(); } catch( Exception exp ){ Debug.LogError( "Tem que fazer um modo para mandar mensagem " ); }
+                try{ Update_interno(); } catch( Exception exp ){ UnityEngine.Debug.LogError( "Tem que fazer um modo para mandar mensagem " ); }
                 
             
         }

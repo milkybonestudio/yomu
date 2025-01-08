@@ -30,7 +30,10 @@ public class Teste_figure : Figure {
         }
 
         public RESOURCE__image_ref head_1 = Get_image_reference_not_root( "Clothes/head_1" );
-        public RESOURCE__image_ref exp_1 = Get_image_reference( "exp_1" );
+
+        // public RESOURCE__image_ref exp_1 = Get_image_reference( "exp_1" );
+
+        public RESOURCE__image_ref[] exp_1_mouth = Get_images_reference( "exp_1", 2 );
     
         public RESOURCE__image_ref body_1 = Get_image_reference( "body_1" );
 

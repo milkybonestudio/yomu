@@ -47,6 +47,7 @@ public class RESOURCE__structure_copy {
                 public void Activate(){ Guaranty_copy(); TOOL__resource_structure_handler_ACTIONS.Activate( this ); }
 
                 public void Instanciate( GameObject _container = null, bool _set = true ){ TOOL__resource_structure_handler_ACTIONS.Instanciate( this, _container ); structure_game_object.SetActive( _set ); }
+                public void Set( bool _set  ){ structure_game_object.SetActive( _set ); }
 
                 // ** down resources
 
@@ -65,6 +66,9 @@ public class RESOURCE__structure_copy {
 
                 public GameObject Get_component_game_object( string _component_key ){ Guaranty_copy(); Guaranty_dic(); return TOOL__resources_structures.Get_component_game_object( this, _component_key ); }
                 public Image Get_component_image( string _component_key ){ Guaranty_copy(); Guaranty_dic(); return TOOL__resources_structures.Get_component_image( this, _component_key ); }
+                public SpriteRenderer Get_component_sprite_render( string _component_key ){ Guaranty_copy(); Guaranty_dic(); return TOOL__resources_structures.Get_component_sprite_render( this, _component_key ); }
+
+                public Unity_main_components Get_components( string _component_key ){ Guaranty_copy(); Guaranty_dic(); return TOOL__resources_structures.Get_components( this, _component_key ); }
 
                 
 

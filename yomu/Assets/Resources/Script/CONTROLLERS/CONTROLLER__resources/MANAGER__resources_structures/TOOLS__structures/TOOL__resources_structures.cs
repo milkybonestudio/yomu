@@ -32,8 +32,10 @@ public static class TOOL__resources_structures {
                 Unity_main_components unity_main_components = new Unity_main_components();
 
                     unity_main_components.active = true;
-                    unity_main_components.game_object = _obj;    
+                    unity_main_components.game_object = _obj;
+                    _obj.TryGetComponent<SpriteRenderer>( out unity_main_components.sprite_render );
                     _obj.TryGetComponent<Image>( out unity_main_components.image );
+                    
                     
 
                 if( !!!( _dic.TryAdd( key, unity_main_components ) ) )
@@ -112,12 +114,51 @@ public static class TOOL__resources_structures {
                     { CONTROLLER__errors.Throw( $"The component in the key <Color=lightBlue>{ _component_key }</Color> in the structure <Color=lightBlue>{ _copy.name }</Color> is not active" ); }
 
                 if( main_components.image == null )
-                    { CONTROLLER__errors.Throw( $"The component in the key <Color=lightBlue>{ _component_key }</Color> in the structure <Color=lightBlue>{ _copy.name }</Color> dont have the Game_object" ); }
+                    { CONTROLLER__errors.Throw( $"The component in the key <Color=lightBlue>{ _component_key }</Color> in the structure <Color=lightBlue>{ _copy.name }</Color> dont have the Image" ); }
                     
 
                 return main_components.image;
 
         }
+
+
+        public static SpriteRenderer Get_component_sprite_render( RESOURCE__structure_copy _copy, string _component_key ){
+
+
+                Unity_main_components main_components = new Unity_main_components();
+
+                // Console.Log( $"Vai tentar pegar o componente { _component_key } em image" );
+                
+                if( !!!( _copy.components_dic.TryGetValue( _component_key, out main_components ) ) )
+                    { CONTROLLER__errors.Throw( $"Did not found the component <Color=lightBlue>{ _component_key }</Color> in the structure <Color=lightBlue>{ _copy.name }</Color>" ); }
+
+                if( !!!( main_components.active ) )
+                    { CONTROLLER__errors.Throw( $"The component in the key <Color=lightBlue>{ _component_key }</Color> in the structure <Color=lightBlue>{ _copy.name }</Color> is not active" ); }
+
+                if( main_components.sprite_render == null )
+                    { CONTROLLER__errors.Throw( $"The component in the key <Color=lightBlue>{ _component_key }</Color> in the structure <Color=lightBlue>{ _copy.name }</Color> dont have the sprite render" ); }
+                    
+
+                return main_components.sprite_render;
+
+        }
+
+
+
+        public static Unity_main_components Get_components( RESOURCE__structure_copy _copy, string _component_key ){
+
+
+                Unity_main_components main_components = new Unity_main_components();
+
+                // Console.Log( $"Vai tentar pegar o componente { _component_key } em image" );
+                
+                if( !!!( _copy.components_dic.TryGetValue( _component_key, out main_components ) ) )
+                    { CONTROLLER__errors.Throw( $"Did not found the component <Color=lightBlue>{ _component_key }</Color> in the structure <Color=lightBlue>{ _copy.name }</Color>" ); }
+
+                return main_components;
+
+        }
+
 
 
 

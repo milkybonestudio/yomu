@@ -20,6 +20,7 @@ public struct Figure_data_getter {
 
         public void Put_data( Resource_context _context, string _main_folder, string _root, Figure_use_context _context_figure ){
 
+
                 if( show_who )
                     { Console.Log( $"put fata on { _main_folder }" ); }
                 
@@ -41,6 +42,7 @@ public struct Figure_data_getter {
                 resources_images = controller.resources_images;
                 resources_structures = controller.resources_structures;
 
+
         }
 
 
@@ -50,9 +52,12 @@ public struct Figure_data_getter {
         }
 
 
-        public RESOURCE__image_ref Get_image_reference( string _name ){ Verify(); return resources_images.Get_image_reference( context, main_folder, ( path_root + "/" + _name ), level_pre_alloc ); }
-
+        public RESOURCE__image_ref Get_image_reference( string _name ){ Verify(); return resources_images.Get_image_reference( context, main_folder, ( path_root + "/" + _name  ), level_pre_alloc ); }
         public RESOURCE__image_ref Get_image_reference_not_root( string _name ){ Verify(); return resources_images.Get_image_reference( context, main_folder,  _name , level_pre_alloc ); }
+
+        public RESOURCE__image_ref[] Get_images_reference( string _name, int _number_images ){ Verify(); return resources_images.Get_images_reference( context, main_folder, ( path_root + "/" + _name + "/" ), level_pre_alloc, _number_images );}
+        public RESOURCE__image_ref[] Get_images_reference_not_root( string _name, int _number_images ){ Verify(); return resources_images.Get_images_reference( context, main_folder,  _name + "/" , level_pre_alloc, _number_images ); }
+
 
         private void Verify(){ if( ( main_folder == null ) || ( path_root == null) ){ CONTROLLER__errors.Throw( "forgot to put <Color=lightBlue>static constructor</Color> in some figure" ); }}
 

@@ -6,6 +6,27 @@ unsafe public static class INT {
 
 
 
+
+            public static string ToString( int _int ){
+
+
+                    if( numbers_string == null )
+                        {
+                            numbers_string = new string[ 30 ];
+                            for( int i = 0; i < 30; i++ )
+                                { numbers_string[ i ] = i.ToString(); }
+                        }
+
+                    if( _int > numbers_string.Length || _int < 0 )
+                        { return _int.ToString(); }
+                
+
+                    return numbers_string[ _int ];
+
+            }
+
+            public static string[] numbers_string;
+
             public static void Reajust_sort_array_after_deletions( int[] _array ){
 
 

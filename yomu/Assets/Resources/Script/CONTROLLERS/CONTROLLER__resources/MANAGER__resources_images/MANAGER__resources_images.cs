@@ -61,6 +61,37 @@ public class MANAGER__resources_images : MANAGER__RESOURCES {
         public RESOURCE__image_ref Get_image_reference( Resource_context _context, string _main_folder,  string _path, Resource_image_content _level_pre_allocation ){ Verify( _context, _main_folder,  _path, _level_pre_allocation ); return context_images_modules[ ( int ) _context ].Get_image_ref( _main_folder, _path, _level_pre_allocation ) ; }
 
 
+        public RESOURCE__image_ref[] Get_images_reference( Resource_context _context, string _main_folder,  string _name, Resource_image_content _level_pre_allocation, int _number_images ){ 
+
+            Verify( _context, _main_folder, _name, _level_pre_allocation ); 
+
+                RESOURCE__image_ref[] ret  = new RESOURCE__image_ref[ _number_images ];
+
+                #if UNITY_EDITOR
+
+                    string path = System.IO.Path.Combine( Application.dataPath,"Resources", _context.ToString(), _main_folder, _name ) ;
+
+                    if( !!!( System.IO.Directory.Exists( path ) ) )
+                        { CONTROLLER__errors.Throw( $"in the sequence <Color=lightBlue>{ _name }</Color> there is no folder in the path { path }" ); }
+
+                    string[] strs = System.IO.Directory.GetFiles( path ).Where( s => !!!(s.EndsWith( ".meta" )) ).ToArray();
+
+
+                    if( strs.Length != _number_images )
+                        { CONTROLLER__errors.Throw( $"in the sequence <Color=lightBlue>{ _name }</Color> have <Color=lighBlue>{ strs.Length }</Color> images, but the number_images is <Color=lighBlue>{ _number_images }</Color>" ); }
+
+
+                #endif
+
+
+                for( int slot_animation = 0 ; slot_animation < _number_images ; slot_animation++ )
+                    { ret[ slot_animation ] = Get_image_reference( _context, _main_folder, ( _name + INT.ToString( slot_animation ) ), _level_pre_allocation ); }
+                
+                return ret;
+
+        }
+
+
         private void Verify( Resource_context _context, string _main_folder,  string _path, Resource_image_content _level_pre_allocation ) {
 
 

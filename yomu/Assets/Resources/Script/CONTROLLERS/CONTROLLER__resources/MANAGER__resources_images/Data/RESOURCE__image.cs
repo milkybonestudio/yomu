@@ -37,6 +37,10 @@ unsafe public class RESOURCE__image {
         
         public int width; 
         public int height; 
+
+        public float width_float; 
+        public float height_float;
+
         public int pointer_container; 
         public int data_size; 
         public int number_images; 

@@ -9,9 +9,13 @@ public class Teste_figure_MAD : Figure_type<Teste_figure> {
                 Link( "arms", figure.arms_1 );
                 Link( "top", figure.top_1 );
                 Link( "head", figure.head_1 );
-                Link( "exp", figure.exp_1 );
+
+
+                Link_mouth( "exp", figure.exp_1_mouth );
 
         }
+
+        
 
 
 }

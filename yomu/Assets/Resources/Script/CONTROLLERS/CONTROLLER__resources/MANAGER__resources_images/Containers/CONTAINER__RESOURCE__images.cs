@@ -49,14 +49,14 @@ public class CONTAINER__RESOURCE__images {
                 
                 Array.Resize( ref images_available, images_available.Length + 150 );
 
-                while(  old_length++ < ( images_available.Length - 1 )  ){
-
-                        images_available[ pointer_object_to_verify ] = new RESOURCE__image();
-                        
-                }
+                while(  old_length++ < ( images_available.Length - 1 )  )
+                    { images_available[ pointer_object_to_verify ] = new RESOURCE__image();}
 
                 RESOURCE__image new_image = images_available[ pointer_object_to_verify ];
                 images_available[ pointer_object_to_verify ] = null;
+
+                Put_data_image( new_image, _module_images, _context, _main_folder, _path, locator );
+
                 return new_image;
             
 
@@ -161,6 +161,8 @@ public class CONTAINER__RESOURCE__images {
 
                 _image.width = locator.width;
                 _image.height = locator.height;
+                _image.width_float = ( float ) locator.width;
+                _image.height_float = ( float ) locator.height;
                 _image.pointer_container = locator.pointer;
                 _image.data_size = locator.length;
 

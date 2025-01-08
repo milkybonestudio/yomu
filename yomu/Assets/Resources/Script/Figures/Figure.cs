@@ -48,11 +48,16 @@ public abstract class Figure {
         public static void Put_data( string _main_folder, string _root_path, Resource_context _resources_context = Resource_context.Characters  ){ Figure_creation_data.Put_data( _resources_context,_main_folder, _root_path ); }
 
         public static RESOURCE__image_ref Get_image_reference( string _name ){ return Figure_creation_data.figure_getter_static.Get_image_reference( _name ); }
+        public static RESOURCE__image_ref[] Get_images_reference( string _name, int _number_images ){ return Figure_creation_data.figure_getter_static.Get_images_reference( _name, _number_images ); }
+        
         public static RESOURCE__image_ref Get_image_reference_not_root( string _name ){return Figure_creation_data.figure_getter_static.Get_image_reference_not_root( _name ); }
+        public static RESOURCE__image_ref[] Get_images_reference_not_root( string _name, int _number_images ){return Figure_creation_data.figure_getter_static.Get_images_reference_not_root( _name, _number_images ); }
 
 
 
         // --- DATA
+
+        
 
         public Linear_dictionary_figure_modes figure_modes;
         public Figure_data_getter figure_getter_object;

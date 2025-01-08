@@ -68,6 +68,8 @@ unsafe public static class TOOL__loader_texture {
         public static void Transfer_data_PNG( byte[] png,  NativeArray<Color32> _native_arr_texture ){
 
                 
+
+                
                 if( png == null )
                     { CONTROLLER__errors.Throw( "png veio null" ); }
 

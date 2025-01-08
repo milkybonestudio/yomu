@@ -12,10 +12,10 @@ public abstract class Figure_type<FIGURE_TYPE> : Figure_mode where FIGURE_TYPE :
 
                     figure_interface = _figure;
                     visual_figure = _visual_figure;
-                    resources   =  new Figure_mode_resources()  {
-                                                                    images_links = new Figure_mode_image_link[ _images_links_length ],
-                                                                    resources = new RESOURCE__ref[ _resources_length ]
-                                                                };
+                    main   = new Figure_mode_main() {
+                                                        images_links = new Image_link[ _images_links_length ],
+                                                        resources = new RESOURCE__ref[ _resources_length ]
+                                                    };
 
                     return this;
 
