@@ -46,6 +46,8 @@ unsafe public class CONTROLLER__main : MonoBehaviour {
         public CONTROLLER__tasks controlador_tasks;
         public CONTROLLER__audio controlador_audio;
 
+        public CONTROLLER__cameras controller_cameras;
+
 
 
 
@@ -67,8 +69,6 @@ unsafe public class CONTROLLER__main : MonoBehaviour {
                 CONTROLLER__resources.Get_instance().resources_structures.container_to_instanciate.SetActive( false );
 
                 // ** pra testar é bom deixar aqui, se tiver algum erro e nao tiver auqi vai travar quando tentar setar o contexto
-                Figure_creation_data.Clean_context();
-
                 
                 // b_up = EXAMPLE_UI_button.Simple( GameObject.Find( "Tela/Container_teste/a" ) ); 
             
@@ -77,101 +77,28 @@ unsafe public class CONTROLLER__main : MonoBehaviour {
                 // r_l = CONTROLLER__resources.Get_instance().resources_logics.Get_logic_reference( Resource_context.Characters, "LOGIC__lily_1", "Get_number", Resource_logic_content.method_info );
 
 
-                RESOURCE__structure_copy s_c = CONTROLLER__resources.Get_instance().resources_structures.Get_structure_copy(Resource_context.Characters, "Lily", "Clothes/Clothes_prefab", Resource_structure_content.game_object );
+                //RESOURCE__structure_copy s_c = CONTROLLER__resources.Get_instance().resources_structures.Get_structure_copy(Resource_context.Characters, "Lily", "Clothes/Clothes_prefab", Resource_structure_content.game_object );
 
                 // s_c.Instanciate( GameObject.Find( "Tela/Container_teste" ) );
 
-
-                Figure_creation_data.Set_context( Figure_use_context.conversation );
-
-
-                    figure = Teste_figure.Construct().Set( GameObject.Find( "Tela/Container_teste" ) );
+                story_text_display =  new Golden_text_display_DOWN();
 
 
+            //mark
+            // ** a figure que esta sendo criada nao esta destruindo a texture, esta dando memory leak no editor
+
+
+                                                                // what
+                    // figure = Teste_figure.Construct().Set( GameObject.Find( "Container_teste" ) );
+
+                    figure = Teste_figure.Construct();
                     figure.Prepare( Figure_mode_type.mad );
-                    figure.Get( Figure_mode_type.mad ).Instanciate();
-                    // figure.Rescale_to( 200f );
-
-                    // figure.Get( Figure_mode_type.mad ).Prepare();
-
-
-                Figure_creation_data.Clean_context();
-
-
-
-
-                // // ** to string -> 3m/seg
-
-                // string s = "";
-
-                // Stopwatch sttt = System.Diagnostics.Stopwatch.StartNew();
-
-                    
-                //     for( int i = 0 ; i < 500_000 ; i += 1 ){
-
-
-                //             // s = st[ i % 15 ] + "a";
-                //             s = (i % 15).ToString()  + "a";
-
-                            
-                //     }
-
-                // UnityEngine.Debug.Log( sttt.ElapsedMilliseconds );
-
-
-        //         UnityEngine.Debug.Log( "memory: " + SystemInfo.graphicsMemorySize );
-
-
-
-
-
-        //         Process process = new Process();
-        //         process.StartInfo.FileName = "nvidia-smi";
-        //         process.StartInfo.Arguments = "--query-gpu=memory.used,memory.free --format=csv,noheader,nounits";
-        //         process.StartInfo.RedirectStandardOutput = true;
-        //         process.StartInfo.UseShellExecute = false;
-        //         process.StartInfo.CreateNoWindow = true;
-                
-        //         process.Start();
-        //         string output = process.StandardOutput.ReadToEnd();
-        //         process.WaitForExit();
-
-        //         UnityEngine.Debug.Log("VRAM Usage: " + output);
-
-
-        // // The output will look like this:
-        // // "1234 MiB, 3456 MiB"
-        // // We will split it by comma and parse the values
-        // string[] memoryValues = output.Split(',');
-
-        // if (memoryValues.Length >= 2)
-        // {
-        //     // Parse used and free memory
-        //     string usedMemoryStr = memoryValues[0].Trim(); // "1234 MiB"
-        //     string freeMemoryStr = memoryValues[1].Trim(); // "3456 MiB"
-
-        //     // You can convert these strings to integers or floats for further use, if needed.
-        //     UnityEngine.Debug.Log("Used VRAM: " + usedMemoryStr);
-        //     UnityEngine.Debug.Log("Free VRAM: " + freeMemoryStr);
-
-        //     // Optionally, display total memory as well if needed (Total VRAM is used + free memory)
-        //     int usedMemory = int.Parse(usedMemoryStr.Replace(" MiB", ""));
-        //     int freeMemory = int.Parse(freeMemoryStr.Replace(" MiB", ""));
-        //     int totalMemory = usedMemory + freeMemory;
-        //     UnityEngine.Debug.Log("Total VRAM: " + totalMemory + " MiB");
-        // }
-        // else
-        // {
-        //     UnityEngine.Debug.LogError("Failed to parse VRAM usage data.");
-        // }
-
-
-
 
                     
         }   
 
         public Figure figure;   
+        Story_text_display story_text_display;
 
 
         public bool aa = false;
@@ -185,72 +112,45 @@ unsafe public class CONTROLLER__main : MonoBehaviour {
     
         public void Update() {
 
+                story_text_display.Update( null );
+
+                if( Input.GetKeyDown( KeyCode.G ) )
+                    { story_text_display .Instanciate( GameObject.Find( "Container_teste" ) ); }
+
+                if( Input.GetKey( KeyCode.LeftArrow ) )
+                    { story_text_display .Move( -50f, 0f, 0f ); }
+                if( Input.GetKey( KeyCode.RightArrow ) )
+                    { story_text_display .Move( 50f, 0f, 0f ); }
+
+
+
+                // if( Input.GetKeyDown( KeyCode.J ) )
+                //     { CONTROLLER__cameras.Get_instance().Switch_cameras( Camera_switch_type.fade, "Visual_novel" ); }
+
+
+                if( Input.GetKeyDown( KeyCode.K ) )
+                    { CONTROLLER__cameras.Get_instance().Switch_cameras( Camera_switch_type.fade, "Management" ); }
+
+
+                // if( Input.GetKeyDown( KeyCode.L ) )
+                //     { CONTROLLER__cameras.Get_instance().Switch_cameras( Camera_switch_type.fade, "Nothing" ); }
+
+                if( Input.GetKeyDown( KeyCode.B ) )
+                    { figure.Instanciate( Figure_mode_type.mad, GameObject.Find( "Container_teste" ) ); }
+                    
+
+                // if( Input.GetKeyDown( KeyCode.M ) )
+                //     { figure.Get( Figure_mode_type.mad ).Speak( new Speak_data(){ loops = 10 } ); }
+
+
+                if( Input.GetKeyDown( KeyCode.J ) )
+                    { figure.Activate_emoji( Figure_emoji.heart ); }
 
 
 
                 figure.Update();
 
-
-                //Lettlece l = new();  
-
-
-                //TOOL__resource_logic_testing.Test( ref r_l, new object[]{ 1, "a" } );
-
-
-                // return;
-
-        
-                // if( Input.GetKeyDown( KeyCode.A ) )
-                //     { text_container.Add_dimensions( 20f, 20f ); }
-
                 
-                // if( Input.GetKey( KeyCode.LeftArrow ) )
-                //     { b_up.container.Move( -200f * Time.deltaTime , 0f ); ac *= 1.05f; }
-
-
-                // if( Input.GetKey( KeyCode.RightArrow ) )
-                //     { b_up.container.Move( 200f * Time.deltaTime, 0f ); ac += 1; }
-
-                // if( Input.GetKey( KeyCode.UpArrow ) )
-                //     { b_up.container.Move( 0f, 200f* Time.deltaTime ); ac *= 1.05f; }
-
-                
-                // if( Input.GetKey( KeyCode.DownArrow ) )
-                //     { b_up.container.Move( 0f, -200f * Time.deltaTime); ac *= 1.05f; }
-
-
-
-                // if( Input.GetKey( KeyCode.B ) )
-                //     { text_container.Put_text( "abacataoooo<Color=lightBlue>AAAA</Color>ooooooooo", 0, Color.red ); }
-
-                // if( Input.GetKey( KeyCode.V ) )
-                //     { text_container.Put_text( "olha ssom que vai vir LOL", 0, Color.green ); }
-
-
-                // if( Input.GetKey( KeyCode.P ) )
-                //     { text_container.Change_type_construction( Type_writing_construction.fade ); }
-
-
-                    
-
-                // if( Input.GetKeyDown( KeyCode.U ) )
-                //     { b_up.container.Add_scale( 0.5f ); }
-
-                // if( Input.GetKeyDown( KeyCode.O ) )
-                //     { b_up.container.Add_scale( -0.5f ); }
-
-
-
-                // if( Input.GetKey( KeyCode.H ) )
-                //     { b_up.container.Add_rotation_Z( 50f * Time.deltaTime ); }
-
-                // if( Input.GetKey( KeyCode.J ) )
-                //     { b_up.container.Add_rotation_X( 50f * Time.deltaTime ); }
-
-                // if( Input.GetKey( KeyCode.K ) )
-                //     { b_up.container.Add_rotation_Y( 50f * Time.deltaTime ); }
-
-
             
 
                 CONTROLLER__input.instancia.Update();
@@ -261,6 +161,7 @@ unsafe public class CONTROLLER__main : MonoBehaviour {
 
                 // ** aqui seria o real, ver certo depois
                 Process_weight p = new (){ weight = 10 };
+                CONTROLLER__cameras.Get_instance().Update();
                 CONTROLLER__resources.Get_instance().Update( ref p );
                 CONTROLLER__tasks.Pegar_instancia().Update();
                 Console.Update();
@@ -329,10 +230,12 @@ unsafe public class CONTROLLER__main : MonoBehaviour {
                 
                 Dados_fundamentais_sistema.jogo_ativo = false;
                 Jogo.Zerar_dados();
+                MANAGER__textures_resources.Clean_all();
                 
         }
 
         
 
 }
+
 

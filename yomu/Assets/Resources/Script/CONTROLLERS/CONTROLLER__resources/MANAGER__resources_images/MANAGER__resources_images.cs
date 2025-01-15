@@ -15,6 +15,8 @@ public class MANAGER__resources_images : MANAGER__RESOURCES {
                 container_image_refs = new CONTAINER__RESOURCE__image_refs();
                 context_images_modules = new MODULE__context_images[ contexts.Length ];
 
+                textures_manager = new MANAGER__textures_resources();
+
                 for( int context_index = ( int )( Resource_context.not_given + 1 ) ; context_index < contexts.Length ; context_index++ )
                     { context_images_modules[ context_index ] = new MODULE__context_images( _manager: this, _context: contexts[ context_index ], _initial_capacity: 1_000, _buffer_cache: 2_000_000 ); }
 
@@ -67,7 +69,7 @@ public class MANAGER__resources_images : MANAGER__RESOURCES {
 
                 RESOURCE__image_ref[] ret  = new RESOURCE__image_ref[ _number_images ];
 
-                #if UNITY_EDITOR
+                #if UNITY_EDITOR 
 
                     string path = System.IO.Path.Combine( Application.dataPath,"Resources", _context.ToString(), _main_folder, _name ) ;
 
@@ -78,14 +80,14 @@ public class MANAGER__resources_images : MANAGER__RESOURCES {
 
 
                     if( strs.Length != _number_images )
-                        { CONTROLLER__errors.Throw( $"in the sequence <Color=lightBlue>{ _name }</Color> have <Color=lighBlue>{ strs.Length }</Color> images, but the number_images is <Color=lighBlue>{ _number_images }</Color>" ); }
+                        { CONTROLLER__errors.Throw( $"in the sequence <Color=lightBlue>{ _name }</Color> have <Color=lighBlue>{ strs.Length }</Color> images in the folder, but the number_images is <Color=lighBlue>{ _number_images }</Color> in the script" ); }
 
 
                 #endif
 
 
                 for( int slot_animation = 0 ; slot_animation < _number_images ; slot_animation++ )
-                    { ret[ slot_animation ] = Get_image_reference( _context, _main_folder, ( _name + INT.ToString( slot_animation ) ), _level_pre_allocation ); }
+                    { ret[ slot_animation ] = Get_image_reference( _context, _main_folder, ( _name + "/" + INT.ToString( slot_animation ) ), _level_pre_allocation ); }
                 
                 return ret;
 

@@ -10,7 +10,10 @@ public enum Resource_context {
 
         Characters, 
 
+        Blocks, 
+
         Devices,
+        Effects,
         // minigames, 
         // backgrounds,
         // stories, // pode ter as splashes e scripts

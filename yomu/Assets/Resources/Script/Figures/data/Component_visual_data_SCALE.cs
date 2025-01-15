@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public struct Figure_visual_data_SCALE {
+public struct Component_visual_data_SCALE {
 
 
         public void Start(){

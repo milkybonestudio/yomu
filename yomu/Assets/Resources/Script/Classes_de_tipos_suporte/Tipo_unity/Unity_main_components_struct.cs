@@ -10,6 +10,8 @@ public struct Unity_main_components {
         public Image image;
         public TMP_Text tmp_text;
         public SpriteRenderer sprite_render;
+        public Material material;
+        
         
 
 }

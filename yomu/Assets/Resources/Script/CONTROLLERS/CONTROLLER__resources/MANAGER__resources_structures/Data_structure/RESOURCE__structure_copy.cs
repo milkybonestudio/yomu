@@ -46,6 +46,7 @@ public class RESOURCE__structure_copy {
                 public void Load(){ Guaranty_copy(); TOOL__resource_structure_handler_ACTIONS.Load( this ); }
                 public void Activate(){ Guaranty_copy(); TOOL__resource_structure_handler_ACTIONS.Activate( this ); }
 
+                // _container -> null -> continue no container structs
                 public void Instanciate( GameObject _container = null, bool _set = true ){ TOOL__resource_structure_handler_ACTIONS.Instanciate( this, _container ); structure_game_object.SetActive( _set ); }
                 public void Set( bool _set  ){ structure_game_object.SetActive( _set ); }
 

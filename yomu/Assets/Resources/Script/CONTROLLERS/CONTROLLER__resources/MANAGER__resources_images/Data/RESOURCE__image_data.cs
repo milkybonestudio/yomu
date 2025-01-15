@@ -5,6 +5,7 @@ using UnityEngine;
 
 public struct RESOURCE__image_data {
 
+
             public bool used;
 
             // ** por hora nao vai ter texture alloc, vai ser somente 1 texture para cada 
@@ -17,6 +18,8 @@ public struct RESOURCE__image_data {
 
 
             public Texture2D texture_exclusiva;
+            public int slot_texture;
+            
             public NativeArray<Color32> texture_exclusiva_native_array;
             public Sprite sprite;
 

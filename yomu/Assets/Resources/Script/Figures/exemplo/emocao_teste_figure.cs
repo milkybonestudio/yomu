@@ -11,7 +11,8 @@ public class Teste_figure_MAD : Figure_type<Teste_figure> {
                 Link( "head", figure.head_1 );
 
 
-                Link_mouth( "exp", figure.exp_1_mouth );
+                Link_mouth( "exp", figure.exp_1_mouth, Frame_rate._8 );
+                Link_emoji();
 
         }
 

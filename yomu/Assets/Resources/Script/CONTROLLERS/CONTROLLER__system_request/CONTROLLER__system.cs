@@ -2,14 +2,23 @@ using System;
 
 
 
-public class CONTROLLER__system_requests {
+public class CONTROLLER__system {
 
 
-        public static CONTROLLER__system_requests instancia;
-        public static CONTROLLER__system_requests Pegar_instancia(){ return instancia; }
+        public static CONTROLLER__system instancia;
+        public static CONTROLLER__system Pegar_instancia(){ return instancia; }
 
         // *** pedidos
         public bool pediu_para_encerrar_jogo = false; // ** vai iniciar 
+
+
+        public int graphic_memory;
+        public int ram_memory;
+
+        public int processor_frequency;
+        public int processor_cores;
+        
+        
 
         // --- PEDIDO FINALIZAR
 

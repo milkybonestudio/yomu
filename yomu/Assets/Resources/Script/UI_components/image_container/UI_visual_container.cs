@@ -20,7 +20,7 @@ public class UI_visual_container : UI_component {
 
                 string path_imagem = ( _path_dispositivo + "/" + _dados.nome );
 
-                game_object = GAME_OBJECT.Find( _path: path_imagem, _message_on_not_find: $"Nao foi achado a imagem estatica no path { path_imagem }", _throw_exception: true );
+                game_object = GAME_OBJECT.Find( _path: path_imagem, _message_on_not_find: $"Nao foi achado a imagem estatica no path { path_imagem }" );
                 image = IMAGE.Get_component( _game_object: game_object, _message_on_not_find: $"A imagem estatica { _dados.nome } nao tinha o componente Image", _throw_exception: true );
 
                 

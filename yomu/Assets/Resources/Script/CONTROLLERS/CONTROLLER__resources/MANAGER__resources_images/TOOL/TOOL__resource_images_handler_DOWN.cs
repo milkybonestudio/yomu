@@ -65,10 +65,7 @@ public static class TOOL__resource_images_handler_DOWN {
                     { Console.LogError( "isso era meio obvio?" ); return 0; }
 
                 // --- DESTROY
-                GameObject.Destroy( _image.single_image.texture_exclusiva );
-
-                _image.single_image.sprite = null;
-                _image.single_image.texture_exclusiva_native_array.Dispose();
+                _manager.textures_manager.Liberate_texture( _image );
                 _image.actual_content = Resource_image_content.compress_data;
 
                 return 1;

@@ -14,7 +14,10 @@ public static class Shaders {
     public static Shader normal = Shader.Find( "Teste" );
     public static Shader teste_shader = Shader.Find( "Shader Graphs/Teste_shader" );
     public static Shader figure = Shader.Find( "Shader Graphs/Figure" );
-    public static Shader DEFAULT = Shader.Find( "Shader Graphs/Default" );
+
+    public static Shader individual_components = Shader.Find( "Shader Graphs/Individual_component" );
+
+    public static Shader _DEFAULT = Shader.Find( "Shader Graphs/Default" );
 
 
 

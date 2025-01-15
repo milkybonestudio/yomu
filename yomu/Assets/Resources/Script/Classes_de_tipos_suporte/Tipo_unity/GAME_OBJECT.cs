@@ -5,18 +5,13 @@ using UnityEngine;
 public static class GAME_OBJECT {
 
 
-        public static GameObject Find( string _path , string _message_on_not_find, bool _throw_exception ){
+        public static GameObject Find( string _path , string _message_on_not_find = "not find" ){
 
             GameObject game_object = GameObject.Find( _path );
 
             if( game_object == null )
-                { 
-                    if( _throw_exception )
-                        { throw new System.Exception(_message_on_not_find ); }
-                        else
-                        { Console.LogError( _message_on_not_find ); }
-                     
-                }
+                { CONTROLLER__errors.Throw( _message_on_not_find + ". path: " + _path ); }
+
             return game_object;
 
         }

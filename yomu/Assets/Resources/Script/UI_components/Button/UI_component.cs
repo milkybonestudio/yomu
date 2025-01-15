@@ -1,5 +1,7 @@
 
 
+using UnityEngine;
+
 public abstract class UI_component {
 
     public UI_container container;
@@ -10,3 +12,8 @@ public abstract class UI_component {
 
 
 }
+
+
+
+
+

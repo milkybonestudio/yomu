@@ -1178,7 +1178,7 @@ public class Leitor_visual_novel{
 
                     
 
-                Req_transicao req_transicao = CONTROLLER__system_requests.instancia.Create_new_transition_req();
+                Req_transicao req_transicao = CONTROLLER__system.instancia.Create_new_transition_req();
                 
                     req_transicao.tipo_troca_bloco = Tipo_troca_bloco.OUT;
                     req_transicao.tipo_transicao = Tipo_transicao.instantaneo;

@@ -26,7 +26,7 @@ public static class Construtor_controlador {
                 Application.runInBackground = true;
 
                 CONSTRUCTOR__paths_system.Construct();
-                // Shaders.Get_shaders();
+                
 
 
                 // --- CONSTRUIR CONTROLADORES GERAIS
@@ -43,6 +43,8 @@ public static class Construtor_controlador {
                 CONSTRUCTOR__controller_resources.Construct();
 
                 CONSTRUCTOR__controller_items.Construct();
+
+                controlador.controller_cameras = CONSTRUCTOR__controller_cameras.Construct();
                 
 
                 controlador.controlador_development = Construtor_controlador_development.Construir();  
@@ -55,6 +57,13 @@ public static class Construtor_controlador {
                 // --- VERIFICAR ARQUIVO DE SEGURANCA
                 if( !!!( Gerenciador_seguranca_main.Garantir_arquivo_de_seguranca()) )
                         { return ; } // --- PRECISA RECONSTRUIR
+
+
+
+                // --- LISTS
+
+                Figure_emojis_list.list = new Figure_emojis_list();
+
 
 
                 

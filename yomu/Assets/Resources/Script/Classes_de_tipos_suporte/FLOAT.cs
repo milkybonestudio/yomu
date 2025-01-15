@@ -23,5 +23,16 @@ public static class FLOAT {
 
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining )]
+        public static float Set_max( float _value, float _max ){
+
+                if( _value > _max )
+                    { return _max; }
+                    
+                return _value;
+
+        }
+
+
 
 }

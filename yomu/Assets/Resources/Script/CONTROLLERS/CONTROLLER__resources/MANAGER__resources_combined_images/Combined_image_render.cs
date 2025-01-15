@@ -124,7 +124,12 @@ public class Combined_image_render{
 
                 // ** CRIAR PLANE
 
+        
+                container_images = new GameObject( "combined_images" );
                 quad_render = GameObject.Instantiate( Resources.Load<GameObject>( "Quad" ) );
+
+
+                quad_render.transform.SetParent( container_images.transform, false );
 
 
 
@@ -132,9 +137,11 @@ public class Combined_image_render{
                 float scale_y = ( ( float ) height ) / 100f ;
 
                 MeshRenderer mesh_render = quad_render.GetComponent<MeshRenderer>();
-                mesh_render.material = new Material( Shaders.DEFAULT );
+                mesh_render.material = new Material( Shaders.individual_components );
 
                 mesh_render.material.SetTexture( "_MainTex", render_texture );
+
+
 
 
                 quad_render.transform.localScale = new Vector3( scale_x, scale_y, 1f );
@@ -147,7 +154,9 @@ public class Combined_image_render{
         }
 
 
+
         public GameObject quad_render; // pegar
+        public GameObject container_images; // ** empity 
 
 
         // ** new

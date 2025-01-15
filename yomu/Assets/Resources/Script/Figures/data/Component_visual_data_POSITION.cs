@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public struct Figure_visual_data_POSITION {
+public struct Component_visual_data_POSITION {
 
 
         public void Start(){
@@ -55,7 +55,7 @@ public struct Figure_visual_data_POSITION {
                 
                 Vector3 resto = ( current - final );
 
-                float distance = Mathf.Sqrt( ( resto.x * resto.x ) + ( resto.y * resto.y ) );
+                float distance = Mathf.Sqrt( ( resto.x * resto.x ) + ( resto.y * resto.y ) + ( resto.z * resto.z )  );
                 float frame_difference = ( base_speed_per_second * speed_per_second * Time.deltaTime );
                 // Console.Log( "distancia" + distance );
                 
@@ -66,18 +66,34 @@ public struct Figure_visual_data_POSITION {
 
 
                 if( distance <= frame_difference )
-                    {  current = final; return current;  }
+                    {  
+                        current = final;                         
+                    }
+                    else
+                    {
+                        float alp = ( frame_difference / distance  );
+
+                        resto.x *= alp;
+                        resto.y *= alp;
+                        resto.z *= alp;
+
+                        current.x -= ( resto.x );
+                        current.y -= ( resto.y );
+                        current.z -= ( resto.z );
+
+                    }
                 
 
-                
-                float alp = ( frame_difference / distance  );
+                // ** aplica PPU 1:100
 
-                current.x -= ( alp * resto.x );
-                current.y -= ( alp * resto.y );
-                current.z -= ( alp * resto.z );
+                Vector3 retorno_PPU = current;
 
-                Console.Log( "current: " + current );
-                return current;
+                retorno_PPU.x *= PPU.value;
+                retorno_PPU.y *= PPU.value;
+                retorno_PPU.z *= PPU.value;
+
+
+                return retorno_PPU;
             
 
         }

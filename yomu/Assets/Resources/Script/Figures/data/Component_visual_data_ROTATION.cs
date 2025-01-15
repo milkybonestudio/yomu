@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public struct Figure_visual_data_ROTATION {
+public struct Component_visual_data_ROTATION {
 
 
 
@@ -40,6 +40,9 @@ public struct Figure_visual_data_ROTATION {
 
 
         public Quaternion Calculate_final(){
+
+            //mark 
+            // ** nao esta fazendo direito, se esta em 0 e o ponto final é 370 ele nao pode só ir para o 10
 
             final = ( normal * off_set );
 

@@ -71,11 +71,10 @@ public class MANAGER__resources_combined_images : MANAGER__RESOURCES {
 
                 camera_game_object.transform.SetParent( camera_renders_container.transform, false );
                 camera_game_object.transform.localPosition = position;
-                camera_game_object.transform.localRotation *= Quaternion.Euler( 0f,180f, 0f );
+                camera_game_object.transform.localRotation *= Quaternion.Euler( 0f, 0f, 0f );
 
                 _game_object.transform.SetParent( camera_renders_container.transform, false );
-                _game_object.transform.localPosition = position + new Vector3( 0f, 0f, -10f );
-
+                _game_object.transform.localPosition = position + new Vector3( 0f, 0f, 10f );
 
 
                 Combined_image_render render = new Combined_image_render( _game_object, _links, camera, camera_game_object,  line, collum );

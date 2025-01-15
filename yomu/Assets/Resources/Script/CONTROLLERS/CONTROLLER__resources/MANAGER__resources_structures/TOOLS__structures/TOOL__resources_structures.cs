@@ -34,6 +34,12 @@ public static class TOOL__resources_structures {
                     unity_main_components.active = true;
                     unity_main_components.game_object = _obj;
                     _obj.TryGetComponent<SpriteRenderer>( out unity_main_components.sprite_render );
+                    if( unity_main_components.sprite_render != null )
+                        {
+                            unity_main_components.material = new Material( Shaders.individual_components );
+                            unity_main_components.sprite_render.material = unity_main_components.material;
+                        }
+                
                     _obj.TryGetComponent<Image>( out unity_main_components.image );
                     
                     
