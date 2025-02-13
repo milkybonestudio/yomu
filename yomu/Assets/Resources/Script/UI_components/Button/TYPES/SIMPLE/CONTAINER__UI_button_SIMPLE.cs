@@ -1,6 +1,7 @@
 
 
 
+using UnityEngine;
 
 public class CONTAINER__UI_button_SIMPLE : CONTAINER__generic<UI_button_SIMPLE> {
                                                  
@@ -37,12 +38,16 @@ public class CONTAINER__UI_button_SIMPLE : CONTAINER__generic<UI_button_SIMPLE> 
                 button.manager_resources = new MANAGER__UI_button_resources_SIMPLE();
                 button.data = new DATA__UI_button_SIMPLE();
 
+                // ** BODY
 
-                button.container = new UI_container();
-                // button.botao_game_object;
+                    GameObject.Destroy( button.body_container );
 
+                    button.body_container = null;
+                    button.off_set_rotation_container = null;
+                    button.structure_container = null;
 
-                button.button_name = "Nao_colocou";
+                    button.name = "";
+                    button.body_data = Body_data.Construct();
 
 
                 // --- LOGICA

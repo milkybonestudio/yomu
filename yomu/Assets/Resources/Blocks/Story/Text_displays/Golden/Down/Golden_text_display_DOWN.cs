@@ -6,7 +6,6 @@ public class Golden_text_display_DOWN : Story_text_display {
 
 
 
-
         public Golden_text_display_DOWN(){
 
 

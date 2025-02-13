@@ -32,7 +32,7 @@ public class Linear_dictionary_figure_modes{
 
             _value.Set_figure_mode_structure( root_path, level_re_allocation );
 
-            values[ ( int ) _value.visual_figure ] = _value; 
+            values[ ( int ) _value.visual_figure ] = _value;
 
         }
 

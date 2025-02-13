@@ -3,7 +3,7 @@ using UnityEngine;
 
 
 
-public class BLOCO_cartas : Block {
+public class BLOCO_cartas : BLOCK {
 
         public static BLOCO_cartas instancia;
         public static BLOCO_cartas Pegar_instancia(){ return instancia; }
@@ -52,7 +52,7 @@ public class BLOCO_cartas : Block {
 
         }
 
-        public override void Update(){}
+        public override void Update( Control_flow _control_flow ){}
 
         public Action Lidar_saida;
 

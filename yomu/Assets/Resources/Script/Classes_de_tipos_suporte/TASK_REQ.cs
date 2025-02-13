@@ -1,9 +1,34 @@
 
 
 
+using System.Runtime.CompilerServices;
+
+public enum Task_req_handle_array_null {
+
+    error, 
+    _true,
+
+}
+
 public static class TASK_REQ {
 
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool Verify_all_finalized( Task_req[] _reqs, Task_req_handle_array_null _handle = Task_req_handle_array_null._true ){
+
+        if( ( _reqs == null ) && ( _handle == Task_req_handle_array_null._true ) )
+            { return true; }
+        
+        foreach( Task_req req in _reqs ){
+
+            if( !!!( req.finalizado ) )
+                { return false; }
+
+        }
+
+        return true;
+
+    }
 
 
     public static void Cancel_task( ref Task_req _req_ref ){

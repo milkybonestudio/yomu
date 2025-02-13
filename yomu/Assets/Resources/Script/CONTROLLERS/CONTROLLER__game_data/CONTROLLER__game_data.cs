@@ -17,7 +17,7 @@ unsafe public class CONTROLLER__game_data {
         public static CONTROLLER__game_data Pegar_instancia(){ return instancia; }
 
         // --- DADOS QUE VAO SER COLCOADOS QUANDO O JOGO INICIAR
-        public Block[] blocos;
+        public BLOCK[] blocos;
 
         public Game_current_state game_current_state;
 

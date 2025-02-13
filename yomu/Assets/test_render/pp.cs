@@ -11,8 +11,8 @@ public class pp : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update(){
+        
         if( Input.GetKey( KeyCode.A ) )
             { gameObject.transform.localRotation *= Quaternion.Euler( 25f * Time.deltaTime, 25f * Time.deltaTime, 25f * Time.deltaTime  ); }
         

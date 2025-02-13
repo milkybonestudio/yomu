@@ -4,6 +4,18 @@
 unsafe public static class  STRING {
 
 
+
+        public static void Transfer_string_to_char_pointer( char* _char_pointer, int _limit, string _text ){
+
+            if( _text.Length >= _limit )
+                { CONTROLLER__errors.Throw( $"Tried to transfer the string { _text }, but the limit is { _limit }" ); }
+
+            for( int c = 0; c < _text.Length ;c++ )
+                { *_char_pointer++ = _text[ c ]; }
+
+        }
+
+
         public static string Get_string( char* _char_pointer , int _length ){
 
             char[] char_array = new char[ _length ];

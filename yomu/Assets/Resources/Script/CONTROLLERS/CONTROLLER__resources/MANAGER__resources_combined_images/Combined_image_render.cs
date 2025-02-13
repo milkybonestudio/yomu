@@ -8,12 +8,12 @@ public class Combined_image_render{
 
         public const bool DEBUG = false;
 
-        public Combined_image_render( GameObject _game_object, Image_link[] _links, Camera _camera, GameObject _camera_game_obj, int _line, int _collum ){
+        public Combined_image_render( Material _material, GameObject _game_object, Image_link[] _links, Camera _camera, GameObject _camera_game_obj, int _line, int _collum ){
 
                 line = _line;
                 collum = _collum;
 
-                c = _camera;
+                camera = _camera;
                 camera_game_object = _camera_game_obj;
 
                 // _camera_game_obj.SetActive( false );
@@ -84,8 +84,6 @@ public class Combined_image_render{
                             }
                         
 
-
-
                 }
 
 
@@ -118,7 +116,9 @@ public class Combined_image_render{
                 // ** Number of bits in depth buffer -> pra que serve?
                 render_texture = new RenderTexture( ( int ) width, ( int ) height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default );
                 render_texture.filterMode = FilterMode.Point;
-                c.targetTexture =  render_texture;
+
+                // acho que da o crete automatico( ? )
+                camera.targetTexture =  render_texture;
 
 
 
@@ -137,8 +137,8 @@ public class Combined_image_render{
                 float scale_y = ( ( float ) height ) / 100f ;
 
                 MeshRenderer mesh_render = quad_render.GetComponent<MeshRenderer>();
-                mesh_render.material = new Material( Shaders.individual_components );
 
+                mesh_render.material = _material;
                 mesh_render.material.SetTexture( "_MainTex", render_texture );
 
 
@@ -146,7 +146,7 @@ public class Combined_image_render{
 
                 quad_render.transform.localScale = new Vector3( scale_x, scale_y, 1f );
 
-                c.orthographicSize = scale_y / 2;
+                camera.orthographicSize = scale_y / 2;
 
                 Print();
                 
@@ -162,20 +162,31 @@ public class Combined_image_render{
         // ** new
         public RenderTexture render_texture;
 
-        public Camera c;
+        public Camera camera;
         public GameObject camera_game_object;
 
         public int line;
         public int collum;
+
+
+        public void Free(){
+
+            render_texture.Release();
+
+        }
         
 
         public void Delete(){
 
 
                 GameObject.Destroy( render_texture );
-                c = null;
+                GameObject.Destroy( camera_game_object );
+
+                camera = null;
                 camera_game_object = null;
 
+
+                // ** poderia ser melhor
                 CONTROLLER__resources.Get_instance().resources_combined_images.spaces[ line, collum ] = false;
 
         }
@@ -184,7 +195,7 @@ public class Combined_image_render{
         public void Print(){
 
                 camera_game_object.SetActive( true );
-                c.Render();
+                camera.Render();
                 camera_game_object.SetActive( false );
 
         }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 
 
-public class MODULO__input_game_pad : INTERFACE__input_device {
+public class MODULO__input_GAME_PAD : Input_device {
 
 
         public string nome_modulo = "MODULO__input_game_pad";
@@ -59,7 +59,7 @@ public class MODULO__input_game_pad : INTERFACE__input_device {
 
 
 
-        public void Update(){
+        public override void Update(){
 
 
                 // ** tem que garantir que os axis estejam

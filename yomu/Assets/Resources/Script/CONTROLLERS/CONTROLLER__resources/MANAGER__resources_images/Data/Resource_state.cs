@@ -3,6 +3,11 @@
 
 //mark
 // ** passar active -> full
+
+// ** instanciate nao deveria ser um estado
+// ** se um recurso precisa verificar se ele já tem algo precisa usar Actual_content 
+// ** como todos os recursos usam instanciate vai dar um certo trabalho para mudar 
+
 public enum Resource_state {
 
     nothing, // nada

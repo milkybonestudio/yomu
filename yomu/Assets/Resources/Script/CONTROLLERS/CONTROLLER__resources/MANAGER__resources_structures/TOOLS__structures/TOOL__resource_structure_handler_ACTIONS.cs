@@ -37,8 +37,7 @@ public static class TOOL__resource_structure_handler_ACTIONS {
 
         public static void Delete( RESOURCE__structure_copy _copy ){ 
 
-                Console.Log( "Veio Delete()" );
-
+                
                 if( _copy.state == Resource_state.instanciated )
                     { Deinstanciate( _copy ); }
 
@@ -67,11 +66,9 @@ public static class TOOL__resource_structure_handler_ACTIONS {
         // ** dados vao ser perdidos, mas a referencia da imagem volta 
         public static void Unload( RESOURCE__structure_copy _copy ){
 
-
-                Console.Log( "Veio Unload()" );
                 
                 if( _copy.state == Resource_state.nothing )
-                    { Console.Log( "state menor" ); return; } // ** nao tem nada para remover
+                    { return; } // ** nao tem nada para remover
 
                 Deactivate( _copy );
                 _copy.state = Resource_state.nothing;
@@ -102,10 +99,8 @@ public static class TOOL__resource_structure_handler_ACTIONS {
 
                 // ** vai para o minimo
 
-                Console.Log( "Veio Deactivate()" );
-
                 if( ( _copy.state < Resource_state.active ) )
-                    {  Console.Log( "state menor" ); return; } // ** nao tem recursos para remover
+                    { return; } // ** nao tem recursos para remover
 
                 Deinstanciate( _copy );
                 _copy.state = Resource_state.minimun;
@@ -140,10 +135,9 @@ public static class TOOL__resource_structure_handler_ACTIONS {
 
         public static void Deinstanciate( RESOURCE__structure_copy _copy ){
 
-                Console.Log( "Veio Deinstanciate()" );
-
+                
                 if( _copy.state < Resource_state.instanciated )
-                    {  Console.Log( "state menor" ); return; }
+                    { return; }
 
                 _copy.state = Resource_state.active;
                 _copy.structure.module_structures.manager.Put_in_waiting_container( _copy );
@@ -230,21 +224,24 @@ public static class TOOL__resource_structure_handler_ACTIONS {
                 if( structure.actual_content < Resource_structure_content.structure_data )
                     {
                         
+                        structure.prefab = Resources.Load<GameObject>( structure.resource_path );
+
                         structure.content_going_to = Resource_structure_content.structure_data;
                         structure.actual_content = Resource_structure_content.structure_data;
                         structure.stage_getting_resource = Resources_getting_structure_stage.finished;
-
-                        structure.prefab = Resources.Load<GameObject>( structure.resource_path );
                         
                     }
 
                 // ** GURANTY STRUCTURE
-                if( structure.actual_content < Resource_structure_content.game_object )
+                if( _copy.actual_content < Resource_structure_content.game_object )
                     {
                         // --- FORCE INSTANCIATE
                         _copy.structure_game_object = GameObject.Instantiate( structure.prefab );
-                        structure.actual_content = Resource_structure_content.game_object;
                         _copy.structure_game_object.name = structure.prefab.name;
+                        _copy.actual_content = Resource_structure_content.game_object;
+                        //mark
+                        // ** porque o dicionario esta sendo criado na copia e não no generico?
+                        // ** tem se algo vor movido ele troca no dicionario?
                         TOOL__resources_structures.Create_dictionary( _copy );
 
                     }
@@ -263,6 +260,67 @@ public static class TOOL__resource_structure_handler_ACTIONS {
                 return;
                 
         }
+
+
+
+        //test
+
+        // public static void Instanciate( RESOURCE__structure_copy _copy, GameObject _container ){
+
+
+        //         if( _copy.state == Resource_state.instanciated )
+        //             { return; } // ** ja instanciado
+
+        //         _copy.state = Resource_state.instanciated;
+        //         TOOL__resources_structures.Change_actual_need_content_count(  _copy ,Resource_structure_content.game_object );
+                
+
+        //         _copy.Flag_need_to_instanciate( false );
+
+                
+        //         RESOURCE__structure structure = _copy.structure;
+
+        //         if( structure == null )
+        //             { CONTROLLER__errors.Throw( "struct null" ); }
+
+
+        //         // ** GURANTY PREFAB
+        //         if( structure.actual_content < Resource_structure_content.structure_data )
+        //             {
+                        
+        //                 structure.prefab = Resources.Load<GameObject>( structure.resource_path );
+
+        //                 structure.content_going_to = Resource_structure_content.structure_data;
+        //                 structure.actual_content = Resource_structure_content.structure_data;
+        //                 structure.stage_getting_resource = Resources_getting_structure_stage.finished;
+                        
+        //             }
+
+        //         // ** GURANTY STRUCTURE
+        //         if( structure.actual_content < Resource_structure_content.game_object )
+        //             {
+        //                 // --- FORCE INSTANCIATE
+        //                 _copy.structure_game_object = GameObject.Instantiate( structure.prefab );
+        //                 structure.actual_content = Resource_structure_content.game_object;
+        //                 _copy.structure_game_object.name = structure.prefab.name;
+        //                 TOOL__resources_structures.Create_dictionary( _copy );
+
+        //             }
+                
+
+
+        //         // ** set 
+        //         // ** null -> nao pode parecer -> default
+
+        //         if( _container == null )
+        //             { _container = structure.module_structures.manager.container_to_instanciate; }
+
+        //         GAME_OBJECT.Colocar_parent( _container, _copy.structure_game_object );
+        //         _copy.structure_game_object.SetActive( true );
+
+        //         return;
+                
+        // }
 
 
 

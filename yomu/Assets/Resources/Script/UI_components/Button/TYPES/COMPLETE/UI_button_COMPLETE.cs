@@ -74,7 +74,10 @@ public class UI_button_COMPLETE : UI_button {
 
 
 
-        public override void Define_button(){
+
+    public override void Change_text( string _text ){ throw new NotImplementedException(); }
+
+    public override void Convert_creation_data_TO_resources(){
 
                 // creation -> data
 
@@ -160,7 +163,7 @@ public class UI_button_COMPLETE : UI_button {
 
 
                     // ** back
-                    indentificador = ( button_name + "_ON_back" );
+                    indentificador = ( name + "_ON_back" );
                     
                         data.on.animacao_back.cor = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.on.animacao_back.cor, Cores.grey_90 );                
                         data.images_refs_animacoes_completas[ ( int ) Device_button_animation_part.animation_back , index_ON ] =  resources_image.Get_image_reference( Resource_context.Devices, data.main_folder, data.on.animacao_back.image_path, Resource_image_content.sprite  );
@@ -168,7 +171,7 @@ public class UI_button_COMPLETE : UI_button {
 
 
                     // ** base
-                    indentificador = ( button_name + "_ON_base" );
+                    indentificador = ( name + "_ON_base" );
                     
                         data.on.animacao_base.cor = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.on.animacao_base.cor, Cores.grey_90 );                    
                         data.images_refs_animacoes_completas[ ( int ) Device_button_animation_part.animation_base , index_ON ] =  resources_image.Get_image_reference( Resource_context.Devices, data.main_folder, data.on.animacao_base.image_path, Resource_image_content.sprite  );
@@ -176,7 +179,7 @@ public class UI_button_COMPLETE : UI_button {
 
 
                     // ** atras-texto
-                    indentificador = ( button_name + "_ON_atras_texto" );
+                    indentificador = ( name + "_ON_atras_texto" );
             
                         data.on.animacao_atras_texto.cor = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.on.animacao_atras_texto.cor, Cores.grey_90 );                    
                         data.images_refs_animacoes_completas[ ( int ) Device_button_animation_part.animation_back_text , index_ON ] =  resources_image.Get_image_reference( Resource_context.Devices, data.main_folder, data.on.animacao_atras_texto.image_path, Resource_image_content.sprite  );
@@ -184,7 +187,7 @@ public class UI_button_COMPLETE : UI_button {
 
                     
                     // ** decoracao
-                    indentificador = ( button_name + "_ON_decoracao" );
+                    indentificador = ( name + "_ON_decoracao" );
                     data.on.animacao_decoracao.cor = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.on.animacao_decoracao.cor, Cores.grey_90 );
 
 
@@ -194,7 +197,7 @@ public class UI_button_COMPLETE : UI_button {
                     
 
                     // ** frente-texto
-                    indentificador = ( button_name + "_ON_frente_texto" );
+                    indentificador = ( name + "_ON_frente_texto" );
                     
                     data.on.animacao_frente_texto.cor = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.on.animacao_frente_texto.cor, Cores.grey_90 );
 
@@ -210,7 +213,7 @@ public class UI_button_COMPLETE : UI_button {
                     if( data.off.decoracao_composta != null || data.off.decoracao_composta != null )
                         {  
 
-                            // Criar_decoracao_composta_simples( _dados, _dispositivo, index_OFF, index_ON, button_name );
+                            // Criar_decoracao_composta_simples( _dados, _dispositivo, index_OFF, index_ON, name );
             
                             // --- TEM DECORACAO COMPOSTA
 
@@ -240,15 +243,10 @@ public class UI_button_COMPLETE : UI_button {
         }
 
 
-        public override void Link_to_game_object( GameObject _button_game_object ){
+        public override void Link_to_UI_game_object_in_structure(){
 
 
                 // data -> unity data
-
-                if( _button_game_object == null )
-                    { CONTROLLER__errors.Throw( $"The button <Color=lightBlue>{ button_name }</Color> came in <Color=lightBlue>Get_data_SIMPLE</Color> but the gameObject was null" ); }
-
-                container.game_object = _button_game_object;
 
                 try {
 
@@ -256,14 +254,14 @@ public class UI_button_COMPLETE : UI_button {
 
                         // ** COLLIDERS
 
-                            COLLIDERS_container  = container.game_object.transform.GetChild( 0 ).gameObject;
+                            COLLIDERS_container  = structure_container.transform.GetChild( 0 ).gameObject;
                             
                             ON_collider_game_object   =  COLLIDERS_container.transform.GetChild( 0 ).gameObject;
                             OFF_collider_game_object  =  COLLIDERS_container.transform.GetChild( 1 ).gameObject;
 
 
                         // IMAGEM
-                            IMAGE_container = container.game_object.transform.GetChild( 1 ).gameObject;
+                            IMAGE_container = structure_container.transform.GetChild( 1 ).gameObject;
 
                             IMAGE_animation_back.game_object         =  IMAGE_container.transform.GetChild( 0 ).gameObject;
                             IMAGE_base.game_object                   =  IMAGE_container.transform.GetChild( 1 ).gameObject;
@@ -276,7 +274,7 @@ public class UI_button_COMPLETE : UI_button {
 
 
                         // ** TRANSICAO
-                            TRANSITION_container = container.game_object.transform.GetChild( 2 ).gameObject;
+                            TRANSITION_container = structure_container.transform.GetChild( 2 ).gameObject;
 
                             TRANSITION_animation_back.game_object          =   TRANSITION_container.transform.GetChild( 0 ).gameObject;
                             TRANSITION_base.game_object                    =   TRANSITION_container.transform.GetChild( 1 ).gameObject;
@@ -325,7 +323,7 @@ public class UI_button_COMPLETE : UI_button {
                                         { CONTROLLER__errors.Throw(  "Dentro de decoracao tinha mais de 1 gameObject. Se a decoracao for composta ela precisa estar dentro de outro container: decoracao => container_dec_composta => gameObjects[]. O sistema vai somente copiar o gameObject para a transicao" ); }
 
                                     if( data.sprites_decoracao_composta == null )
-                                        { CONTROLLER__errors.Throw(  $"Tinha um gameObject contianer na decoracao do botao <color=lightBlue><b>{ button_name }</b></color> MAS nao foi declarado as imagens das sprites." ); }
+                                        { CONTROLLER__errors.Throw(  $"Tinha um gameObject contianer na decoracao do botao <color=lightBlue><b>{ name }</b></color> MAS nao foi declarado as imagens das sprites." ); }
 
 
                                     IMAGE_composed_decoration_game_object = IMAGE_decoration.game_object.transform.GetChild( 0 ).gameObject;
@@ -337,10 +335,10 @@ public class UI_button_COMPLETE : UI_button {
                                     int numero_imagens_decoracao_composta = IMAGE_composed_decoration_game_object.transform.childCount;
 
                                     if( numero_imagens_decoracao_composta == 0 )
-                                        { CONTROLLER__errors.Throw( $"Tinha um gameObject contianer na decoracao do botao <color=lightBlue><b>{ button_name }</b></color> mas ele nao tinha nenhum gameObject." );}
+                                        { CONTROLLER__errors.Throw( $"Tinha um gameObject contianer na decoracao do botao <color=lightBlue><b>{ name }</b></color> mas ele nao tinha nenhum gameObject." );}
 
                                     if( data.sprites_decoracao_composta.GetLength( 0 ) > numero_imagens_decoracao_composta )
-                                        { CONTROLLER__errors.Throw( $"Tinha um gameObject contianer na decoracao do botao <color=lightBlue><b>{ button_name }</b></color> MAS o numero de gameObjects [ { numero_imagens_decoracao_composta } ] é menor que o numero de sprites [ { data.sprites_decoracao_composta.GetLength( 0 ) } ]." );}
+                                        { CONTROLLER__errors.Throw( $"Tinha um gameObject contianer na decoracao do botao <color=lightBlue><b>{ name }</b></color> MAS o numero de gameObjects [ { numero_imagens_decoracao_composta } ] é menor que o numero de sprites [ { data.sprites_decoracao_composta.GetLength( 0 ) } ]." );}
 
 
                                     IMAGE_composed_decoration_images = new Image[ numero_imagens_decoracao_composta ];
@@ -379,7 +377,7 @@ public class UI_button_COMPLETE : UI_button {
                 }
                 catch ( System.Exception exc )
                 {
-                    Debug.LogError( $"Nao conseguiu pegar os dados do botao <color=lightBlue><b>{ button_name}</b></color>." );
+                    Debug.LogError( $"Nao conseguiu pegar os dados do botao <color=lightBlue><b>{ name}</b></color>." );
                     throw exc;
 
                 }
@@ -422,7 +420,7 @@ public class UI_button_COMPLETE : UI_button {
 
         }
 
-        public override void Activate_button(){
+        public override void Start_UI(){
 
             is_active = true;
             TOOL__UI_button_SET_COMPLETE.SET_OFF_static( this );

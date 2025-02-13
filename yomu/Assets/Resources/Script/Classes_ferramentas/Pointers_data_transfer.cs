@@ -3,12 +3,44 @@
 unsafe public static class Pointers_data_transfer {
 
 
+
+    public static void Transfer( byte* _pointer_destino, byte[] _pointer_dados, int _length  ){
+
+
+        fixed( byte* byte_data = _pointer_dados ){
+
+            Transfer( _pointer_destino, byte_data, _length );
+
+        }
+
+    }
+
+
+    public static void Transfer( byte[] _pointer_destino, byte* _pointer_dados, int _length  ){
+
+
+        fixed( byte* byte_data = _pointer_destino ){
+
+            Transfer( byte_data, _pointer_dados, _length );
+
+        }
+
+    }
+
+
+
+
+ 
+
+
+
+
     // ** assume que quem invocar a funcao colocou o pointer em fixed()
     public static void Transfer( byte* _pointer_destino, byte* _pointer_dados, int _length  ){
 
 
-            if( _length < 16 )
-                { Simple_transfer( _pointer_destino,  _pointer_dados, _length ); return; }
+            // if( _length < 16 )
+            //     { Simple_transfer( _pointer_destino,  _pointer_dados, _length ); return; }
 
 
             int* pointer_destino_origem = ( int* ) _pointer_destino;
@@ -24,13 +56,38 @@ unsafe public static class Pointers_data_transfer {
             int* _pointer_dados_4 = ( _pointer_dados_origem + 3 ) - 4 ;
 
 
-            int length_com_4_X_4 = _length / ( sizeof( int ) * 4 );
 
 
+            //  4 per time, 4 per loop
+            const int ints_per_point = 4;
+            const int points_per_cicle = 4;
+            int number_loops = _length / ( sizeof( int ) * ints_per_point * points_per_cicle );
 
-            for( int index = 0 ; index < length_com_4_X_4 ; index += 4 ){
+
+            int index = 0;
+            while(  index++ < number_loops ){
 
 
+                    // --- POINT 1
+                    _pointer_dados_1 += 4;
+                    _pointer_dados_2 += 4;
+                    _pointer_dados_3 += 4;
+                    _pointer_dados_4 += 4;
+
+
+                    pointer_destino_1 += 4;
+                    pointer_destino_2 += 4;
+                    pointer_destino_3 += 4;
+                    pointer_destino_4 += 4;
+
+                        
+                        *pointer_destino_1 = *_pointer_dados_1 ;
+                        *pointer_destino_2 = *_pointer_dados_2 ;
+                        *pointer_destino_3 = *_pointer_dados_3 ;
+                        *pointer_destino_4 = *_pointer_dados_4 ;
+
+
+                    // --- POINT 2
                     _pointer_dados_1 += 4;
                     _pointer_dados_2 += 4;
                     _pointer_dados_3 += 4;
@@ -43,10 +100,49 @@ unsafe public static class Pointers_data_transfer {
                     pointer_destino_4 += 4;
 
                     
-                    *pointer_destino_1 = *_pointer_dados_1 ;
-                    *pointer_destino_2 = *_pointer_dados_2 ;
-                    *pointer_destino_3 = *_pointer_dados_3 ;
-                    *pointer_destino_4 = *_pointer_dados_4 ;
+                        *pointer_destino_1 = *_pointer_dados_1 ;
+                        *pointer_destino_2 = *_pointer_dados_2 ;
+                        *pointer_destino_3 = *_pointer_dados_3 ;
+                        *pointer_destino_4 = *_pointer_dados_4 ;
+
+
+
+                    // --- POINT 3
+                    _pointer_dados_1 += 4;
+                    _pointer_dados_2 += 4;
+                    _pointer_dados_3 += 4;
+                    _pointer_dados_4 += 4;
+
+
+                    pointer_destino_1 += 4;
+                    pointer_destino_2 += 4;
+                    pointer_destino_3 += 4;
+                    pointer_destino_4 += 4;
+
+                        
+                        *pointer_destino_1 = *_pointer_dados_1 ;
+                        *pointer_destino_2 = *_pointer_dados_2 ;
+                        *pointer_destino_3 = *_pointer_dados_3 ;
+                        *pointer_destino_4 = *_pointer_dados_4 ;
+
+                    // --- POINT 4
+                    _pointer_dados_1 += 4;
+                    _pointer_dados_2 += 4;
+                    _pointer_dados_3 += 4;
+                    _pointer_dados_4 += 4;
+
+
+                    pointer_destino_1 += 4;
+                    pointer_destino_2 += 4;
+                    pointer_destino_3 += 4;
+                    pointer_destino_4 += 4;
+
+                        
+                        *pointer_destino_1 = *_pointer_dados_1 ;
+                        *pointer_destino_2 = *_pointer_dados_2 ;
+                        *pointer_destino_3 = *_pointer_dados_3 ;
+                        *pointer_destino_4 = *_pointer_dados_4 ;
+
 
                     continue;
 
@@ -54,9 +150,9 @@ unsafe public static class Pointers_data_transfer {
 
 
             // ** termina de transferir o resto
-            int resto_em_bytes = _length %  ( sizeof( int ) * 4 );
+            int resto_em_bytes = _length %  ( sizeof( int ) * ints_per_point * points_per_cicle );
 
-            int numero_bytes_passados = length_com_4_X_4 * ( sizeof( int ) * 4 );
+            int numero_bytes_passados = number_loops * ( sizeof( int ) * ints_per_point * points_per_cicle );
 
             // --- AJUSTA BYTES
             _pointer_destino += numero_bytes_passados;
@@ -72,13 +168,9 @@ unsafe public static class Pointers_data_transfer {
     private static void Simple_transfer( byte* _pointer_destino, byte* _pointer_dados, int _length  ){
 
 
-            for( int index = 0 ; index < _length ; index ++ ){
-
-                    *_pointer_destino = *_pointer_dados;
-                    _pointer_destino++;
-                    _pointer_dados++;
-                    continue;
-            }
+            int index = 0;
+            while( index ++ < _length )
+                { *_pointer_destino++ = *_pointer_dados++; }
 
             return;
 

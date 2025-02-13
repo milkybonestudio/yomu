@@ -31,7 +31,7 @@ public class Controlador_armazenamento_disco {
         public const int espacamento = 60;
 
 
-        public void Update(){
+        public void Update( Control_flow _control_flow ){
 
 
                 // quando estiver em teste nao vai deixar salvar      

@@ -40,8 +40,13 @@ public class MANAGER__textures_resources {
 
         public void Get_texture( RESOURCE__image _image ){ 
 
-            
-                _image.single_image.texture_exclusiva = new Texture2D( _image.width, _image.height, TextureFormat.RGBA32, false );
+
+                // Format32bppArgb
+                
+                _image.single_image.texture_exclusiva = new Texture2D( _image.width, _image.height, TextureFormat.BGRA32, false );
+                //_image.single_image.texture_exclusiva = new Texture2D( _image.width, _image.height, TextureFormat.ARGB32, false );
+                //_image.single_image.texture_exclusiva = new Texture2D( _image.width, _image.height, TextureFormat.RGBA32, false );
+
                 _image.single_image.texture_exclusiva.filterMode = FilterMode.Point;
                 _image.single_image.texture_exclusiva_native_array = _image.single_image.texture_exclusiva.GetPixelData<Color32>( 0 );
 

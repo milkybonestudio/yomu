@@ -50,7 +50,7 @@ public class Blocos_conversa_info {
 
 
 
-public class BLOCO_conversas : Block {
+public class BLOCO_conversas : BLOCK {
 
 
         public static BLOCO_conversas instancia;
@@ -148,7 +148,7 @@ public class BLOCO_conversas : Block {
 
 
 
-        public override void Update(){
+        public override void Update( Control_flow _control_flow ){
 
 
                 if(  Input.GetKeyDown( KeyCode.Escape)){ 

@@ -6,17 +6,34 @@ public enum Resource_context {
 
         // generic, // ** mais usado para audios e sfx 
 
-        // login_AND_menu,
+        login,
+        menu,
 
         Characters, 
 
         Blocks, 
 
+
+
         Devices,
+
         Effects,
+
+        UI_components,
+
+        Testing,
+
+        // ** recursos especificos sáo melhores que de tipo. Mas as vezes pode precisar
+        images,
+        audio,
+
+        END,
+
         // minigames, 
         // backgrounds,
         // stories, // pode ter as splashes e scripts
 
     
 }
+
+

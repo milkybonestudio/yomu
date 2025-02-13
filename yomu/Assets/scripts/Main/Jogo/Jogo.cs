@@ -6,85 +6,69 @@ using UnityEngine.UI;
 
 
 
-public class Jogo { 
 
 
-        public static Jogo instancia;
-        public static Jogo Pegar_instancia(){ if( instancia == null ){ /*throw new Exception("tentou pegar Jogo mas estava null");*/ } return instancia; }
+unsafe public struct PROGRAM_DATA__game { 
 
-        public Block[] interfaces_blocos;
+    public Lock_program_data lock_data;
 
-        // --- CONTROLADORES
-        public Controlador_armazenamento_disco controlador_armazenamento_disco;
-        public Controlador_sistema controlador_sistema;
-        public Controlador_AI controlador_AI;
-        
+    // ** START
+    public int save;
 
-        // TELA 
-        public GERENCIADOR__tela_jogo gerenciador_tela_jogo;
-        
+    public Game_type type;
 
-        // ** isso ficaria em controlador_sistema_estado_atual
-        public Block_type bloco_atual = Block_type.nada;
-        public Game_update_mode game_update_mode;
-
-
-        public void Update(){
-
-                controlador_armazenamento_disco.Update();
-
-                switch( game_update_mode ){
-
-                    case Game_update_mode.blocks: interfaces_blocos[ ( int ) bloco_atual ].Update(); break;
-                    case Game_update_mode.transition: break;
-
-                }
-
-                Verity_transition();
-
-        }
-
-        private void Verity_transition(){
-
-                if( CONTROLLER__transition.instancia.transition_request_visual == null )
-                    { return; }
-
-                // --- INCIA TRANSICAO
-                game_update_mode = Game_update_mode.transition; 
-                CONTROLLER__transition.instancia.Start_transition_BLOCK();
-
-                return;
-
-        }
-
-
-        public static void Zerar_dados(){
-
-
-                instancia = null;
-
-                //mark
-                // ** ativar depois
-                // // --- ZERAR BLOCOS
-                // foreach( INTERFACE__bloco bloco_interface in Jogo.Pegar_instancia().interfaces_blocos )
-                //     { bloco_interface.Destruir(); }
-
-                if ( CONTROLLER__data.instancia != null )
-                    {
-                        if( CONTROLLER__data.instancia.pointer_general_data != IntPtr.Zero )
-                            { Marshal.FreeHGlobal( CONTROLLER__data.instancia.pointer_general_data ); }
-
-                    }
-
-                Finalizador_UI.Finalizar();
-                CONTROLLER__game_data.instancia = null;
-
-
-                return;
-
-
-        }
+    public static void Construct( PROGRAM_DATA__game* _data ){}
 
 
 
 }
+
+public enum Game_type {
+
+    _default,
+    END,
+
+
+}
+
+
+unsafe public class Game : PROGRAM_MODE {
+
+        public Game(){  type = Program_mode.jogo; }
+
+        public PROGRAM_MODE __interface__;
+
+        public override void Construct(){
+
+                PROGRAM_DATA__game* data = &(Controllers_program.data.pointer->game);
+                Game_type type = data->type;
+
+                    switch( type ){
+
+                        case Game_type._default: __interface__ = new Game__DEFAULT(); break;
+                        default: CONTROLLER__errors.Throw( $" Can not handle { type } in game" ); break;
+                        
+                    }
+
+                    
+                __interface__.Construct();
+            
+        }
+
+        public override void Destroy(){
+
+            __interface__?.Destroy();
+            __interface__ = null;
+
+        }
+
+        public override void Update( Control_flow _control_flow ){ __interface__.Update( _control_flow ); }
+        public override Transition Construct_transition( Transition_data _data ){ return __interface__.Construct_transition( _data ); }
+        public override void Clean_resources(){ __interface__.Clean_resources(); }
+
+
+}
+
+
+
+

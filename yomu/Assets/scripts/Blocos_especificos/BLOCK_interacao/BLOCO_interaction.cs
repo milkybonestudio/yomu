@@ -10,7 +10,7 @@ using System;
 //** controladores nao podem ter referencias, o finalizar sempre limpa os campos estaticos
 
 
-public class BLOCO_interacao : Block {
+public class BLOCO_interacao : BLOCK {
 
 
         // --- INSTANCIA
@@ -32,7 +32,7 @@ public class BLOCO_interacao : Block {
 
 
 
-        public override void Update(){ 
+        public override void Update( Control_flow _control_flow ){ 
 
 
                 // --- VERIFICA SE TEM QUE MUDAR TELA

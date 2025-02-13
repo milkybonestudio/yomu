@@ -5,6 +5,9 @@ using UnityEngine;
 public struct MANAGER__UI_button_resources_SIMPLE {
 
 
+        // ** this is really bad
+        // ** prefere RESOURCE__ref to make this operations
+
 
         public UI_button_SIMPLE button;
         public Resources_minimun_levels minimun;
@@ -16,6 +19,7 @@ public struct MANAGER__UI_button_resources_SIMPLE {
 
         public void Load(){ Generic_action( Resource_action.load ); } // ** prepara
         public void Activate(){ Generic_action( Resource_action.activate ); } // ** prepara
+        public void Instanciate(){ Generic_action( Resource_action.instanciate ); } // ** prepara
         
 
         public void Unload(){ Generic_action( Resource_action.unload ); } // volta para o nada
@@ -30,12 +34,19 @@ public struct MANAGER__UI_button_resources_SIMPLE {
             ref DATA__UI_button_SIMPLE data = ref button.data;
 
             // ** AUDIO
-            data.audio_click?.Delete( ref data.audio_click );
-            data.audio_houver?.Delete( ref data.audio_houver );
+            
+            data.audio_click?.Delete();
+            data.audio_click = null;
+
+            data.audio_houver?.Delete();
+            data.audio_houver = null;
 
             // ** IMAGES
-            data.button_OFF_frame.image_ref?.Delete( ref data.button_OFF_frame.image_ref );
-            data.button_ON_frame.image_ref?.Delete( ref data.button_ON_frame.image_ref );
+            data.button_OFF_frame.image_ref?.Delete();
+            data.button_OFF_frame.image_ref = null;
+            
+            data.button_ON_frame.image_ref?.Delete();
+            data.button_ON_frame.image_ref = null;
             
 
         }

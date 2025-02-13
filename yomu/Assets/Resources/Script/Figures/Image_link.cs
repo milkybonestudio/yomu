@@ -8,6 +8,7 @@ public struct Image_link {
     
     public GameObject game_object;
     public SpriteRenderer sprite_render;
+    public Material material;
 
-
+    
 }

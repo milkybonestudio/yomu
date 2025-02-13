@@ -21,8 +21,6 @@ public abstract class UI_button : UI_component {
         public Resource_context context;
         public Material material;
 
-        public string name;
-
 
         public Action Activate;
         public UI_button_activation_type activation_type;
@@ -31,6 +29,8 @@ public abstract class UI_button : UI_component {
 
         public GameObject IMAGE_container;
         public GameObject TRANSITION_container;
+
+        public abstract void Change_text( string _text );
 
 
 
@@ -48,8 +48,6 @@ public abstract class UI_button : UI_component {
         // --- INTERNO
 
         public Resource_state resource_state;
-
-        public string button_name;
 
 
         // --- LOGICA
@@ -73,25 +71,13 @@ public abstract class UI_button : UI_component {
 
     
 
-        // ?? 
-        // ---- VISUAL
-
-        // public DEVICE_button_visual_state current_visual_state;
-        // public DEVICE_button_visual_state visual_state_going_to;
-
-
-
-        // public DEVICE_button_visual_state estado_visual_botao;
-        // public DEVICE_button_visual_state ultimo_estado_visual_botao;
-
-
-
         // --- PUBLIC 
 
 
-        public virtual void Update(){
+        public virtual void Update( Control_flow _flow ){
 
-
+                base.Update( _flow );
+                
                 if( !!!( is_active ) )
                     { return; }
 
@@ -103,10 +89,17 @@ public abstract class UI_button : UI_component {
         }
 
 
-        public abstract void Define_button();
-        public abstract void Link_to_game_object( GameObject _button_game_object );
-        public abstract void Load();
-        public abstract void Activate_button();
+
+        //mark
+        // ** faz parte do UI_component
+
+        // public abstract void Convert_creation_data_TO_resources();
+        // public abstract void Link_to_game_object( GameObject _button_game_object );
+        // public abstract void Load();
+
+
+        // ?
+
         public abstract void Deactivate_button();
 
 

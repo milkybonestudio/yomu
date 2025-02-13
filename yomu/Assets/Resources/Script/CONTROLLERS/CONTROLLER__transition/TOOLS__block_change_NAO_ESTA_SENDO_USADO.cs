@@ -35,8 +35,8 @@ public class __TOOLS__blocks_change {
                 
 
                 // --- PEGAR BLOCO
-                Block interface_bloco_para_voltar = controlador.blocos[ ( int ) bloco_para_voltar ];
-                Block interface_bloco_para_excluir = controlador.blocos[ ( int ) bloco_para_voltar ];
+                BLOCK interface_bloco_para_voltar = controlador.blocos[ ( int ) bloco_para_voltar ];
+                BLOCK interface_bloco_para_excluir = controlador.blocos[ ( int ) bloco_para_voltar ];
 
                 // --- FINALIZAR
                 interface_bloco_para_voltar.Finalizar();
@@ -56,7 +56,7 @@ public class __TOOLS__blocks_change {
                 Block_type bloco_para_ir = _novo_bloco;
                 Player_estado_atual.Pegar_instancia().Adicionar_modo_tela( bloco_para_ir ); 
 
-                Block _interface_bloco = controlador.blocos[ ( int ) _novo_bloco ];
+                BLOCK _interface_bloco = controlador.blocos[ ( int ) _novo_bloco ];
                 _interface_bloco.Iniciar();
 
                 //mark

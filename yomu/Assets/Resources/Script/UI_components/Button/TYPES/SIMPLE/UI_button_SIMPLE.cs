@@ -45,6 +45,17 @@ public class UI_button_SIMPLE : UI_button {
 
 
 
+        
+
+
+
+        public override void Change_text( string _text ){
+
+
+                data.text_off = _text;
+                data.text_on  = _text;
+
+        }
 
 
         public override void Update_parte_visual(){
@@ -69,8 +80,8 @@ public class UI_button_SIMPLE : UI_button {
             
         }
 
-
-    public override void Define_button(){
+    
+    public override void Convert_creation_data_TO_resources(){
 
             // ** data + creation_data -> thing
 
@@ -80,7 +91,7 @@ public class UI_button_SIMPLE : UI_button {
                 data.Ativar = creation_data.Activate;
 
                 // ** passing normal data
-                button_name = creation_data.name;
+                name = creation_data.name;
                 main_folder = creation_data.main_folder;
                 context = creation_data.context;
                 material = creation_data.material;
@@ -92,10 +103,10 @@ public class UI_button_SIMPLE : UI_button {
                         // ** nao pode ter nenhum
 
                         if( creation_data.text_off != null )
-                            { CONTROLLER__errors.Throw( $"button { button_name } defines a text <Color=lightBlue>{ creation_data.text }</Color> for OFF and ON but in the OFF text is <Color=lightBlue>{  creation_data.text_off }</Color>" ); }
+                            { CONTROLLER__errors.Throw( $"button { name } defines a text <Color=lightBlue>{ creation_data.text }</Color> for OFF and ON but in the OFF text is <Color=lightBlue>{  creation_data.text_off }</Color>" ); }
 
                         if( creation_data.text_on != null )
-                            { CONTROLLER__errors.Throw( $"button { button_name } defines a text <Color=lightBlue>{ creation_data.text }</Color> for OFF and ON but in the OFF text is <Color=lightBlue>{  creation_data.text_on }</Color>" ); }
+                            { CONTROLLER__errors.Throw( $"button { name } defines a text <Color=lightBlue>{ creation_data.text }</Color> for OFF and ON but in the OFF text is <Color=lightBlue>{  creation_data.text_on }</Color>" ); }
                 
                         data.text_off = creation_data.text;
                         data.text_on  = creation_data.text;
@@ -105,10 +116,10 @@ public class UI_button_SIMPLE : UI_button {
                         // ** tem que ter os 2
 
                         if( creation_data.text_off == null )
-                            { CONTROLLER__errors.Throw( $"button { button_name } Dont define the text for the <Color=lightBlue>OFF</Color>" ); }
+                            { CONTROLLER__errors.Throw( $"button { name } Dont define the text for the <Color=lightBlue>OFF</Color>" ); }
 
                         if( creation_data.text_on == null )
-                            { CONTROLLER__errors.Throw( $"button { button_name } Dont define the text for the <Color=lightBlue>ON</Color>" ); }
+                            { CONTROLLER__errors.Throw( $"button { name } Dont define the text for the <Color=lightBlue>ON</Color>" ); }
 
                         data.text_off = creation_data.text_off;
                         data.text_on  = creation_data.text_on;
@@ -120,10 +131,10 @@ public class UI_button_SIMPLE : UI_button {
                     {
 
                         if( creation_data.image_path_OFF != null )
-                            { CONTROLLER__errors.Throw( $"button { button_name } defines a path <Color=lightBlue>{ creation_data.image_path }</Color> for OFF and ON but in the OFF path is <Color=lightBlue>{  creation_data.image_path_OFF }</Color>" ); }
+                            { CONTROLLER__errors.Throw( $"button { name } defines a path <Color=lightBlue>{ creation_data.image_path }</Color> for OFF and ON but in the OFF path is <Color=lightBlue>{  creation_data.image_path_OFF }</Color>" ); }
 
                         if( creation_data.image_path_ON != null )
-                            { CONTROLLER__errors.Throw( $"button { button_name } defines a path <Color=lightBlue>{ creation_data.image_path }</Color> for OFF and ON but in the ON path is <Color=lightBlue>{ data.button_ON_frame.path }</Color>" ); }
+                            { CONTROLLER__errors.Throw( $"button { name } defines a path <Color=lightBlue>{ creation_data.image_path }</Color> for OFF and ON but in the ON path is <Color=lightBlue>{ data.button_ON_frame.path }</Color>" ); }
 
                         data.button_OFF_frame.path  = creation_data.image_path;
                         data.button_ON_frame.path   = creation_data.image_path;
@@ -134,10 +145,10 @@ public class UI_button_SIMPLE : UI_button {
                     {
                         
                         if( creation_data.image_path_ON == null )
-                            { CONTROLLER__errors.Throw( $"button { button_name } do not define <Color=lightBlue>path_ON</Color>" ); }
+                            { CONTROLLER__errors.Throw( $"button { name } do not define <Color=lightBlue>path_ON</Color>" ); }
 
                         if( creation_data.image_path_OFF == null )
-                            { CONTROLLER__errors.Throw( $"button { button_name } do not define <Color=lightBlue>path_OFF</Color>" ); }
+                            { CONTROLLER__errors.Throw( $"button { name } do not define <Color=lightBlue>path_OFF</Color>" ); }
 
                             
                         data.button_OFF_frame.path  = creation_data.image_path_OFF;
@@ -178,23 +189,17 @@ public class UI_button_SIMPLE : UI_button {
         }
 
 
-        public override void Link_to_game_object( GameObject _button_game_object ){
+        public override void Link_to_UI_game_object_in_structure(){
 
                 // data -> unity data
-
-                if( _button_game_object == null )
-                    { CONTROLLER__errors.Throw( $"The button <Color=lightBlue>{ button_name }</Color> came in <Color=lightBlue>Get_data_SIMPLE</Color> but the gameObject was null" ); }
-
-                container.game_object = _button_game_object;
-
 
 
                 try {
 
                         // ** containers 
-                        COLLIDERS_container       =  container.game_object.transform.GetChild( 0 ).gameObject;
-                        IMAGE_container           =  container.game_object.transform.GetChild( 1 ).gameObject;
-                        TRANSITION_container      =  container.game_object.transform.GetChild( 2 ).gameObject;
+                        COLLIDERS_container       =  structure_container.transform.GetChild( 0 ).gameObject;
+                        IMAGE_container           =  structure_container.transform.GetChild( 1 ).gameObject;
+                        TRANSITION_container      =  structure_container.transform.GetChild( 2 ).gameObject;
 
                         // ** colliders
                         ON_collider_game_object   =  COLLIDERS_container.transform.GetChild( 0 ).gameObject;
@@ -206,7 +211,7 @@ public class UI_button_SIMPLE : UI_button {
 
                         // ** IMAGE
                         IMAGE_body.game_object = IMAGE_container.transform.GetChild( 0 ).gameObject;
-                        IMAGE_body.image       = IMAGE_body.game_object.GetComponent<Image>();
+                        IMAGE_body.sprite_render       = IMAGE_body.game_object.GetComponent<SpriteRenderer>();
 
 
                         IMAGE_text.game_object    = IMAGE_container.transform.GetChild( 1 ).gameObject;
@@ -220,7 +225,7 @@ public class UI_button_SIMPLE : UI_button {
 
                         // ** TRANSITION
                         TRANSITION_body.game_object = TRANSITION_container.transform.GetChild( 0 ).gameObject;
-                        TRANSITION_body.image       = TRANSITION_body.game_object.GetComponent<Image>();
+                        TRANSITION_body.sprite_render       = TRANSITION_body.game_object.GetComponent<SpriteRenderer>();
 
                         TRANSITION_text.game_object = TRANSITION_container.transform.GetChild( 1 ).gameObject;
                         TRANSITION_text.tmp_text    = TRANSITION_text.game_object.GetComponent<TMP_Text>();
@@ -228,7 +233,7 @@ public class UI_button_SIMPLE : UI_button {
                     }
                     catch( Exception e )
                     {
-                        Console.LogError( $"Could not link to the game object for the button { button_name }. <Color=lightBlue>PROBABLY THE PREFAB IS NOT RIGHT</Color>" );
+                        Console.LogError( $"Could not link to the game object for the button { name }. <Color=lightBlue>PROBABLY THE PREFAB IS NOT RIGHT</Color>" );
                         CONTROLLER__errors.Throw_exception( e );
 
                     }
@@ -245,18 +250,22 @@ public class UI_button_SIMPLE : UI_button {
         // ** nao vale a pena
         public override void Load(){ manager_resources.Load(); }
 
-        public override void Activate_button(){
+            
+        public override void Start_UI(){
 
-            is_active = true;
-            TOOL__UI_button_SET_SIMPLE.SET_OFF_static( this );
-
+                manager_resources.Instanciate();
+                is_active = true;
+                TOOL__UI_button_SET_SIMPLE.SET_OFF_static( this );
+                
         }
 
 
         public override void Deactivate_button(){
 
-            is_active = false;
-            container.game_object.SetActive( false );
+                manager_resources.Delete();
+
+                is_active = false;
+                structure_container.SetActive( false );
 
         }
 

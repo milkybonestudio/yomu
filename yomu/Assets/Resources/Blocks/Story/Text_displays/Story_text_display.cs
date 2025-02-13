@@ -7,10 +7,8 @@ using UnityEngine;
 
 
 
-public abstract class Story_text_display : Component {
+public abstract class Story_text_display : Device {
 
-
-        public string name;
         public string root;
 
         public abstract void Show();

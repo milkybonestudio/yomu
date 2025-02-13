@@ -85,9 +85,13 @@ public static class TOOL__resources_structures {
         public static GameObject Get_component_game_object( RESOURCE__structure_copy _copy, string _component_key ){
 
 
+                if( _component_key == null )
+                    { CONTROLLER__errors.Throw( "the <Color=lightBlue>_component_key</Color> was null" ); }
+
+
                 Unity_main_components main_components = new Unity_main_components();
 
-                Console.Log( $"Vai tentar pegar o componente { _component_key } em game_object" );
+                // Console.Log( $"Vai tentar pegar o componente { _component_key } em game_object" );
                 
                 if( !!!( _copy.components_dic.TryGetValue( _component_key, out main_components ) ) )
                     { CONTROLLER__errors.Throw( $"Did not found the component <Color=lightBlue>{ _component_key }</Color> in the structure <Color=lightBlue>{ _copy.name }</Color>" ); }
@@ -97,8 +101,6 @@ public static class TOOL__resources_structures {
 
                 if( main_components.game_object == null )
                     { CONTROLLER__errors.Throw( $"The component in the key <Color=lightBlue>{ _component_key }</Color> in the structure <Color=lightBlue>{ _copy.name }</Color> dont have the Game_object" ); }
-
-                Console.Log( "Conseguiu pegar game_object" );
 
                 return main_components.game_object;
 

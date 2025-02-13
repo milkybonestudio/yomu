@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 
-public class MODULO__input_mobile : INTERFACE__input_device {
+public class MODULO__input_MOBILE : Input_device {
 
 
         public string nome_modulo = "MODULO__input_mobile";
@@ -12,6 +12,7 @@ public class MODULO__input_mobile : INTERFACE__input_device {
         //mark 
         // ** nao tenho ideia de como fazer
         
+        public override void Update(){}
 
 
         // public KeyCode[] bind_actions_TO_key_atual;        

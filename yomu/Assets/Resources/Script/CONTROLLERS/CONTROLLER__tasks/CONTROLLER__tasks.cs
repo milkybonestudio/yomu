@@ -48,7 +48,7 @@ public class CONTROLLER__tasks  {
 
         public bool block_frame;
 
-        public void Update(){
+        public void Update( Control_flow _control_flow ){
 
 
                 if( block_frame )

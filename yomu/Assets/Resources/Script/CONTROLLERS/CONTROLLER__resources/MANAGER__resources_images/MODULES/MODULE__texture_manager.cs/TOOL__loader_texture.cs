@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 
@@ -67,9 +68,8 @@ unsafe public static class TOOL__loader_texture {
         
         public static void Transfer_data_PNG( byte[] png,  NativeArray<Color32> _native_arr_texture ){
 
-                
 
-                
+
                 if( png == null )
                     { CONTROLLER__errors.Throw( "png veio null" ); }
 
@@ -83,164 +83,162 @@ unsafe public static class TOOL__loader_texture {
                 try { m_s = new MemoryStream( png ); image = System.Drawing.Image.FromStream( m_s ); } catch( Exception e ){ CONTROLLER__errors.Throw( $"Could not pass the data of the png { png }, length: { png.Length }" ); }
 
 
-                Bitmap bm = new Bitmap( image );
 
+                Bitmap bm = new Bitmap( image );
+            
                 BitmapData bitmapData = bm.LockBits (
                                                         new System.Drawing.Rectangle( 0, 0, bm.Width, bm.Height ),
-                                                        ImageLockMode.ReadOnly,
-                                                        PixelFormat.Format32bppArgb // ** talvez trenha que inverter
+                                                        ImageLockMode.ReadWrite,
+                                                        PixelFormat.Format32bppArgb  
                                                     );
 
+
+                int length = ( bitmapData.Height * bitmapData.Width );
+
+                Color32* native_container_pointer_fix = ( Color32* ) _native_arr_texture.GetUnsafePtr();
+                Color32* data_descompress_container_fix = ( ( Color32*)  bitmapData.Scan0.ToPointer() );
+
+
+                Color32* native_container_pointer = native_container_pointer_fix;
+                Color32* data_descompress_container = data_descompress_container_fix;
+
+
+
+                // Color32* data_descompress_container_1 = ( data_descompress_container + 0 ) - 4 ; 
+                // Color32* data_descompress_container_2 = ( data_descompress_container + 1 ) - 4 ; 
+                // Color32* data_descompress_container_3 = ( data_descompress_container + 2 ) - 4 ; 
+                // Color32* data_descompress_container_4 = ( data_descompress_container + 3 ) - 4 ; 
+
+
+
+                for( int pixel_height = 0 ; pixel_height < ( bitmapData.Height  ) ; pixel_height++ ){
+
+
+                    int pixels_done = ( ( pixel_height ) * bitmapData.Width );
+                    int last_position = ( length - bitmapData.Width );
+
+                    native_container_pointer = native_container_pointer_fix + ( last_position - pixels_done );
+
+
+                    // Color32* native_container_pointer_1 = ( native_container_pointer + 0 ) - 4 ; 
+                    // Color32* native_container_pointer_2 = ( native_container_pointer + 1 ) - 4 ; 
+                    // Color32* native_container_pointer_3 = ( native_container_pointer + 2 ) - 4 ; 
+                    // Color32* native_container_pointer_4 = ( native_container_pointer + 3 ) - 4 ; 
+
+
+                    // int loop_length = bitmapData.Width / ( 4 * 4 );
+                    // int pixels_left = bitmapData.Width - ( loop_length * ( 4 * 4 ) );   
+
+                    //test
+                    // ** nos testes normais nao tem como ter certeza qual é o mais rapido, depois testar melhor
+
+                    System.Buffer.MemoryCopy( ( void* ) data_descompress_container, ( void* ) native_container_pointer, long.MaxValue, ( long ) ( bitmapData.Width * sizeof( Color32 ) ) );
+                    data_descompress_container += bitmapData.Width;
+
+                    // for( int pixel_width = 0 ; pixel_width < loop_length ; pixel_width++ ){
+
+
+
+
+                    //         native_container_pointer_1 += 4;
+                    //         native_container_pointer_2 += 4;
+                    //         native_container_pointer_3 += 4;
+                    //         native_container_pointer_4 += 4;
+
+                    //         data_descompress_container_1 += 4;
+                    //         data_descompress_container_2 += 4;
+                    //         data_descompress_container_3 += 4;
+                    //         data_descompress_container_4 += 4;
+
+
+                    //             *native_container_pointer_1 = *data_descompress_container_1;
+                    //             *native_container_pointer_2 = *data_descompress_container_2;
+                    //             *native_container_pointer_3 = *data_descompress_container_3;
+                    //             *native_container_pointer_4 = *data_descompress_container_4;
+
+
+                    //         native_container_pointer_1 += 4;
+                    //         native_container_pointer_2 += 4;
+                    //         native_container_pointer_3 += 4;
+                    //         native_container_pointer_4 += 4;
+
+                    //         data_descompress_container_1 += 4;
+                    //         data_descompress_container_2 += 4;
+                    //         data_descompress_container_3 += 4;
+                    //         data_descompress_container_4 += 4;
+
+
+                    //             *native_container_pointer_1 = *data_descompress_container_1;
+                    //             *native_container_pointer_2 = *data_descompress_container_2;
+                    //             *native_container_pointer_3 = *data_descompress_container_3;
+                    //             *native_container_pointer_4 = *data_descompress_container_4;
+
+                    //         native_container_pointer_1 += 4;
+                    //         native_container_pointer_2 += 4;
+                    //         native_container_pointer_3 += 4;
+                    //         native_container_pointer_4 += 4;
+
+                    //         data_descompress_container_1 += 4;
+                    //         data_descompress_container_2 += 4;
+                    //         data_descompress_container_3 += 4;
+                    //         data_descompress_container_4 += 4;
+
+
+                    //             *native_container_pointer_1 = *data_descompress_container_1;
+                    //             *native_container_pointer_2 = *data_descompress_container_2;
+                    //             *native_container_pointer_3 = *data_descompress_container_3;
+                    //             *native_container_pointer_4 = *data_descompress_container_4;
+
+                    //         native_container_pointer_1 += 4;
+                    //         native_container_pointer_2 += 4;
+                    //         native_container_pointer_3 += 4;
+                    //         native_container_pointer_4 += 4;
+
+                    //         data_descompress_container_1 += 4;
+                    //         data_descompress_container_2 += 4;
+                    //         data_descompress_container_3 += 4;
+                    //         data_descompress_container_4 += 4;
+
+
+                    //             *native_container_pointer_1 = *data_descompress_container_1;
+                    //             *native_container_pointer_2 = *data_descompress_container_2;
+                    //             *native_container_pointer_3 = *data_descompress_container_3;
+                    //             *native_container_pointer_4 = *data_descompress_container_4;
+
+
+
+
+                    // }
+
+                    
+
+                    // // ** resto
+
+                    // data_descompress_container_1 += pixels_left;
+                    // data_descompress_container_2 += pixels_left;
+                    // data_descompress_container_3 += pixels_left;
+                    
                 
+                    // while( pixels_left-- > 0 )
+                    //     // { *native_container_pointer_4++ = *data_descompress_container_4++; }
+                    //     { *++native_container_pointer_4 = *++data_descompress_container_4; }
 
-
-                int* p_container_origin = stackalloc int[ 4 ];
-                
-
-                byte* p_data = ( byte* ) bitmapData.Scan0;
-                byte* p_container = ( byte* ) p_container_origin;
-
-                byte* p_container_1 = ( p_container + 0 )  ;
-                byte* p_container_2 = ( p_container + 1 )  ;
-                byte* p_container_3 = ( p_container + 2 )  ;
-                byte* p_container_4 = ( p_container + 3 )  ;
-
-                byte* p_data_1 = ( p_data + 0 ) - 4 ;
-                byte* p_data_2 = ( p_data + 1 ) - 4 ;
-                byte* p_data_3 = ( p_data + 2 ) - 4 ;
-                byte* p_data_4 = ( p_data + 3 ) - 4 ;
-
-
-                for( int height = ( bm.Height - 1 ) ; height > -1  ; height-- ){
-
-                        // ** imagem esta inversa no bitmap. tem que fazer a height ao contrario
-
-                        int teste_length = ( bm.Width / 4 ) * 4 ;
-
-                        for( int height_pixel = 0 ; height_pixel < teste_length ; height_pixel += 4 ){
-
-                                
-                                // ** reseta container
-                                p_container_1 = ( p_container + 0 ) ;
-                                p_container_2 = ( p_container + 1 ) ;
-                                p_container_3 = ( p_container + 2 ) ;
-                                p_container_4 = ( p_container + 3 ) ;
-
-                                    p_data_1 += 4;
-                                    p_data_2 += 4;
-                                    p_data_3 += 4;
-                                    p_data_4 += 4;
-                                        *p_container_1 = *p_data_3;
-                                        *p_container_2 = *p_data_2;
-                                        *p_container_3 = *p_data_1;
-                                        *p_container_4 = *p_data_4;
-                        
-                                // --- LEU B1
-                                p_container_1 += 4 ;
-                                p_container_2 += 4 ;
-                                p_container_3 += 4 ;
-                                p_container_4 += 4 ;
-                                    p_data_1 += 4;
-                                    p_data_2 += 4;
-                                    p_data_3 += 4;
-                                    p_data_4 += 4;
-                                        *p_container_1 = *p_data_3;
-                                        *p_container_2 = *p_data_2;
-                                        *p_container_3 = *p_data_1;
-                                        *p_container_4 = *p_data_4;
-
-                                // --- LEU B2
-                                p_container_1 += 4 ;
-                                p_container_2 += 4 ;
-                                p_container_3 += 4 ;
-                                p_container_4 += 4 ;
-                                    p_data_1 += 4;
-                                    p_data_2 += 4;
-                                    p_data_3 += 4;
-                                    p_data_4 += 4;
-                                        *p_container_1 = *p_data_3;
-                                        *p_container_2 = *p_data_2;
-                                        *p_container_3 = *p_data_1;
-                                        *p_container_4 = *p_data_4;
-                                // --- LEU B3
-                                p_container_1 += 4 ;
-                                p_container_2 += 4 ;
-                                p_container_3 += 4 ;
-                                p_container_4 += 4 ;
-                                    p_data_1 += 4;
-                                    p_data_2 += 4;
-                                    p_data_3 += 4;
-                                    p_data_4 += 4;
-                                        *p_container_1 = *p_data_3;
-                                        *p_container_2 = *p_data_2;
-                                        *p_container_3 = *p_data_1;
-                                        *p_container_4 = *p_data_4;
-                                // --- LEU B4
-
-
-                                int ponto_pixel = ( height * bm.Width ) + height_pixel;
-
-                                // --- PASSA 4 PIXELS DE 1 VEZ
-                                _native_arr_texture[ ponto_pixel + 0 ] =  *( Color32* ) ( p_container_origin + 0 );
-                                _native_arr_texture[ ponto_pixel + 1 ] =  *( Color32* ) ( p_container_origin + 1 );
-                                _native_arr_texture[ ponto_pixel + 2 ] =  *( Color32* ) ( p_container_origin + 2 );
-                                _native_arr_texture[ ponto_pixel + 3 ] =  *( Color32* ) ( p_container_origin + 3 );
-                        
-
-                        }
-
-                        int ponto_inicial_final  = bm.Width - ( bm.Width % 4 );
-
-                        // Console.Log( "bm.Width % 4: " + (bm.Width % 4 ));
-                        // Console.Log( "ponto_inicial_final: " + (ponto_inicial_final ));
-                        // Console.Log( "bm.Width: " + (bm.Width ));
-                        
-                        for( int i = ponto_inicial_final ; i < bm.Width ; i++ ){
-
-
-                        
-                                p_container_1 = ( p_container + 0 ) ;
-                                p_container_2 = ( p_container + 1 ) ;
-                                p_container_3 = ( p_container + 2 ) ;
-                                p_container_4 = ( p_container + 3 ) ;
-
-                                    p_data_1 += 4;
-                                    p_data_2 += 4;
-                                    p_data_3 += 4;
-                                    p_data_4 += 4;
-
-
-                                        *p_container_1 = *p_data_3;
-                                        *p_container_2 = *p_data_2;
-                                        *p_container_3 = *p_data_1;
-                                        *p_container_4 = *p_data_4;
-
-
-                                int ponto_pixel = ( height * bm.Width ) + i;
-
-                                _native_arr_texture[ ponto_pixel ] = *( Color32* ) ( p_container_origin ) ; // UnityEngine.Color.red;
-                                //_native_arr_texture[ ponto_pixel ] = UnityEngine.Color.red;
-                                continue;
-
-                        }
+ 
 
                 }
 
 
-                // --- CLEAN 
-
                 m_s.Dispose();
                 bm.Dispose();
                 image.Dispose();
+
+            
 
         
             return;
 
 
         }
-
-
-
 
 
 }

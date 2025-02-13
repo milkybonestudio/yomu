@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+
 
 
 public class MANAGER__resources_structures : MANAGER__RESOURCES {
@@ -9,8 +11,7 @@ public class MANAGER__resources_structures : MANAGER__RESOURCES {
         
         public MANAGER__resources_structures(){
 
-                contexts = System_enums.resource_context;  // ( Resource_context[] ) System.Enum.GetValues( typeof( Resource_context ) );
-                context_structures_modules = new MODULE__context_structures[ contexts.Length ];
+                context_structures_modules = new MODULE__context_structures[ ( int ) Resource_context.END ];
 
                 container_resources_structures = new CONTAINER__resource_structure();
                 container_resources_structures_copies = new CONTAINER__resource_structure_copy();
@@ -21,19 +22,20 @@ public class MANAGER__resources_structures : MANAGER__RESOURCES {
                     { CONTROLLER__errors.Throw( $"container_to_instanciate was not found int the path { Paths_system.path_resources_structures_container }" ); }
 
 
-                for( int context_index = 0 ; context_index < contexts.Length ; context_index++ )
-                    { context_structures_modules[ context_index ] = new MODULE__context_structures( _manager: this, _context: contexts[ context_index ], _initial_capacity: 1_000, _buffer_cache: 2_000_000 ); }
+                for( int context_index = 0 ; context_index < ( int ) Resource_context.END ; context_index++ )
+                    { context_structures_modules[ context_index ] = new MODULE__context_structures( _manager: this, _context: ( ( Resource_context ) context_index ), _initial_capacity: 1_000, _buffer_cache: 2_000_000 ); }
 
+                // lose the reference -> always in memory
+                Get_structure_copy_null();
+                container_to_instanciate.SetActive( false );
 
 
                 return;
 
         }
-        public int a = 10;
-        
-        public MODULE__context_structures[] context_structures_modules;
 
-        private Resource_context[] contexts;
+
+        public MODULE__context_structures[] context_structures_modules;
 
         public CONTAINER__resource_structure container_resources_structures;
         public CONTAINER__resource_structure_copy container_resources_structures_copies;
@@ -43,6 +45,8 @@ public class MANAGER__resources_structures : MANAGER__RESOURCES {
         // --- PUBLIC METHODS
                                                         //  personagens          //     lily    //      chave
         public RESOURCE__structure_copy Get_structure_copy( Resource_context _context, string _main_folder, string _path_local, Resource_structure_content _level_pre_allocation ){ return context_structures_modules[ ( int ) _context ].Get_structure_copy( _main_folder, _path_local, _level_pre_allocation ) ; }
+
+        public RESOURCE__structure_copy Get_structure_copy_null(){ return context_structures_modules[ ( int ) Resource_context.Devices ].Get_structure_copy( "default", "structure_null", Resource_structure_content.game_object ) ; } 
         
 
 
@@ -61,7 +65,7 @@ public class MANAGER__resources_structures : MANAGER__RESOURCES {
         public override void Update(){
 
                 
-                context_frame = ( context_frame + 1 ) % contexts.Length;
+                context_frame = ( context_frame + 1 ) % ( int ) Resource_context.END;
 
                 int current_weight = 0;
                 
@@ -147,8 +151,6 @@ public class MANAGER__resources_structures : MANAGER__RESOURCES {
 
 
         public void Put_in_waiting_container( RESOURCE__structure_copy _copy ){
-
-                Console.Log( "Veio Put_in_waiting_container()" );
 
             
                 if( _copy.structure_game_object == null )

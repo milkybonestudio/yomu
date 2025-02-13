@@ -17,7 +17,7 @@ public enum Tipo_mudanca {
 
 
 
-public class BLOCO_story : Block {
+public class BLOCO_story : BLOCK {
 
       
         // --- INSTANCIA
@@ -84,7 +84,7 @@ public class BLOCO_story : Block {
 
 
 
-        public override void Update(){
+        public override void Update( Control_flow _control_flow ){
 
 
                 CONTROLLER__input.Pegar_instancia().manager_cursor.Change_action( Cursor_action.choice ); //Mudar_cursor( Cor_cursor.off );

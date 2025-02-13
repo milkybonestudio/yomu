@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public abstract class RESOURCE__ref {
 
-        public string n; // ** pode excluir depois
+        public string name;
     
         public abstract void Unload();
         public abstract void Deactivate();
@@ -16,6 +16,10 @@ public abstract class RESOURCE__ref {
         public abstract void Load();
         public abstract void Activate();
         public abstract void Instanciate();
+
+        public abstract void Delete();
+
+        public abstract bool Got_to_minimun();
 }
 
 
@@ -27,6 +31,8 @@ public class RESOURCE__image_ref : RESOURCE__ref {
         public string localizador; // ** localizador local
         public string identifire;
         public RESOURCE__image image;
+        //mark
+        // ** pode remover?
         public Image image_component;
         public MODULE__context_images module;
         
@@ -41,6 +47,16 @@ public class RESOURCE__image_ref : RESOURCE__ref {
         public Resource_image_content actual_need_content;
 
 
+        public override bool Got_to_minimun(){
+
+            // Console.Log( "--current content: " + image.actual_content );
+            // Console.Log( "--level pre allocation: " + level_pre_allocation );
+
+            return ( image.actual_content == level_pre_allocation );
+
+        }
+
+
 
         public Sprite Get_sprite(){  Guaranty_ref(); return TOOL__module_context_images_actions.Get_sprite( this );  }
     
@@ -49,11 +65,11 @@ public class RESOURCE__image_ref : RESOURCE__ref {
 
         // ** DOWN
 
-        
-        public void Delete( ref RESOURCE__image_ref _ref_ref ){ Guaranty_ref(); TOOL__module_context_images_actions.Delete( this ); _ref_ref = null; } 
+
         public override void Unload(){ Guaranty_ref(); TOOL__module_context_images_actions.Unload( this ); }
         public override void Deactivate(){ Guaranty_ref(); TOOL__module_context_images_actions.Deactivate( this ); }
         public override void Deinstanciate(){ Guaranty_ref(); TOOL__module_context_images_actions.Deinstanciate( this );  }
+        public override void Delete(){ TOOL__module_context_images_actions.Delete( this ); }
 
         // ** UP
 

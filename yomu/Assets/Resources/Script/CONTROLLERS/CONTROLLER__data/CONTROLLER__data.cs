@@ -8,8 +8,22 @@ using System.Runtime.InteropServices;
 
 
 
+public enum Login_images {
+
+
+
+}
+
+public struct Login_static_data {
+
+    public Login_images login_image;
+
+}
+
+
 
 unsafe public class CONTROLLER__data {
+
 
 
 
@@ -18,6 +32,14 @@ unsafe public class CONTROLLER__data {
 
 
         public FileStream stream_arquivo;
+
+
+        public void Destroy_data(){
+
+                if( pointer_general_data != IntPtr.Zero )
+                    { Marshal.FreeHGlobal( pointer_general_data ); }
+
+        }
 
 
         // ** teste
@@ -119,77 +141,29 @@ unsafe public class CONTROLLER__data {
 
 
 
-      // testei e a velocidade para struc é basicamente a mesma. 
-      public float[] posicao_mouse = new float[ 2 ];
-      public float  screen_h = 0f;
-      public float  screen_w = 0f;
-      public float  alpha = 0f;
+        // testei e a velocidade para struc é basicamente a mesma. 
+        public float[] posicao_mouse = new float[ 2 ];
+        public float  screen_h = 0f;
+        public float  screen_w = 0f;
+        public float  alpha = 0f;
 
-      public float  dif = 0f;
-
-
-
-        public Vector2 Ajustar_posicao_vec2( Vector2 _vec ){
-
-                return _vec * (1080f / Screen.height);
-
-
-        }    
-
-
-        public void Mudar_scale( Vector2 _vec ){
-
-            _vec *= 1080f / Screen.height;
-
-        }
+        public float  dif = 0f;
 
 
 
-        public void Atualizar_mouse_atual(){
+        public Vector2 Ajustar_posicao_vec2( Vector2 _vec ){ return _vec * (1080f / Screen.height); }
+
+
+        public void Mudar_scale( Vector2 _vec ){ _vec *= 1080f / Screen.height; }
+
+
+
+        public void Atualizar_mouse_atual( Control_flow _control_flow ){
 
 
                 posicao_mouse[ 0 ] =   Input.mousePosition.x  * (  1920f / Screen.width ) ;
                 posicao_mouse[ 1 ] =   Input.mousePosition.y  * (  1920f / Screen.width )  ;
 
         }
-
-
-        // public void Atualizar_mouse_atual(){
-
-        //         screen_h = Screen.height;
-        //         screen_w = Screen.width;
-
-                
-        //         Debug.Log( "antigo_x: " + Input.mousePosition[ 0 ] );
-        //         Debug.Log( "antigo_y: " + Input.mousePosition[ 1 ] );
-
-        //         if( screen_h / screen_w  < 0.5625f ){
-
-        //                 alpha  =   1080f / screen_h;
-        //                 dif = (screen_w -  screen_h  * 1.7777f) / 2f;
-
-        //                                     //  real  * alp => virtual
-        //                 posicao_mouse[0] =  ( Input.mousePosition[0] - dif ) * alpha ;
-        //                 posicao_mouse[1] =  ( Input.mousePosition[1]  ) * alpha ;
-
-        //         }
-        //         else{
-
-        //                 alpha  =   1920f / screen_w;
-        //                 dif = (screen_h  -  screen_w  * 0.5625f)/2f;
-
-        //                 posicao_mouse[0] =  (Input.mousePosition[0]) * alpha ;
-        //                 posicao_mouse[1] =  (Input.mousePosition[1] - dif ) * alpha ;
-
-        //         }
-
-        //         Debug.Log( "novo_x: " + posicao_mouse[ 0 ] );
-        //         Debug.Log( "novo_y: " + posicao_mouse[ 1 ] );
-
-
-        //         return;
-
-        // }
-
 
 }

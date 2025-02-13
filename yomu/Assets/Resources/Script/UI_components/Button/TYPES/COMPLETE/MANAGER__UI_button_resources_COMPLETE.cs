@@ -30,8 +30,11 @@ public struct MANAGER__UI_button_resources_COMPLETE {
             ref DATA__UI_button_COMPLETE data = ref button.data;
 
             // ** AUDIO
-            data.audio_click?.Delete( ref data.audio_click );
-            data.audio_houver?.Delete( ref data.audio_houver );
+            data.audio_click?.Delete();
+            data.audio_click = null;
+            
+            data.audio_houver?.Delete();
+            data.audio_houver = null;
 
             
             // ** IMAGES

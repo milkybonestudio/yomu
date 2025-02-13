@@ -3,7 +3,7 @@ using UnityEngine;
 
 
 
-public class BLOCO_minigames : Block {
+public class BLOCO_minigames : BLOCK {
 
         // --- INSTANCIA
 
@@ -18,7 +18,7 @@ public class BLOCO_minigames : Block {
         public Action Colocar_input;
 
 
-        public override void Update(){}
+        public override void Update( Control_flow _control_flow ){}
         public override void Finalizar(){}
         public override void Iniciar(){}
         public override void Destruir(){}

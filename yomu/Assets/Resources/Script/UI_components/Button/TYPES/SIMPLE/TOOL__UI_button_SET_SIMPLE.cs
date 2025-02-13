@@ -19,8 +19,8 @@ public static class TOOL__UI_button_SET_SIMPLE {
                 botao.TRANSITION_container.SetActive( false );
 
 
-                botao.IMAGE_body.image.sprite = botao.data.button_ON_frame.image_ref.Get_sprite();
-                botao.IMAGE_body.image.color = botao.data.button_ON_frame.color;
+                botao.IMAGE_body.sprite_render.sprite = botao.data.button_ON_frame.image_ref.Get_sprite();
+                botao.IMAGE_body.sprite_render.color = botao.data.button_ON_frame.color;
                 
                 botao.IMAGE_text.tmp_text.text = botao.data.text_on;
                 botao.IMAGE_text.tmp_text.color = botao.data.button_ON_text_color;
@@ -36,14 +36,15 @@ public static class TOOL__UI_button_SET_SIMPLE {
 
 
         public static void SET_OFF_static( UI_button_SIMPLE botao ){
+            
 
                 // esconde outros
                 botao.IMAGE_container.SetActive( true );
                 botao.TRANSITION_container.SetActive( false );
 
 
-                botao.IMAGE_body.image.sprite = botao.data.button_OFF_frame.image_ref.Get_sprite();
-                botao.IMAGE_body.image.color = botao.data.button_OFF_frame.color;
+                botao.IMAGE_body.sprite_render.sprite = botao.data.button_OFF_frame.image_ref.Get_sprite();
+                botao.IMAGE_body.sprite_render.color = botao.data.button_OFF_frame.color;
                 
                 botao.IMAGE_text.tmp_text.text = botao.data.text_off;
                 botao.IMAGE_text.tmp_text.color = botao.data.button_OFF_text_color;
@@ -73,8 +74,8 @@ public static class TOOL__UI_button_SET_SIMPLE {
 
 
                             // --- PUT SPRITES
-                            botao.IMAGE_body.image.sprite = botao.data.button_ON_frame.image_ref.Get_sprite();
-                            botao.IMAGE_body.image.color = botao.data.button_ON_frame.color;
+                            botao.IMAGE_body.sprite_render.sprite = botao.data.button_ON_frame.image_ref.Get_sprite();
+                            botao.IMAGE_body.sprite_render.color = botao.data.button_ON_frame.color;
 
                             botao.TRANSITION_body.image.sprite = botao.data.button_OFF_frame.image_ref.Get_sprite();
                             botao.TRANSITION_body.image.color = botao.data.button_OFF_frame.color;
@@ -129,8 +130,8 @@ public static class TOOL__UI_button_SET_SIMPLE {
 
 
                             // --- PUT SPRITES
-                            botao.IMAGE_body.image.sprite = botao.data.button_OFF_frame.image_ref.Get_sprite();
-                            botao.IMAGE_body.image.color = botao.data.button_OFF_frame.color;
+                            botao.IMAGE_body.sprite_render.sprite = botao.data.button_OFF_frame.image_ref.Get_sprite();
+                            botao.IMAGE_body.sprite_render.color = botao.data.button_OFF_frame.color;
 
                             botao.TRANSITION_body.image.sprite = botao.data.button_ON_frame.image_ref.Get_sprite();
                             botao.TRANSITION_body.image.color = botao.data.button_ON_frame.color;

@@ -5,12 +5,12 @@ using UnityEngine;
 public static class TOOL__resource_audio_testing {
 
 
-        public static void Test( ref RESOURCE__audio_ref _audio_ref, AudioSource _audio_source  ){
+        public static void Test( ref RESOURCE__audio_ref _audio_ref, AudioSource _audio_source, Control_flow _control_flow  ){
 
-                Process_weight p = new (){ weight = 10 };
-                CONTROLLER__resources.Get_instance().Update( ref p );
+                
+                CONTROLLER__resources.Get_instance().Update( _control_flow );
             
-                CONTROLLER__tasks.Pegar_instancia().Update();
+                CONTROLLER__tasks.Pegar_instancia().Update( _control_flow );
 
                 int i = 0;
 
@@ -45,7 +45,7 @@ public static class TOOL__resource_audio_testing {
 
                 
                 if( Input.GetKeyDown( KeyCode.F ) )
-                    { i++; _audio_ref.Delete( ref _audio_ref );  }
+                    { i++; _audio_ref.Delete(); _audio_ref = null; }
 
                 
 

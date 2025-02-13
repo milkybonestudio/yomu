@@ -19,7 +19,7 @@ public class MANAGER__resources_combined_images : MANAGER__RESOURCES {
 
 
 
-        public RESOURCE__combined_image Get_combined_image( GameObject _game_object, Image_link[] _links ){ 
+        public RESOURCE__combined_image Get_combined_image( Material _material, GameObject _game_object, Image_link[] _links ){ 
 
                 // ** assume que as imagens já foram carregadas
                 RESOURCE__combined_image image = new RESOURCE__combined_image();
@@ -27,7 +27,7 @@ public class MANAGER__resources_combined_images : MANAGER__RESOURCES {
                 image.images_game_object = _game_object;
                 image.links = _links;
 
-                image.render = Create_render( _game_object, _links );
+                image.render = Create_render( _material, _game_object, _links );
 
 
                 return image;
@@ -35,7 +35,7 @@ public class MANAGER__resources_combined_images : MANAGER__RESOURCES {
         }
 
 
-        private Combined_image_render Create_render( GameObject _game_object, Image_link[] _links ){
+        private Combined_image_render Create_render( Material _material, GameObject _game_object, Image_link[] _links ){
 
                 
                 int line = -1;
@@ -77,7 +77,7 @@ public class MANAGER__resources_combined_images : MANAGER__RESOURCES {
                 _game_object.transform.localPosition = position + new Vector3( 0f, 0f, 10f );
 
 
-                Combined_image_render render = new Combined_image_render( _game_object, _links, camera, camera_game_object,  line, collum );
+                Combined_image_render render = new Combined_image_render( _material, _game_object, _links, camera, camera_game_object,  line, collum );
 
                 return render;
                 

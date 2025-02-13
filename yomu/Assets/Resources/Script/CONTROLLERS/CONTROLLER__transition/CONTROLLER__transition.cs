@@ -16,6 +16,23 @@ public class CONTROLLER__transition {
         public Transition_request transition_request;
         public INTERFACE__transition_request_visual transition_request_visual;
 
+
+
+        public void Change_node( string _name, RESOURCE__structure_copy _content_structure ){
+
+                // ** o unico que pode deletar a structure é o bloco que tem ela 
+
+                if( _content_structure == null )
+                    { CONTROLLER__errors.Throw( $"structure came null in { _name }" ); }
+
+                if( _content_structure.state != Resource_state.instanciated )
+                    { CONTROLLER__errors.Throw( $"structure<Color=lightBlue>{ _name }</Color> was not instanciated" ); }
+
+                Switching_cameras_data switching_cameras_data = Controllers.cameras.Switch_cameras( _name );
+                
+
+        }
+
         
         public void Put_transition_request_BLOCK( Transition_request _transition_request_block, INTERFACE__transition_request_visual _transition_request_visual ){
 

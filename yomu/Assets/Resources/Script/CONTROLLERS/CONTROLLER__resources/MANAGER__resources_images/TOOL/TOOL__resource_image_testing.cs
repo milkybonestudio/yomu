@@ -42,13 +42,12 @@ public static class TOOL__resource_image_testing {
 
 
 
-        public static void Test(){
+        public static void Test( Control_flow _control_flow ){
 
 
-                Process_weight p = new (){ weight = 10 };
-                CONTROLLER__resources.Get_instance().Update( ref p );
+                CONTROLLER__resources.Get_instance().Update( _control_flow );
             
-                CONTROLLER__tasks.Pegar_instancia().Update();
+                CONTROLLER__tasks.Pegar_instancia().Update( _control_flow );
 
                 int i = 0;
 
@@ -83,7 +82,7 @@ public static class TOOL__resource_image_testing {
 
                 
                 if( Input.GetKeyDown( KeyCode.F ) )
-                    { i++; image_ref.Delete( ref image_ref );  }
+                    { i++; image_ref.Delete(); image_ref = null;  }
 
                 
 

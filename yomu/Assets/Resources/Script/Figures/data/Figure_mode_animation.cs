@@ -6,25 +6,19 @@ using UnityEngine.UI;
 public struct Figure_mode_animation_SIMPLE {
 
 
-        public bool active;
+        
+        public bool active; // -> isso existe
 
         public Figure_mode_resoruces_state resources_state;
-
-
-        public void Load_resources(){
-
-            if( !!!( active ) ) 
-                { return; }
-
-            resources_state = Figure_mode_resoruces_state.getting_resources;
-
-        }
 
 
 
         // ** 1 -> precisa atualizar
         public int Check_resources(){
 
+
+                if( !!!( active ) )   
+                    { return 0;  }
 
                 if( resources_state == Figure_mode_resoruces_state.off )   
                     { return 0; }
@@ -37,12 +31,6 @@ public struct Figure_mode_animation_SIMPLE {
                 for( int slot = 0; slot < resources_images.Length ; slot++ ){
 
                     RESOURCE__image image = resources_images[ slot ].image;
-
-                    //mark
-                    // ** precisa 
-                    // if( ( image.stage_getting_resource != Resources_getting_image_stage.finished ) || ( image.actual_content != Resource_image_content.sprite ) )
-                    //     { return 0; }
-
 
                    if( image.stage_getting_resource != Resources_getting_image_stage.finished  )
                         { return 0; }
@@ -132,6 +120,9 @@ public struct Figure_mode_animation_SIMPLE {
 public struct Figure_mode_animation_MULTIPLES {
 
 
+        //mark 
+        // ** nao faz sentido me preocupar com isso aqui
+
         public Figure_mode_resoruces_state resources_state;
 
 
@@ -159,7 +150,7 @@ public struct Figure_mode_animation_MULTIPLES {
 
 
 
-public struct Resources_container {
+public class Resources_container {
 
     public static Resources_container Get(){
 
@@ -175,8 +166,13 @@ public struct Resources_container {
 
     public void Add_multiples( RESOURCE__ref[] _refs, int _number_to_ignor = 0 ){
 
-        for( int slot = _number_to_ignor; slot < _refs.Length; slot++ )
-            { _refs[ slot ].n = "multiples_" + slot; Add( _refs[ slot ] ); }
+        for( int slot = _number_to_ignor; slot < _refs.Length; slot++ ){ 
+                if( _refs[ slot ] == null )
+                    { return; }
+                    
+                Add( _refs[ slot ] ); 
+        }
+
 
     }
 
@@ -239,6 +235,18 @@ public struct Resources_container {
     }
 
 
+    public void Delete(){
+
+        
+        for( int slot = 0 ; slot < current_index; slot++ )
+            { 
+                resources_refs[ slot ].Delete(); 
+                resources_refs[ slot ] = null;
+            }
+
+    }
+
+
 
 
 
@@ -270,6 +278,8 @@ public struct Figure_mode_main {
 
     public void Put_sprites(){
         
+        resources_state = Figure_mode_resoruces_state.getting_resources;
+
         for( int slot = 0; slot < images_links.Length ; slot++ ){
 
             if( images_links[ slot ].sprite_render == null )
@@ -278,24 +288,30 @@ public struct Figure_mode_main {
             images_links[ slot ].sprite_render.sprite = images_links[ slot ].resource_ref.Get_sprite();
 
         }
+
         
 
     }
 
-    public void Update_material( Material _material ){
+
+    //mark
+    // ** nao faz muito sentido
+    // 16/01
+
+    // public void Update_material( Material _material ){
 
 
-            for( int slot = 0; slot < images_links.Length ; slot++ ){
+    //         for( int slot = 0; slot < images_links.Length ; slot++ ){
 
-                if( images_links[ slot ].sprite_render == null )
-                    { break; } // ** no more images
+    //             if( images_links[ slot ].sprite_render == null )
+    //                 { break; } // ** no more images
 
-                images_links[ slot ].sprite_render.material = null;
-                images_links[ slot ].sprite_render.material = _material;
+    //             images_links[ slot ].sprite_render.material = null;
+    //             images_links[ slot ].sprite_render.material = _material;
 
-            }
+    //         }
 
-    }
+    // }
 
 
     public int Check_resources(){

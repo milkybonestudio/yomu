@@ -2,7 +2,7 @@
 
 public static class Construtor_bloco_CONVERSAS {
 
-        public static Block Construir(){
+        public static BLOCK Construir(){
 
             if ( BLOCO_conversas.instancia != null)
                 { throw new System.Exception( "Tentou construir o BLOCO_conversas mas o bloco ja estava construido" ); }
@@ -23,7 +23,7 @@ public static class Construtor_bloco_CONVERSAS {
 
                     // *** coisas
 
-            return ( Block ) bloco;
+            return bloco;
 
     }
 

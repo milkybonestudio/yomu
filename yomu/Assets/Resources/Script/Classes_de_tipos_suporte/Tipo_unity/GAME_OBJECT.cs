@@ -29,7 +29,14 @@ public static class GAME_OBJECT {
 
         public static void Colocar_parent( GameObject _pai, GameObject _filho ){
 
-                    _filho.transform.SetParent( _pai.transform, false );
+
+                if( _pai == null )
+                    { CONTROLLER__errors.Throw( "Tried to change parente , but the <Color=lightBlue>_pai</Color> is null" ); }
+
+                if( _filho == null )
+                    { CONTROLLER__errors.Throw( "Tried to change parente , but the <Color=lightBlue>_filho</Color> is null" ); }
+
+                _filho.transform.SetParent( _pai.transform, false );
 
         }
 

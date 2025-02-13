@@ -6,6 +6,7 @@ using System.Threading;
 public class CONTROLLER__errors {
 
 
+        [MethodImpl( MethodImplOptions.NoInlining )]
         public static int Throw( string _message ){ Get_instance().Throw_intern( _message ); return -1; }
 
         // public static void Verify( bool _bool , string _message ){ if( _bool ){ instance.Throw_intern( _message ); } }

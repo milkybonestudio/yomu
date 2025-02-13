@@ -7,14 +7,26 @@ using UnityEngine;
 public static class Paths_system {
 
 
+        //mark
+        // strings deveriam ser consts, se precisar algo run time pegar com funcao
+
+
         // ** ver depois:
 
         public static string path_resources_structures_container = "Containers/Structures";
         public static string path_resources_complex_structures_container = "Tela/Container_structures";
         
+        //mark
+        // ** mover depois
+        public const int version = 1;
+
+        public static string persistent_data_path_correct_version = System.IO.Path.Combine( Application.persistentDataPath, version.ToString() ) ;
 
         
         // --- FOLDERS PRINCIPAIS
+
+
+            public static string path_file__program_data = System.IO.Path.Combine( Application.persistentDataPath, "Program_data.dat" ) ;
 
             public static string path_folder__static_data; // images container, scripts etc in the game folder in build
             public static string path_folder__dinamic_data; // saves and user data etc in the persistent data folder in build

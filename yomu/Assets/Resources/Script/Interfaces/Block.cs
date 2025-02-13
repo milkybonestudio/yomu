@@ -2,17 +2,20 @@ using UnityEngine;
 
 // Contruir() => cria o objeto
 
-public abstract class Block {
+public abstract class BLOCK {
 
 
         public Block_type block_type;
         public GameObject container;
 
+        //mark
+        // ** depois fazer abstract
+        public virtual void Create_camera_stuff(){}
         
     
         public abstract void Finalizar(); // destroi os objetos que precisam ser destruido os dados do bloco, mas mantem o BLOCO_objeto ** destroy o container
         public abstract void Iniciar();   //  junto com os dados de Dados_blocos inicia o bloco sempre na transicao 
-        public abstract void Update();
+        public abstract void Update( Control_flow _control_flow );
 
 
         // ** se null nao precisa carregar

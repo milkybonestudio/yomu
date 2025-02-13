@@ -18,13 +18,12 @@ public class Hokushi : Item {
 
                 id = ( int ) ITEM__NAMED__POSSESSED__PRIMORDIAL_WEAPONS.Hokushi;
                 name = "Hokushi";
-                path_data = "/Named/Possessed/Primordial_weapons/Hokushi"; 
+                type_name = "ITEM__NAMED__POSSESSED__PRIMORDIAL_WEAPONS"; 
                 
-                #if UNITY_EDITOR
-                    DEVELOPMENT( "ITEM__NAMED__POSSESSED__PRIMORDIAL_WEAPONS" );
-                #endif
-
+                
         }
+
+        public void Construct(){}
 
         
 

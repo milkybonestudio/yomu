@@ -9,16 +9,16 @@ public class MANAGER__resources_images : MANAGER__RESOURCES {
         
         public MANAGER__resources_images(){
 
-                contexts = contexts = System_enums.resource_context;// ( Resource_context[] ) System.Enum.GetValues( typeof( Resource_context ) );
-
+                
+                number_contexts = ( int ) Resource_context.END;
                 container_images = new CONTAINER__RESOURCE__images();
                 container_image_refs = new CONTAINER__RESOURCE__image_refs();
-                context_images_modules = new MODULE__context_images[ contexts.Length ];
+                context_images_modules = new MODULE__context_images[ ( int ) Resource_context.END ];
 
                 textures_manager = new MANAGER__textures_resources();
 
-                for( int context_index = ( int )( Resource_context.not_given + 1 ) ; context_index < contexts.Length ; context_index++ )
-                    { context_images_modules[ context_index ] = new MODULE__context_images( _manager: this, _context: contexts[ context_index ], _initial_capacity: 1_000, _buffer_cache: 2_000_000 ); }
+                for( int context_index = ( int )( Resource_context.not_given + 1 ) ; context_index < number_contexts ; context_index++ )
+                    { context_images_modules[ context_index ] = new MODULE__context_images( _manager: this, _context: ( Resource_context ) context_index, _initial_capacity: 1_000, _buffer_cache: 2_000_000 ); }
 
                 return;
 
@@ -33,8 +33,7 @@ public class MANAGER__resources_images : MANAGER__RESOURCES {
         public MODULE__context_images[] context_images_modules;
 
 
-
-        private Resource_context[] contexts;
+        private int number_contexts;
 
 
         public int pointer;
@@ -117,29 +116,40 @@ public class MANAGER__resources_images : MANAGER__RESOURCES {
         // --- UPDATE
 
         private const int weight_to_stop = 5;
-        private int context_frame;
+        private int context_frame = 1;
+
         public override void Update(){
 
                 //** fazer para dar preferencia pelo tipo depois a ordem
-
-                context_frame = ( context_frame + 1 ) % contexts.Length;
-                if( context_frame == 0 )
-                    { context_frame++; }
+                
+                int limit_loops  = ( ( int ) Resource_context.END - 1 ); // ** remove the not_give
 
                 int current_weight = 0;
-                foreach(  RESOURCE__image image in context_images_modules[ context_frame ].actives_images_dictionary.Values ){
 
-                        current_weight += Updata_image( image );
+                int loop = 0;
+                
+                while( loop++ < limit_loops ){
+
+                        foreach(  RESOURCE__image image in context_images_modules[ context_frame ].actives_images_dictionary.Values )
+                            { current_weight += Updata_image( image ); }
         
+                    
+                        context_frame = ( context_frame + 1 ) % number_contexts;
+                        
+                        if( context_frame == 0 )
+                            { context_frame++; }
+
                         if( current_weight >= weight_to_stop )
                             { return; } 
                 }
 
+                // Console.Log( "<Color=red>-------------------</Color>" );
                 
         }
 
 
         private int Updata_image( RESOURCE__image _image ){
+
 
 
                 TOOL__resource_image.Verify_image( _image );

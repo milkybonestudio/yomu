@@ -27,18 +27,6 @@ public enum Figure_use_context {
 }
 
 
-public enum Figure_visual_emotion_state {
-
-        off, 
-
-        going_off,
-        goinf_on,
-
-        on,
-
-}
-
-
 
 
 public enum Figure_mode_type {

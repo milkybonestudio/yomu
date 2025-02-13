@@ -10,12 +10,6 @@ public static class Console {
 
 
 
-        public static int i = 0;
-        public const int i_m = 10;
-
-        public static void Log_intervalado( string m ){ i = ( ( i + 1 ) % i_m ); if( i == 0 ){ Debug.Log( m ); }  }
-
-
         public static bool multithread_ativado = false;
 
         // --- MAIN
@@ -33,7 +27,10 @@ public static class Console {
         public static Log_type[] logs_tipos_m;
 
 
+        public static int slow_value;
+        public static void Log_slow( string _message ){ if( slow_value == 0 ){ Log_intern( _message, Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }  }
 
+        public static void Log( bool _can, string _message ){ if( !!!( _can ) ){ return; } Log_intern( _message, Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }
         public static void Log( string _message ){ Log_intern( _message, Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }
         public static void Log( object _message ){ Log_intern( Convert.ToString(  _message ), Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }
         public static void LogError( string _message ){ Log_intern( _message, Log_type.error, ( Thread.CurrentThread.Name == "Main" ) ); return; }
@@ -87,9 +84,10 @@ public static class Console {
 
         private static void Log_intern( string _message, Log_type _type, bool _main_thread ){
 
+                if( _message != "" )
+                    { _message = $"<Size=13>{ _message }</Size>"; }
 
-                _message = $"<Size=13>{ _message }</Size>";
-
+                
                 string message_with_trace = Get_trace( _message );
 
                 if( !!!( _main_thread ) )
@@ -197,6 +195,10 @@ public static class Console {
 
         public static void Update(){
 
+
+                slow_value = ( slow_value + 1 ) % 60;
+
+                // ** Console.Update é o unico update que nao precisa do Control_flow
                 
                 if( pointer_run_time == index_atual_main && pointer_run_time_m == index_atual_m )
                         { return; }

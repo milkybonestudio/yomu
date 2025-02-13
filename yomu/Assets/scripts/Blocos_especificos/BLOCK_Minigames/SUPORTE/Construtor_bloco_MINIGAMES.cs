@@ -2,7 +2,7 @@ using UnityEngine;
 
 public static class Construtor_bloco_MINIGAMES {
 
-    public static Block Construir( GameObject _container ){
+    public static BLOCK Construir( GameObject _container ){
 
             if ( BLOCO_minigames.instancia != null)
                 { throw new System.Exception( "Tentou construir o BLOCO_minigames mas o bloco ja estava construido" ); }
@@ -29,7 +29,7 @@ public static class Construtor_bloco_MINIGAMES {
 
                     // *** coisas
 
-            return ( Block ) bloco;
+            return  bloco;
 
     }
 

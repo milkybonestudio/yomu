@@ -3,7 +3,7 @@ using UnityEngine;
 public static class Construtor_bloco_STORY {
     
 
-        public static Block Construir( GameObject _container ){
+        public static BLOCK Construir( GameObject _container ){
 
 
                     // --- VERIFICAR SE O BLOCO JA NAO FOI CRIADO
@@ -26,7 +26,7 @@ public static class Construtor_bloco_STORY {
                         bloco.bloqueador = new Bloqueador_cenas_visual_novel();
 
                         
-                    return ( Block ) bloco;
+                    return bloco;
 
         }
 
