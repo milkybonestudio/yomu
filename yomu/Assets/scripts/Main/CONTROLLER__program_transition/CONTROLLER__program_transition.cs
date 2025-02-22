@@ -13,12 +13,13 @@ unsafe public class CONTROLLER__program_transition {
         public static CONTROLLER__program_transition Get_instance(){ return instance; }
 
 
-        public Transition transition;
+        public Transition_program transition;
         public Swithcing_program_transition_state state;
 
         // ** used only in transition for reference
         private PROGRAM_MODE old_mode;
         private PROGRAM_MODE new_mode;
+
         
         // --- PROTECTION
 
@@ -32,13 +33,8 @@ unsafe public class CONTROLLER__program_transition {
                     { return; }
 
                 if( watch.ElapsedMilliseconds > max_time_to_transition_ms[ ( int ) new_mode.type ] )    
-                    { CONTROLLER__errors.Throw( $"Time exceeded in program_transition, time: { ( float )watch.ElapsedMilliseconds / 1_000f } seconds" ); }
+                    { CONTROLLER__errors.Throw( $"Time exceeded in program_transition to <Color=lightBlue>{ new_mode.type }</Color>, time: <Color=lightBlue>{ ( long )(( float )watch.ElapsedMilliseconds / 1_000f) }</Color> seconds" ); }
 
-                
-                // --- NEED TO BE BEFORE
-                _control_flow.Set_UI( ( transition.stage_to_liberate_UI <= transition.stage ) );
-                _control_flow.Block_program_mode_update();
-                
                 switch( transition.stage ){
 
                     
@@ -55,7 +51,9 @@ unsafe public class CONTROLLER__program_transition {
 
 
 
-        public void Switch_program_mode(  Program_mode _new_mode, Transition_data _mode_transition ){
+        public void Switch_program_mode(  Program_mode _new_mode, Transition_program_data _mode_transition ){
+
+                watch.Start();
 
 
                 Program program = Controllers_program.program;
@@ -76,34 +74,31 @@ unsafe public class CONTROLLER__program_transition {
                     new_mode = program.modes[ ( int ) _new_mode ];
                     old_mode = program.modes[ ( int ) program.current_mode ];
                 
-
                     new_mode.Construct();
 
-                    Lock_program_data* lock_data = Program_data.Get_lock( _new_mode );
 
-                    if( !!!( lock_data->put_data ) )
-                        { CONTROLLER__errors.Throw( "Did not put data" ); }
-
+                    Program_data.Verify_lock_data( _new_mode );
                         transition = new_mode.Construct_transition( _mode_transition );
+                    Program_data.Unlock_data();
 
-                    lock_data->put_data = false;
-
+                    
                     if( transition == null )
                         {  CONTROLLER__errors.Throw( $"The <Color=lightBlue>transition</Color> to the mode <Color=lightBlue>{ _new_mode }</Color> was null" ); }
 
                 // --- SET STATES
 
                     state = Swithcing_program_transition_state.switching;
-                    new_mode.state = Program_mode_state.swithing_to_active;
-                    old_mode.state = Program_mode_state.swithing_to_inactive;
+                    // new_mode.state = Program_mode_state.swithing_to_active;
+                    // old_mode.state = Program_mode_state.swithing_to_inactive;
 
                 // --- GET CAMERA DATA
                     transition.cameras_data = Controllers.cameras.Switch_cameras( _new_mode.ToString() );
                 
                 // --- START
 
-                    Cast_actions_NO_REF( ref transition.sections_actions.preparation ); // ** começa a carregar os recursos
-                    Pass_stage( ref transition.checks, transition.stage );
+                    transition.sections_actions.preparation();
+                    transition.resource_container_checker.Load_all_resources();
+                    transition.Pass_stage();
                     return;
 
         }
@@ -114,60 +109,29 @@ unsafe public class CONTROLLER__program_transition {
         // --- INTERN
 
 
-        [MethodImpl( MethodImplOptions.AggressiveInlining )]
-        private void Pass_stage( ref Transition_checks[] _checks , Transition_stage _stage ){
-
-                int index = ( int ) _stage;
-                ref Transition_checks checks = ref _checks[ index ];
-
-                if( !!!( checks.new_part ) )
-                    { return; }
-                if( !!!( checks.old_part ) )
-                    { return; }
-                if( !!!( checks.screen_part ) )
-                    { return; }
-                if( !!!( checks.UI_part ) )
-                    { return; }
-                    
-                transition.Pass_stage();
-
-        }
-
-
-
-
         private void Handle_UP( Control_flow _control_flow ){
 
-                Cast_actions_REF( ref transition.sections_actions.up ); 
-                Pass_stage( ref transition.checks, transition.stage );
+                if( transition.sections_actions.up() )
+                    { transition.Pass_stage();}
                 return; 
 
         }
 
         private void handle_MID( Control_flow _control_flow ){
 
-                Cast_actions_REF( ref transition.sections_actions.mid );
-
-                if( !!!( transition.resource_container_minimun_checker.End() ) )
+                transition.sections_actions.mid();
+                
+                if( !!!( transition.resource_container_checker.All_resources_loaded() ) )
                     { return; }
 
-                if( ( transition.data_requisition?.finalizado != true ) && ( transition.data_requisition != null ) )
-                    { return; }
-
-                if( ( transition.resources_requisition?.finalizado != true ) && ( transition.resources_requisition != null ) )
-                    { return; }
                 
                 if( !!!( TASK_REQ.Verify_all_finalized( transition.tasks, Task_req_handle_array_null._true ) ) )
                     { return; }
 
-                
-                // --- FORCE PASS
-                transition.checks[ ( int ) Transition_stage.mid ].new_part = true;
-                transition.checks[ ( int ) Transition_stage.mid ].old_part = true;
-                transition.checks[ ( int ) Transition_stage.mid ].screen_part = true;
-                transition.checks[ ( int ) Transition_stage.mid ].UI_part = true;
-                transition.Pass_stage();
-
+                if(  transition.sections_actions.mid_all_loaded() )
+                    { transition.Pass_stage(); }
+ 
+            
                 return;
 
         }
@@ -177,8 +141,11 @@ unsafe public class CONTROLLER__program_transition {
 
         private void Handle_DOWN( Control_flow _control_flow ){
 
-                Cast_actions_REF( ref transition.sections_actions.down );
-                Pass_stage( ref transition.checks, transition.stage );
+                if( transition.sections_actions.down() )
+                    { transition.Pass_stage(); return; }
+
+                transition.sections_actions.down();
+                return; 
                 
         }
 
@@ -186,34 +153,35 @@ unsafe public class CONTROLLER__program_transition {
 
         private void Handle_MODE_SET( Control_flow _control_flow ){ 
 
-                Cast_actions_REF( ref transition.sections_actions.mode_set );
+
+                if( transition.sections_actions.mode_set() )
+                    { transition.Pass_stage(); }
+                
                 _control_flow.Set_UI( transition.stage_to_liberate_UI <= transition.stage );
                 _control_flow.Block_program_mode_update();
-                Pass_stage( ref transition.checks, transition.stage );
+
+                return;
 
         }
 
 
 
         private void Handle_MODE_START( Control_flow _control_flow ){
-
-                Pass_stage( ref transition.checks, transition.stage );
+            
 
             //** logic back
 
-                Cast_actions_NO_REF( ref transition.sections_actions.mode_start );
+                transition.sections_actions.mode_start();
 
                 // --- OLD
                     old_mode.Clean_resources();
                     old_mode.Destroy();
-                    old_mode.state = Program_mode_state.inactive;
                     old_mode = null;
 
 
                 // --- NEW
 
                     Controllers_program.program.current_mode = new_mode.type;
-                    new_mode.state = Program_mode_state.active;
                     new_mode = null;
 
 
@@ -226,65 +194,6 @@ unsafe public class CONTROLLER__program_transition {
                 _control_flow.Unblock_UI();
                 Controllers.cameras.End_switch();
 
-
-        }
-
-
-    // ---- INTER
-
-
-        private void Cast_actions_NO_REF( ref Transition_section_actions_WITH_NO_REF _sections ){
-
-                //mark
-                // essa parte faz sentido kinda mas ta estranha
-
-                ref Transition_checks checks = ref transition.checks[ ( int ) transition.stage ];
-
-                if( _sections.NEW != null )
-                    { _sections.NEW(); }
-
-                checks.new_part = true; 
-
-                if( _sections.OLD != null )
-                    { _sections.OLD(); }
-
-                checks.old_part = true; 
-                
-                if( _sections.screen != null )
-                    { _sections.screen(); }
-
-                checks.screen_part = true; 
-
-                if( _sections.UI != null )
-                    { _sections.UI(); }
-
-                checks.UI_part = true; 
-
-        }
-
-        private void Cast_actions_REF( ref Transition_section_actions_WITH_REF _sections ){
-
-                ref Transition_checks checks = ref transition.checks[ ( int ) transition.stage ];
-
-                if( _sections.NEW != null )
-                    { _sections.NEW( transition ); }
-                    else
-                    { checks.new_part = true; }
-
-                if( _sections.OLD != null )
-                    { _sections.OLD( transition ); }
-                    else
-                    { checks.old_part = true; }
-                
-                if( _sections.screen != null )
-                    { _sections.screen( transition ); }
-                    else
-                    { checks.screen_part = true; }
-
-                if( _sections.UI != null )
-                    { _sections.UI( transition ); }
-                    else
-                    { checks.UI_part = true; }
 
         }
 

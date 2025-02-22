@@ -29,14 +29,13 @@ public class MANAGER__resources_audios : MANAGER__RESOURCES {
         
         public MANAGER__resources_audios(){
 
-                contexts = contexts = System_enums.resource_context; // ( Resource_context[] ) System.Enum.GetValues( typeof( Resource_context ) );
-
+            
                 container_audios = new CONTAINER__RESOURCE__audios();
                 container_audio_refs = new CONTAINER__RESOURCE__audios_refs();
-                context_audios_modules = new MODULE__context_audios[ contexts.Length ];
+                context_audios_modules = new MODULE__context_audios[ ( int ) Resource_context.END ];
 
-                for( int context_index = 0 ; context_index < contexts.Length ; context_index++ )
-                    { context_audios_modules[ context_index ] = new MODULE__context_audios( _manager: this, _context: contexts[ context_index ], _initial_capacity: 1_000, _buffer_cache: 2_000_000 ); }
+                for( int context_index = 0 ; context_index < ( int ) Resource_context.END ; context_index++ )
+                    { context_audios_modules[ context_index ] = new MODULE__context_audios( _manager: this, _context: ( Resource_context ) context_index , _initial_capacity: 1_000, _buffer_cache: 2_000 ); }
 
                 return;
 
@@ -48,9 +47,7 @@ public class MANAGER__resources_audios : MANAGER__RESOURCES {
     
         public MODULE__context_audios[] context_audios_modules;
 
-
-
-        private Resource_context[] contexts;
+        
 
 
         public int pointer;
@@ -75,7 +72,7 @@ public class MANAGER__resources_audios : MANAGER__RESOURCES {
 
                 //** fazer para dar preferencia pelo tipo depois a ordem
 
-                context_frame = ( context_frame + 1 ) % contexts.Length;
+                context_frame = ( context_frame + 1 ) % ( int ) Resource_context.END;
 
                 int current_weight = 0;
                 foreach(  RESOURCE__audio image in context_audios_modules[ context_frame ].actives_audios_dictionary.Values ){

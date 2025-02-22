@@ -21,6 +21,23 @@ public struct Login_static_data {
 }
 
 
+unsafe public struct Heap_data {
+
+        //mark
+        // ** fazer depois
+
+        public static void Construct( Heap_data* _data ){
+
+            
+
+        }
+
+        public int number_containers;
+
+
+
+}
+
 
 unsafe public class CONTROLLER__data {
 
@@ -116,8 +133,7 @@ unsafe public class CONTROLLER__data {
 
         public bool Pode_pedir_dados(){  return ! ( ja_pegou_dados_do_ciclo ); }
 
-        
-
+    
         public byte[] Pedir_dados_run_time_byte_arr( string _path_dados ){
 
                 // talvez valha mais a pena retornoar a stream?

@@ -109,7 +109,7 @@ public class MODULE__context_structures {
                         string path_file_data = System.IO.Path.Combine( Application.dataPath, "Resources", context.ToString(), _main_folder, ( _path_local + "_DATA.txt") );
 
                         
-                        RESOURCE__structure new_structure = manager.container_resources_structures.Get_resource_structure();
+                        RESOURCE__structure new_structure = manager.resources_structures__CONTAINER.Get_resource_structure();
                         Put_data_structure( new_structure, context, _main_folder, locators );
 
                         if(  Resources.Load<GameObject>( new_structure.resource_path ) == null )
@@ -147,8 +147,15 @@ public class MODULE__context_structures {
         private RESOURCE__structure_copy Get_copy( RESOURCE__structure _structure, Resource_structure_content _copy_level_pre_allocation  ){
 
                 
+
                 // --- GET COPY
                 RESOURCE__structure_copy copy = manager.container_resources_structures_copies.Get_resource_structure_copy( _structure, _copy_level_pre_allocation );
+
+                // ** pega vazio e não muda?
+
+
+                // copy.actual_content = Resource_structure_content.nothing;
+
 
 
                 if( _structure.copies.Length == _structure.copies_pointer )
@@ -157,6 +164,7 @@ public class MODULE__context_structures {
                 copy.RESOURCE_index = _structure.copies_pointer;
                 _structure.copies[ _structure.copies_pointer++ ].copy = copy;
 
+                
                 TOOL__resources_structures.Increase_count( _structure, Resource_structure_content.nothing );
 
                 return copy;

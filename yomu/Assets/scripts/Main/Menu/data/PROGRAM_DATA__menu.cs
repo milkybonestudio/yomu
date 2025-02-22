@@ -4,8 +4,8 @@
 public unsafe struct PROGRAM_DATA__menu {
 
 
-    public Lock_program_data lock_data;
 
+    public PROGRAM_DATA__menu* pointer;
 
     // --- CREATION
     // ** need on creation

@@ -7,12 +7,14 @@ public enum Resource_context {
         // generic, // ** mais usado para audios e sfx 
 
         login,
+        
         menu,
 
         Characters, 
 
         Blocks, 
 
+        System,
 
 
         Devices,

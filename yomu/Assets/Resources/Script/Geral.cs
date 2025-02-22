@@ -21,8 +21,7 @@ public static class Geral {
                 
         }
 
-
-
+        
 
         public static int n = 0;
         public static bool foi_setado = false;

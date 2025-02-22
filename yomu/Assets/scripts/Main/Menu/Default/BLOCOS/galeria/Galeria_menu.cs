@@ -42,7 +42,7 @@ public class Galeria_menu {
       public void Passar_pagina_galeria(){
 
 
-            int max =  ( CONTROLLER__configurations.Pegar_instancia().galeria_imagens_liberadas.Length / 6 );
+            int max =  0;
 
             if(  numero_pagina_galeria  +  1  > max  ){ return; }
 

@@ -4,133 +4,119 @@ using UnityEngine;
 
 
 
-public static class Paths_system {
-
-
-        //mark
-        // strings deveriam ser consts, se precisar algo run time pegar com funcao
-
-
-        // ** ver depois:
+public static class Paths_containers {
 
         public static string path_resources_structures_container = "Containers/Structures";
         public static string path_resources_complex_structures_container = "Tela/Container_structures";
+
+}
+
+
+public static class Paths_files {
+
+
+        // ** PERSISTENTDATAPATH
+
+
+            public static string program_data_version = Path.Combine( Paths_system.persistent_data_path, "version.dat" );
+
+            // ** PROGRAM
+
+                // ** program have heap?
+
+                public static string program_brute_data = Path.Combine( Paths_folders.program, "program_brute_data.dat" );
+
+
+                // ** lembrar que tem que guardar qual o save esta usando
+                public static string safety_data_stack = Path.Combine( Paths_system.persistent_data_path, "safety_data_stack.dat" );
+
+
+
+            // ** SAVES
+
+                public static string Get_save_brute_data( int _save ){ return Path.Combine( Paths_folders.Get_save( _save ), "brute_data.dat" ); }
         
-        //mark
-        // ** mover depois
-        public const int version = 1;
 
-        public static string persistent_data_path_correct_version = System.IO.Path.Combine( Application.persistentDataPath, version.ToString() ) ;
-
-        
-        // --- FOLDERS PRINCIPAIS
+                public static string Get_save_heap_data( int _save ){ return Path.Combine( Paths_folders.Get_save( _save ), "heap_data.dat" ); }
+                public static string Get_save_heap_data_slot( int _save, int _slot ){ return Path.Combine( Get_save_heap_data( _save ), $"data_{ _slot.ToString() }.dat" ); }
 
 
-            public static string path_file__program_data = System.IO.Path.Combine( Application.persistentDataPath, "Program_data.dat" ) ;
-
-            public static string path_folder__static_data; // images container, scripts etc in the game folder in build
-            public static string path_folder__dinamic_data; // saves and user data etc in the persistent data folder in build
-
-
-        // --- DADOS ESTATICOS
-
-            public static string path_folder__images_containers;
-            public static string path_folder__dlls; // ** nao vale a pena ter 1 dll para cada coisa, isso so vai ser usado na build para mover as dlls. Se elas nao ficarem na pasta managed as dlls só vão carregar oque precisarem + metadados
-            public static string path_folder__save_default;
-
-
-            public static string path_folder__prefabs; // ** por hora vai ser usado para pegar os prefabs no resouces.Load
-
-
-
-        // --- DADOS DINAMICOS
+        // ** DATA
     
-            // --- USER DATA
-                public static string path_folder__user_data;
-
-                    public static string path_arquivo_resumo_persona_usuario;
-                    public static string path_arquivo_configuracoes;
-                    public static string path_arquivo_dados_menu_E_login_dados;
+            public static string Get_resources_container( Resource_context _context ){  Garanty_build(); return Path.Combine( Paths_system.data_path, $"resources_container{ _context.ToString() }.dat" ); }
 
 
-            // --- SYSTEM DATA
+        /*
+            o linker vai ter pointers para pegar o recurso, tem que ser no formato " "chave", pointer_1, pointer_2, dados[...]"
+            o linker sempre vai ser usado para criar um dic<stirng, type_info>
 
-                public static string path_folder__system;
+            os recursos normais não vão ter dados, talvez tipo?
 
-                    public static string path_file__complete_use__system_data;
-                    public static string path_file__complete_use__player_data;
-                    public static string path_arquivo__stack;
+        */
 
-            // --- SAVES DATA
-
-                public static string path_folder__saves;
-
-                    public static string path_file__saves_information; // ** cration time, version and stuff
+        public static string Get_resources_container_linker( Resource_context _context ){ Garanty_build(); return Path.Combine( Paths_system.data_path, $"resources_container{ _context.ToString() }_linker.txt" ); }
 
 
 
-            // --- QUANDO FOR INICIAR O JOGO
+        private static void Garanty_build(){
 
-                public static string path_folder__save;
-                public static string path_folder__save_DEATH;
+                #if UNITY_EDITOR
+                    CONTROLLER__errors.Throw( "Can not call in editor" );
+                #endif
+        }
 
-                        // ** ir adicionando conforme for precisando
-
-                        // --- POSITIONS
-
-                        public static string path_file__points;
-                        public static string path_file__points_locator;
-
+        
     
+}
 
-        // --- DEVICES
-        // ** talvez depois mudar para o formato compactado e usar strings para pegar as imagens no locator
-
-        public static string path_folder__imagens_devices;
-        public static string path_folder__imagens_dispositivos_reutilizaveis;
-
-        
-        
-
-        public static void Colocar_save( int _save ){
+public static class Paths_folders {
 
 
-                // --- PEGA FOLDERS PRINCIPAIS
+        public static string saves = Path.Combine( Paths_system.persistent_data_path, "saves" );
+        public static string program = Path.Combine( Paths_system.persistent_data_path, "program" );
 
-                path_folder__save = System.IO.Path.Combine( path_folder__saves ,  $"save_{ _save.ToString() }" );
-                path_folder__save_DEATH = System.IO.Path.Combine( path_folder__save,  "Death" );
 
-                path_file__complete_use__system_data = System.IO.Path.Combine( path_folder__save,  "System_data.dat" ); 
-                path_file__complete_use__player_data = System.IO.Path.Combine( path_folder__save,  "Player_data.dat" ); 
+
+
+        public static string Get_heap_save( int _save ){ return System.IO.Path.Combine( Get_save( _save ), "data_heap" ); }
+
+
+        public static string Get_save( int _save ){
+
+                if( _save > 7 )
+                    { CONTROLLER__errors.Throw( $"Can not handle save number <Color=lightBlue>{ _save }</Color>" ); }
+
+                return System.IO.Path.Combine( Paths_folders.saves, ( "save_" + _save.ToString() ) );
+
+        }
+
+
+        public static string Get_saves_death( int _save ){ return System.IO.Path.Combine( Get_save( _save ) , "death"  ); }
+        public static string Get_specific_save_death( int _save,  int _slot ){ return System.IO.Path.Combine( Get_saves_death( _save ) , ( "death_" + _slot.ToString() ) ); }
+
+
+
+
+}
+
+
+public static class Paths_system {
+
+
+        // ** MAIN ENTRY POINTS
+
+
+        #if UNITY_EDITOR
+
+            public static string persistent_data_path = Path.Combine( Application.dataPath, "Editor", "persistentDataPath" );
+            public static string data_path = Path.Combine( Application.dataPath, "Editor", "dataPath" );
             
-                return;
+        #else 
 
-        }
+            public static string persistent_data_path = Application.persistentDataPath;
+            public static string data_path = Path.Combine( Application.dataPath, "Data" );
 
-        
-
-        
-        // public static string Get_path_folder__images_container_type( Images_container_type _type )
-        //     { return Path.Combine( path_folder__images_containers, _type.ToString() ); }
-
-
-        // public static string Get_path_folder__entities_type( Tipo_entidade _entidade )
-        //     { return Path.Combine( path_folder__save, _entidade.ToString() ); }
-
-
-        // public static string Get_file_path__entity( Tipo_entidade _entidade,  string _nome_entidade )
-        //     { return Path.Combine( Get_path_folder__entities_type( _entidade ), _nome_entidade ); }
-
-
-        public static string Pegar_path_imagem_save( int _numero_save ){
-
-                if( _numero_save > 4 )
-                        { throw new Exception( $"tentou carregar o save { _numero_save }" ); }
-
-                return System.IO.Path.Combine( Application.persistentDataPath, $"save_{ _numero_save.ToString() }", "imagem_save_slot.png" );
-
-
-        }
+        #endif
 
 
 }

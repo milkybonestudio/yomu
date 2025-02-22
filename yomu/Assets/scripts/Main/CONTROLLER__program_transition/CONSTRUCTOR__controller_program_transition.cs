@@ -17,8 +17,9 @@ public static class CONSTRUCTOR__controller_program_transition {
 
                             controller.max_time_to_transition_ms[ ( int ) Program_mode.login ] = 5_000l;
                             controller.max_time_to_transition_ms[ ( int ) Program_mode.menu ] = 5_000l;
-                            controller.max_time_to_transition_ms[ ( int ) Program_mode.jogo ] = 15_000l;
-                            controller.max_time_to_transition_ms[ ( int ) Program_mode.test ] = 1_000l;
+                            controller.max_time_to_transition_ms[ ( int ) Program_mode.game ] = 15_000l;
+                            controller.max_time_to_transition_ms[ ( int ) Program_mode.test ] = 30_000l;
+                            controller.max_time_to_transition_ms[ ( int ) Program_mode.rebuild_save ] = ( 5l * 60l * 1_000l );
 
                         controller.state = Swithcing_program_transition_state.nothing;
 

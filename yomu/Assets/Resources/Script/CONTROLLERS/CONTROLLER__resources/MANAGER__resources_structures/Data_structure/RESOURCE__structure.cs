@@ -41,7 +41,6 @@ public class RESOURCE__structure {
 
             private int n = 0;
 
-            // public RESOURCE__structure_copy[] copies = new RESOURCE__structure_copy[ 10 ];
             public Structure_copy_reference[] copies = new Structure_copy_reference[ 10 ];
             
             public int copies_pointer;

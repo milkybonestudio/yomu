@@ -33,7 +33,7 @@ public static class Console {
         public static void Log( bool _can, string _message ){ if( !!!( _can ) ){ return; } Log_intern( _message, Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }
         public static void Log( string _message ){ Log_intern( _message, Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }
         public static void Log( object _message ){ Log_intern( Convert.ToString(  _message ), Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }
-        public static void LogError( string _message ){ Log_intern( _message, Log_type.error, ( Thread.CurrentThread.Name == "Main" ) ); return; }
+        public static void LogError( string _message, int _trace_to_ignore = 0 ){ Log_intern( _message, Log_type.error, ( Thread.CurrentThread.Name == "Main" ), _trace_to_ignore ); return; }
 
 
 
@@ -82,13 +82,13 @@ public static class Console {
 
         }
 
-        private static void Log_intern( string _message, Log_type _type, bool _main_thread ){
+        private static void Log_intern( string _message, Log_type _type, bool _main_thread, int _trace_to_ignore = 0 ){
 
                 if( _message != "" )
                     { _message = $"<Size=13>{ _message }</Size>"; }
 
                 
-                string message_with_trace = Get_trace( _message );
+                string message_with_trace = Get_trace( _message, _trace_to_ignore );
 
                 if( !!!( _main_thread ) )
                     { multithread_ativado = true; }
@@ -116,7 +116,7 @@ public static class Console {
         }
 
 
-        public static string Get_trace( string _message ){
+        public static string Get_trace( string _message, int _trace_to_ignore ){
 
 
                 System.Diagnostics.StackFrame[] frames = ( new System.Diagnostics.StackTrace( true ) ).GetFrames();
@@ -135,10 +135,10 @@ public static class Console {
 
                 }
 
-                const int margin_message = 1;
-                const int margin_lines = 20;
-                const int remove_log_frame = 3;
-                const int message_with_link = 1; 
+                int margin_message = 1;
+                int margin_lines = 20;
+                int remove_log_frame = ( 3 + _trace_to_ignore );
+                int message_with_link = 1; 
 
                 string[] frames_stack = new string[ ( ( numero_frames - remove_log_frame ) + margin_message + margin_lines + message_with_link ) ];   
 

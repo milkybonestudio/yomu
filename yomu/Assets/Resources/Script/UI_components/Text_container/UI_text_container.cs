@@ -4,7 +4,7 @@ using TMPro;
 
 
 
-public class UI_text_container : UI_component {
+unsafe public class UI_text_container : UI_component {
 
 
         public static UI_text_container Get_text_container(){ UI_text_container text_container = new UI_text_container(); DEFAULT_APPLICATOR__UI_text_container.Apply_default( text_container ); return text_container; }
@@ -227,7 +227,7 @@ public class UI_text_container : UI_component {
                     {  constructors[ ( int ) data.tipo_texto ].Force_complete( this ); }
             
                 if( _tipo_construcao == Type_writing_construction.config_default )
-                    { _tipo_construcao = CONTROLLER__configurations.Pegar_instancia().tipo_texto; }
+                    { _tipo_construcao = CONTROLLER__configurations.Pegar_instancia().configurations-> tipo_texto; }
 
                 data.tipo_texto = _tipo_construcao;
 

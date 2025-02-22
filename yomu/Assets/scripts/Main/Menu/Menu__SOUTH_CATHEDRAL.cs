@@ -16,13 +16,11 @@ unsafe public class Menu__SOUTH_CATHEDRAL : PROGRAM_MODE {
         public static Menu Pegar_instancia(){ return instancia; }
         
         public override void Construct(){ return; }
-        public override Transition Construct_transition( Transition_data _data ){ 
+        public override Transition_program Construct_transition( Transition_program_data _data ){ 
 
-                Transition transition = new Transition();
+                Transition_program transition = Transition_program.Get();
 
-                    
-
-                return transition; 
+                return transition;
 
         }
 

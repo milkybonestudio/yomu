@@ -48,7 +48,7 @@ public static class TOOL__resource_structure_testing {
                     { i++; structure_copy_test.Activate(); }
 
                if( Input.GetKeyDown( KeyCode.E ) )
-                    { i++; structure_copy_test.Instanciate( canvas ); }
+                    { i++; structure_copy_test.Get_game_object( canvas ); }
 
 
                 // --- DOWN
@@ -64,7 +64,7 @@ public static class TOOL__resource_structure_testing {
 
                 
                 if( Input.GetKeyDown( KeyCode.F ) )
-                    { i++; structure_copy_test.Delete( ref structure_copy_test );  }
+                    { i++; structure_copy_test.Delete(); structure_copy_test = null; }
 
                 
 

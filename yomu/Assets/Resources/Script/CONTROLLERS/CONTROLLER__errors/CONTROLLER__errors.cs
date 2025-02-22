@@ -25,33 +25,15 @@ public class CONTROLLER__errors {
         private void Throw_intern( string _message ){
 
 
-                CONTROLLER__tasks.Pegar_instancia().modulo_multithread.Matar_thread();
+                CONTROLLER__tasks.Pegar_instancia()?.modulo_multithread.Matar_thread();
+                Console.LogError( _message, 2 );
                 Console.Update();
                 // ** garante 
 
-                throw new Exception( _message );
+                throw new Exception( "" );
 
         }
 
-        public void Check_pointer_length( bool _check, string _message ){
-
-            if( is_checking_pointer_length && _check )
-                {
-                    // ** fazer depois 
-                    throw new System.Exception( "Error: " + _message );
-                }
-
-        }
-
-        public void Check_dll_data( bool _check, string _message ){
-
-            if( is_checking_dll_data && _check )
-                {
-                    // ** fazer depois 
-                    throw new System.Exception( "Error: " + _message );
-                }
-
-        }
 
         private void Throw_exception_internal( Exception _exp  ){
 

@@ -1,25 +1,10 @@
 
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
-// ** conteiner que vai ser entregue para o controlador_UI 
-public struct Switching_cameras_data {
 
-
-    // --- GIVE TO THE CONTROLLER UI
-    public GameObject unique_UI_container_main;
-    public GameObject unique_UI_container_transition;
-    public GameObject UI_above;
-
-    public GameObject main_world_container;
-    public GameObject transition_world_container;
-
-    // --- GIVE TO THE CONTROLLER TRANSITION 
-    public Material material_mode_main;
-    public Material material_mode_transition;
-
-}
 
 
 public class CONTROLLER__cameras {
@@ -28,10 +13,13 @@ public class CONTROLLER__cameras {
         public static CONTROLLER__cameras Get_instance(){ return instance; }
 
 
+
         public Stage_camera stage = Stage_camera.normal;
 
         // --- DO NOT CHANGE 
             
+            public Cameras_switching_data cameras_switching_data;
+
             // ** 
             public Camera main_camera;
             public GameObject main_camera_game_object;
@@ -45,35 +33,33 @@ public class CONTROLLER__cameras {
         // --- MAIN MODE
             public Camera_operator mode_main_operator;
             public Camera_operator mode_transition_operator;
+
             public Camera_operator mode_transition_UI_operator;
 
-            public string current_camera_name =  "";
+            public string current_camera_name =  "__not_give__";
             
         
         public void Update( Control_flow _control_flow ){
 
-            // if( stage == Stage_camera.switching )
-            //     { /* precisa bloquear o update */ }
 
-            // if( Input.GetKeyDown( KeyCode.Alpha1 ) )
-            //     { Switch_cameras( "teste" ); End_switch(); }
+                if( Input.GetKeyDown( KeyCode.Alpha1 ) )
+                    { Switch_cameras( "teste" ); End_switch(); }
 
 
-            // if( Input.GetKeyDown( KeyCode.Alpha2 ) )
-            //     { Switch_cameras( "teste_2" ); End_switch(); }
+                if( Input.GetKeyDown( KeyCode.Alpha2 ) )
+                    { Switch_cameras( "teste_2" ); End_switch(); }
 
-            mode_main_operator.Update();
-            mode_transition_operator.Update();
-            mode_transition_UI_operator.Update();
-
-
+                mode_main_operator.Update();
+                mode_transition_operator.Update();
+                mode_transition_UI_operator.Update();
 
         }
 
 
 
-        public Switching_cameras_data Switch_cameras( string _name ){
+        public Cameras_switching_data Switch_cameras( string _name ){
 
+                
                 
                 // --- VERIFICATIONS DEFAULT
 
@@ -88,31 +74,44 @@ public class CONTROLLER__cameras {
                 mode_transition_operator.Start_render();
                 mode_transition_UI_operator.Start_render();
 
-                Switching_cameras_data containers = default;
-
+                
                     // --- GET UI CONTAINERS
-                    containers.UI_above = mode_transition_UI_operator.container_unique_UI;
-                    containers.unique_UI_container_main = mode_main_operator.container_unique_UI;
-                    containers.unique_UI_container_transition = mode_transition_operator.container_unique_UI;
+                    cameras_switching_data.UI_above = mode_transition_UI_operator.container_unique_UI;
+                    cameras_switching_data.unique_UI_container_main = mode_main_operator.container_unique_UI;
+                    cameras_switching_data.unique_UI_container_transition = mode_transition_operator.container_unique_UI;
 
                     // --- GET MATERIAL
-                    containers.material_mode_main = mode_main_operator.mesh_render_material;
-                    containers.material_mode_transition = mode_transition_operator.mesh_render_material;
+                    cameras_switching_data.material_mode_main = mode_main_operator.mesh_render_material;
+                    cameras_switching_data.material_mode_transition = mode_transition_operator.mesh_render_material;
 
                     // --- GET WORLD CONTAINERS
-                    containers.main_world_container = mode_main_operator.container;
-                    containers.transition_world_container = mode_transition_operator.container;
+                    cameras_switching_data.main_world_container = mode_main_operator.container;
+                    cameras_switching_data.transition_world_container = mode_transition_operator.container;
 
                 
-                return containers;
+                return cameras_switching_data;
             
         }
 
 
+
+
         
-
-
         public void End_switch(){
+
+                /*
+
+                        antes do end os 3 renders vão estar ativos
+                        quem tem o switching vai dar o End()
+                        quando o end for dado as unicas coisas que vão sobrar na tela vao ser o "transition" que vai ser renomeado para "main"
+                        o resto vai ser deletado.
+
+                        controlador camera vai ser o mais simples possivel, se algo estiver no plano que não deveria, vai ser deletado e vai dar erro
+                        ele não vai guardar Device[] ou algo do genero
+                        qualquer tipo de logica tem que ser feita em blocos superiores
+                        
+                */
+
 
 
                 // --- VERIFICATIONS DEFAULT    
@@ -122,7 +121,7 @@ public class CONTROLLER__cameras {
 
                 mode_main_operator.Stop_render();
                 mode_main_operator.Reset_material();
-                mode_main_operator.Move_structures_to_container();
+                mode_main_operator.Destroy_structures_to_container();
 
                 mode_transition_UI_operator.Stop_render();
 
@@ -154,12 +153,39 @@ public class CONTROLLER__cameras {
         }
 
 
-        private void Change_position_cameras( Camera_operator _operator_1, Camera_operator _operator_2 ){
+
+
+
+        public Texture2D Screen_shot( string _path_to_save ){
+
+
+                RenderTexture render_texture = new RenderTexture(Screen.width, Screen.height, 24 );
+                
+                
+                main_camera.targetTexture = render_texture;
+                main_camera.Render();
+
+                Texture2D screen_shot = new Texture2D( render_texture.width, render_texture.height, TextureFormat.RGB24, false);
+
+                
+                RenderTexture.active = render_texture;
+                screen_shot.ReadPixels(new Rect(0, 0, render_texture.width, render_texture.height), 0, 0);
+                screen_shot.Apply();
+
+                // Reset the RenderTexture and camera settings
+                main_camera.targetTexture = null;
+                RenderTexture.active = null;
+                GameObject.Destroy( render_texture );
+
+                return screen_shot;
+
 
 
 
         }
 
+
+        
 
 
 

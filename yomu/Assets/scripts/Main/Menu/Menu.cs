@@ -10,10 +10,9 @@ unsafe public class Menu : PROGRAM_MODE {
         public override void Construct(){
 
 
-                PROGRAM_DATA__menu* data = &( Controllers_program.data.pointer->menu );
-                Menu_type type = data->type;
-
-                switch( type ){
+                PROGRAM_DATA__menu* data = Program_data.Get_data__MENU();
+                                
+                switch( data->type ){
 
                     case Menu_type.south_cathedral: __interface__ = new Menu__SOUTH_CATHEDRAL(); break;
                     default: CONTROLLER__errors.Throw( $" Can not handle { type } in menu" ); break;
@@ -24,8 +23,6 @@ unsafe public class Menu : PROGRAM_MODE {
                 // ** use data
 
                 __interface__.Construct();
-
-                
 
                 return;
 
@@ -42,7 +39,7 @@ unsafe public class Menu : PROGRAM_MODE {
         }
 
         public override void Update( Control_flow _control_flow ){ __interface__.Update( _control_flow ); }
-        public override Transition Construct_transition( Transition_data _data ){ return __interface__.Construct_transition( _data ); }
+        public override Transition_program Construct_transition( Transition_program_data _data ){ return __interface__.Construct_transition( _data ); }
         public override void Clean_resources(){ __interface__.Clean_resources(); }
         
 
@@ -50,7 +47,3 @@ unsafe public class Menu : PROGRAM_MODE {
 
 }
 
-public class Menu_data : Data {
-
-
-}

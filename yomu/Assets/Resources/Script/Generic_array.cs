@@ -3,6 +3,7 @@
 
 public class array<T>{
 
+
     private T[] intern_array;
     public int length;
 
@@ -29,3 +30,5 @@ public class array<T>{
     }
 
 }
+
+

@@ -35,3 +35,11 @@ public class Transition_data {
 
     
 }
+
+public struct Transition_data_specific_UI_position { 
+
+        public int UI_id;
+        public Transition_data_UI_position position;
+
+}
+

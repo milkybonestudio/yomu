@@ -34,33 +34,33 @@ unsafe public abstract class Test_development {
 
               if( Development_tests.program_mode == Program_mode.login )
                 {
-                    PROGRAM_DATA__login* data = &( Controllers_program.data.pointer->login );
+                    PROGRAM_DATA__login* data = Program_data.Lock_data__LOGIN();
 
-                        STRING.Transfer_string_to_char_pointer( data->image_path, PROGRAM_DATA__login.image_path_limit, "image_login_1" );
+                        LOGIN_DATA_GLOBAL_persistent* global_persistent = &( data->global.persistent );
+                
+                        STRING.Transfer_string_to_char_pointer( global_persistent->image_path, LOGIN_DATA_GLOBAL_persistent.image_path_limit, "image_login_1" );
                         
-                    Program_data.Get_lock( Program_mode.login )->put_data = true;
-                    Controllers_program.program_transition.Switch_program_mode( Program_mode.login, new Transition_data() ); 
+                    Controllers_program.program_transition.Switch_program_mode( Program_mode.login, new Transition_program_data() ); 
 
                 }
         else if(  Development_tests.program_mode == Program_mode.menu )
                 {
 
-                    PROGRAM_DATA__menu* menu_data = &Controllers_program.data.pointer->menu;
-                    Program_data.Get_lock( Program_mode.menu )->put_data = true;
-                    Controllers_program.program_transition.Switch_program_mode( Program_mode.menu, new Transition_data() ); 
+                    PROGRAM_DATA__menu* menu_data = Program_data.Lock_data__MENU();
+                    
+                    Controllers_program.program_transition.Switch_program_mode( Program_mode.menu, new Transition_program_data() ); 
 
 
                 }
-        else if(  Development_tests.program_mode == Program_mode.jogo )
+        else if(  Development_tests.program_mode == Program_mode.game )
                 {
 
                     // ** VAI PARA O MINIMO QUE O GAME PRECISA
-                    PROGRAM_DATA__game* game_data = &Controllers_program.data.pointer->game;
+                    PROGRAM_DATA__game* game_data = Program_data.Lock_data__GAME();
 
                         game_data->save = 0;
 
-                    Program_data.Get_lock( Program_mode.jogo )->put_data = true;
-                    Controllers_program.program_transition.Switch_program_mode( Program_mode.jogo, new Transition_data() ); 
+                    Controllers_program.program_transition.Switch_program_mode( Program_mode.game, new Transition_program_data() ); 
                     
                 }                
 

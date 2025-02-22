@@ -10,8 +10,8 @@ public class MANAGER__resources_complex_structures : MANAGER__RESOURCES {
         
         public MANAGER__resources_complex_structures(){
 
-                contexts = System_enums.resource_context;  // ( Resource_context[] ) System.Enum.GetValues( typeof( Resource_context ) );
-                context_complex_structures_modules = new MODULE__context_complex_structures[ contexts.Length ];
+                
+                context_complex_structures_modules = new MODULE__context_complex_structures[ ( int ) Resource_context.END ];
 
                 container_resources_complex_structures = new CONTAINER__RESOURCE__complex_structure();
                 container_resources_complex_structures_copies = new CONTAINER__RESOURCE__complex_structure_copy();
@@ -21,16 +21,14 @@ public class MANAGER__resources_complex_structures : MANAGER__RESOURCES {
                 // if( container_to_instanciate == null )
                 //     { CONTROLLER__errors.Throw( $"container_to_instanciate was not found int the path { Paths_system.path_resources_complex_structures_container }" ); }
 
-                for( int context_index = 0 ; context_index < contexts.Length ; context_index++ )
-                    { context_complex_structures_modules[ context_index ] = new MODULE__context_complex_structures( _manager: this, _context: contexts[ context_index ], _initial_capacity: 1_000, _buffer_cache: 2_000_000 ); }
+                for( int context_index = 0 ; context_index < ( int ) Resource_context.END ; context_index++ )
+                    { context_complex_structures_modules[ context_index ] = new MODULE__context_complex_structures( _manager: this, _context: ( Resource_context ) context_index, _initial_capacity: 1_000, _buffer_cache: 1_000 ); }
 
                 return;
 
         }
         
         public MODULE__context_complex_structures[] context_complex_structures_modules;
-
-        private Resource_context[] contexts;
 
         public CONTAINER__RESOURCE__complex_structure container_resources_complex_structures;
         public CONTAINER__RESOURCE__complex_structure_copy container_resources_complex_structures_copies;
@@ -59,7 +57,7 @@ public class MANAGER__resources_complex_structures : MANAGER__RESOURCES {
 
                 //Console.Log( "a" );
 
-                context_frame = ( context_frame + 1 ) % contexts.Length;
+                context_frame = ( context_frame + 1 ) % ( int ) Resource_context.END;
 
                 int current_weight = 0;
                 

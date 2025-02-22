@@ -9,16 +9,18 @@ using UnityEngine.Rendering;
 using UnityEngine.UI;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using Unity.Collections.LowLevel.Unsafe;
+using System.Runtime.CompilerServices;
+using System.Diagnostics;
+using System.Management;
+using System.IO;
 
 //test
 // ** arquivo que controla como o jogo vai ser testado. 
 // ** nao pode afetar a build
 
 
-
-
-
-unsafe public class Test : PROGRAM_MODE {
+unsafe public partial class Test : PROGRAM_MODE {
 
         public Test(){ 
             type = Program_mode.test; 
@@ -29,8 +31,6 @@ unsafe public class Test : PROGRAM_MODE {
         public static Test instancia;
 
         
-
-
         // --- properties testing
         
             public Figure figure;   
@@ -42,7 +42,8 @@ unsafe public class Test : PROGRAM_MODE {
         // --- methods
 
         public GameObject contianer_test;
-        
+
+
 
         public override void Construct (){
 
@@ -52,47 +53,33 @@ unsafe public class Test : PROGRAM_MODE {
                 // device = Example_devices_with_UIs.Construct( Example_devices_with_UIs_types.type_1 );
                 // device.Instanciate( contianer_test );
 
-
                 //--------------------
                 return;
 
 
         }
 
+
+
+
+
+
+
+
+
+
+
+
         
         public override void Update( Control_flow _flow ){
 
-
-                Console.Log( "a" );
-                if( Input.GetKeyDown( KeyCode.B ) )
-                    { 
-                        
-                        Lock_program_data* LOCK = Program_data.Get_lock( Program_mode.login );
-                        LOCK->put_data = true;
-                        Controllers_program.program_transition.Switch_program_mode( Program_mode.login, new Transition_data() );
-                    }
-
-
-                if( Input.GetKeyDown( KeyCode.N ) )
-                    { Controllers_program.program_transition.Switch_program_mode( Program_mode.menu, new Transition_data() ); }
-
-
-                if( Input.GetKeyDown( KeyCode.M ) )
-                    { Controllers_program.program_transition.Switch_program_mode( Program_mode.jogo, new Transition_data() ); }
-
-
-
-                    
-
-                if( Input.GetKeyDown( KeyCode.J ) )
-                    { figure.Activate_emoji( Figure_emoji.heart ); }
-
+                Teste_transicao_program_mode();
 
         }
 
         public override void Clean_resources(){}
         public override void Destroy(){}
-        public override Transition Construct_transition( Transition_data _data ){ return new Transition(); }
+        public override Transition_program Construct_transition( Transition_program_data _data ){ return Transition_program.Get(); }
         
         // --- INTERN
 
@@ -103,4 +90,5 @@ unsafe public class Test : PROGRAM_MODE {
         }
 
 }
+
 

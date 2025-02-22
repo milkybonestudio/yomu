@@ -9,14 +9,12 @@ public class MANAGER__resources_logics : MANAGER__RESOURCES {
         
         public MANAGER__resources_logics(){
 
-                contexts = contexts = System_enums.resource_context;// ( Resource_context[] ) System.Enum.GetValues( typeof( Resource_context ) );
-
                 container_logics = new CONTAINER__RESOURCE__logics();
                 container_logic_refs = new CONTAINER__RESOURCE__logics_refs();
-                context_logics_modules = new MODULE__context_logics[ contexts.Length ];
+                context_logics_modules = new MODULE__context_logics[ ( int ) Resource_context.END ];
 
-                for( int context_index = ( ( int ) Resource_context.not_given + 1 )  ; context_index < contexts.Length ; context_index++ )
-                    { context_logics_modules[ context_index ] = new MODULE__context_logics( _manager: this, _context: contexts[ context_index ], _initial_capacity: 1_000, _buffer_cache: 2_000_000 ); }
+                for( int context_index = ( ( int ) Resource_context.not_given + 1 )  ; context_index < ( int ) Resource_context.END ; context_index++ )
+                    { context_logics_modules[ context_index ] = new MODULE__context_logics( _manager: this, _context: ( Resource_context ) context_index, _initial_capacity: 1_000, _buffer_cache: 1_000 ); }
 
                 return;
 
@@ -27,10 +25,6 @@ public class MANAGER__resources_logics : MANAGER__RESOURCES {
         public CONTAINER__RESOURCE__logics_refs container_logic_refs;
     
         public MODULE__context_logics[] context_logics_modules;
-
-
-
-        private Resource_context[] contexts;
 
 
         public int pointer;
@@ -54,7 +48,7 @@ public class MANAGER__resources_logics : MANAGER__RESOURCES {
 
                 int current_weight = 0;
 
-                for( int context_slot = ( int )( Resource_context.not_given + 1 ) ; context_slot < contexts.Length ; context_slot++ ){
+                for( int context_slot = ( int )( Resource_context.not_given + 1 ) ; context_slot < ( int ) Resource_context.END ; context_slot++ ){
 
                         
                         foreach( RESOURCE__logic logic in context_logics_modules[ context_slot ].actives_logics_dictionary.Values ){

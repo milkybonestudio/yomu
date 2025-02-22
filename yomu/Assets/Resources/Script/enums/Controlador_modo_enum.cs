@@ -3,16 +3,18 @@
 public enum Program_mode {
 
 
-        not_give,
+        not_give = 0b__0000_0000__0000_0000__0000_0000__0000_0000,
 
-            test,
-            nothing, // ** somente virtual
-            reconstruindo_save, // ** somente quando o jogo iniciar 
-            login,
-            menu,
-            jogo,
+            nothing = 0b__0000_0000__0000_0000__0000_0000__0000_0001, // ** somente virtual
+            rebuild_save = 0b__0000_0000__0000_0000__0000_0000__0000_0010, // ** somente quando o jogo iniciar 
+            login = 0b__0000_0000__0000_0000__0000_0000__0000_0100,
+            menu = 0b__0000_0000__0000_0000__0000_0000__0000_1000,
+            game = 0b__0000_0000__0000_0000__0000_0000__0001_0000,
+            test = 0b__0000_0000__0000_0000__0000_0000__0010_0000,
 
-        END,
+        END = 0b__0000_0000__0000_0000__0000_0000__0100_0000,
+
+
 
         //transicao,
 

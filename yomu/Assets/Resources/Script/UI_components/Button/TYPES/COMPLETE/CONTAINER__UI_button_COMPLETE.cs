@@ -25,8 +25,8 @@ public class CONTAINER__UI_button_COMPLETE : CONTAINER__generic<UI_button_COMPLE
 
                     button.IMAGE_container = null;
 
-                        button.IMAGE_animation_back = default; 
-                        button.IMAGE_base = default;  
+                        button.IMAGE_animation_back = default;
+                        button.IMAGE_base = default;
                         button.IMAGE_animation_back_text = default;  
                         button.IMAGE_text = default;  
                         button.IMAGE_decoration = default;  

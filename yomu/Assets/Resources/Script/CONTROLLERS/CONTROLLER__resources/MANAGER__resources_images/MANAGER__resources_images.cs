@@ -18,7 +18,7 @@ public class MANAGER__resources_images : MANAGER__RESOURCES {
                 textures_manager = new MANAGER__textures_resources();
 
                 for( int context_index = ( int )( Resource_context.not_given + 1 ) ; context_index < number_contexts ; context_index++ )
-                    { context_images_modules[ context_index ] = new MODULE__context_images( _manager: this, _context: ( Resource_context ) context_index, _initial_capacity: 1_000, _buffer_cache: 2_000_000 ); }
+                    { context_images_modules[ context_index ] = new MODULE__context_images( _manager: this, _context: ( Resource_context ) context_index, _initial_capacity: 1_000, _buffer_cache: 50_000 ); }
 
                 return;
 

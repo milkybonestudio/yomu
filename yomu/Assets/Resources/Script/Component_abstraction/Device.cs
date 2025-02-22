@@ -45,8 +45,7 @@ public abstract class Device : Body {
                     { return; }
 
 
-                structure.Instanciate( _place_to_instanciate );
-                Create_body( structure.structure_game_object );
+                Create_body( structure.Get_game_object( _place_to_instanciate ) );
 
                 if( state < Device_resource_state.linked )
                     { Link_to_game_object_UIs(); }

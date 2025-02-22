@@ -3,6 +3,9 @@ using System.Collections;
 using UnityEngine;
 
 
+
+//mark
+// ** provavelmente vale a pena ter um trnasition_block e um transition_mode
 public class CONTROLLER__transition {
 
         //** relacionado com a parte visual
@@ -28,7 +31,7 @@ public class CONTROLLER__transition {
                 if( _content_structure.state != Resource_state.instanciated )
                     { CONTROLLER__errors.Throw( $"structure<Color=lightBlue>{ _name }</Color> was not instanciated" ); }
 
-                Switching_cameras_data switching_cameras_data = Controllers.cameras.Switch_cameras( _name );
+                Cameras_switching_data switching_cameras_data = Controllers.cameras.Switch_cameras( _name );
                 
 
         }

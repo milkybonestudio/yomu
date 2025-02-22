@@ -13,13 +13,13 @@ public class MANAGER__resources_structures : MANAGER__RESOURCES {
 
                 context_structures_modules = new MODULE__context_structures[ ( int ) Resource_context.END ];
 
-                container_resources_structures = new CONTAINER__resource_structure();
+                resources_structures__CONTAINER = new CONTAINER__resource_structure();
                 container_resources_structures_copies = new CONTAINER__resource_structure_copy();
 
-                container_to_instanciate = GameObject.Find( Paths_system.path_resources_structures_container );
+                container_to_instanciate = GameObject.Find( Paths_containers.path_resources_structures_container );
                 
                 if( container_to_instanciate == null )
-                    { CONTROLLER__errors.Throw( $"container_to_instanciate was not found int the path { Paths_system.path_resources_structures_container }" ); }
+                    { CONTROLLER__errors.Throw( $"container_to_instanciate was not found int the path { Paths_containers.path_resources_structures_container }" ); }
 
 
                 for( int context_index = 0 ; context_index < ( int ) Resource_context.END ; context_index++ )
@@ -37,7 +37,8 @@ public class MANAGER__resources_structures : MANAGER__RESOURCES {
 
         public MODULE__context_structures[] context_structures_modules;
 
-        public CONTAINER__resource_structure container_resources_structures;
+
+        public CONTAINER__resource_structure resources_structures__CONTAINER;
         public CONTAINER__resource_structure_copy container_resources_structures_copies;
         
 
@@ -72,7 +73,7 @@ public class MANAGER__resources_structures : MANAGER__RESOURCES {
                 foreach(  RESOURCE__structure structure in  context_structures_modules[ context_frame ].actives_structures_dictionary.Values ){
 
                         current_weight += Update_structure( structure );
-                        current_weight += Update_structure_copy( structure, current_weight );
+                        current_weight += Update_all_structures_copys_of_structure( structure, current_weight );
 
                         if( current_weight >= weight_to_stop )
                             { return; } 
@@ -101,7 +102,7 @@ public class MANAGER__resources_structures : MANAGER__RESOURCES {
         }
 
 
-        private int Update_structure_copy( RESOURCE__structure structure, int _current_weight ){
+        private int Update_all_structures_copys_of_structure( RESOURCE__structure structure, int _current_weight ){
 
                 if( structure.actual_content < Resource_structure_content.structure_data )
                     { return _current_weight; }
@@ -109,13 +110,18 @@ public class MANAGER__resources_structures : MANAGER__RESOURCES {
                 
                 for( int slot = 0 ; slot < structure.copies.Length ; slot++ ){
 
+                        
 
                         if( !!!( structure.copies[ slot ].need_to_get_instanciate ) )
                             { continue; }
 
-                        structure.copies[ slot ].need_to_get_instanciate = false;
+
+                        Debug.Log( "actual_need_content: " + structure.copies[ slot ].copy.actual_need_content );
                         
+
                         RESOURCE__structure_copy copy = structure.copies[ slot ].copy;
+                        copy.Flag_need_to_instanciate( false );
+                        
                         if( copy == null )
                             { CONTROLLER__errors.Throw( $"The flag to instanciate copy was true, but the structure_copy was null in the slot { slot }" ); }
 
@@ -139,9 +145,6 @@ public class MANAGER__resources_structures : MANAGER__RESOURCES {
 
                 }
 
-                int a = 0;
-                
-                relogio.Reset(); 
                 return _current_weight;
 
 

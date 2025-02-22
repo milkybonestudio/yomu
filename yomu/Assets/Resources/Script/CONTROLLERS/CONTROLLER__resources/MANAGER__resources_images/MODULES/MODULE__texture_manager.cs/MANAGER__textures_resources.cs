@@ -10,7 +10,12 @@ public class MANAGER__textures_resources {
         public static MANAGER__textures_resources instance;
         public MANAGER__textures_resources(){ instance = this; }
         
-        public static void Clean_all(){ foreach( Texture2D t in instance.textures ){ if( t != null ) { GameObject.Destroy( t ); } } }
+        public static void Clean_all(){ 
+
+            if( instance == null )
+                { return; }
+            foreach( Texture2D t in instance.textures ){ if( t != null ) { GameObject.Destroy( t ); } } 
+        }
 
         // --- DATA
         

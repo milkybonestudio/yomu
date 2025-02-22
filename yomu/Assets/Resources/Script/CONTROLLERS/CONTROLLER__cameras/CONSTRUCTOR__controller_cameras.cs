@@ -12,6 +12,9 @@ public static class CONSTRUCTOR__controller_cameras {
                 CONTROLLER__cameras controller = new CONTROLLER__cameras();
                 CONTROLLER__cameras.instance = controller;
 
+
+                        controller.cameras_switching_data = new Cameras_switching_data();
+
                     
                     // --- DO NOT CHANGE 
                             

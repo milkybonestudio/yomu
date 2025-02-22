@@ -77,11 +77,7 @@ public class CONTROLLER__resources {
 
         public void Update( Control_flow _control_flow ){
 
-                resources_images.Update();
-
-                //mark
-                // ** ativar depois
-                // managers.Get().Update();
+                managers.Get().Update();
 
         }
 

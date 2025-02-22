@@ -30,7 +30,6 @@ public static class Visual_novel_teste_estado_generico {
 
                 //Dados_containers_personagem dados_para_construir_personagem = new Dados_containers_personagem();
 
-                Dados_blocos.story_START = new Story_START();
                 
                 // Controlador_dados_dinamicos.Pegar_instancia().perso.Carregar_personagem( lily );
                 // Controlador_personagens.Pegar_instancia().personagens[ ( int ) Personagem_nome.Lily ] = lily;

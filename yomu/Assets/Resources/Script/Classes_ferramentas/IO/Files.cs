@@ -2,7 +2,23 @@ using System;
 
 
 
-public static class Files {
+unsafe public static class Files {
+
+
+
+        public static void Save_file( string _path, void* _pointer_data, int _length ){
+
+                byte[] data = new byte[ _length ];
+
+                fixed( byte* pointer_data = data )
+                    { System.Buffer.MemoryCopy( ( void* ) _pointer_data, ( void* ) pointer_data, long.MaxValue, ( long ) ( _length ) ); }
+                    
+                System.IO.File.WriteAllBytes( _path, data );
+
+
+        }
+
+
 
 
         // pastas só são criadas no save 

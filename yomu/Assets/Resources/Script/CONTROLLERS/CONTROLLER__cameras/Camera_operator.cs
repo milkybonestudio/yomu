@@ -2,13 +2,6 @@ using System;
 using UnityEngine;
 
 
-public enum Camera_state {
-
-    not_give,
-    hide,
-    activated,
-
-}
 
 public class Camera_operator {
 
@@ -66,6 +59,7 @@ public class Camera_operator {
         
         public GameObject camera_unique_UI_game_object;
         public Camera camera_unique_UI;
+        public int number_unique_UIs;
         
         // ** container
         public GameObject container_unique_UI;
@@ -89,8 +83,6 @@ public class Camera_operator {
         public GameObject container;
 
 
-        public Action on_change_target = ()=>{};
-
         public Camera_state state = Camera_state.hide;
 
 
@@ -99,21 +91,21 @@ public class Camera_operator {
             if( state == Camera_state.hide )
                 { return; }
 
+            // ** me doi, mas é a vida
             container_unique_UI.SetActive( ( container_unique_UI_transform.childCount != 0 ) );
 
         }
 
+        public void Destroy_structures_to_container(){
 
-        public void Move_structures_to_container(){
-
-                // ** controller__camera nao pode destruir nada, ele somente move para um container que nao vai ficar na frente da camera
+                // ** faz mais sentido assim, se algo nao poder ser destruido vai ter que ser removido por quem precisar 
 
                 Transform container_transform = container.transform;
 
                 int number_objects = container_transform.childCount;
 
                 for( int child_index = 0 ; child_index < number_objects ; child_index++ )
-                    { container_transform.GetChild( child_index ).SetParent( container_to_move.transform, false ); }
+                    { GameObject.Destroy( container_transform.GetChild( child_index ).gameObject );  }
 
         }
 

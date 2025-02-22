@@ -156,8 +156,6 @@ public static class TOOL__resource_structure_handler_ACTIONS {
         public static void Load( RESOURCE__structure_copy _copy ){
 
 
-                Console.Log( "Veio Load()" );
-
                 if( _copy.state >= Resource_state.minimun )
                     { return; } _copy.state = Resource_state.minimun;
 
@@ -201,8 +199,16 @@ public static class TOOL__resource_structure_handler_ACTIONS {
         }
 
 
+
+
+
+
         public static void Instanciate( RESOURCE__structure_copy _copy, GameObject _container ){
 
+
+                
+                //mark
+                // ** esse vai ser chamado quando a copia precisar ser instanciada na hora
 
                 if( _copy.state == Resource_state.instanciated )
                     { return; } // ** ja instanciado

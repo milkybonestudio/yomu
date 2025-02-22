@@ -4,13 +4,18 @@
 public static class Development_tests {
 
 
+        // ** system files
+
+        public static bool reset_folders_persistent_data_path = true;
+
+
         public static Level_machine level_machine = Level_machine.max;
 
 
         // --- WHAT IS TESTING
         // ** nao troca direto, tem que trocar no Set_program_environment();
         public static Program_mode program_mode = Program_mode.test;
-        public static bool use_generic = false;
+        public static bool use_generic = true;
 
             // --- TEST
 
@@ -36,14 +41,17 @@ public static class Development_tests {
 
 }
 
-public class Generic_test : Test_development {
+unsafe public class Generic_test : Test_development {
 
     // ** TESTES QUE NAO PRECISAM SER GUARDADOS
 
     // ** seta o programa login, menu, game
     public override void Set_program_environment(){
 
-        // base.Set_program_environment();
+        
+            Controllers_program.data.program_data->program_mode_lock = Program_mode.rebuild_save;
+            Controllers_program.program_transition.Switch_program_mode( Development_tests.program_mode, new Transition_program_data() ); 
+
     }
 
     // ** com o programa setado vai mudar os dados e forçar algo

@@ -112,6 +112,13 @@ public class Body {
             body_container.transform.SetParent( _new_parent.transform, false ); 
 
         }
+        public void Set_body_container_parent( Transform _new_parent_transform ){
+
+            body_container.transform.SetParent( _new_parent_transform, false ); 
+
+        }
+
+
 
 
         // ** if something override

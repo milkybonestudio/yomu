@@ -1,20 +1,30 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 
 
 public static class TOOL__resources_structures {
 
-
         public static void Create_dictionary( RESOURCE__structure_copy _copy ){
-
 
                 _copy.components_dic = new Dictionary<string,Unity_main_components>( 30 );
                 int a = Get_components_loop(  0, "", _copy.structure_game_object, _copy.components_dic );
                                 
         }
 
+        private static int Get_components_loop( int _number_interations, string _root_path, GameObject _structure_game_object, Dictionary<string,Unity_main_components> _dic ){
+
+                // --- APPLY TO CHILDREN
+                int child_count = _structure_game_object.transform.childCount;
+
+                for( int child = 0 ; child < child_count ; child++ )
+                    { _number_interations = Get_components(  _number_interations , _root_path, _structure_game_object.transform.GetChild( child ).gameObject, _dic ); }
+
+                return _number_interations;
+
+        }
 
         private static int Get_components(  int _number_interations, string _root_path, GameObject _obj, Dictionary<string,Unity_main_components> _dic ){
 
@@ -50,13 +60,6 @@ public static class TOOL__resources_structures {
 
                 return Get_components_loop( _number_interations , key, _obj, _dic );
 
-                // // --- APPLY TO CHILDREN
-                // int child_count = _obj.transform.childCount;
-
-                // for( int child = 0 ; child < child_count ; child++ )
-                //     { _number_interations = Get_components(  _number_interations , key, _obj.transform.GetChild( child ).gameObject, _dic ); }
-
-                // return _number_interations;
 
         }
 
@@ -69,17 +72,7 @@ public static class TOOL__resources_structures {
 
         }
 
-        private static int Get_components_loop( int _number_interations, string _root_path, GameObject _obj, Dictionary<string,Unity_main_components> _dic ){
 
-                // --- APPLY TO CHILDREN
-                int child_count = _obj.transform.childCount;
-
-                for( int child = 0 ; child < child_count ; child++ )
-                    { _number_interations = Get_components(  _number_interations , _root_path, _obj.transform.GetChild( child ).gameObject, _dic ); }
-
-                return _number_interations;
-
-        }
 
 
         public static GameObject Get_component_game_object( RESOURCE__structure_copy _copy, string _component_key ){
@@ -194,7 +187,7 @@ public static class TOOL__resources_structures {
                 // ** DELETE
 
                 _structure.module_structures.actives_structures_dictionary.Remove( _structure.structure_key ); // ** nao tem mais update
-                _structure.module_structures.manager.container_resources_structures.Return_structure( _structure ); 
+                _structure.module_structures.manager.resources_structures__CONTAINER.Return_structure( _structure ); 
 
 
         }
@@ -239,15 +232,28 @@ public static class TOOL__resources_structures {
                 Console.Log( "Veio Instanciate" );
 
 
+                    //mark
+                    // ** esse vai ser chamado quando a copia for instanciada pelo fluxo normal 
+
+
+                    //mark
+                    // ** isso nao deveria funcionar
+                    // ** _copy.structure_game_object esta sendo declarado somente em baixo
+                    // ** 
+
+
+
                     GameObject game_object = GameObject.Instantiate( _structure.prefab );
                     game_object.name = _structure.prefab.name;
-
-                    TOOL__resources_structures.Create_dictionary( _copy );
-
-                    GAME_OBJECT.Colocar_parent( _container, game_object );
-                
                     _copy.structure_game_object = game_object;
+
+                        TOOL__resources_structures.Create_dictionary( _copy );
+                        GAME_OBJECT.Colocar_parent( _container, game_object );
+
+                    _copy.actual_content = Resource_structure_content.game_object;
+
                     _copy.structure_game_object.SetActive( false );
+                
 
                 return;
 
@@ -283,7 +289,7 @@ public static class TOOL__resources_structures {
         public static void Increase_count( RESOURCE__structure _image, Resource_structure_content _state ){ Change( _image, _state, 1 ); }
         public static void Decrease_count( RESOURCE__structure _image, Resource_structure_content _state ){ Change( _image, _state, -1 ); }
 
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Change( RESOURCE__structure _structure, Resource_structure_content _content, int _value ){
 
 

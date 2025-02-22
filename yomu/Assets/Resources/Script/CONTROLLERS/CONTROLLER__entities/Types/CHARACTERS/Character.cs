@@ -1,7 +1,7 @@
 using System.Runtime.InteropServices;
 
 
-unsafe public struct Heap_data {
+unsafe public struct Heap_pointer_data {
 
         public int pointer;
         public short heap_size; // kb?

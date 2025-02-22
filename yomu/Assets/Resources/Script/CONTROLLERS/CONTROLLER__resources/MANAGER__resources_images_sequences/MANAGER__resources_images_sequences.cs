@@ -11,12 +11,11 @@ public class MANAGER__resources_images_sequences : MANAGER__RESOURCES {
 
         public MANAGER__resources_images_sequences(){
 
-                contexts = contexts = System_enums.resource_context;// ( Resource_context[] ) System.Enum.GetValues( typeof( Resource_context ) );
+            
+                context_images_modules = new MODULE__context_images_sequences[ ( int ) Resource_context.END ];
 
-                context_images_modules = new MODULE__context_images_sequences[ contexts.Length ];
-
-                for( int context_index = 0 ; context_index < contexts.Length ; context_index++ )
-                    { context_images_modules[ context_index ] = new MODULE__context_images_sequences( _manager: this, _context: contexts[ context_index ], _initial_capacity: 1_000, _buffer_cache: 2_000_000 ); }
+                for( int context_index = 0 ; context_index < ( int ) Resource_context.END ; context_index++ )
+                    { context_images_modules[ context_index ] = new MODULE__context_images_sequences( _manager: this, _context: ( Resource_context ) context_index, _initial_capacity: 1_000, _buffer_cache: 1_000 ); }
 
                 return;
 
@@ -27,9 +26,7 @@ public class MANAGER__resources_images_sequences : MANAGER__RESOURCES {
     
         public MODULE__context_images_sequences[] context_images_modules;
 
-        private Resource_context[] contexts;
-
-
+        
         public int pointer;
         public bool request_tem_que_encurtar;
 
@@ -67,7 +64,7 @@ public class MANAGER__resources_images_sequences : MANAGER__RESOURCES {
         public override void Update(){
 
 
-                context_frame = ( context_frame + 1 ) % contexts.Length;
+                context_frame = ( context_frame + 1 ) % ( int ) Resource_context.END;
 
                 int current_weight = 0;
                 foreach(  RESOURCE__image image in  context_images_modules[ context_frame ].actives_images_dictionary.Values ){

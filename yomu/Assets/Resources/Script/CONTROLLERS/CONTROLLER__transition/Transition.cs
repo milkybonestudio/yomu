@@ -1,84 +1,65 @@
 
 
 
-
-public class Resource_container_minimun_checker { 
-
-
-    // ** todos vao estar como minimo 
-
-    // ** os recursos aqui nao são contatos como referencias
-    // ** cada modo cria oque precisa e depois transfere para ca para verificar se ja terminou
-
-    private int slot_intern;
-    public RESOURCE__ref[] resource_refs = new RESOURCE__ref[ 200 ];
-
-    public void Add( RESOURCE__ref _ref ){
-
-        
-        resource_refs[ slot_intern++ ] = _ref;
-
-
-        if( resource_refs.Length == slot_intern )
-            { System.Array.Resize( ref resource_refs, ( resource_refs.Length + 50 ) ); }
-
-
-
-    }
-
-    public bool End(){
-
-            bool load_all = true;
-
-            for( int slot = 0 ; slot < resource_refs.Length ; slot++ ){
-
-                    if( resource_refs[ slot ] == null )
-                        { break; }
-                    
-                    if( resource_refs[ slot ].Got_to_minimun() )
-                        { continue; }
-                    
-                    load_all = false; 
-                    break; 
-
-            }
-
-            //Console.Log( "deu: " + load_all );
-            return load_all;
-
-    }
-
-    // public RESOURCE__audio_ref[] audios;
-
-
-
-}
-
-
 public class Transition {
 
 
+        public static Transition intern_transition = new Transition();
+        public static Transition Get(){
+
+
+                // --- RESET CHECKS
+
+                Device[,,] UIs = intern_transition.UIs;
+
+                int length_devices = UIs.GetLength( 1 );
+                    
+                for( int device_stage = 0 ; device_stage <  ( int ) Transition_stage.END; device_stage++ ){
+
+                    for( int device_index = 0 ; device_index < length_devices ; device_index++ ){
+
+                            UIs[ device_stage, device_index, 0 ] = default;
+                            UIs[ device_stage, device_index, 1 ] = default;
+
+                        }
+
+                }
+
+                
+                intern_transition.stage = default;
+                intern_transition.stage_to_liberate_UI = default;
+                intern_transition.sections_actions = Transition_sections_actions.Construct();
+
+                return intern_transition;
+
+
+        }
+
         // --- DATA
         public Transition_stage stage;
-        public Switching_cameras_data cameras_data;
+        public Cameras_switching_data cameras_data;
 
         public void Pass_stage(){ stage++; }
-
-        public Transition_checks[] checks = new Transition_checks[ ( int ) Transition_stage.END ];
         
-        public Transition_sections_actions sections_actions;
+        public Transition_sections_actions sections_actions = Transition_sections_actions.Construct();
+
+        // public Transition_response response;
 
 
         // --- UI
 
-        public Device[,,] UIs = new Device[ ( int ) Transition_stage.END, 15, 2 ];// stage, thing, action action, thing, stage
+        // ** pode expandir se precisar
+
+
+
+        public Device[,,] UIs = new Device[ ( int ) Transition_stage.END, 15, 2 ];// stage, thing, action 
+
+
         public Transition_stage stage_to_liberate_UI;
 
 
         // --- RESOURCES
-        public Resource_container_minimun_checker resource_container_minimun_checker = new Resource_container_minimun_checker();
-        public Task_req data_requisition;
-        public Task_req resources_requisition;
+        public Resource_container_checker resource_container_checker = new Resource_container_checker();
         public Task_req[] tasks;
 
         

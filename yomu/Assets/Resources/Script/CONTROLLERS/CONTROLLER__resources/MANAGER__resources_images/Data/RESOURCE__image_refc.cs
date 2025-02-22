@@ -49,6 +49,7 @@ public class RESOURCE__image_ref : RESOURCE__ref {
 
         public override bool Got_to_minimun(){
 
+            // Console.Log( "--content_going_to: " + image.content_going_to  );
             // Console.Log( "--current content: " + image.actual_content );
             // Console.Log( "--level pre allocation: " + level_pre_allocation );
 

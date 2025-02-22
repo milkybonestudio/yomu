@@ -125,10 +125,16 @@ public class CONTAINER__resource_structure_copy {
         private void Put_data_copy( RESOURCE__structure_copy _copy, RESOURCE__structure _structure,  Resource_structure_content _level_pre_allocation ){
 
                 _copy.structure = _structure;
+                _copy.name = _structure.structure_key;
+
                 _copy.level_pre_allocation = _level_pre_allocation;
                 _copy.actual_need_content = Resource_structure_content.nothing;
+                _copy.actual_content = Resource_structure_content.nothing;
 
-                _copy.name = _structure.structure_key;
+                // ** _copy.components_dic => created when need it
+
+                _copy.deleted = false;
+
             
         }
 
@@ -144,6 +150,10 @@ public class CONTAINER__resource_structure_copy {
                     _copy.actual_need_content = Resource_structure_content.not_give; // ** nothing / instanciate
                     _copy.name = null;
                     _copy.RESOURCE_index = -1;
+                    _copy.deleted = true;
+                    
+                    _copy.components_dic.Clear();
+                    _copy.components_dic = null;
 
                             
                 return weight;

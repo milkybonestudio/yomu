@@ -366,7 +366,7 @@ public abstract class Figure_mode {
             if( index_link_atual > -1 )
                 { return; } // --- ja pegou os links
 
-            structure.Instanciate( _container: null, _set: false );
+            structure.Instanciate(); Console.Log( "NAO TESTEI" );
             
             Link_resources_main();
             state_link = State_link.done;

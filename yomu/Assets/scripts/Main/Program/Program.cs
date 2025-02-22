@@ -103,7 +103,9 @@ unsafe public class Program : MonoBehaviour {
             
                 MANAGER__textures_resources.Clean_all();
 
-                Controllers_program.data.Destroy();
+                Controllers_program.data?.Destroy();
+                Controllers.saving?.Destroy();
+
                 
         }
 

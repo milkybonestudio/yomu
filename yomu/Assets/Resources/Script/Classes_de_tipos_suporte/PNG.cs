@@ -7,6 +7,13 @@ public static class PNG {
 
 
 
+        public static void Save_png( string _path, Texture2D _image ){
+
+            System.IO.File.WriteAllBytes( _path, _image.EncodeToPNG() );
+
+        }
+
+
         public static bool Verify_is_png( byte[] _bytes ){
 
             int i = 10;

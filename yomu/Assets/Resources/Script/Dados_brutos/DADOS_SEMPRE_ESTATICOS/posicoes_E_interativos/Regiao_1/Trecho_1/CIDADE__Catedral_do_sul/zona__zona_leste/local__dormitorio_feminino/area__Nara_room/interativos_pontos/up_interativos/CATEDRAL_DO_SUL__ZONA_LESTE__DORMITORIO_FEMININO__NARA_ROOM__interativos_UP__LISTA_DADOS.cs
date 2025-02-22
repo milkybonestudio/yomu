@@ -21,9 +21,6 @@ using System;
                                 Type tipo_interativo = typeof( CATEDRAL_DO_SUL__ZONA_LESTE__DORMITORIO_FEMININO__NARA_ROOM__UP__interativo );
                                 string nome_area = typeof( CATEDRAL_DO_SUL__ZONA_LESTE__DORMITORIO_FEMININO__NARA_ROOM__ponto ).Namespace;
 
-                                // Marcador_de_nomes_DEVELOPMENT.Colocar_nome_interativo_tela( tipo_interativo, nome_area, dados );
-                                Verificador_interativos_tela_DESENVOLVIMENTO.Verificar  ( ref dados );
-
                             }
 
                     if( dados[ _interativo_id ] == null )

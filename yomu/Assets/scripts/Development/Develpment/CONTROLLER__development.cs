@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Threading;
 using UnityEngine;
 
 
@@ -49,40 +50,58 @@ unsafe public class CONTROLLER__development {
         public static Test_development current_test;
 
 
-        public static void Apply_development_modifications(){ instancia._Apply_development_modifications(); }
+        public static void Apply_development_modifications_end(){ instancia._Apply_development_modifications_end(); }
+        public static void Apply_development_modifications_start(){ instancia._Apply_development_modifications_start(); }
         public static Action<Control_flow> Get_update(){ return Update; }
         public static void Update( Control_flow _flow ){ if( current_test != null ){ current_test.Update( _flow ); }  instancia._Update( _flow ); }
 
 
 
-        public static void Start_login_development(){
 
-            
-            Program.instancia.modes[ ( int ) Program_mode.login ].Construct();
+        private void _Apply_development_modifications_start(){
+
+                // ** USADO PARA MODIFICAR ARQUIVOS 
+                // ** pode gerar conflito com streams se não fizer antes, nenhum constroller esta ativo
+
+                if( Development_tests.reset_folders_persistent_data_path )
+                    {
+                        if( System.IO.Directory.Exists( Paths_system.persistent_data_path ) )
+                            { 
+
+                                System.IO.Directory.Delete( Paths_folders.program, true ); 
+                                System.IO.Directory.Delete( Paths_folders.saves, true ); 
+                            }
+                            
+                        System.IO.Directory.CreateDirectory( Paths_system.persistent_data_path );
+
+                        TOOL__folders_constructor.Construct_new_persistent_data_path();
+                    }
+
 
         }
 
-
-        public static void Start_menu_development(){
-
-            Program.instancia.modes[ ( int ) Program_mode.login ].Construct();
-
-        }
+        private void _Apply_development_modifications_end(){
 
 
-        public static void Start_test_development(){  }
+                //mark
+                // ** I can not delete if the data have the stream
+                // ** stack.dat agora fica fora do folder program
 
 
-
-
-        private void _Apply_development_modifications(){
 
 
                 // ** vai ser chamado sempre no editor
 
 
                 if( Development_tests.program_mode == Program_mode.test )
-                    { Controllers_program.program_transition.Switch_program_mode( Development_tests.program_mode, new Transition_data() ); return; }
+                    { 
+                        //mark
+                        // ** não é o caminho correto mas não vai dar problemas
+
+                        Controllers_program.data.program_data->program_mode_lock = Program_mode.test;
+                        Controllers_program.program_transition.Switch_program_mode( Development_tests.program_mode, new Transition_program_data() ); 
+                        return; 
+                    }
 
 
                 if( Development_tests.use_generic )
@@ -95,9 +114,9 @@ unsafe public class CONTROLLER__development {
                         // ** TESTS                
                         switch( Development_tests.program_mode ){
                             
-                            case Program_mode.jogo: current_test = Tests_game_development.Get_test( Development_tests.block_type, Development_tests.game_test_key ); break;
-                            case Program_mode.login: current_test = Tests_login_development.Get_test( Development_tests.login_test_key ); break;
-                            case Program_mode.menu: current_test = Tests_menu_development.Get_test( Development_tests.login_test_key ); break;
+                            case Program_mode.game: current_test = Tests_development__GAME.Get_test( Development_tests.block_type, Development_tests.game_test_key ); break;
+                            case Program_mode.login: current_test = Tests_development__LOGIN.Get_test( Development_tests.login_test_key ); break;
+                            case Program_mode.menu: current_test = Tests_development__MENU.Get_test( Development_tests.login_test_key ); break;
                             default: CONTROLLER__errors.Throw( $"Can not handle Program_mode: <Color=lightBlue>{ Development_tests.program_mode }</Color>" ); break;
                             
                         }
@@ -174,9 +193,6 @@ unsafe public class CONTROLLER__development {
 
 
                     // --- COLOCA DADOS DEFAULT
-
-                    TESTE__controlador_save.Construir();
-
 
                     switch( desenvolvimento_atual ){
 

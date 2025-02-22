@@ -3,6 +3,23 @@ using System;
 
 public static class Directories {
 
+
+        public static void Delete_directory( string _path ){
+
+                string path_safe = Paths_system.persistent_data_path;
+
+                if( path_safe == null || path_safe == "" )
+                    { CONTROLLER__errors.Throw( "Tried to delete a folder, but the path in <Color=lightBlue>Paths_system.persistent_data_path</Color> is null or empty" ); }
+
+                if( !!!( _path.Contains( path_safe ) ) )
+                    { CONTROLLER__errors.Throw( $"Tried to delete the folder <Color=lightBlue>{ _path }</Color>, but the path does not starts on the <Color=lightBlue>{ Paths_system.persistent_data_path }</Color>" ); }
+
+
+                
+
+
+        }
+
         public static void Guarantee_exists_editor( string _path ){
 
                 
