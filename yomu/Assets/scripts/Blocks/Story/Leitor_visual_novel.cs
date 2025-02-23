@@ -1178,14 +1178,16 @@ public class Leitor_visual_novel{
 
                     
 
-                Req_transicao req_transicao = CONTROLLER__system.instancia.Create_new_transition_req();
-                
-                    req_transicao.tipo_troca_bloco = Tipo_troca_bloco.OUT;
-                    req_transicao.tipo_transicao = Tipo_transicao.instantaneo;
+                CONTROLLER__errors.Throw( "esse bloco foi modificado, CONTROLLER__system e transicao_req foram modificados/excluidos" );
 
-                    // ** implementar depois: pode ser controlador pelo [ end ]
-                    req_transicao.dados_troca_input = Colocar_input_suporte_VISUAL_NOVEL.Colocar_input_default();
-                    req_transicao.dados_troca_UI = Colocar_UI_suporte_VISUAL_NOVEL.Default();
+                // Req_transicao req_transicao = null;
+                
+                //     req_transicao.tipo_troca_bloco = Tipo_troca_bloco.OUT;
+                //     req_transicao.tipo_transicao = Tipo_transicao.instantaneo;
+
+                //     // ** implementar depois: pode ser controlador pelo [ end ]
+                //     req_transicao.dados_troca_input = Colocar_input_suporte_VISUAL_NOVEL.Colocar_input_default();
+                //     req_transicao.dados_troca_UI = Colocar_UI_suporte_VISUAL_NOVEL.Default();
 
 
 

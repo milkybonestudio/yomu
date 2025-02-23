@@ -11,4 +11,6 @@ public enum Minerio {
         ouro, 
         carvao_mineral,
 
+        // --- MINERIOS FIC
+
 }

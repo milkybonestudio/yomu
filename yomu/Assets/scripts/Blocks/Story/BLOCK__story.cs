@@ -38,9 +38,9 @@ public class BLOCO_story : BLOCK {
         // --- DEFAULT BLOCOS
 
         // ** vai ser struct para poder salvar 
-        public Localizador_simples lidar_retorno_localizador;
-        public Localizador_simples mudar_UI_localizador;
-        public Localizador_simples mudar_input_localizador;
+        // public Localizador_simples lidar_retorno_localizador;
+        // public Localizador_simples mudar_UI_localizador;
+        // public Localizador_simples mudar_input_localizador;
         
 
         // --- DADOS
@@ -49,7 +49,6 @@ public class BLOCO_story : BLOCK {
 
         public Modo_visual_novel modo_visual_novel_atual = Modo_visual_novel.normal;
         public Screen_play screen_play = null;
-        public Dados_figure_personagem[] dados;
 
 
         public  float  tempo_para_passar_cena_atutomatica_milisegundos;

@@ -5,57 +5,27 @@ using System.Runtime.CompilerServices;
 unsafe public static class INT {
 
 
-
+            private const int number_string_length = 100;
+            public static string[] numbers_string;
 
             public static string ToString( int _int ){
 
 
+                    if( _int > number_string_length || _int < 0 )
+                        { return _int.ToString(); }
+
+                
                     if( numbers_string == null )
                         {
-                            numbers_string = new string[ 30 ];
-                            for( int i = 0; i < 30; i++ )
+                            numbers_string = new string[ number_string_length ];
+                            for( int i = 0; i < number_string_length; i++ )
                                 { numbers_string[ i ] = i.ToString(); }
                         }
 
-                    if( _int > numbers_string.Length || _int < 0 )
-                        { return _int.ToString(); }
-                
 
                     return numbers_string[ _int ];
 
             }
-
-            public static string[] numbers_string;
-
-            public static void Reajust_sort_array_after_deletions( int[] _array ){
-
-
-                    int index_old_data = 0;
-
-                    for( int index_new_data = 0 ; index_new_data < _array.Length ; index_new_data++ ){
-
-                            
-                            while( index_old_data < _array.Length ){
-
-
-                                    if( _array[ index_old_data ] != 0 )
-                                        {
-                                            _array[ index_new_data ] = _array[ index_old_data++ ];
-                                            break;
-                                        }
-                                    index_old_data++;
-                                    continue;
-
-
-                            }
-                            continue;
-
-                    }
-
-
-            }
-
-            
 
 
 
@@ -66,41 +36,28 @@ unsafe public static class INT {
             
         }
 
-        public static int[] Criar_array_com_valor_especifico( int _length, int _numero ){
 
-                int[] arr = new int[ _length ];
-
-                for(int i = 0 ; i < arr.Length; i++ ){
-
-                    arr[ i ] = _numero;
-
-                }
-
-                return arr;
-
-
-        }
 
         public static string Transformar_int_array_em_string( int[] _array ){
 
                 string[] numeros = new string[ _array.Length ];
 
-                for(  int i = 0 ; i< _array.Length ; i++){
-
-                        numeros[ i ] = _array[ i ].ToString();
-                        continue;
-                }
+                for(  int i = 0 ; i< _array.Length ; i++)
+                    { numeros[ i ] = _array[ i ].ToString(); }
 
                 return string.Join( ',', numeros );
 
         }
 
 
+        //performance
+        // ** da para melhorar depois
         public static string Transformar_int_array_2d_em_string( int[][] _array_2d ){
 
                 string[] arrays_string = new string [ ( _array_2d.Length * 2 )];
 
                 for( int array_index = 0 ; array_index < _array_2d.Length ; array_index++ ){
+                    
                         int[] array = _array_2d[ array_index ];
 
                         if( array == null )
@@ -128,52 +85,52 @@ unsafe public static class INT {
 
 
 
-        public static int[] Transformar_array_2d_em_1d( int[][] _array_2d ){
+        // public static int[] Transformar_array_2d_em_1d( int[][] _array_2d ){
 
-                // ** nao se preocupa em ter repetidos
+        //         // ** nao se preocupa em ter repetidos
 
-                int numero_de_elementos = 0;
+        //         int numero_de_elementos = 0;
 
-                // --- PEGA QUANTOS ELEMENTOS
+        //         // --- PEGA QUANTOS ELEMENTOS
 
-                int array_2d_index = 0;
-                for( array_2d_index = 0 ; array_2d_index < _array_2d.Length ; array_2d_index++ ){ 
+        //         int array_2d_index = 0;
+        //         for( array_2d_index = 0 ; array_2d_index < _array_2d.Length ; array_2d_index++ ){ 
 
-                        if( _array_2d[ array_2d_index ] == null )
-                                { continue; }
+        //                 if( _array_2d[ array_2d_index ] == null )
+        //                         { continue; }
 
-                        numero_de_elementos += _array_2d[ array_2d_index ].Length; 
-                        continue;
+        //                 numero_de_elementos += _array_2d[ array_2d_index ].Length; 
+        //                 continue;
 
-                }
+        //         }
 
-                // --- CRIA ARRAY
-                int[] array_retorno = new int[ numero_de_elementos ];
+        //         // --- CRIA ARRAY
+        //         int[] array_retorno = new int[ numero_de_elementos ];
 
-                int poiner_atual = 0;
+        //         int poiner_atual = 0;
 
-                for( array_2d_index = 0 ; array_2d_index < _array_2d.Length ; array_2d_index++ ){
+        //         for( array_2d_index = 0 ; array_2d_index < _array_2d.Length ; array_2d_index++ ){
 
 
-                        int[] array_1d = _array_2d[ array_2d_index ];
+        //                 int[] array_1d = _array_2d[ array_2d_index ];
 
-                        if( array_1d == null )
-                                { continue; }
+        //                 if( array_1d == null )
+        //                         { continue; }
 
-                        for( int array_1d_index = 0 ; array_1d_index < array_1d.Length ; array_1d_index++ ){
+        //                 for( int array_1d_index = 0 ; array_1d_index < array_1d.Length ; array_1d_index++ ){
 
-                                array_retorno[ poiner_atual ] = array_1d[ array_1d_index ];
-                                poiner_atual++;
-                                continue;
-                        }
+        //                         array_retorno[ poiner_atual ] = array_1d[ array_1d_index ];
+        //                         poiner_atual++;
+        //                         continue;
+        //                 }
                         
-                        continue;
+        //                 continue;
 
-                }
+        //         }
 
-                return array_retorno;
+        //         return array_retorno;
 
-        }
+        // }
 
 
         public static int[] Remover_valor( int[] _array, int _valor ){

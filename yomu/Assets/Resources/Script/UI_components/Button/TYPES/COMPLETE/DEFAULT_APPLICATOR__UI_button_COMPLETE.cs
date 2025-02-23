@@ -7,7 +7,7 @@ public class DEFAULT_APPLICATOR__UI_button_COMPLETE {
                     // --- TIMEs
 
                     _button.creation_data.tempo_transicao = 75f;
-                    _button.Activate = VOID.Metodo_nao_colocado;
+                    _button.Activate = ()=>{};
 
 
                     // --- RESOURCES

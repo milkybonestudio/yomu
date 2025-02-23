@@ -69,10 +69,10 @@ unsafe public class Menu__SOUTH_CATHEDRAL : PROGRAM_MODE {
             if( esta_nos_botoes )
                 { return; }
             
-            switch(estado_atual){
+            switch( estado_atual ){
 
 
-                    case Menu_bloco.transicao: break;
+                    case Menu_bloco.transition: break;
                     case Menu_bloco.novo_jogo: novo_jogo_menu.Update(); break;
                     case Menu_bloco.configuracoes: configuracoes_menu.Update(); break;
 

@@ -21,8 +21,6 @@ public class Cameras_switching_data {
 
     public void Annex_structure( RESOURCE__structure_copy _structure ){
 
-        Console.Log( "AAAAAAAAAAA" );
-
         _structure.Instanciate();
         _structure.Set_parent( transition_world_container );
         _structure.Set( true );

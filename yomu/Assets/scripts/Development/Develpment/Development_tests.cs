@@ -14,7 +14,7 @@ public static class Development_tests {
 
         // --- WHAT IS TESTING
         // ** nao troca direto, tem que trocar no Set_program_environment();
-        public static Program_mode program_mode = Program_mode.test;
+        public static Program_mode program_mode = Program_mode.rebuild_save;
         public static bool use_generic = true;
 
             // --- TEST

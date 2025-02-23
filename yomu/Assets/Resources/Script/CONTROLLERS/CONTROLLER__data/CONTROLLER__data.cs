@@ -8,19 +8,6 @@ using System.Runtime.InteropServices;
 
 
 
-public enum Login_images {
-
-
-
-}
-
-public struct Login_static_data {
-
-    public Login_images login_image;
-
-}
-
-
 unsafe public struct Heap_data {
 
         //mark

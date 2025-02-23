@@ -30,6 +30,7 @@ public class BLOCO_cartas : BLOCK {
 
         // nao é UI, vai star no espaço 3d 
         // ** lembrar que Tela senpre vai estar na frente por ser canvas/UI
+        
 
         public GameObject canvas;
         public GameObject canvas_3d;

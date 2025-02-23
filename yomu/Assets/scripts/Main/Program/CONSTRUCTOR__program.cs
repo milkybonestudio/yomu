@@ -127,6 +127,9 @@ public static class CONSTRUCTOR__program {
                 _program.modes[ ( int ) Program_mode.rebuild_save ] = new Rebuild_save();
                 _program.modes[ ( int ) Program_mode.nothing ] = new Nothing();
                 _program.modes[ ( int ) Program_mode.test ] = new Test();
+                _program.modes[ ( int ) Program_mode.new_game ] = new New_game();
+
+                
 
                 _program.current_mode = Program_mode.nothing;
 

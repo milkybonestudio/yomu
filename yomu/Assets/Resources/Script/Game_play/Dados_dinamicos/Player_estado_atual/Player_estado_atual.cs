@@ -32,7 +32,7 @@ public class Player_estado_atual {
     public int[] bau = new int[24];
 
     public Locator_position[] posicao_arr = new Locator_position[20];
-    public Ponto ponto_atual ;
+    
 
 
     public float sadismo = 0f;

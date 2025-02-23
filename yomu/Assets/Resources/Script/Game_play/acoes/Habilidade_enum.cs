@@ -1,8 +1,10 @@
 
 
-public enum Habilidade {
+public enum Skill {
 
     nada, 
+
+    END
     
 
 }

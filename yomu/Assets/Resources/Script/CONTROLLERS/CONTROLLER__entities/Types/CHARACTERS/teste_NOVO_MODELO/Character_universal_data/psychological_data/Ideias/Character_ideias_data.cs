@@ -7,7 +7,7 @@ unsafe public struct Character_ideas_data {
 
         public Character_ideas_about_race ideas_about_race_;
 
-        public fixed byte ideas_about_race[ DIC__races.number_of_races ];
+        public fixed byte ideas_about_race[ ( int ) Race.END ];
 
         // ** coisas como depressao, passivo_agressivo, fala baixo, fala alto
         public fixed ushort character_psychological_attributes[ DIC__character_psychological_data.psychological_specific_attributes ];  // more worth with enums 

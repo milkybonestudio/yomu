@@ -19,6 +19,7 @@ public static class FLOAT {
 
                 if( _value < 0f )
                     { return -_value; }
+                    
                 return _value;
 
         }

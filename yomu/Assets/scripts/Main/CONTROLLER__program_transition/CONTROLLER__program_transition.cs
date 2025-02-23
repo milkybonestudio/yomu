@@ -5,6 +5,22 @@ using System;
 using System.Runtime.CompilerServices;
 
 
+/*
+
+    ** HOW TO TRANSITION:
+
+        2 things are necessary: 
+
+            PROGRAM_MODE__thing* thing = Program_mode.Lock_data__THING(); 
+            controller_program_transition.Switch( thing, data_transtion );
+
+        Lock_data__THING ensure that will be a transition to THING and no other parte of the code can ask for a transition
+        also ensures that where it asks for it gets the right data. if the lock is for the mode X the only switch acceptable is for the X 
+        if in a part it chenges the value of Y by mistake it will give a run time error
+
+
+*/
+
 
 
 unsafe public class CONTROLLER__program_transition {
@@ -55,8 +71,12 @@ unsafe public class CONTROLLER__program_transition {
 
                 watch.Start();
 
-
                 Program program = Controllers_program.program;
+
+                CONTROLLER__program_transition program_transition = null;
+
+                Console.Log( ( program_transition = Controllers_program.program_transition ) );
+                Console.Log( program_transition );
 
                 // --- VERIFICATIONS
 

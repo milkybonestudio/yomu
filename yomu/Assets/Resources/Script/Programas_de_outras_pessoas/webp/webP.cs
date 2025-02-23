@@ -33,7 +33,6 @@ unsafe public sealed class WebP : IDisposable{
 
             // ** size 4 bytes
 
-
             if( _bytes[ 8 ] != 87 )
                 { i = i * 0; }
             if( _bytes[ 9 ] != 69 )
@@ -53,7 +52,6 @@ unsafe public sealed class WebP : IDisposable{
     public void Transfer_data( byte[] rawWebP,  int _width, int _height, NativeArray<Color32> _native_arr_texture ){
 
 
-
           VP8StatusCode result;
 
             GetInfo( rawWebP, out int imgWidth, out int imgHeight, out bool hasAlpha, out bool hasAnimation, out string format );
@@ -61,7 +59,8 @@ unsafe public sealed class WebP : IDisposable{
             if( _width != imgWidth || _height != imgHeight )
                 {
 
-                    // ** somente editor
+                    
+
                     if( !!!( Application.isEditor ) )
                         { CONTROLLER__errors.Throw( "This can only happens in the editor" ); }
 
@@ -71,6 +70,8 @@ unsafe public sealed class WebP : IDisposable{
                     byte[] webp_default =  Get_bytes( rawWebP );
 
                     int index = 0;
+
+                    Console.Log( "DEPOIS FAZER MELHOR" );
 
                     for( int h = 0 ; h < _height ; h++ ){
 
@@ -91,22 +92,8 @@ unsafe public sealed class WebP : IDisposable{
 
                             }
 
-
                     }
 
-                    // for( int i = 0 ; i < _native_arr_texture.Length ; i++ ){
-
-                    //         Color32 color = new Color32();
-
-                    //         color.r = webp_default[ index + 0 ] ;
-                    //         color.g = webp_default[ index + 1 ] ;
-                    //         color.b = webp_default[ index + 2 ] ;
-                    //         color.a = webp_default[ index + 3 ] ;
-                    //         index = ( index + 4 ) % webp_default.Length;
-
-                    //         _native_arr_texture[ i ] = color;
-
-                    // }
 
                     return;
 
@@ -126,11 +113,7 @@ unsafe public sealed class WebP : IDisposable{
             GCHandle handle = GCHandle.Alloc( bytes, GCHandleType.Pinned);
             
 
-
-
-
             IntPtr ptrRawWebP = pinnedWebP.AddrOfPinnedObject();
-            // IntPtr pointer_dados =  handle.AddrOfPinnedObject();
             IntPtr pointer_dados = ( IntPtr ) _native_arr_texture.GetUnsafePtr();
 
             
@@ -197,10 +180,7 @@ unsafe public sealed class WebP : IDisposable{
             Console.Log( "arr length : " + _native_arr_texture.Length );
 
             if( _native_arr_texture.Length == ( bytes.Length / 4 ) )
-                {
-
-
-                }
+                {}
             
 
 
@@ -227,18 +207,17 @@ unsafe public sealed class WebP : IDisposable{
 
 
             
-
             VP8StatusCode result;
 
             GetInfo( rawWebP, out int imgWidth, out int imgHeight, out bool hasAlpha, out bool hasAnimation, out string format );
 
-            byte[] bytes = new byte[ imgHeight * imgWidth * 4 ];
+            byte[] bytes = new byte[ ( imgHeight * imgWidth * 4 ) ];
    
             WebPDecoderOptions options = new WebPDecoderOptions();
             WebPDecoderConfig config = new WebPDecoderConfig();
 
-            GCHandle pinnedWebP = GCHandle.Alloc(rawWebP, GCHandleType.Pinned);
-            GCHandle handle = GCHandle.Alloc( bytes, GCHandleType.Pinned);
+            GCHandle pinnedWebP = GCHandle.Alloc(rawWebP, GCHandleType.Pinned );
+            GCHandle handle = GCHandle.Alloc( bytes, GCHandleType.Pinned );
             
 
 
@@ -246,8 +225,8 @@ unsafe public sealed class WebP : IDisposable{
             IntPtr pointer_dados =  handle.AddrOfPinnedObject();            
 
             
-            if (UnsafeNativeMethods.WebPInitDecoderConfig(ref config) == 0 )
-                {  throw new Exception("WebPInitDecoderConfig failed. Wrong version?"); }
+            if ( UnsafeNativeMethods.WebPInitDecoderConfig( ref config ) == 0 )
+                {  CONTROLLER__errors.Throw( "WebPInitDecoderConfig failed. Wrong version?" ); }
 
             // Read the .webp input file information
             config.options.bypass_filtering = options.bypass_filtering;
@@ -267,10 +246,12 @@ unsafe public sealed class WebP : IDisposable{
 
 
             //Create a BitmapData and Lock all pixels to be written
-            if ( config.input.Has_alpha == 1)
+            if ( config.input.Has_alpha == 1 )
                 { config.output.colorspace = WEBP_CSP_MODE.MODE_RGBA; }
                 else
-                { config.output.colorspace = WEBP_CSP_MODE.MODE_RGBA; }
+                { config.output.colorspace = WEBP_CSP_MODE.MODE_RGB; }
+
+            config.output.colorspace = ( WEBP_CSP_MODE ) config.input.Has_alpha;
 
 
 
@@ -284,27 +265,18 @@ unsafe public sealed class WebP : IDisposable{
             config.output.is_external_memory = 1;
 
 
-            try{
+            result = UnsafeNativeMethods.WebPDecode(  ptrRawWebP, rawWebP.Length, ref config);
+            if (result != VP8StatusCode.VP8_STATUS_OK)
+                { throw new Exception("Failed WebPDecode with error " + result); }
 
-                result = UnsafeNativeMethods.WebPDecode(  ptrRawWebP, rawWebP.Length, ref config);
-                if (result != VP8StatusCode.VP8_STATUS_OK)
-                    { throw new Exception("Failed WebPDecode with error " + result); }
+            UnsafeNativeMethods.WebPFreeDecBuffer(ref config.output);
 
-                UnsafeNativeMethods.WebPFreeDecBuffer(ref config.output);
+            if ( handle.IsAllocated )
+                { handle.Free(); }
+                
 
-            } catch( Exception e ){
-
-                    Console.Log( e.Message );
-
-            } finally {
-
-                if (handle.IsAllocated)
-                    handle.Free();
-
-                if (pinnedWebP.IsAllocated)
-                    pinnedWebP.Free();
-
-            }
+            if ( pinnedWebP.IsAllocated )
+                { pinnedWebP.Free(); }
 
 
             return bytes;
@@ -314,305 +286,39 @@ unsafe public sealed class WebP : IDisposable{
 
 
 
-
-    public Sprite Pegar_sprite( byte[] rawWebP ){
-        
-
-        GetInfo( rawWebP, out int imgWidth, out int imgHeight, out bool hasAlpha, out bool hasAnimation, out string format );
-
-
-
-        int n_bytes = -1;
-        if (hasAlpha)
-                { n_bytes = 4;}
-            else
-                { n_bytes = 3;}
-
-
-
-        byte[] bytes = new byte[ imgHeight * imgWidth * n_bytes ];
-
-        GCHandle pinnedWebP = GCHandle.Alloc( rawWebP, GCHandleType.Pinned );
-        GCHandle handle = GCHandle.Alloc( bytes, GCHandleType.Pinned);
-
-            
-        IntPtr ptrData = pinnedWebP.AddrOfPinnedObject();
-        IntPtr pointer_dados =  handle.AddrOfPinnedObject();
-        
-        int outputSize = ( imgWidth * n_bytes ) * imgHeight;
-        
-
-        try
-            {
-
-                
-                Color32[] colors = new Color32[ ( bytes.Length / n_bytes ) ];
-
-                if ( n_bytes == 3 )
-                        { 
-                            UnsafeNativeMethods.WebPDecodeBGRInto( ptrData, rawWebP.Length, pointer_dados, outputSize, ( imgWidth * n_bytes ) );
-
-                            //UnsafeNativeMethods.WebPDecodeARGBInto( ptrData, rawWebP.Length, pointer_dados, outputSize, ( imgWidth * n_bytes ) );
-
-                            for( int c= 0 ;  c < colors.Length; c++ ){
-
-                                    Color32 color = new Color32();
-                                    color[ 0 ] = bytes[ ( c * 3 ) + 2 ];
-                                    color[ 1 ] = bytes[ ( c * 3 ) + 1 ];
-                                    color[ 2 ] = bytes[ ( c * 3 ) + 0 ];
-                                    color[ 3 ] = ( byte ) 255;
-
-                                    
-                                    colors[ (  ( imgWidth - 1  ) - ( c % imgWidth )  ) + (  ( imgWidth  * ( imgHeight - 1 )  ) - ( ( c / imgWidth ) * imgWidth )  ) ] = color;
-
-                                    //colors[ colors.Length - c - 1 ] = color;
-                                    continue;
-
-                            }
-                        }
-                    else
-                        { 
-                            UnsafeNativeMethods.WebPDecodeBGRAInto( ptrData, rawWebP.Length, pointer_dados, outputSize, ( imgWidth * n_bytes ) );
-
-                            for( int c= 0 ;  c < colors.Length; c++ ){
-
-                                    Color32 color = new Color32();
-                                    color[ 0 ] = bytes[ ( c * 4 ) + 2 ];
-                                    color[ 1 ] = bytes[ ( c * 4 ) + 1 ];
-                                    color[ 2 ] = bytes[ ( c * 4 ) + 0 ];
-                                    color[ 3 ] = bytes[ ( c * 4 ) + 3 ];
-
-
-
-                                    colors[ colors.Length - c - 1 ] = color;
-
-
-                                    continue;
-
-                            }
-
-                            
-                        }
-
-                        //Geral.Salvar_byte_array( bytes );
-
-
-
-            
-
-                Sprite sprite = SPRITE.Transformar_colors_container_TO_sprite( colors, imgHeight, imgWidth );
-
-
-                return sprite;
-            }
-
-        catch (Exception) 
-        { throw; }
-
-
-        finally
-        {
-            
-            //Free memory
-            if (pinnedWebP.IsAllocated)
-                pinnedWebP.Free();
-            if (handle.IsAllocated)
-                handle.Free();                
-        }
-
-
-
-
-
-
-    }
-
-
-
-
     public void GetInfo( byte[] rawWebP, out int width, out int height, out bool has_alpha, out bool has_animation, out string format ){
 
 
-        VP8StatusCode result;
-        GCHandle pinnedWebP = GCHandle.Alloc(rawWebP, GCHandleType.Pinned);
+            VP8StatusCode result;
+            GCHandle pinnedWebP = GCHandle.Alloc( rawWebP, GCHandleType.Pinned );
 
-        try
-        {
             IntPtr ptrRawWebP = pinnedWebP.AddrOfPinnedObject();
 
             WebPBitstreamFeatures features = new WebPBitstreamFeatures();
-            result = UnsafeNativeMethods.WebPGetFeatures(ptrRawWebP, rawWebP.Length, ref features);
+            result = UnsafeNativeMethods.WebPGetFeatures( ptrRawWebP, rawWebP.Length, ref features );
 
-            if (result != 0)
-                throw new Exception(result.ToString());
+            if ( result != 0 )  
+                { CONTROLLER__errors.Throw( result.ToString() ); }
+
 
             width = features.Width;
             height = features.Height;
-            if (features.Has_alpha == 1) has_alpha = true; else has_alpha = false;
-            if (features.Has_animation == 1) has_animation = true; else has_animation = false;
-            switch (features.Format)
-            {
-                case 1:
-                    format = "lossy";
-                    break;
-                case 2:
-                    format = "lossless";
-                    break;
-                default:
-                    format = "undefined";
-                    break;
+
+            has_alpha = ( features.Has_alpha == 1 );
+
+            has_animation = ( features.Has_animation == 1 );
+
+            switch ( features.Format ){
+
+                case 1: format = "lossy"; break;
+                case 2: format = "lossless"; break;
+                default: format = "undefined"; break;
             }
-        }
-        catch (Exception ex) { throw new Exception(ex.Message + "\r\nIn WebP.GetInfo"); }
-        finally
-        {
-            //Free memory
-            if (pinnedWebP.IsAllocated)
-                pinnedWebP.Free();
-        }
+        
+            
+            if ( pinnedWebP.IsAllocated )   
+                { pinnedWebP.Free(); }
     }
-
-
-
-
-
-
-        public Sprite Decode_2( byte[] rawWebP ){
-
-
-            VP8StatusCode result;
-
-            GetInfo( rawWebP, out int imgWidth, out int imgHeight, out bool hasAlpha, out bool hasAnimation, out string format );
-
-
-            WebPDecoderOptions options = new WebPDecoderOptions();
-            WebPDecoderConfig config = new WebPDecoderConfig();
-
-
-            byte[] bytes = new byte[ imgHeight * imgWidth * 4 ];
-
-            GCHandle pinnedWebP = GCHandle.Alloc(rawWebP, GCHandleType.Pinned);
-            GCHandle handle = GCHandle.Alloc( bytes, GCHandleType.Pinned);
-
-
-
-
-            IntPtr ptrRawWebP = pinnedWebP.AddrOfPinnedObject();
-            IntPtr pointer_dados =  handle.AddrOfPinnedObject();
-            
-
-
-            if (UnsafeNativeMethods.WebPInitDecoderConfig(ref config) == 0)
-            {  throw new Exception("WebPInitDecoderConfig failed. Wrong version?");}
-            // Read the .webp input file information
-
-            config.options.bypass_filtering = options.bypass_filtering;
-            config.options.no_fancy_upsampling = options.no_fancy_upsampling;
-            config.options.use_cropping = options.use_cropping;
-            config.options.crop_left = options.crop_left;
-            config.options.crop_top = options.crop_top;
-            config.options.crop_width = options.crop_width;
-            config.options.crop_height = options.crop_height;
-            config.options.use_scaling = options.use_scaling;
-            config.options.scaled_width = options.scaled_width;
-            config.options.scaled_height = options.scaled_height;
-            config.options.use_threads = options.use_threads;
-            config.options.dithering_strength = options.dithering_strength;
-            config.options.flip = 1;
-            config.options.alpha_dithering_strength = options.alpha_dithering_strength;
-
-
-            //Create a BitmapData and Lock all pixels to be written
-            if ( config.input.Has_alpha == 1)
-                { config.output.colorspace = WEBP_CSP_MODE.MODE_RGBA; }
-                else
-                { config.output.colorspace = WEBP_CSP_MODE.MODE_RGBA; }
-
-
-
-
-            // Specify the output format
-            config.output.u.RGBA.rgba = pointer_dados;
-            config.output.u.RGBA.stride = ( imgWidth * 4 );
-            config.output.u.RGBA.size = (UIntPtr)( imgHeight * ( imgWidth * 4 ) );
-            config.output.height = imgHeight;
-            config.output.width = imgWidth;
-            config.output.is_external_memory = 1;
-
-
-
-            // Decode
-            result = UnsafeNativeMethods.WebPDecode(  ptrRawWebP, rawWebP.Length, ref config);
-
-
-            if (result != VP8StatusCode.VP8_STATUS_OK)
-            { throw new Exception("Failed WebPDecode with error " + result); }
-
-            UnsafeNativeMethods.WebPFreeDecBuffer(ref config.output);
-
-
-            //Geral.Salvar_byte_array( bytes );
-            Debug.Log( bytes.Length );
-
-
-
-            // pode multithread
-            if( ( imgHeight * imgWidth * 4 ) != bytes.Length )
-                    { throw new Exception( $"" ); }
-
-            Texture2D tex = new Texture2D(  imgWidth  , imgHeight , TextureFormat.RGBA32,  false ); 
-
-            tex.SetPixelData( bytes , 0 );
-            tex.Apply( false, false );
-            tex.filterMode = UnityEngine.FilterMode.Point;
-
-            Sprite sprite_retorno  =   Sprite.Create(tex  ,     new Rect( 0.0f, 0.0f, tex.width, tex.height ), new Vector2( 0.5f, 0.5f), 100.0f ,0, SpriteMeshType.FullRect   );
-
-
-
-            if (handle.IsAllocated)
-                handle.Free();
-
-            if (pinnedWebP.IsAllocated)
-                pinnedWebP.Free();
-            
-
-
-
-            return sprite_retorno;
-
-
-
-    
-
-
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

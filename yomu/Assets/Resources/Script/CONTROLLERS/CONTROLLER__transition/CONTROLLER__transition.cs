@@ -82,28 +82,29 @@ public class CONTROLLER__transition {
                 // ** garante que o jogo não vai aceitar updates para outros modos: 
 
                 transition_request_visual.Set_transition_space();
-                transition_request.req_change_interface.Prepare_UI_data();
 
-                transition_request.req_change_interface.Change_UI_hide();
-                yield return Mono_instancia.Start_coroutine( transition_request_visual.Get_hide_IE() );
+                // transition_request.req_change_interface.Prepare_UI_data();
+                // transition_request.req_change_interface.Change_UI_hide();
 
-                Coroutine wait_task_coroutine = Mono_instancia.Start_coroutine( transition_request_visual.Get_waiting_task_to_finish() );
+                // yield return Mono_instancia.Start_coroutine( transition_request_visual.Get_hide_IE() );
 
-                Task_req task = transition_request.task_to_execute_on_hide;
-                task.prioridade = 1_000;
-                CONTROLLER__tasks.Pegar_instancia().Adicionar_task( task );
-                yield return CONTROLLER__tasks.Pegar_instancia().Wait_task_ends( _task_request: task, _max_time_ms: 10_000f ); 
+                // Coroutine wait_task_coroutine = Mono_instancia.Start_coroutine( transition_request_visual.Get_waiting_task_to_finish() );
 
-                // ** sdai loop 
-                Mono_instancia.Stop_coroutine( wait_task_coroutine );
+                // Task_req task = transition_request.task_to_execute_on_hide;
+                // task.prioridade = 1_000;
+                // CONTROLLER__tasks.Pegar_instancia().Adicionar_task( task );
+                // yield return CONTROLLER__tasks.Pegar_instancia().Wait_task_ends( _task_request: task, _max_time_ms: 10_000f ); 
 
-                // ** atualiza a logica do jogo
-                transition_request.Action_mid_transition();
-                transition_request.req_change_interface.Change_UI_down(); // ** get new ones
+                // // ** sdai loop 
+                // Mono_instancia.Stop_coroutine( wait_task_coroutine );
+
+                // // ** atualiza a logica do jogo
+                // transition_request.Action_mid_transition();
+                // transition_request.req_change_interface.Change_UI_down(); // ** get new ones
                 
-                yield return Mono_instancia.Start_coroutine( transition_request_visual.Get_down_IE() );
+                // yield return Mono_instancia.Start_coroutine( transition_request_visual.Get_down_IE() );
 
-                transition_request.Action_end_transition();
+                // transition_request.Action_end_transition();
                 
                 yield break; // --- TERMINOU TRANSICAO
 

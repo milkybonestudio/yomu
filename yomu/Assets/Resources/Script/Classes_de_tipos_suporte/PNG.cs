@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using Png_decoder;
 
 
 public static class PNG {
@@ -10,6 +9,19 @@ public static class PNG {
         public static void Save_png( string _path, Texture2D _image ){
 
             System.IO.File.WriteAllBytes( _path, _image.EncodeToPNG() );
+
+        }
+
+
+
+        public static Sprite Transformar_png_TO_sprite(  byte[] _png  ){
+
+
+                Texture2D tex = new Texture2D(  1, 1, TextureFormat.RGBA32, false ); 
+                tex.LoadImage( _png  );
+                Sprite sprite_retorno = Sprite.Create( tex, new Rect( 0.0f, 0.0f, tex.width, tex.height ), new Vector2( 0.5f, 0.5f ), 100.0f, 0, SpriteMeshType.FullRect );
+
+                return sprite_retorno;
 
         }
 

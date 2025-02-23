@@ -18,7 +18,7 @@ unsafe public class Game : PROGRAM_MODE {
 
                     switch( type ){
 
-                        case Game_type.standart: __interface__ = new Game__DEFAULT(); break;
+                        case Game_type.standart: __interface__ = new Game__STANDART(); break;
                         default: CONTROLLER__errors.Throw( $" Can not handle { type } in game" ); break;
                         
                     }

@@ -7,4 +7,6 @@ public enum Race {
     dwarf,
     oni,
 
+    END
+
 }

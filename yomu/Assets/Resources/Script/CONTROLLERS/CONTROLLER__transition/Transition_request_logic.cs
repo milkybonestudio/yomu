@@ -10,7 +10,6 @@ public class Transition_request {
         public Transition_type tipo;
 
 
-        public Req_change_interface req_change_interface;
         public Task_req task_to_execute_on_hide;
 
         public System.Action Action_mid_transition; // ** change block => executa depois de task for finalizada

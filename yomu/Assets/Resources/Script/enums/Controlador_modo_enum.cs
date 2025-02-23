@@ -11,8 +11,9 @@ public enum Program_mode {
             menu = 0b__0000_0000__0000_0000__0000_0000__0000_1000,
             game = 0b__0000_0000__0000_0000__0000_0000__0001_0000,
             test = 0b__0000_0000__0000_0000__0000_0000__0010_0000,
+            new_game = 0b__0000_0000__0000_0000__0000_0000__0100_0000,
 
-        END = 0b__0000_0000__0000_0000__0000_0000__0100_0000,
+        END,
 
 
 
@@ -20,12 +21,3 @@ public enum Program_mode {
 
 }
 
-
-public struct _Program_state {
-
-    public byte mode;
-    public bool is_changing_block;
-    public bool is_changing_block_mode;
-    
-
-}

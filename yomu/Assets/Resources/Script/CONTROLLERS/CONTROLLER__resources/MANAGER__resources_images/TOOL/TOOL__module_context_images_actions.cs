@@ -159,7 +159,7 @@ public static class TOOL__module_context_images_actions {
 
 
                 if( _ref.image == null )
-                    { CONTROLLER__errors.Throw( $"Tried to Load ref { _ref.identifire }, but the RESOURCE__image is null" ); }
+                    { CONTROLLER__errors.Throw( $"Tried to Load ref { _ref.localizador }, but the RESOURCE__image is null" ); }
 
                 if( _ref.state >= Resource_state.minimun )
                     { return; } _ref.state = Resource_state.minimun;

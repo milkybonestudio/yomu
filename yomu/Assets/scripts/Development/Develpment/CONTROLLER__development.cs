@@ -31,7 +31,7 @@ unsafe public class CONTROLLER__development {
 
         public bool bloqueado_por_ferramenta = false;
         public Ferramenta_desenvolvimento ferramenta_atual = Ferramenta_desenvolvimento.nada;
-        public Del_void_TO_bool ferramenta_update;
+        
 
         public NODE_DEVELOPEMENT_TOOLs[,] tools = new NODE_DEVELOPEMENT_TOOLs[ ( int ) Block_type.END, 10 ];
 
@@ -194,17 +194,7 @@ unsafe public class CONTROLLER__development {
 
                     // --- COLOCA DADOS DEFAULT
 
-                    switch( desenvolvimento_atual ){
-
-                         case Desenvolvimento_atual.interacao : Teste_interacao.Criar( chave_teste ); break;
-                         case Desenvolvimento_atual.story : Teste_story.Criar( chave_teste ); break;
-                         case Desenvolvimento_atual.cartas : Teste_cartas.Criar( chave_teste ); break;
-                         case Desenvolvimento_atual.minigames : Teste_minigames.Criar( chave_teste ); break;
-                         
-                         default : Console.Log( "wtf?" ); break;
-                         
-                    }
-
+          
           }
 
 
@@ -224,14 +214,7 @@ unsafe public class CONTROLLER__development {
                 // as ferramentas vao estar em cada Teste_bloco
 
                 Controlador_ferramentas.Atualizar_ferramentas_desenvolvimento();
-                
-            
-                if( ferramenta_update != null )
-                    {
-                            bool pode_atualizar_o_jogo = ferramenta_update();
-                            if( !( pode_atualizar_o_jogo ))
-                                    { return; }
-                    }
+
 
                 return;
             

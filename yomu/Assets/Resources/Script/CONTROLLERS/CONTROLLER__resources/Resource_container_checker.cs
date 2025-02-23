@@ -2,7 +2,6 @@
 
 public class Resource_container_checker { 
 
-
         // ** todos vao estar como minimo 
 
         // ** os recursos aqui nao são contatos como referencias
@@ -11,6 +10,7 @@ public class Resource_container_checker {
         private int slot_intern;
         public RESOURCE__ref[] resource_refs = new RESOURCE__ref[ 200 ];
 
+        
         public void Add( RESOURCE__ref _ref ){
 
                 if( _ref == null )
@@ -24,6 +24,23 @@ public class Resource_container_checker {
 
 
         }
+
+        public void Add( ref RESOURCE__ref _resource_field, RESOURCE__ref _resource_value ){
+
+                _resource_field = _resource_value;
+
+                if( _resource_value == null )
+                    { CONTROLLER__errors.Throw( "Tried to add a <Color=lightBlue>RESOURCE__ref</Color> in the container_checker, but it is null" ); }
+            
+                resource_refs[ slot_intern++ ] = _resource_value;
+
+                if( resource_refs.Length == slot_intern )
+                    { System.Array.Resize( ref resource_refs, ( resource_refs.Length + 50 ) ); }
+
+
+
+        }
+
 
         public void Load_all_resources(){
 
@@ -48,5 +65,17 @@ public class Resource_container_checker {
 
         }
 
+        
+        public void Delete_all(){
+
+            for( int slot = 0 ; slot < slot_intern ; slot++ )
+                { 
+                    resource_refs[ slot ].Delete();
+                    resource_refs[ slot ] = null; 
+                }
+
+            slot_intern = default;
+
+        }
 
 }

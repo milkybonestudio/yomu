@@ -10,7 +10,9 @@ public class Transition_program {
         
                 // --- RESET CHECKS
 
-                Device[,,] UIs = intern_transition.UIs;
+                Transition_program transition = intern_transition;
+
+                Device[,,] UIs = transition.UIs;
 
                 int length_devices = UIs.GetLength( 1 );
                     
@@ -25,11 +27,12 @@ public class Transition_program {
 
                 }
 
-                intern_transition.stage = default;
-                intern_transition.stage_to_liberate_UI = default;
-                intern_transition.sections_actions = Transition_sections_actions.Construct();
+                transition.resource_container_checker = null;
+                transition.stage = default;
+                transition.stage_to_liberate_UI = default;
+                transition.sections_actions = Transition_sections_actions.Construct();
 
-                return intern_transition;
+                return transition;
 
 
         }
