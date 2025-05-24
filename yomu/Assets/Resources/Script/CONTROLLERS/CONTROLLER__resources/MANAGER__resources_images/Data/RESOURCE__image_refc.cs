@@ -3,24 +3,6 @@ using UnityEngine.UI;
 
 
 
-public abstract class RESOURCE__ref {
-
-        public string name;
-    
-        public abstract void Unload();
-        public abstract void Deactivate();
-        public abstract void Deinstanciate();
-
-        // ** UP
-
-        public abstract void Load();
-        public abstract void Activate();
-        public abstract void Instanciate();
-
-        public abstract void Delete();
-
-        public abstract bool Got_to_minimun();
-}
 
 
 
@@ -41,21 +23,21 @@ public class RESOURCE__image_ref : RESOURCE__ref {
         public RESOURCE__image_ref_state ref_state;
         
 
-        public Resource_state state;
-
-        public Resource_image_content level_pre_allocation; // minimun 
+        public Resource_image_content level_pre_allocation; // minimum 
         public Resource_image_content actual_need_content;
 
 
-        public override bool Got_to_minimun(){
-
-            // Console.Log( "--content_going_to: " + image.content_going_to  );
-            // Console.Log( "--current content: " + image.actual_content );
-            // Console.Log( "--level pre allocation: " + level_pre_allocation );
+        public override bool Got_to_minimum(){
 
             return ( image.actual_content == level_pre_allocation );
 
         }
+
+        public override bool Got_to_full(){
+
+            return ( image.actual_content == Resource_image_content.sprite );
+        }
+
 
 
 

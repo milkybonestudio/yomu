@@ -14,7 +14,12 @@ public class MANAGER__textures_resources {
 
             if( instance == null )
                 { return; }
-            foreach( Texture2D t in instance.textures ){ if( t != null ) { GameObject.Destroy( t ); } } 
+
+            foreach( Texture2D t in instance.textures ){ 
+
+                if( t != null )
+                    { GameObject.Destroy( t ); } 
+            } 
         }
 
         // --- DATA
@@ -33,28 +38,37 @@ public class MANAGER__textures_resources {
                 Texture2D texture = textures[ slot ];
                 textures[ slot ] = null;
 
-                if( texture != null )
+                
+                //mark
+                // ** mudei de texture para a exclusiva, por cima não parece fazer sentido. REOURCE__image só esta usando a exclusiva por design ruim
+                // ** quando arrumar a exclusiva vai virar a unica disponivel
+
+                if( _image.single_image.texture_exclusiva == null )
                     { CONTROLLER__errors.Throw( $"tried to liberate texture of the image <Color=lightBlue>{ _image.name }</Color>, but there is no texture in the slot <Color=lightBlue>{ slot }</Color>" ); }
 
-                GameObject.Destroy( texture );
+                GameObject.Destroy( _image.single_image.texture_exclusiva );
+
+                // GameObject.Destroy( texture );
 
 
 
         }
 
 
-        public void Get_texture( RESOURCE__image _image ){ 
+        public void Get_texture( RESOURCE__image _image ){
 
 
-                // Format32bppArgb
-                
+                if( _image.single_image.texture_exclusiva != null )
+                    { CONTROLLER__errors.Throw( $"Tried to create a texture in the image { _image.name }, but the texture_exclusiva was already created" ); }
+
                 _image.single_image.texture_exclusiva = new Texture2D( _image.width, _image.height, TextureFormat.BGRA32, false );
-                //_image.single_image.texture_exclusiva = new Texture2D( _image.width, _image.height, TextureFormat.ARGB32, false );
-                //_image.single_image.texture_exclusiva = new Texture2D( _image.width, _image.height, TextureFormat.RGBA32, false );
-
-                _image.single_image.texture_exclusiva.filterMode = FilterMode.Point;
                 _image.single_image.texture_exclusiva_native_array = _image.single_image.texture_exclusiva.GetPixelData<Color32>( 0 );
+                _image.single_image.texture_exclusiva.filterMode = UnityEngine.FilterMode.Point;
 
+
+
+                //mark
+                // ????
                 int slot = 0;
                 while( slot++ < textures.Length ){
 

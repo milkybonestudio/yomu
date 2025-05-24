@@ -8,19 +8,17 @@ public static class TOOL__module_context_images_actions {
 
         public static void Change_level_pre_allocation( RESOURCE__image_ref _ref, Resource_image_content _new_pre_alloc ){
 
-                Console.Log( "Veio Change_pre_alloc()" );
-
                 // --- CHANGE
                 Resource_image_content old_pre_alloc = _ref.level_pre_allocation;
                 _ref.level_pre_allocation = _new_pre_alloc;
 
-                if( _ref.state != Resource_state.minimun )
+                if( _ref.state != Resource_state.minimum )
                     { return; } // ** nao vai importar
 
                 if( old_pre_alloc == _new_pre_alloc )
-                    { Console.Log( "Mesmo alloc" ); return; } // ** eh o mesmo
+                    { return; } // ** eh o mesmo
 
-                // ** IS IN MINIMUN AND IS DIFERENT
+                // ** IS IN MINIMUm AND IS DIFERENT
                 TOOL__resource_image.Change_actual_need_content_count( _ref, _new_pre_alloc );
                 
                 TOOL__module_context_images.Update_resource_level( _ref.image );
@@ -100,18 +98,18 @@ public static class TOOL__module_context_images_actions {
 
         public static void Deactivate( RESOURCE__image_ref _ref ){
 
-            // ** GO BACK TO MINIMUN
+            // ** GO BACK TO MINIMUm
 
                 // ** VAI PARA O NADA
 
-                Console.Log( "Veio Deactivate()" );
+                // Console.Log( "Veio Deactivate()" );
 
                 if( _ref.image == null )
                     { CONTROLLER__errors.Throw( $"Tried to Deactivate ref { _ref.identifire }, but the RESOURCE__image is null" ); }
 
 
-                if( _ref.state <= Resource_state.minimun )
-                    { return; } _ref.state = Resource_state.minimun;
+                if( _ref.state <= Resource_state.minimum )
+                    { return; } _ref.state = Resource_state.minimum;
 
                 if( _ref.actual_need_content == _ref.level_pre_allocation )
                     { return; }
@@ -161,8 +159,8 @@ public static class TOOL__module_context_images_actions {
                 if( _ref.image == null )
                     { CONTROLLER__errors.Throw( $"Tried to Load ref { _ref.localizador }, but the RESOURCE__image is null" ); }
 
-                if( _ref.state >= Resource_state.minimun )
-                    { return; } _ref.state = Resource_state.minimun;
+                if( _ref.state >= Resource_state.minimum )
+                    { return; } _ref.state = Resource_state.minimum;
 
                 if( _ref.actual_need_content >= _ref.level_pre_allocation )
                     { return; }
@@ -262,11 +260,10 @@ public static class TOOL__module_context_images_actions {
                                 if( ( image.width * image.height ) == 0 )
                                     { CONTROLLER__errors.Throw( $"Image { image.name } is with height { image.height } and width { image.width }" ); }
                                 
-                                image.single_image.texture_exclusiva = new Texture2D( image.width, image.height, TextureFormat.RGBA32, false );
-                                image.single_image.texture_exclusiva_native_array = image.single_image.texture_exclusiva.GetPixelData<Color32>( 0 );
-                                image.single_image.texture_exclusiva.filterMode = UnityEngine.FilterMode.Point;
-
+                                manager.textures_manager.Get_texture( image );
+                                
                                 image.actual_content = Resource_image_content.texture;
+
                             }
 
 
@@ -274,8 +271,7 @@ public static class TOOL__module_context_images_actions {
                             {
 
                                      if( image.single_image.image_compress != null )
-                                        { 
-                                            
+                                        {         
                                             TOOL__loader_texture.Transfer_data_PNG( image.single_image.image_compress, image.single_image.texture_exclusiva_native_array );
                                         }           
                                 else if( image.single_image.image_low_quality_compress != null )

@@ -6,7 +6,6 @@ public static class TOOL__resources_images_handler_REAJUST {
 
         public static int Handle_waiting_to_get_compress_file_REAJUST( MANAGER__resources_images _manager, RESOURCE__image _image ){ 
 
-
                 int weight = 0;
 
                 if( _manager.task_getting_compress_file_REAJUST != null )       
@@ -89,7 +88,7 @@ public static class TOOL__resources_images_handler_REAJUST {
 
                 // --- GET TASK
                 _manager.task_passing_to_texture_REAJUST = CONTROLLER__tasks.Pegar_instancia().Get_task_request( "task_passing_to_texture_REAJUST" );
-                _manager.task_passing_to_texture_REAJUST.fn_multithread = ( Task_req req ) => {  Console.Log( _image.main_folder ); TOOL__loader_texture.Transfer_data_PNG( _image.single_image.image_compress, _image.single_image.texture_exclusiva_native_array );  };
+                _manager.task_passing_to_texture_REAJUST.fn_multithread = ( Task_req req ) => { TOOL__loader_texture.Transfer_data_PNG( _image.single_image.image_compress, _image.single_image.texture_exclusiva_native_array );  };
 
                 // --- NEXT STEAP
                 _image.stage_getting_resource = Resources_getting_image_stage.passing_data_to_texture_REAJUST;

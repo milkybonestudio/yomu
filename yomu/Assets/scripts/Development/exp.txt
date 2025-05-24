@@ -1,3 +1,0 @@
-
-
-So vai existir e ser usado no editor. Na parte do codigo onde for usado a funcao vai precisar ter conditional directives

@@ -13,7 +13,7 @@ public static class TOOL__resource_structure_testing {
                 if( canvas == null )
                     { CONTROLLER__errors.Throw( $"Dond found the canvas for the RESOURCE__image test. Path:<Color=lightBlue> { path }</Color>" ); }
 
-                structure_copy_test = CONTROLLER__resources.Get_instance().resources_structures.Get_structure_copy( Resource_context.Characters, "teste", "Teste", Resource_structure_content.game_object );
+                structure_copy_test = Controllers.resources.structures.Get_structure_copy( Resource_context.Characters, "teste", "Teste", Resource_structure_content.game_object );
             
 
         }
@@ -27,7 +27,7 @@ public static class TOOL__resource_structure_testing {
         public static void Test( Control_flow _control ){
 
 
-                CONTROLLER__resources.Get_instance().Update( _control );
+                Controllers.resources.Update( _control );
                 CONTROLLER__tasks.Pegar_instancia().Update( _control );
 
 
@@ -48,7 +48,13 @@ public static class TOOL__resource_structure_testing {
                     { i++; structure_copy_test.Activate(); }
 
                if( Input.GetKeyDown( KeyCode.E ) )
-                    { i++; structure_copy_test.Get_game_object( canvas ); }
+                    { 
+                        i++; 
+                        structure_copy_test.Get_game_object(); 
+                        structure_copy_test.Set_parent( canvas );
+                        structure_copy_test.Set( true );
+
+                    }
 
 
                 // --- DOWN

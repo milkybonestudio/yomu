@@ -21,6 +21,8 @@ public class Control_flow {
 
         // --- cpu consuming stuff
 
+        public int weight_frame_available = int.MaxValue;
+
         public bool cpu_consuming_operation_blocked;
         public float block_cpu_consuming_operation_time_ms;
         public void Block_cpu_consuming_operation( float _time ){ cpu_consuming_operation_blocked = true; block_cpu_consuming_operation_time_ms += _time; }

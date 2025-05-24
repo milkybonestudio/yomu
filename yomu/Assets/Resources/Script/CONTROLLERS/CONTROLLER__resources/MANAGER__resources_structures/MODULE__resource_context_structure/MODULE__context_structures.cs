@@ -34,6 +34,8 @@ public class MODULE__context_structures {
         public MANAGER__resources_structures manager;
         
         
+    
+
         public Dictionary<string, RESOURCE__structure> actives_structures_dictionary;
         // public Dictionary<string, RESOURCE__structure> actives_structures_dictionary;
         
@@ -44,21 +46,26 @@ public class MODULE__context_structures {
         public RESOURCE__structure_copy Get_structure_copy(  string _main_folder, string _path_local,  Resource_structure_content _level_pre_allocation  ){
 
                 // --- GET RESOURCE
-                
-                RESOURCE__structure structure = null;
-                string path_structure = Get_structure_key( _main_folder, _path_local );
 
-                if( !!!( Get_dictionary( _main_folder ).TryGetValue( path_structure,  out structure ) ) )
+                // RESOURCE__structure structure = null;
+                string path_structure = Get_structure_key( _main_folder, _path_local );
+                
+                if( !!!( Get_dictionary( _main_folder ).TryGetValue( path_structure,  out RESOURCE__structure structure ) ) )
                     { structure = Create_new_structure( _main_folder, _path_local, _level_pre_allocation ); }
 
-                
+
                 return Get_copy( structure, _level_pre_allocation ); // --- CREATE COPY
                 
         }
 
         private string Get_structure_key( string _main_folder, string _path_local ){
 
-            return  $"{ _main_folder }\\{ _path_local }";
+            #if UNITY_EDITOR
+                if( _main_folder == null )
+                    { return _path_local; }
+            #endif
+
+            return $"{ _main_folder }\\{ _path_local }";
         }
 
 
@@ -88,6 +95,27 @@ public class MODULE__context_structures {
         }
 
 
+        
+        private void Force_game_object_for_testing( RESOURCE__structure _structure, string _path_local ){
+
+                _structure.stage_getting_resource = Resources_getting_structure_stage.finished;
+                _structure.actual_content = Resource_structure_content.structure_data;
+                _structure.content_going_to = Resource_structure_content.structure_data;
+
+                _structure.module_structures = this;
+
+                _structure.structure_key = Get_structure_key( null, _path_local );
+
+                _structure.prefab = GameObject.Find( _path_local );
+
+                if( _structure.prefab == null )
+                    { CONTROLLER__errors.Throw( $"Tryied to get a structure in the world for testing, but it was not found in the path <Color=lightBlue>{ _path_local }</Color>" ); }
+
+        }
+
+
+
+
         private RESOURCE__structure Create_new_structure( string _main_folder, string _path_local, Resource_structure_content _level_pre_allocation ){
 
                 if( Application.isEditor )
@@ -99,24 +127,41 @@ public class MODULE__context_structures {
                 // --- EDITOR
                 RESOURCE__structure Create_new_structure_EDITOR( string _main_folder, string _path_local, Resource_structure_content _level_pre_allocation ){
 
+
                         // ** GET LOCATOR
                         //mark
                         // ** tem que fazer o parser depois
                         Structure_locators locators = new Structure_locators();
                         locators.current_structure_local_path = _path_local;
+                        
+                        RESOURCE__structure new_structure = Containers.structure.Get();
+                        new_structure.structure_state = Resource_use_state.used;
 
-                        // ????
-                        string path_file_data = System.IO.Path.Combine( Application.dataPath, "Resources", context.ToString(), _main_folder, ( _path_local + "_DATA.txt") );
+
+                        if( ( _main_folder == "" ) || ( _main_folder == null ) )
+                            {
+                                // ** O OBJETO ESTA NO CAMPO, NAO VAI PROCURAR O PREFAB
+
+                                // ** o path_local pode ser somente o nome do arquivo, não precisa ser o path completo
+                                Force_game_object_for_testing( new_structure, _path_local );
+                                Get_dictionary( _main_folder ).Add( new_structure.structure_key, new_structure );
+                                // ** cria uma copia que sempre vai deixar a structure como 
+                                Get_structure_copy( _main_folder, _path_local, Resource_structure_content.structure_data );
+                                
+                            }
+                            else
+                            {
+                                
+                                // ** O OBJETO ESTA EM UM PREFAB
+                                Put_data_structure( new_structure, context, _main_folder, locators );
+
+                                if(  Resources.Load<GameObject>( new_structure.resource_path ) == null )
+                                    { CONTROLLER__errors.Throw( $"Could not find the prefab in the path: <Color=lightBlue>{ new_structure.resource_path }</Color>" ); }
+
+                                Get_dictionary( _main_folder ).Add( new_structure.structure_key, new_structure );
+                            }
 
                         
-                        RESOURCE__structure new_structure = manager.resources_structures__CONTAINER.Get_resource_structure();
-                        Put_data_structure( new_structure, context, _main_folder, locators );
-
-                        if(  Resources.Load<GameObject>( new_structure.resource_path ) == null )
-                            { CONTROLLER__errors.Throw( $"Could not find the prefab int he path: <Color=lightBlue>{ new_structure.resource_path }</Color>" ); }
-
-                        
-                        Get_dictionary( _main_folder ).Add( new_structure.structure_key, new_structure );
 
 
                         if( locators.sub_structs == null )
@@ -136,6 +181,18 @@ public class MODULE__context_structures {
                 // --- BUILD
                 RESOURCE__structure Create_new_structure_BUILD( string _main_folder, string _path_local, Resource_structure_content _level_pre_allocation ){
 
+
+                    //performance
+                    // ** teria como pegar os dados das structures e passar para um .data ou .txt pegar os dados na hora levaria bem mais tmepo.
+                    // ** seria algo como "botoes:001botoes/botao_1:001"
+                    // ** ou seja path_game_object : components
+                    // ** o jeito que é feito agora é um horror
+                    // ** mas fazer desse jeito tem a desvantagem que teria que carregar o .txt com as informaçoes
+                    // ** poderia deixar o mais compactado possivel e colocar em um grande container
+                    // ** poderia separar em "structure_name::{ info }structure_name::{ info }..."
+                    // ** depois fazer o trim quando o jogo pedir e guardar o dicionario
+
+
                     CONTROLLER__errors.Throw( "ainda tme que fazer" );
                     return null;
 
@@ -151,8 +208,9 @@ public class MODULE__context_structures {
                 // --- GET COPY
                 RESOURCE__structure_copy copy = manager.container_resources_structures_copies.Get_resource_structure_copy( _structure, _copy_level_pre_allocation );
 
-                // ** pega vazio e não muda?
-
+                //test
+                    copy.place_to_instanciate = manager.container_to_instanciate;
+                //test
 
                 // copy.actual_content = Resource_structure_content.nothing;
 

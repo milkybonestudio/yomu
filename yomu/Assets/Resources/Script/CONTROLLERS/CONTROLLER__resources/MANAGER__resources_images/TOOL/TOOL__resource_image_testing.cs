@@ -21,17 +21,17 @@ public static class TOOL__resource_image_testing {
                 { CONTROLLER__errors.Throw( $"Dond found the iamge container for the RESOURCE__image test. Path: <Color=lightBlue>{ path }<Color>" ); } 
 
 
-            CONTROLLER__resources.Get_instance().resources_images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
-            CONTROLLER__resources.Get_instance().resources_images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
-            CONTROLLER__resources.Get_instance().resources_images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
-            CONTROLLER__resources.Get_instance().resources_images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
-            CONTROLLER__resources.Get_instance().resources_images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
-            CONTROLLER__resources.Get_instance().resources_images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
-            CONTROLLER__resources.Get_instance().resources_images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
-            CONTROLLER__resources.Get_instance().resources_images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
-            CONTROLLER__resources.Get_instance().resources_images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
+            Controllers.resources.images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
+            Controllers.resources.images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
+            Controllers.resources.images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
+            Controllers.resources.images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
+            Controllers.resources.images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
+            Controllers.resources.images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
+            Controllers.resources.images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
+            Controllers.resources.images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
+            Controllers.resources.images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
             
-            image_ref = CONTROLLER__resources.Get_instance().resources_images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
+            image_ref = Controllers.resources.images.Get_image_reference( Resource_context.Characters, "Teste", "Clothes/lily_clothes_body_1", Resource_image_content.compress_data );
 
         }
 
@@ -45,7 +45,7 @@ public static class TOOL__resource_image_testing {
         public static void Test( Control_flow _control_flow ){
 
 
-                CONTROLLER__resources.Get_instance().Update( _control_flow );
+                Controllers.resources.Update( _control_flow );
             
                 CONTROLLER__tasks.Pegar_instancia().Update( _control_flow );
 

@@ -16,13 +16,13 @@ public static class TOOL__module_context_logics_actions {
                 Resource_logic_content old_pre_alloc = _ref.level_pre_allocation;
                 _ref.level_pre_allocation = _new_pre_alloc;
 
-                if( _ref.state != Resource_state.minimun )
+                if( _ref.state != Resource_state.minimum )
                     { return; } // ** nao vai importar
 
                 if( old_pre_alloc == _new_pre_alloc )
                     { Console.Log( "Mesmo alloc" ); return; } // ** eh o mesmo
 
-                // ** IS IN MINIMUN AND IS DIFERENT
+                // ** IS IN MINIMUm AND IS DIFERENT
                 TOOL__resource_logic.Change_actual_content_count( _ref, _new_pre_alloc );
                 
                 TOOL__module_context_logics.Update_resource_level( _ref.logic );
@@ -88,15 +88,15 @@ public static class TOOL__module_context_logics_actions {
 
         public static void Deactivate( RESOURCE__logic_ref _ref ){
 
-            // ** GO BACK TO MINIMUN
+            // ** GO BACK TO MINIMUm
 
                 // ** VAI PARA O NADA
 
                 Console.Log( "Veio Deactivate()" );
                 
 
-                if( _ref.state <= Resource_state.minimun )
-                    { return; } _ref.state = Resource_state.minimun;
+                if( _ref.state <= Resource_state.minimum )
+                    { return; } _ref.state = Resource_state.minimum;
 
                 if( _ref.actual_need_content == _ref.level_pre_allocation )
                     { return; }
@@ -146,8 +146,8 @@ public static class TOOL__module_context_logics_actions {
                 Console.Log(  "_ref.state: " + _ref.state  );
                 Console.Log(  "_ref.actual_need_content: " + _ref.actual_need_content  );
 
-                if( _ref.state >= Resource_state.minimun )
-                    { return; } _ref.state = Resource_state.minimun;
+                if( _ref.state >= Resource_state.minimum )
+                    { return; } _ref.state = Resource_state.minimum;
 
                 if( _ref.actual_need_content >= _ref.level_pre_allocation )
                     { return; }

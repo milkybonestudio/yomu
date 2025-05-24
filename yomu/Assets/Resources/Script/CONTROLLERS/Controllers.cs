@@ -12,7 +12,7 @@ public static class Controllers {
         public static CONTROLLER__errors errors;
         public static CONTROLLER__configurations configurations;
         public static CONTROLLER__items items;
-        public static CONTROLLER__cameras cameras;
+        public static CONTROLLER__canvas_spaces canvas_spaces;
 
         public static CONTROLLER__saving saving;
 

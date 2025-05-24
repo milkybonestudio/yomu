@@ -32,6 +32,25 @@ public class MANAGER__resources_images : MANAGER__RESOURCES {
     
         public MODULE__context_images[] context_images_modules;
 
+        public int Get_number_images(){
+
+            int acc = 0;
+            foreach( MODULE__context_images context_images_module in context_images_modules ){
+
+                if( context_images_module != null )
+                    { 
+                        acc += context_images_module.actives_images_dictionary.Count; 
+                        foreach( RESOURCE__image image in context_images_module.actives_images_dictionary.Values )
+                            { Console.Log( "Image: " + image.local_path ); }
+                    }
+                
+
+            }
+
+            return acc;
+
+        }
+
 
         private int number_contexts;
 
@@ -93,20 +112,20 @@ public class MANAGER__resources_images : MANAGER__RESOURCES {
         }
 
 
-        private void Verify( Resource_context _context, string _main_folder,  string _path, Resource_image_content _level_pre_allocation ) {
+        private void Verify( Resource_context _context, string _main_folder,  string _path, Resource_image_content _level_pre_allocation ){
 
 
                 if( _context == Resource_context.not_given )
-                    { CONTROLLER__errors.Throw( $"" ); }
+                    { CONTROLLER__errors.Throw( $"Context was not give" ); }
 
                 if( _main_folder == null )
-                    { CONTROLLER__errors.Throw( $"" ); }
+                    { CONTROLLER__errors.Throw( $"Main folder null" ); }
 
                 if( _path == null )
-                    { CONTROLLER__errors.Throw( $"" ); }
+                    { CONTROLLER__errors.Throw( $"path was null" ); }
 
                 if( _level_pre_allocation == Resource_image_content.not_give )
-                    { CONTROLLER__errors.Throw( $"" ); }
+                    { CONTROLLER__errors.Throw( $"Level_pre_alloc was not_give" ); }
 
         }
         
@@ -229,7 +248,7 @@ public class MANAGER__resources_images : MANAGER__RESOURCES {
                 int accumulator = 0;
 
                 // --- IMAGES COMPRESS
-                for( int image_index = 0 ; image_index < context_images_modules.Length ; image_index++)
+                for( int image_index = 1 ; image_index < context_images_modules.Length ; image_index++)
                     { accumulator += context_images_modules[ image_index ].Get_bytes(); }
 
                 // --- TEXTURES

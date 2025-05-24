@@ -20,7 +20,7 @@ public static class TOOL__resource_structure_handler_ACTIONS {
                 _copy.level_pre_allocation = _new_pre_alloc;
 
 
-                if( _copy.state != Resource_state.minimun )
+                if( _copy.state != Resource_state.minimum )
                     { return; } // nao muda nada
 
                 TOOL__resources_structures.Change_actual_need_content_count( _copy, _copy.level_pre_allocation );
@@ -44,7 +44,7 @@ public static class TOOL__resource_structure_handler_ACTIONS {
                 if( _copy.state == Resource_state.active )
                     { Deactivate( _copy ); }
 
-                if( _copy.state == Resource_state.minimun )
+                if( _copy.state == Resource_state.minimum )
                     { Unload( _copy ); }
 
 
@@ -103,7 +103,7 @@ public static class TOOL__resource_structure_handler_ACTIONS {
                     { return; } // ** nao tem recursos para remover
 
                 Deinstanciate( _copy );
-                _copy.state = Resource_state.minimun;
+                _copy.state = Resource_state.minimum;
 
                 
                 if( _copy.actual_need_content != Resource_structure_content.game_object )
@@ -156,8 +156,8 @@ public static class TOOL__resource_structure_handler_ACTIONS {
         public static void Load( RESOURCE__structure_copy _copy ){
 
 
-                if( _copy.state >= Resource_state.minimun )
-                    { return; } _copy.state = Resource_state.minimun;
+                if( _copy.state >= Resource_state.minimum )
+                    { return; } _copy.state = Resource_state.minimum;
 
                 if( _copy.actual_need_content != Resource_structure_content.nothing )
                     { CONTROLLER__errors.Throw( $"Tentou dar Load na copia { _copy.structure.structure_key } mas o state estava como { _copy.state } mas o actua_need_content como nothing" ); }
@@ -176,10 +176,10 @@ public static class TOOL__resource_structure_handler_ACTIONS {
 
         public static void Activate( RESOURCE__structure_copy _copy ){
 
-                Console.Log( "Veio Activate()" );
-
+                
                 if( _copy.state >= Resource_state.active )
                     { return; } // ** already active
+
                 _copy.state = Resource_state.active;
                 
                 if( _copy.actual_need_content == Resource_structure_content.game_object )
@@ -206,12 +206,16 @@ public static class TOOL__resource_structure_handler_ACTIONS {
         public static void Instanciate( RESOURCE__structure_copy _copy, GameObject _container ){
 
 
+                if( _copy.place_to_instanciate == null )
+                    { CONTROLLER__errors.Throw( $"Tried to isntanciate the structure <Color=lightBlue>{ _copy.name }</Color> but the <Color=lightBlue>place_to_instanciate was null</Color>" ); }
+
                 
                 //mark
                 // ** esse vai ser chamado quando a copia precisar ser instanciada na hora
 
                 if( _copy.state == Resource_state.instanciated )
                     { return; } // ** ja instanciado
+
 
                 _copy.state = Resource_state.instanciated;
                 TOOL__resources_structures.Change_actual_need_content_count(  _copy ,Resource_structure_content.game_object );
@@ -260,7 +264,7 @@ public static class TOOL__resource_structure_handler_ACTIONS {
                 if( _container == null )
                     { _container = structure.module_structures.manager.container_to_instanciate; }
 
-                GAME_OBJECT.Colocar_parent( _container, _copy.structure_game_object );
+                GAME_OBJECT.Colocar_parent( _copy.place_to_instanciate, _copy.structure_game_object );
                 _copy.structure_game_object.SetActive( true );
 
                 return;

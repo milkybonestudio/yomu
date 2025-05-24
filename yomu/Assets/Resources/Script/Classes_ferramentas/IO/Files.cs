@@ -69,6 +69,14 @@ unsafe public static class Files {
 
         }
 
+        public static void Guarantee_exists( string _path ){
+
+                    if( !!!( System.IO.File.Exists( _path ) ) )
+                        { throw new Exception( $"Nao tinha o arquivo { _path }" ); }
+
+        }
+
+
 
 
         public static void Change_files_extension_in_folder( string _folder_para_mudar_as_extensoes, string _nova_extensao ){

@@ -1,13 +1,31 @@
 
 
 
+// ** text_container_buffado
+
+using UnityEngine;
+
 public class UI_write_content_container : UI_component {
 
 
-        public override void Link_to_UI_game_object_in_structure(){}
-        public override void Load(){}
-        public override void Start_UI(){}
-        public override void Convert_creation_data_TO_resources(){}
-        
+
+    public override void Force_active(){ Console.Log( "tem que fazer" ); }
+    public override void Force_inactive(){ Console.Log( "tem que fazer" ); }
+    public override void Force_nothing(){ Console.Log( "tem que fazer" ); }
+    
+        protected override void Create_data_FROM_creation_data(){}
+        protected override void Link_to_UI_game_object_in_structure( GameObject _UI_game_object ){}
+        protected override void Destroy_abs(){
+
+            resources_container.Delete_all_resources();
+            // ** depois devolver container
+
+        }
+
+    protected override void Update_phase( Control_flow _flow ){
+
+        throw new System.NotImplementedException();
+    }
+
 
 }

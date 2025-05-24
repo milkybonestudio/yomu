@@ -52,10 +52,6 @@ public abstract class UI_button : UI_component {
 
         // --- LOGICA
 
-        public bool is_active;
-        public Resource_use_state state;
-
-
 
         public UI_button_type type;
 
@@ -74,37 +70,18 @@ public abstract class UI_button : UI_component {
         // --- PUBLIC 
 
 
-        public virtual void Update( Control_flow _flow ){
 
-                base.Update( _flow );
-                
-                if( !!!( is_active ) )
-                    { return; }
+        protected override void Update_phase( Control_flow _flow ){ 
 
-                Update_parte_logica();
-                Update_parte_visual();
-
-                return;
+            
+            TOOL__UI_button_UPDATE.Update_logica( this ); 
 
         }
 
 
-
-        //mark
-        // ** faz parte do UI_component
-
-        // public abstract void Convert_creation_data_TO_resources();
-        // public abstract void Link_to_game_object( GameObject _button_game_object );
-        // public abstract void Load();
-
-
-        // ?
-
-        public abstract void Deactivate_button();
-
-
-        public virtual void Update_parte_logica(){ TOOL__UI_button_UPDATE.Update_logica( this ); }
         public abstract void Update_parte_visual();
+
+
 
 
         

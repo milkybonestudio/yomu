@@ -82,14 +82,8 @@ public class Text_constructor_FADE : Text_constructor {
 
 
 
-
-
-
-
         public override UI_text_container_writing_state Update_writing( UI_text_container _container ){
 
-
-                Console.Log( "veio update" );
                 
                 int variante_frame = ( int )( Time.deltaTime * _container.data.characters_per_frame * 255f ) + 1;
 
@@ -100,8 +94,6 @@ public class Text_constructor_FADE : Text_constructor {
 
                 int max_range_loop = _container.maxRange;
 
-                Debug.Log( "max_range_loop: " + max_range_loop );
-                Debug.Log( "length: " + text_info.characterInfo.Length );
                 
                 for( int i = _container.minRange; i < max_range_loop; i++ ){
 
@@ -132,17 +124,6 @@ public class Text_constructor_FADE : Text_constructor {
 
                 _container.text.tmp_text.UpdateVertexData( TMP_VertexDataUpdateFlags.Colors32 );
 
-                Debug.Log( "index: " + ( _container.maxRange - 1 ) );
-                Debug.Log( text_info.characterInfo.Length );
-
-
-
-                // bool lastCharacterIsInvisible = !!!( text_info.characterInfo [ (_container.maxRange - 1 ) ].isVisible );
-
-                
-                // if( ( max_alpha > alpha_threshold ) || lastCharacterIsInvisible )
-
-
                 
                 if( max_alpha > alpha_threshold  )
                     {
@@ -155,8 +136,7 @@ public class Text_constructor_FADE : Text_constructor {
                                                         
                     }
 
-                Debug.Log( "max_aloha: " + max_alpha  );
-
+                
                 if( max_alpha == 255 ) 
                     { return UI_text_container_writing_state.finished; }
                     else

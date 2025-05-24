@@ -55,6 +55,7 @@ public class Personagem_dados_visual_novel {
         public float[] posicao = new float[2];
 
 
+
         //  usar para o inverso 
         public int path_localizador_imagem_atual =  0;
 

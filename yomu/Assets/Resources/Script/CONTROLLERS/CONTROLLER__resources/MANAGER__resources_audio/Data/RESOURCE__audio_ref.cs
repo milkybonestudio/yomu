@@ -20,9 +20,7 @@ public class RESOURCE__audio_ref : RESOURCE__ref  {
         public string ref_name;
         
 
-        public Resource_state state;
-
-        public Resource_audio_content level_pre_allocation; // minimun 
+        public Resource_audio_content level_pre_allocation; // minimum 
         public Resource_audio_content actual_need_content;
 
 
@@ -45,14 +43,19 @@ public class RESOURCE__audio_ref : RESOURCE__ref  {
 
     // ** DOWN
 
-    public override bool Got_to_minimun(){
+    public override bool Got_to_minimum(){
 
         return ( audio.actual_content == level_pre_allocation );
         
     }
 
+    public override bool Got_to_full(){
 
-        public override void Delete(){ Guaranty_ref(); TOOL__module_context_audios_actions.Delete( this ); } 
+        return ( audio.actual_content == Resource_audio_content.audio_clip );
+    }
+
+
+    public override void Delete(){ Guaranty_ref(); TOOL__module_context_audios_actions.Delete( this ); } 
         public override void Unload(){ Guaranty_ref(); TOOL__module_context_audios_actions.Unload( this ); }
         public override void Deactivate(){ Guaranty_ref(); TOOL__module_context_audios_actions.Deactivate( this ); }
         public override void Deinstanciate(){ Guaranty_ref(); TOOL__module_context_audios_actions.Deinstanciate( this );  }

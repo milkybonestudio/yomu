@@ -3,23 +3,45 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 
+public enum UI_use_state {
 
+    used, 
+    waiting_to_delete,
+    unused,
+
+}
 
 
 public class UI_button_COMPLETE : UI_button {
 
-
-            // ** use only for tests
+            
+            
             public static UI_button_COMPLETE Get_button(){ 
 
-                    UI_button_COMPLETE button = new UI_button_COMPLETE();
-                    button.state = Resource_use_state.used;
+                    UI_button_COMPLETE button = Containers.UI_button_COMPLETE.Get();
+                    button.use_state = UI_use_state.used;
 
                     DEFAULT_APPLICATOR__UI_button_COMPLETE.Apply_default( button );
 
                     return button;
                 
             }
+
+
+        public override void Force_active(){ Console.Log( "tem que fazer" ); }
+        public override void Force_inactive(){ TOOL__UI_button_SET_COMPLETE.SET_OFF_static( this ); }
+        public override void Force_nothing(){ Console.Log( "tem que fazer" ); }
+
+
+
+            protected override void Destroy_abs(){
+
+                resources_container.Delete_all_resources();
+                Containers.UI_button_COMPLETE.Return_object( this );
+                
+            }
+
+
 
             public UI_button_type type = UI_button_type.simple;
 
@@ -77,11 +99,13 @@ public class UI_button_COMPLETE : UI_button {
 
     public override void Change_text( string _text ){ throw new NotImplementedException(); }
 
-    public override void Convert_creation_data_TO_resources(){
+    
+    protected override void Create_data_FROM_creation_data(){
 
                 // creation -> data
 
 
+                
                 string indentificador = null;
 
                 //mark 
@@ -114,43 +138,43 @@ public class UI_button_COMPLETE : UI_button {
 
                 data.tipo_transicao = DEVICE_button_transition_type_OFF_ON.cor;
 
-                MANAGER__resources_images resources_image = CONTROLLER__resources.Get_instance().resources_images;
+                MANAGER__resources_images resources_image = Controllers.resources.images;
                 
 
                 // OFF 
 
 
-                    data.off.texto_cor = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.off.texto_cor, Cores.black );
+                    data.off.texto_cor = TOOL__UI_button_change_colors.Guarantee_color(  data.off.texto_cor, Cores.black );
 
 
                     // ** back
-                        data.off.animacao_back.cor = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.off.animacao_back.cor, Cores.grey_90 );
+                        data.off.animacao_back.cor = TOOL__UI_button_change_colors.Guarantee_color(  data.off.animacao_back.cor, Cores.grey_90 );
                         data.images_refs_animacoes_completas[ ( int ) Device_button_animation_part.animation_back , index_OFF ] = resources_image.Get_image_reference( Resource_context.Devices, data.main_folder, data.off.animacao_back.image_path, Resource_image_content.sprite  );
                         data.cores_animacoes_completas[ ( int ) Device_button_animation_part.animation_back , index_OFF ] =    data.off.animacao_back.cor;
 
 
                     // ** base
-                        data.off.animacao_base.cor = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.off.texto_cor, Cores.white );
+                        data.off.animacao_base.cor = TOOL__UI_button_change_colors.Guarantee_color(  data.off.texto_cor, Cores.white );
                         data.images_refs_animacoes_completas[ ( int ) Device_button_animation_part.animation_base , index_OFF ] = resources_image.Get_image_reference( Resource_context.Devices, data.main_folder, data.off.animacao_base.image_path, Resource_image_content.sprite  );
                         data.cores_animacoes_completas[ ( int ) Device_button_animation_part.animation_base , index_OFF ] = data.off.animacao_base.cor;
 
 
                     // ** atras-texto
-                        data.off.animacao_atras_texto.cor = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.off.animacao_atras_texto.cor, Cores.grey_90 );
+                        data.off.animacao_atras_texto.cor = TOOL__UI_button_change_colors.Guarantee_color(  data.off.animacao_atras_texto.cor, Cores.grey_90 );
                         data.images_refs_animacoes_completas[ ( int ) Device_button_animation_part.animation_back_text , index_OFF ] = resources_image.Get_image_reference( Resource_context.Devices, data.main_folder, data.off.animacao_atras_texto.image_path, Resource_image_content.sprite  );
                         data.cores_animacoes_completas[ ( int ) Device_button_animation_part.animation_back_text , index_OFF ] = data.off.animacao_atras_texto.cor;
 
 
                         
                     // ** decoracao
-                        data.off.animacao_decoracao.cor = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.off.animacao_decoracao.cor, Cores.grey_90 );
+                        data.off.animacao_decoracao.cor = TOOL__UI_button_change_colors.Guarantee_color(  data.off.animacao_decoracao.cor, Cores.grey_90 );
                         data.images_refs_animacoes_completas[ ( int ) Device_button_animation_part.animation_decoration , index_OFF ] =  resources_image.Get_image_reference( Resource_context.Devices, data.main_folder, data.off.animacao_decoracao.image_path, Resource_image_content.sprite  );
                         data.cores_animacoes_completas[ ( int ) Device_button_animation_part.animation_decoration , index_OFF ] = data.off.animacao_decoracao.cor;
 
                     
 
                     // ** frente-texto
-                        data.off.animacao_frente_texto.cor = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.off.animacao_frente_texto.cor, Cores.grey_90 );
+                        data.off.animacao_frente_texto.cor = TOOL__UI_button_change_colors.Guarantee_color(  data.off.animacao_frente_texto.cor, Cores.grey_90 );
                         data.images_refs_animacoes_completas[ ( int ) Device_button_animation_part.animation_front_text , index_OFF ] =  resources_image.Get_image_reference( Resource_context.Devices, data.main_folder, data.off.animacao_frente_texto.image_path, Resource_image_content.sprite  );
                         data.cores_animacoes_completas[ ( int ) Device_button_animation_part.animation_front_text , index_OFF ] = data.off.animacao_frente_texto.cor;
 
@@ -159,13 +183,13 @@ public class UI_button_COMPLETE : UI_button {
                 // ON
 
 
-                    data.on.texto_cor = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.on.texto_cor, Cores.black );
+                    data.on.texto_cor = TOOL__UI_button_change_colors.Guarantee_color(  data.on.texto_cor, Cores.black );
 
 
                     // ** back
                     indentificador = ( name + "_ON_back" );
                     
-                        data.on.animacao_back.cor = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.on.animacao_back.cor, Cores.grey_90 );                
+                        data.on.animacao_back.cor = TOOL__UI_button_change_colors.Guarantee_color(  data.on.animacao_back.cor, Cores.grey_90 );                
                         data.images_refs_animacoes_completas[ ( int ) Device_button_animation_part.animation_back , index_ON ] =  resources_image.Get_image_reference( Resource_context.Devices, data.main_folder, data.on.animacao_back.image_path, Resource_image_content.sprite  );
                         data.cores_animacoes_completas[ ( int ) Device_button_animation_part.animation_back , index_ON ] = data.on.animacao_back.cor;
 
@@ -173,7 +197,7 @@ public class UI_button_COMPLETE : UI_button {
                     // ** base
                     indentificador = ( name + "_ON_base" );
                     
-                        data.on.animacao_base.cor = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.on.animacao_base.cor, Cores.grey_90 );                    
+                        data.on.animacao_base.cor = TOOL__UI_button_change_colors.Guarantee_color(  data.on.animacao_base.cor, Cores.grey_90 );                    
                         data.images_refs_animacoes_completas[ ( int ) Device_button_animation_part.animation_base , index_ON ] =  resources_image.Get_image_reference( Resource_context.Devices, data.main_folder, data.on.animacao_base.image_path, Resource_image_content.sprite  );
                         data.cores_animacoes_completas[ ( int ) Device_button_animation_part.animation_base , index_ON ] = data.on.animacao_base.cor;
 
@@ -181,14 +205,14 @@ public class UI_button_COMPLETE : UI_button {
                     // ** atras-texto
                     indentificador = ( name + "_ON_atras_texto" );
             
-                        data.on.animacao_atras_texto.cor = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.on.animacao_atras_texto.cor, Cores.grey_90 );                    
+                        data.on.animacao_atras_texto.cor = TOOL__UI_button_change_colors.Guarantee_color(  data.on.animacao_atras_texto.cor, Cores.grey_90 );                    
                         data.images_refs_animacoes_completas[ ( int ) Device_button_animation_part.animation_back_text , index_ON ] =  resources_image.Get_image_reference( Resource_context.Devices, data.main_folder, data.on.animacao_atras_texto.image_path, Resource_image_content.sprite  );
                         data.cores_animacoes_completas[ ( int ) Device_button_animation_part.animation_back_text , index_ON ] = data.on.animacao_atras_texto.cor;
 
                     
                     // ** decoracao
                     indentificador = ( name + "_ON_decoracao" );
-                    data.on.animacao_decoracao.cor = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.on.animacao_decoracao.cor, Cores.grey_90 );
+                    data.on.animacao_decoracao.cor = TOOL__UI_button_change_colors.Guarantee_color(  data.on.animacao_decoracao.cor, Cores.grey_90 );
 
 
                     data.images_refs_animacoes_completas[ ( int ) Device_button_animation_part.animation_decoration , index_ON ] =  resources_image.Get_image_reference( Resource_context.Devices, data.main_folder, data.on.animacao_decoracao.image_path, Resource_image_content.sprite  );
@@ -199,7 +223,7 @@ public class UI_button_COMPLETE : UI_button {
                     // ** frente-texto
                     indentificador = ( name + "_ON_frente_texto" );
                     
-                    data.on.animacao_frente_texto.cor = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.on.animacao_frente_texto.cor, Cores.grey_90 );
+                    data.on.animacao_frente_texto.cor = TOOL__UI_button_change_colors.Guarantee_color(  data.on.animacao_frente_texto.cor, Cores.grey_90 );
 
                     data.images_refs_animacoes_completas[ ( int ) Device_button_animation_part.animation_front_text , index_ON ] =  resources_image.Get_image_reference( Resource_context.Devices, data.main_folder, data.on.animacao_frente_texto.image_path, Resource_image_content.sprite  );
                     data.cores_animacoes_completas[ ( int ) Device_button_animation_part.animation_front_text , index_ON ] = data.on.animacao_frente_texto.cor;
@@ -223,7 +247,10 @@ public class UI_button_COMPLETE : UI_button {
 
 
 
+
+
         }
+        
 
         public override void Update_parte_visual(){
 
@@ -243,7 +270,7 @@ public class UI_button_COMPLETE : UI_button {
         }
 
 
-        public override void Link_to_UI_game_object_in_structure(){
+        protected override void Link_to_UI_game_object_in_structure( GameObject _UI_game_object ){
 
 
                 // data -> unity data
@@ -254,14 +281,14 @@ public class UI_button_COMPLETE : UI_button {
 
                         // ** COLLIDERS
 
-                            COLLIDERS_container  = structure_container.transform.GetChild( 0 ).gameObject;
+                            COLLIDERS_container  = _UI_game_object.transform.GetChild( 0 ).gameObject;
                             
                             ON_collider_game_object   =  COLLIDERS_container.transform.GetChild( 0 ).gameObject;
                             OFF_collider_game_object  =  COLLIDERS_container.transform.GetChild( 1 ).gameObject;
 
 
                         // IMAGEM
-                            IMAGE_container = structure_container.transform.GetChild( 1 ).gameObject;
+                            IMAGE_container = _UI_game_object.transform.GetChild( 1 ).gameObject;
 
                             IMAGE_animation_back.game_object         =  IMAGE_container.transform.GetChild( 0 ).gameObject;
                             IMAGE_base.game_object                   =  IMAGE_container.transform.GetChild( 1 ).gameObject;
@@ -274,7 +301,7 @@ public class UI_button_COMPLETE : UI_button {
 
 
                         // ** TRANSICAO
-                            TRANSITION_container = structure_container.transform.GetChild( 2 ).gameObject;
+                            TRANSITION_container = _UI_game_object.transform.GetChild( 2 ).gameObject;
 
                             TRANSITION_animation_back.game_object          =   TRANSITION_container.transform.GetChild( 0 ).gameObject;
                             TRANSITION_base.game_object                    =   TRANSITION_container.transform.GetChild( 1 ).gameObject;
@@ -416,20 +443,7 @@ public class UI_button_COMPLETE : UI_button {
 
 
         }
-        public override void Load(){
 
-        }
-
-        public override void Start_UI(){
-
-            is_active = true;
-            TOOL__UI_button_SET_COMPLETE.SET_OFF_static( this );
-
-
-        }
-        public override void Deactivate_button(){
-
-        }
 
 
 }

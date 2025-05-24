@@ -11,11 +11,11 @@ public class Golden_text_display_DOWN : Story_text_display {
 
                 name = "Golden_text_display_DOWN";
                 root = "Text_displays/Golden/Down";
-                structure = CONTROLLER__resources.Get_instance().resources_structures.Get_structure_copy( Resource_context.Blocks, "Story", root + "/Text_display_golden", Resource_structure_content.game_object );
+                structure = Controllers.resources.structures.Get_structure_copy( Resource_context.Blocks, "Story", root + "/Text_display_golden", Resource_structure_content.game_object );
 
 
 
-                MANAGER__resources_images images = CONTROLLER__resources.Get_instance().resources_images;
+                MANAGER__resources_images images = Controllers.resources.images;
 
                 back = images.Get_image_reference( Resource_context.Blocks, "Story", ( root + "/back" ), Resource_image_content.sprite );
                 sword_left = images.Get_image_reference( Resource_context.Blocks, "Story", ( root + "/sword_left" ), Resource_image_content.sprite );
@@ -33,19 +33,20 @@ public class Golden_text_display_DOWN : Story_text_display {
 
         public RESOURCE__image_ref name_support;
         public RESOURCE__image_ref inferior_support;
-        
 
 
 
+    protected override void Update_phase(Control_flow _control_flow){
+
+        base.Update_phase( _control_flow );
+
+    }
 
 
-        public override void Update( Control_flow _control_flow ){
-
-            base.Update( _control_flow );
-        }
+    // protected override void Link_UIs(){ throw new System.NotImplementedException(); }
 
 
-        public override void Put_effect(){
+    public override void Put_effect(){
 
             throw new System.NotImplementedException();
         }

@@ -17,7 +17,6 @@ public struct Individual_components_material_manager {
 
 
         public void Update_material(){
-
             
                 if( material == null )
                     { return; }
@@ -27,7 +26,6 @@ public struct Individual_components_material_manager {
 
                 if( have_mask_position )
                     { Update_mask_position(); }
-
 
         }
 
@@ -45,24 +43,26 @@ public struct Individual_components_material_manager {
 
         public void Add_mask( float _width, float _height ){
 
-                Console.Log( "Veio Add_mask" );
+                // Console.Log( "Veio Add_mask" );
 
                 new_mask_dimensions.x += _width;
                 new_mask_dimensions.y += _height;
 
-                Console.Log( "Antes de adicionar" );
+                // Console.Log( "Antes de adicionar" );
 
-                Console.Log( "new_mask_width " + new_mask_dimensions.x  );
-                Console.Log( "mask_width " + mask_dimensions.x  );
+                // Console.Log( "new_mask_width " + new_mask_dimensions.x  );
+                // Console.Log( "mask_width " + mask_dimensions.x  );
 
-                Console.Log( "new_mask_height " + new_mask_dimensions.y  );
-                Console.Log( "mask_height " + mask_dimensions.y  );
-                Console.Log("--------------" );
+                // Console.Log( "new_mask_height " + new_mask_dimensions.y  );
+                // Console.Log( "mask_height " + mask_dimensions.y  );
+                // Console.Log("--------------" );
 
 
         }
 
         public void Set_mask( float _width, float _height ){
+
+                Console.Log( "VEIO SET MASK" );
 
                 if( !!!( have_mask ) )
                     { CONTROLLER__errors.Throw( $"in the ui { UI.name } tried to change the mas but the mask was not give Apply" ); }
@@ -132,9 +132,9 @@ public struct Individual_components_material_manager {
 
 
                 if( new_mask_dimensions == mask_dimensions )
-                    { return;
-                    }
-                material.SetVector( Shaders.individual_components_mask_dimensions, mask_dimensions ); 
+                    { return;}
+
+                material.SetVector( Shaders.individual_components_mask_dimensions, new_mask_dimensions ); 
                 mask_dimensions = new_mask_dimensions;
 
                 return;
@@ -248,7 +248,7 @@ public struct Individual_components_material_manager {
                     {
 
                         // ** GET POSITION
-                        Vector3 position = mask_position_reference_component.body_container.transform.position; // ** NEED GLOBAL NOT CACHE
+                        Vector3 position = mask_position_reference_component.body.body_container.transform.position; // ** NEED GLOBAL NOT CACHE
 
                         
                         new_mask_position_variables.x = position.x;
@@ -268,7 +268,11 @@ public struct Individual_components_material_manager {
                     }
 
                 // --- UPDATE POSITION
-                Vector3 anchor_position = mask_position_reference_component.local_position;
+
+                //mark ver depois
+                // Vector3 anchor_position = mask_position_reference_component.local_position;
+                Vector3 anchor_position = Vector3.zero;
+                
 
                     new_mask_position_variables.x = anchor_position.x;
                     new_mask_position_variables.y = anchor_position.y;

@@ -5,19 +5,35 @@ using TMPro;
 
 
 
+
 public class UI_button_SIMPLE : UI_button {
 
-        // ** use only for tests
-        public static UI_button_SIMPLE Get_button(){ 
+        
+        public static UI_button_SIMPLE Get_button( string _name ){ 
 
-                UI_button_SIMPLE button = new UI_button_SIMPLE();
-                button.state = Resource_use_state.used;
+                UI_button_SIMPLE button = Containers.UI_button_SIMPLE.Get();
+                
+                    button.use_state = UI_use_state.used;
+                    button.name = _name;
 
                 DEFAULT_APPLICATOR__UI_button_SIMPLE.Apply_default( button );
 
                 return button;
             
         }
+        protected override void Destroy_abs(){
+
+            resources_container.Delete_all_resources();
+            Containers.UI_button_SIMPLE.Return_object( this );
+            
+        }
+            
+            
+        public override void Force_active(){}
+        public override void Force_inactive(){ TOOL__UI_button_SET_SIMPLE.SET_OFF_static( this ); }
+        public override void Force_nothing(){}
+
+
 
         public UI_button_type type = UI_button_type.simple;
 
@@ -46,15 +62,10 @@ public class UI_button_SIMPLE : UI_button {
 
 
         
-
-
-
         public override void Change_text( string _text ){
-
 
                 data.text_off = _text;
                 data.text_on  = _text;
-
         }
 
 
@@ -81,7 +92,7 @@ public class UI_button_SIMPLE : UI_button {
         }
 
     
-    public override void Convert_creation_data_TO_resources(){
+    protected override void Create_data_FROM_creation_data(){
 
             // ** data + creation_data -> thing
 
@@ -91,7 +102,6 @@ public class UI_button_SIMPLE : UI_button {
                 data.Ativar = creation_data.Activate;
 
                 // ** passing normal data
-                name = creation_data.name;
                 main_folder = creation_data.main_folder;
                 context = creation_data.context;
                 material = creation_data.material;
@@ -168,19 +178,19 @@ public class UI_button_SIMPLE : UI_button {
 
 
                 
-                MANAGER__resources_images resources_image = CONTROLLER__resources.Get_instance().resources_images;
+                MANAGER__resources_images resources_image = Controllers.resources.images;
 
                 // OFF 
                     data.button_OFF_frame.image_ref = resources_image.Get_image_reference( context, main_folder, data.button_OFF_frame.path, manager_resources.minimun.image );
                     data.button_OFF_frame.image_ref.image.name = "button_OFF";
-                    data.button_OFF_frame.color = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.button_OFF_frame.color, Cores.grey_90 );
-                    data.button_OFF_text_color = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.button_OFF_text_color, Cores.black );
+                    data.button_OFF_frame.color = TOOL__UI_button_change_colors.Guarantee_color(  data.button_OFF_frame.color, Cores.grey_90 );
+                    data.button_OFF_text_color = TOOL__UI_button_change_colors.Guarantee_color(  data.button_OFF_text_color, Cores.black );
 
                 // ON
                     data.button_ON_frame.image_ref = resources_image.Get_image_reference( context, main_folder, data.button_ON_frame.path, manager_resources.minimun.image  );
                     data.button_ON_frame.image_ref.image.name = "button_ON";
-                    data.button_ON_frame.color = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.button_ON_frame.color, Cores.white );
-                    data.button_ON_text_color = TOOL__device_UI_SUPPORT.Mudar_cor_default(  data.button_ON_text_color, Cores.black );
+                    data.button_ON_frame.color = TOOL__UI_button_change_colors.Guarantee_color(  data.button_ON_frame.color, Cores.white );
+                    data.button_ON_text_color = TOOL__UI_button_change_colors.Guarantee_color(  data.button_ON_text_color, Cores.black );
 
 
                 // // --- DEFINE
@@ -189,18 +199,18 @@ public class UI_button_SIMPLE : UI_button {
         }
 
 
-        public override void Link_to_UI_game_object_in_structure(){
+        protected override void Link_to_UI_game_object_in_structure( GameObject _UI_game_object ){
 
                 // data -> unity data
-
 
                 try {
 
                         // ** containers 
-                        COLLIDERS_container       =  structure_container.transform.GetChild( 0 ).gameObject;
-                        IMAGE_container           =  structure_container.transform.GetChild( 1 ).gameObject;
-                        TRANSITION_container      =  structure_container.transform.GetChild( 2 ).gameObject;
+                        COLLIDERS_container       =  _UI_game_object.transform.GetChild( 0 ).gameObject;
+                        IMAGE_container           =  _UI_game_object.transform.GetChild( 1 ).gameObject;
+                        TRANSITION_container      =  _UI_game_object.transform.GetChild( 2 ).gameObject;
 
+                        
                         // ** colliders
                         ON_collider_game_object   =  COLLIDERS_container.transform.GetChild( 0 ).gameObject;
                         ON_collider   =  ON_collider_game_object.GetComponent<PolygonCollider2D>();
@@ -234,45 +244,19 @@ public class UI_button_SIMPLE : UI_button {
                     catch( Exception e )
                     {
                         Console.LogError( $"Could not link to the game object for the button { name }. <Color=lightBlue>PROBABLY THE PREFAB IS NOT RIGHT</Color>" );
-                        CONTROLLER__errors.Throw_exception( e );
+                        CONTROLLER__errors.Throw( e.Message );
 
                     }
                         
 
-                // // --- DEFINE 
-                // TOOL__UI_button_LINKER_SIMPLE.Link_to_game_object( this );
-
         }
 
-
-
-
-        // ** nao vale a pena
-        public override void Load(){ manager_resources.Load(); }
-
-            
-        public override void Start_UI(){
-
-                manager_resources.Instanciate();
-                is_active = true;
-                TOOL__UI_button_SET_SIMPLE.SET_OFF_static( this );
-                
-        }
-
-
-        public override void Deactivate_button(){
+        protected override void Delete_abs(){
 
                 manager_resources.Delete();
-
-                is_active = false;
-                structure_container.SetActive( false );
+                body.self_container.SetActive( false );
 
         }
-
-
-
-
-
 
 
 }

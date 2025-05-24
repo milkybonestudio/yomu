@@ -1,4 +1,0 @@
-
-aqui vai estar codigos referentes a arquivos fora do jogo em si .
-vai ser usado para compilar imagens e scripts. 
-também vai ter classes que estao em teste 

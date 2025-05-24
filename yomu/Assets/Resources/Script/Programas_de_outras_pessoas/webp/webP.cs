@@ -69,9 +69,8 @@ unsafe public sealed class WebP : IDisposable{
 
                     byte[] webp_default =  Get_bytes( rawWebP );
 
-                    int index = 0;
 
-                    Console.Log( "DEPOIS FAZER MELHOR" );
+                    int index = 0;
 
                     for( int h = 0 ; h < _height ; h++ ){
 
@@ -85,7 +84,7 @@ unsafe public sealed class WebP : IDisposable{
                                     color.r = webp_default[ p0 + ( width_pixel * 4 ) + 0 ] ;
                                     color.g = webp_default[ p0 + ( width_pixel * 4 ) + 1 ] ;
                                     color.b = webp_default[ p0 + ( width_pixel * 4 ) + 2 ] ;
-                                    color.a = webp_default[ p0 + ( width_pixel * 4 ) + 3 ] ;
+                                    color.a = webp_default[ p0 + ( width_pixel * 4 ) + 3 ] ;                                    
                                     
                                     _native_arr_texture[ ( h * _width ) + width_pixel ] = color;
 
@@ -244,14 +243,15 @@ unsafe public sealed class WebP : IDisposable{
             config.options.flip = 1;
             config.options.alpha_dithering_strength = options.alpha_dithering_strength;
 
-
             //Create a BitmapData and Lock all pixels to be written
             if ( config.input.Has_alpha == 1 )
                 { config.output.colorspace = WEBP_CSP_MODE.MODE_RGBA; }
                 else
-                { config.output.colorspace = WEBP_CSP_MODE.MODE_RGB; }
+                { config.output.colorspace = WEBP_CSP_MODE.MODE_RGBA; }
 
-            config.output.colorspace = ( WEBP_CSP_MODE ) config.input.Has_alpha;
+
+            // config.output.colorspace = ( WEBP_CSP_MODE ) config.input.Has_alpha;
+            config.output.colorspace = WEBP_CSP_MODE.MODE_RGBA;
 
 
 

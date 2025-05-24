@@ -13,7 +13,6 @@ public class MANAGER__resources_structures : MANAGER__RESOURCES {
 
                 context_structures_modules = new MODULE__context_structures[ ( int ) Resource_context.END ];
 
-                resources_structures__CONTAINER = new CONTAINER__resource_structure();
                 container_resources_structures_copies = new CONTAINER__resource_structure_copy();
 
                 container_to_instanciate = GameObject.Find( Paths_containers.path_resources_structures_container );
@@ -38,7 +37,7 @@ public class MANAGER__resources_structures : MANAGER__RESOURCES {
         public MODULE__context_structures[] context_structures_modules;
 
 
-        public CONTAINER__resource_structure resources_structures__CONTAINER;
+        // public CONTAINER__resource_structure resources_structures__CONTAINER;
         public CONTAINER__resource_structure_copy container_resources_structures_copies;
         
 

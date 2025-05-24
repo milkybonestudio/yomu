@@ -8,15 +8,25 @@ public static class Paths_system {
 
         // ** MAIN ENTRY POINTS
 
+        // persistentDataPath 
+
+        //     ----- current
+        //             ---- saves
+        //             ---- program
+
+        //     ----- other_version_XYZ
+
+        
+
 
         #if UNITY_EDITOR
 
-            public static string persistent_data_path = Path.Combine( Application.dataPath, "Editor", "persistentDataPath" );
+            public static string persistent_data_path = Path.Combine( Application.dataPath, "Editor", "persistentDataPath", "Current_version" );
             public static string data_path = Path.Combine( Application.dataPath, "Editor", "dataPath" );
             
         #else 
 
-            public static string persistent_data_path = Application.persistentDataPath;
+            public static string persistent_data_path = Path.Combine( Application.persistentDataPath, "Current_version" ) ;
             public static string data_path = Path.Combine( Application.dataPath, "Data" );
 
         #endif

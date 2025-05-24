@@ -23,6 +23,7 @@ public class RESOURCE__structure {
 
         // --- COMPLEX STRUCTURES
         
+        // ** pode tirar ?????
         public RESOURCE__structure_copy[] sub_structures;
 
 

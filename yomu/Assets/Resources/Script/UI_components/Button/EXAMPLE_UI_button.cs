@@ -4,8 +4,6 @@ using UnityEngine;
 
 // ** exemplos sempre vao usar contexto Testing
 
-
-
 public static class EXAMPLE_UI_button {
 
 
@@ -27,31 +25,29 @@ public static class EXAMPLE_UI_button {
 
         // ** o botao constroe a parte visual e a logica é definida em quem pediu o botao
         // ** o _path_to_button é om path relativo a structure
-        public static UI_button Construct( string _path_to_button_in_device ){
+        public static UI_button Construct(){
             
 
                 // ** um botao só consegue pegar recursos do contexto e do main folder. 
                 // ** porem um device pode ter botoes de diferentes contextos
 
-                UI_button_SIMPLE botao = UI_button_SIMPLE.Get_button();
+                UI_button_SIMPLE botao = UI_button_SIMPLE.Get_button( _name: "Botao_exemplo" );
                 
-                botao.path_to_UI = _path_to_button_in_device;
 
                 ref DATA_CREATION__UI_button_SIMPLE data_creation = ref botao.creation_data;
 
                 // --- PUT DATA
 
-                        data_creation.name = "Botao_exemplo";
-                        data_creation.main_folder = "main_folder";
-                        data_creation.context = Resource_context.Testing;
+                        data_creation.main_folder = "UIs";
+                        data_creation.context = Resource_context.Examples;
 
                         
                         data_creation.tipo_ativacao = UI_button_activation_type.clicar;
 
                         // ** sempre passa objetivo, se precisar encurtar usar root + final
 
-                        data_creation.image_path_OFF = "a";
-                        data_creation.image_path_ON = "device_folder_1/buttons/b";
+                        data_creation.image_path_OFF = "Buttons/a";
+                        data_creation.image_path_ON = "Buttons/buttons_folder_1/b";
 
                         data_creation.text = "TESTE";
 
@@ -69,14 +65,9 @@ public static class EXAMPLE_UI_button {
         public static UI_button Construct_unitary( string _path_to_button_in_world ){
 
                 string path_in_device = null;
-                UI_button botao = EXAMPLE_UI_button.Construct( path_in_device ); // nao vai usar o path pois vai pegar o gameObject que esta no mundo
+                UI_button botao = EXAMPLE_UI_button.Construct(); // nao vai usar o path pois vai pegar o gameObject que esta no mundo
 
-                botao.Convert_creation_data_TO_resources();
-
-                GameObject button_game_object = GameObject.Find( _path_to_button_in_world );
-
-
-                botao.Instanciate_UI();
+                botao.Instanciate_content();
                 
                 return botao;
 
@@ -90,22 +81,22 @@ public static class EXAMPLE_UI_button {
                 Example_devices_with_UIs device = Example_devices_with_UIs.Construct( Example_devices_with_UIs_types.type_1 );
 
 
-                // ** device sempre faz todas as operacoes
-                device.Convert_creation_data_TO_resources_UIs();
+                // // ** device sempre faz todas as operacoes
+                // device.Create_data_FROM_creation_data_UIs_device();
 
-                // ** device já contem a structure, entao ele nao precisa de nenhuma outra referencia
-                device.Link_to_game_object_UIs();
-
-                device.Load_UIs();
+                // // ** device já contem a structure, entao ele nao precisa de nenhuma outra referencia
+                // device.Link_UIs_device();
 
                 GameObject place_to_put_the_device = GameObject.Find( "place_to_put_the_device" );
-                device.Instanciate( place_to_put_the_device );
+                // device.Set_place_to_instanciate( place_to_put_the_device );
+                device.Create(new(){
+                    change_state_data = new(){ 
+                        force = true 
+                    },
+                });
 
 
         }
-
-
-
 
 
 }

@@ -21,9 +21,6 @@ public class DEFAULT_APPLICATOR__UI_button_SIMPLE {
                     _button.manager_resources.minimun.audio = ( _button.data.audio_resource_pre_allocation == Resource_audio_content.not_give ) ? ( Resource_audio_content.audio_clip ) : ( _button.data.audio_resource_pre_allocation );
 
 
-                    // _button.manager_resources.minimun.image = ( _button.data.image_resource_pre_allocation == Resource_image_content.not_give ) ? ( Resource_image_content.compress_data ) : ( _button.data.image_resource_pre_allocation );
-                    // _button.manager_resources.minimun.audio = ( _button.data.audio_resource_pre_allocation == Resource_audio_content.not_give ) ? ( Resource_audio_content.audio_clip ) : ( _button.data.audio_resource_pre_allocation );
-
                     _button.manager_resources.button = _button;
 
 

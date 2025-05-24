@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Threading;
 using UnityEngine;
@@ -6,8 +7,6 @@ using UnityEngine;
 
 
 public static class Console {
-
-
 
 
         public static bool multithread_ativado = false;
@@ -29,12 +28,13 @@ public static class Console {
 
         public static int slow_value;
         public static void Log_slow( string _message ){ if( slow_value == 0 ){ Log_intern( _message, Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }  }
-
-        public static void Log( bool _can, string _message ){ if( !!!( _can ) ){ return; } Log_intern( _message, Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }
         public static void Log( string _message ){ Log_intern( _message, Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }
         public static void Log( object _message ){ Log_intern( Convert.ToString(  _message ), Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }
         public static void LogError( string _message, int _trace_to_ignore = 0 ){ Log_intern( _message, Log_type.error, ( Thread.CurrentThread.Name == "Main" ), _trace_to_ignore ); return; }
 
+
+        [ Conditional( "UNITY_EDITOR" ) ]
+        public static void Log( bool _can, string _message ){ if( !!!( _can ) ){ return; } Log_intern( _message, Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }
 
 
         public static void Clear(){
@@ -126,12 +126,10 @@ public static class Console {
                 int numero_frames = 0;
                 foreach( System.Diagnostics.StackFrame f in frames ){
 
-                        if( f.GetFileName() != null )
-                            { numero_frames++; }
-                            else
-                            { break; }
-                        
-                        continue;
+                    if( f.GetFileName() != null )
+                        { numero_frames++; }
+                        else
+                        { break; }
 
                 }
 
@@ -141,7 +139,6 @@ public static class Console {
                 int message_with_link = 1; 
 
                 string[] frames_stack = new string[ ( ( numero_frames - remove_log_frame ) + margin_message + margin_lines + message_with_link ) ];   
-
 
                 string assets_path = System.IO.Directory.GetParent( Application.dataPath ).FullName;
 
@@ -159,22 +156,21 @@ public static class Console {
 
                     for( int frame_id = ( remove_log_frame + 1 )  ; frame_id < numero_frames ; frame_id++ ){
 
-                            System.Diagnostics.StackFrame s_frame = frames[ frame_id ];
+                        System.Diagnostics.StackFrame s_frame = frames[ frame_id ];
 
-                            string file_name = s_frame.GetFileName();             
-                            string path = System.IO.Path.GetRelativePath( assets_path , file_name ).Replace( "\\", "/" );
-                            
-                            string className = s_frame.GetMethod().DeclaringType.Name;
-                            string methodName = s_frame.GetMethod().Name;
-                            int linha = s_frame.GetFileLineNumber();
+                        string file_name = s_frame.GetFileName();             
+                        string path = System.IO.Path.GetRelativePath( assets_path , file_name ).Replace( "\\", "/" );
+                        
+                        string className = s_frame.GetMethod().DeclaringType.Name;
+                        string methodName = s_frame.GetMethod().Name;
+                        int linha = s_frame.GetFileLineNumber();
 
-                            frames_stack[ frame_stack++ ] = $"{className}:{methodName} () (at <a href=\"{path}\" line=\"{ linha }\">{ path }:{ linha }</a> )";
-
-                            continue;
+                        frames_stack[ frame_stack++ ] = $"{className}:{methodName} () (at <a href=\"{path}\" line=\"{ linha }\">{ path }:{ linha }</a> )";
 
                     }
 
-                for( int i = 0; i < 20 ;i++ ){ frames_stack[ ^( i + 1 ) ] = "---------------------------"; }
+                for( int i = 0; i < 20 ;i++ )
+                    { frames_stack[ ^( i + 1 ) ] = "---------------------------"; }
 
                 return string.Join( "\n\r", frames_stack  );
 
@@ -185,8 +181,8 @@ public static class Console {
 
                 switch( _type ){
 
-                    case Log_type.normal: Debug.Log( _message ); break;
-                    case Log_type.error: Debug.LogError( _message ); break;
+                    case Log_type.normal: UnityEngine.Debug.Log( _message ); break;
+                    case Log_type.error: UnityEngine.Debug.LogError( _message ); break;
 
                 }
 
@@ -245,10 +241,10 @@ public static class Console {
                     { return; }
 
                 if( _message_1 != null )
-                    { Debug.Log( $"<Size=14>{ _message_1 }</Size>"); }
+                    { UnityEngine.Debug.Log( $"<Size=14>{ _message_1 }</Size>"); }
 
                 if( _message_2 != null )
-                    { Debug.Log( $"<Size=14>{ _message_2 }</Size>"); }
+                    { UnityEngine.Debug.Log( $"<Size=14>{ _message_2 }</Size>"); }
 
                 return;
 

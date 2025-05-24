@@ -183,15 +183,9 @@ public static class TOOL__resources_images_handler_UP {
                     { CONTROLLER__errors.Throw( $"The image { _image.name } was going to create the texture, but the content_going_to is { _image.content_going_to }" ); }
 
 
-
                 // --- CREATE DATA
 
                 _manager.textures_manager.Get_texture( _image );
-                //mark
-                // ** agora faz no MANAGER__textures
-                // _image.single_image.texture_exclusiva = new Texture2D( _image.width, _image.height, TextureFormat.RGBA32, false );
-                // _image.single_image.texture_exclusiva.filterMode = FilterMode.Point;
-                // _image.single_image.texture_exclusiva_native_array = _image.single_image.texture_exclusiva.GetPixelData<Color32>( 0 );
                 
                 // --- NEXT STEAP
                 _image.actual_content = Resource_image_content.texture;

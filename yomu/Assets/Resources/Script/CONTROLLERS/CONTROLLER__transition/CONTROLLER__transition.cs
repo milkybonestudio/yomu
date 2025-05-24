@@ -31,7 +31,7 @@ public class CONTROLLER__transition {
                 if( _content_structure.state != Resource_state.instanciated )
                     { CONTROLLER__errors.Throw( $"structure<Color=lightBlue>{ _name }</Color> was not instanciated" ); }
 
-                Cameras_switching_data switching_cameras_data = Controllers.cameras.Switch_cameras( _name );
+                Space_switcher switching_cameras_data = Controllers.canvas_spaces.Switch_cameras( _name );
                 
 
         }

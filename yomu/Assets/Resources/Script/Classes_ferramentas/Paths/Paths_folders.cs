@@ -3,8 +3,9 @@ using System.IO;
 public static class Paths_folders {
 
 
-        public static string saves = Path.Combine( Paths_system.persistent_data_path, "saves" );
-        public static string program = Path.Combine( Paths_system.persistent_data_path, "program" );
+        // public static string current_persistent_path = Path.Combine( Paths_system.persistent_data_path, "current" );
+            public static string saves = Path.Combine( Paths_system.persistent_data_path, "saves" );
+            public static string program = Path.Combine( Paths_system.persistent_data_path, "program" );
 
 
 

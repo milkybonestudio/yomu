@@ -8,18 +8,14 @@ public static class Paths_files {
 
             // ** a versao do persistent tem que ser a mesma que a do persistent
             // ** se for diferente ele tem que verificar se 
-            public static string yomu_version_persistent = Path.Combine( Paths_system.persistent_data_path, "yomu_version.dat" );
-            public static string yomu_version_data = Path.Combine( Paths_system.data_path, "yomu_version.dat" );
-
+            public static string persistent_data_version = Path.Combine( Paths_system.persistent_data_path, "yomu_version.dat" );
             
-
-            public static string program_data_version = Path.Combine( Paths_system.persistent_data_path, "version.dat" );
 
             // ** PROGRAM
 
                 // ** program have heap?
 
-                public static string program_brute_data = Path.Combine( Paths_folders.program, "program_brute_data.dat" );
+                public static string program_data = Path.Combine( Paths_folders.program, "program_data.dat" );
 
 
                 // ** lembrar que tem que guardar qual o save esta usando

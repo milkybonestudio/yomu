@@ -50,7 +50,7 @@ public static class TOOL__resource_image {
 
         public static int Down_resources( RESOURCE__image _image ){
 
-                Console.Log( "Veio down resources" );
+                // Console.Log( "Veio down resources" );
 
                 if( Verify_stage( _image, Resources_getting_image_stage.all_reajust_stages ) )
                     { Remove_REAJUST( _image ); }

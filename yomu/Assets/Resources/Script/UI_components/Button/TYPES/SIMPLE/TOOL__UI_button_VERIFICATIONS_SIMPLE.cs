@@ -11,13 +11,9 @@ public static class TOOL__UI_button_VERIFICATIONS_SIMPLE {
 
                 ref DATA_CREATION__UI_button_SIMPLE data_creation = ref _button.creation_data;
 
-                if( data_creation.name == null )
-                    { CONTROLLER__errors.Throw( $"There was no name in a button" ); }
 
-
-
-                if( _button.state != Resource_use_state.used )
-                    { CONTROLLER__errors.Throw( $"Tried to define button { data_creation.name } but the button is with the state { _button.state }" ); }
+                if( _button.use_state != UI_use_state.used )
+                    { CONTROLLER__errors.Throw( $"Tried to define button { data_creation.name } but the button is with the state { _button.use_state }" ); }
                 
                 // --- TEMPO
                 if( data_creation.tempo_transicao == 0f )

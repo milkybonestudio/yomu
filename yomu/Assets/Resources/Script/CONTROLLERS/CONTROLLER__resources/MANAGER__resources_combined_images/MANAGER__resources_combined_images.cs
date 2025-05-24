@@ -5,89 +5,21 @@ using UnityEngine;
 
 
 
-
-
-
-
 public class MANAGER__resources_combined_images : MANAGER__RESOURCES {
 
         public MANAGER__resources_combined_images(){
 
-            camera_renders_container = GameObject.Find( "Containers/Camera_renders" );
-
-        }
-
-
-
-        public RESOURCE__combined_image Get_combined_image( Material _material, GameObject _game_object, Image_link[] _links ){ 
-
-                // ** assume que as imagens já foram carregadas
-                RESOURCE__combined_image image = new RESOURCE__combined_image();
-
-                image.images_game_object = _game_object;
-                image.links = _links;
-
-                image.render = Create_render( _material, _game_object, _links );
-
-
-                return image;
-
-        }
-
-
-        private Combined_image_render Create_render( Material _material, GameObject _game_object, Image_link[] _links ){
-
-                
-                int line = -1;
-                int collum = -1;
-
-                for( int line_slot = 0 ; line_slot < spaces.GetLength( 0 ) ; line_slot++ ){
-
-                        for( int collum_slot = 0 ; collum_slot < spaces.GetLength( 1 ) ; collum_slot++ ){
-
-                            if( spaces[ line_slot, collum_slot ] )
-                                { continue; }
-
-                            line = line_slot;
-                            collum = collum_slot;
-                            break;
-
-                        }
-
-                }
-
-                if( line + collum < 0 )
-                    { CONTROLLER__errors.Throw( "There is no slot available..? how tha fk I write this" ); }
-
-                int width = line * width_space;
-                int height = collum * height_space;
-
-                GameObject camera_game_object = new GameObject( $"Camera { width }/{ height }" );
-                Camera camera = camera_game_object.AddComponent<Camera>();
-
-                camera.orthographic = true;
-
-                Vector3 position = new Vector3( width, height, 0f );
-
-                camera_game_object.transform.SetParent( camera_renders_container.transform, false );
-                camera_game_object.transform.localPosition = position;
-                camera_game_object.transform.localRotation *= Quaternion.Euler( 0f, 0f, 0f );
-
-                _game_object.transform.SetParent( camera_renders_container.transform, false );
-                _game_object.transform.localPosition = position + new Vector3( 0f, 0f, 10f );
-
-
-                Combined_image_render render = new Combined_image_render( _material, _game_object, _links, camera, camera_game_object,  line, collum );
-
-                return render;
-                
-
             
+            manager_spaces = MANAGER__resources_combined_images_spaces.Construct();
+            manager_render_rextures = MANAGER__resources_combined_images_render_textures.Construct();
+            combined_images_dic = new();
 
         }
 
 
-        public GameObject camera_renders_container;
+        public MANAGER__resources_combined_images_spaces manager_spaces;
+        public MANAGER__resources_combined_images_render_textures manager_render_rextures;
+
 
 
         // --- UPDATE
@@ -96,13 +28,44 @@ public class MANAGER__resources_combined_images : MANAGER__RESOURCES {
         private int context_frame;
         public override void Update(){}
 
-        // ** controls max size
-        public const int width_space = 2_000;
-        public const int height_space = 2_000;
 
-        public bool[,] spaces = new bool[ 25, 25 ];
-        public Combined_image_render[] renders;
+        public Dictionary<int,RESOURCE__combined_image> combined_images_dic;
 
+        private int current_count;
+
+        public RESOURCE__combined_image Get_combined_image( Material _material, Dimensions _dimensions ){
+
+
+                //mark
+                // ** por hora sempre vai instanciar com texture
+
+                // ** assume que as imagens já foram carregadas
+                RESOURCE__combined_image image = RESOURCE__combined_image.Construct( this, _dimensions, current_count++ );
+
+                    combined_images_dic.Add( image.id, image );
+
+                    // ** content 1 
+                    image.key_space = manager_spaces.Get_space_key();
+                    image.camera_setting = manager_spaces.Get_camera_setting( image.key_space, _dimensions );
+
+                    // ** content 2
+                    RenderTexture render_texture = manager_render_rextures.Get_render_texture( _dimensions );
+                    image.camera_output = manager_spaces.Get_output( _material, render_texture, image.camera_setting );
+
+
+                return image;
+
+        }
+
+
+        public void Remove_reference( RESOURCE__combined_image _image ){
+
+            combined_images_dic.Remove( _image.id );
+
+        }
+
+
+        
 
 
 
@@ -111,8 +74,7 @@ public class MANAGER__resources_combined_images : MANAGER__RESOURCES {
 
         public override int Get_bytes_allocated(){
 
-                int accumulator = 0;
-                return accumulator;
+                 return manager_render_rextures.current_ram_usage;
             
         }
 

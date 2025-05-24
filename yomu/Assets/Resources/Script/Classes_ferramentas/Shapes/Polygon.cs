@@ -13,8 +13,8 @@ public static class Polygon {
 
                 // --- AJUST VECTOR
 
-                Console.Log( _off_set );
-                Console.Log( _ponto );
+                // Console.Log( "_off_set: " + _off_set );
+                // Console.Log( "_ponto: " + _ponto );
 
                 // ** move ponto para nao precisar mover pontos_poligono[] 
                 _ponto -=  _off_set;
@@ -26,11 +26,11 @@ public static class Polygon {
                 // Console.Log( $"Ponto principal: { _ponto }" );
 
 
-                Console.Log( "poligonos.Length: " + _poligono.Length );
-                for( int  i = 0 ; i < _poligono.Length ; i++ ){
+                // Console.Log( "poligonos.Length: " + _poligono.Length );
+                // for( int  i = 0 ; i < _poligono.Length ; i++ ){
 
-                    Console.Log( $"ponto { i }: { _poligono[ i ] }" );
-                }
+                //     Console.Log( $"ponto { i }: { _poligono[ i ] }" );
+                // }
 
                 
                 bool resultado = false;                

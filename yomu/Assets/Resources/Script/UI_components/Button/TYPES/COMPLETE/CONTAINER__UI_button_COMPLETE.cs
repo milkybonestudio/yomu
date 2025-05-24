@@ -6,6 +6,8 @@ public class CONTAINER__UI_button_COMPLETE : CONTAINER__generic<UI_button_COMPLE
 
 
         public override void Reset_data( UI_button_COMPLETE button ){
+
+
             
                 // ** COLLIDERS
 
@@ -62,24 +64,9 @@ public class CONTAINER__UI_button_COMPLETE : CONTAINER__generic<UI_button_COMPLE
 
                 
 
-
-                // ** BODY
-
-                    GameObject.Destroy( button.body_container );
-
-                    button.body_container = null;
-                    button.off_set_rotation_container = null;
-                    button.structure_container = null;
-
-                    button.name = "";
-                    button.body_data = Body_data.Construct();
-
-
-
                 // --- LOGICA
 
-                button.is_active = false;
-                button.state = Resource_use_state.unused;
+                button.use_state = UI_use_state.unused;
 
 
 

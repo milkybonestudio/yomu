@@ -59,13 +59,6 @@ public enum Nome_cor {
             takeru_default_text_color,
             nadia_default_text_color,
 
-
-
-
-
-
-
-
 }
 
 

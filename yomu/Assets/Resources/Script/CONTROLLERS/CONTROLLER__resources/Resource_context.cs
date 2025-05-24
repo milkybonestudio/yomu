@@ -16,6 +16,8 @@ public enum Resource_context {
 
         System,
 
+        Script, // ** somente para teste
+
 
         Devices,
 
@@ -23,7 +25,7 @@ public enum Resource_context {
 
         UI_components,
 
-        Testing,
+        Examples,
 
         // ** recursos especificos sáo melhores que de tipo. Mas as vezes pode precisar
         images,

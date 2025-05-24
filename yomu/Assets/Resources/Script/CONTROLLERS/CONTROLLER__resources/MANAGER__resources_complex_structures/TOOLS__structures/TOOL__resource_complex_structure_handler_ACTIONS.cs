@@ -20,7 +20,7 @@ public static class TOOL__resource_complex_structure_handler_ACTIONS {
                 _copy.level_pre_allocation = _new_pre_alloc;
 
 
-                if( _copy.state != Resource_state.minimun )
+                if( _copy.state != Resource_state.minimum )
                     { return; } // nao muda nada
 
                 TOOL__resources_complex_structures.Change_actual_need_content_count( _copy, _copy.level_pre_allocation );
@@ -45,7 +45,7 @@ public static class TOOL__resource_complex_structure_handler_ACTIONS {
                 if( _copy.state == Resource_state.active )
                     { Deactivate( _copy ); }
 
-                if( _copy.state == Resource_state.minimun )
+                if( _copy.state == Resource_state.minimum )
                     { Unload( _copy ); }
 
 
@@ -108,7 +108,7 @@ public static class TOOL__resource_complex_structure_handler_ACTIONS {
                     {  Console.Log( "state menor" ); return; } // ** nao tem recursos para remover
 
                 Deinstanciate( _copy );
-                _copy.state = Resource_state.minimun;
+                _copy.state = Resource_state.minimum;
 
                 
                 if( _copy.actual_need_content != Resource_complex_structure_content.game_object )
@@ -164,9 +164,9 @@ public static class TOOL__resource_complex_structure_handler_ACTIONS {
 
                 Console.Log( "Veio Load()" );
 
-                if( _copy.state >= Resource_state.minimun )
+                if( _copy.state >= Resource_state.minimum )
                     { return; }
-                _copy.state = Resource_state.minimun;
+                _copy.state = Resource_state.minimum;
 
                 if( _copy.actual_need_content != Resource_complex_structure_content.nothing )
                     { CONTROLLER__errors.Throw( $"Tentou dar Load na copia { _copy.structure.complex_structure_key } mas o state estava como { _copy.state } mas o actua_need_content como nothing" ); }

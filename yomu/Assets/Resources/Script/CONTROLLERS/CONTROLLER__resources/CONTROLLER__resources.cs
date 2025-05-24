@@ -36,27 +36,11 @@ using System.Collections.Generic;
 */
 
 
-public struct Process_weight {
-
-    public int weight;
-
-}
-
-public abstract class _CONTROLLER {
-
-    public abstract void Update( ref Process_weight _process_weight );
-
-}
-
 public class CONTROLLER__resources {
 
 
-        public static CONTROLLER__resources instance;
-        public static CONTROLLER__resources Get_instance(){ return instance; }
-
-
         // --- IMAGES
-        public MANAGER__resources_images resources_images;
+        public MANAGER__resources_images images;
         public MANAGER__resources_images_sequences resources_images_sequences;
 
 
@@ -66,7 +50,7 @@ public class CONTROLLER__resources {
         public MANAGER__resources_audios resources_audios;
 
         // --- STRUCTURES
-        public MANAGER__resources_structures resources_structures;
+        public MANAGER__resources_structures structures;
         public MANAGER__resources_complex_structures resources_complex_structures;
 
         // --- LOGICS
@@ -87,7 +71,7 @@ public class CONTROLLER__resources {
 
             int total_bytes = 0;
 
-            total_bytes += resources_images.Get_bytes_allocated();
+            total_bytes += images.Get_bytes_allocated();
 
             return total_bytes;
 

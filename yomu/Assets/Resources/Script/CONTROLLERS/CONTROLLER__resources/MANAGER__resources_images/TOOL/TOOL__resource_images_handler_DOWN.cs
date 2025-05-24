@@ -29,10 +29,10 @@ public static class TOOL__resource_images_handler_DOWN {
 
         private static int Destroy_compress_low_quality_data( MANAGER__resources_images _manager, RESOURCE__image _image ){
 
-                Console.Log( "Veio Destroy_compress_low_quality_data()" );
+                // Console.Log( "Veio Destroy_compress_low_quality_data()" );
 
                 if( _image.actual_content < Resource_image_content.compress_data )
-                    { Console.LogError( "isso era meio obvio?" ); return 0; }
+                    { return 0; }
                     
                 // --- DESTROY
                 _image.single_image.image_low_quality_compress = null;
@@ -44,10 +44,10 @@ public static class TOOL__resource_images_handler_DOWN {
         
         private static int Destroy_compress_data( MANAGER__resources_images _manager, RESOURCE__image _image ){
 
-                Console.Log( "Veio Destroy_compress_data()" );
+                // Console.Log( "Veio Destroy_compress_data()" );
 
                 if( _image.actual_content < Resource_image_content.compress_data )
-                    { Console.LogError( "isso era meio obvio?" ); return 0; }
+                    { return 0; }
 
                 // --- DESTROY
                 _image.single_image.image_compress = null;
@@ -59,10 +59,14 @@ public static class TOOL__resource_images_handler_DOWN {
 
         private static int Destroy_resource_texture( MANAGER__resources_images _manager, RESOURCE__image _image ){
 
-                Console.Log( "Destroy_resource_texture" );
+                // Console.Log( "Destroy_resource_texture" );
 
                 if( _image.actual_content < Resource_image_content.texture )
-                    { Console.LogError( "isso era meio obvio?" ); return 0; }
+                    { return 0; }
+
+                // Console.Log( _image.actual_content );
+                // Console.Log( _image.single_image.texture_exclusiva );
+                
 
                 // --- DESTROY
                 _manager.textures_manager.Liberate_texture( _image );

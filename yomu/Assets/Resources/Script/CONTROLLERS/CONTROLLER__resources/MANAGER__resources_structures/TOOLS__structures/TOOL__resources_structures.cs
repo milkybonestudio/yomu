@@ -48,6 +48,7 @@ public static class TOOL__resources_structures {
                         {
                             unity_main_components.material = new Material( Shaders.individual_components );
                             unity_main_components.sprite_render.material = unity_main_components.material;
+                            unity_main_components.sprite_render.sprite = null;
                         }
                 
                     _obj.TryGetComponent<Image>( out unity_main_components.image );
@@ -182,12 +183,13 @@ public static class TOOL__resources_structures {
                     { Going_to_resource_level_STRUCTURE_DATA( _structure ); return; }
             
                 if( _structure.count_places_being_used_nothing >= 0  )
-                    { Going_to_resource_level_NOTHING( _structure ); return;}
+                    { Going_to_resource_level_NOTHING( _structure ); return; }
 
                 // ** DELETE
 
                 _structure.module_structures.actives_structures_dictionary.Remove( _structure.structure_key ); // ** nao tem mais update
-                _structure.module_structures.manager.resources_structures__CONTAINER.Return_structure( _structure ); 
+                Containers.structure.Return_object( _structure ); 
+                _structure.structure_state = Resource_use_state.waiting_to_delete;
 
 
         }
