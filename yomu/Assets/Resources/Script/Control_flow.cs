@@ -4,7 +4,6 @@
 public class Control_flow {
 
 
-
         // --- UI
 
         public bool UI_blocked;
@@ -20,8 +19,37 @@ public class Control_flow {
         public void Set_program_mode_update( bool _value ){ program_mode_update_blocked = _value; }
 
         // --- cpu consuming stuff
+        private const int WEIGHT_MS = 10_000;
+        private const int pegar_do_user = 10;
 
-        public int weight_frame_available = int.MaxValue;
+        public static int Get_weight( int _number_operations_per_second, int _operations ){
+
+            unchecked{
+
+                long operations_per_miliseconds = (long)_number_operations_per_second / 1_000l;
+                // Console.Log( "operations_per_miliseconds: " + operations_per_miliseconds );
+
+                // Console.Log( "operations: " + _operations );
+                // Console.Log( "WEIGHT_MS: " + WEIGHT_MS );
+                
+
+                int weight_to_operations =  ( int )( ( (long)_operations * (long) WEIGHT_MS ) / operations_per_miliseconds );
+                // Console.Log( "weight_to_operations: " + weight_to_operations );
+
+                return weight_to_operations ;
+
+            }
+
+        }
+
+        public int weight_per_frame = ( WEIGHT_MS * pegar_do_user );
+        public int weight_frame_available = ( WEIGHT_MS * pegar_do_user );
+
+        public void Add_weight( int _weight ){ 
+
+            weight_frame_available -= _weight;
+
+        }
 
         public bool cpu_consuming_operation_blocked;
         public float block_cpu_consuming_operation_time_ms;

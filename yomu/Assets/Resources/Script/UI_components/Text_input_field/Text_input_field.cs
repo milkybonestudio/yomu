@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Text_input_field : UI_component {
 
+    protected override void Update_material(){}
 
     public override void Force_active(){ Console.Log( "tem que fazer" ); }
     public override void Force_inactive(){ Console.Log( "tem que fazer" ); }

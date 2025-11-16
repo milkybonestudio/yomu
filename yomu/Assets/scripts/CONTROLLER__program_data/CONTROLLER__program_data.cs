@@ -13,7 +13,6 @@ unsafe public class CONTROLLER__program_data {
         
         
         public CONTROLLER__program_data__MODES modes;
-        public CONTROLLER__program_data__USER user;
         public CONTROLLER__program_data__SAVES saves;
 
 

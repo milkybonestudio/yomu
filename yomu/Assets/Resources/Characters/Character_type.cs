@@ -6,11 +6,8 @@ public enum Character_type {
         human,
         elves = CHARACTER__HUMAN.END,
 
-
-
     END = CHARACTER__ELVES.END,
 
-    
 
 }
 

@@ -3,7 +3,11 @@ using UnityEngine;
 
 
 
+// public struct Trasnform_data {
 
+    
+
+// }
 
 
 unsafe public partial struct Body {
@@ -62,6 +66,50 @@ unsafe public partial struct Body {
         //mark
         // ** se nao usar ele vai 
 
+        public void Set_transform( Transform_data _data ){
+
+            Console.Log( "veio set transform" );
+
+            Vector3 new_position = POSITION.Guarantee_value( _data.position  , position.Get_current() );
+            body_container_transform.localPosition = ( new_position * PPU.value_inverse );
+            position.__Set_initial_position__( new_position );
+
+
+            QUATERNION.Guarantee_value( ref _data.rotation, rotation.Get_current() );
+            self_container_transform.localRotation = _data.rotation;
+            rotation.__Set_initial_rotation__( _data.rotation );
+
+
+            Vector3 new_scale = SCALE.Guarantee_value( _data.scale, scale.Get_current() );
+            self_container_transform.localScale = new_scale;
+            scale.__Set_initial_scale__( new_scale );
+
+        }
+
+        public void Set_anchour_transform( Transform_data _data ){
+
+            if( !!!( constructor_data.need_anchour) )
+                { CONTROLLER__errors.Throw( $"Tried to set anchour trnsform but the body <Color=lightBlue>{ name }</Color> do not need anchour" ); }
+
+            Vector3 new_position = POSITION.Guarantee_value( _data.position , anchour_position.Get_current() );
+            self_container_transform.localPosition = ( new_position * PPU.value_inverse );
+            anchour_container_transform.localPosition = ( -1f * new_position * PPU.value_inverse );
+            anchour_position.__Set_current_initial_position__( new_position );
+
+
+            Vector3 new_scale = SCALE.Guarantee_value( _data.scale, anchour_scale.Get_current() );
+            body_container_transform.localScale = new_scale;
+            anchour_scale.__Set_initial_scale__( new_scale );
+
+
+            QUATERNION.Guarantee_value( ref _data.rotation, anchour_rotation.Get_current() );
+            anchour_container_transform.localRotation = _data.rotation;
+            anchour_rotation.__Set_initial_rotation__( _data.rotation );
+
+        }
+
+
+
         public void Set_parent( Body_set_parent_data _data ){
 
 
@@ -71,33 +119,34 @@ unsafe public partial struct Body {
             body_container_transform.SetParent( _data.parent.transform, false );
 
             if( _data.set_new_transform )
-                {
+                { Set_transform( _data.self_transform );
 
-                    body_container_transform.localPosition = _data.position;
-                    position.__Set_initial_position__( _data.position );
+                    // body_container_transform.localPosition = ( _data.position * PPU.value_inverse );
+                    // position.__Set_initial_position__( _data.position );
 
-                    QUATERNION.Guarantee_value( ref _data.rotation );
-                    self_container_transform.localRotation = _data.rotation;
-                    rotation.__Set_initial_rotation__( _data.rotation );
+                    // QUATERNION.Guarantee_value( ref _data.rotation );
+                    // self_container_transform.localRotation = _data.rotation;
+                    // rotation.__Set_initial_rotation__( _data.rotation );
 
-                    VECTOR_3.Guarantee_value( ref _data.scale, Vector3.one );
-                    self_container_transform.localScale = _data.scale;
-                    scale.__Set_initial_scale__( _data.scale );
+                    // VECTOR_3.Guarantee_value( ref _data.scale, Vector3.one );
+                    // self_container_transform.localScale = _data.scale;
+                    // scale.__Set_initial_scale__( _data.scale );
                 }
 
             if( _data.set_new_transform_anchour )
-                {
+                { Set_anchour_transform( _data.anchour_transform );
 
-                    self_container_transform.localPosition = _data.anchour_position;
-                    anchour_position.__Set_current_initial_position__( _data.anchour_position );
+                    // self_container_transform.localPosition = ( _data.anchour_position * PPU.value_inverse );
+                    // anchour_container_transform.localPosition = ( -1f * _data.anchour_position * PPU.value_inverse );
+                    // anchour_position.__Set_current_initial_position__( _data.anchour_position );
 
-                    VECTOR_3.Guarantee_value( ref _data.anchour_scale, Vector3.one );
-                    body_container_transform.localScale = _data.anchour_scale;
-                    anchour_scale.__Set_initial_scale__( _data.anchour_scale );
+                    // VECTOR_3.Guarantee_value( ref _data.anchour_scale, Vector3.one );
+                    // body_container_transform.localScale = _data.anchour_scale;
+                    // anchour_scale.__Set_initial_scale__( _data.anchour_scale );
 
-                    QUATERNION.Guarantee_value( ref _data.anchour_rotation );
-                    anchour_container_transform.localRotation = _data.anchour_rotation;
-                    anchour_rotation.__Set_initial_rotation__( _data.anchour_rotation );
+                    // QUATERNION.Guarantee_value( ref _data.anchour_rotation );
+                    // anchour_container_transform.localRotation = _data.anchour_rotation;
+                    // anchour_rotation.__Set_initial_rotation__( _data.anchour_rotation );
 
                 }
 
@@ -117,11 +166,14 @@ unsafe public partial struct Body {
 
         }
 
+        
 
-        public void Update( Control_flow _control_flow ){
+        public int Update(){
+
+            int weight = 0;
 
             if( state != Body_state.constructed )
-                { return; }
+                { CONTROLLER__errors.Throw( $"Tried to update body <Color=lightBlue>{ name }</Color> but it was not constructed" ); }
                 
             #if UNITY_EDITOR
                 if( only_names_to_update.Length > 0  )
@@ -133,27 +185,27 @@ unsafe public partial struct Body {
                         }
 
                         if( !!!( need_update ) )
-                            { return; }
+                            { return 0; }
                     }
             #endif
 
 
             // Console.Log( $"Updata body <Color=lightBlue>{ name }</Color>" );
-            position.__Update__( body_container_transform );
-            rotation.__Update__( self_container_transform );
-            scale.__Update__( self_container_transform );
+            weight += position.__Update__( body_container_transform );
+            weight += rotation.__Update__( self_container_transform );
+            weight += scale.__Update__( self_container_transform );
 
 
             if( constructor_data.need_anchour )
                 {
-                    anchour_scale.__Update__( body_container_transform );
-                    anchour_position.__Update__( anchour_container_transform, self_container_transform );
-                    anchour_rotation.__Update__( anchour_container_transform );
+                    weight += anchour_scale.__Update__( body_container_transform );
+                    weight += anchour_position.__Update__( anchour_container_transform, self_container_transform );
+                    weight += anchour_rotation.__Update__( anchour_container_transform );
                 }
 
             // Console.Log( "<Color=lightBlue>-----------------------------</Color>" );
 
-            return;
+            return weight;
             
         }
 
@@ -176,13 +228,6 @@ unsafe public partial struct Body {
 
 
         public void Destroy( ref Body _body ){
-
-
-            //performance
-            // ** pode ser somente editor
-            // ** seria interessante que nunca poderia destruir o objeto em si pelo body
-            if( body_object_transform.childCount > 0 )
-                { CONTROLLER__errors.Throw( $"Tried to destroy body <Color=lightBlue>{ name }</Color> but the object was still in the body_object" ); }
 
             GameObject.Destroy( body_container );
             _body = default;

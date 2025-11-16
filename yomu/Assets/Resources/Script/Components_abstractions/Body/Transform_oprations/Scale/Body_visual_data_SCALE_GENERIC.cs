@@ -80,12 +80,13 @@ public struct Body_visual_data_SCALE_GENERIC {
         public bool force;
 
 
-        public void Update( Transform _transform ){
+        public int Update( Transform _transform ){
 
                 if( finished )
-                    { return; }
+                    { return 0; }
 
                 Scale( _transform );
+                return 2;
 
         }
 

@@ -2,16 +2,35 @@
 
 using UnityEngine;
 
+
+
 public struct Individual_components_material_manager {
 
+        public static Individual_components_material_manager Construct( SpriteRenderer _render ){
+
+            Individual_components_material_manager manager = default;
+
+                manager.material = new Material( Shaders.individual_components );
+                _render.material = manager.material;
+
+            return manager;
+
+        }
+
         public Material material;
-        public UI_component UI;
-        public SpriteRenderer render;
+        public string name;
+        
+        // public void Change_material( Material _new_material ){ 
 
-        public void Change_material( Material _new_material ){ 
+        //         GameObject.Destroy( render.material );  // precisa
+        //         render.material = _new_material; 
 
-                GameObject.Destroy( render.material );  // precisa
-                render.material = _new_material; 
+        // }
+
+        public void Destroy(){
+
+            if( material != null )
+                { GameObject.Destroy( material ); }
 
         }
 
@@ -65,7 +84,7 @@ public struct Individual_components_material_manager {
                 Console.Log( "VEIO SET MASK" );
 
                 if( !!!( have_mask ) )
-                    { CONTROLLER__errors.Throw( $"in the ui { UI.name } tried to change the mas but the mask was not give Apply" ); }
+                    { CONTROLLER__errors.Throw( $"in the ui { name } tried to change the mas but the mask was not give Apply" ); }
 
 
                 Console.Log( "_width: " + _width );
@@ -164,7 +183,7 @@ public struct Individual_components_material_manager {
 
 
                 if( !!!( have_mask_position ) )
-                    { CONTROLLER__errors.Throw( $"in the ui { UI.name } tried to change the mas but the mask was not give Apply" ); }
+                    { CONTROLLER__errors.Throw( $"in the ui { name } tried to change the mas but the mask was not give Apply" ); }
 
                 new_mask_position_variables.x += ( _x_position * PPU.value );
                 new_mask_position_variables.y += ( _y_position * PPU.value );
@@ -176,7 +195,7 @@ public struct Individual_components_material_manager {
 
 
                 if( !!!( have_mask_position ) )
-                    { CONTROLLER__errors.Throw( $"in the ui { UI.name } tried to change the mas but the mask was not give Apply" ); }
+                    { CONTROLLER__errors.Throw( $"in the ui { name } tried to change the mas but the mask was not give Apply" ); }
 
                 new_mask_position_variables.z += _width;
                 new_mask_position_variables.w += _height;
@@ -187,7 +206,7 @@ public struct Individual_components_material_manager {
         public void Set_mask_position_dimensions( float _width, float _height ){
 
                 if( !!!( have_mask_position ) )
-                    { CONTROLLER__errors.Throw( $"in the ui { UI.name } tried to change the mas but the mask was not give Apply" ); }
+                    { CONTROLLER__errors.Throw( $"in the ui { name } tried to change the mas but the mask was not give Apply" ); }
 
                 new_mask_position_variables.z = _width;
                 new_mask_position_variables.w = _height;
@@ -200,7 +219,7 @@ public struct Individual_components_material_manager {
         public void Set_mask_position( float _x_position, float _y_position ){
 
                 if( !!!( have_mask_position ) )
-                    { CONTROLLER__errors.Throw( $"in the ui { UI.name } tried to change the mas but the mask was not give Apply" ); }
+                    { CONTROLLER__errors.Throw( $"in the ui { name } tried to change the mas but the mask was not give Apply" ); }
 
                 new_mask_position_variables.x = _x_position;
                 new_mask_position_variables.y = _y_position;

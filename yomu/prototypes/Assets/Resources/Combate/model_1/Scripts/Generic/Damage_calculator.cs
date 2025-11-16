@@ -6,4 +6,8 @@ public struct Damage_calculator {
     public int number_slots;
     public int fix_damage;
 
+    
+
 }
+
+

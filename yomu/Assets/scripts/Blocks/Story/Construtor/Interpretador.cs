@@ -299,13 +299,11 @@ public static class Interpretador {
                                 case "audio" :   cenas_pre[ cena ]  = Compilar_audio (  line , cena,  interpretador_data ) ; break; 
                                 
 
-
                                 case "fn" :      cenas_pre[ cena ]  = Compilar_fn (  line , cena,  interpretador_data ) ; break;
                                 case "choice":  /* cenas_pre[ cena ]  = Compilar_choice (  line , cena,  interpretador_data ); */  break; // já foi em cima
                                 case "pointer": /* cenas_pre[ cena ]  = Compilar_pointer (  line , cena,  interpretador_data )*/ ; break; 
                                 case "jump" :    cenas_pre[ cena ]  = Compilar_jump (  line , cena,  interpretador_data ) ; break; 
                                 case "end" :     cenas_pre[ cena ]  = Compilar_end (  line , cena,  interpretador_data ) ; break; 
-
 
 
                                 default : throw new ArgumentException("nao foi achado tipo cena na linha: " + interpretador_data.linhas_localizador_cenas[ cena ] + ". veio: " + tipo );

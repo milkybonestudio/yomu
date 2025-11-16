@@ -69,7 +69,7 @@ public static class TOOL__resource_image {
                         
                     if( _image.stage_getting_resource == Resources_getting_image_stage.getting_compress_file )
                         {  
-                            if( ( manager.task_getting_compress_file.finalizado ) )
+                            if( ( manager.task_getting_compress_file.Is_finalized() ) )
                                 { 
                                     // --- APROVEITAR 
                                     _image.single_image.image_compress = ( byte[] ) _image.module_images.manager.task_getting_compress_file.dados[ 0 ];
@@ -87,7 +87,7 @@ public static class TOOL__resource_image {
                             if( _image.single_image.have_low_quality_compress )
                                 {
                                     // --- APROVEITAR 
-                                    if( ( manager.task_getting_compress_low_quality_file.finalizado ) )
+                                    if( ( manager.task_getting_compress_low_quality_file.Is_finalized() ) )
                                         { 
                                             _image.single_image.image_low_quality_compress = ( byte[] ) _image.module_images.manager.task_getting_compress_low_quality_file.dados[ 0 ];
                                             _image.actual_content = Resource_image_content.compress_data; 
@@ -103,7 +103,7 @@ public static class TOOL__resource_image {
                 else if( _image.stage_getting_resource == Resources_getting_image_stage.passing_data_to_texture )
                         {  
                             
-                            if( ( manager.task_passing_to_texture.finalizado ) )
+                            if( ( manager.task_passing_to_texture.Is_finalized() ) )
                                 { 
                                     // --- APROVEITAR 
                                     _image.actual_content = Resource_image_content.texture_with_pixels; 
@@ -137,7 +137,7 @@ public static class TOOL__resource_image {
                 else if( _image.stage_getting_resource == Resources_getting_image_stage.getting_compress_file_REAJUST )
                         { 
 
-                            if( ( _image.module_images.manager.task_getting_compress_file_REAJUST.finalizado ) )
+                            if( ( _image.module_images.manager.task_getting_compress_file_REAJUST.Is_finalized() ) )
                                 { 
                                     // --- APROVEITAR 
                                     _image.single_image.image_compress = ( byte[] ) manager.task_getting_compress_file_REAJUST.dados[ 0 ];
@@ -161,7 +161,7 @@ public static class TOOL__resource_image {
                         }
                 else if( _image.stage_getting_resource == Resources_getting_image_stage.passing_data_to_texture_REAJUST )
                         { 
-                            if( ( manager.task_passing_to_texture_REAJUST.finalizado ) )
+                            if( ( manager.task_passing_to_texture_REAJUST.Is_finalized() ) )
                                 { 
                                     // --- APROVEITAR
                                     _image.actual_content = Resource_image_content.texture_with_pixels;
@@ -192,7 +192,11 @@ public static class TOOL__resource_image {
 
                 _req.data_1 = _image.single_image.texture_exclusiva;
                 _image.single_image.texture_exclusiva = null;
-                _req.fn_single_thread = ( Task_req _req )  =>   {  try{ GameObject.Destroy( ( Texture2D ) _req.data_1 );} catch( System.Exception e ){ Console.LogError( "AAAAAAA:" + _req.dados[ 0 ] ); } };
+                
+                _req.Give_single_final(( Task_req _req )  => { 
+                    try{ GameObject.Destroy( ( Texture2D ) _req.data_1 );} 
+                    catch( System.Exception e ){ Console.LogError( "AAAAAAA:" + _req.dados[ 0 ] ); }
+                });
 
         }
 

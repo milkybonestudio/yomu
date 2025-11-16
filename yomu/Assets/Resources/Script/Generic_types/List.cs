@@ -1,7 +1,8 @@
 using System;
+using System.Collections.Generic;
 
 
-public class List<T> where T : class  {
+public class List<T> {
 
         public List( int _length ){
 
@@ -28,6 +29,36 @@ public class List<T> where T : class  {
                 values[ used_length++ ] = _t;
                 
                 return _t;
+
+        }
+
+        public bool Have_value( T _t ){
+
+            for( int i = 0 ; i < used_length ; i++ )
+                { if( EqualityComparer<T>.Default.Equals( values[ i ], _t ) ){ return true; } }
+
+            return false;
+
+        }
+
+        public void Remove( T _t ){
+            
+            int off_set = 0;
+            for( int i = 0 ; i < used_length ; i++ ){ 
+
+                if( EqualityComparer<T>.Default.Equals( values[ i ], _t ) )
+                    { off_set = 1; }
+
+                values[ i ] = values[ ( i + off_set ) ];
+                
+            }
+            used_length -= off_set;
+
+        }
+
+        public void Reset(){
+
+            used_length = -1;
 
         }
 

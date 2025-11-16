@@ -27,7 +27,8 @@ public class UI_button_SIMPLE : UI_button {
             Containers.UI_button_SIMPLE.Return_object( this );
             
         }
-            
+        
+        protected override void Update_material(){}
             
         public override void Force_active(){}
         public override void Force_inactive(){ TOOL__UI_button_SET_SIMPLE.SET_OFF_static( this ); }

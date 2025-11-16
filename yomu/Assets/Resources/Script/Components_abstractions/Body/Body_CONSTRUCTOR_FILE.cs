@@ -1,4 +1,7 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
+
+
 
 unsafe public partial struct Body {
 
@@ -6,8 +9,6 @@ unsafe public partial struct Body {
         private Body_data_creation constructor_data;
         public void Set_body_constructor_data( Body_data_creation _data ){ constructor_data = _data; }
         
-
-        // ** activate -> Initialize
 
         public void Create(  GameObject _UI_component_game_object = null ){
 
@@ -17,6 +18,21 @@ unsafe public partial struct Body {
 
 
             state = Body_state.constructed;
+
+            // ** --- LOGIC
+            
+        
+            constructor_data.Verify(); // ** GUARANTEE STUFF
+
+                scale.__Start__( constructor_data.scale_type, constructor_data.scale_type_data );
+                position.__Start__( constructor_data.position_type, constructor_data.position_type_data );
+                rotation.__Start__( constructor_data.rotation_type, constructor_data.rotation_type_data );
+
+                anchour_scale.__Start__( constructor_data.anchour_scale_type, constructor_data.anchour_scale_type_data );
+                anchour_rotation.__Start__( constructor_data.anchour_rotation_type, constructor_data.anchour_rotation_type_data );
+                anchour_position.__Start__( constructor_data.anchour_position_type, constructor_data.anchour_position_type_data );
+
+
 
 
             // ** --- CONSTRUCT WORLD PART
@@ -68,29 +84,44 @@ unsafe public partial struct Body {
 
 
 
-            if( constructor_data.set_new_transform )
+            // ** preferir nao usar, as UIs vao ter as posicoes certas nos prefabs
+            // ** os devices e as figures vao ser colocados no Initialize
+            if( constructor_data.transform_in_parent.position.Is_not_default() )
                 {
-                    // ** preferir nao usar, as UIs vao ter as posicoes certas nos prefabs
-                    // ** os devices e as figures vao ser colocados no Initialize
-                    body_container_transform.localPosition = constructor_data.position_in_parent;
-                    position.__Set_initial_position__( constructor_data.position_in_parent * PPU.value );
+                    Vector3 initial_position_in_parent = constructor_data.transform_in_parent.position.Convert_to_vector();
+                    body_container_transform.localPosition = ( initial_position_in_parent * PPU.value_inverse );
+                    Console.Log( body_container_transform.localPosition );
+                    position.__Set_initial_position__( initial_position_in_parent );
 
-                    self_container_transform.localRotation = constructor_data.rotation_in_parent;
-                    rotation.__Set_initial_rotation__( constructor_data.rotation_in_parent );
-
-                    self_container_transform.localScale = constructor_data.scale_in_parent;
-                    scale.__Set_initial_scale__( constructor_data.scale_in_parent );
-
-                    if( ( constructor_data.force_transform & Transform_type.position ) > 0 )
+                    if( ( constructor_data.NOT_force_transform & Transform_type.position ) == 0 )
                         { position.Force(); }
-
-                    if( ( constructor_data.force_transform & Transform_type.rotation ) > 0 )
-                        { rotation.Force(); }
-
-                    if( ( constructor_data.force_transform & Transform_type.scale ) > 0 )
-                        { scale.Force(); }
-
                 }
+
+            if( constructor_data.transform_in_parent.scale.Is_not_default() )
+                {
+                    Vector3 initial_scale_in_parent = constructor_data.transform_in_parent.scale.Convert_to_vector();
+                    body_container_transform.localScale = ( initial_scale_in_parent );
+                    scale.__Set_initial_scale__( initial_scale_in_parent );
+                }
+
+
+
+
+            // QUATERNION.Guarantee_value( ref constructor_data.rotation_in_parent, initial_rotation );
+            // self_container_transform.localRotation = constructor_data.rotation_in_parent;
+            // rotation.__Set_initial_rotation__( constructor_data.rotation_in_parent );
+
+            VECTOR_3.Guarantee_value( ref constructor_data.scale_in_parent, initial_scale );
+            self_container_transform.localScale = constructor_data.scale_in_parent;
+            scale.__Set_initial_scale__( constructor_data.scale_in_parent );
+
+            if( ( constructor_data.NOT_force_transform & Transform_type.rotation ) == 0 )
+                { rotation.Force(); }
+
+            if( ( constructor_data.NOT_force_transform & Transform_type.scale ) == 0 )
+                { scale.Force(); }
+
+
 
 
             if( constructor_data.need_anchour )
@@ -117,6 +148,7 @@ unsafe public partial struct Body {
                         { body_container_transform.SetParent( container_bodies_transform, false ); }
 
 
+                    // ** reajusta
                     body_object_transform.localPosition = Vector3.zero;
                     body_object_transform.localRotation = Quaternion.identity;
                     body_object_transform.localScale = Vector3.one;
@@ -127,19 +159,31 @@ unsafe public partial struct Body {
 
 
 
+
                     // ** SET DATA
 
                     anchour_position.__Set_current_initial_position__( constructor_data.anchour_position );
+                    self_container_transform.localPosition = ( -1f * constructor_data.anchour_position * PPU.value_inverse );
+                    anchour_container_transform.localPosition = ( constructor_data.anchour_position * PPU.value_inverse );
+
+
+                    VECTOR_3.Guarantee_value( ref constructor_data.anchour_scale, Vector3.one );
                     anchour_scale.__Set_initial_scale__( constructor_data.anchour_scale );
+                    body_container_transform.localScale = constructor_data.anchour_scale;
+
+
+                    QUATERNION.Guarantee_value( ref constructor_data.anchour_rotation, Quaternion.identity );
                     anchour_rotation.__Set_initial_rotation__( constructor_data.anchour_rotation );
+                    anchour_container_transform.localRotation = constructor_data.anchour_rotation;
                     
-                    if( ( constructor_data.force_transform_anchour & Transform_type.position ) > 0 )
+                    
+                    if( ( constructor_data.NOT_force_transform_anchour & Transform_type.position ) == 0 )
                         { anchour_position.Force(); }
 
-                    if( ( constructor_data.force_transform_anchour & Transform_type.rotation ) > 0 )
+                    if( ( constructor_data.NOT_force_transform_anchour & Transform_type.rotation ) == 0 )
                         { anchour_rotation.Force(); }
 
-                    if( ( constructor_data.force_transform_anchour & Transform_type.scale ) > 0 )
+                    if( ( constructor_data.NOT_force_transform_anchour & Transform_type.scale ) == 0 )
                         { anchour_scale.Force(); }
 
 
@@ -155,25 +199,15 @@ unsafe public partial struct Body {
 
 
 
+            Console.Log( body_container_transform.localPosition );
             
-            // ** --- LOGIC
-            
-        
-            constructor_data.Verify(); // ** GUARANTEE STUFF
-
-                scale.__Start__( constructor_data.scale_type, constructor_data.scale_type_data );
-                position.__Start__( constructor_data.position_type, constructor_data.position_type_data );
-                rotation.__Start__( constructor_data.rotation_type, constructor_data.rotation_type_data );
-
-                anchour_scale.__Start__( constructor_data.anchour_scale_type, constructor_data.anchour_scale_type_data );
-                anchour_rotation.__Start__( constructor_data.anchour_rotation_type, constructor_data.anchour_rotation_type_data );
-                anchour_position.__Start__( constructor_data.anchour_position_type, constructor_data.anchour_position_type_data );
-
-
             // ** EXTRAS
 
                 if( constructor_data.parent != null )
                     { body_container_transform.SetParent( constructor_data.parent.transform, false ); }
+
+                
+            Update();
 
 
             

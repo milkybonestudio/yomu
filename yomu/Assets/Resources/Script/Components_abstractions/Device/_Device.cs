@@ -93,7 +93,7 @@ public unsafe abstract partial class Device {
 
             }
             
-            body.Update( _flow );
+            _flow.weight_frame_available -= body.Update();
 
         }
 

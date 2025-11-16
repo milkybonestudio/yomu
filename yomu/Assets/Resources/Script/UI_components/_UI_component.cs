@@ -75,6 +75,12 @@ unsafe public abstract partial class UI_component {
                 
                 Instanciate_content();
 
+                if( material_manager_is_specific )
+                    { Specific_material_update(); }
+                    else
+                    { Update_material(); }
+
+
                 bool re_do = true;
 
                 Look_safer locker = new(){ times = 100 };
@@ -98,7 +104,7 @@ unsafe public abstract partial class UI_component {
                 }
                 
                 
-                body.Update( _flow ); 
+                _flow.weight_frame_available -= body.Update();
 
             }
 

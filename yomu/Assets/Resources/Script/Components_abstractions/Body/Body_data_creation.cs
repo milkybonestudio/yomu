@@ -10,12 +10,10 @@ public struct Body_data_creation {
 
         public bool put_in_container;
         
+        // ** por hora nao esta usando
         public Vector3 initial_position_in_parent;
         public Vector3 initial_scale_in_parent;
         public Quaternion initial_rotation_in_parent;
-
-
-
 
 
         // ** TRANSFORM TYPES 
@@ -54,8 +52,9 @@ public struct Body_data_creation {
             // ** geralmente não vai ser usado
             // ** isso iria mudar oque estaria no prefab
 
-            public bool set_new_transform;
-            public Transform_type force_transform;
+            // public bool set_new_transform;
+            public Transform_type NOT_force_transform;
+            public Transform_data transform_in_parent;
             public Vector3 position_in_parent;
             public Vector3 scale_in_parent;
             public Quaternion rotation_in_parent;
@@ -66,7 +65,7 @@ public struct Body_data_creation {
             // ** se o normal precisar ele é a exceção
             public bool need_anchour; // ** 3 gameObjzcts
         
-            public Transform_type force_transform_anchour;
+            public Transform_type NOT_force_transform_anchour;
             public Vector3 anchour_position;
             public Vector3 anchour_scale;
             public Quaternion anchour_rotation;

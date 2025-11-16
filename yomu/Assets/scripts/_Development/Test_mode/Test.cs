@@ -21,8 +21,6 @@ using System;
 // ** nao pode afetar a build
 
 
-
-
 unsafe public partial class Test {
 
         
@@ -52,28 +50,30 @@ unsafe public partial class Test {
                 //--------------------
                             
 
-                device = Example_devices_with_UIs.Construct( Example_devices_with_UIs_types.type_1 );
+                // device = Example_devices_with_UIs.Construct( Example_devices_with_UIs_types.type_1 );
                 
-                device.Create(new(){
+                // device.Create(new(){
 
-                    start_state = Device_state.active,
-                    parent = container_test, 
-                    body_set_data = new(){
-                        set_new_transform = true,
-                        position = new Vector3( 50,78,65 ),
-                    },
-                    change_state_data = new(){
-                        force = true,
-                    }
-                });
+                //     start_state = Device_state.active,
+                //     parent = container_test, 
+                //     body_set_data = new(){
+                //         set_new_transform = true,
+                //         position = new Vector3( 50,78,65 ),
+                //     },
+                //     change_state_data = new(){
+                //         force = true,
+                //     }
+                // });
 
 
 
-                test_figures.Set();
+                // test_figures.Set();
 
                 // image = Single_image.Construct( "arvore", Controllers.resources.images.Get_image_reference( Resource_context.images, "a", "arvore", Resource_image_content.compress_data ) );
 
 
+                Console.Log( "WILL ACTIVATE TEST" );
+                TO_DELETE_AFTER.Set();
 
                 return;
 
@@ -83,23 +83,25 @@ unsafe public partial class Test {
         
         public void Update( Control_flow _flow ){
 
-                test_figures?.Update( _flow );
+                TO_DELETE_AFTER.Update();
 
-                if( Input.GetKeyDown( KeyCode.Alpha1 ) )
-                    { device.Change_state(new(){ new_state = Device_state.nothing, force = true }); }
+                // test_figures?.Update( _flow );
 
-                if( Input.GetKeyDown( KeyCode.Alpha2 ) )
-                    { device.Change_state(new(){ new_state = Device_state.inactive, force = true }); }
+                // if( Input.GetKeyDown( KeyCode.Alpha1 ) )
+                //     { device.Change_state(new(){ new_state = Device_state.nothing, force = true }); }
 
-
-                if( Input.GetKeyDown( KeyCode.Alpha3 ) )
-                    { device.Change_state(new(){ new_state = Device_state.active, force = true }); }
-
-                if( Input.GetKeyDown( KeyCode.Alpha4 ) )
-                    { device.Delete(); }
+                // if( Input.GetKeyDown( KeyCode.Alpha2 ) )
+                //     { device.Change_state(new(){ new_state = Device_state.inactive, force = true }); }
 
 
-                device?.Update( _flow );
+                // if( Input.GetKeyDown( KeyCode.Alpha3 ) )
+                //     { device.Change_state(new(){ new_state = Device_state.active, force = true }); }
+
+                // if( Input.GetKeyDown( KeyCode.Alpha4 ) )
+                //     { device.Delete(); }
+
+
+                // device?.Update( _flow );
 
         }
 
@@ -114,5 +116,6 @@ unsafe public partial class Test {
         }
 
 }
+
 
 

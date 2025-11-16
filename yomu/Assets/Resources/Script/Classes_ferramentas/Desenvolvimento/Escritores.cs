@@ -7,7 +7,7 @@ using UnityEditor;
 using System.Reflection;
 
 
-public static class Escritores {
+unsafe public static class Escritores {
     
 
 
@@ -93,23 +93,15 @@ public static class Escritores {
 
         }
 
-        public static void Salvar_byte_array( byte[] _bytes , int n = -1 ){
+        public static void Salvar_byte_array( byte[] _bytes , int n = -1, string path_final = null ){
 
+
+                if( path_final == null )
+                    { path_final = $"{ System.IO.Directory.GetCurrentDirectory() }\\Assets\\Editor\\texto_para_verificar.txt"; }
                 
-                string path_dir = System.IO.Directory.GetCurrentDirectory();
 
-                string path_para_salvar = path_dir + "\\Assets\\scripts\\Main\\";
-
-                
-                string path_final = path_para_salvar + "texto_para_verificar.txt";
-
-                if(System.IO.File.Exists( path_final )) {System.IO.File.Delete( path_final );}
-
-                System.Diagnostics.Process.Start( path_final );
-                throw new Exception( );
-
-
-
+                if( System.IO.File.Exists( path_final ) ) 
+                    { System.IO.File.Delete( path_final );}
                 
 
                 char[] t = new char[_bytes.Length ];
@@ -140,8 +132,6 @@ public static class Escritores {
                 //System.IO.File.WriteAllLines( path_final ,( t) );
                 System.IO.File.WriteAllLines( path_final ,  str_arr );
 
-                System.Diagnostics.Process.Start( path_final );
-                throw new Exception( );
                 
 
 
@@ -153,10 +143,10 @@ public static class Escritores {
                 
                 string path_dir = System.IO.Directory.GetCurrentDirectory();
 
-                string path_para_salvar = path_dir + "\\Assets\\scripts\\Main\\";
+                string path_para_salvar = path_dir + "\\Assets\\Editor\\";
 
                 
-                string path_final = path_para_salvar + "texto_para_verificar.txt";
+                string path_final = path_para_salvar + "a.txt";
 
                 if(System.IO.File.Exists( path_final )) {System.IO.File.Delete( path_final );}
 
@@ -178,12 +168,58 @@ public static class Escritores {
 
                 System.IO.File.WriteAllLines( path_final ,  str_arr );
 
-                System.Diagnostics.Process.Start( path_final );
-                throw new Exception( );
+                // System.Diagnostics.Process.Start( path_final );
+                // throw new Exception( );
                 
 
 
         }
+
+        public static void Salvar_pointer( void* _pointer, int _length, string path_final ){
+
+                byte[] _bytes = new byte[ _length ];
+
+                Files.Transfer_data( _pointer, _bytes );
+
+                if( System.IO.File.Exists( path_final ) ) 
+                    { System.IO.File.Delete( path_final );}
+                
+
+                char[] t = new char[_bytes.Length ];
+                string[] str_arr = new string[ _bytes.Length + 1 ];
+
+                for( int k = 0 ; k < _bytes.Length ;k++ ){
+
+                    str_arr[ k + 1 ] = _bytes[ k ].ToString();
+                    
+
+                }
+
+                    str_arr[ 0 ] = "texto:";
+
+                for( int i = 0  ; i < _bytes.Length ;i++ ){
+
+                    t[ i ] = ( char ) _bytes[ i ] ;
+                }
+
+
+
+
+
+                string texto_final = "texto: \n\r"   + new string( t );
+
+                
+
+                //System.IO.File.WriteAllLines( path_final ,( t) );
+                System.IO.File.WriteAllLines( path_final ,  str_arr );
+
+
+
+
+
+        }
+
+        
 
 
 

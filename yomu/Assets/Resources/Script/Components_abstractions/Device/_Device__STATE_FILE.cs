@@ -13,7 +13,6 @@ public unsafe abstract partial class Device {
         public Device_state__TRANSITIONS transitions;
 
 
-
         protected virtual void Force_inactive(){}
         protected virtual void Force_active(){}
         protected virtual void Force_nothing(){}
@@ -145,7 +144,9 @@ public unsafe abstract partial class Device {
         protected virtual void Delete_device_signal(){}
         public virtual void Delete(){
 
+            
             Delete_device_signal();
+            body.Destroy( ref body );
             UIs_manager.Delete_all_UIs();
             deleted = true;
 

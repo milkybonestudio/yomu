@@ -33,7 +33,7 @@ public static class TOOL__resources_images_handler_REAJUST {
 
                 int weight = 0;
 
-                if( !!!( _manager.task_getting_compress_file_REAJUST.finalizado ) )
+                if( !!!( _manager.task_getting_compress_file_REAJUST.Is_finalized() ) )
                     { return weight; }
 
                 // --- TASK GET THE PNG                
@@ -107,7 +107,7 @@ public static class TOOL__resources_images_handler_REAJUST {
                     { CONTROLLER__errors.Throw(  $"The image { _image.name } was passing the data to the texture, but the content_going_to is { _image.content_going_to }" ); }
 
 
-                if( !!!( _manager.task_passing_to_texture_REAJUST.finalizado ) )
+                if( !!!( _manager.task_passing_to_texture_REAJUST.Is_finalized() ) )
                     { return 0; }
 
                 

@@ -78,13 +78,14 @@ public struct Body_visual_data_ROTATION_GENERIC {
     }
 
     
-    public void Update( Transform _transform ){
+    public int Update( Transform _transform ){
 
 
         if( finished )
-            { return; }
+            { return 0; }
 
         Rotate( _transform );
+        return 2;
         
     }
 

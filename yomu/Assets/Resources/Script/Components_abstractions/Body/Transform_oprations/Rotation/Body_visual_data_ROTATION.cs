@@ -15,6 +15,19 @@ public struct Body_visual_data_ROTATION {
         public Body_rotation_type current_type;
 
 
+        public Quaternion Get_current(){
+
+            if( current_type == Body_rotation_type.generic )
+                { return generic.current; }
+
+            switch( current_type ){
+                default: CONTROLLER__errors.Throw( $"Can not handle the type <Color=lightBlue>{ current_type }</Color>" ); return default;
+            }
+        
+
+        }
+
+
         public void __Set_initial_rotation__( Quaternion _rotation ){
 
                 switch( current_type ){
@@ -25,8 +38,6 @@ public struct Body_visual_data_ROTATION {
                 }
 
         }
-
-
 
 
 
@@ -72,14 +83,14 @@ public struct Body_visual_data_ROTATION {
 
 
 
-        public void __Update__( Transform _transform ){
+        public int __Update__( Transform _transform ){
 
 
             if( current_type == Body_rotation_type.generic )
-                { generic.Update( _transform ); return; }
+                { return generic.Update( _transform ); }
             
             switch( current_type ){
-                default: CONTROLLER__errors.Throw( $"Can not handle the type <Color=lightBlue>{ current_type }</Color>" ); break;
+                default: CONTROLLER__errors.Throw( $"Can not handle the type <Color=lightBlue>{ current_type }</Color>" ); return 0;
             }
 
         }

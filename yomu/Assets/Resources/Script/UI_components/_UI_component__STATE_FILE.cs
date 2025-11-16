@@ -15,6 +15,19 @@ using UnityEngine;
 unsafe public abstract partial class UI_component{
 
 
+        // ** MATERIAL
+        public bool material_manager_is_specific;
+        public Action Specific_material_update;
+        public void Use_specific_material_manager( Action _specific_material_update = null ){
+
+            Specific_material_update = _specific_material_update;
+            material_manager_is_specific = true;
+
+        }
+
+        protected abstract void Update_material();
+
+
 
         public abstract void Force_active();
         public abstract void Force_inactive();

@@ -55,7 +55,7 @@ public static class TOOL__resources_images_handler_UP {
 
                 _manager.task_getting_compress_low_quality_file = CONTROLLER__tasks.Pegar_instancia().Get_task_request( "task_getting_compress_low_quality_file" );
                 
-                    _manager.task_getting_compress_low_quality_file.prioridade = 1000;
+                    _manager.task_getting_compress_low_quality_file.priority = 1000;
                     _manager.task_getting_compress_low_quality_file.fn_multithread = ( Task_req req ) => { TASK_REQ.Add_single_data( req, TOOL__get_data_images_resources.Get_single_low_quality( _image ) ); };
 
                 return weight;
@@ -79,7 +79,7 @@ public static class TOOL__resources_images_handler_UP {
 
                 int weight = 0;
 
-                if( !!!( _manager.task_getting_compress_low_quality_file.finalizado ) )
+                if( !!!( _manager.task_getting_compress_low_quality_file.Is_finalized()  ) )
                     { return weight; }
 
                 // --- JA PEGOU A IMAGEM
@@ -136,7 +136,7 @@ public static class TOOL__resources_images_handler_UP {
 
                 int weight = 0;
 
-                if( !!!( _manager.task_getting_compress_file.finalizado ) )
+                if( !!!( _manager.task_getting_compress_file.Is_finalized() ) )
                     { return weight; }
 
                 // --- TASK GET THE PNG                
@@ -247,7 +247,7 @@ public static class TOOL__resources_images_handler_UP {
                 if( _image.content_going_to < Resource_image_content.sprite )
                     { CONTROLLER__errors.Throw( $"The image { _image.name } was passing the data to the texture, but the content_going_to is { _image.content_going_to }" ); }
 
-                if( !!!( _manager.task_passing_to_texture.finalizado ) )
+                if( !!!( _manager.task_passing_to_texture.Is_finalized() ) )
                     { return 0; }
                 
                 // --- NEXT STEAP

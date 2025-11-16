@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,7 +24,7 @@ public class CONTAINER__UI_visual_container : CONTAINER__generic<UI_visual_conta
 
             // ** change
 
-            ex.material_manager.Change_material( null );
+            ex.material_manager.Destroy();
             ex.material_manager = default;
             Controllers.resources.images.container_image_refs.Return_image_ref( ex.image_ref );
             ex.image_ref = null; 
@@ -52,7 +53,7 @@ public class UI_visual_container : UI_component {
 
 
     public override void Force_active(){}
-    public override void Force_inactive(){ material_manager.render.sprite = image_ref.Get_sprite(); }
+    public override void Force_inactive(){ sprite_render.sprite = image_ref.Get_sprite(); }
     public override void Force_nothing(){}
 
         
@@ -64,6 +65,8 @@ public class UI_visual_container : UI_component {
 
 
         // ** IMAGE DATA
+
+        private SpriteRenderer sprite_render;
 
         private Resource_context context;
         private string main_folder;
@@ -86,34 +89,37 @@ public class UI_visual_container : UI_component {
 
 
         public RESOURCE__image_ref image_ref;
+
+
+        //mark
+        // ** nao pode ficar aqui
         public Individual_components_material_manager material_manager;
 
 
         public UI_visual_container(){
 
                 resources_container = new MANAGER__resources();
-                material_manager.material = new Material( Shaders.individual_components );
-                material_manager.UI = this;
+                material_manager.name = name;
 
         }
 
+        protected override void Update_material(){
+
+            material_manager.Update_material();
+
+        }
 
         protected override void Update_phase( Control_flow _flow ){
 
-            if( material_manager.material != null )
-                { material_manager.Update_material(); }
                                 
         }
             
 
         protected override void Link_to_UI_game_object_in_structure( GameObject _UI_game_object ){ 
 
-                material_manager.render = _UI_game_object.GetComponent<SpriteRenderer>();
+                sprite_render = _UI_game_object.GetComponent<SpriteRenderer>();
+                material_manager = Individual_components_material_manager.Construct( sprite_render );
 
-                // talvez fazer um container generico
-                material_manager.render.material = material_manager.material;
-
-                
 
         }
 

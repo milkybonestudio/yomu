@@ -116,7 +116,7 @@ public abstract partial class Figure{
                 if( state != Figure_state.active )
                     {  Update_content( _flow ); return; }
 
-                body.Update( _flow );
+                _flow.weight_frame_available -= body.Update();
                 
         }
 

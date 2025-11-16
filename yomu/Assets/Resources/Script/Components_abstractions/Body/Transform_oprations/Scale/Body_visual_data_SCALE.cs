@@ -13,6 +13,21 @@ public partial struct Body_visual_data_SCALE {
         public Body_scale_type current_type;
 
 
+
+        public Vector3 Get_current(){
+
+            if( current_type == Body_scale_type.generic )
+                { return generic.current; }
+
+            switch( current_type ){
+                default: CONTROLLER__errors.Throw( $"Can not handle the type <Color=lightBlue>{ current_type }</Color>" ); return default;
+            }
+        
+
+        }
+
+
+
         public void __Set_initial_scale__( Vector3 _position ){
 
                 switch( current_type ){
@@ -65,14 +80,14 @@ public partial struct Body_visual_data_SCALE {
 
 
 
-        public void __Update__( Transform _transform ){
+        public int __Update__( Transform _transform ){
 
                         
             if( current_type == Body_scale_type.generic )
-                { generic.Update( _transform ); return; }
+                { return generic.Update( _transform ); }
 
             switch( current_type ){
-                default: CONTROLLER__errors.Throw( $"Can not handle the type <Color=lightBlue>{ current_type }</Color>" ); break;
+                default: CONTROLLER__errors.Throw( $"Can not handle the type <Color=lightBlue>{ current_type }</Color>" ); return 0;
             }
 
         }

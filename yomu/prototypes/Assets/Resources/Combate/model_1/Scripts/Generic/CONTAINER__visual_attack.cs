@@ -20,10 +20,19 @@ public static class CONTAINER__visual_attack {
     static CONTAINER__visual_attack(){
 
         dic.Add( "slash", new(){
-            audio_name = "slash",
+            // audio_name = "slash",
             number_frames = 7,
             path_name = "slash"
         });
+
+
+
+        dic.Add( "jud", new(){
+            // audio_name = "slash",
+            number_frames = 13,
+            path_name = "jud"
+        });
+
 
     }
 

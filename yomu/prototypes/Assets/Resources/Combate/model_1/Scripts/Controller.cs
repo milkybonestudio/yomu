@@ -1,118 +1,176 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-
-public struct Fase{
-
-    public string[] player_start_characters;
-    public string[][] mobs_in_world; 
-    public string world_model; // ** aponta para uma pasta com 2 prefabs que tem o cenario
-
-}
-
-
-public enum Stage {
-
-    treasure, // ** get more characters
-    player_turn,
-    mob_turn,
-
-}
-
-    public struct Options {
-
-        public bool click_auto;
-        public bool click_pass_turn;
-
-    }
 
 
 
 public class Controller : MonoBehaviour{
 
-    public Button pass_turn_button;
-    public Button auto_button;
+
+        public Stage stage;
+
+        public static Controller instance;
 
 
-    public Characters_controller character_controller;
-    public Mob_controller mob_controller;
-    public Player_inputs player_inputs;
-    public World_controller world_controller;
-
-    public Stage stage;
-
-    Combat_character ruby;
-    
-    void Start(){
-
-        // ** iniciar containers 
-        character_controller = new Characters_controller();
-        mob_controller = new Mob_controller();
-        world_controller = new World_controller();
-
-        player_inputs = new Player_inputs();
-
-        pass_turn_button.onClick.AddListener(  ()=>{ player_inputs.options.click_pass_turn = true; } );
-        auto_button.onClick.AddListener(  ()=>{ player_inputs.options.click_auto = true; } );
+        Combat_character ruby;
         
-    }
+        void Start(){
 
 
-    public void Start_fase( Fase _fase ){
+            Audios.Start_music();
 
-            character_controller.Start_fase( _fase.player_start_characters );
+            Controllers.main = this;
 
-    }
+            // ** MATERIALS
+            
+            VISUAL_CONTAINER__visual_attacks.Construct();
+            Character_giver.Start();
+            
+            instance = this;
 
+            finalize_game_object = GameObject.Find( "Canvas/Finalize" );
+            finalize_button = finalize_game_object.GetComponent<Button>();
+            finalize_button.onClick.AddListener(()=>{
 
-    void Update(){
+                finalize_game_object.SetActive( false );
+                Change_stage( Stage.menu );
 
-        Audios.Update();
-        VISUAL_CONTAINER__visual_attacks.Update();
+            });
 
-        if( Input.GetKeyDown( KeyCode.Space ) )
-            {
-                VISUAL_CONTAINER__visual_attacks.Add_visual_attack( 
-                    CONTAINER__visual_attack.Get_visual_attakc( "slash" ) 
-                );
-            }
-
-        if( Input.GetKeyDown( KeyCode.Alpha1 ) )
-            {
-                character_controller.Start_player_turn();
-            }
-
-        
-        switch( stage ){
-            case Stage.waiting_player_inputs: player_inputs.Update(); break;
-            default: throw new System.Exception( $"Can not handle stage type { stage }" ); 
-        }
-
-        
-    }
+            finalize_game_object.SetActive( false );
 
 
-        public void Start_player_turn(){
+            // ** iniciar containers 
+            new CONTROLLER__combat();
+            new CONTROLLER__path();
+            new Menu();
 
-            for( int i = 0 ; i < NUMBER_COMBAT_CHARACTERS ; i++ ){
-                characters_in_combat[ i ].Liberat_cast();
-            }
-
-
-        }
-
-        public void Start_mob_turn(){
-
-            for( int i = 0 ; i < NUMBER_COMBAT_CHARACTERS ; i++ ){
-                characters_in_combat[ i ].Block_cast();
-            }
-
+            Controllers.menu.Start();
 
         }
 
 
+        public void Change_stage( Stage _stage ){
+
+            Controllers.menu.container.SetActive( false );
+            Controllers.path.container.SetActive( false );
+            Controllers.combat.container.SetActive( false );
+
+            switch( _stage ){
+
+                case Stage.menu: Controllers.menu.container.SetActive( true ); break;
+                case Stage.combat: Controllers.combat.container.SetActive( true ); break;
+                case Stage.choosing_path: Controllers.path.container.SetActive( true ); break;
+
+            }
+
+            stage = _stage;
+            // Debug.Log( "vai mudar para stage " + _stage );
+
+        }
+
+
+
+
+        void Update(){
+
+            if( Input.GetKeyDown( KeyCode.Alpha1 ) )
+                { Character_giver.Start( new Combat_character( "Maki" ) ); }
+
+            
+            Mob.Touch();
+
+
+            
+            Audios.Update();
+            VISUAL_CONTAINER__visual_attacks.Update();
+
+            switch( stage ){
+                case Stage.menu: Controllers.menu.Update(); break;
+                case Stage.combat: Controllers.combat.Update(); break;
+                case Stage.choosing_path: Controllers.path.Update(); break;
+                case Stage.final: break;
+                default: throw new System.Exception( $"Can not handle stage type { stage }" ); 
+            }
+            
+        }
+
+        // ** quem vai chamar geralmente é o menu
+        public void Start_fase( Fase _fase ){
+
+            _fase.map = Get_map( _fase.map_name );
+            
+            Controllers.path.Start_fase( _fase );
+            Controllers.combat.Start_fase( _fase );
+
+            Change_stage( Stage.combat );
+
+        }
+
+        private I_map Get_map( string _name ){
+
+            switch( _name  ){
+
+                case "map_1": return new MAP_1();
+                default: throw new System.Exception( "Could no find map <Color=lightBlue>{ _name }</Color>" );
+
+            };
+
+        }
+
+
+        public Button finalize_button;
+        public GameObject finalize_game_object;
+        public void Finalise(){
+
+            Debug.Log( "veio finalize" );
+
+            finalize_game_object.SetActive( true );
+            finalize_game_object.GetComponent<Image>().sprite = Resources.Load<Sprite>( Paths_combate_modelo_1.Get_path( "end_win" ) );
+
+            Controllers.path.Destroy();
+            Controllers.mobs.Destroy();
+            Controllers.characters.Destroy();
+            Change_stage( Stage.final );
+            
+
+        }
+
+        public void Finalise_lose(){
+
+            Debug.Log( "veio finalize" );
+
+            finalize_game_object.SetActive( true );
+            finalize_game_object.GetComponent<Image>().sprite = Resources.Load<Sprite>( Paths_combate_modelo_1.Get_path( "end_lose" ) );
+
+            Controllers.path.Destroy();
+            Controllers.combat.Destroy();
+            // Controllers.mobs.Destroy();
+            // Controllers.characters.Destroy();
+            Change_stage( Stage.final );
+
+        }
+
+
+        public Coroutine Start_coroutine( IEnumerator _num ){
+
+            return StartCoroutine( _num );
+
+        }
+
+        
+        public void Stop_coroutine( Coroutine _num ){
+
+            if( _num == null )
+                { return; }
+            
+            StopCoroutine( _num );
+
+        }
 
 
 }
+
 

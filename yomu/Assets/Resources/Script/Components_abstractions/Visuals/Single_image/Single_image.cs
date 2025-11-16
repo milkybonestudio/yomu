@@ -36,7 +36,7 @@ public class Single_image{
             if( !!!( activate ) )
                 { return; }
 
-            body.Update( _flow );
+            _flow.weight_frame_available -= body.Update();
             
         }
 

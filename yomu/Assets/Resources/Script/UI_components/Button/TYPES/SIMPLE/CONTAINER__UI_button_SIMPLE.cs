@@ -6,8 +6,6 @@ using UnityEngine;
 public class CONTAINER__UI_button_SIMPLE : CONTAINER__generic<UI_button_SIMPLE> {
 
         
-                                                 
-
         public override void Reset_data( UI_button_SIMPLE button ){
 
 

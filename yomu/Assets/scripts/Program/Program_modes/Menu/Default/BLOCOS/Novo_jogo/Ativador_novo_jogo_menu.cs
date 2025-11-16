@@ -76,7 +76,7 @@ public static class Ativador_novo_jogo_menu {
 
                 while( true ){
 
-                        if( _task_req.finalizado )
+                        if( _task_req.Is_finalized() )
                             { break; }
 
                         continue;
@@ -88,11 +88,6 @@ public static class Ativador_novo_jogo_menu {
 
 
         }
-
-
-
-
-    
 
 
 

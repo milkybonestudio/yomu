@@ -5,253 +5,294 @@ using System.Collections.Concurrent;
 using System.Collections;
 
 
+public class CONTROLLER__tasks {
 
-public class CONTROLLER__tasks  {
+    //mark
+    // ** OQUE NAO FOI VERIFICADO:
 
-
-        public static CONTROLLER__tasks instancia;
-        public static CONTROLLER__tasks Pegar_instancia(){ return instancia; }
-    
-
-        public CONTROLLER__tasks() {
-
-                modulo_multithread = new MODULO__multithread( _nome_modulo: "Modulo_multithread_controlador_tasks", _controalador_tasks: this );
-                relogio = new System.Diagnostics.Stopwatch();
-
-                int numero_inicial_de_slots = 2;
-
-                tasks_em_espera_iniciar = new Task_req [ numero_inicial_de_slots ];
-                tasks_em_espera_para_ativar_multithread = new Task_req [ numero_inicial_de_slots ];
-                tasks_em_espera_para_ativar_single_thread = new Task_req [ numero_inicial_de_slots ];
-
-                tempo_maximo_em_single_thread_ms = 3L;
-
-        }
-
-        public Task_req Get_task_request( string _name ){
-
-                Task_req req = new Task_req( _name );
-                Adicionar_task( req );
-                return req;
-
-        }
-
-        public long tempo_maximo_em_single_thread_ms;
-
-        public MODULO__multithread modulo_multithread;
-
-        public Task_req[] tasks_em_espera_iniciar;
-        public Task_req[] tasks_em_espera_para_ativar_multithread;// somente multithread deleta e somente single thread adiciona.
-        public Task_req[] tasks_em_espera_para_ativar_single_thread;
-
-        private System.Diagnostics.Stopwatch relogio;
-
-        public bool block_frame;
-
-        public void Update( Control_flow _control_flow ){
+    // --> stop/start da multithread funciona
+    // --> inserir mais de 1 thread e funciona do mesmo jeito
+    // --> alterar prioridade da thread no meio do caminho
+    // --> cancelar toda uma task
 
 
-                if( block_frame )
-                    { block_frame = false; return; }
-                
-
-                relogio.Start();
-
-                Allocat_waiting_tasks();
-                Verify_multithread_task();
-                Guarantee_second_thread();
-
-                while ( true ){
-
-                        if( !!! ( Pode_continuar() ) ) 
-                            { return; } // --- NAO PODE CONTINUAR
-
-                        Task_req task = TASK_REQ.Pegar_task_com_maior_prioridade( tasks_em_espera_para_ativar_single_thread ); // --- VERIFICA SE TEM TASKS
-
-                        if( task == null ) 
-                            { relogio.Reset(); return; }  // --- NAO TEM NADA PARA FAZER
-
-                    
-                        if( !!! ( task.pode_executar_single_thread ) || task.task_bloqueada )
-                            { 
-                                // --- NAO PODE EXECUTAR
-                                task.finalizado = true; 
-                                tasks_em_espera_para_ativar_single_thread[ task.slot_id ] = null; 
-                                continue; 
-                            }  
-                            
-
-                        if( ( task.task_fracionada != null ) && ( task.pode_executar_parte_single_thread_fracionada ) )
-                            { Executar_fracionado( task ); } // --- VAI EXECUTAR FRACIONADO
+    public static CONTROLLER__tasks instancia;
+    public static CONTROLLER__tasks Pegar_instancia(){ return instancia; }
 
 
-                        if ( !!!( Pode_continuar() ) )
-                            { return; } // --- NAO PODE CONTINUAR
-
-                    
-                        task.fn_single_thread( task ); 
-                        task.finalizado = true;
-                        tasks_em_espera_para_ativar_single_thread[ task.slot_id ] = null;
-                
-                }
-
-            
-
-                if( modulo_multithread.exception != null )
-                    { CONTROLLER__errors.Throw_exception( modulo_multithread.exception ); }
-                
-
-        }
-
-        private void Guarantee_second_thread(){
-
-                foreach( Task_req req in tasks_em_espera_para_ativar_multithread ){
-
-                        if( req != null )
-                            { modulo_multithread.Garantir_thread(); return; }
-                            
-                }
-
-        }
-
-
-        private void Verify_multithread_task(){
-
-
-                for(  int index_multithread = 0 ; index_multithread < tasks_em_espera_para_ativar_multithread.Length; index_multithread++  ){
-
-                        Task_req req = tasks_em_espera_para_ativar_multithread[ index_multithread ];
-
-                        if( req == null )
-                            { continue; }
-
-                        if( req.part_multithread_finished )
-                            { tasks_em_espera_para_ativar_multithread[ index_multithread ] = null; }
-
-                        continue;
-                }
-
-        }
+    public CONTROLLER__tasks() {
 
         
+        relogio = new System.Diagnostics.Stopwatch();
 
-        public Coroutine Wait_task_ends( Task_req _task_request, float _max_time_ms ){
+            single_tasks_collection.Start( "single_tasks_collection" );
+            multithread_tasks_collection.Start( "multithread_tasks_collection" );
 
-                return Mono_instancia.Start_coroutine( Wait() );
+        modulo_multithread = new MODULO__multithread( _nome_modulo: "Modulo_multithread_controlador_tasks", _controalador_tasks: this );
 
-                IEnumerator Wait(){
+        tempo_maximo_em_single_thread_ms = 3L;
+        block_for_test = false;
 
-                        float time = 0f;
+    }
 
-                        while( true ){
+    public void Block_multithread_TEST(){
 
-                            time += ( Time.deltaTime * 1000f );
+        block_for_test = true;
 
-                            if( time > _max_time_ms )
-                                { CONTROLLER__errors.Throw( $"Passou do tempo na task { _task_request.nome }" ); }
+    }
 
-                            if(  _task_request.finalizado )
-                                { break; }
-                                
-                            yield return null; 
+    public void Liberate_multithread_TEST(){
 
-                        }
-                        
-                        yield break;
+       block_for_test = false;
+        
+    }
 
-                };
+    public static volatile bool block_for_test;
 
-                                                    
+    public Task_req Get_task_request( string _name ){
 
-        }
+        Task_req req = new Task_req( _name );
+        Adicionar_task( req );
+        return req;
 
+    }
 
-        public void Block_frame_update(){
+    public void Destroy(){
 
-            block_frame = true;
-
-        }
-
-
-        private void Executar_fracionado( Task_req task ){
-
-                for( int  i = 0 ; i < task.task_fracionada.fn_fracionadas.Length ; i++ ){
-
-                        task.task_fracionada.Ativar_fracionado();
-
-                        if( ! ( Pode_continuar() ) ) 
-                            { return; }
-
-                        if( ! ( task.task_fracionada.tem_fracionado ) )
-                            { break;}
-
-                        continue;
-
-                }
-                
-        }
-
-        private bool Pode_continuar(){
-
-                bool pode_continuar = ( relogio.ElapsedMilliseconds < tempo_maximo_em_single_thread_ms );
-                
-                if( !!!( pode_continuar ) )
-                    { relogio.Reset(); }
-
-                return pode_continuar;
-
-        }
-
-        private void Allocat_waiting_tasks(){
-
-            // ** previne que inicie a segunda thread por nada
-
-            for( int index = 0 ; index < tasks_em_espera_iniciar.Length ; index++ ){
+        Thread multithread_thread = modulo_multithread.Sinalize_stop_multithread();
+        Liberate_spin_locks();
 
 
-                    Task_req task = tasks_em_espera_iniciar[ index ];
+        // Thread.Sleep( 1000 );
 
-                    if( task == null )
-                        { continue; }
+        if( multithread_thread != null && multithread_thread.IsAlive )
+            { 
+                bool ended = multithread_thread.Join( 5_000 ); 
+                if( !!!( ended ) )
+                    { CONTROLLER__errors.Throw( "The multitrhead didn't end " ); }                    
+            }
+                            
+    }
 
-                    tasks_em_espera_iniciar[ index ] = null;
+    public void Liberate_spin_locks(){
 
-                    // --- VERIFICAR MULTI THREAD
+        single_tasks_collection.Liberate_spin_locks();
+        multithread_tasks_collection.Liberate_spin_locks();
 
-                    if( task.pode_executar_parte_multithread )
-                        { modulo_multithread.Garantir_thread();     TASK_REQ.Adicionar_task_em_array( ref tasks_em_espera_para_ativar_multithread, task );     continue; } // --- COLOCA MULTITHREAD
+        if( modulo_multithread.spin_lock_change_state.IsHeldByCurrentThread )
+            { multithread_tasks_collection.spin_lock_tasks.Exit(); }
 
-                    // ---NAO TEM NADA NA MULTITRHEAD
+        return;
 
-                    if( task.pode_executar_single_thread )
-                        { TASK_REQ.Adicionar_task_em_array( ref tasks_em_espera_para_ativar_single_thread, task );     continue; } // --- COLOCA SINGLETHREAD
-                    
-                    // --- NADA È FEITO
-                    continue;
+    }
+
+    public long tempo_maximo_em_single_thread_ms;
+
+    
+    public MODULO__multithread modulo_multithread;
+
+    public const int INITIAL_SLOTS_SIZE = 100;
+        public Task_thread_safe_collection single_tasks_collection;
+        public Task_thread_safe_collection multithread_tasks_collection;
+    
+
+
+
+
+    private System.Diagnostics.Stopwatch relogio;
+    
+
+    public bool block_frame;
+
+    public void Update( Control_flow _control_flow ){
+
+        modulo_multithread.Update();
+
+        if( block_frame )
+            { block_frame = false; return; }
+
+        relogio.Start();
+
+        while ( true ){
+
+            // ** SINGLE THREAD
+
+            if( !!! ( Pode_continuar() ) ) 
+                { return; } // --- NAO PODE CONTINUAR
+
+            Task_req best_task =  single_tasks_collection.Get_best_task();
+
+            if( best_task == null ) 
+                {  relogio.Reset();  return; }  // --- NAO TEM NADA PARA FAZER
+
+            switch( best_task.stage ){
+
+                case Task_req_stage.single_start: Start( best_task ); break;
+                case Task_req_stage.single_sequencial: Single_sequencial( best_task ); break;
+                case Task_req_stage.single_final: Single_final( best_task ); break;
+                case Task_req_stage.finished: Finished( best_task ); break;
 
             }
 
+            
+            if ( !!!( Pode_continuar() ) )
+                { break; } // --- NAO PODE CONTINUAR
+
+            continue;
+
         }
 
 
-        public void Adicionar_task( Task_req _nova_task ) {
+        if( modulo_multithread.exception != null )
+            { CONTROLLER__errors.Throw_exception( modulo_multithread.exception ); }
+        
 
-                
-                int index = TASK_REQ.Pegar_index_null( tasks_em_espera_iniciar );
-                if( index == -1 )
-                    { 
-                        // --- AUMENTAR
-                        index = tasks_em_espera_iniciar.Length;
-                        tasks_em_espera_iniciar = TASK_REQ.Aumentar_length_array_2d( tasks_em_espera_iniciar, 20 ); 
-                    }
+    }
 
 
-                tasks_em_espera_iniciar[ index ] = _nova_task;
-                _nova_task.slot_id = index;
+    private void Finished( Task_req task ){
 
+        Console.Log( System_run.tasks_show_messages, ( "FINISH TASK: " + task.nome ) );
+        single_tasks_collection.Remove_task( task );
+        return;
+
+    }
+    private void Start( Task_req task ){
+
+        Console.Log( System_run.tasks_show_messages, "WILL START TASK: " + task.nome );
+        task.Change_stage( Task_req_stage.multithread_sequencial );
+        
+        // ** SWITCH
+        single_tasks_collection.Remove_task( task );
+        multithread_tasks_collection.Add_task( task );
+
+        // ** nesse ponto se a thread acabou de ser removida não vai iniciar novamente, vai só mudar as flags
+        // ** fazer um if
+        
+        modulo_multithread.Start_thread_again();
+        
+        return;
+
+    }
+
+
+    public bool Have_any_task(){
+
+        Task_req best_task_req_single = single_tasks_collection.Get_best_task();
+        Task_req best_task_req_multithread = multithread_tasks_collection.Get_best_task();
+        
+        return ( best_task_req_single != null ) || ( best_task_req_multithread != null );
+
+    }
+
+    public bool Have_single_task(){ return single_tasks_collection.Get_best_task() != null; }
+    public bool Have_multithread_task(){ return multithread_tasks_collection.Get_best_task() != null; }
+
+    private void Single_sequencial( Task_req task ){
+
+        Console.Log( System_run.tasks_show_messages, "veio single sequencial" );
+
+        if( !!!( task.have_single_sequencial ) || ( task.single_sequencial_situation == Task_req_stage_situation.ignore ) || task.task_bloqueada || ( task.Get_single_sequencial_number_of_calls_left() == 0 ) )
+            {
+                task.Change_stage( Task_req_stage.single_final );
                 return;
+            }
+
+        if( ( task.single_sequencial_situation == Task_req_stage_situation.force_wait ) )
+            { return; }
+
+        for( int  i = 0 ; i < task.Get_length_sequencial_single() ; i++ ){
+
+            task.sequencial_tasks_single.Ativar_fracionado( task );
+            return;
 
         }
+        
+    }
+
+    private void Single_final( Task_req task ){
+
+        Console.Log( System_run.tasks_show_messages, "SINGLE FINAL" );
+
+        if( !!!( task.have_single_final ) || ( task.single_final_situation == Task_req_stage_situation.ignore ) || task.task_bloqueada )
+            { 
+                task.Change_stage( Task_req_stage.finished );
+                // tasks_em_espera_para_ativar_single_thread[ task.slot_id ] = null;
+                return;
+            }
+    
+
+        if( task.single_final_situation == Task_req_stage_situation.force_wait )
+            { return; }
+
+        task.fn_single( task );
+        task.Change_stage( Task_req_stage.finished );
+
+        return;
+        
+    
+    }
+
+
+    public Coroutine Wait_task_ends( Task_req _task_request, float _max_time_ms ){
+
+        return Mono_instancia.Start_coroutine( Wait() );
+
+        IEnumerator Wait(){
+
+            float time = 0f;
+
+            while( true ){
+
+                time += ( Time.deltaTime * 1000f );
+
+                if( time > _max_time_ms )
+                    { CONTROLLER__errors.Throw( $"Passou do tempo na task { _task_request.nome }" ); }
+
+                if(  _task_request.Is_finalized() )
+                    { break; }
+                    
+                yield return null; 
+
+            }
+            
+            yield break;
+
+        };
+
+                                            
+
+    }
+
+
+    public void Block_frame_update(){ block_frame = true; }
+
+
+
+
+    private bool Pode_continuar(){
+
+        bool pode_continuar = ( relogio.ElapsedMilliseconds < tempo_maximo_em_single_thread_ms );
+        
+        if( !!!( pode_continuar ) )
+            { relogio.Reset(); }
+
+        return pode_continuar;
+
+    }
+
+
+    // ENTRY POINT
+    public void Adicionar_task( Task_req _nova_task ) { 
+
+        Console.Log( "WILL ADD TASK TO THE LIST: " + _nova_task.nome );
+        single_tasks_collection.Add_task( _nova_task ); 
+
+    }
+
+
+
 
 }
+
 

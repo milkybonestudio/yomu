@@ -10,19 +10,28 @@ public struct Mob_data {
 
     public string name;
     public Mob_type_taunt taunt;
-
-    // ** fix position
-    public int[] fix_positions;
-
-    // ** very_specifics
-    // ** in order of importance
-    public Character_trait[] traits;
-
-    public Combat_information combat_information;
+    // public Combat_information combat_information;
+    public int damage;
+    public int life;
 
 }
 
 public static class Mob_container {
+
+
+    public static void Verify_mobs( string[][] _mobs ){
+
+        foreach( string[] mobs_line in _mobs ){
+
+            foreach( string mob in mobs_line ){
+
+                Get_mob_data( mob );
+
+            }
+
+        }
+
+    }
 
     public static Dictionary<string, Mob_data> mobs_data = new Dictionary<string, Mob_data>();
 
@@ -37,26 +46,39 @@ public static class Mob_container {
 
     static Mob_container(){
 
-        mobs_data.Add( "albuin", new(){
+
+        mobs_data.Add( "Javali", new(){
             taunt = Mob_type_taunt.random,
-            combat_information = new(){
-                damage_calculator = new(){
-                    fix_damage = 2,
-                    number_slots = 2,
-                    max_slot_damage = 3, 
-                },
-            specific_modifier_attack = ( Combat_character _character, Damage_calculator _start_damage_calculator ) => {
+            life = 35,
+            damage = 3,
+        });
 
-                if( _character.data.name == "Ruby" )
-                    { _start_damage_calculator.fix_damage += 1; }
+        mobs_data.Add( "Mico", new(){
+            taunt = Mob_type_taunt.less_life,
+            life = 15,
+            damage = 1,
+        });
 
-                return _start_damage_calculator;
+        mobs_data.Add( "Alce", new(){
+            taunt = Mob_type_taunt.random,
+            life = 125,
+            damage = 5,
+        });
 
-            }
-            },
-
+        mobs_data.Add( "Bear", new(){
+            taunt = Mob_type_taunt.less_life_chance,
+            life = 250,
+            damage = 8,
 
         });
+
+        mobs_data.Add( "Tartaruga", new(){
+            taunt = Mob_type_taunt.random,
+            life = 100,
+            damage = 1,
+
+        });
+
 
     }
 

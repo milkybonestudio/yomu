@@ -1,0 +1,45 @@
+
+
+public enum Packet_storage_size {
+
+        _0_bytes,
+        _1_byte,
+        _2_bytes,
+        _3_bytes,
+        _4_bytes,
+        _5_bytes,
+        _10_bytes,
+        _20_bytes,
+        _40_bytes,
+        _60_bytes,
+        _80_bytes,
+        _120_bytes,
+        _160_bytes,
+        _200_bytes,
+        _250_bytes,
+        _300_bytes,
+        _350_bytes,
+        _400_bytes,
+        _500_bytes,
+        _700_bytes,
+        _900_bytes,
+        _1000_bytes,
+        _1500_bytes,
+        _2000_bytes,
+        _3000_bytes,
+        _4000_bytes,
+        _5000_bytes,
+        _10_kb,
+        _15_kb,
+        _20_kb,
+        _25_kb,
+        _40_kb,
+        _55_kb,
+        _70_kb,
+        _100_kb,
+
+        _MAX,
+
+    END,
+
+}

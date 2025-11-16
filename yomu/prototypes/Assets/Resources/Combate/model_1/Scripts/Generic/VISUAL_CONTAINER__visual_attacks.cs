@@ -5,18 +5,22 @@ using UnityEngine.UI;
 
 public static class VISUAL_CONTAINER__visual_attacks {
 
+        public static void Construct(){
 
-        public static GameObject container_visual_attacks = GameObject.Find( "Canvas/Attacks" );
-        public static Dictionary<int, Visual_attack_screen_data> list = new Dictionary<int, Visual_attack_screen_data>();
+            list = new Dictionary<int, Visual_attack_screen_data>();
+            container_visual_attacks = GameObject.Find( "Canvas/Game/Attacks" );
+
+        }
+
+        public static GameObject container_visual_attacks;
+        public static Dictionary<int, Visual_attack_screen_data> list;
 
         private static void Change_sprite( Visual_attack_screen_data _data, Sprite _sprite ){
 
             _data.image.sprite = _sprite;
 
-            _data.rect_transform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, _sprite.rect.width );
-            _data.rect_transform.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, _sprite.rect.height );
-
-
+            _data.rect_transform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, ( 5 * _sprite.rect.width) );
+            _data.rect_transform.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, ( 5 * _sprite.rect.height) );
 
         }
 
@@ -25,8 +29,7 @@ public static class VISUAL_CONTAINER__visual_attacks {
         public static void Add_visual_attack( Visual_attack _visual_attack, Vector3 _position_attack = default ){
 
             
-
-            Audios.Create_audio( _visual_attack.audio_name );
+            Audios.Create_audio();
 
             Visual_attack_screen_data data = new Visual_attack_screen_data();
 
@@ -46,7 +49,7 @@ public static class VISUAL_CONTAINER__visual_attacks {
             
                 for( int i = 0 ; i < _visual_attack.number_frames ; i++ ){
 
-                    string path = Paths_combate_modelo_1.Get_path( $"Visual_attacks/{ _visual_attack.path_name }_{ i }" );
+                    string path = Paths_combate_modelo_1.Get_path( $"Visual_attacks/{ _visual_attack.path_name }/{ i }" );
                     data.sprites[ i ] = Resources.Load<Sprite>( path );
                     if( data.sprites[ i ] == null )
                         { throw new System.Exception( $"Did not find in the path <Color=lightBlue>{ path }</Color>" ); }

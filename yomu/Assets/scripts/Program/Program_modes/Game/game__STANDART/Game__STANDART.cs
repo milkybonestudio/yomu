@@ -57,12 +57,12 @@ unsafe public class Game__STANDART : PROGRAM_MODE__INTERFACE {
 
         private void Verity_transition(){
 
-                if( CONTROLLER__transition.instancia.transition_request_visual == null )
+                if( CONTROLLER__game_transition.instancia.transition_request_visual == null )
                     { return; }
 
                 // --- INCIA TRANSICAO
                 game_update_mode = Game_update_mode.transition; 
-                CONTROLLER__transition.instancia.Start_transition_BLOCK();
+                CONTROLLER__game_transition.instancia.Start_transition_BLOCK();
 
                 return;
 

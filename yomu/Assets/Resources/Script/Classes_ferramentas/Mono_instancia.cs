@@ -3,7 +3,6 @@ using System.Collections;
 using System;
 
 
-
 public class Mono_instancia : MonoBehaviour {
 
 

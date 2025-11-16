@@ -9,6 +9,23 @@ public partial struct Body_visual_data_POSITION_ANCHOUR {
         public Body_visual_data_POSITION__GENERIC generic_self;
 
 
+        public Vector3 Get_current(){
+
+            // ** SEMPRE RETORNA O POSITIVO
+
+            if( current_type == Body_position_type.generic )
+                { return generic_self.current; }
+
+            switch( current_type ){
+                default: CONTROLLER__errors.Throw( $"Can not handle the type <Color=lightBlue>{ current_type }</Color>" ); return default;
+            }
+        
+
+        }
+
+
+
+
         public void __Set_current_initial_position__( Vector3 _position ){
 
                 switch( current_type ){
@@ -61,13 +78,13 @@ public partial struct Body_visual_data_POSITION_ANCHOUR {
 
 
 
-        public void __Update__( Transform _transform_container, Transform _transform_self ){
+        public int __Update__( Transform _transform_container, Transform _transform_self ){
 
             
             switch( current_type ){
 
-                case Body_position_type.generic: generic_container.Update( _transform_container ); generic_self.Update( _transform_self ); break;
-                default: CONTROLLER__errors.Throw( $"Can not handle the type <Color=lightBlue>{ current_type }</Color>" ); break;
+                case Body_position_type.generic: return ( generic_container.Update( _transform_container ) + generic_self.Update( _transform_self ) );
+                default: CONTROLLER__errors.Throw( $"Can not handle the type <Color=lightBlue>{ current_type }</Color>" ); return 0;
 
             }
 

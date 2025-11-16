@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using UnityEngine;
 
@@ -28,13 +29,22 @@ public static class Console {
 
         public static int slow_value;
         public static void Log_slow( string _message ){ if( slow_value == 0 ){ Log_intern( _message, Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }  }
+        public static void Log_TEST( object _message ){ _message = "<TESTE> " + _message; Log_intern( Convert.ToString(  _message ), Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }
         public static void Log( string _message ){ Log_intern( _message, Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }
         public static void Log( object _message ){ Log_intern( Convert.ToString(  _message ), Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }
         public static void LogError( string _message, int _trace_to_ignore = 0 ){ Log_intern( _message, Log_type.error, ( Thread.CurrentThread.Name == "Main" ), _trace_to_ignore ); return; }
 
 
-        [ Conditional( "UNITY_EDITOR" ) ]
-        public static void Log( bool _can, string _message ){ if( !!!( _can ) ){ return; } Log_intern( _message, Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }
+        public static void Log_player_need_to_read( string _message ){ Log( "PLAYER NEED TO READ: " + _message ); }
+
+
+
+        // sempre usar consts como flags para fazer optimização na build
+        [ MethodImpl(MethodImplOptions.AggressiveInlining) ]
+        public static void Log( bool _flag, string _message ){ if( _flag ){ Log( _message ); }; }
+
+        [ MethodImpl(MethodImplOptions.AggressiveInlining) ]
+        public static void Log( bool _flag, object _message ){ if( _flag ){ Log( _message ); }; }
 
 
         public static void Clear(){
@@ -82,10 +92,26 @@ public static class Console {
 
         }
 
+        private static SpinLock spinLock = default;
+
         private static void Log_intern( string _message, Log_type _type, bool _main_thread, int _trace_to_ignore = 0 ){
 
-                if( _message != "" )
-                    { _message = $"<Size=13>{ _message }</Size>"; }
+            bool good = false;
+            spinLock.Enter( ref good );
+
+            if( !!!( good ) )
+                { CONTROLLER__errors.Throw( "no good" ); }
+
+            try {
+
+                if( _message == null )
+                    { _message = "__NULL__"; }
+
+                
+                if( _message == "" )
+                    { _message = "__EMPTY_STRING__"; }
+
+                _message = $"<Size=13>{ _message }</Size>";
 
                 
                 string message_with_trace = Get_trace( _message, _trace_to_ignore );
@@ -111,7 +137,14 @@ public static class Console {
                 logs[ index_atual ] = message_with_trace;
                 logs_tipos[ index_atual ] = _type;
 
-                return;
+
+            }
+            finally{
+                spinLock.Exit();
+            }
+
+
+            return;
 
         }
 
@@ -191,7 +224,7 @@ public static class Console {
 
         public static void Update(){
 
-
+                
                 slow_value = ( slow_value + 1 ) % 60;
 
                 // ** Console.Update é o unico update que nao precisa do Control_flow
@@ -199,7 +232,9 @@ public static class Console {
                 if( pointer_run_time == index_atual_main && pointer_run_time_m == index_atual_m )
                         { return; }
 
+                //UnityEngine.Debug.Log( "" );
                 Debug_conditional( multithread_ativado, "<b><color=lime>---------- MAIN -------------</color></b>" );
+                
 
 
                 int starter_point = pointer_run_time;
@@ -254,19 +289,21 @@ public static class Console {
 
         public static void Start(){
 
+                // UnityEngine.Debug.Log( "vai dar start" );
+                
                 // --- MAIN
 
                 index_atual_main = 0;
                 pointer_run_time = 0;
-                logs_main = new string[ 5 ];
-                logs_tipos_main = new Log_type[ 5 ]{ Log_type.warning,Log_type.warning, Log_type.warning, Log_type.warning,Log_type.warning };
+                logs_main = new string[ 1_000 ];
+                logs_tipos_main = new Log_type[ 1_000 ];
 
                 // --- MULTITHREAD
 
                 index_atual_m = 0;
                 pointer_run_time_m = 0;
-                logs_m = new string[ 7 ];
-                logs_tipos_m = new Log_type[ 7 ];
+                logs_m = new string[ 1_000 ];
+                logs_tipos_m = new Log_type[ 1_000 ];
 
                 return;
 

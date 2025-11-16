@@ -10,19 +10,19 @@ unsafe public struct Heap_pointer_data {
 }
 
 
-public enum Heap_size {
+// public enum Heap_size {
 
-    // ** used in the 
-    nothing, 
-    slot_500b,
-    slot_1kb,
-    slot_5kb, 
-    slot_10kb,
-    slot_25kb,
-    slot_50kb,
-    slot_100kb,
+//     // ** used in the 
+//     nothing, 
+//     slot_500b,
+//     slot_1kb,
+//     slot_5kb, 
+//     slot_10kb,
+//     slot_25kb,
+//     slot_50kb,
+//     slot_100kb,
 
-}
+// }
 
 
 public unsafe class Character {

@@ -28,6 +28,9 @@ public class UI_button_COMPLETE : UI_button {
             }
 
 
+        protected override void Update_material(){}
+
+
         public override void Force_active(){ Console.Log( "tem que fazer" ); }
         public override void Force_inactive(){ TOOL__UI_button_SET_COMPLETE.SET_OFF_static( this ); }
         public override void Force_nothing(){ Console.Log( "tem que fazer" ); }

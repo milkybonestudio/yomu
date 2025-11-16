@@ -1,18 +1,41 @@
 using System;
+using System.IO;
 
 
 public static class Directories {
 
 
+        public static bool Directory_have_files( string _path ){
+
+
+            if( !!!( Directory.Exists( _path ) ) )
+                { CONTROLLER__errors.Throw( $"Tried to see if there are files in the directory <Color=lightBlue>{ _path }</Color>, but the directory DOESN'T exist" ); }
+
+            string[] arquivos = Directory.GetFiles( _path );
+            return ( arquivos.Length > 0 );
+
+        }
+
+        
+        public static string[] Get_files( string _path ){
+
+            if( !!!( Directory.Exists( _path ) ) )
+                { CONTROLLER__errors.Throw( $"Tried to get the files in the directory <Color=lightBlue>{ _path }</Color>, but the directory DOESN'T exist" ); }
+
+            string[] arquivos = Directory.GetFiles( _path );
+            return arquivos;
+
+        }
+
         public static void Delete_directory( string _path ){
 
-                string path_safe = Paths_system.persistent_data_path;
+                string path_safe = Paths_system.persistent_data;
 
                 if( path_safe == null || path_safe == "" )
-                    { CONTROLLER__errors.Throw( "Tried to delete a folder, but the path in <Color=lightBlue>Paths_system.persistent_data_path</Color> is null or empty" ); }
+                    { CONTROLLER__errors.Throw( "Tried to delete a folder, but the path in <Color=lightBlue>Paths_system.persistent_data</Color> is null or empty" ); }
 
                 if( !!!( _path.Contains( path_safe ) ) )
-                    { CONTROLLER__errors.Throw( $"Tried to delete the folder <Color=lightBlue>{ _path }</Color>, but the path does not starts on the <Color=lightBlue>{ Paths_system.persistent_data_path }</Color>" ); }
+                    { CONTROLLER__errors.Throw( $"Tried to delete the folder <Color=lightBlue>{ _path }</Color>, but the path does not starts on the <Color=lightBlue>{ Paths_system.persistent_data }</Color>" ); }
 
 
                 

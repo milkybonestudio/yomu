@@ -22,6 +22,8 @@ public class UI_write_content_container : UI_component {
 
         }
 
+    protected override void Update_material(){}
+
     protected override void Update_phase( Control_flow _flow ){
 
         throw new System.NotImplementedException();

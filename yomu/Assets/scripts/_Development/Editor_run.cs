@@ -8,8 +8,9 @@ public static class Editor_run {
         public static Type_testing type_testing = Type_testing.test;
 
 
+        
         // --- FILE SYSTEM
-        public static bool reset_folders_persistent_data_path = true;
+        public static bool reset_version_folder = false;
 
 
         // --- CHANGE BEHAVIOR

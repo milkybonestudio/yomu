@@ -75,15 +75,18 @@ public partial struct Body_visual_data_POSITION__GENERIC {
 
         }
 
+        
 
-        public void Update( Transform _transform ){
+        public int Update( Transform _transform ){
 
             // Console.Log( "entrou update" );
 
             if( finished )
-                { return; }
-                
+                { return 0; }
+
             Move( _transform );
+
+            return 2; // ** +- 5m /ms 
 
         }
 

@@ -20,5 +20,16 @@ public static class ARRAY {
 
     }
 
+    public static T[] Get_array<T>( int _length, T _value = default ) where T: unmanaged {
+
+        T[] ret = new T[ _length ];
+
+        for( int index = 0 ; index < _length ; index++ )
+            { ret[ index ] = _value; }
+
+        return ret;
+
+    }
+
 
 }

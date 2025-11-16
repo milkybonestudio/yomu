@@ -28,7 +28,7 @@ unsafe public class UI_text_container : UI_component {
             }
             
 
-        
+        protected override void Update_material(){}
 
     public override void Force_active(){ /*Console.Log( "tem que fazer" );*/ }
     public override void Force_inactive(){ /*Console.Log( "tem que fazer" );*/ }

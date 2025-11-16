@@ -4,55 +4,40 @@ using System.Collections.Generic;
 
 public class Task_fracionada {
 
-        public Task_fracionada( Task_req _task ){
-                
-                // * task que contem a task fracionada
-                task_req = _task;
+    public Task_fracionada( string _name = "name not give" ){ name = _name; }
 
-        }
+    
+    public void Adicionar_fn( Action<Task_req> _fn ){
 
-        public Task_req task_req;
+        if( current_sequencial_slot > 50 )
+            { CONTROLLER__errors.Throw( $"Tried to add and action in sequencial <Color=lightBlue>{ name }</Color> but there is already <Color=lightBlue>50</Color> actions" ); }
 
-        public int pointer;
-        public Action<Task_req>[] fn_fracionadas = new Action<Task_req>[ 10 ];
+        sequecial_tasks[ current_sequencial_slot++ ] =  _fn;
+        return;
 
+    }
 
-        public void Adicionar_fn( Action<Task_req> _fn ){
+    public string name;
 
-                fn_fracionadas[ pointer++ ] =  _fn ;
+    
+    public Action<Task_req>[] sequecial_tasks = new Action<Task_req>[ 50 ];
 
-                if( pointer == fn_fracionadas.Length )
-                    { Array.Resize( ref fn_fracionadas, ( fn_fracionadas.Length + 10 ) ); }
+    public int current_sequencial_slot;
 
-        }
+    public bool Have_tasks_to_execute(){ return ( sequencial_slot_already_casted >= current_sequencial_slot ); }
 
+    public int sequencial_slot_already_casted;
+    
+    public void Ativar_fracionado( Task_req _task_req ) {
 
-        // Parte fracionada => se a task precisa ser na main thread ela pode ser dividida em partes mas ainda tendo a mesma chave 
-        // o objeto vai ser mantido vivo até que todas as partes sejam terminadas
+        if( sequecial_tasks[ sequencial_slot_already_casted ] != null )
+            { sequecial_tasks[ sequencial_slot_already_casted ]( _task_req ); }
 
-        // dado pode ser compactado como um Sprite[], entao cada loop ele cria um necessario
+        sequencial_slot_already_casted++;
 
-        public Action<Task_req>[] tasks_fracionadas = null;
+        return;
 
-        public bool tem_fracionado = false;
-
-        public int parte_fracionado_atual = 0;
-        
-        public void Ativar_fracionado() {  
-
-
-                if( tasks_fracionadas[ parte_fracionado_atual ] != null ){ tasks_fracionadas[ parte_fracionado_atual ]( task_req ); }
-
-                parte_fracionado_atual++;
-
-                int quantidade_de_partes = tasks_fracionadas.Length;
-
-                if( parte_fracionado_atual >= quantidade_de_partes ) { tem_fracionado = false;}
-                return;
-
-        }
-
-
+    }
 
 
 

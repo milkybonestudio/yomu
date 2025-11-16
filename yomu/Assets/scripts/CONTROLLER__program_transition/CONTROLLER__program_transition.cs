@@ -109,7 +109,7 @@ unsafe public class CONTROLLER__program_transition {
                     // current_mode.state = Program_mode_state.swithing_to_inactive;
 
                 // --- GET CAMERA DATA
-                    transition.space_switcher = Controllers.canvas_spaces.Switch_cameras( _new_mode.ToString() );
+                    transition.space_switcher = Controllers_program.canvas_spaces.Switch_cameras( _new_mode.ToString() );
                 
                 // --- START
 
@@ -215,7 +215,7 @@ unsafe public class CONTROLLER__program_transition {
 
                 _control_flow.Unblock_program_mode_update();
                 _control_flow.Unblock_UI();
-                Controllers.canvas_spaces.End_switch();
+                Controllers_program.canvas_spaces.End_switch();
                 Controllers_program.data.modes.Unlock_data();
 
 

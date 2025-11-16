@@ -1,16 +1,18 @@
 using UnityEngine;
 
+public struct Transform_data {
+    
+    public Position position;
+    public Scale scale;
+    public Quaternion rotation;
+
+}
+
 public struct Body_transform_data{
 
     public bool not_use_normal;
-
-        public Vector3 position;
-        public Vector3 scale;
-        public Quaternion rotation;
-
+    public Transform_data normal;
     public bool use_anchour_normal;
+    public Transform_data anchour;
 
-        public Vector3 anchour_position;
-        public Vector3 anchour_scale;
-        public Quaternion anchour_rotation;
 }

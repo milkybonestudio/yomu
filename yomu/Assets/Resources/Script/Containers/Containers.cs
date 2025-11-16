@@ -3,7 +3,7 @@
 public static class Containers {
 
     // --- UI
-    public static void k(){}
+    public static void Force_static_constructor(){}
 
     public static CONTAINER__UI_button_SIMPLE UI_button_SIMPLE = new CONTAINER__UI_button_SIMPLE();
     public static CONTAINER__UI_button_COMPLETE UI_button_COMPLETE = new CONTAINER__UI_button_COMPLETE();

@@ -16,12 +16,11 @@ unsafe public static class CONSTRUCTOR__controller_program_data {
 
 
                     ret.modes = new CONTROLLER__program_data__MODES( &( ret.brute_data_pointer->program_modes ) );
-                    ret.saves = new CONTROLLER__program_data__SAVES( &( ret.brute_data_pointer->saves_data ) );
-                    ret.user = new CONTROLLER__program_data__USER( &( ret.brute_data_pointer->user_data ) );
+                    ret.saves = new CONTROLLER__program_data__SAVES( &( ret.brute_data_pointer->_saves_data ) );
                     
-                    Files.Guarantee_exists( Paths_files.program_data );
+                    Files.Guarantee_exists( Paths_program.program_data );
                     
-                    byte[] program_brute_data = System.IO.File.ReadAllBytes( Paths_files.program_data );
+                    byte[] program_brute_data = System.IO.File.ReadAllBytes( Paths_program.program_data );
 
                     if( program_brute_data.Length != sizeof( Program_data ) )
                         { CONTROLLER__errors.Throw( $"The <Color=lightBlue>program_brute_data file</Color> have <Color=lightBlue>{ program_brute_data.Length }</Color> bytes, but the <Color=lightBlue>Program_brute_data</Color> type have <Color=lightBlue>{ sizeof( Program_data ) }</Color>" ); }
@@ -32,10 +31,6 @@ unsafe public static class CONSTRUCTOR__controller_program_data {
 
                     }
 
-
-                    ret.program_brute_stream = FILE_STREAM.Criar_stream( Paths_files.safety_data_stack, 50_000 );
-
-                    
                 return ret;
 
         }

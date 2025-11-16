@@ -54,7 +54,7 @@ unsafe public class Login_standart : PROGRAM_MODE__INTERFACE {
                 transition.sections_actions.mode_set = () =>    {
                                                                     
                                                                     transition.space_switcher.canvas_space_new.screen_view.material.SetFloat( "_opacity", 1f );
-                                                                    var v_1 = Controllers.canvas_spaces;
+                                                                    var v_1 = Controllers_program.canvas_spaces;
                                                                     var v_2 = v_1.canvas_space_new;
                                                                     var v_3 = v_2.content;
                                                                     login_structure.Instanciate();

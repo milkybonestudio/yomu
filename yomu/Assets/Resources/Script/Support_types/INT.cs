@@ -5,6 +5,19 @@ using System.Runtime.CompilerServices;
 unsafe public static class INT {
 
 
+    public static void Transfer_int_to_byte_arr( byte[] _array, int _off_set, int _value ){
+
+        fixed( byte* b_p = _array )
+            { * ( int* ) ( b_p + _off_set ) = _value; }
+
+        _array[ ( _off_set + 0 ) ] = ( byte ) ( _value >> 24 );
+        _array[ ( _off_set + 1 ) ] = ( byte ) ( _value >> 16 );
+        _array[ ( _off_set + 2 ) ] = ( byte ) ( _value >> 8  );
+        _array[ ( _off_set + 3 ) ] = ( byte ) ( _value >> 0  );
+
+
+    }
+
             private const int number_string_length = 100;
             public static string[] numbers_string;
 

@@ -18,6 +18,10 @@ unsafe public partial class Test {
                     body_data_creation = new(){
                         need_anchour = true,
                         anchour_position = new Vector3( 100f, 0f, 0f ),
+                        
+                        transform_in_parent = new(){
+                            position = new( 1000f, 0f, 0f ),
+                        }
                     }
                 });
             
@@ -110,20 +114,38 @@ unsafe public partial class Test {
                     { figure.body.anchour_position.Add( 20f, 0f, 0f ); }
 
 
+                if( Input.GetKeyDown( KeyCode.Alpha9 ) )
+                    { 
+                        figure.body.Set_transform(new(){
+
+                            position = new( -1000f,-1000f, -1000f ),
+
+                        });
+                    }
+
+                if( Input.GetKeyDown( KeyCode.Alpha8 ) )
+                    { 
+                        figure.body.Set_transform(new(){
+                            position = new( -700f,-700f, -700f ),
+                        });
+                    }
+
+
+
 
 
                 // ** position 
                 if( Input.GetKeyDown( KeyCode.LeftArrow ) )
-                    { figure.body.position.Add( -100f, 0f, 0f ); }
+                    { figure.body.position.Add( -10000f, 0f, 0f ); }
 
                 if( Input.GetKeyDown( KeyCode.RightArrow ) )
-                    { figure.body.position.Add( 100f, 0f, 0f ); }
+                    { figure.body.position.Add( 10000f, 0f, 0f ); }
 
                 if( Input.GetKeyDown( KeyCode.UpArrow ) )
-                    { figure.body.position.Add( 0f, 100f,  0f ); }
+                    { figure.body.position.Add( 0f, 10000f,  0f ); }
 
                 if( Input.GetKeyDown( KeyCode.DownArrow ) )
-                    { figure.body.position.Add( 0f,-100f,  0f ); }
+                    { figure.body.position.Add( 0f,-10000f,  0f ); }
 
                 // ** scale
 
@@ -141,7 +163,10 @@ unsafe public partial class Test {
                         figure.Activate(new(){
                             parent = GameObject.Find( "Container_teste" ),
                             set_body_data = new(){
-                                rotation = Quaternion.Euler( 0f,0f,0f ),
+                                set_new_transform = true,    
+                                self_transform = new(){
+                                    rotation = Quaternion.Euler( 90f,0f,0f ),
+                                },
                             }
 
                         });

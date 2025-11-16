@@ -1,28 +1,28 @@
 using System.Runtime.CompilerServices;
 
 
- // [MethodImpl(MethodImplOptions.AggressiveInlining)]
+// [MethodImpl(MethodImplOptions.AggressiveInlining)]
+
+
 public static class BYTE {
 
 
+    public static void Copiar_elementos_de_array( byte[] _array_para_colocar, int _index_para_iniciar, byte[] _array_com_os_dados, int _length ){
 
+        if( _length > 150 )
+            {
+                for( int index = 0 ; index < _length ; index++ ){
 
-        public static void Copiar_elementos_de_array( byte[] _array_para_colocar, int _index_para_iniciar, byte[] _array_com_os_dados, int _length ){
+                    _array_para_colocar[ _index_para_iniciar + index ] = _array_com_os_dados[ index ];
 
-                if( _length > 150 )
-                    {
-                        for( int index = 0 ; index < _length ; index++ ){
-
-                            _array_para_colocar[ _index_para_iniciar + index ] = _array_com_os_dados[ index ];
-
-                        }
-                        return;
-                    }
-
-                System.Buffer.BlockCopy( _array_para_colocar, _index_para_iniciar, _array_com_os_dados, 0, _length );
+                }
                 return;
+            }
 
-        }
+        System.Buffer.BlockCopy( _array_para_colocar, _index_para_iniciar, _array_com_os_dados, 0, _length );
+        return;
+
+    }
 
 
 
