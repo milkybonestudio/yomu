@@ -26,9 +26,7 @@ unsafe public class Packet_storage_start_data {
     public int Get_minimun_size(){
 
 
-        Console.Log( "Vai iniciar" );
         int minimum_space = sizeof( Packet_storage );
-        Console.Log( "minimum_space: " + minimum_space );
 
         foreach( Packet_storage_start_data_PER_SIZE size_data in sizes_settings ){
 
@@ -39,12 +37,19 @@ unsafe public class Packet_storage_start_data {
 
             int size_length = ( flags_size + content_size );
 
-            Console.Log( $"size { size_data.size } vai adicionar { size_length } totalizando { minimum_space }" );
+            if( System_run.packet_show_messages_full_detail )
+                { Console.Log( $"size { size_data.size } vai adicionar { Formater.Format_number( size_length ) } totalizando { Formater.Format_number( minimum_space )  }" ); }
+
             minimum_space += size_length;
 
         }
 
+        if( System_run.packet_show_messages_full_detail )
+            { Console.Log( "minimum_space: " + minimum_space ); }
+        
+
         return minimum_space;
+        
 
     }
 

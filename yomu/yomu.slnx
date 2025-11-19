@@ -1,0 +1,7 @@
+﻿<Solution>
+  <Project Path="General_usage.csproj" />
+  <Project Path="Main.csproj" />
+  <Project Path="Development.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
+</Solution>

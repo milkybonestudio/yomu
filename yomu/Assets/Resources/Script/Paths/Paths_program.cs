@@ -36,7 +36,7 @@ public static class Paths_program {
         program_path = _path_to_program_folder;
 
         program_data = Get_program_data();
-        packet_storage_SIMPLE = Get_packet_storage_SIMPLE();
+        program_storage_SIMPLE = Get_program_storage_SIMPLE();
 
 
         saving_run_time_folder = Get_saving_run_time_folder();
@@ -62,10 +62,10 @@ public static class Paths_program {
         public static string Get_program_data( string _path ){ return Combine( _path, program_data_NAME ); }
 
 
-        public const string packet_storage_SIMPLE_NAME = "packet_storage_SIMPLE.dat";
-        public static string packet_storage_SIMPLE;
-        public static string Get_packet_storage_SIMPLE(){ return Combine( program_path, packet_storage_SIMPLE_NAME ); }
-        public static string Get_packet_storage_SIMPLE( string _path ){ return Combine( _path, packet_storage_SIMPLE_NAME ); }
+        public const string program_storage_SIMPLE_NAME = "program_storage_SIMPLE.storage";
+        public static string program_storage_SIMPLE;
+        public static string Get_program_storage_SIMPLE(){ return Combine( program_path, program_storage_SIMPLE_NAME ); }
+        public static string Get_program_storage_SIMPLE( string _path ){ return Combine( _path, program_storage_SIMPLE_NAME ); }
 
 
 

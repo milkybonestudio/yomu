@@ -22,22 +22,28 @@ public static class System_run {
 
 
     // --- PROGRAM
-    
-        public const bool activate_crash_handler = true || WORK_IN_BUILD;
 
         public const bool show_program_messages = true && NOT_IN_BUILD;
-            public const bool show_program_construction_messages = true && NOT_IN_BUILD;
+            public const bool show_program_construction_messages = false && NOT_IN_BUILD;
+
+
+        // --- SUPPORT SYSTEMS
+    
+            public const bool activate_crash_handler = true || WORK_IN_BUILD;
+
 
 
     // --- CONTROLL OVER NORMAL CONTROLLERS
 
         // *** SAFETY_STACK
 
-        public const bool activate_controller_safety_stack = WORK_IN_BUILD || true ;
-            public const bool save_in_disk_controller_safety_stack = WORK_IN_BUILD || true;
+        public const bool activate_controller_safety_stack = true || WORK_IN_BUILD  ;
+            public const bool save_in_disk_controller_safety_stack =  true || WORK_IN_BUILD;
+
             public const bool show_stack_messages = true && NOT_IN_BUILD;
-            public const bool show_stack_messages_update = true && NOT_IN_BUILD;
-            public const bool show_stack_messages_buffer = true && NOT_IN_BUILD;
+            public const bool show_stack_messages_update =  true && show_stack_messages && NOT_IN_BUILD;
+            public const bool show_stack_messages_buffer = true && show_stack_messages && NOT_IN_BUILD;
+
             
 
         // --- TASKS
@@ -53,6 +59,7 @@ public static class System_run {
 
         public const bool packet_storage_show_messages = true && NOT_IN_BUILD;
             public const bool packet_show_messages = true && NOT_IN_BUILD;
+            public const bool packet_show_messages_full_detail = false && packet_show_messages && NOT_IN_BUILD;
 
         // --- HEAP
 
@@ -62,6 +69,7 @@ public static class System_run {
         // --- FILES
 
         public const bool files_show_messages = false && NOT_IN_BUILD;
+
 
 
 

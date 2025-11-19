@@ -52,7 +52,10 @@ unsafe public struct MANAGER__safety_stack_buffer {
 
     public void End(){
 
-        Controllers.heap.Return_key( heap_key_buffer );
+        if( heap_key_buffer.Is_valid() )
+            { Controllers.heap.Return_key( heap_key_buffer ); }
+
+        
 
     }
 
@@ -129,24 +132,7 @@ unsafe public struct MANAGER__safety_stack_buffer {
 
         Console.Log( "---- <Color=lightBlue>{ WILL SAVE NORMAL BUFFER IN FILE TO TEST }</Color> ----" );
 
-        try{
-
-            UnmanagedMemoryStream stream = new UnmanagedMemoryStream( (byte*)buffer_pointer_0, buffer_size );
-            FileStream file = new FileStream( Paths_program.safety_stack_file + "NORMAL_BUFFER.dat", FileMode.Create, FileAccess.Write, FileShare.None);
-
-            stream.CopyTo( file );
-            file.Flush();
-
-            stream?.Close();
-            file?.Close();
-
-        } catch( Exception e ){
-
-            Console.Log( "Could not save file NORMAL BUFFER" );
-
-        }
-
-
+        try{ Files.Save_critical_file( ( Paths_program.safety_stack_file + "NORMAL_BUFFER.dat" ), buffer_pointer_0, buffer_size ); } catch( Exception e ){ Console.Log( "Could not save file NORMAL BUFFER" ); }
 
     }
 
@@ -158,37 +144,19 @@ unsafe public struct MANAGER__safety_stack_buffer {
                 try{
 
                     Console.Log( "---- is not saving no space ----" );
-
                     byte* aaa = stackalloc byte[ 10 ];
-
-                    var _stream = new UnmanagedMemoryStream( aaa, 10 );
-                    var _file = new FileStream( Paths_program.safety_stack_file + "NO_SPACE.dat", FileMode.Create, FileAccess.Write);
-
-                    _stream.CopyTo( _file );
-
-                    _file.Close();
-                    _stream.Close();
+                    Files.Save_critical_file( ( Paths_program.safety_stack_file + "NO_SPACE.dat" ),  aaa, 10 );
 
                 } catch( Exception e ){
-
                     Console.Log( "Could not save file NO_SPACE_buffer" );
-
                 }
                 return;
             }
 
         try{
 
-
             Console.Log( "---- <Color=lightBlue>{ WILL SAVE NO SPACE BUFFER IN FILE TO TEST }</Color> ----" );
-
-            var stream = new UnmanagedMemoryStream( (byte*) key_no_space.Get_pointer(), key_no_space.Get_length() );
-            var file = new FileStream( Paths_program.safety_stack_file + "NO_SPACE.dat", FileMode.Create, FileAccess.Write);
-
-            stream.CopyTo( file );
-
-            file.Close();
-            stream.Close();
+            Files.Save_critical_file( ( Paths_program.safety_stack_file + "NO_SPACE.dat" ), key_no_space.Get_pointer(), key_no_space.Get_length() );
 
         } catch( Exception e ){
 

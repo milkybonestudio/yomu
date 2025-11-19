@@ -6,7 +6,7 @@ using System.IO;
 //     ** save_morte
 //         ...
 //     ** data_heap
-//         heap_data.dat
+//         storage.dat
 //         data_1.dat
 //         data_2.dat
 //         .
@@ -30,7 +30,7 @@ public struct Save_paths{
 
     public string save_data;
     public string save_image;
-    public string save_heap_data;
+    public string save_storage;
     
 }
 
@@ -47,13 +47,13 @@ public static class Paths_save {
 
             normal.save_data = Get_save_data();
             normal.save_image = Get_save_image();
-            normal.save_heap_data = Get_save_heap_data(); 
+            normal.save_storage = Get_save_storage(); 
 
         save_path = Get_save_death( save_path );
 
             death.save_data = Get_save_data();
             death.save_image = Get_save_image();
-            death.save_heap_data = Get_save_heap_data(); 
+            death.save_storage = Get_save_storage(); 
             
 
         save_path = Paths_version.Get_save_folder( _save );
@@ -81,15 +81,15 @@ public static class Paths_save {
     public static string Get_save_brute_data(){ return Path.Combine( save_path, brute_data_name ); }
     public static string Get_save_brute_data( string _save_path ){ return Path.Combine( _save_path, brute_data_name ); }
 
-    public const string heap_data_name = "heap_data.dat";
-    public static string heap_data;
-    public static string Get_save_heap_data(){ return Path.Combine( save_path, heap_data_name ); }
-    public static string Get_save_heap_data( string _save_path ){ return Path.Combine( _save_path, heap_data_name ); }
+    public const string storage_name = "storage.dat";
+    public static string storage;
+    public static string Get_save_storage(){ return Path.Combine( save_path, storage_name ); }
+    public static string Get_save_storage( string _save_path ){ return Path.Combine( _save_path, storage_name ); }
 
-    public const string heap_data_slot_prefix = "data_";
-    public const string heap_data_slot_suffix = ".dat";
-    public static string Get_save_heap_data_slot( int _slot ){  return Path.Combine( save_path, $"{ heap_data_slot_prefix }{ INT.ToString( _slot ) }{ heap_data_slot_suffix }");  }
-    public static string Get_save_heap_data_slot( string _save_path, int _slot ){  return Path.Combine( _save_path, $"{ heap_data_slot_prefix }{ INT.ToString( _slot ) }{ heap_data_slot_suffix }");  }
+    public const string storage_slot_prefix = "data_";
+    public const string storage_slot_suffix = ".dat";
+    public static string Get_save_storage_slot( int _slot ){  return Path.Combine( save_path, $"{ storage_slot_prefix }{ INT.ToString( _slot ) }{ storage_slot_suffix }");  }
+    public static string Get_save_storage_slot( string _save_path, int _slot ){  return Path.Combine( _save_path, $"{ storage_slot_prefix }{ INT.ToString( _slot ) }{ storage_slot_suffix }");  }
     
     
 

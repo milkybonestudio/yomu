@@ -17,12 +17,7 @@ unsafe public static class TOOL__version_folders_constructor {
     private const int LENGTH_SAFETY_FILES = 1_000_000;
     private const int LENGTH_CREATE_FILE = 2_500_000;
 
-    private static IntPtr space_to_create_data;
-
     public static void Construct( string _path_to_persistent_location ){
-
-        if( space_to_create_data.ToPointer() == null )
-            { space_to_create_data = Marshal.AllocHGlobal( LENGTH_CREATE_FILE ); }
 
         // --- CREATE VERSION FOLDER
 
@@ -41,28 +36,12 @@ unsafe public static class TOOL__version_folders_constructor {
             Create_saves( version_folder );
 
     
-        Marshal.FreeHGlobal( space_to_create_data );
-        space_to_create_data = default;
-    
         return;
 
     }
     
 
-    private static void* Get_pointer(){
-
-        void* pointer = space_to_create_data.ToPointer();
-
-        if( pointer == null )
-            { CONTROLLER__errors.Throw( "Pointer to transfer data was null" ); }
-
-        return pointer;
-
-    }
-
     private static void Create_program_persistent_files( string _version_path ){
-
-        void* pointer = Get_pointer();
 
 
         string pre_version_path = Paths_version.path_to_version;
@@ -75,36 +54,30 @@ unsafe public static class TOOL__version_folders_constructor {
         Directory.CreateDirectory( program_path );
 
         // --- PROGAM DATA FILE
-
-            if( LENGTH_CREATE_FILE <= sizeof( Program_data ) )
-                { CONTROLLER__errors.Throw( "Size insufficient" ); }
-
-            CONSTRUCTOR__program_data_file.Construct_new_program_file( ( Program_data* ) pointer );
-            Save_file( Paths_program.program_data, pointer, sizeof( Program_data ) );
+            void* pointer_program = Controllers.heap.Get_fast_pointer( sizeof( Program_data ) );
+            CONSTRUCTOR__program_data_file.Construct_new_program_file(  ( Program_data* ) pointer_program );
+            Files.Save_file( Paths_program.program_data, pointer_program, sizeof( Program_data ) );
 
         // --- PACKED STORAGE
 
-            Console.Log( "ver depois" );
-            // CONSTRUCTOR__controller_packets_storage.Construct_SIMPLE_packed_storage_file( (Packet_storage*) pointer, LENGTH_CREATE_FILE );
+            Packet_storage_start_data program_storage_data = CONSTRUCTOR__controller_packets_storage.Get_SIMPLE_args();
+            int length_storage_program = program_storage_data.Get_file_length();
+            void* pointer_storage_program = Controllers.heap.Get_fast_pointer( length_storage_program );
 
+            Controllers.packets.creation.Apply_create_data( pointer_storage_program, length_storage_program, program_storage_data );
 
-        // --- SAVING RUN TIME
-
-        Directory.CreateDirectory( Paths_program.saving_run_time_folder );
-        
-            Directory.CreateDirectory( Paths_program.safety_stack_folder );
-
-        // ** se tiver algum arquivo aqui dentro o sistema foi encerrado incorretamente
-
+            Files.Save_file( Paths_program.program_storage_SIMPLE, pointer_storage_program, length_storage_program );
 
 
         // ** VOLTA AO PADRAO
         Paths_version.Define_version_folder( pre_version_path );
 
+        Controllers.heap.Return_fast_pointer();
+
         return;
     }
 
-
+    
     private static void Create_saves( string _version_path ){
 
 
@@ -116,14 +89,14 @@ unsafe public static class TOOL__version_folders_constructor {
         // --- CREATE EACH SAVE FOLDER
         for( int save_slot = 0 ; save_slot < 8 ; save_slot++ ){ 
    
-            string  save_path = Paths_version.Get_save_folder( saves_path, save_slot );
             // NORMAL   
-            Create_save_files( save_path ); 
-
+            string  save_path = Paths_version.Get_save_folder( saves_path, save_slot );
+            Directory.CreateDirectory( save_path );
+            
             // DEATH
             string save_DEATH = Paths_save.Get_save_death( save_path );
-            Create_save_files( save_DEATH ); 
-
+            Directory.CreateDirectory( save_DEATH );
+            
             continue;
 
         }
@@ -135,62 +108,7 @@ unsafe public static class TOOL__version_folders_constructor {
 
 
 
-    private static void Create_save_files( string _save_path ){
 
-    
-        Directory.CreateDirectory( _save_path );
-        void* pointer = Get_pointer();
-
-
-        string brute_data_path = Paths_save.Get_save_brute_data( _save_path );
-
-        // --- SAVE_DATA
-
-        string path_to_save_data = Paths_save.Get_save_data( _save_path );
-        Save_data.Construct( (Save_data*) pointer );
-        Save_file( path_to_save_data, pointer, sizeof( Save_data ) );
-
-        // --- IMAGE
-
-        //mark
-        // ** fazer depois
-
-        // --- HEAP
-
-        string heap_data_path = Paths_save.Get_save_heap_data( _save_path );
-
-        Save_file( heap_data_path, ( void* )&pointer, sizeof( Heap_data ) );
-
-
-    }
-
-    private static void Save_file( string _path, void* _pointer, int _size ){
-
-        Files.Save_file( _path, _pointer, _size );
-
-        // ** CLEAN POINTER 
-
-        if( _size > 1_000 )
-            {
-                UnsafeUtility.MemClear( _pointer, ( long ) _size );
-            }
-            else
-            {
-                int* int_pointer = ( int* ) _pointer;
-                int number_big_loops = ( _size / 4 );
-                for( int i = 0 ; i < number_big_loops ; i++, int_pointer++ )
-                    { *( int_pointer ) = 0; }
-                
-                int rest = ( _size % 4 );
-                byte* byte_pointer = ( byte* )int_pointer;
-                for( int k = 0 ; k < rest ; k++, byte_pointer++ )
-                    { *byte_pointer = ( byte )0; }
-                
-                
-            }
-
-
-    }
 
 
 }

@@ -125,12 +125,24 @@ unsafe public class CONTROLLER__data_files {
         
     }
 
+    // private Data_file_link Get_file_intern( byte[] _file,  )
+
     public Data_file_link Create_file( string _path, int _file_length ){
 
-        if( System_run.max_security && System.IO.File.Exists( _path ))
-            { CONTROLLER__errors.Throw( "Tried to create a file in the path <Color=lightBlue>{ _path }</Color> but the file already exists" ); }
+        // ** call only when create run time files
+
+        if( System_run.max_security )
+            { 
+                if( System.IO.File.Exists( _path ) )
+                    { CONTROLLER__errors.Throw( $"Tried to create a file in the path <Color=lightBlue>{ _path }</Color> but the file already exists" );  }
+
+                if( path_TO_id.ContainsKey( _path ) )
+                    { CONTROLLER__errors.Throw( $"Tried to create a file in the path <Color=lightBlue>{ _path }</Color> but the file was already in the dictionary" ); }
+            }
 
         byte[] file = new byte[ _file_length ];
+
+        // Controllers.stack.files.Save_data_change_data_in_file
 
         fixed( byte* pointer = file )
             { Files.Save_file( _path, pointer, file.Length ); }
@@ -150,6 +162,10 @@ unsafe public class CONTROLLER__data_files {
     public bool Got_file( string _path ){ return path_TO_id.ContainsKey( _path ); }
 
 
+
+
+
+
     // --- TEST
 
     public void Save_link_paths_sync(){
@@ -162,8 +178,9 @@ unsafe public class CONTROLLER__data_files {
         foreach (var kv in id_TO_path ) 
             { result[ kv.Key ] = kv.Value; }
 
-        System.IO.File.WriteAllLines( Paths_program.saving_link_file_to_path, result );
+        Files.Save_critical_file( Paths_program.saving_link_file_to_path, result );
 
+        return;
 
     }
 
@@ -216,6 +233,8 @@ unsafe public class CONTROLLER__data_files {
         return;
 
     }
+
+    // Save_file_run_time[] -> move_file[] -> switch[]
 
     public void Switch_files( Data_file_link _data ){
 

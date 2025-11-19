@@ -42,8 +42,6 @@ public class MODULO__multithread {
         timer = System.Diagnostics.Stopwatch.StartNew();
         loop_timer = new System.Diagnostics.Stopwatch();
 
-        Console.Log( signal );
-
         Creat_thread();
 
     }
@@ -202,6 +200,7 @@ public class MODULO__multithread {
 
         return;
     }
+
 
     public static int a;
 

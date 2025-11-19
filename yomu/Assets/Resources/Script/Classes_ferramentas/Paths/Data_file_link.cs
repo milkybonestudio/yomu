@@ -29,5 +29,14 @@ unsafe public struct Data_file_link {
 
     }
 
+    public void Fill_TEST( byte _value ){
+
+        byte* b = (byte*) Get_pointer();
+        int lenght = Get_length();
+        for( int k = 0 ; k < lenght ; k++ )
+            { b[ k ] = _value; }
+
+    }
+
 
 }

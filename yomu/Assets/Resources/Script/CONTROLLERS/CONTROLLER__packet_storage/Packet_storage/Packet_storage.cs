@@ -459,7 +459,7 @@ unsafe public struct Packet_storage {
         if( can_use_the_same_key )
             {
                 Controllers.stack.files.Save_data_change_data_in_file(
-                    _slot_file            : file_link.id,
+                    _file_id              : file_link.id,
                     _file_point_to_change : old_key_off_set,
                     _data_pointer         : old_key_pointer,
                     _length               : _new_length
@@ -520,7 +520,7 @@ unsafe public struct Packet_storage {
 
 
         Controllers.stack.files.Save_data_change_data_in_file(
-            _slot_file            : file_link.id,
+            _file_id              : file_link.id,
             _file_point_to_change : Get_off_set_to_data( _key ),
             _data_pointer         : Get_pointer( _key ),
             _length               : _key.length
@@ -542,10 +542,10 @@ unsafe public struct Packet_storage {
 
     public void Sinalize_partial_local_change<T>( int _off_set_in_file, T _value ) where T : unmanaged {
 
-        Controllers.stack.files.Save_data_change_data_in_file(
-            _slot_file            : file_link.id,
+        Controllers.stack.files.Save_data_change_data_in_file<T>(
+            _file_id              : file_link.id,
             _file_point_to_change : _off_set_in_file,
-            _data: _value
+            _data                 : _value
         );
 
     }
@@ -553,7 +553,7 @@ unsafe public struct Packet_storage {
     public void Sinalize_partial_local_change( int _off_set_in_file, void* _pointer_to_data, int _length ){
 
         Controllers.stack.files.Save_data_change_data_in_file(
-            _slot_file            : file_link.id,
+            _file_id              : file_link.id,
             _file_point_to_change : _off_set_in_file,
             _data_pointer         : _pointer_to_data,
             _length               : _length
@@ -628,7 +628,7 @@ unsafe public struct Packet_storage {
         int off_set = Get_off_set_to_data( _key );
 
         Controllers.stack.files.Save_data_change_data_in_file(
-            _slot_file            : file_link.id,
+            _file_id              : file_link.id,
             _file_point_to_change : off_set,
             _data_pointer         : pointer_to_data,
             _length               : _length

@@ -4,6 +4,17 @@ using System.IO;
 
 public static class Directories {
 
+        public static bool Is_sub_path( string full_path, string sub_part ){
+
+            // Normalize trailing slashes
+            full_path = full_path.TrimEnd( Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar ) + Path.DirectorySeparatorChar;
+            sub_part = sub_part.TrimEnd( Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar ) + Path.DirectorySeparatorChar;
+
+            return full_path.StartsWith( sub_part, StringComparison.OrdinalIgnoreCase );
+        }
+        
+            
+
 
         public static bool Directory_have_files( string _path ){
 

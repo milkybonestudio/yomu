@@ -36,7 +36,9 @@ unsafe public struct MANAGER__safety_stack_saver {
 
     public void End(){
 
-        Controllers.heap?.Return_key( heap_key_span_safety_digits );
+        if( heap_key_span_safety_digits.Is_valid() )
+            { Controllers.heap?.Return_key( heap_key_span_safety_digits ); }
+
         strem_stack?.Close();
 
     }
@@ -100,6 +102,22 @@ unsafe public struct MANAGER__safety_stack_saver {
 
     }
 
+
+    unsafe public struct Test{
+
+        public void Force_corrupt_file( int _bytes ){
+
+            Controllers.stack.saver.strem_stack.Seek( ( Controllers.stack.saver.current_pointer_in_file - _bytes ), SeekOrigin.Begin );
+            Controllers.stack.saver.strem_stack.Write( new byte[ _bytes ] );
+            Controllers.stack.saver.strem_stack.Flush();
+            
+
+        }
+
+    }
+
+    public Test test;
+
     public void Clean_file(){
 
         strem_stack.Seek( 0, SeekOrigin.Begin );
@@ -153,7 +171,6 @@ unsafe public struct MANAGER__safety_stack_saver {
 
 
 
-
     // -- CALLED IN THE MULTITHREAD
     // ** NEED TO GET THE STRUCT AGAIN WITH THE STATIC DATA
     public static void Save_in_disk( Task_req _req ){
@@ -194,13 +211,13 @@ unsafe public struct MANAGER__safety_stack_saver {
         byte* signature_start_data_pointer = stackalloc byte[ 2 * sizeof( int ) ];
 
             ((int*) signature_start_data_pointer)[ 0 ] = Interlocked.Add( ref Controllers.stack.saver.block_number, 1 );
-            ((int*) signature_start_data_pointer)[ 1 ] = total_bytes_to_save;
+            ((int*) signature_start_data_pointer)[ 1 ] = total_bytes_to_pass_to_file;
 
 
         ReadOnlySpan<byte> signature_start_data_span = new ReadOnlySpan<byte>( signature_start_data_pointer, (2 * sizeof( int )) );
         
         if( System_run.show_stack_messages )
-            { Console.Log( $"Will write the signature bytes, block: <Color=lightBlue>{ Controllers.stack.saver.block_number }</Color> and length: <Color=lightBlue>{ total_bytes_to_save }</Color>" ); }
+            { Console.Log( $"Will write the signature bytes, block: <Color=lightBlue>{ Controllers.stack.saver.block_number }</Color> and length: <Color=lightBlue>{ total_bytes_to_pass_to_file }</Color>" ); }
 
         Controllers.stack.saver.strem_stack.Write( signature_start_data_span );
 
@@ -258,7 +275,7 @@ unsafe public struct MANAGER__safety_stack_saver {
         if( System_run.show_stack_messages )
             { Console.Log( $"Will write the data <Color=lightBlue>IN DISK</Color> by the strem.flush()" ); }
 
-        Controllers.stack.saver.strem_stack.Flush();
+        Controllers.stack.saver.strem_stack.Flush( true );
 
 
         Interlocked.Exchange( ref Controllers.stack.saver.pointer_buffer_already_saved, pointer_save_END );
@@ -274,6 +291,13 @@ unsafe public struct MANAGER__safety_stack_saver {
 
     // public const int SECURITY_VALUE = 0b_0001_1001__0111_1101__0001_0111__0101_1111;
     public const int SECURITY_VALUE = 64;
+
+    public static bool Security_values_are_OK( byte* _pointer_to_block, int _length_block ){
+
+        byte* pointer_to_security = _pointer_to_block + (_length_block - ( sizeof( int ) * 2)) ;
+        return ( ((int*) pointer_to_security)[ 0 ] == SECURITY_VALUE ) && ( ((int*) pointer_to_security)[ 1 ] == SECURITY_VALUE );
+
+    }
 
 
 

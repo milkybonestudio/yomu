@@ -87,8 +87,6 @@ unsafe public class Program : MonoBehaviour {
     public void OnDisable(){
 
 
-        return;
-
         System_run.force_stop = false;
         Dados_fundamentais_sistema.jogo_ativo = false;
         

@@ -15,6 +15,7 @@ unsafe public static class CONSTRUCTOR__controller_heap{
                 // controller.current_pointer = controller.fix_pointer.ToPointer();
 
                 controller.unique_keys = new Dictionary<int, Heap_key>( 100 );
+                controller.fast_pointer = Marshal.AllocHGlobal( 200_000 );
 
         return controller;
 

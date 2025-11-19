@@ -234,7 +234,20 @@ unsafe public static class INT {
         }
 
 
+        public static int Return_int_4_bytes_asc2( char _c ){
 
+            int ret = 0;
+
+            ret += (byte)_c << 0;
+            ret += (byte)_c << 8;
+            ret += (byte)_c << 16;
+            ret += (byte)_c << 24;
+
+            // BITS.Printar_bits( ret );
+
+            return ret;
+
+        }
 
 
 

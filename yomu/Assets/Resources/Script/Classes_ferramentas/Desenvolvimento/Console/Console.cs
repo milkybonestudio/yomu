@@ -35,7 +35,7 @@ public static class Console {
         public static void LogError( string _message, int _trace_to_ignore = 0 ){ Log_intern( _message, Log_type.error, ( Thread.CurrentThread.Name == "Main" ), _trace_to_ignore ); return; }
 
 
-        public static void Log_player_need_to_read( string _message ){ Log( "PLAYER NEED TO READ: " + _message ); }
+        public static void Log_player_need_to_read( string _message ){ Log_intern( ( "PLAYER NEED TO READ: " + _message ), Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return;  }
 
 
 

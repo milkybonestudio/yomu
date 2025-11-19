@@ -31,6 +31,21 @@ public static class CONSTRUCTOR__program {
 
 
 
+        string version_folder = Path.Combine( Paths_system.persistent_data, System_information.version.Get_name() );
+        Paths_version.Define_version_folder( version_folder );
+
+
+
+
+        // --- CONTROLLERS GENERIC 1
+            Controllers.heap = CONSTRUCTOR__controller_heap.Construct();
+            Controllers.tasks = CONSTRUCTOR__controller_tasks.Construct();
+            Controllers.resources = CONSTRUCTOR__controller_resources.Construct();
+            CONSTRUCTOR__controller_packets_storage.Construct( ref Controllers.packets );
+
+
+
+
         #if UNITY_EDITOR
 
 
@@ -53,21 +68,20 @@ public static class CONSTRUCTOR__program {
         #endif
         
 
+        
         // --- PERSISTENT AND VERSION FOLDERS
 
-        
         if( !!!( System.IO.Directory.Exists( Paths_system.persistent_data ) ) )
-            {  Directory.CreateDirectory( Paths_system.persistent_data ); } // ** somente development, no jogo já vai criar automatico
+            {  Directory.CreateDirectory( Paths_system.persistent_data ); } // only editor, is construct by default in build
 
-
-        string version_folder = Path.Combine( Paths_system.persistent_data, System_information.version.Get_name() );
-        Paths_version.Define_version_folder( version_folder );
 
 
         bool is_first_play = !!!( System.IO.Directory.Exists( version_folder ) );
 
         if( is_first_play )
             { TOOL__version_folders_constructor.Construct( Paths_system.persistent_data ); }
+
+        // --- CONTROLLERS GENERIC 2
 
 
         // --- CRASH HANDLER
@@ -103,20 +117,11 @@ public static class CONSTRUCTOR__program {
         
         // --- CONSTRUIR CONTROLADORES GERAIS
 
-
-        // --- GENERIC
-
             Controllers.files = CONSTRUCTOR__controller_data_files.Construct();
-            Controllers.heap = CONSTRUCTOR__controller_heap.Construct();
-            Controllers.resources = CONSTRUCTOR__controller_resources.Construct();
-            Controllers.tasks = CONSTRUCTOR__controller_tasks.Construct();
             Controllers.input = CONSTRUCTOR__controller_input.Construct();
             Controllers.audio = CONSTRUCTOR__controller_audio.Construct();
             Controllers.configurations = CONSTRUCTOR__controller_configurations.Construct();
 
-
-            
-        
             // ** can not be here
             // ???
             Controllers.data = CONSTRUCTOR__controller_data.Construct();
@@ -166,7 +171,6 @@ public static class CONSTRUCTOR__program {
         // ** STRUCTS CONTROLLERS
 
             CONSTRUCTOR__controller_safety_stack.Construct( ref Controllers.stack );
-            CONSTRUCTOR__controller_packets_storage.Construct( ref Controllers.packets );
 
         // --- LISTS
         //performance

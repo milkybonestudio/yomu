@@ -62,14 +62,14 @@ unsafe public struct Data_manipulator {
     public void Change( void* _pointer, int _value ){
 
         *(int*) _pointer  = _value;
-        Controllers.stack.Save_data( _pointer, sizeof( int ) );        
+        Controllers.stack.test.Save_data( _pointer, sizeof( int ) );        
         Controllers.stack.files.Save_data_change_data_in_file( slot, ( int )( ( long )pointer_full_data - ( long )_pointer ),  _pointer, _value );
 
     }
 
     public void Change( void* _pointer, byte _value ){
 
-        Controllers.stack.Save_data( _pointer, _value );
+        Controllers.stack.test.Save_data( _pointer, _value );
         *(byte*) _pointer  = _value;
 
     }

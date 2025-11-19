@@ -13,7 +13,7 @@ unsafe public struct MANAGER__packet_storage_creation {
         if( _start_data.sizes_settings == null )
             { CONTROLLER__errors.Throw( "sizes setiings came null" ); }
 
-        Packet_storage* packet_storage = Apply_create_data( _data_file_link.heap_key.Get_pointer(), _start_data );
+        Packet_storage* packet_storage = Apply_create_data( _data_file_link.heap_key.Get_pointer(), _data_file_link.Get_length(), _start_data );
 
         Packet_storage.Start( _data_file_link );
         
@@ -22,9 +22,16 @@ unsafe public struct MANAGER__packet_storage_creation {
 
     }
 
-    public Packet_storage* Apply_create_data( void* _pointer, Packet_storage_start_data _start_data ){
+
+
+    public Packet_storage* Apply_create_data( void* _pointer, int _pointer_max_length, Packet_storage_start_data _start_data ){
 
         // info:[   dados necessario  ]  -> [ keys free ][ all keys flags ][ data ]
+
+
+        if( _start_data.Get_file_length() > _pointer_max_length )
+            { CONTROLLER__errors.Throw( $"Tried to construct packed storage but the size required is <Color=lightBlue>{ _start_data.Get_file_length() }</Color> but the max length of the pointer is <Color=lightBlue>{ _pointer_max_length }</Color>" ); }
+
                 
         Packet_storage* packet_storage = ( Packet_storage* ) _pointer;
         Packet_storage_start_data default_args = Controllers.packets.defaults.Get_default_args();
@@ -32,7 +39,8 @@ unsafe public struct MANAGER__packet_storage_creation {
         foreach( Packet_storage_start_data_PER_SIZE data in _start_data.sizes_settings ){ 
 
             if( System_run.max_security )
-                { data.Guarantee(); }
+                { data.Guarantee_size_make_sense(); }
+
             default_args.sizes_settings[ ( int ) data.size ] = data; 
 
         }
@@ -47,7 +55,7 @@ unsafe public struct MANAGER__packet_storage_creation {
         int* sizes = Controllers.packets.sizes.sizes;
         Packet_storage_info* infos = (Packet_storage_info*) packet_storage->infos_buffer;
 
-        Console.Log( "size type: " + sizeof( Packet_storage ) );
+        // Console.Log( "size type: " + sizeof( Packet_storage ) );
         
         for( int index = ( int ) Packet_storage_size._1_byte ; index < ( int ) Packet_storage_size._MAX ; index++  )
             { infos[ index ].Applay_start_data( correct_data_per_size_array[ index ], _pointer, &current_pointer, sizes[ index ] ); }

@@ -25,7 +25,8 @@ unsafe public struct CONTROLLER__safety_stack {
 
     public void Destroy(){
 
-        saver.strem_stack?.Close();
+        // saver.strem_stack?.Close();
+
 
         packet_storage.End();
         files.End();
@@ -34,6 +35,7 @@ unsafe public struct CONTROLLER__safety_stack {
 
         saver.End();
         buffer.End();
+        
 
     }
 
@@ -62,13 +64,21 @@ unsafe public struct CONTROLLER__safety_stack {
     public MANAGER__safety_stack_saver saver;
     public MANAGER__safety_stack_buffer buffer;
 
-
-
-    public void Save_data( byte[] _data, int _length ){ buffer.Save_data( _data, _length ); }
-    public void Save_data( void* _data_pointer, int _length ){ buffer.Save_data_inline( _data_pointer, _length ); }
-
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Save_data_inline( void* _data_pointer, int _length ){ buffer.Save_data_inline( _data_pointer, _length ); }
+    public void Save_message( int _message_length ){ buffer.Save_data_inline( pointer_with_message, _message_length ); }
+
+    unsafe public struct Teste{
+
+        // ** não devia ficar esposto
+        public void Save_data( byte[] _data, int _length ){ Controllers.stack.buffer.Save_data( _data, _length ); }
+        public void Save_data( void* _data_pointer, int _length ){ Controllers.stack.buffer.Save_data_inline( _data_pointer, _length ); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Save_data_inline( void* _data_pointer, int _length ){ Controllers.stack.buffer.Save_data_inline( _data_pointer, _length ); }
+
+    }
+
+    public Teste test;
 
 
 
@@ -263,12 +273,10 @@ unsafe public struct CONTROLLER__safety_stack {
                     { CONTROLLER__errors.Throw( $"tried to change state of the stack to <Color=lightBlue>{ _state }</Color>, but the current one is <Color=lightBlue>{ state }</Color>. it need to change to waiting" ); }
             }
 
-        if( System_run.show_stack_messages )
+        if( System_run.show_stack_messages_update )
             { Console.Log( $"Will change state to <Color=lightBlue>{ _state }</Color>" ); }
     
         state = _state;
-
-        
 
         return;
 
@@ -351,8 +359,6 @@ unsafe public struct CONTROLLER__safety_stack {
     public void Save_stack_in_disk_sync(){
 
         // ** never change state
-
-        Console.Log( "a" );
 
         if( state != SAFETY_STACK__state.waiting_to_save_stack )
             { CONTROLLER__errors.Throw( "State need to be <Color=lightBlue>waiting_to_save_stack</Color>" ); }

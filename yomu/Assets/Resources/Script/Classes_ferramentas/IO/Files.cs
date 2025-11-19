@@ -6,6 +6,85 @@ using System.IO;
 unsafe public static class Files {
 
 
+    public static void Save_critical_file( string _path, string[] _array ){
+
+        
+        string combined_text = string.Join( Environment.NewLine , _array );
+        byte[] data = System.Text.Encoding.UTF8.GetBytes( combined_text );
+
+        FileMode file_mode = FileMode.Create;
+        FileAccess file_accees = FileAccess.ReadWrite;
+        FileShare file_share = FileShare.Read;
+        FileOptions file_options = FileOptions.WriteThrough;
+
+        FileStream stream = new FileStream( _path, file_mode, file_accees , file_share, data.Length , file_options );
+        
+
+        stream.Write( data );
+            stream.Flush( true );
+        stream.Close();
+
+        return;
+
+    }
+
+
+
+
+    public static void Save_critical_file( string _path, byte[] _array ){
+
+        
+        FileMode file_mode = FileMode.Create;
+        FileAccess file_accees = FileAccess.ReadWrite;
+        FileShare file_share = FileShare.Read;
+        FileOptions file_options = FileOptions.WriteThrough;
+
+        FileStream stream = new FileStream( _path, file_mode, file_accees , file_share, _array.Length , file_options );
+
+        stream.Write( _array );
+            stream.Flush( true );
+        stream.Close();
+
+        return;
+
+    }
+
+
+    public static void Save_critical_file( string _path, void* _pointer_data, int _length ){
+
+        
+        FileMode file_mode = FileMode.Open;
+        FileAccess file_accees = FileAccess.ReadWrite;
+        FileShare file_share = FileShare.Read;
+        FileOptions file_options = FileOptions.WriteThrough;
+
+
+            UnmanagedMemoryStream stream = new UnmanagedMemoryStream( (byte*)_pointer_data, _length );
+            FileStream file = new FileStream( _path, file_mode, file_accees , file_share, _length , file_options );
+
+            stream.CopyTo( file );
+            file.Flush( true );
+
+            stream.Close();
+            file.Close();
+
+        return;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public static void Save_file( string _path, void* _pointer_data, int _length ){
 
         byte[] data = new byte[ _length ];

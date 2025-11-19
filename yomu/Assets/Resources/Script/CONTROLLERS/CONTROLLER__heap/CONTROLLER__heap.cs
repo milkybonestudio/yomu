@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Threading;
 using Unity.Collections.LowLevel.Unsafe;
 
 
@@ -17,6 +18,72 @@ unsafe public class CONTROLLER__heap {
     public int fix_space_length;
 
     public volatile int current_id;
+
+
+
+    // --- FAST USE POINTER
+
+
+    private const int MAX_FAST_POOINTER_SIZE = 10_000_000;
+    private int current_fast_pointer_length;
+    public IntPtr fast_pointer;
+    public volatile int fast_is_lock;
+    public volatile int thread_id;
+
+    public void Return_fast_pointer(){
+
+        Interlocked.Exchange( ref fast_is_lock, 0 );
+        Interlocked.Exchange( ref thread_id, -1 );
+        
+
+    }
+
+    public void* Get_fast_pointer( int _max_length ){
+
+        if( fast_is_lock == 1 && thread_id != Thread.CurrentThread.ManagedThreadId )
+            {
+                int current = 0;
+                while( fast_is_lock == 1 ){
+
+                    Thread.SpinWait( 100 );
+                    current += 100;
+
+                    // ** 1000-1300ms
+                    if( current > 50_000_000 )
+                        { CONTROLLER__errors.Throw( "Tried to get the fast_pointer in the HEAP but the pointer takes too long to become free" ); }
+
+                }
+            }
+
+        Interlocked.Exchange( ref fast_is_lock, 1 );
+        Interlocked.Exchange( ref thread_id, Thread.CurrentThread.ManagedThreadId );
+        
+
+        if( System_run.max_security )
+            {
+                if( fast_pointer.ToPointer() == null )
+                    { CONTROLLER__errors.Throw( "Didn't start fast_pointer in HEAP" ); }
+            }
+        
+        if( _max_length > current_fast_pointer_length ) 
+            {
+                // ** REAJUST SIZE
+                Marshal.FreeHGlobal( fast_pointer );
+                int new_length = ( _max_length + 50_000 );
+
+                if( new_length > MAX_FAST_POOINTER_SIZE )
+                    { CONTROLLER__errors.Throw( $"Tried to reajust FAST POINTER in heap, but the size required is <Color=lightBlue>{ new_length }</Color> and the max size is <Color=lightBlue>{ MAX_FAST_POOINTER_SIZE }</Color>" ); }
+
+                fast_pointer = Marshal.AllocHGlobal( new_length );
+            }
+
+        void* pointer = fast_pointer.ToPointer();
+
+        UnsafeUtility.MemClear( pointer, ( long ) _max_length );
+
+        return pointer;
+
+    }
 
 
 
@@ -164,14 +231,17 @@ unsafe public class CONTROLLER__heap {
         if( key.type != Heap_key_type.unique )
             { CONTROLLER__errors.Throw( "type is not UNIQUE" ); }
 
+        if( !!!( unique_keys.ContainsKey( key.unique_id ) ) )
+            { CONTROLLER__errors.Throw( "Tried to return key <Color=lightBlue>{ key.unique_id }</Color> but it was not allocated. Probably already free the key and try it again" ); }
+
         Marshal.FreeHGlobal( key.unique_key.int_pointer );
 
         if( _remove_from_list )
             { unique_keys.Remove( key.unique_id ); }
-            
+
+        return;            
 
     }
-
 
 
 
@@ -204,6 +274,9 @@ unsafe public class CONTROLLER__heap {
 
         foreach( Heap_key key in unique_keys.Values )
             { Return_key_UNIQUE( key, false ); }
+
+        if( fast_pointer.ToPointer() != null )
+            { Marshal.FreeHGlobal( fast_pointer ); }
 
     }
 

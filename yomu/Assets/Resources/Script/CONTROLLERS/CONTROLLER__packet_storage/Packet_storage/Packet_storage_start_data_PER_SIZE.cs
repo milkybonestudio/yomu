@@ -7,7 +7,7 @@ public struct Packet_storage_start_data_PER_SIZE {
     public int slots_to_need_up;
     public int slots_add_per_expansion;
 
-    public void Guarantee(){
+    public void Guarantee_size_make_sense(){
 
         
         return;Console.Log_slow( "remover depois" );

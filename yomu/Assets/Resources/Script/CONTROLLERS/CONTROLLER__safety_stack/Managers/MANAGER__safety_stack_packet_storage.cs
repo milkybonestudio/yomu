@@ -13,7 +13,12 @@ unsafe public struct MANAGER__safety_stack_packet_storage {
 
     }
 
-    public void End(){}
+    public void End(){
+
+        origianl_message_pointer = default;
+        
+    }
+
     public void* origianl_message_pointer;
 
     public void Save_alloc( int _slot_file, Packet_storage_size _size, int _slot ){
@@ -32,7 +37,7 @@ unsafe public struct MANAGER__safety_stack_packet_storage {
         int length = 2;
 
 
-        Controllers.stack.Save_data_inline( origianl_message_pointer, length );
+        Controllers.stack.test.Save_data_inline( origianl_message_pointer, length );
 
     }
 
