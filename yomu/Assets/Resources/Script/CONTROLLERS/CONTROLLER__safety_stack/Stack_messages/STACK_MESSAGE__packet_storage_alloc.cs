@@ -3,6 +3,8 @@ using System.Runtime.InteropServices;
 [StructLayout(LayoutKind.Explicit)]
 unsafe public struct STACK_MESSAGE__packet_storage_alloc {
 
+    // ** só tem que mudar no arquivo, a chave vai ser alocada junto como change_data
+
     [ FieldOffset( 0 ) ]
     public Stack_message_core core_message;
 
@@ -15,70 +17,12 @@ unsafe public struct STACK_MESSAGE__packet_storage_alloc {
     [ FieldOffset( 12 ) ]
     public int slot;
 
+
+    // FILE_ID? 
     
     [ FieldOffset( 16 ) ]
     public int file_id;
 
 
 }
-
-
-[StructLayout(LayoutKind.Explicit)]
-unsafe public struct STACK_MESSAGE__file_change {
-
-    [ FieldOffset( 0 ) ]
-    public Stack_message_core core_message;
-
-    // ** SPECIFIC FROM TYPE
-
-    [ FieldOffset( 8 ) ]
-    public int file_id;
-
-    
-    [ FieldOffset( 12 ) ]
-    public int point_to_change;
-
-    
-    [ FieldOffset( 16 ) ]
-    public int length;
-
-    [ FieldOffset( 20 ) ]
-    public byte pointer_data;
-
-    // ** DATA
-
-
-}
-
-
-
-[StructLayout(LayoutKind.Explicit)]
-unsafe public struct STACK_MESSAGE__create_new_file {
-
-    [ FieldOffset( 0 ) ]
-    public Stack_message_core core_message;
-
-    // ** SPECIFIC FROM TYPE
-
-    [ FieldOffset( 8 ) ]
-    public int file_id;
-
-
-    [ FieldOffset( 12 ) ]
-    public int length_file;
-
-    [ FieldOffset( 16 ) ]
-    public int length_path;
-
-    [ FieldOffset( 20 ) ]
-    public byte pointer_data_path;
-
-    // ** DATA
-
-
-}
-
-
-
-
 

@@ -13,7 +13,7 @@ unsafe public static class CONSTRUCTOR__controller_safety_stack{
         ret.safety_file_size = 1_000_000;
         ret.minimun_time_to_save_ms = 200f;
 
-        ret.message_max_size = 100_000;
+        ret.message_max_size = 9_000_000;
         ret.message_heap_key = Controllers.heap.Get_unique( ret.message_max_size );
         ret.pointer_with_message = ret.message_heap_key.Get_pointer();
 

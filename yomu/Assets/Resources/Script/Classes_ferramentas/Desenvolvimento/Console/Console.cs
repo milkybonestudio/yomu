@@ -212,12 +212,12 @@ public static class Console {
 
         private static void Log_unity( string _message, Log_type _type ){
 
-                switch( _type ){
+            switch( _type ){
 
-                    case Log_type.normal: UnityEngine.Debug.Log( _message ); break;
-                    case Log_type.error: UnityEngine.Debug.LogError( _message ); break;
+                case Log_type.normal: UnityEngine.Debug.Log( _message ); break;
+                case Log_type.error: UnityEngine.Debug.LogError( _message ); break;
 
-                }
+            }
 
         }
 

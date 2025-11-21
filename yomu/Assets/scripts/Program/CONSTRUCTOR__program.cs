@@ -92,10 +92,13 @@ public static class CONSTRUCTOR__program {
 
                 if( system_crashed )
                     { 
+
                         if( System_run.show_program_messages )
                             { Console.Log( "The sistem crashed. Will handle it" ); }
-                        // ** GUARANTEE STATE
-                        Crash_handler.Deal_crash();
+
+                        Crash_handler.Change_variables_for_reconstruct();
+                            Crash_handler.Deal_crash(); // ** GUARANTEE STATE
+                        Crash_handler.End_stack_variables();
                     }
 
             }
@@ -117,7 +120,7 @@ public static class CONSTRUCTOR__program {
         
         // --- CONSTRUIR CONTROLADORES GERAIS
 
-            Controllers.files = CONSTRUCTOR__controller_data_files.Construct();
+            CONSTRUCTOR__controller_data_files.Construct( ref Controllers.files );
             Controllers.input = CONSTRUCTOR__controller_input.Construct();
             Controllers.audio = CONSTRUCTOR__controller_audio.Construct();
             Controllers.configurations = CONSTRUCTOR__controller_configurations.Construct();

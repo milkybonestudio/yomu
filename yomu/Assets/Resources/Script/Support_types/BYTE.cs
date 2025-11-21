@@ -7,6 +7,21 @@ using System.Runtime.CompilerServices;
 public static class BYTE {
 
 
+    public static void Print_values( byte[] _arr ){
+
+        if( _arr == null )
+            { Console.Log( "Aray bytes came null" ); return; }
+
+        if( _arr.Length > 300 )
+            { Console.Log( "Aray bytes have " + _arr.Length + " is too much to print" ); return; }
+
+        foreach( byte b in _arr ){
+            Console.Log( (char)b );
+        }
+
+    }
+
+
     public static void Copiar_elementos_de_array( byte[] _array_para_colocar, int _index_para_iniciar, byte[] _array_com_os_dados, int _length ){
 
         if( _length > 150 )

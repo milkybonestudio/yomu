@@ -23,10 +23,11 @@ unsafe public struct MANAGER__safety_stack_buffer {
             ret.buffer_pointer_0 = ret.heap_key_buffer.Get_pointer();
 
 
-
         return ret;
 
     }
+
+
 
 
     // ** WILL BE A "COPY" OF THE STACK FILE, BUT ONLY IN BLOCKS
@@ -265,13 +266,34 @@ unsafe public struct MANAGER__safety_stack_buffer {
 
 
     public void Save_data( byte[] _data, int _length ){ fixed( byte* data = _data ){ Save_data_inline( data, _length ); }}
-
-
     public void Save_data( void* _data_pointer, int _length ){ Save_data_inline( _data_pointer, _length ); }
 
 
+    public bool is_reconstructing_stack;
+    public void Activate__is_reconstructing_stack(){
+
+        is_reconstructing_stack = true;
+
+    }
+
+    public void Deactivate__is_reconstructing_stack(){
+
+        is_reconstructing_stack = false;
+
+    }
+
+
+    #if !UNITY_EDITOR
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    #endif
     public void Save_data_inline( void* _data_pointer, int _length ){
+
+        if( is_reconstructing_stack )
+            { 
+                // ** in the reconstruct will call a lot of functions to change data again
+                // ** and this functions will call stack.save again, so block here
+                return; 
+            } 
 
         if( System_run.show_stack_messages_buffer )
             { 

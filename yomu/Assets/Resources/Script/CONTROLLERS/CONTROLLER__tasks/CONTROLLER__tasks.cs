@@ -285,7 +285,9 @@ public class CONTROLLER__tasks {
     // ENTRY POINT
     public void Adicionar_task( Task_req _nova_task ) { 
 
-        Console.Log( "WILL ADD TASK TO THE LIST: " + _nova_task.nome );
+        if( System_run.tasks_show_messages )
+            { Console.Log( "WILL ADD TASK TO THE LIST: " + _nova_task.nome ); }
+
         single_tasks_collection.Add_task( _nova_task ); 
 
     }

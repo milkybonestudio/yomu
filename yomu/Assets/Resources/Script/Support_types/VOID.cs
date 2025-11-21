@@ -10,7 +10,27 @@ unsafe public static class VOID {
 
     }
 
+
+    public static void Print_chars( void* _pointer, int _length ){
+
+        if( _pointer == null )
+            { Console.Log( "pointer came null" ); return; }
+
+        if( _length > 300 )
+            { Console.Log( "length have " + _length + " is too much to print" ); return; }
+
+        for( int i = 0 ; i < _length ; i++){
+
+            Console.Log( (char)(*((byte*)_pointer + i)) );
+        }
+
+    }
+
+
+
+    #if !UNITY_EDITOR
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    #endif
     public static void Transfer_data( void* _pointer_data, void* _pointer_to_transfer, int _length ){
 
 
@@ -31,7 +51,7 @@ unsafe public static class VOID {
 
 
                 if( left == _length )
-                    {return; }
+                    { return; }
 
                 int* start_pointer_data = (int*) ( byte_p + left );
 
@@ -49,12 +69,14 @@ unsafe public static class VOID {
 
                 int number_cycles = _length / ( sizeof( int ) * 4  );
 
-                for( int index = 0; index < number_cycles ; index += 4 ){
+                for( int index = 0; index < number_cycles ; index++ ){
 
-                    int_pointer_transfer_1[ index ] = int_pointer_data_1[ index ];
-                    int_pointer_transfer_2[ index ] = int_pointer_data_2[ index ];
-                    int_pointer_transfer_3[ index ] = int_pointer_data_3[ index ];
-                    int_pointer_transfer_4[ index ] = int_pointer_data_4[ index ];
+                    int index_to_use = ( index * 4 );
+
+                    int_pointer_transfer_1[ index_to_use ] = int_pointer_data_1[ index_to_use ];
+                    int_pointer_transfer_2[ index_to_use ] = int_pointer_data_2[ index_to_use ];
+                    int_pointer_transfer_3[ index_to_use ] = int_pointer_data_3[ index_to_use ];
+                    int_pointer_transfer_4[ index_to_use ] = int_pointer_data_4[ index_to_use ];
 
                 }
 

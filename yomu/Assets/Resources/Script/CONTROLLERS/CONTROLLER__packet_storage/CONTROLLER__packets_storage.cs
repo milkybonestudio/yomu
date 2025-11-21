@@ -15,7 +15,7 @@ unsafe public struct CONTROLLER__packets_storage {
 
     public Packet_storage* Get_packet_storage( string _path_to_file ){
         
-        Data_file_link file_data_link = Controllers.files.Get_file( _path: _path_to_file, _safety_length_type: int.MaxValue );
+        Data_file_link file_data_link = Controllers.files.Get_file( _path: _path_to_file );
         
         return Packet_storage.Start( file_data_link );
         
@@ -30,7 +30,9 @@ unsafe public struct CONTROLLER__packets_storage {
         // ** vai chamar aqui por hora somente quando for iniciar ou para teste
 
         int file_length = _start_data.Get_file_length();
-        Data_file_link file_data_link = Controllers.files.Create_file( _path_to_file, file_length );
+
+        Console.Log( "antes era Controllers.files mas mudei porque a funcao nao existe mais" );
+        Data_file_link file_data_link = Controllers.files.Create_new_file_EMPTY( _path_to_file, file_length );
         creation.Create( file_data_link, _start_data );
 
 

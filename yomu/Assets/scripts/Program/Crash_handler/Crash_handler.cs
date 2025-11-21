@@ -2,7 +2,9 @@
 
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 
 public enum Crash_handle_situation {
@@ -17,6 +19,7 @@ public enum Crash_handle_situation {
 
 
 }
+
 
 unsafe public static class Crash_handler{
 
@@ -71,11 +74,28 @@ unsafe public static class Crash_handler{
 
     public static byte[] stack_file;
 
-    public static string[] paths;
+    public static string[] _paths;
+    // public static byte[][] files;
+    public static Crash_file[] files;
 
-    public static byte[][] files;
+    public static Crash_handle_ephemeral_files files_OS;
 
 
+    public static void Change_variables_for_reconstruct(){
+
+        // ** all the import constructors that need acces are structs
+
+        Controllers.stack.buffer.Activate__is_reconstructing_stack();
+        Controllers.files.Activate__is_reconstructing_stack();
+
+    }
+
+    public static void End_stack_variables(){
+
+        Controllers.stack.buffer.Deactivate__is_reconstructing_stack();
+        Controllers.files.Deactivate__is_reconstructing_stack();
+
+    }
 
 
 
@@ -87,10 +107,11 @@ unsafe public static class Crash_handler{
 
     }
 
+
     public static Crash_handle_situation Deal_crash(){
 
 
-        if ( System_run.show_program_messages )
+        if ( System_run.show_program_construction_messages )
             { Console.Log("----------------------- CALLED <Color=lightBlue>DEAL CRASH</Color> -----------------------"); }
 
 
@@ -101,11 +122,36 @@ unsafe public static class Crash_handler{
 
         // ** GET DATA 
 
+        
+        /*
+            path[ n ] -> null
+            data[ n ] -> null    ==> empty
+
+            path[ n ] -> "path"
+            data[ n ] -> byte[]    ==> active data
+
+            path[ n ] -> "path"
+            data[ n ] ->  null   ==> deleted the file
+        
+        */
 
         stack_file = System.IO.File.ReadAllBytes(Paths_program.safety_stack_file);
-        paths = System.IO.File.ReadAllLines(Paths_program.saving_link_file_to_path);
 
-        files = new byte[ paths.Length ][];
+        // ** only the files to save
+        _paths = System.IO.File.ReadAllLines(Paths_program.saving_link_file_to_path);
+
+
+        files = new Crash_file[ _paths.Length ];
+
+        for( int index = 0 ; index < _paths.Length ; index++ )
+            { files[ index ].path = _paths[ index ]; }
+
+        // files = new byte[ _paths.Length ][];
+
+
+        // ** always the files that should be in disk at that point
+        files_OS = new Crash_handle_ephemeral_files();
+
 
         if ( !!!( Verify_if_important_files_make_sense() ) )
             { return Crash_handle_situation.corrupted; }
@@ -119,9 +165,9 @@ unsafe public static class Crash_handler{
 
         // ** GET FILES
 
-        for (int file_index = 1; file_index < paths.Length; file_index++){
+        for (int file_index = 1; file_index < files.Length; file_index++){
 
-            string path = paths[ file_index ];
+            string path = _paths[ file_index ];
 
             if ( path == "" )
                 { continue; }
@@ -140,8 +186,8 @@ unsafe public static class Crash_handler{
                     return Crash_handle_situation.corrupted;
                 }
 
-            files[ file_index ] = System.IO.File.ReadAllBytes( path );
-            current_bytes += files[ file_index ].Length;
+            files[ file_index ].data =  System.IO.File.ReadAllBytes( path );
+            current_bytes += files[ file_index ].data.Length;
 
             if ( current_bytes > MAX_LENGTH_FILES )
                 { CONTROLLER__errors.Throw("file size explode BUUUUUm"); }
@@ -164,12 +210,21 @@ unsafe public static class Crash_handler{
     
     
     
+    public enum File_operation {
+
+        _not_give,
+            _switch, 
+            _delete,
+
+    }
 
     private struct Key_path_TO_real_path {
 
         public string path_in_disk;
         public string real_path;
         public string name_in_saving_file;
+
+        public File_operation operation; 
         
     }
 
@@ -222,12 +277,7 @@ unsafe public static class Crash_handler{
 
         int files_without_meta = 0;
 
-        foreach( string s in files_paths_in_directory ){
-
-            if( Path.GetExtension( s ) != ".meta" )
-                { files_without_meta++; }
-
-        }
+        foreach( string s in files_paths_in_directory ){ if( Path.GetExtension( s ) != ".meta" ) { files_without_meta++; } }
 
         int length_without_security = ( ( files_without_meta ) - 1 );
 
@@ -241,7 +291,6 @@ unsafe public static class Crash_handler{
 
             string file_path = files_paths_in_directory[ index ];
             string file_name = Path.GetFileName( file_path );
-
 
 
             if( file_name == Paths_program.saving_files_security_file_NAME )
@@ -264,18 +313,24 @@ unsafe public static class Crash_handler{
                 }
 
             
-            bool name_is_a_number = int.TryParse( Path.GetFileNameWithoutExtension( file_name ), out int slot );
+            bool name_is_a_number = int.TryParse( Path.GetFileNameWithoutExtension( file_name ), out int slot_sign );
 
-            
+            int slot = Math.Abs( slot_sign );
+
             // --- VERIFICATIONS
+
+            Console.Log( "slot: " + file_name );
+
+            if( slot == 0 )
+                { return File_worst_corruption( $"The slot is 0 in the file <Color=lightBlue>{ file_name }</Color> and is invalid" ); }
 
             if( !!!( name_is_a_number ) )
                 { return File_worst_corruption( $"There is a file with the name <Color=lightBlue>{ file_name }</Color> and is invalid" ); }
 
-            if(  slot > paths.Length )
-                { return File_worst_corruption( $"There is a file with slot <Color=lightBlue>{ slot }</Color>, but the max slot based on <Color=lightBlue>saving_link_file_to_path</Color> is <Color=lightBlue>{ paths.Length }</Color>" ); }
+            if(  slot > files.Length )
+                { return File_worst_corruption( $"There is a file with slot <Color=lightBlue>{ slot }</Color>, but the max slot based on <Color=lightBlue>saving_link_file_to_path</Color> is <Color=lightBlue>{ files.Length }</Color>" ); }
 
-            string path_to_move = paths[ slot ];
+            string path_to_move = files[ slot ].path;
 
             if( ( path_to_move == null ) || ( path_to_move.Length < 10 ) )
                 { return File_worst_corruption( $"The path <Color=lightBlue>{ file_path }</Color> is not valid " ); }
@@ -289,16 +344,21 @@ unsafe public static class Crash_handler{
                 { return File_worst_corruption( $"There is a file in the temp path <Color=lightBlue>{ temp_path }</Color> but the file also exist in the saving_files_folder as <Color=lightBlue>{ file_name }</Color>" ); }
 
 
-            if( !!!( Directories.Is_sub_path( file_path, Paths_program.program_path ) ) )
-                { return File_worst_corruption( $" The path <Color=lightBlue>{ file_path }</Color> is not part of The path <Color=lightBlue>{ Paths_program.program_path }</Color>" ); }
+            if( !!!( Directories.Is_sub_path( file_path, Paths_version.path_to_version ) ) )
+                { return File_worst_corruption( $" The path <Color=lightBlue>{ file_path }</Color> is not part of The path <Color=lightBlue>{ Paths_version.path_to_version }</Color>" ); }
 
-            if( !!!( Directories.Is_sub_path( path_to_move, Paths_program.program_path ) ) )
-                { return File_worst_corruption( $"The path <Color=lightBlue>{ path_to_move }</Color> is not part of <Color=lightBlue>{ Paths_program.program_path }</Color>" ); }
+            if( !!!( Directories.Is_sub_path( path_to_move, Paths_version.path_to_version ) ) )
+                { return File_worst_corruption( $"The path <Color=lightBlue>{ path_to_move }</Color> is not part of <Color=lightBlue>{ Paths_version.path_to_version }</Color>" ); }
 
 
             keys[ current_index ].path_in_disk = file_path;
             keys[ current_index ].real_path = path_to_move;
             keys[ current_index ].name_in_saving_file = file_path;
+
+            if( slot_sign > 0 )
+                { keys[ current_index ].operation = File_operation._switch; }
+                else
+                { keys[ current_index ].operation = File_operation._delete; }
             
             current_index++;
 
@@ -314,12 +374,16 @@ unsafe public static class Crash_handler{
 
         Console.Log( "Will verify if there is any temp switch interrupted" );
 
-        foreach( string path_file_saving in paths ){
+        foreach( string path_file_saving in Get_paths() ){
 
-            string temp_file = path_file_saving + ".temp";
+            if( path_file_saving == null || path_file_saving.Length < 14 )
+                { continue; }
+
+            string temp_file =  CONTROLLER__data_files.Get_run_time_path_TEMP( path_file_saving );
 
             if( System.IO.File.Exists( temp_file ) )
                 {
+                    // ** ONLY CAMES HERE IF IS FOR SWITCH
                     // ** finding the one switching
                     Console.Log( $"Crash when switching file <Color=lightBlue>{ path_file_saving }</Color> " );
                     
@@ -335,18 +399,34 @@ unsafe public static class Crash_handler{
 
         }
 
-        Console.Log( "alll the files are in the right places or in the saving_files folder" );
+        Console.Log( "all the files are in the right places or in the saving_files folder" );
 
 
         // ** MOVE THE FILES
 
         foreach( Key_path_TO_real_path key in keys ){ 
 
-            string path_temp = ( key.real_path + ".temp" );
-            
-            System.IO.File.Move( key.path_in_disk, path_temp );
-            System.IO.File.Delete( key.real_path );
-            System.IO.File.Move( path_temp, key.real_path );
+            if( key.operation == File_operation._switch )
+                {
+                    string path_temp = CONTROLLER__data_files.Get_run_time_path_TEMP( key.real_path );
+
+                    UnityEngine.Debug.Log( path_temp );
+                    UnityEngine.Debug.Log( key.path_in_disk );
+                    
+                    System.IO.File.Move( key.path_in_disk, path_temp );
+                    System.IO.File.Delete( key.real_path );
+                    System.IO.File.Move( path_temp, key.real_path );
+
+                }
+
+            if( key.operation == File_operation._delete )
+                {
+                    if( System.IO.File.Exists( key.real_path ) )
+                        { System.IO.File.Delete( key.real_path ); }
+
+                    System.IO.File.Delete( key.path_in_disk );
+                }
+
 
         }
 
@@ -364,7 +444,7 @@ unsafe public static class Crash_handler{
 
         // cuidar que saving_link_file_to_path pode estar desatualizado
 
-        if( System_run.show_program_messages )
+        if( System_run.show_program_construction_messages )
             {
                 
                 Console.Log( "Came Handle_all_the_data_is_in_the_stack()" );
@@ -375,12 +455,12 @@ unsafe public static class Crash_handler{
             { System.IO.Directory.Delete( Paths_program.saving_files_folder, true ); }
         
 
-        if( System_run.show_program_messages )
+        if( System_run.show_program_construction_messages )
             { Console.Log( "Will create the folder again empty" ); }
             
         System.IO.Directory.CreateDirectory( Paths_program.saving_files_folder );
 
-        if( System_run.show_program_messages )
+        if( System_run.show_program_construction_messages )
             { Console.Log( "Will reconstruct the files in ram" ); }
             
         // ** ERRORS QUE PODE ACONTECER:
@@ -393,9 +473,7 @@ unsafe public static class Crash_handler{
             int max_length_stack = stack_file.Length;
             int index_in_file = 0;
 
-            Console.Log( "max_length_stack: " + max_length_stack );
-
-            while( index_in_file < max_length_stack ){
+            while( true ){
 
                 byte* block_pointer = ( pointer_stack + index_in_file );
 
@@ -407,17 +485,24 @@ unsafe public static class Crash_handler{
 
                     index_in_file += length_block;
 
-                
-
-                if( System_run.show_program_messages )
+                if( System_run.show_program_construction_messages )
                     { Console.Log( $"--- receive block <Color=lightBlue>{ block_id }</Color> and length <Color=lightBlue>{ length_block }</Color> ----" ); }
+                
 
                 if( ( block_id == 0 ) || ( length_block == 0 ) )
                     { 
-                        if( System_run.show_program_messages )
+                        if( System_run.show_program_construction_messages )
                             { Console.Log( "Came to the end of blocks" ); }
                         break; 
                     }
+                
+                #if UNITY_EDITOR
+
+                    // ** to not destroy my eyes I use "-" insted of 0-> "null"
+                    if( block_id == INT.Return_int_4_bytes_asc2( '-' ) )
+                        { return Crash_handle_situation.need_to_recosntruct_with_the_stack; }
+
+                #endif
 
                 if( !!!( MANAGER__safety_stack_saver.Security_values_are_OK( block_pointer, length_block ) ) )
                     { 
@@ -432,6 +517,10 @@ unsafe public static class Crash_handler{
                 if( result_message.result == Stack_reconstruction_result.fail )
                     { return Handle_fail_reconstruct_stack( result_message.message ); }
 
+                
+                if( index_in_file < max_length_stack  )
+                    { break; }
+
                 continue;
 
             }
@@ -439,45 +528,55 @@ unsafe public static class Crash_handler{
         }
         
 
-        if( System_run.show_program_messages )
+        if( System_run.show_program_construction_messages )
             { 
                 Console.Log( "All the files in the files[] should already be with the correct state. Will continue with the normal flow of saving the data in case crash when reconstructing" ); 
                 Console.Log( "Will save the paths updated" );
             }
 
-        Files.Save_critical_file( Paths_program.saving_link_file_to_path, paths );
+        Files.Save_critical_file( Paths_program.saving_link_file_to_path, Get_paths() );
 
         TOOL__crash_handler.Save_files_in_saving_files_folder();
 
 
-        if( System_run.show_program_messages )
+        if( System_run.show_program_construction_messages )
             { Console.Log( "Will create the safety_file" ); }
 
         Files.Save_critical_file( Paths_program.saving_files_security_file, new byte[]{ 0,0 } );
 
+        // ** poderia simplesmente chamar em cima de novo
 
-        TOOL__crash_handler.Move_files_to_correct_place_as_temp();
+        return Handle_were_saving_files_in_disk();
 
 
-        TOOL__crash_handler.Switch_files_in_correct_place();
+        // TOOL__crash_handler.Move_files_to_correct_place_as_temp();
 
-        
-        if( System_run.show_program_messages )
-            { Console.Log( "Will reset the stack" ); }
 
-        Files.Save_critical_file( Paths_program.safety_stack_file, new byte[ stack_file.Length ] );
+        // TOOL__crash_handler.Switch_files_in_correct_place();
 
         
-        if( System_run.show_program_messages )
-            { Console.Log( "Will delete everything. With the stack reseted will not come here again" ); }
+        // if( System_run.show_program_construction_messages )
+        //     { Console.Log( "Will reset the stack" ); }
 
-        Delete_all();
+        // Files.Save_critical_file( Paths_program.safety_stack_file, new byte[ stack_file.Length ] );
 
         
-        if( System_run.show_program_messages )
-            { Console.Log( "<Color=lime>System with correct state</Color>" ); }
+        // if( System_run.show_program_construction_messages )
+        //     { Console.Log( "Will delete everything. With the stack reseted will not come here again" ); }
 
-        return Crash_handle_situation.need_to_recosntruct_with_the_stack;
+        // Delete_all();
+
+        
+        // if( System_run.show_program_construction_messages )
+        //     { Console.Log( "<Color=lime>System with correct state</Color>" ); }
+
+        // return Crash_handle_situation.need_to_recosntruct_with_the_stack;
+
+    }
+
+    private static string[] Get_paths(){
+
+        return files.Select( s => s.path ).ToArray();
 
     }
 
@@ -502,7 +601,7 @@ unsafe public static class Crash_handler{
             if( !!!( System.IO.File.Exists( _path ) ) )
                 { 
                     // rare case, but possible
-                    if( System_run.show_program_messages )
+                    if( System_run.show_program_construction_messages )
                         { Console.Log( $"<Color=lightBlue>{ _name }</Color> didn't exist" ); }
 
                     return true;
@@ -518,7 +617,7 @@ unsafe public static class Crash_handler{
             if( !!!( System.IO.Directory.Exists( _path ) ) )
                 { 
                     // rare case, but possible
-                    if( System_run.show_program_messages )
+                    if( System_run.show_program_construction_messages )
                         { Console.Log( $"<Color=lightBlue>{ _name }</Color> didn't exist" ); }
 
                     return true;
@@ -529,7 +628,7 @@ unsafe public static class Crash_handler{
         }
 
 
-        if( System_run.show_program_messages ) 
+        if( System_run.show_program_construction_messages ) 
             { Console.Log( "will Verify_if_crash_at_final_OR_start()" ); }
         
 
@@ -544,7 +643,7 @@ unsafe public static class Crash_handler{
 
         if( some_file_is_missing )
             {
-                if( System_run.show_program_messages )
+                if( System_run.show_program_construction_messages )
                     { Console.Log( "Some important <Color=lightBlue>files are missing</Color>, what means the system already saved the files with the right data, but crashed when deleting the run time ones " ); }
 
                 Delete_all();
@@ -552,7 +651,7 @@ unsafe public static class Crash_handler{
             }
             else
             {
-                if( System_run.show_program_messages )
+                if( System_run.show_program_construction_messages )
                     { Console.Log( "The system have all the files, so it crashed in the middle of the game, will reconstruct state" ); }
             }
 
@@ -564,17 +663,18 @@ unsafe public static class Crash_handler{
 
     private static void Delete_all(){
 
-        if( System_run.show_program_messages )
+        if( System_run.show_program_construction_messages )
             { Console.Log( "Will just delete the folder and go with the flow normally" ); }
         
 
-        System.IO.Directory.Delete( Paths_program.saving_run_time_folder, true );
+        //mark
+        Console.Log( "ATIVAR NOVAMENTE QUANDO PRONTO" );
+        // System.IO.Directory.Delete( Paths_program.saving_run_time_folder, true );
 
 
         stack_file = null;
-        paths = null;
-
         files = null;
+        files_OS = null;
 
         current_bytes = 0;
 
@@ -597,9 +697,9 @@ unsafe public static class Crash_handler{
 
         // ** FILES
 
-        if( paths.Length == 0 )
+        if( _paths.Length == 0 )
             {
-                if( System_run.show_program_messages )
+                if( System_run.show_program_construction_messages )
                     { Console.Log( "Files don't have data" ); }
                 Delete_all();
                 return false;

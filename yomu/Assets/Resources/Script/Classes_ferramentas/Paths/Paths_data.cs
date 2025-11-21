@@ -157,9 +157,11 @@ unsafe public static class Paths_data {
         //mark 
         // ** porque nao so o Data_file_link? 
         // ** ele parece que tem tudo, slot não é mais pego ali e sim no controller_files
-        Data_file_link info = Controllers.files.Get_file( _path: path, _safety_length_type: sizeof( Tipo ) );
-        Tipo.pointer = ( Tipo* ) info.heap_key.Get_pointer();
-        Tipo.pointer->edit.Start(  _ptr: Tipo.pointer, _size: size, _slot: slot );
+
+        
+        // Data_file_link info = Controllers.files.Get_file( _path: path, _safety_length_type: sizeof( Tipo ) );
+        // Tipo.pointer = ( Tipo* ) info.heap_key.Get_pointer();
+        // Tipo.pointer->edit.Start(  _ptr: Tipo.pointer, _size: size, _slot: slot );
 
     }
 

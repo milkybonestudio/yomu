@@ -7,6 +7,20 @@ using System.Runtime.InteropServices;
 [StructLayout(LayoutKind.Explicit)]
 unsafe public struct Heap_key {
 
+    public static Heap_key Construct_fast( void* _pointer, int _length ){
+
+        Heap_key key = default;
+
+            key.type = Heap_key_type.fast;
+            
+            key.fast_key = new Heap_key_FAST(){
+                pointer = _pointer,
+                length = _length
+            };
+        return key;
+
+    }
+
     [ FieldOffset( 0 ) ]
     public Heap_key_type type;
 
@@ -24,7 +38,8 @@ unsafe public struct Heap_key {
     [ FieldOffset( 8 ) ]
     public Heap_key_MANAGED_TYPE managed_key;
 
-
+    [ FieldOffset( 8 ) ]
+    public Heap_key_FAST fast_key;
 
     public void* Get_pointer(){
 
@@ -89,6 +104,8 @@ public enum Heap_key_type {
     fix,
     managed_type,
 
+    fast,
+
 
 }
 
@@ -124,6 +141,16 @@ unsafe public struct Heap_key_MANAGED_TYPE {
 
     public Heap_key_managed_type managed_type;
     public int heap_slot;
+    
+
+}
+
+
+
+unsafe public struct Heap_key_FAST {
+
+    public void* pointer;
+    public int length;
     
 
 }

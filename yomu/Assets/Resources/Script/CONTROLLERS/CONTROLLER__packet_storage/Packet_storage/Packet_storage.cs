@@ -4,6 +4,8 @@ using System.Runtime.InteropServices;
 using Unity.Burst;
 
 
+
+
 [StructLayout(LayoutKind.Sequential)]
 unsafe public struct Packet_storage {
 
@@ -14,35 +16,37 @@ unsafe public struct Packet_storage {
     public bool started;
     private Packet_storage* storage_pointer;
     public Data_file_link file_link;
+    public Packet_storage_size_manager sizes;
     public int file_length;
 
-    #if UNITY_EDITOR
+    public Packet_storage_TEST test;
 
-    // ** TESTING
+    // #if UNITY_EDITOR
+
+    // // ** TESTING
         
-        public static Packet_storage* Start( Heap_key _key ){
+    //     public static Packet_storage* Start( Heap_key _key ){
 
-            Packet_storage* _pointer = ( Packet_storage* ) _key.Get_pointer();
+    //         Packet_storage* _pointer = ( Packet_storage* ) _key.Get_pointer();
 
-                _pointer->started = true;
-                _pointer->storage_pointer = _pointer;
+    //             _pointer->started = true;
+    //             _pointer->storage_pointer = _pointer;
 
-                _pointer->file_link.heap_key = _key;
-                _pointer->file_link.size = _key.Get_length();
+    //             _pointer->file_link.heap_key = _key;
+    //             _pointer->file_link.size = _key.Get_length();
 
-                _pointer->file_length = _key.Get_length();
-                _pointer->infos = (Packet_storage_info*) _pointer->infos_buffer;
+    //             _pointer->file_length = _key.Get_length();
+    //             _pointer->infos = (Packet_storage_info*) _pointer->infos_buffer;
+    //             _pointer->sizes.Start();
 
-            return _pointer;
+    //         return _pointer;
         
-        }
+    //     }
 
-    #endif
+    // #endif
 
 
     
-
-
     private Packet_storage_info* infos;
     public fixed byte infos_buffer [ LENGTH_INFO_BUFFER ];
 
@@ -52,12 +56,13 @@ unsafe public struct Packet_storage {
         Packet_storage* pointer = (Packet_storage*) _data_file.heap_key.Get_pointer();
 
         pointer->started = true;
+        pointer->storage_pointer = pointer;
 
         pointer->file_link = _data_file;
-            pointer->file_length = _data_file.size;
 
-        pointer->storage_pointer = pointer;
+        pointer->file_length = _data_file.size;
         pointer->infos = (Packet_storage_info*) pointer->infos_buffer;
+        pointer->sizes.Start();
 
         return pointer;
     
@@ -65,36 +70,6 @@ unsafe public struct Packet_storage {
 
 
 
-
-    public Packet_key Get_key_FOR_TEST( Packet_storage_size _size, int _slot ){
-
-
-        
-        #if !UNITY_EDITOR
-            CONTROLLER__errors.Throw( "Tentou chamar<Color=lightBlue>Get_key</Color> mas nao pode ser chamada na build" );
-        #endif
-
-        Safety();
-
-        if( !!! ( Can_have_specific_key( _size, _slot ) ) )
-            { CONTROLLER__errors.Throw( $"Tried to get the key of the size <Color=lightBlue>{ _size }</Color> and the slot <Color=lightBlue>{ _slot }</Color> but system can not have it" ); }
-
-        if( !!!( Is_slot_used( _size, _slot ) ) )
-            { CONTROLLER__errors.Throw( $"Tried to get the key of the size <Color=lightBlue>{ _size }</Color> and the slot <Color=lightBlue>{ _slot }</Color> but system didnt allocated it" ); }
-
-
-
-        if( System_run.packet_storage_show_messages )
-            { Console.Log( $"will create a copy with NOT the same data of the packet_key {{ size = <Color=lightBlue>{ _size }</Color>, slot = <Color=lightBlue>{ _slot }</Color> }}. " ); }
-
-        // The length is not right because the Packet_storage dont stores it
-        return Packet_key.Construct(
-            _slot : _slot,
-            _size : _size,
-            _length : Controllers.packets.sizes.Get_size_in_bytes( _size )
-        );
-        
-    }
 
 
     public bool Is_slot_used( Packet_storage_size _size, int _slot ){
@@ -201,7 +176,12 @@ unsafe public struct Packet_storage {
 
         int final_size = file_length + ( _need_bytes * multiplier );
 
-        Controllers.files.Sinalize_change_length( ref file_link, final_size );
+
+        // ** if it's reconstructing with the stack it will NEVER came here
+        // ** the message ( add ) is alwasy after the function executes. if it need more space it will call EXPAND 
+        // ** what means the message ( change length ) is always called before ( ADD ) -> the length the packet sees should be enough 
+        Controllers.files.operations.Change_length_file( ref file_link, final_size );
+
         file_length = file_link.heap_key.Get_length();
 
     }
@@ -368,7 +348,7 @@ unsafe public struct Packet_storage {
             
             }
         
-        Packet_storage_size size = Controllers.packets.sizes.Get_required_size( _size_in_bytes );
+        Packet_storage_size size = sizes.Get_required_size( _size_in_bytes );
         int size_index = ( int ) size;
 
         // ** garante que tem pelo menos 1
@@ -379,6 +359,8 @@ unsafe public struct Packet_storage {
 
         if( System_run.packet_storage_show_messages )
             { Console.Log( "current_pointer_of_free_space : " + (infos[ size_index ].current_pointer_of_free_space )); }
+
+        Controllers.stack.packet_storage.Save_alloc( file_link.id, size, slot );
         
 
         return Packet_key.Construct(
@@ -450,7 +432,7 @@ unsafe public struct Packet_storage {
 
 
 
-        Packet_storage_size new_size = Controllers.packets.sizes.Get_required_size( _new_length );
+        Packet_storage_size new_size = sizes.Get_required_size( _new_length );
         void* old_key_pointer = Get_pointer( _key );
         int old_key_off_set = Get_off_set_to_data( _key );
 
@@ -684,7 +666,7 @@ unsafe public struct Packet_storage {
 
 
 
-    private void Safety(){
+    public void Safety(){
 
         if( !!!( System_run.max_security ) )
             { return; }

@@ -10,7 +10,7 @@ public struct Stack_reconstruction_result_message {
 
         if( _results == Stack_reconstruction_result.fail )
             { 
-                Console.Log( "<Color=red>FAILED</Color>" ); 
+                Console.Log( "<Color=#FF6B6B>FAILED</Color>" ); 
                 Console.Log( _message );
             }
 

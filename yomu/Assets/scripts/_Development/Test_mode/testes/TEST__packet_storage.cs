@@ -57,7 +57,14 @@ unsafe public static class TEST__packet_storage {
                         if( packet_storage == null )
                             {
                                 byte[] data = System.IO.File.ReadAllBytes( path_to_packet_storage );
-                                packet_storage = Packet_storage.Start( Controllers.heap.Get_unique( data ) );
+
+                                packet_storage = Packet_storage.Start(
+                                    Data_file_link.Construct_fast(
+                                        _data_pointer: Controllers.heap.Get_unique( data ).Get_pointer(), 
+                                        _length: data.Length,
+                                        _id: 10
+                                    )  
+                                );
                                 Console.Log( "Load packet store" );
 
                             }
@@ -91,7 +98,14 @@ unsafe public static class TEST__packet_storage {
                     _start_data: Controllers.packets.defaults.Get_default_args()
                 );
 
-                packet_storage = Packet_storage.Start( key );
+                packet_storage = Packet_storage.Start(
+                    Data_file_link.Construct_fast(
+                        _data_pointer: Controllers.heap.Get_unique( file_length ).Get_pointer(), 
+                        _length: file_length,
+                        _id: 10
+                    )  
+                );
+
                 
                 Console.Log( "Created packet store" );
 
@@ -183,7 +197,7 @@ unsafe public static class TEST__packet_storage {
         // ** GET KEY
         if( Input.GetKeyDown( KeyCode.H ) )
             {
-                packet_key_test = packet_storage->Get_key_FOR_TEST(  Packet_storage_size._10_bytes, 10 );
+                packet_key_test = packet_storage->test.Get_key_FOR_TEST( packet_storage, Packet_storage_size._10_bytes, 10 );
                 packet_key_test.length = 8;
             }
 

@@ -187,7 +187,7 @@ unsafe public struct MANAGER__safety_stack_saver {
             ( 2 * sizeof( int ) )  // **  2 numbers safety
         );
 
-        if( System_run.show_stack_messages )
+        if( System_run.show_stack_messages_saver )
             {
                 Console.Log( "pointer_save_END: " + pointer_save_END );
                 Console.Log( "pointer_save_START: " + pointer_save_START );
@@ -198,7 +198,7 @@ unsafe public struct MANAGER__safety_stack_saver {
             { CONTROLLER__errors.Throw( $"Tried to save <Color=lightBlue>{ total_bytes_to_save }</Color> bytes" ); }
 
 
-        if( System_run.show_stack_messages )
+        if( System_run.show_stack_messages_saver )
             { Console.Log( $"Will give Seek in the stream to the point <Color=lightBlue>{ Controllers.stack.saver.current_pointer_in_file }</Color> in the file" ); }
 
 
@@ -216,7 +216,7 @@ unsafe public struct MANAGER__safety_stack_saver {
 
         ReadOnlySpan<byte> signature_start_data_span = new ReadOnlySpan<byte>( signature_start_data_pointer, (2 * sizeof( int )) );
         
-        if( System_run.show_stack_messages )
+        if( System_run.show_stack_messages_saver )
             { Console.Log( $"Will write the signature bytes, block: <Color=lightBlue>{ Controllers.stack.saver.block_number }</Color> and length: <Color=lightBlue>{ total_bytes_to_pass_to_file }</Color>" ); }
 
         Controllers.stack.saver.strem_stack.Write( signature_start_data_span );
@@ -231,7 +231,7 @@ unsafe public struct MANAGER__safety_stack_saver {
 
         
 
-        if( System_run.show_stack_messages )
+        if( System_run.show_stack_messages_saver )
             { 
                 Console.Log( $"Will write the data <Color=lightBlue>in the stream</Color>" ); 
                 if( total_bytes_to_save < 10 )
@@ -262,7 +262,7 @@ unsafe public struct MANAGER__safety_stack_saver {
         ReadOnlySpan<byte> safety_digit_span = new ReadOnlySpan<byte>( safety_digit, (2 * sizeof( int )) );
 
 
-        if( System_run.show_stack_messages )
+        if( System_run.show_stack_messages_saver )
             { Console.Log( $"Will write 8 bytes <Color=lightBlue>SECURITY_VALUE</Color>" ); }
 
         Controllers.stack.saver.strem_stack.Write( safety_digit_span );
@@ -272,7 +272,7 @@ unsafe public struct MANAGER__safety_stack_saver {
 
 
         
-        if( System_run.show_stack_messages )
+        if( System_run.show_stack_messages_saver )
             { Console.Log( $"Will write the data <Color=lightBlue>IN DISK</Color> by the strem.flush()" ); }
 
         Controllers.stack.saver.strem_stack.Flush( true );
@@ -282,7 +282,7 @@ unsafe public struct MANAGER__safety_stack_saver {
         
             
 
-        if( System_run.show_stack_messages )
+        if( System_run.show_stack_messages_saver )
             { Console.Log( $" --- <Color=lightBlue>FINISH SAVE STACK IN DISC</Color> ---" ); }
 
         return;
