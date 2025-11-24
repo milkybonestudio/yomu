@@ -12,67 +12,52 @@ public class CONTROLLER__saving {
 
     public static CONTROLLER__saving instancia;
     public static CONTROLLER__saving Pegar_instancia(){ return instancia; }
+
+    public MANAGER__controller_saving_saver saver;
     
-
-
     public Saving_state state;
     
-    public MANAGER__data_tracker data_tracker;
-    
 
+    public bool Update(){
 
+        switch( state ){
 
-    public void Update( Control_flow _control_flow ){
-
-
-
-    }
-
-
-    public void Match_disc_to_real( File_to_save[] _dados_pedidos ){
-
-
-        //Garantir_dados_para_salvar( _dados_pedidos ); // 0.2ms/file => 2ms 10 - files  => 10ms( 50 files )
-
-        for( int pedido_index = 0 ; pedido_index < _dados_pedidos.Length ; pedido_index++ ){
-
-            File_to_save dados_para_salvar = _dados_pedidos[ pedido_index ];
-
-            string path = dados_para_salvar.path;
-            byte[] dados = dados_para_salvar.dados;
-
-            if( path == null )
-                { continue; }
-
-        
-            string path_temp_arquivo_NOVO = ( path + ".temp" ) ;
-            string path_temp_arquivo_ANTIGO = ( path + ".2.temp" );
-
-            System.IO.File.WriteAllBytes( path_temp_arquivo_NOVO , dados  );
-
-            Files.Flush( _path : path_temp_arquivo_NOVO );
-
-            // muda o nome do antigo
-            System.IO.File.Move(  path , path_temp_arquivo_ANTIGO );
-
-            // coloca o nome correto 
-            System.IO.File.Move(  path_temp_arquivo_NOVO, path  );
-
-            // deleta o save
-            System.IO.File.Delete( path_temp_arquivo_ANTIGO );
+            case Saving_state.waiting_to_save_files: return Handle_waiting_to_save_files();
+            case Saving_state.saving_files: return Handle_saving_files();
+            default: CONTROLLER__errors.Throw( "can not handle type: " + state ); return false;
 
         }
+        
+    }
 
-        return;
+    private const bool BLOCK_UPDATE = true;
+    private const bool LIBERATE_UPDATE = true;
+
+    private bool Handle_saving_files(){
+
+        if( saver.Finish_saving_files() )
+            {
+                Controllers.stack.Sinalize_saved_all_files();
+                state = Saving_state.waiting_to_save_files;
+            }
+
+        return BLOCK_UPDATE;
 
     }
 
-    public void Save(){
+    private bool Handle_waiting_to_save_files(){
 
+        if( Controllers.stack.saver.Stack_file_is_close_to_end() && ( Controllers.stack.state == SAFETY_STACK__state.waiting_to_save_stack ) )
+            { 
+                Console.Log( "will save files" );
+                state = Saving_state.saving_files;
+                saver.Start_saving_files();
+                return BLOCK_UPDATE;
+            }
 
-
+        return LIBERATE_UPDATE;
+        
     }
-
 
 
 }

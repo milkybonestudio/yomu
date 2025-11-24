@@ -30,6 +30,9 @@ unsafe public struct Heap_key {
     [ FieldOffset( 8 ) ]
     public Heap_key_UNIQUE unique_key;
 
+    [ FieldOffset( 8 ) ]
+    public Heap_key_EMPTY empty_key;
+
     
     [ FieldOffset( 8 ) ]
     public Heap_key_FIX fix_key;
@@ -51,6 +54,7 @@ unsafe public struct Heap_key {
         switch( type ){
             case Heap_key_type.fix: ret_pointer = fix_key.pointer; break;
             case Heap_key_type.unique: ret_pointer = unique_key.pointer; break;
+            case Heap_key_type.empty: ret_pointer = (void*)0; break;
             default: CONTROLLER__errors.Throw( $"can not handle type <Color=lightBlue>{ type }</Color>" ); break;
         }
 
@@ -71,6 +75,7 @@ unsafe public struct Heap_key {
 
         switch( type ){
             case Heap_key_type.unique: ret_length = unique_key.length; break;
+            case Heap_key_type.empty: return 0;
             default: CONTROLLER__errors.Throw( $"can not handle type <Color=lightBlue>{ type }</Color>" ); break;
         }
 
@@ -103,11 +108,17 @@ public enum Heap_key_type {
     unique,
     fix,
     managed_type,
+    empty,
 
     fast,
 
 
 }
+
+
+
+
+unsafe public struct Heap_key_EMPTY {}
 
 
 unsafe public struct Heap_key_UNIQUE {

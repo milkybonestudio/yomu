@@ -26,6 +26,26 @@ unsafe public static class VOID {
 
     }
 
+    // public static void Transfer_data( void* _pointer_data, void* _pointer_to_transfer, int _length ){
+
+    //     System.Buffer.MemoryCopy( _pointer_data, _pointer_to_transfer, long.MaxValue, ( long ) ( _length ) ); 
+        
+    // }
+
+    public static void Transfer_data( byte[] _array_data, void* _pointer_to_transfer ){
+
+        fixed( byte* pointer_data = _array_data )
+            { System.Buffer.MemoryCopy( ( void* ) pointer_data, ( void* ) _pointer_to_transfer, long.MaxValue, ( long ) ( _array_data.Length ) ); }
+        
+    }
+
+    public static void Transfer_data( void* _pointer_with_data, byte[] _array_to_transfer ){
+
+        fixed( byte* pointer_array_to_transfer = _array_to_transfer )
+            { System.Buffer.MemoryCopy( _pointer_with_data, pointer_array_to_transfer, long.MaxValue, ( long ) ( _array_to_transfer.Length ) ); }
+        
+    }
+
 
 
     #if !UNITY_EDITOR

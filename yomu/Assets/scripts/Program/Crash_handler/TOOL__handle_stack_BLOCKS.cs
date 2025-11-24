@@ -1,9 +1,9 @@
 
 
 
-unsafe public static class TOOL__handle_stack {
+unsafe public static class TOOL__handle_stack_BLOCKS {
 
-    public static Stack_reconstruction_result_message Handle_stack_block( int _block_id, byte* pointer_start_block, int _length_block ){
+    public static Stack_reconstruction_result_message Handle_stack_block( ref Crash_cached_file[] _files,  Crash_handle_ephemeral_files _files_OS, int _block_id, byte* pointer_start_block, int _length_block ){
 
         if( System_run.show_program_construction_messages )
             { Console.Log( $"CAME Handle_stack_block() FOR THE BLOCK <Color=lightBlue>{ _block_id }</Color>" ); }
@@ -58,7 +58,7 @@ unsafe public static class TOOL__handle_stack {
                         );
                     }
 
-            Stack_reconstruction_result_message result = Handle_stack_message( core.type, pointer_to_message, core.length );
+            Stack_reconstruction_result_message result = Handle_stack_message( ref _files, _files_OS,  core.type, pointer_to_message, core.length );
 
 
             //mark
@@ -78,20 +78,21 @@ unsafe public static class TOOL__handle_stack {
 
     }
 
-    private static Stack_reconstruction_result_message Handle_stack_message( Safety_stack_action_type _type, void* _message, int _length ){
+    private static Stack_reconstruction_result_message Handle_stack_message( ref Crash_cached_file[] _files, Crash_handle_ephemeral_files _files_OS, Safety_stack_action_type _type, void* _message, int _length ){
 
         if( _type < Safety_stack_action_type.FILES_END )
-            { return MANAGER__safety_stack_files.Read_message( Crash_handler.files_OS, ref Crash_handler.files, _message ); }
+            { return MANAGER__safety_stack_files.Read_message( _files_OS, ref _files, _message ); }
 
         if( _type < Safety_stack_action_type.STORAGE_END )
-            { return MANAGER__safety_stack_packet_storage.Read_message( Crash_handler.files_OS, ref Crash_handler.files, _message ); }
-
+            { return MANAGER__safety_stack_packet_storage.Read_message( _files_OS, ref _files, _message ); }
 
 
         return Stack_reconstruction_result_message.Construct( $"Can not handle type <Color=lightBlue>{ _type }</Color>", Stack_reconstruction_result.fail );
 
     }
-    
+
+
+
 
 
 }

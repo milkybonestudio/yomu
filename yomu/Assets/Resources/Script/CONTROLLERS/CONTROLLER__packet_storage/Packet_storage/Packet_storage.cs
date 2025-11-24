@@ -180,7 +180,7 @@ unsafe public struct Packet_storage {
         // ** if it's reconstructing with the stack it will NEVER came here
         // ** the message ( add ) is alwasy after the function executes. if it need more space it will call EXPAND 
         // ** what means the message ( change length ) is always called before ( ADD ) -> the length the packet sees should be enough 
-        Controllers.files.operations.Change_length_file( ref file_link, final_size );
+        file_link = Controllers.files.operations.Change_length_file( file_link, final_size );
 
         file_length = file_link.heap_key.Get_length();
 

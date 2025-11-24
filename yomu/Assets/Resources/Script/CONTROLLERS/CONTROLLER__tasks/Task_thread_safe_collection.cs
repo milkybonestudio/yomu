@@ -22,6 +22,21 @@ public struct Task_thread_safe_collection {
     public Task_req[] tasks;
     public string name;
 
+
+    public void Liberte_locks_in_task(){
+
+        foreach( Task_req req in tasks ){
+
+            if( ( req == null ) || ( req.object_to_lock == null ) )
+                { continue; }
+
+            if( Monitor.IsEntered( req.object_to_lock ) )
+                { Monitor.Exit( req.object_to_lock ); }
+
+        }
+
+    }
+
     private void Garantee_tasks(){
 
         if( tasks == null )

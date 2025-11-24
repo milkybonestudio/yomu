@@ -1,4 +1,4 @@
-using System;
+    using System;
 using UnityEngine;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -85,13 +85,43 @@ unsafe public struct CONTROLLER__safety_stack {
     public MANAGER__safety_stack_saver saver;
     public MANAGER__safety_stack_buffer buffer;
 
-    #if !UNITY_EDITOR
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    #endif
-    public void Save_message( int _message_length ){ buffer.Save_data_inline( pointer_with_message, _message_length ); }
-
+    // EDITOR
 
     public TEST__CONTROLLER__safety_stack test;
+
+    public fixed int last_10_messages[ 10 ];
+
+    public int last_message_length;
+
+
+    #if !UNITY_EDITOR
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    #endif
+    public void Save_message( int _message_length ){ 
+
+        #if UNITY_EDITOR
+
+            for( int index = 9 ; index > 0 ; index-- )
+                { last_10_messages[ index ] = last_10_messages[ index - 1 ]; }
+
+            last_10_messages[ 0 ] = (int) (((Stack_message_core*) pointer_with_message)->type);
+
+            last_message_length = _message_length;
+        #endif
+        buffer.Save_data_inline( pointer_with_message, _message_length ); 
+    }
+
+
+
+    public Safety_stack_action_type Get_last_message( int _index ){
+
+        if( _index >= 10 || _index < 0 )
+            { CONTROLLER__errors.Throw( "tried to call index " + _index ); }
+
+        return (Safety_stack_action_type) last_10_messages[ _index ];
+    }
+
+
 
 
 
@@ -99,6 +129,10 @@ unsafe public struct CONTROLLER__safety_stack {
     public SAFETY_STACK__state state;
     public void Update( Control_flow _control_flow ){
 
+        #if UNITY_EDITOR
+            for( int index = 0 ; index < 10 ; index++ )
+                { last_10_messages[ index ] = 0; }
+        #endif
         
         if( System_run.show_stack_messages_update  )
             { 
@@ -128,14 +162,14 @@ unsafe public struct CONTROLLER__safety_stack {
 
     // ** SAVE FILES
 
-    public Task_req Sinalize_will_save_files(){
+    public void Sinalize_will_save_files(){
         
         if( System_run.max_security && state != SAFETY_STACK__state.waiting_to_save_stack )
             { CONTROLLER__errors.Throw( $"Called Sinalize_saved_all_files but the state is { state }" ); }
 
         state = SAFETY_STACK__state.waiting_files_to_end_saving;
-
-        return saver.Sinalize_to_save();
+        
+        return;
 
     }
 

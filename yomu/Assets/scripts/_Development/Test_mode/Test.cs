@@ -124,7 +124,103 @@ unsafe public partial class Test {
             
         }
 
+
+
+        public static void SHOULD_FAIL( string _test, Action _a ){
+
+            string message = null;
+            try { _a(); message = "<Color=red>{ SHOULD FAIL }</Color>"; } 
+            catch{ message = "<Color=lime>{ FAIL }</Color>"; }
+
+            Console.Log( $"-->> test: <Color=lightBlue>{ _test }</Color> || { message }" );
+            
+
+        }
+
+
+        public static void SHOULD_PASS( string _test, Action _a ){
+
+            string message = null;
+            try { _a(); message = "<Color=lime>{ PASS }</Color>"; } 
+            catch{ message = "<Color=red>{ FAIL }</Color>"; }
+
+            Console.Log( $"-->> test: <Color=lightBlue>{ _test }</Color> || { message }"  );
+            
+        }
+
+
+        public static void Assert( Assert_fn fn_1  ){
+
+            if( fn_1 != null )
+                {
+                    Ressult_assert assert = fn_1();
+
+                    string message = null;
+                    if( assert.pass )
+                        { message = ( $"<Color=lime>{{ PASS }}</Color>" ); }
+                        else
+                        { 
+                                
+                            message = ( $"<Color=red>{{ FAIL }}</Color>" ); 
+
+                            if( assert.object_on_fail != null )
+                                { message +=  $" || OBJECT FAIL: <Color=lightBlue>{ assert.object_on_fail.ToString() }</Color>";  }
+                        }
+
+                    Console.Log( $"-->> test: <Color=lightBlue>{ assert.test }</Color> || { message }" );
+                }
+
+            /*
+
+                Test.Assert(()=>new(
+                    "",
+                    ( BOOL )
+                ));
+            */
+
+
+        }
+
+        public static void Assert( Assert_fn[] _fns ){
+
+            foreach( Assert_fn _fn in _fns )
+                { Assert( _fn ); }
+
+
+            /*
+
+                Test.Assert(new Assert_fn[]{
+
+                    () => new ( "",( BOOL ) )
+
+                });
+            
+            */
+
+
+        }
+
+
+
+
+
+
 }
 
+public delegate Ressult_assert Assert_fn();
+
+public class Ressult_assert{
+
+    public Ressult_assert( string _test, bool _pass, object _object_on_fail = null ){
+        test = _test;
+        pass = _pass;
+        object_on_fail = _object_on_fail;
+    }
+
+    public string test;
+    public bool pass;
+    public object object_on_fail;
+
+}
 
 

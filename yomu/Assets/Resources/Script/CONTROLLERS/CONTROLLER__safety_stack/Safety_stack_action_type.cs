@@ -19,6 +19,9 @@ public enum Safety_stack_action_type {
 
             change_length_file,
 
+            delete_file,
+            remove_file, // ** makes id invalid
+
         FILES_END,
 
     // PACKET STORAGE

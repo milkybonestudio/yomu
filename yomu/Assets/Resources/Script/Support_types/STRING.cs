@@ -4,6 +4,17 @@
 unsafe public static class  STRING {
 
 
+        public static string Reconstruct_string( void* _data, int _length ){
+
+            byte[] path_bytes = new byte[ _length ];
+
+            fixed( byte* b_p = path_bytes )
+                { VOID.Transfer_data( _data, b_p, path_bytes.Length ); }
+        
+            return System.Text.Encoding.UTF8.GetString( path_bytes );
+    
+        }
+
 
         public static void Transfer_string_to_char_pointer( char* _char_pointer, int _limit, string _text ){
 

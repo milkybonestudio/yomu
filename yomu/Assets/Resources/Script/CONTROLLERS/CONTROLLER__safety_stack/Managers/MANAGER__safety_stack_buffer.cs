@@ -1018,7 +1018,8 @@ unsafe public struct MANAGER__safety_stack_buffer {
 
         // ** don't change logic specific for the switch
         // ** it calls to save the stack file, so the is_passing_data is TRUE
-        // ** it will not loop or expand, just use the NO_SPACE
+        // ** the buffer and the stack_file are not 1:1 so even if the real file is lock or clean, the buffer is a second thing
+        // ** if it needs space it will not loop or expand, just use the NO_SPACE
         // ** when all the files are saved will just finish
         // ** Return_pointer_to_pass_data_to_disk() is no more called in the Save_in_disk in the saver
         // ** is called in the update

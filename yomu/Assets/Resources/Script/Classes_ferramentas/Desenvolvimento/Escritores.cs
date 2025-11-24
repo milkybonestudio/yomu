@@ -179,7 +179,7 @@ unsafe public static class Escritores {
 
                 byte[] _bytes = new byte[ _length ];
 
-                Files.Transfer_data( _pointer, _bytes );
+                VOID.Transfer_data( _pointer, _bytes );
 
                 if( System.IO.File.Exists( path_final ) ) 
                     { System.IO.File.Delete( path_final );}

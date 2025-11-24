@@ -53,7 +53,7 @@ unsafe public static class Files {
     public static void Save_critical_file( string _path, void* _pointer_data, int _length ){
 
         
-        FileMode file_mode = FileMode.Open;
+        FileMode file_mode = FileMode.Create;
         FileAccess file_accees = FileAccess.ReadWrite;
         FileShare file_share = FileShare.Read;
         FileOptions file_options = FileOptions.WriteThrough;
@@ -97,25 +97,8 @@ unsafe public static class Files {
 
     }
 
-    public static void Transfer_data( void* _pointer_data, void* _pointer_to_transfer, int _length ){
 
-        System.Buffer.MemoryCopy( _pointer_data, _pointer_to_transfer, long.MaxValue, ( long ) ( _length ) ); 
-        
-    }
 
-    public static void Transfer_data( byte[] _array_data, void* _pointer_to_transfer ){
-
-        fixed( byte* pointer_data = _array_data )
-            { System.Buffer.MemoryCopy( ( void* ) pointer_data, ( void* ) _pointer_to_transfer, long.MaxValue, ( long ) ( _array_data.Length ) ); }
-        
-    }
-
-    public static void Transfer_data( void* _pointer_with_data, byte[] _array_to_transfer ){
-
-        fixed( byte* pointer_array_to_transfer = _array_to_transfer )
-            { System.Buffer.MemoryCopy( _pointer_with_data, pointer_array_to_transfer, long.MaxValue, ( long ) ( _array_to_transfer.Length ) ); }
-        
-    }
 
 
 

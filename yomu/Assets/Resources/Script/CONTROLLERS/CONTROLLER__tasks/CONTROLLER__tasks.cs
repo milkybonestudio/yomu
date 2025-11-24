@@ -62,9 +62,7 @@ public class CONTROLLER__tasks {
         Thread multithread_thread = modulo_multithread.Sinalize_stop_multithread();
         Liberate_spin_locks();
 
-
         // Thread.Sleep( 1000 );
-
         if( multithread_thread != null && multithread_thread.IsAlive )
             { 
                 bool ended = multithread_thread.Join( 5_000 ); 
@@ -78,6 +76,9 @@ public class CONTROLLER__tasks {
 
         single_tasks_collection.Liberate_spin_locks();
         multithread_tasks_collection.Liberate_spin_locks();
+    
+        multithread_tasks_collection.Liberte_locks_in_task();
+        single_tasks_collection.Liberte_locks_in_task();
 
         if( modulo_multithread.spin_lock_change_state.IsHeldByCurrentThread )
             { multithread_tasks_collection.spin_lock_tasks.Exit(); }
@@ -154,6 +155,13 @@ public class CONTROLLER__tasks {
 
         Console.Log( System_run.tasks_show_messages, ( "FINISH TASK: " + task.nome ) );
         single_tasks_collection.Remove_task( task );
+
+        if( task.object_to_lock != null && Monitor.IsEntered( task.object_to_lock ) )
+            { 
+                Monitor.Exit( task.object_to_lock );
+                task.object_to_lock = null;
+            }
+
         return;
 
     }

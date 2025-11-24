@@ -206,85 +206,89 @@ public class MODULO__multithread {
 
     public void Thread_secundaria_update(){
 
-            int a = 0;
-            while( true ){
+        try 
+            {
+                int a = 0;
+                while( true ){
 
-                if( CONTROLLER__tasks.block_for_test )
-                    {
-                        Thread.Sleep( 500 );
-                        continue;
-                    }
+                    if( CONTROLLER__tasks.block_for_test )
+                        {
+                            Thread.Sleep( 500 );
+                            continue;
+                        }
 
-                if( !!! ( Dados_fundamentais_sistema.jogo_ativo ) || force_stop == 1 )
-                    {
-                        if( System_run.tasks_show_messages )
-                            {
-                                Console.Log( $"<Color=lightBlue>VAI MATAR A THERAD</Color>>" );
-                                Console.Log( $"force_stop: " + force_stop );
-                                Console.Log( $"Dados_fundamentais_sistema.jogo_ativo: " + Dados_fundamentais_sistema.jogo_ativo );
+                    if( !!! ( Dados_fundamentais_sistema.jogo_ativo ) || force_stop == 1 )
+                        {
+                            if( System_run.tasks_show_messages )
+                                {
+                                    Console.Log( $"<Color=lightBlue>VAI MATAR A THERAD</Color>>" );
+                                    Console.Log( $"force_stop: " + force_stop );
+                                    Console.Log( $"Dados_fundamentais_sistema.jogo_ativo: " + Dados_fundamentais_sistema.jogo_ativo );
 
+                                }
+                            Kill_thread_safe();
+                            return;
+                        }
+
+                    if( state == State.down )
+                        { 
+                            Console.Log( System_run.tasks_show_messages,"Vai entrar no wait()");
+                            signal.WaitOne();
+                            continue; 
+                        }
+
+                    Task_req best_task = controlador_tasks.multithread_tasks_collection.Get_best_task();
+                    
+                    if( best_task == null )
+                        { 
+
+                            if( state == State.up )
+                                {
+                                    Change_state( State.waiting_to_down );
+                                    Console.Log( System_run.tasks_show_messages, "Don't have more tasks to execute, will wait to sleep the thread" );
+                                    loop_timer.Start();
+                                    continue;
+                                }
+                            if( state == State.waiting_to_down )
+                                {
+                                    if( loop_timer.ElapsedMilliseconds > time_for_stop_multithread_by_timer_milisecodns )
+                                        {
+                                            loop_timer.Reset();
+                                            timer.Start();
+                                            Console.Log( System_run.tasks_show_messages, "não tem mais tasks e passou o tempo, vai ficar descançar" );
+                                            Change_state( State.down );
+                                            continue;
+                                        }
+
+                                    Console.Log( System_run.tasks_show_messages, "waiting..." );
+                                    Thread.Sleep( 500 );
+                                }
+
+                            continue;
+                        }
+
+                            switch( best_task.stage ){
+                                case Task_req_stage.multithread_sequencial: Multithread_sequecial( best_task ); break;
+                                case Task_req_stage.multithread_final: Multithread_final( best_task ); break;
+                                case Task_req_stage.finished_multithread: Finish_multithread( best_task ); break;
+                                default: CONTROLLER__errors.Throw( $"Tried to update a task in the multithread, but the stage was: <Color=lightBlue>{ best_task.stage }</Color>" ); break;
                             }
-                        Kill_thread_safe();
-                        return;
-                    }
+                    
+                    continue;
 
-                if( state == State.down )
-                    { 
-                        Console.Log( System_run.tasks_show_messages,"Vai entrar no wait()");
-                        signal.WaitOne();
-                        continue; 
-                    }
-
-                Task_req best_task = controlador_tasks.multithread_tasks_collection.Get_best_task();
-                
-                if( best_task == null )
-                    { 
-
-                        if( state == State.up )
-                            {
-                                Change_state( State.waiting_to_down );
-                                Console.Log( System_run.tasks_show_messages, "Don't have more tasks to execute, will wait to sleep the thread" );
-                                loop_timer.Start();
-                                continue;
-                            }
-                        if( state == State.waiting_to_down )
-                            {
-                                if( loop_timer.ElapsedMilliseconds > time_for_stop_multithread_by_timer_milisecodns )
-                                    {
-                                        loop_timer.Reset();
-                                        timer.Start();
-                                        Console.Log( System_run.tasks_show_messages, "não tem mais tasks e passou o tempo, vai ficar descançar" );
-                                        Change_state( State.down );
-                                        continue;
-                                    }
-
-                                Console.Log( System_run.tasks_show_messages, "waiting..." );
-                                Thread.Sleep( 500 );
-                            }
-
-                        continue;
-                    }
-
-                switch( best_task.stage ){
-                    case Task_req_stage.multithread_sequencial: Multithread_sequecial( best_task ); break;
-                    case Task_req_stage.multithread_final: Multithread_final( best_task ); break;
-                    case Task_req_stage.finished_multithread: Finish_multithread( best_task ); break;
-                    default: CONTROLLER__errors.Throw( $"Tried to update a task in the multithread, but the stage was: <Color=lightBlue>{ best_task.stage }</Color>" ); break;
                 }
+            } 
+            catch( Exception e )
+            {
 
-                continue;
+                // CONTROLLER__errors.Throw_exception(e);
+                controlador_tasks.multithread_tasks_collection.Liberte_locks_in_task();
+                Console.LogError( e.Message );
+                exception = e;
+                Kill_thread_safe();
+                return;
 
             }
-        try {
-        } catch( Exception e ){
-
-            // CONTROLLER__errors.Throw_exception(e);
-            Console.LogError( e.Message );
-            exception = e;
-            Kill_thread_safe();
-            return;
-
-        }
 
 
     }
@@ -304,6 +308,12 @@ public class MODULO__multithread {
         controlador_tasks.multithread_tasks_collection.Remove_task( best_task );
         controlador_tasks.single_tasks_collection.Add_task( best_task );
         best_task.Change_stage( Task_req_stage.single_sequencial );
+
+        if( best_task.object_to_lock != null && Monitor.IsEntered( best_task.object_to_lock ) )
+            { 
+                Monitor.Exit( best_task.object_to_lock );
+                best_task.object_to_lock = null;
+            }
         
         return;
 

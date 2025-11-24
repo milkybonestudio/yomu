@@ -7,7 +7,7 @@ public static class Directories {
         public static bool Is_sub_path( string full_path, string sub_part ){
 
 
-            Console.Log( "REMOVER DEPOIS" );
+            Console.Log_super_slow( "REMOVER DEPOIS" );
             if( sub_part != Paths_version.path_to_version )
                 { CONTROLLER__errors.Throw( "usou program_path" ); }
 

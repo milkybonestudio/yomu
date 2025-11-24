@@ -1,8 +1,10 @@
 
 
 public enum Saving_state {
-
-    nothing, 
-    saving,
+    
+    not_give, 
+    
+        waiting_to_save_files,
+        saving_files,
 
 }

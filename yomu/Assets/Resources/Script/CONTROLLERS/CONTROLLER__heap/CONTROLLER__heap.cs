@@ -190,7 +190,7 @@ unsafe public class CONTROLLER__heap {
                 key.int_pointer = pointer;
                 key.pointer = pointer.ToPointer();
                 key.length = _size;
-
+        
         return_key.unique_key = key;
         unique_keys[ return_key.unique_id ] = return_key;
 
@@ -201,9 +201,17 @@ unsafe public class CONTROLLER__heap {
     public Heap_key Get_unique( byte[] _data ){
 
         Heap_key key = Get_unique( _data.Length );
-        Files.Transfer_data( _data, key.Get_pointer() );
+        VOID.Transfer_data( _data, key.Get_pointer() );
 
         return key;
+
+    }
+
+    public Heap_key Get_empty(){
+        
+        return new Heap_key(){
+            type = Heap_key_type.empty
+        };
 
     }
 
@@ -215,6 +223,7 @@ unsafe public class CONTROLLER__heap {
 
         switch( _key.type ){
             case Heap_key_type.unique: Return_key_UNIQUE( _key ); break;
+            case Heap_key_type.empty: return;
             default: CONTROLLER__errors.Throw( $"Can not handle type: <Color=lightBlue>{ _key.type }</Color> when return a heap key" ); break;
         }
 
@@ -226,7 +235,6 @@ unsafe public class CONTROLLER__heap {
 
         if( key.Get_pointer() == null )
             { CONTROLLER__errors.Throw( "pointer is null" ); }
-
         
         if( key.type != Heap_key_type.unique )
             { CONTROLLER__errors.Throw( "type is not UNIQUE" ); }

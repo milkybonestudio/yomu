@@ -28,11 +28,15 @@ public static class Console {
 
 
         public static int slow_value;
+        public static int super_slow_value;
         public static void Log_slow( string _message ){ if( slow_value == 0 ){ Log_intern( _message, Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }  }
+        public static void Log_super_slow( string _message ){ if( super_slow_value == 0 ){ Log_intern( _message, Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }  }
         public static void Log_TEST( object _message ){ _message = "<TESTE> " + _message; Log_intern( Convert.ToString(  _message ), Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }
         public static void Log( string _message ){ Log_intern( _message, Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }
         public static void Log( object _message ){ Log_intern( Convert.ToString(  _message ), Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }
         public static void LogError( string _message, int _trace_to_ignore = 0 ){ Log_intern( _message, Log_type.error, ( Thread.CurrentThread.Name == "Main" ), _trace_to_ignore ); return; }
+
+        
 
 
         public static void Log_player_need_to_read( string _message ){ Log_intern( ( "PLAYER NEED TO READ: " + _message ), Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return;  }
@@ -46,6 +50,7 @@ public static class Console {
         [ MethodImpl(MethodImplOptions.AggressiveInlining) ]
         public static void Log( bool _flag, object _message ){ if( _flag ){ Log( _message ); }; }
 
+        public static void Log( bool _activate, string _m_1, string _m_2 = "", string _m_3 = "", string _m_4 = "" ){ if( !!!( _activate ) ){ return; } Log_intern( ( _m_1 + _m_2 + _m_3 + _m_4 ), Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }
 
         public static void Clear(){
 
@@ -226,6 +231,7 @@ public static class Console {
 
                 
                 slow_value = ( slow_value + 1 ) % 60;
+                super_slow_value = ( super_slow_value + 1 ) % 1_000;
 
                 // ** Console.Update é o unico update que nao precisa do Control_flow
                 

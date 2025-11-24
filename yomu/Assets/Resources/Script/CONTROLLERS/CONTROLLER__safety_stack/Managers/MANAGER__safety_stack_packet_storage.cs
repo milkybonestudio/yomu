@@ -43,7 +43,7 @@ unsafe public struct MANAGER__safety_stack_packet_storage {
 
     }
 
-    public static Stack_reconstruction_result_message Reconstruct_by_message__PACKET_SOTRAGE_ALLOC( Crash_handle_ephemeral_files _files_OS, ref Crash_file[] _files, void* _message ){
+    public static Stack_reconstruction_result_message Reconstruct_by_message__PACKET_SOTRAGE_ALLOC( Crash_handle_ephemeral_files _files_OS, ref Crash_cached_file[] _files, void* _message ){
 
 
         STACK_MESSAGE__packet_storage_alloc message = *(STACK_MESSAGE__packet_storage_alloc*) _message;
@@ -108,7 +108,7 @@ unsafe public struct MANAGER__safety_stack_packet_storage {
     // ** 
 
 
-    public static Stack_reconstruction_result_message Read_message( Crash_handle_ephemeral_files _files_OS, ref Crash_file[] _files, void* _message ){
+    public static Stack_reconstruction_result_message Read_message( Crash_handle_ephemeral_files _files_OS, ref Crash_cached_file[] _files, void* _message ){
 
 
         Safety_stack_action_type type = ((Stack_message_core*)_message)->type;

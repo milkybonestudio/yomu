@@ -45,7 +45,9 @@ public static class Paths_program {
                 saving_files_security_file = Get_saving_files_security_file();
 
             safety_stack_folder = Get_safety_stack_folder();
+                stack_start_files = Get_stack_start_files();
                 saving_link_file_to_path = Get_saving_link_file_to_path();
+                
                 safety_stack_file = Get_safety_stack_file(); 
                 
 
@@ -94,11 +96,22 @@ public static class Paths_program {
                 public static string Get_safety_stack_file( string _path ){ return Combine( _path, safety_stack_file_NAME ); }
 
                 
+
+
+                // => stack_start_files
+                public const string stack_start_files_NAME = "stack_start_files.txt";
+                public static string stack_start_files;
+                public static string Get_stack_start_files(){ return Combine( safety_stack_folder, stack_start_files_NAME ); }
+                public static string Get_stack_start_files( string _path ){ return Combine( _path, stack_start_files_NAME ); }
+
+
+
+                // => saving_link_file_to_path
+                // ** for when is saving, if it needs to recosntruct with the stack but the normal link files alredy have being changed
                 public const string saving_link_file_to_path_NAME = "saving_link_file_to_path.txt";
                 public static string saving_link_file_to_path;
                 public static string Get_saving_link_file_to_path(){ return Combine( safety_stack_folder, saving_link_file_to_path_NAME ); }
                 public static string Get_saving_link_file_to_path( string _path ){ return Combine( _path, saving_link_file_to_path_NAME ); }
-
 
 
 

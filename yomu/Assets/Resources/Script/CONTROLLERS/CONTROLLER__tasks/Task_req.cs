@@ -65,6 +65,17 @@ public class Task_req {
     private static int current_unique_id;
     public int unique_id;
 
+    public System.Object object_to_lock;
+
+    public void Give_lock_object( System.Object _object_to_lock, bool _enter = true ){
+
+        if( _enter )
+            { Monitor.Enter( _object_to_lock ); }
+        object_to_lock = _object_to_lock;
+        return;
+
+    }
+
     public bool have_single_start; // ** ver depois
     public bool Is_finalized(){ return stage == Task_req_stage.finished; }
     public volatile Task_req_stage stage = Task_req_stage.single_start;

@@ -40,15 +40,12 @@ unsafe public class Program : MonoBehaviour {
         Controllers.input.Update();
         TOOL__cleaner_control_flow.Clean( control_flow );
 
-        //mark
-        // ** DEPOIS ATIVR NOVAMNETE
-        if( false ){
-            Controllers.stack.Update( control_flow );
-        }
 
         #if UNITY_EDITOR
             Update_development( control_flow );
         #endif
+
+        Controllers.stack.Update( control_flow );
 
         // --- 
         Controllers_program.canvas_spaces.Update( control_flow );
@@ -56,19 +53,40 @@ unsafe public class Program : MonoBehaviour {
         Controllers.tasks.Update( control_flow );
 
         Controllers_program.program_transition.Update( control_flow );
+        Controllers.files.Update();
 
-        if( !!!( control_flow.program_mode_update_blocked ) )
-            { Current_mode().Update( control_flow ); }
+        if( Controllers.saving.Update() )
+            { Console.Update(); return; }
+
+        Update_mode( control_flow );
         
-
         Console.Update(); // --- SEMPRE POR ULTIMO
         
         return;
         
     }
 
+    private void Update_mode( Control_flow _control_flow ){
 
-    private PROGRAM_MODE Current_mode(){ return modes[ ( int ) current_mode ]; }
+        
+        if( control_flow.program_mode_update_blocked )
+            { return; }
+
+        if( System_run.max_security )
+            {
+                if( current_mode >= Program_mode.END )
+                    { CONTROLLER__errors.Throw( "tried to get the program mode: " + current_mode ); }
+
+                if( modes[ ( int ) current_mode ] == null )
+                    { CONTROLLER__errors.Throw( $"tried to get the program mode <Color=lightBlue>{ current_mode }</Color> but the mode is null" ); }
+            }
+
+        modes[ ( int ) current_mode ].Update( _control_flow );
+
+        return;
+
+    }
+
 
     public void OnApplicationQuit(){ OnApplicationPause( true ); }
 
@@ -104,6 +122,7 @@ unsafe public class Program : MonoBehaviour {
         Controllers.packets.Destroy();
         Controllers.tasks?.Destroy();
         Controllers.heap?.Destroy();
+
 
 
         Console.Update();

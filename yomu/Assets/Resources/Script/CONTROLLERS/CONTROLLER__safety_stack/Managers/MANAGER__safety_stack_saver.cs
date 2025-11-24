@@ -48,7 +48,7 @@ unsafe public struct MANAGER__safety_stack_saver {
 
         int _80 = 8 * ( current_pointer_in_file / 10 );
 
-        return file_size > ( _80 );
+        return current_pointer_in_file > ( _80 );
 
     }
 
@@ -95,10 +95,14 @@ unsafe public struct MANAGER__safety_stack_saver {
 
         // ** reset file 
 
-        Clean_file();
+
+        
         Interlocked.Exchange( ref current_pointer_in_file, 0 );
         Interlocked.Exchange( ref block_number, 0 );
         
+        //mark
+        // ** will be called in the CONTROLLER__data_files
+        // Clean_file();
 
     }
 
@@ -139,6 +143,8 @@ unsafe public struct MANAGER__safety_stack_saver {
 
         }
 
+        strem_stack.Flush( true );
+        return;
 
     }
 
@@ -166,6 +172,22 @@ unsafe public struct MANAGER__safety_stack_saver {
         Controllers.tasks.Adicionar_task( req_saving );
 
         return req_saving;
+
+    }
+
+    public void Give_multithread_saving_stack( Task_req _task_req_to_add ){
+
+        if( _task_req_to_add == null )
+            { CONTROLLER__errors.Throw( "Task came null in <Color=lightBlue>Put_save_stack_into_task</Color>" ); }
+
+        req_saving.Give_multithread_sequencial_action( MANAGER__safety_stack_saver.Save_in_disk );
+        req_saving.Change_priority( 10_000 );
+
+        // ** sempre referentes ao buffer 
+        req_saving.data.int_values[ 0 ] = ( Controllers.stack.saver.pointer_buffer_already_saved + 1 );
+        req_saving.data.int_values[ 1 ] = Controllers.stack.buffer.Get_pointer_to_pass_data_to_disk();
+
+        return;
 
     }
 

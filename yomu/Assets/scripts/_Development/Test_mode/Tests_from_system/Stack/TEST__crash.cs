@@ -3,29 +3,32 @@ using System;
 using System.IO;
 using UnityEngine;
 
-unsafe public static class Test_stack_crash {
+unsafe public static class TEST__crash {
 
 
     public enum Crash {
 
-        _1_save_stack,
-        _2_save_new_slot_file_link,
-        _3_create_saving_files_folders, 
-        _4_add_slots_files_half,
-        _5_add_slots_files_full,
-        _6_create_saving_files_security_file, 
-        _7_move_files_half, 
-        _71_move_files_full,
-        _72_switch_files_half,
-        _73_switch_files_full,
-        _8_reset_stack,
-        _9_delete_saving_files_security_file,
-        _91_delete_saving_files_folder,
+        save_stack,
+        save_new_slot_file_link,
+        create_saving_files_folders, 
+        add_slots_files_half,
+        add_slots_files_full,
+        create_saving_files_security_file, 
+        move_files_half, 
+        move_files_full,
+        switch_files_half,
+        switch_files_full,
+        reset_stack,
+
+
+        delete_saving_files_security_file,
+        delete_saving_files_folder,
+        
+        delete_file_links,
+        change_stack_start_files,
         finish,
 
     }
-
-
 
 
 
@@ -41,7 +44,7 @@ unsafe public static class Test_stack_crash {
 
     public static void Set(){
 
-        current_state_crash = Crash._1_save_stack;
+        current_state_crash = Crash.save_stack;
 
         path_1 = Path.Combine( Paths_program.program_path, "test_1.dat" );
         path_2 = Path.Combine( Paths_program.program_path, "test_2.dat" );
@@ -54,9 +57,9 @@ unsafe public static class Test_stack_crash {
         // Console.Log( "remvoer" );
         // return;
 
-        data_1 = Controllers.files.Get_file_from_disk( path_1 );
-        data_2 = Controllers.files.Get_file_from_disk( path_2 );
-        data_3 = Controllers.files.Get_file_from_disk( path_3 );
+        data_1 = Controllers.files.operations.Get_file_from_disk( path_1 );
+        data_2 = Controllers.files.operations.Get_file_from_disk( path_2 );
+        data_3 = Controllers.files.operations.Get_file_from_disk( path_3 );
 
     }
     
@@ -68,7 +71,7 @@ unsafe public static class Test_stack_crash {
         Console.Log( "vai: " + current_state_crash );
 
 
-        if( current_state_crash == Crash._1_save_stack )
+        if( current_state_crash == Crash.save_stack )
             {
 
                 SS v = new SS(){
@@ -96,71 +99,81 @@ unsafe public static class Test_stack_crash {
             }
 
 
-        if( current_state_crash == Crash._2_save_new_slot_file_link )
+        if( current_state_crash == Crash.save_new_slot_file_link )
             {
                 Controllers.files.test.Save_link_paths_sync();
             }
 
-        if( current_state_crash == Crash._3_create_saving_files_folders )
+        if( current_state_crash == Crash.create_saving_files_folders )
             {
                 System.IO.Directory.CreateDirectory( Paths_program.saving_files_folder );
             }
 
-        if( current_state_crash == Crash._4_add_slots_files_half )
+        if( current_state_crash == Crash.add_slots_files_half )
             {
                 data_1.Fill_TEST( (byte)'$' );
-                Controllers.files.Save_file_run_time( data_1 );
+                File_run_time_saving_operations.Save_file_run_time_SWITCH( data_1 );
                 data_2.Fill_TEST( (byte)'%' );
-                Controllers.files.Save_file_run_time( data_2 );
+                File_run_time_saving_operations.Save_file_run_time_SWITCH( data_2 );
             }
             
-        if( current_state_crash == Crash._5_add_slots_files_full )
+        if( current_state_crash == Crash.add_slots_files_full )
             {
                 data_3.Fill_TEST( (byte)'@' );
-                Controllers.files.Save_file_run_time( data_3 );
+                File_run_time_saving_operations.Save_file_run_time_DELETE( data_3 );
             }
 
-        if( current_state_crash == Crash._6_create_saving_files_security_file )
+        if( current_state_crash == Crash.create_saving_files_security_file )
             {
                 System.IO.File.WriteAllBytes( Paths_program.saving_files_security_file, new byte[ 1_000 ] );
             }
-        if( current_state_crash == Crash._7_move_files_half )
+        if( current_state_crash == Crash.move_files_half )
             {
-                Controllers.files.Move_file( data_1 );
-                Controllers.files.Move_file( data_2 );
+                File_run_time_saving_operations.Move_switch_file( data_1 );
+                File_run_time_saving_operations.Move_switch_file( data_2 );
             }
 
-        if( current_state_crash == Crash._71_move_files_full )
+        if( current_state_crash == Crash.move_files_full )
             {
-                Controllers.files.Move_file( data_3 );
+                    // Controllers.files.saver.Move_file( data_3 );
             }
 
-        if( current_state_crash == Crash._72_switch_files_half )
+        if( current_state_crash == Crash.switch_files_half )
             {
-                Controllers.files.Switch_files( data_1 );
-                Controllers.files.Switch_files( data_2 );
+                File_run_time_saving_operations.Switch_files( data_1 );
+                File_run_time_saving_operations.Switch_files( data_2 );
             }
 
-        if( current_state_crash == Crash._73_switch_files_full )
+        if( current_state_crash == Crash.switch_files_full )
             {
-                Controllers.files.Switch_files( data_3 );
+                File_run_time_saving_operations.Delete_files( data_3 );
             }
 
 
-        if( current_state_crash == Crash._8_reset_stack )
+        if( current_state_crash == Crash.reset_stack )
             { 
                 Controllers.stack.saver.Clean_file();
             }
 
-        if( current_state_crash == Crash._9_delete_saving_files_security_file )
+        if( current_state_crash == Crash.delete_saving_files_security_file )
             {
                 System.IO.File.Delete( Paths_program.saving_files_security_file );
             }
-            
-        if( current_state_crash == Crash._91_delete_saving_files_folder )
+        if( current_state_crash == Crash.delete_saving_files_folder )
             {
                 System.IO.Directory.Delete( Paths_program.saving_files_folder );
             }
+
+        if( current_state_crash == Crash.delete_file_links )
+            {
+                System.IO.File.Delete( Paths_program.saving_link_file_to_path );
+            }
+
+        if( current_state_crash == Crash.change_stack_start_files )
+            {
+                Files.Save_critical_file( Paths_program.stack_start_files, new byte[ 1_000 ] );
+            }
+            
 
 
         current_state_crash++;
@@ -185,7 +198,7 @@ unsafe public static class Test_stack_crash {
 
         // --- 
 
-        if( false  )
+        if( true  )
             {
 
                 if( Input.GetKeyDown( KeyCode.P ) )
@@ -207,6 +220,8 @@ unsafe public static class Test_stack_crash {
                     }
 
                     
+                return;
+                    
             }
 
 
@@ -217,7 +232,7 @@ unsafe public static class Test_stack_crash {
 
         // ** TESTS FOR MESSAGES
 
-        if( true )
+        if( false )
             {
 
                 if ( Input.GetKeyDown( KeyCode.Keypad1 ) )
@@ -229,9 +244,7 @@ unsafe public static class Test_stack_crash {
 
                 if ( Input.GetKeyDown( KeyCode.Keypad2 ) )
                     {
-                        
                         Console.Log( "state: " + _Crash() );
-
                     }
 
 
@@ -349,7 +362,7 @@ unsafe public static class Test_stack_crash {
                         // ** OK
                         if ( Input.GetKeyDown( KeyCode.Q ) )
                             { 
-                                data_1 = Controllers.files.Get_file_from_disk( path_1 );
+                                data_1 = Controllers.files.operations.Get_file_from_disk( path_1 );
                                 Controllers.stack.files.Save_data_change_data_in_file( data_1.id, 5, v );
                             }
 
@@ -357,7 +370,7 @@ unsafe public static class Test_stack_crash {
 
                         // ** path dont have file
                         if ( Input.GetKeyDown( KeyCode.W ) )
-                            { data_1 = Controllers.files.Get_file_from_disk( path_dont_exist ); }
+                            { data_1 = Controllers.files.operations.Get_file_from_disk( path_dont_exist ); }
 
                         // ** path dont have file in reconstruct
                         if ( Input.GetKeyDown( KeyCode.E ) )
@@ -367,7 +380,7 @@ unsafe public static class Test_stack_crash {
 
                         // ** path is not part of version 
                         if ( Input.GetKeyDown( KeyCode.R ) )
-                            { data_1 = Controllers.files.Get_file_from_disk( path_can_not_get  ); }
+                            { data_1 = Controllers.files.operations.Get_file_from_disk( path_can_not_get  ); }
                         
                         // ** path is not part of version
                         if ( Input.GetKeyDown( KeyCode.T ) )
@@ -385,7 +398,7 @@ unsafe public static class Test_stack_crash {
 
                         // ** path is null OK
                         if ( Input.GetKeyDown( KeyCode.U ) )
-                            { data_1 = Controllers.files.Get_file_from_disk( null  ); }
+                            { data_1 = Controllers.files.operations.Get_file_from_disk( null  ); }
 
 
 
@@ -486,7 +499,7 @@ unsafe public static class Test_stack_crash {
 
                         // ** Change file OK
                         if ( Input.GetKeyDown( KeyCode.O ) )
-                            { Controllers.stack.files.Save_data_change_data_in_file( data_1.id, 5, v ); }
+                            { Controllers.stack.files.Save_data_change_data_in_file( data_1.id, 10, v ); }
 
 
 
@@ -532,47 +545,47 @@ unsafe public static class Test_stack_crash {
                     }
 
 
+
+
                 if (Input.GetKeyDown(KeyCode.Alpha1))
-                { Verify_crash(Crash._1_save_stack, Crash_handle_situation.need_to_recosntruct_with_the_stack); }
+                    { Verify_crash(Crash.save_stack, Crash_handle_situation.need_to_recosntruct_with_the_stack); }
 
                 if( Input.GetKeyDown( KeyCode.Alpha2 ) )
-                    { Verify_crash( Crash._2_save_new_slot_file_link,  Crash_handle_situation.need_to_recosntruct_with_the_stack ); }
+                    { Verify_crash( Crash.save_new_slot_file_link,  Crash_handle_situation.need_to_recosntruct_with_the_stack ); }
 
                 if( Input.GetKeyDown( KeyCode.Alpha3 ) )
-                    { Verify_crash( Crash._3_create_saving_files_folders,  Crash_handle_situation.need_to_recosntruct_with_the_stack ); }
+                    { Verify_crash( Crash.create_saving_files_folders,  Crash_handle_situation.need_to_recosntruct_with_the_stack ); }
 
                 if( Input.GetKeyDown( KeyCode.Alpha4 ) )
-                    { Verify_crash( Crash._4_add_slots_files_half,  Crash_handle_situation.need_to_recosntruct_with_the_stack ); }
+                    { Verify_crash( Crash.add_slots_files_half,  Crash_handle_situation.need_to_recosntruct_with_the_stack ); }
 
                 
                 if( Input.GetKeyDown( KeyCode.Alpha5 ) )
-                    { Verify_crash( Crash._5_add_slots_files_full,  Crash_handle_situation.need_to_recosntruct_with_the_stack ); }
+                    { Verify_crash( Crash.add_slots_files_full,  Crash_handle_situation.need_to_recosntruct_with_the_stack ); }
 
                 if( Input.GetKeyDown( KeyCode.Alpha6 ) )
-                    { Verify_crash( Crash._6_create_saving_files_security_file,  Crash_handle_situation.all_temp_files_were_already_there_just_move ); }
+                    { Verify_crash( Crash.create_saving_files_security_file,  Crash_handle_situation.all_temp_files_were_already_there_just_move ); }
 
                 if( Input.GetKeyDown( KeyCode.Alpha7 ) )
-                    { Verify_crash( Crash._7_move_files_half,  Crash_handle_situation.all_temp_files_were_already_there_just_move ); }
+                    { Verify_crash( Crash.move_files_half,  Crash_handle_situation.all_temp_files_were_already_there_just_move ); }
 
                 if( Input.GetKeyDown( KeyCode.Alpha8 ) )
-                    { Verify_crash( Crash._71_move_files_full,  Crash_handle_situation.all_temp_files_were_already_there_just_move ); }
+                    { Verify_crash( Crash.move_files_full,  Crash_handle_situation.all_temp_files_were_already_there_just_move ); }
 
                 if( Input.GetKeyDown( KeyCode.Alpha9 ) )
-                    { Verify_crash( Crash._72_switch_files_half,  Crash_handle_situation.all_temp_files_were_already_there_just_move ); }
+                    { Verify_crash( Crash.switch_files_half,  Crash_handle_situation.all_temp_files_were_already_there_just_move ); }
 
                 if( Input.GetKeyDown( KeyCode.Q ) )
-                    { Verify_crash( Crash._73_switch_files_full,  Crash_handle_situation.all_temp_files_were_already_there_just_move ); }
+                    { Verify_crash( Crash.switch_files_full,  Crash_handle_situation.all_temp_files_were_already_there_just_move ); }
 
                 if( Input.GetKeyDown( KeyCode.W ) )
-                    { Verify_crash( Crash._8_reset_stack,  Crash_handle_situation.all_files_already_got_saved ); }
+                    { Verify_crash( Crash.reset_stack,  Crash_handle_situation.all_files_already_got_saved ); }
 
                 if( Input.GetKeyDown( KeyCode.E ) )
-                    { Verify_crash( Crash._9_delete_saving_files_security_file,  Crash_handle_situation.all_files_already_got_saved ); }
+                    { Verify_crash( Crash.delete_saving_files_security_file,  Crash_handle_situation.all_files_already_got_saved ); }
 
                 if( Input.GetKeyDown( KeyCode.R ) )
-                    { Verify_crash( Crash._91_delete_saving_files_folder,  Crash_handle_situation.all_files_already_got_saved ); }
-
-
+                    { Verify_crash( Crash.delete_saving_files_folder,  Crash_handle_situation.all_files_already_got_saved ); }
 
 
             }
@@ -623,7 +636,7 @@ unsafe public static class Test_stack_crash {
 
     private static void Crash_test_until( Crash _crash ){
 
-        current_state_crash = Crash._1_save_stack;
+        current_state_crash = Crash.save_stack;
 
         while( current_state_crash <= _crash )
             { Go_to_state_saving_crash(); }

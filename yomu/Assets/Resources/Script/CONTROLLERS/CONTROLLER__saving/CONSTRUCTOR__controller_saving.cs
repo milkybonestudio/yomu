@@ -11,12 +11,8 @@ public static class CONSTRUCTOR__controller_saving {
 
                     // --- USO GERAL 
 
-                    // --- VERIFICACOES DE SEGURANCA
-
-                    
-                    
-                    // --- USAO EXCLUSIVO SAVE
-                    controlador.data_tracker = new MANAGER__data_tracker();
+                    controlador.saver = MANAGER__controller_saving_saver.Construct();
+                    controlador.state = Saving_state.waiting_to_save_files;
 
                 return controlador;
 

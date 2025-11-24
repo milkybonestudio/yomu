@@ -29,6 +29,7 @@ public static class System_run {
             // é do crash_handle, renomear depois
             public const bool show_program_construction_messages = true && NOT_IN_BUILD;
             public const bool show_program_construction_messages_messages_detail_in_block = false && NOT_IN_BUILD;
+            public const bool show_program_construction_messages_messages_detail_in_messages = false && NOT_IN_BUILD;
             public const bool show_program_construction_messages_can_break_if_change_warns = false && NOT_IN_BUILD;
 
 
@@ -42,10 +43,10 @@ public static class System_run {
 
         // *** SAFETY_STACK
 
-        public const bool activate_controller_safety_stack = true || WORK_IN_BUILD  ;
+        public const bool activate_controller_safety_stack = false || WORK_IN_BUILD;
             public const bool save_in_disk_controller_safety_stack =  true || WORK_IN_BUILD;
 
-            public const bool show_stack_messages = true && NOT_IN_BUILD;
+            public const bool show_stack_messages = false && NOT_IN_BUILD;
             public const bool show_stack_messages_update =  true && show_stack_messages && NOT_IN_BUILD;
             public const bool show_stack_messages_buffer = false && show_stack_messages && NOT_IN_BUILD;
             public const bool show_stack_messages_saver = false && show_stack_messages && NOT_IN_BUILD;
@@ -75,7 +76,7 @@ public static class System_run {
 
         // --- FILES
 
-        public const bool files_show_messages = false && NOT_IN_BUILD;
+        public const bool files_show_messages = true && NOT_IN_BUILD;
 
 
 

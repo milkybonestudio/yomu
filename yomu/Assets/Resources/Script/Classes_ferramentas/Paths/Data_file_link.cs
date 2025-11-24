@@ -18,6 +18,9 @@ unsafe public struct Data_file_link {
         };
     }
 
+    //mark
+    // ** dont make sense being here
+    // ** is a struct
     public enum Situation {
         
         clean, // ** not in sistem

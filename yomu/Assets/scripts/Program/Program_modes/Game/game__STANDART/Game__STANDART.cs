@@ -39,7 +39,7 @@ unsafe public class Game__STANDART : PROGRAM_MODE__INTERFACE {
 
                 return;
 
-                controller_saving.Update( _control_flow );
+                controller_saving.Update();
 
                 switch( game_update_mode ){
 
