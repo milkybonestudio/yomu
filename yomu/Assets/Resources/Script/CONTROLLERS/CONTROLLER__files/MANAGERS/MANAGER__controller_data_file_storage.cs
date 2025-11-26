@@ -1,15 +1,18 @@
 
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 
 
 public enum File_IO_operation {
 
-    _nothing,
-    _switch,
-    _create,
-    _delete,
+    _not_give,
+        _nothing,
+        _switch,
+        _create,
+        _delete,
 
 
 }
@@ -66,6 +69,67 @@ unsafe public struct MANAGER__controller_data_file_storage {
     }
 
 
+    public string[] Get_current_links_lines(){
+
+        int max_key = Controllers.files.storage.id_TO_path.Keys.Max();
+
+        string[] result = new string[ ( max_key + 1 ) ];
+
+        foreach (var kv in Controllers.files.storage.id_TO_path ) 
+            { result[ kv.Key ] = kv.Value; }
+
+        return result;
+
+    }
+
+    public string[] Get_link_files_lines(){
+
+        int current_max = 0;
+        int cached_max = 0;
+        int max_deleted = 0;
+
+        if( id_TO_path.Count > 0 )
+            { current_max = id_TO_path.Keys.Max(); }
+
+        if( deleted_files.Count > 0 )
+            { max_deleted = deleted_files.Values.Max( s => s.id ); }
+
+        if( cached_data_files.Count > 0 )
+            { cached_max = cached_data_files.Values.Max( s => s.id ); }
+        
+        
+        int max_key = Math.Max( current_max, Math.Max( cached_max, max_deleted ) );
+
+        string[] result = new string[ ( max_key + 1 ) ];
+
+        foreach (var kv in id_TO_path ) 
+            { result[ kv.Key ] = kv.Value; }
+
+        
+        foreach (var kv in cached_data_files ){ 
+
+            if( result[ kv.Value.id ] != null )
+                { CONTROLLER__errors.Throw( $"Tried to creat the new link_paths, but id <Color=lightBlue>{ kv.Value.id }</Color> got duplicated" ); }
+
+            result[ kv.Value.id ] = kv.Key;
+
+        }
+        foreach (var kv in deleted_files ){ 
+
+            if( result[ kv.Value.id ] != null )
+                { CONTROLLER__errors.Throw( $"Tried to creat the new link_paths, but id <Color=lightBlue>{ kv.Value.id }</Color> got duplicated" ); }
+
+            result[ kv.Value.id ] = kv.Key;
+
+        }
+
+        return result;
+
+
+
+    }
+
+
     public bool Have_data_in_cache( string _path ){
 
         return cached_data_files.ContainsKey( _path );
@@ -100,7 +164,7 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
     public void Add_file( Data_file_link _data, string _path ){
 
-
+        
         if( id_TO_path.ContainsKey( _data.id ) )
             { CONTROLLER__errors.Throw( $"try to add the file id <Color=lightBlue>{ _data.id }</Color> but it already exists" ); }
 
@@ -126,7 +190,7 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
 
     public Data_file_link Delete_file( string _path ){
-
+        
         Data_file_link data = default;
 
             if( path_TO_id.ContainsKey( _path ) )
@@ -143,7 +207,7 @@ unsafe public struct MANAGER__controller_data_file_storage {
         else if( true )
                 {
                     // ** is delete a file that the system don't own
-                    data = Lock_slot( _path: _path, _size: 0 );
+                    data = Lock_slot_delete( _path );
                 }
 
         if( System_run.files_show_messages )
@@ -159,13 +223,7 @@ unsafe public struct MANAGER__controller_data_file_storage {
     public Data_file_link Lock_slot( string _path, int _size ){
 
         
-        Heap_key heap_key = default;
-
-        if( _size > 0 )
-            { heap_key = Controllers.heap.Get_unique( _size ); }
-            else
-            { heap_key = Controllers.heap.Get_empty(); }
-        
+        Heap_key heap_key = Controllers.heap.Get_unique( _size );;
 
         current_file_id += 1;
         
@@ -181,6 +239,24 @@ unsafe public struct MANAGER__controller_data_file_storage {
         return data;
 
     }
+
+    public Data_file_link Lock_slot_delete( string _path ){
+
+        
+        Heap_key heap_key = Controllers.heap.Get_empty();;
+        
+        current_file_id += 1;
+        
+        Data_file_link data = new(){
+            heap_key = heap_key,
+            size = 0,
+            id = current_file_id
+        };
+        
+        return data;
+
+    }
+
 
 
     public Data_file_link Lock_slot_recicle( string _path, Data_file_link _cached_data ){
@@ -216,10 +292,7 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
     public bool File_exist_in_final_disk( string _path ){
 
-        if( deleted_files.ContainsKey( _path ) )
-            { return false; }
-        
-        return ( System.IO.File.Exists( _path ) || cached_data_files.ContainsKey( _path ) || path_TO_id.ContainsKey( _path ) );
+        return !!!( deleted_files.ContainsKey( _path ) ) && ( System.IO.File.Exists( _path ) || cached_data_files.ContainsKey( _path ) || path_TO_id.ContainsKey( _path ) );
 
     }
 
@@ -274,7 +347,9 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
     private void Removed_current( string _path ){
 
+
         int id = path_TO_id[ _path ];
+        Console.Log( "came to remove id: " + id );
         id_TO_path.Remove( id );
         path_TO_id.Remove( _path );
         current_files.Remove( id );

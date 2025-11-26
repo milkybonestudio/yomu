@@ -169,6 +169,7 @@ public class Task_req {
     
 
     public Task_req_data data;
+    public Task_req_data_managed managed_data;
 
 
     public System.Object[] dados;
@@ -203,6 +204,15 @@ unsafe public struct Task_req_data {
     // ** ints 
     public fixed int int_values[ 10 ];
     public fixed byte byte_values[ 40 ];
+
+}
+
+
+
+public struct Task_req_data_managed {
+    
+    public string[] string_array;
+    public int[] int_array;
 
 }
 

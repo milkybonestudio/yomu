@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 unsafe public class Crash_handle_ephemeral_files {
 
@@ -14,16 +15,46 @@ unsafe public class Crash_handle_ephemeral_files {
         files = new Dictionary<string, byte[]>( 1_000 );
         Load_recursive( Paths_version.path_to_version, files );
 
+        active_files = new Dictionary<string, bool>();
+
+        // ** la arte de la gambiarra
+        // ** vai dar 1 slot extra para ig
+        active_files[ STRING_TO_IGNORE ] = true;
+
     }
 
+    public const string STRING_TO_IGNORE = "?? used_to_ignor_zero_index ??";
+
+    public Dictionary<string, byte[]> files;
+
+    // ** if true will make an operation on the file in disk at the end
+    public Dictionary<string, bool> active_files;
+
+
+    public string[] Get_active_paths(){
+
+        string[] paths = active_files.Keys.ToArray();
+
+        int index_to_change = Array.IndexOf( paths, STRING_TO_IGNORE );
+
+        string valid_path = paths[ 0 ];
+        paths[ index_to_change ] = valid_path;
+
+        return paths;
+
+    }
 
     public void Switch_file( string _path, byte[] _data ){
+
+        Set_active( _path );
 
         files[ _path ] = _data;
 
     }
 
     public byte[] Get_file( string _path ){
+
+        Set_active( _path );
 
         return  files[ _path ];
 
@@ -32,6 +63,8 @@ unsafe public class Crash_handle_ephemeral_files {
 
     public byte[] Create_new_file( string _path, int _length ){
 
+        Set_active( _path );
+
         files[ _path ] = new byte[ _length ];
 
         return files[ _path ];
@@ -39,7 +72,9 @@ unsafe public class Crash_handle_ephemeral_files {
 
     public void Delete_file( string _path ){
 
-            files[ _path ] = null;
+        Set_active( _path );
+        
+        files[ _path ] = null;
 
     }
 
@@ -49,20 +84,21 @@ unsafe public class Crash_handle_ephemeral_files {
 
     }
 
-    public byte[] Change_length_file( string _path, int _new_length ){
+    public void Change_length_file( string _path, int _new_length ){
 
-        byte[] old_file = files[ _path ];
-
-            Array.Resize( ref old_file, _new_length );
-
-            files[ _path ] = old_file;
-
-        return old_file;
+        Set_active( _path );
 
     }
 
 
-    public Dictionary<string, byte[]> files;
+    private void Set_active( string _path ){
+
+        Console.Log( "active path: " + _path );
+        active_files[ _path ] = true;
+
+    }
+
+
 
     public const int MAX_LENGTH_FILES = 500_000_000;
 

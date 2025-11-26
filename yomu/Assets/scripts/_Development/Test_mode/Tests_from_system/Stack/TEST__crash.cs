@@ -5,23 +5,60 @@ using UnityEngine;
 
 unsafe public static class TEST__crash {
 
+/*
+        --> crash tests:
+            --> understand the state that stoped and switches to the right handler ( OK )
+            --> find edge cases where the files where already all saved ( OK )
+            --> find edge cases where the files got corrupted
+                    --> temp file duplicated ( OK )
+                    --> old file deleted befor correct move ( OK )
+            --> handlers: 
+                --> data was already saved ( OK )
+                --> will reconstruct from the stack (  )
+                --> all data in saving_files/already moved ( OK )
+            --> expected:
+                1_save_stack ( OK )
+                2_save_new_slot_file_link ( OK )
+                3_create_saving_files_folders ( OK )
+                4_create_half_run_time_saving_files ( OK )
+                5_create_full_run_time_saving_files ( OK )
+                6_create_saving_files_security_file ( OK )
+                7_move_files_half ( OK )
+                71_move_files_full ( OK )
+                72_apply_logic_half ( OK )
+                73_apply_logic_full ( OK )
+                8_reset_stack ( OK )
+                9_delete_saving_files_security_file ( OK )
+                91_delete_saving_files_folder ( OK )
+        finish,
+
+*/
+
+
 
     public enum Crash {
 
         save_stack,
         save_new_slot_file_link,
-        create_saving_files_folders, 
-        add_slots_files_half,
-        add_slots_files_full,
-        create_saving_files_security_file, 
-        move_files_half, 
-        move_files_full,
-        switch_files_half,
-        switch_files_full,
+        create_saving_files_folders,
+
+        // ** create files in saving folder
+        create_half_run_time_saving_files,
+        create_full_run_time_saving_files,
+
+        // ** 
+        create_saving_files_security_file,
+
+        // --> have all the data
+
+        // ** apply logic
+        apply_logic_half,
+        apply_logic_full,
+
+
+
         reset_stack,
 
-
-        delete_saving_files_security_file,
         delete_saving_files_folder,
         
         delete_file_links,
@@ -35,10 +72,21 @@ unsafe public static class TEST__crash {
         static string path_1;
         static string path_2;
         static string path_3;
+        static string path_4_EXIST_OU_SYSTEM;
+        static string path_5_EXIST_OU_SYSTEM;
+        static string path_6_DONT_EXIST;
+        static string path_7_DONT_EXIST;
+
+
+        static string path_storage;
+
+        
 
         static Data_file_link data_1;
         static Data_file_link data_2;
         static Data_file_link data_3;
+
+        static Packet_storage* packet_storage;
 
         static Crash current_state_crash;
 
@@ -49,130 +97,120 @@ unsafe public static class TEST__crash {
         path_1 = Path.Combine( Paths_program.program_path, "test_1.dat" );
         path_2 = Path.Combine( Paths_program.program_path, "test_2.dat" );
         path_3 = Path.Combine( Paths_program.program_path, "test_3.dat" );
+        path_4_EXIST_OU_SYSTEM = Path.Combine( Paths_program.program_path, "test_4.dat" );
+        path_5_EXIST_OU_SYSTEM = Path.Combine( Paths_program.program_path, "test_5.dat" );
+        path_6_DONT_EXIST = Path.Combine( Paths_program.program_path, "test_6.dat" );
+        path_7_DONT_EXIST = Path.Combine( Paths_program.program_path, "test_7.dat" );
+
+        path_storage = Path.Combine( Paths_program.program_path, "storage_test.dat" );
+
 
             System.IO.File.WriteAllBytes( path_1, ARRAY.Get_array<byte>( 10_000, (byte)'@' ) );
             System.IO.File.WriteAllBytes( path_2, ARRAY.Get_array<byte>( 10_000, (byte)'9' )  );
             System.IO.File.WriteAllBytes( path_3, ARRAY.Get_array<byte>( 10_000, (byte)'7' )  );
+            System.IO.File.WriteAllBytes( path_storage, new byte[ 100_000 ]  );
 
-        // Console.Log( "remvoer" );
-        // return;
+
+            System.IO.File.WriteAllBytes( path_4_EXIST_OU_SYSTEM, ARRAY.Get_array<byte>( 1_000, (byte)'^' )  );
+
+            System.IO.File.WriteAllBytes( path_5_EXIST_OU_SYSTEM, ARRAY.Get_array<byte>( 10_000, (byte)'1' )  );
+            
 
         data_1 = Controllers.files.operations.Get_file_from_disk( path_1 );
         data_2 = Controllers.files.operations.Get_file_from_disk( path_2 );
         data_3 = Controllers.files.operations.Get_file_from_disk( path_3 );
+        Data_file_link data_storage = Controllers.files.operations.Get_file_from_disk( path_storage );
+        
+        packet_storage = Packet_storage.Start( data_storage );
 
     }
     
 
+    public static Task_req req = new Task_req();
 
     private static void Go_to_state_saving_crash(){
 
 
         Console.Log( "vai: " + current_state_crash );
 
+        req.data.int_values[ 69 ] = 0;
 
         if( current_state_crash == Crash.save_stack )
             {
+                // ** save a lot of diferent results 
+                Controllers.files.operations.Change_data_file( data_1, 5, v );
+                data_1 = Controllers.files.operations.Change_length_file( data_1, 500 );
+                Controllers.files.operations.Remove_file( data_1 );
 
-                SS v = new SS(){
-                        a = INT.Return_int_4_bytes_asc2( 'a' ),
-                        b = INT.Return_int_4_bytes_asc2( 'b' ),
-                        c = INT.Return_int_4_bytes_asc2( 'c' ),
-                        d = INT.Return_int_4_bytes_asc2( 'd' ),
-                        e = INT.Return_int_4_bytes_asc2( 'e' ),
-                        f = INT.Return_int_4_bytes_asc2( 'f' ),
-                };
+                // Controllers.files.operations.Change_data_file( data_2, 20, v );
+                 Controllers.files.operations.Change_data_file( data_2, 20, 10d );
+                //Controllers.files.operations.Change_data_file( data_2, 20, 4f );
+                Controllers.files.operations.Remove_file( data_2 );
 
+                Data_file_link data_4 = Controllers.files.operations.Get_file_from_disk( path_4_EXIST_OU_SYSTEM );
+                Controllers.files.operations.Delete_file( path_5_EXIST_OU_SYSTEM );
+                
+                
+                Data_file_link data_6 = Controllers.files.operations.Create_new_file( new byte[ 500 ] , path_6_DONT_EXIST );
+                Controllers.files.operations.Change_data_file( data_6, 15, v );
 
-                Controllers.stack.files.Save_data_change_data_in_file( data_1.id, 5, v );
-                Controllers.stack.files.Save_data_change_data_in_file( data_1.id, 100, v );
-                Controllers.stack.files.Save_data_change_data_in_file( data_1.id, 1500, v );
-                Controllers.stack.files.Save_data_change_data_in_file( data_1.id, 2500, v );
+                Data_file_link data_7 = Controllers.files.operations.Create_new_file( new byte[ 500 ] , path_7_DONT_EXIST );
+                Controllers.files.operations.Delete_file( path_7_DONT_EXIST );
 
+                Packet_key pk = packet_storage->Alloc_packet( 10 );
+                Packet p = packet_storage->Get_packet( pk );
+                ((int*)( p.Get_pointer_partial() )) [ 0 ] = 4;
+                
                 Controllers.stack.test.Save_stack_in_disk_sync();
-
-                // Controllers.stack.files.Save_data_change_data_in_file( data_2.id, 5, v );
-                // Controllers.stack.files.Save_data_change_data_in_file( data_2.id, 100, v );
-
-                // Controllers.stack.Save_stack_in_disk_sync();
 
             }
 
 
         if( current_state_crash == Crash.save_new_slot_file_link )
-            {
-                Controllers.files.test.Save_link_paths_sync();
-            }
+            {  MANAGER__controller_saving_saver.Save_link_paths( req ); }
+
+
 
         if( current_state_crash == Crash.create_saving_files_folders )
-            {
-                System.IO.Directory.CreateDirectory( Paths_program.saving_files_folder );
-            }
+            { System.IO.Directory.CreateDirectory( Paths_program.saving_files_folder ); }
 
-        if( current_state_crash == Crash.add_slots_files_half )
+        if( current_state_crash == Crash.create_half_run_time_saving_files )
             {
-                data_1.Fill_TEST( (byte)'$' );
-                File_run_time_saving_operations.Save_file_run_time_SWITCH( data_1 );
-                data_2.Fill_TEST( (byte)'%' );
-                File_run_time_saving_operations.Save_file_run_time_SWITCH( data_2 );
+                MANAGER__controller_saving_saver.Save_files( req );
+                string p = File_run_time_saving_operations.Get_run_time_path( data_3.id, File_IO_operation._switch );
+                if( !!!( System.IO.File.Exists( p )) ){ CONTROLLER__errors.Throw( "path dont exist: " + p ); }
+                System.IO.File.Move( p, Paths_program.safety_stack_folder + "AAA.dat" );
             }
             
-        if( current_state_crash == Crash.add_slots_files_full )
+        if( current_state_crash == Crash.create_full_run_time_saving_files )
             {
-                data_3.Fill_TEST( (byte)'@' );
-                File_run_time_saving_operations.Save_file_run_time_DELETE( data_3 );
+                string p = File_run_time_saving_operations.Get_run_time_path( data_3.id, File_IO_operation._switch );
+                if( System.IO.File.Exists( p ) ){ CONTROLLER__errors.Throw( "path exist: " + p ); }
+                System.IO.File.Move( Paths_program.safety_stack_folder + "AAA.dat", p );
             }
 
         if( current_state_crash == Crash.create_saving_files_security_file )
-            {
-                System.IO.File.WriteAllBytes( Paths_program.saving_files_security_file, new byte[ 1_000 ] );
-            }
-        if( current_state_crash == Crash.move_files_half )
-            {
-                File_run_time_saving_operations.Move_switch_file( data_1 );
-                File_run_time_saving_operations.Move_switch_file( data_2 );
-            }
+            { MANAGER__controller_saving_saver.Create_security_file( req ); }
 
-        if( current_state_crash == Crash.move_files_full )
-            {
-                    // Controllers.files.saver.Move_file( data_3 );
-            }
+        
+        if( current_state_crash == Crash.apply_logic_half )
+            { req.data.int_values[ 69 ] = 1; MANAGER__controller_saving_saver.Apply_actions_files_in_saving_folder( req ); }
 
-        if( current_state_crash == Crash.switch_files_half )
-            {
-                File_run_time_saving_operations.Switch_files( data_1 );
-                File_run_time_saving_operations.Switch_files( data_2 );
-            }
-
-        if( current_state_crash == Crash.switch_files_full )
-            {
-                File_run_time_saving_operations.Delete_files( data_3 );
-            }
+        if( current_state_crash == Crash.apply_logic_full )
+            { req.data.int_values[ 69 ] = 2; MANAGER__controller_saving_saver.Apply_actions_files_in_saving_folder( req ); }
 
 
         if( current_state_crash == Crash.reset_stack )
-            { 
-                Controllers.stack.saver.Clean_file();
-            }
+            { MANAGER__controller_saving_saver.Reset_stack( req ); }
 
-        if( current_state_crash == Crash.delete_saving_files_security_file )
-            {
-                System.IO.File.Delete( Paths_program.saving_files_security_file );
-            }
         if( current_state_crash == Crash.delete_saving_files_folder )
-            {
-                System.IO.Directory.Delete( Paths_program.saving_files_folder );
-            }
+            { MANAGER__controller_saving_saver.Delete_saving_folder( req ); }
 
         if( current_state_crash == Crash.delete_file_links )
-            {
-                System.IO.File.Delete( Paths_program.saving_link_file_to_path );
-            }
+            { MANAGER__controller_saving_saver.Delete_file_links( req ); }
 
         if( current_state_crash == Crash.change_stack_start_files )
-            {
-                Files.Save_critical_file( Paths_program.stack_start_files, new byte[ 1_000 ] );
-            }
+            { MANAGER__controller_saving_saver.Save_stack_start_files( req ); }
             
 
 
@@ -196,9 +234,16 @@ unsafe public static class TEST__crash {
     public static void Update(){
 
 
+        if( Input.GetKeyDown( KeyCode.M ) )
+            {  
+                Packet pac = packet_storage->Get_packet( Packet_key.Construct( Packet_storage_size._10_bytes, 0, 10 ) ); 
+                Console.Log( (*(int*)pac.Get_pointer_partial()) );
+            }
+
+
         // --- 
 
-        if( true  )
+        if( Input.GetKey( KeyCode.Keypad1 )  )
             {
 
                 if( Input.GetKeyDown( KeyCode.P ) )
@@ -209,389 +254,51 @@ unsafe public static class TEST__crash {
 
                 if( Input.GetKeyDown( KeyCode.I ) )
                     { Controllers.stack.saver.test.Force_corrupt_file( 10 ); }
-
-                if( Input.GetKeyDown( KeyCode.L ) )
-                    { 
-                        Controllers.stack.files.Save_data_got_file_from_disk( '&', Paths_program.program_path );
-                        Controllers.stack.files.Save_data_got_file_from_disk( '*', @"C:/Users/User/Desktop/yomu_things/yomu/yomu/abcdefghi" );
-                        Controllers.stack.files.Save_data_got_file_from_disk( '%', @"FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" );
-                        
-                        Controllers.stack.test.Save_stack_in_disk_sync(); 
-                    }
-
                     
-                return;
-                    
-            }
-
-
-
-
-
-
-
-        // ** TESTS FOR MESSAGES
-
-        if( false )
-            {
-
-                if ( Input.GetKeyDown( KeyCode.Keypad1 ) )
-                    {
-                        
-                        Controllers.stack.test.Save_stack_in_disk_sync(); 
-
-                    }
-
-                if ( Input.GetKeyDown( KeyCode.Keypad2 ) )
-                    {
-                        Console.Log( "state: " + _Crash() );
-                    }
-
-
-
-
-                // ** CREATE NEW FILE
-                if( false )
-                    {
-
-                        /*
-
-                            creat new file:
-                                --> workds with normal data (  )
-                                --> handle errors:
-                                    --> path dont have file (  ) 
-                                    --> path is not in the version folder (  ) 
-                                    --> duplication (  )
-                        
-                        */
-
-                        string path_can_not_get = Path.Combine( Paths_system.persistent_data, "can_not_get.txt" );
-                        string path_new_file = path_1 + ".abc";
-                        string path_that_already_exist = path_1;
-
-                        System.IO.File.WriteAllBytes( path_can_not_get, new byte[ 100 ] );
-
-
-                        // ** OK
-                        if ( Input.GetKeyDown( KeyCode.Q ) )
-                            { Controllers.stack.files.Save_data_create_new_file( 20, 10_000, path_new_file ); }
-
-
-                        // ID 
-                        // ** invalid
-                        if ( Input.GetKeyDown( KeyCode.W ) )
-                            { Controllers.stack.files.Save_data_create_new_file( 0, 10_000, path_new_file ); }
-
-                        if ( Input.GetKeyDown( KeyCode.E ) )
-                            { Controllers.stack.files.Save_data_create_new_file( -1, 10_000, path_new_file ); }
-
-                        
-                        if ( Input.GetKeyDown( KeyCode.R ) )
-                            { 
-                                Controllers.stack.files.Save_data_create_new_file( 2, 10_000, path_new_file ); 
-                                Controllers.stack.files.Save_data_create_new_file( 2, 10_000, path_new_file ); 
-                            }
-
-                        // ** invalid path 
-
-                        // ** out version
-                        if ( Input.GetKeyDown( KeyCode.T ) )
-                            { Controllers.stack.files.Save_data_create_new_file( 5, 10_000, path_can_not_get ); }
-
-                        // ** file already exist
-                        if ( Input.GetKeyDown( KeyCode.Y ) )
-                            { Controllers.stack.files.Save_data_create_new_file( 5, 10_000, path_that_already_exist ); }
-
-                        // ** path null
-                        if ( Input.GetKeyDown( KeyCode.U ) )
-                            { Controllers.stack.files.Save_data_create_new_file( 5, 10_000, null ); }
-
-                        
-
-                        // SIZE PROBLEM
-
-                        // ** too much 
-                        if ( Input.GetKeyDown( KeyCode.I ) )
-                            { Controllers.stack.files.Save_data_create_new_file( 20, 10_000_000, path_new_file ); }
-
-                        // ** negative length
-                        if ( Input.GetKeyDown( KeyCode.O ) )
-                            { Controllers.stack.files.Save_data_create_new_file( 20, -1_000, path_new_file ); }
-
-                        
-                        // ** negative length
-                        if ( Input.GetKeyDown( KeyCode.P ) )
-                            { Controllers.stack.files.Save_data_create_new_file( 20, 0, path_new_file ); }
-                        
-
-                    }
-
-
-
-
-
-
-
-
-
-
-
-                //mark
-                // ** need to jump PART of set(), can not get the data
-                // ** GOT FILE FROM DISK
-                if( false )
-                    {
-
-                        /*
-
-                            got file from disk:
-                                --> workds with normal data ( OK )
-                                --> handle errors:
-                                    --> path dont have file ( OK ) 
-                                    --> path is not in the version folder ( OK ) 
-                                    --> duplication ( OK )
-                        
-                        */
-
-                        string path_can_not_get = Path.Combine( Paths_system.persistent_data, "can_not_get.txt" );
-                        string path_dont_exist = path_1 + ".abc";
-
-                        System.IO.File.WriteAllBytes( path_can_not_get, new byte[ 100 ] );
-
-
-                        // ** OK
-                        if ( Input.GetKeyDown( KeyCode.Q ) )
-                            { 
-                                data_1 = Controllers.files.operations.Get_file_from_disk( path_1 );
-                                Controllers.stack.files.Save_data_change_data_in_file( data_1.id, 5, v );
-                            }
-
-                        
-
-                        // ** path dont have file
-                        if ( Input.GetKeyDown( KeyCode.W ) )
-                            { data_1 = Controllers.files.operations.Get_file_from_disk( path_dont_exist ); }
-
-                        // ** path dont have file in reconstruct
-                        if ( Input.GetKeyDown( KeyCode.E ) )
-                            { Controllers.stack.files.Save_data_got_file_from_disk( 20, path_dont_exist ); }
-
-
-
-                        // ** path is not part of version 
-                        if ( Input.GetKeyDown( KeyCode.R ) )
-                            { data_1 = Controllers.files.operations.Get_file_from_disk( path_can_not_get  ); }
-                        
-                        // ** path is not part of version
-                        if ( Input.GetKeyDown( KeyCode.T ) )
-                            { Controllers.stack.files.Save_data_got_file_from_disk( 20, path_can_not_get ); }
-
-
-
-
-
-
-                        // ** path is null  OK
-                        if ( Input.GetKeyDown( KeyCode.Y ) )
-                            { Controllers.stack.files.Save_data_got_file_from_disk( 20, null ); }
-
-
-                        // ** path is null OK
-                        if ( Input.GetKeyDown( KeyCode.U ) )
-                            { data_1 = Controllers.files.operations.Get_file_from_disk( null  ); }
-
-
-
-
-
-
-                        // ** try to add the same id twice OK
-                        if ( Input.GetKeyDown( KeyCode.I ) )
-                            { 
-                                Controllers.stack.files.Save_data_got_file_from_disk( 20, path_1 ); 
-                                Controllers.stack.files.Save_data_got_file_from_disk( 20, path_1 ); 
-                            }
-
-
-                        // ** id invalid for creation
-                        if ( Input.GetKeyDown( KeyCode.O ) )
-                            { Controllers.stack.files.Save_data_got_file_from_disk( 0, path_1 ); }
-
-                        
-                        // ** id invalid for creation
-                        if ( Input.GetKeyDown( KeyCode.P ) )
-                            { Controllers.stack.files.Save_data_got_file_from_disk( -10, path_1 ); }
-
-
-
-
-                    }
-
-
-
-
-
-                // ** CHANGE FILE MESSAGES
-                if( true )
-                    {
-
-                        /*
-
-                            change file:
-                                --> workds with normal data ( OK )
-                                --> handle errors:
-                                    --> change 0 bytes ( OK )
-                                    --> change negative off set ( OK )
-                                    --> chnage off range ( OK )
-                                    --> invalid file id[ 0, negative, invalid ] ( OK )
-                                    --> 
-                        
-                        */
-
-
-                        // ** Change file 0
-                        if ( Input.GetKeyDown( KeyCode.Q ) )
-                            { Controllers.stack.files.Save_data_change_data_in_file( data_1.id, 0, v ); }
-
-                        // ** Change file negative
-                        if ( Input.GetKeyDown( KeyCode.W ) )
-                            { Controllers.stack.files.Save_data_change_data_in_file( data_1.id, -10, v ); }
-
-                        // ** Change file out of file a lot
-                        if ( Input.GetKeyDown( KeyCode.E ) )
-                            { Controllers.stack.files.Save_data_change_data_in_file( data_1.id, data_1.Get_length() + 100_000, v ); }
-
-                        // ** Change file starts ok, but in length pass
-                        if ( Input.GetKeyDown( KeyCode.R ) )
-                            { Controllers.stack.files.Save_data_change_data_in_file( data_1.id, data_1.Get_length() - sizeof( SS ), v ); }
-
-                        
-                        // ** Change file starts ok, but in length pass
-                        if ( Input.GetKeyDown(KeyCode.B) )
-                            { Controllers.stack.files.Save_data_change_data_in_file( data_1.id, data_1.Get_length() - sizeof( SS ), v ); }
-
-
-
-                        // ** wrong id 0
-                        if ( Input.GetKeyDown( KeyCode.T ) )
-                            { Controllers.stack.files.Save_data_change_data_in_file( 0, 5, v ); }
-
-                        
-                        // ** wrong id negative
-                        if ( Input.GetKeyDown( KeyCode.Y ) )
-                            { Controllers.stack.files.Save_data_change_data_in_file( -100, 5, v ); }
-
-                        // ** wrong id not exist
-                        if ( Input.GetKeyDown( KeyCode.U ) )
-                            { Controllers.stack.files.Save_data_change_data_in_file( 100, 5, v ); }
-
-                                                // ** wrong id not exist
-                        if ( Input.GetKeyDown( KeyCode.J ) )
-                            { Controllers.stack.files.Save_data_change_data_in_file( 5, 5, v ); }
-
-
-                        
-
-                        // ** size dont make sense
-                        if ( Input.GetKeyDown( KeyCode.I ) )
-                            { fixed( SS* pp = &v ){Controllers.stack.files.Save_data_change_data_in_file( data_1.id, 5, pp, 200_000 );} }
-
-
-                        // ** Change file OK
-                        if ( Input.GetKeyDown( KeyCode.O ) )
-                            { Controllers.stack.files.Save_data_change_data_in_file( data_1.id, 10, v ); }
-
-
-
-
-                    }
-
-
-
-
             }
 
 
         // ** TESTS FOR STAGES INTERUPTIONS
-        if( false )
+        if( Input.GetKey( KeyCode.Keypad2 ) )
             {
-                if (Input.GetKeyDown(KeyCode.Alpha0))
-                    { 
-                            SS v = new SS(){
-                                a = INT.Return_int_4_bytes_asc2( 'a' ),
-                                b = INT.Return_int_4_bytes_asc2( 'b' ),
-                                c = INT.Return_int_4_bytes_asc2( 'c' ),
-                                d = INT.Return_int_4_bytes_asc2( 'd' ),
-                                e = INT.Return_int_4_bytes_asc2( 'e' ),
-                                f = INT.Return_int_4_bytes_asc2( 'f' ),
-                            };
 
-
-                            Controllers.stack.files.Save_data_change_data_in_file( data_1.id, 5, v );
-                            Controllers.stack.files.Save_data_change_data_in_file( data_1.id, 100, v );
-                            Controllers.stack.files.Save_data_change_data_in_file( data_1.id, 150, v );
-
-                            Controllers.stack.test.Save_stack_in_disk_sync();
-
-                            // Controllers.stack.files.Save_data_change_data_in_file( data_2.id, 5, v );
-                            // Controllers.stack.files.Save_data_change_data_in_file( data_2.id, 100, v );
-
-                            // Controllers.stack.Save_stack_in_disk_sync();
-
-                            // Controllers.stack.saver.test.Force_corrupt_file( 10 );
-
-                            Console.Log( "state: " + _Crash() );
-                        
-                    }
-
-
-
-
-                if (Input.GetKeyDown(KeyCode.Alpha1))
-                    { Verify_crash(Crash.save_stack, Crash_handle_situation.need_to_recosntruct_with_the_stack); }
-
-                if( Input.GetKeyDown( KeyCode.Alpha2 ) )
-                    { Verify_crash( Crash.save_new_slot_file_link,  Crash_handle_situation.need_to_recosntruct_with_the_stack ); }
-
-                if( Input.GetKeyDown( KeyCode.Alpha3 ) )
-                    { Verify_crash( Crash.create_saving_files_folders,  Crash_handle_situation.need_to_recosntruct_with_the_stack ); }
-
-                if( Input.GetKeyDown( KeyCode.Alpha4 ) )
-                    { Verify_crash( Crash.add_slots_files_half,  Crash_handle_situation.need_to_recosntruct_with_the_stack ); }
-
-                
-                if( Input.GetKeyDown( KeyCode.Alpha5 ) )
-                    { Verify_crash( Crash.add_slots_files_full,  Crash_handle_situation.need_to_recosntruct_with_the_stack ); }
-
-                if( Input.GetKeyDown( KeyCode.Alpha6 ) )
-                    { Verify_crash( Crash.create_saving_files_security_file,  Crash_handle_situation.all_temp_files_were_already_there_just_move ); }
-
-                if( Input.GetKeyDown( KeyCode.Alpha7 ) )
-                    { Verify_crash( Crash.move_files_half,  Crash_handle_situation.all_temp_files_were_already_there_just_move ); }
-
-                if( Input.GetKeyDown( KeyCode.Alpha8 ) )
-                    { Verify_crash( Crash.move_files_full,  Crash_handle_situation.all_temp_files_were_already_there_just_move ); }
-
-                if( Input.GetKeyDown( KeyCode.Alpha9 ) )
-                    { Verify_crash( Crash.switch_files_half,  Crash_handle_situation.all_temp_files_were_already_there_just_move ); }
-
-                if( Input.GetKeyDown( KeyCode.Q ) )
-                    { Verify_crash( Crash.switch_files_full,  Crash_handle_situation.all_temp_files_were_already_there_just_move ); }
+                if (Input.GetKeyDown( KeyCode.Q ) )
+                    { Verify_crash(Crash.save_stack, Crash_handle_route.need_to_recosntruct_with_the_stack ); }
 
                 if( Input.GetKeyDown( KeyCode.W ) )
-                    { Verify_crash( Crash.reset_stack,  Crash_handle_situation.all_files_already_got_saved ); }
+                    { Verify_crash( Crash.save_new_slot_file_link,  Crash_handle_route.need_to_recosntruct_with_the_stack ); }
 
                 if( Input.GetKeyDown( KeyCode.E ) )
-                    { Verify_crash( Crash.delete_saving_files_security_file,  Crash_handle_situation.all_files_already_got_saved ); }
+                    { Verify_crash( Crash.create_saving_files_folders,  Crash_handle_route.need_to_recosntruct_with_the_stack ); }
 
                 if( Input.GetKeyDown( KeyCode.R ) )
-                    { Verify_crash( Crash.delete_saving_files_folder,  Crash_handle_situation.all_files_already_got_saved ); }
+                    { Verify_crash( Crash.create_half_run_time_saving_files,  Crash_handle_route.need_to_recosntruct_with_the_stack ); }
+                
+                if( Input.GetKeyDown( KeyCode.T ) )
+                    { Verify_crash( Crash.create_full_run_time_saving_files,  Crash_handle_route.need_to_recosntruct_with_the_stack ); }
+
+
+
+                if( Input.GetKeyDown( KeyCode.A ) )
+                    { Verify_crash( Crash.create_saving_files_security_file,  Crash_handle_route.all_temp_files_were_already_there_just_move ); }
+
+                if( Input.GetKeyDown( KeyCode.S ) )
+                    { Verify_crash( Crash.apply_logic_half,  Crash_handle_route.all_temp_files_were_already_there_just_move ); }
+
+                if( Input.GetKeyDown( KeyCode.D ) )
+                    { Verify_crash( Crash.apply_logic_full,  Crash_handle_route.all_temp_files_were_already_there_just_move ); }
+
+                if( Input.GetKeyDown( KeyCode.F ) )
+                    { Verify_crash( Crash.reset_stack,  Crash_handle_route.all_files_already_got_saved ); }
+
+                if( Input.GetKeyDown( KeyCode.G ) )
+                    { Verify_crash( Crash.delete_saving_files_folder,  Crash_handle_route.all_files_already_got_saved ); }
 
 
             }
 
 
-
+        // ** test for corruptiosn
 
 
 
@@ -604,7 +311,7 @@ unsafe public static class TEST__crash {
     }
 
     
-    private static Crash_handle_situation _Crash(){
+    private static Crash_handle_return _Crash(){
 
         Controllers.stack.saver.strem_stack.Close();
         return Crash_handler.Deal_crash();
@@ -613,23 +320,35 @@ unsafe public static class TEST__crash {
     }
 
 
-    private static void Verify_crash( Crash _crash, Crash_handle_situation _expected ){
+    private static void Verify_crash( Crash _crash, Crash_handle_route _expected ){
 
-        try{
 
             Crash_test_until( _crash );
-            Crash_handle_situation real_crash_handler = _Crash();
+            
+            Crash_handle_return ret = _Crash();
+            Crash_handle_route real_crash_handler = ret.route;
+
+            if( ret.result == Crash_handle_result.fail )
+                { Console.LogError( $"<Color=red>FAIL</Color>FAIL: " + ret.message ); }
+
+
+
+            Console.Log( "stage crash test: " + _crash );
+            Console.Log( "real route: " + real_crash_handler );
+            Console.Log( "expected route: " + _expected );
+
 
             if( real_crash_handler != _expected )
                 { CONTROLLER__errors.Throw( $"Expedcted <Color=lightBlue>{ _expected }</Color> but give <Color=lightBlue>{ real_crash_handler }</Color>" ); }
 
-            Console.Log( "stage crash: " + _crash );
-            Console.Log( "real_crash_handler: " + real_crash_handler );
-
             Console.Log( "<Color=lime>PASS TEST</Color>" );
 
+        // try{
 
-        } catch( Exception e ){}
+        // } catch( Exception e )
+        // {
+        //     Console
+        // }
 
     }
 

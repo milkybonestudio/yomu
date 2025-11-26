@@ -36,6 +36,15 @@ unsafe public struct Data_file_link {
     public Situation situation;
 
 
+    // test
+    public void Change_data( int _off_set, void* _data, int _length ){
+
+        VOID.Transfer_data( _data, ((byte*)heap_key.Get_pointer() + _off_set ), _length );
+        Controllers.stack.files.Save_data_change_data_in_file( id, _off_set, _data, _length );
+
+    }
+
+
     public void Guarantee_space( int _size ){
 
         if( _size < size  )

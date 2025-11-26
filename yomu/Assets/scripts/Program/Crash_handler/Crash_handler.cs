@@ -5,6 +5,21 @@ using System.IO;
 using System.Linq;
 
 
+//mark
+// ** ver depois
+public struct Crash_handle_return {
+
+    public static Crash_handle_return Construct( string _message, Crash_handle_result _result, Crash_handle_route _route ){
+        return new Crash_handle_return(){ message = _message, result = _result, route = _route };
+    }
+
+    public Crash_handle_result result;
+    public Crash_handle_route route;
+    public string message;
+
+
+}
+
 unsafe public static class Crash_handler{
 
 
@@ -14,12 +29,12 @@ unsafe public static class Crash_handler{
     public static byte[] stack_file;
     
 
-    public static Crash_handle_situation Deal_crash(){
+    public static Crash_handle_return Deal_crash(){
 
         Console.Log( System_run.show_program_construction_messages, "----------------------- CALLED <Color=lightBlue>DEAL CRASH</Color> -----------------------");
 
         if ( Verify_if_crash_at_final_OR_start() )
-            { return Crash_handle_situation.all_files_already_got_saved; }
+            { return  Crash_handle_return.Construct( "final or start", Crash_handle_result.sucess, Crash_handle_route.all_files_already_got_saved ); }
 
         stack_file = System.IO.File.ReadAllBytes( Paths_program.safety_stack_file );
 
@@ -28,7 +43,7 @@ unsafe public static class Crash_handler{
         if ( already_pass_the_data )
             { 
                 Delete_all(); 
-                return Crash_handle_situation.all_files_already_got_saved; 
+                return  Crash_handle_return.Construct( "already pass all the data", Crash_handle_result.sucess, Crash_handle_route.all_files_already_got_saved ); 
             }
 
         
@@ -37,10 +52,12 @@ unsafe public static class Crash_handler{
                 Stack_reconstruction_result_message message_reconstruct_stack = TOOL__reconstruct_from_stack.Reconstruct();
                 
                 if( message_reconstruct_stack.result == Stack_reconstruction_result.fail )
-                    { return File_worst_corruption( message_reconstruct_stack.message ); }
+                    { return File_worst_corruption( message_reconstruct_stack.message, Crash_handle_route.need_to_recosntruct_with_the_stack ); }
+
+                return Pass_data_to_disk( Crash_handle_route.need_to_recosntruct_with_the_stack );
             }
 
-        return Pass_data_to_disk();
+        return Pass_data_to_disk( Crash_handle_route.all_temp_files_were_already_there_just_move );
 
     }
 
@@ -62,7 +79,7 @@ unsafe public static class Crash_handler{
 
 
 
-    private static Crash_handle_situation Pass_data_to_disk(){
+    private static Crash_handle_return Pass_data_to_disk( Crash_handle_route _route ){
 
         // ** se veio aqui todos os arquivos estão ou no folder ou na pasta final, ou já foram trocados/eliminados
 
@@ -74,10 +91,12 @@ unsafe public static class Crash_handler{
 
 
         string[] link_paths_updated = System.IO.File.ReadAllLines( Paths_program.saving_link_file_to_path );
+
+
         Deal_edge_cases( link_paths_updated );
 
         string[] files_paths_in_saving_files_folder = System.IO.Directory.GetFiles( Paths_program.saving_files_folder );
-        Dictionary<int,Crash_operation_key> slots_TO_key_paths = new( 100 );
+        Dictionary<int,Crash_operation_key> file_ids_TO_key_paths = new( 100 );
 
 
         // ** valida os arquivos no saving files
@@ -89,19 +108,21 @@ unsafe public static class Crash_handler{
                 if( ( saving_file_name == Paths_program.saving_files_security_file_NAME ) || ( extension == ".meta" ) )
                     { continue; }
 
-                bool name_is_a_number = int.TryParse( Path.GetFileNameWithoutExtension( saving_file_name ), out int slot );
+                bool name_is_a_number = int.TryParse( Path.GetFileNameWithoutExtension( saving_file_name ), out int file_id );
 
                 if( !!!( name_is_a_number ) )
-                    { return File_worst_corruption( $"There is a file with the name <Color=lightBlue>{ saving_file_name }</Color> and is invalid" ); }
+                    { return File_worst_corruption( $"There is a file with the name <Color=lightBlue>{ saving_file_name }</Color> and is invalid", _route ); }
 
-                if( slot == 0 )
-                    { return File_worst_corruption( $"The slot is 0 in the file <Color=lightBlue>{ saving_file_name }</Color> and is invalid" ); }
+                
+                if( file_id == 0 )
+                    { return File_worst_corruption( $"The file_id is 0 in the file <Color=lightBlue>{ saving_file_name }</Color> and is invalid", _route ); }
 
-                if( slots_TO_key_paths.ContainsKey( slot ) )
+                if( file_ids_TO_key_paths.ContainsKey( file_id ) )
                     { 
                         return File_worst_corruption( 
-                            $"There is a file with slot <Color=lightBlue>{ slot }</Color> that was saved twice in the saving_files." +
-                            $" path 1: <Color=lightBlue>{ Path.GetFileName( slots_TO_key_paths[ slot ].path_in_disk )  }</Color> path 2: <Color=lightBlue>{ saving_file_name }</Color>"
+                            $"There is a file with file_id <Color=lightBlue>{ file_id }</Color> that was saved twice in the saving_files." +
+                            $" path 1: <Color=lightBlue>{ Path.GetFileName( file_ids_TO_key_paths[ file_id ].path_in_disk )  }</Color> path 2: <Color=lightBlue>{ saving_file_name }</Color>", 
+                            _route
                         );
                     }
 
@@ -114,13 +135,13 @@ unsafe public static class Crash_handler{
                     case ".create": operation = File_IO_operation._create; break;
                     case ".nothing": operation = File_IO_operation._nothing; break;
 
-                    default: return File_worst_corruption( $"One file in saving have the extension <Color=lightBlue>{ extension }</Color> in the file <Color=lightBlue>{ saving_file_name }</Color>"  );
+                    default: return File_worst_corruption( $"One file in saving have the extension <Color=lightBlue>{ extension }</Color> in the file <Color=lightBlue>{ saving_file_name }</Color>" , _route );
 
                 }
 
 
-                slots_TO_key_paths[ slot ] = new(){
-                    file_id = slot,
+                file_ids_TO_key_paths[ file_id ] = new(){
+                    file_id = file_id,
                     file_extension = extension,
                     path_in_disk = path_in_saving_folder,
                     operation = operation
@@ -129,26 +150,28 @@ unsafe public static class Crash_handler{
         }
 
 
-        int[] sorted_ids_for_dic = slots_TO_key_paths.Keys.ToArray();
+        int[] sorted_ids_for_dic = file_ids_TO_key_paths.Keys.ToArray();
         Array.Sort( sorted_ids_for_dic );
 
-        for( int index_key = 0 ; index_key < sorted_ids_for_dic.Length ; index_key++ ){
+        for( int index_sorted = 0 ; index_sorted < sorted_ids_for_dic.Length ; index_sorted++ ){
 
-            if( index_key > link_paths_updated.Length )
-                { return File_worst_corruption( $"There is a file with slot <Color=lightBlue>{ index_key }</Color>, but the max slot based on <Color=lightBlue>saving_link_file_to_path</Color> is <Color=lightBlue>{ link_paths_updated.Length }</Color>" ); }
+            int file_id = sorted_ids_for_dic[ index_sorted ];
 
-            string real_path = link_paths_updated[ index_key ];
+            if( file_id > link_paths_updated.Length )
+                { return File_worst_corruption( $"There is a file with slot <Color=lightBlue>{ file_id }</Color>, but the max slot based on <Color=lightBlue>saving_link_file_to_path</Color> is <Color=lightBlue>{ link_paths_updated.Length }</Color>" , _route); }
 
+            string real_path = link_paths_updated[ file_id ];
+            
             if( ( real_path == null ) || ( real_path == "" ) )
-                { return File_worst_corruption( $"The path for the id <Color=lightBlue>{ index_key }</Color> is not valid" ); }
+                { return File_worst_corruption( $"The path for the id <Color=lightBlue>{ file_id }</Color> is not valid" , _route); }
 
             if( !!!( Directories.Is_sub_path( real_path, Paths_version.path_to_version ) ) )
-                { return File_worst_corruption( $"The path <Color=lightBlue>{ real_path }</Color> is not part of <Color=lightBlue>{ Paths_version.path_to_version }</Color>" ); }
+                { return File_worst_corruption( $"The path <Color=lightBlue>{ real_path }</Color> is not part of <Color=lightBlue>{ Paths_version.path_to_version }</Color>" , _route); }
             
 
-            Crash_operation_key key = slots_TO_key_paths[ index_key ];
+            Crash_operation_key key = file_ids_TO_key_paths[ file_id ];
                 key.final_path = real_path;
-            slots_TO_key_paths[ index_key ] = key;
+            file_ids_TO_key_paths[ file_id ] = key;
 
             continue;
             
@@ -164,7 +187,7 @@ unsafe public static class Crash_handler{
             // ** if 20 switchs the file and 30 create a new one -> ERROR
 
             int lower_slot = sorted_ids_for_dic[ index_key ];
-            Crash_operation_key key = slots_TO_key_paths[ lower_slot ];
+            Crash_operation_key key = file_ids_TO_key_paths[ lower_slot ];
 
 
             if( key.operation == File_IO_operation._switch )
@@ -180,7 +203,7 @@ unsafe public static class Crash_handler{
             if( key.operation == File_IO_operation._delete )
                 {
                     if( !!!( System.IO.File.Exists( key.final_path ) ) )
-                        { return File_worst_corruption( $"It tryes to DELETE a file in the path <Color=lightBlue>{ key.final_path }</Color>, but there is no file in the path" ); }
+                        { return File_worst_corruption( $"It tryes to DELETE a file in the path <Color=lightBlue>{ key.final_path }</Color>, but there is no file in the path", _route ); }
 
                     string path_temp = File_run_time_saving_operations.Get_run_time_path_TEMP( key.final_path, File_IO_operation._delete );
                     System.IO.File.Move( key.path_in_disk, path_temp );
@@ -191,7 +214,7 @@ unsafe public static class Crash_handler{
             if( key.operation == File_IO_operation._create )
                 {
                     if( System.IO.File.Exists( key.final_path ) )
-                        { return File_worst_corruption( $"It tryes to CREATE a file in the path <Color=lightBlue>{ key.final_path }</Color>, but a file alreaady exist" ); }
+                        { return File_worst_corruption( $"It tryes to CREATE a file in the path <Color=lightBlue>{ key.final_path }</Color>, but a file alreaady exist", _route ); }
 
                     System.IO.File.Move( key.path_in_disk, key.final_path );
 
@@ -214,8 +237,10 @@ unsafe public static class Crash_handler{
 
         Delete_all();
 
-        Console.Log( "<Color=lime>ALL ARQUIVES OK</Color>" );
-        return Crash_handle_situation.all_temp_files_were_already_there_just_move;
+        if( System_run.show_program_construction_messages )
+            { Console.Log( "<Color=lime>ALL ARQUIVES OK</Color>" ); }
+
+        return Crash_handle_return.Construct( "pass", Crash_handle_result.sucess, _route );
 
     }
 
@@ -230,8 +255,9 @@ unsafe public static class Crash_handler{
 
     private static void EDGE_CASE__interrupt_on_switch( string[] link_paths_updated ){
 
-        Console.Log( "Will verify if there is any temp switch interrupted" );
-
+        if( System_run.show_program_construction_messages )
+            { Console.Log( "Will verify if there is any temp switch interrupted" ); }
+        
         foreach( string final_path in link_paths_updated ){
 
             if( ( final_path == null ) || ( final_path == "") )
@@ -255,7 +281,8 @@ unsafe public static class Crash_handler{
 
     private static void EDGE_CASE__interrupt_on_delete( string[] link_paths_updated ){
 
-        Console.Log( "Will verify if there is any temp switch interrupted" );
+        if( System_run.show_program_construction_messages )
+            { Console.Log( "Will verify if there is any temp switch interrupted" ); }
 
         foreach( string final_path in link_paths_updated ){
 
@@ -280,7 +307,8 @@ unsafe public static class Crash_handler{
 
     private static void EDGE_CASE__interrupt_on_create( string[] link_paths_updated ){
 
-        Console.Log( "Will verify if there is any temp switch interrupted" );
+        if( System_run.show_program_construction_messages )
+            { Console.Log( "Will verify if there is any temp switch interrupted" ); }
 
         foreach( string final_path in link_paths_updated ){
 
@@ -317,12 +345,18 @@ unsafe public static class Crash_handler{
         if( System.IO.File.Exists( Paths_program.saving_files_security_file ) )
             { return false; }
 
-        Console.Log( "There is no security file" );
-        Console.Log( "NO SECURITY FILE + DATA STILL IN STACK -> all the temp files are in the saving files folder ( if any ) and will be discarted to use only the stack" );
+        
+        if( System_run.show_program_construction_messages )
+            {
+                Console.Log( "There is no security file" );
+                Console.Log( "NO SECURITY FILE + DATA STILL IN STACK -> all the temp files are in the saving files folder ( if any ) and will be discarted to use only the stack" );
+            }
 
         System.IO.Directory.Delete( Paths_program.saving_files_folder, true );
 
-        Console.Log( "Delete saving files folder" );
+        if( System_run.show_program_construction_messages )
+            { Console.Log( "Delete saving files folder" ); }
+            
 
         // ** EMPTY + DATA STILL IN STACK -> all the temp files are in the folder(if any) and will be discarted
         // ** cenario 2: crashou enquanto estava passando os arquivos
@@ -334,14 +368,14 @@ unsafe public static class Crash_handler{
     
 
 
-    private static Crash_handle_situation Handle_fail_reconstruct_stack( string _message ){
+    // private static Crash_handle_route Handle_fail_reconstruct_stack( string _message ){
 
-        Console.Log_player_need_to_read( $"Was reconstructing the last session that ends wrong. Try to reconstruct with the stack safety but receive thsi error: <Color=lightBlue>{ _message }</Color>. Will ignore the last stack and go with files saved in disk. Sorry" );
+    //     Console.Log_player_need_to_read( $"Was reconstructing the last session that ends wrong. Try to reconstruct with the stack safety but receive thsi error: <Color=lightBlue>{ _message }</Color>. Will ignore the last stack and go with files saved in disk. Sorry" );
 
-        Delete_all();
-        return Crash_handle_situation.corrupted;
+    //     Delete_all();
+    //     return Crash_handle_route.corrupted;
 
-    }
+    // }
 
 
 
@@ -430,7 +464,7 @@ unsafe public static class Crash_handler{
 
     }
 
-    private static Crash_handle_situation File_worst_corruption( string _reason ){
+    private static Crash_handle_return File_worst_corruption( string _reason, Crash_handle_route _route ){
 
         Console.LogError( "<Color=red>GET CORRUPTED</Color>" );
         Console.Log_player_need_to_read( "Reason: " + _reason );
@@ -439,7 +473,7 @@ unsafe public static class Crash_handler{
         // ** but later it should use the death files
         
         Delete_all();
-        return Crash_handle_situation.corrupted;
+        return Crash_handle_return.Construct( _reason, Crash_handle_result.fail, _route );
 
     }
 

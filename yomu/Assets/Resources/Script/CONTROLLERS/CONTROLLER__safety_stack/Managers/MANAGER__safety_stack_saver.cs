@@ -46,7 +46,7 @@ unsafe public struct MANAGER__safety_stack_saver {
 
     public bool Stack_file_is_close_to_end(){
 
-        int _80 = 8 * ( current_pointer_in_file / 10 );
+        int _80 = 8 * ( file_size / 10 );
 
         return current_pointer_in_file > ( _80 );
 
@@ -121,6 +121,8 @@ unsafe public struct MANAGER__safety_stack_saver {
     }
 
     public Test test;
+
+
 
     public void Clean_file(){
 

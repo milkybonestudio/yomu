@@ -205,9 +205,6 @@ public class MODULO__multithread {
     public static int a;
 
     public void Thread_secundaria_update(){
-
-        try 
-            {
                 int a = 0;
                 while( true ){
 
@@ -277,6 +274,9 @@ public class MODULO__multithread {
                     continue;
 
                 }
+
+        try 
+            {
             } 
             catch( Exception e )
             {

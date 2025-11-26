@@ -14,7 +14,7 @@ unsafe public static class Files {
 
         FileMode file_mode = FileMode.Create;
         FileAccess file_accees = FileAccess.ReadWrite;
-        FileShare file_share = FileShare.Read;
+        FileShare file_share = FileShare.None;
         FileOptions file_options = FileOptions.WriteThrough;
 
         FileStream stream = new FileStream( _path, file_mode, file_accees , file_share, data.Length , file_options );
@@ -36,7 +36,7 @@ unsafe public static class Files {
         
         FileMode file_mode = FileMode.Create;
         FileAccess file_accees = FileAccess.ReadWrite;
-        FileShare file_share = FileShare.Read;
+        FileShare file_share = FileShare.None;
         FileOptions file_options = FileOptions.WriteThrough;
 
         FileStream stream = new FileStream( _path, file_mode, file_accees , file_share, _array.Length , file_options );
@@ -55,7 +55,7 @@ unsafe public static class Files {
         
         FileMode file_mode = FileMode.Create;
         FileAccess file_accees = FileAccess.ReadWrite;
-        FileShare file_share = FileShare.Read;
+        FileShare file_share = FileShare.None;
         FileOptions file_options = FileOptions.WriteThrough;
 
 

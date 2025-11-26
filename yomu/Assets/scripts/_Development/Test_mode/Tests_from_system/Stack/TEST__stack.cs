@@ -5,37 +5,7 @@ using System.Text;
 using UnityEngine;
 
 
-
     /*
-
-        --> crash tests:
-            --> understand the state that stoped and switches to the right handler ( OK )
-            --> find edge cases where the files where already all saved ( OK )
-            --> find edge cases where the files got corrupted
-                    --> temp file duplicated ( OK )
-                    --> old file deleted befor correct move ( OK )
-            --> handlers: 
-                --> data was already saved ( OK )
-                --> will reconstruct from the stack (  )
-                --> all data in saving_files/already moved ( OK )
-            --> expected:
-                1_save_stack ( OK )
-                2_save_new_slot_file_link ( OK )
-                3_create_saving_files_folders ( OK )
-                4_add_slots_files_half ( OK )
-                5_add_slots_files_full ( OK )
-                6_create_saving_files_security_file ( OK )
-                7_move_files_half ( OK )
-                71_move_files_full ( OK )
-                72_switch_files_half ( OK )
-                73_switch_files_full ( OK )
-                8_reset_stack ( OK )
-                9_delete_saving_files_security_file ( OK )
-                91_delete_saving_files_folder ( OK )
-        finish,
-
-            
-            
 
         --> update funciona 1 vez (OK)
         --> add data generic (OK)
@@ -254,29 +224,8 @@ unsafe public static class TEST__stack {
 
                             (byte)'<',
 
-                                (byte)'0',
-                                (byte)'0',
-                                (byte)'0',
-                                (byte)'0',
-                                (byte)'0',
-
-                                (byte)'0',
-                                (byte)'0',
-                                (byte)'0',
-                                (byte)'0',
-                                (byte)'0',
-
-                                (byte)'0',
-                                (byte)'0',
-                                (byte)'0',
-                                (byte)'0',
-                                (byte)'0',
-
-                                (byte)'0',
-                                (byte)'0',
-                                (byte)'0',
-                                (byte)'0',
-                                (byte)'0',
+                                (byte)'0',(byte)'0',(byte)'0',(byte)'0',(byte)'0',    (byte)'0',(byte)'0',(byte)'0',(byte)'0',(byte)'0',
+                                (byte)'0',(byte)'0',(byte)'0',(byte)'0',(byte)'0',   (byte)'0',(byte)'0',(byte)'0',(byte)'0',(byte)'0',
 
                             (byte)'>',
 

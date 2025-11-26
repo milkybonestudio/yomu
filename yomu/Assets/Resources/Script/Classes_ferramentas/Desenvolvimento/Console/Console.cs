@@ -30,7 +30,7 @@ public static class Console {
         public static int slow_value;
         public static int super_slow_value;
         public static void Log_slow( string _message ){ if( slow_value == 0 ){ Log_intern( _message, Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }  }
-        public static void Log_super_slow( string _message ){ if( super_slow_value == 0 ){ Log_intern( _message, Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }  }
+        public static void Log_super_slow( string _message ){ if( super_slow_value == 0 ){ super_slow_value++; Log_intern( _message, Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }  }
         public static void Log_TEST( object _message ){ _message = "<TESTE> " + _message; Log_intern( Convert.ToString(  _message ), Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }
         public static void Log( string _message ){ Log_intern( _message, Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }
         public static void Log( object _message ){ Log_intern( Convert.ToString(  _message ), Log_type.normal, ( Thread.CurrentThread.Name == "Main" ) ); return; }

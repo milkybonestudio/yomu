@@ -47,7 +47,8 @@ public class CONTROLLER__saving {
 
     private bool Handle_waiting_to_save_files(){
 
-        if( Controllers.stack.saver.Stack_file_is_close_to_end() && ( Controllers.stack.state == SAFETY_STACK__state.waiting_to_save_stack ) )
+
+        if(  Controllers.stack.saver.Stack_file_is_close_to_end() && ( Controllers.stack.state == SAFETY_STACK__state.waiting_to_save_stack ) )
             { 
                 Console.Log( "will save files" );
                 state = Saving_state.saving_files;

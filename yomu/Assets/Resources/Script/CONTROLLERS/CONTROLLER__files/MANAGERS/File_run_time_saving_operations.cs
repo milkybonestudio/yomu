@@ -13,7 +13,7 @@ unsafe public static class File_run_time_saving_operations {
 
     }
 
-    // ** MORE FOR TESTING
+    // ** MORE FOR TESTING / CRASH
     public static void Move_switch_file( Data_file_link _data ){
 
         if( System_run.files_show_messages )
@@ -105,31 +105,31 @@ unsafe public static class File_run_time_saving_operations {
     }
 
 
-    // ??????
-    public static void Save_file_run_time_SWITCH( Data_file_link _data ){
+    // // ??????
+    // public static void Save_file_run_time_SWITCH( Data_file_link _data ){
 
-        string path = Get_run_time_path( _data.id, File_IO_operation._switch );
-        Files.Save_critical_file( path, _data.Get_pointer(), _data.Get_length() );
+    //     string path = Get_run_time_path( _data.id, File_IO_operation._switch );
+    //     Files.Save_critical_file( path, _data.Get_pointer(), _data.Get_length() );
 
-        return;
-    }
+    //     return;
+    // }
 
 
-    public static void Save_file_run_time_DELETE( Data_file_link _data ){
+    // public static void Save_file_run_time_DELETE( Data_file_link _data ){
 
-        string path = Get_run_time_path( _data.id, File_IO_operation._delete );
-        Files.Save_critical_file( path, _data.Get_pointer(), _data.Get_length() );
+    //     string path = Get_run_time_path( _data.id, File_IO_operation._delete );
+    //     Files.Save_critical_file( path, _data.Get_pointer(), _data.Get_length() );
 
-        return;
-    }
+    //     return;
+    // }
 
-    public static void Save_file_run_time_CREATE( Data_file_link _data ){
+    // public static void Save_file_run_time_CREATE( Data_file_link _data ){
 
-        string path = Get_run_time_path( _data.id, File_IO_operation._create );
-        Files.Save_critical_file( path, _data.Get_pointer(), _data.Get_length() );
+    //     string path = Get_run_time_path( _data.id, File_IO_operation._create );
+    //     Files.Save_critical_file( path, _data.Get_pointer(), _data.Get_length() );
 
-        return;
-    }
+    //     return;
+    // }
 
 
     
@@ -145,6 +145,7 @@ unsafe public static class File_run_time_saving_operations {
             case File_IO_operation._create: suf = ".create"; break;
             case File_IO_operation._switch: suf = ".switch"; break;
             case File_IO_operation._delete: suf = ".delete"; break;
+            case File_IO_operation._nothing: suf = ".nothing"; break;
             default: CONTROLLER__errors.Throw( "Can not handle type: " + _operation ); break;
 
         }

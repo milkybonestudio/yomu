@@ -114,9 +114,11 @@ unsafe public class CONTROLLER__heap {
         Heap_key new_key = default;
 
         switch( _key.type ){
-            case Heap_key_type.unique: new_key = Get_unique( _new_length ); break;
+            case Heap_key_type.unique: new_key = Get_unique( _new_length ); Transfer_data_UNIQUE( _key, new_key, true ); break;
             default: CONTROLLER__errors.Throw( $"Can not handle type: <Color=lightBlue>{ _key.type }</Color> when changing length" ); break;
         }
+
+        
 
         Return_key( _key );
         return new_key;

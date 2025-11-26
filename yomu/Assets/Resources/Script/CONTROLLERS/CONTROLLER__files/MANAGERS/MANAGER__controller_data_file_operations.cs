@@ -12,6 +12,99 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
     }
 
+
+    #if !UNITY_EDITOR
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    #endif
+    public void Change_data_file<T>( Data_file_link _data, int _off_set, T* _data_pointer ) where T: unmanaged{
+
+        Change_data_file( _data, _off_set, _data_pointer, sizeof( T ) );
+
+    }
+
+    #if !UNITY_EDITOR
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    #endif
+    public void Change_data_file<T>( Data_file_link _data, int _off_set, T _data_value ) where T: unmanaged{
+
+        Change_data_file( _data, _off_set, &_data_value, sizeof( T ) );
+
+    }
+
+
+    #if !UNITY_EDITOR
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    #endif
+    public void Change_data_file( Data_file_link _data, int _off_set, void* _data_pointer, int _length ){
+
+        // no need to use stack
+
+        lock( lock_obj ){
+
+            void* file_pointer = default;
+            int length_file = default;
+
+            if( System_run.max_security )   
+                {
+                    if( !!!( Controllers.files.storage.Is_id_valid( _data.id ) ) )
+                        { CONTROLLER__errors.Throw( $"Tried to change data of the file <Color=lightBlue>{ _data.id }</Color> file but teh path is <Color=lightBlue>NULL</Color>" ); }
+
+                    file_pointer = _data.Get_pointer();
+                    length_file = _data.Get_length();
+
+                    if( _off_set <= 0 )
+                        { CONTROLLER__errors.Throw( $"Tried to change data in the file {_data.id } but the _off_set is { _off_set }" ); }
+
+                    if( _data_pointer == null )
+                        { CONTROLLER__errors.Throw( $"Tried to change data in the file {_data.id } but the _data_pointer is null" ); }
+
+                    if( _length <= 0 )
+                        { CONTROLLER__errors.Throw( $"Tried to change data in the file {_data.id } but the length to change is <Color=lightBlue>{ _length }</Color>" ); }
+                    
+                    if( ( _off_set + _length - 1 ) >= length_file )
+                        { CONTROLLER__errors.Throw( $"Tried to change data in the file {_data.id } but the final pointer would pass the file to change is <Color=lightBlue>{ _length }</Color>" ); }
+                   
+                }
+
+
+            void* start_pointer = (void*)( ( ( byte*) file_pointer ) + _off_set );
+
+            // ** I assume compiler will choose the better compile time 
+            // ** data is always in the end -> can overwrite iw some 0s
+
+                 if( _length == 1 )
+                    {
+                        *(byte*)( start_pointer ) = *(byte*)_data_pointer;
+                    }
+            else if( _length == 2 )
+                    {
+                        *(short*)( start_pointer ) = *(short*)_data_pointer;
+                    }
+            else if( _length == 4 )
+                    {
+                        *(int*)( start_pointer ) = *(int*)_data_pointer;
+                    }
+            else if( _length == 8 )
+                    {
+                        *(long*)( start_pointer ) = *(long*)_data_pointer;
+                    }   
+            else if( _length == 16 )
+                    {
+                        *(decimal*)( start_pointer ) = *(decimal*)_data_pointer;
+                    }
+            else if( true )
+                    {
+                        VOID.Transfer_data( _data_pointer, start_pointer, _length );
+                    }
+
+
+            Controllers.stack.files.Save_data_change_data_in_file( _data.id, _off_set, _data_pointer, _length );
+            return;
+
+        }
+        
+    }
+
     
     public Object lock_obj;
 
@@ -260,7 +353,7 @@ unsafe public struct MANAGER__controller_data_file_operations {
                     { CONTROLLER__errors.Throw( $"Tried to delete a file but the path is <Color=lightBlue>NULL</Color>" ); }
 
                 if( !!!( Directories.Is_sub_path( _path, Paths_version.path_to_version ))  )
-                    { CONTROLLER__errors.Throw( $"Tried to delete the file in the path <Color=lightBlue>{ _path }</Color>" ); }
+                    { CONTROLLER__errors.Throw( $"Tried to delete a file, but the path is not on the version folder: <Color=lightBlue>{ _path }</Color>" ); }
 
                 if( !!!( Controllers.files.storage.File_exist_in_final_disk( _path ) ) )
                     { 
@@ -291,7 +384,7 @@ unsafe public struct MANAGER__controller_data_file_operations {
     }
 
 
-    public Data_file_link Change_length_file(  Data_file_link _data_link, int _new_length ){
+    public Data_file_link Change_length_file( Data_file_link _data_link, int _new_length ){
 
         lock( lock_obj ){
 
