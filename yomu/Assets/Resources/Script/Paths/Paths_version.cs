@@ -21,11 +21,18 @@ public static class Paths_version {
 
         path_to_version = _path_to_version;
 
+        security_file = Get_security_file( _path_to_version );
+
         saves = Get_all_saves_folder( _path_to_version );
+            Paths_saves.Define_saves_folder( saves );
 
         program = Get_program( _path_to_version );
             Paths_program.Define_program_folder( program );
-        
+
+        run_time = Get_run_time( _path_to_version );
+            Paths_run_time.Define_run_time_folder( run_time );
+
+        return;
 
     }
 
@@ -40,37 +47,31 @@ public static class Paths_version {
 
     public static string path_to_version;
 
+    // ** SECURITY FILE
+
+        public const string security_file_name = "security_file";
+        public static string security_file;
+        public static string Get_security_file( string _path_to_version ){ return Combine( _path_to_version, security_file_name ); }
+
+    
+    // ** RUN TIME
+
+        
+        public const string run_time_NAME = "run_time";
+        public static string run_time;
+        public static string Get_run_time( string _path_to_version ){ return Combine( _path_to_version, run_time_NAME ); }
+
+
+
     // ** SAVES
 
         public const string saves_name = "saves";
         public static string saves;
         public static string Get_all_saves_folder( string _path_to_version ){ return Combine( _path_to_version, saves_name ); }
 
-        public const string save_prefix_name = "save_";
-        public static string Get_save_folder( int _save ){
-
-                if( saves == null )
-                    { CONTROLLER__errors.Throw( $"Tried to get the save { _save }, but the function <Color=lightBlue>Define_version_folder</Color> was not called" );  }
-
-                if( _save > 7 )
-                    { CONTROLLER__errors.Throw( $"Can not handle save number <Color=lightBlue>{ _save }</Color>" ); }
-
-                return Combine( saves, save_prefix_name, INT.ToString( _save ) );
-
-        }
-
-        public static string Get_save_folder( string _path_to_saves, int _save ){
-
-                if( _save > 7 )
-                    { CONTROLLER__errors.Throw( $"Can not handle save number <Color=lightBlue>{ _save }</Color>" ); }
-
-                return Combine( _path_to_saves, $"{ save_prefix_name }{ INT.ToString( _save ) }"  );
-
-        }
 
 
     // ** PROGRAM
-
     
         public const string program_name = "program";
         public static string program;

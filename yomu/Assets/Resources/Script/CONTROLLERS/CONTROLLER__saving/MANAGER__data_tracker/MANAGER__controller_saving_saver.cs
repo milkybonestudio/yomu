@@ -78,7 +78,7 @@ unsafe public struct MANAGER__controller_saving_saver {
         if( Controllers.stack.saver.strem_stack != null )
             { Controllers.stack.saver.Clean_file(); }
             else
-            { Files.Save_critical_file( Paths_program.stack_start_files, new byte[ 100_000 ] ); }
+            { Files.Save_critical_file( Paths_run_time.stack_start_files, new byte[ 100_000 ] ); }
 
 
     }
@@ -92,29 +92,29 @@ unsafe public struct MANAGER__controller_saving_saver {
 
     public static void Create_saving_folder( Task_req _req ){
 
-        System.IO.Directory.CreateDirectory( Paths_program.saving_files_folder );
+        System.IO.Directory.CreateDirectory( Paths_run_time.saving_files_folder );
 
     }
 
     public static void Delete_saving_folder( Task_req _req ){
 
-        if( !!!( Directories.Is_sub_path( Paths_program.saving_files_folder, Paths_version.path_to_version ) ) )
+        if( !!!( Directories.Is_sub_path( Paths_run_time.saving_files_folder, Paths_version.path_to_version ) ) )
             { CONTROLLER__errors.Throw( "path wrong" ); }
 
-        System.IO.Directory.Delete( Paths_program.saving_files_folder, true );
+        System.IO.Directory.Delete( Paths_run_time.saving_files_folder, true );
 
     }
 
     public static void Delete_file_links( Task_req _req ){
 
-        System.IO.File.Delete( Paths_program.saving_link_file_to_path );
+        System.IO.File.Delete( Paths_run_time.saving_link_file_to_path );
 
     }
 
 
     public static void Create_security_file( Task_req _req ){
 
-        Files.Save_critical_file( Paths_program.saving_files_security_file, new byte[ 500 ] );
+        Files.Save_critical_file( Paths_run_time.saving_files_security_file, new byte[ 500 ] );
 
     }
 
@@ -314,7 +314,7 @@ unsafe public struct MANAGER__controller_saving_saver {
         // ** need to be on the NEW_path because if the system crashes before saved all the files in disk
         // ** it needs to use the old links to reconstruct the stack. this current_links and the one the Reconstruct_stack() 
         // ** should be the same, so same behaviour
-        Files.Save_critical_file( Paths_program.saving_link_file_to_path, linked_files_lines );
+        Files.Save_critical_file( Paths_run_time.saving_link_file_to_path, linked_files_lines );
 
         return;
 
@@ -323,11 +323,11 @@ unsafe public struct MANAGER__controller_saving_saver {
 
     public static void Save_stack_start_files( Task_req _req ){
 
-        System.IO.File.Delete( Paths_program.stack_start_files );
+        System.IO.File.Delete( Paths_run_time.stack_start_files );
 
         string[] start_lines = Controllers.files.storage.Get_current_links_lines();
 
-        Files.Save_critical_file( Paths_program.stack_start_files, start_lines );
+        Files.Save_critical_file( Paths_run_time.stack_start_files, start_lines );
 
         return;
 

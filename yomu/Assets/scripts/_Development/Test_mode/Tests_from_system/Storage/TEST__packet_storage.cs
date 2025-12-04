@@ -33,6 +33,11 @@ unsafe public static class TEST__packet_storage {
     public static Heap_key key;
 
     public static Packet_key packet_key;
+
+    public static Packet_key packet_key_10;
+    public static Packet_key packet_key_189;
+    public static Packet_key packet_key_1_500;
+
     public static Packet_key packet_key_test;
 
     public static int file_length = 1_000_000;
@@ -49,147 +54,265 @@ unsafe public static class TEST__packet_storage {
     public static void Update(){
 
 
-        // ** carregar 
-        if( Input.GetKeyDown( KeyCode.Q ) )
+        Packet_storage p;
+        Packet_key k;
+        Packet pp;
+        
+        
+
+        // ** FIX TESTS
+        if( Input.GetKey( KeyCode.Keypad0 ) )
             {
-                if( System.IO.File.Exists( path_to_packet_storage ) )
+                // ** create storage
+                if( Input.GetKeyDown( KeyCode.Q ) )
                     {
+
+                        // Test.SHOULD_PASS( "message create new file", () => {
+
+                        //     Data_file_link data = Data_file_link.Construct_fast()
+
+                        // });
+
+                    }
+
+            }
+
+
+
+        // ** file from disk
+        if( Input.GetKey( KeyCode.Keypad1 ) )
+            {
+
+                // ** carregar 
+                if( Input.GetKeyDown( KeyCode.Q ) )
+                    {
+                        if( !!!( System.IO.File.Exists( path_to_packet_storage ) ))
+                            { Console.Log( "File didnt exist" ); return; }
+
+                        if( packet_storage != null )
+                            { Console.Log( "pointer already have a file" ); return; }
+                            
+                        // byte[] data = System.IO.File.ReadAllBytes( path_to_packet_storage );
+                        Data_file_link data_link = Controllers.files.operations.Get_file_from_disk( path_to_packet_storage );
+
+                        packet_storage = Packet_storage.Start( data_link );
+
+                        Console.Log( "Load packet store" );
+                    }
+
+
+
+
+                // ** criar
+                if( Input.GetKeyDown( KeyCode.W ) )
+                    {
+
+                        if( packet_storage != null )
+                            { Console.Log( "already have the packet storage" ); return; }
+
+                        if( System.IO.File.Exists( path_to_packet_storage ) )
+                            { Console.Log( "Arquivo já existe" ); return; }
+
+
+                        key = Controllers.heap.Get_unique( file_length );
+
+
+                        Data_file_link data_link = Controllers.files.operations.Create_new_file_EMPTY( path_to_packet_storage, file_length );
+
+                        // Controllers.packets.Create_new();
+
+                        packet_storage = Packet_storage.Start( data_link );
+
+                        
+                        Console.Log( "Created packet store" );
+
+
+                    }
+
+                // ** salvar
+                if( Input.GetKeyDown( KeyCode.E ) )
+                    {
+
                         if( packet_storage == null )
-                            {
-                                byte[] data = System.IO.File.ReadAllBytes( path_to_packet_storage );
+                            { Console.Log( "didnt have any store_packet" ); return; }
 
-                                packet_storage = Packet_storage.Start(
-                                    Data_file_link.Construct_fast(
-                                        _data_pointer: Controllers.heap.Get_unique( data ).Get_pointer(), 
-                                        _length: data.Length,
-                                        _id: 10
-                                    )  
-                                );
-                                Console.Log( "Load packet store" );
-
-                            }
-                            else
-                            { Console.Log( "pointer already have a file" ); }
-                    }
-                    else
-                    { 
-                        Console.Log( "File didnt exist" ); 
-                    }
-            }
-
-
-
-
-        // ** criar
-        if( Input.GetKeyDown( KeyCode.W ) )
-            {
-
-                if( packet_storage != null )
-                    { Console.Log( "already have the packet storage" ); goto jump_create; }
-
-                if( System.IO.File.Exists( path_to_packet_storage ) )
-                    { Console.Log( "Arquivo já existe" ); goto jump_create; }
-
-
-                key = Controllers.heap.Get_unique( file_length );
-                packet_storage = Controllers.packets.creation.Apply_create_data( 
-                    _pointer   : key.Get_pointer(), 
-                    _pointer_max_length: file_length,
-                    _start_data: Controllers.packets.defaults.Get_default_args()
-                );
-
-                packet_storage = Packet_storage.Start(
-                    Data_file_link.Construct_fast(
-                        _data_pointer: Controllers.heap.Get_unique( file_length ).Get_pointer(), 
-                        _length: file_length,
-                        _id: 10
-                    )  
-                );
-
-                
-                Console.Log( "Created packet store" );
-
-
-            }
-
-            /**/ jump_create: 
-
-        // ** salvar
-        if( Input.GetKeyDown( KeyCode.E ) )
-            {
-
-                if( packet_storage != null )    
-                    { 
                         Files.Save_file( path_to_packet_storage, packet_storage, file_length );
                         Controllers.heap.Return_key( packet_storage->file_link.heap_key );
                         packet_storage = null;
                         Console.Log( "Saved packet store" );
-                        
+
                     }
-                    else
-                    { Console.Log( "didnt have any store_packet" ); }
+
+
+                // ** zerar
+                if( Input.GetKeyDown( KeyCode.R ) )
+                    {
+
+                        if( packet_storage != null )    
+                            { 
+                                Controllers.heap.Return_key( packet_storage->file_link.heap_key );
+                                packet_storage = null;
+                            }
+
+                        if( System.IO.File.Exists( path_to_packet_storage ) )
+                            { System.IO.File.Delete( path_to_packet_storage ); }
+
+                        Console.Log( "Removed all data" );
+                    }
+
+
 
             }
 
 
-        // ** zerar
-        if( Input.GetKeyDown( KeyCode.R ) )
+        // printing
+        if( Input.GetKey( KeyCode.P ) )
             {
 
-                if( packet_storage != null )    
+                if( Input.GetKeyDown( KeyCode.Q ) )
                     { 
-                        Controllers.heap.Return_key( packet_storage->file_link.heap_key );
-                        packet_storage = null;
+                        packet_storage->Print_actives( Packet_storage_size._10_bytes ); 
+                        packet_storage->Print_flags( Packet_storage_size._10_bytes );
                     }
 
-                if( System.IO.File.Exists( path_to_packet_storage ) )
-                    { System.IO.File.Delete( path_to_packet_storage ); }
+                if( Input.GetKeyDown( KeyCode.W ) )
+                    { 
+                        packet_storage->Print_actives( Packet_storage_size._200_bytes ); 
+                        packet_storage->Print_flags( Packet_storage_size._200_bytes );
+                    }
 
-                Console.Log( "Removed all data" );
+                if( Input.GetKeyDown( KeyCode.E ) )
+                    { 
+                        packet_storage->Print_actives( Packet_storage_size._1500_bytes ); 
+                        packet_storage->Print_flags( Packet_storage_size._1500_bytes );
+                    }
+
+                
             }
 
 
-        if( Input.GetKeyDown( KeyCode.M ) )
-            { packet_storage->Force_expand( Packet_storage_size._10_bytes ); }
-
-        if( Input.GetKeyDown( KeyCode.N ) )
-            { packet_storage->Print_actives( Packet_storage_size._10_bytes ); }
-
-        if( Input.GetKeyDown( KeyCode.B ) )
-            { packet_storage->Print_flags( Packet_storage_size._10_bytes ); }
 
 
 
-
-
-        // ** ADD 10
-        if( Input.GetKeyDown( KeyCode.Alpha1 ) )
+        // OPERATIONS
+        if( Input.GetKey( KeyCode.Keypad2 ) )
             {
-                // Guarantee_pointer();
-                packet_key = packet_storage->Alloc_packet( 10 );
-                Console.Log( "slot: " +  packet_key.slot );
+
+
+                // 10 BYTES
+
+                    // ** ALLOC 
+                    if( Input.GetKeyDown( KeyCode.Q ) )
+                        {
+                            // Guarantee_pointer();
+                            packet_key_10 = packet_storage->Alloc_packet( 10 );
+                            Console.Log( "slot: " +  packet_key_10.slot );
+                        }
+
+
+                    // ** DEALLOCATE key
+                    if( Input.GetKeyDown( KeyCode.W ) )
+                        {
+                            // Guarantee_pointer();
+                            packet_storage->Dealloc_packet( packet_key_10 );
+                            packet_key_10 = default;
+                        }
+
+
+
+                    // ** ALLOC + DEALLOCATE key
+                    if( Input.GetKeyDown( KeyCode.E ) )
+                        {
+                            packet_key_10 = packet_storage->Alloc_packet( 10 );
+                            packet_storage->Dealloc_packet( packet_key_10 );
+                    }
+
+                // 189 BYTES
+
+                    
+                    if( Input.GetKeyDown( KeyCode.A ) )
+                        {
+                            // Guarantee_pointer();
+                            packet_key_189 = packet_storage->Alloc_packet( 189 );
+                            Console.Log( "slot: " +  packet_key_189.slot );
+                        }
+
+
+                    // ** DEALLOCATE key
+                    if( Input.GetKeyDown( KeyCode.S ) )
+                        {
+                            // Guarantee_pointer();
+                            packet_storage->Dealloc_packet( packet_key_189 );
+                            packet_key_189 = default;
+                        }
+
+
+
+                    // ** ALLOC + DEALLOCATE key
+                    if( Input.GetKeyDown( KeyCode.D ) )
+                        {
+                            packet_key_189 = packet_storage->Alloc_packet( 200 );
+                            packet_storage->Dealloc_packet( packet_key_189 );
+                        }
+
+                // 1500 BYTES
+
+                    
+                    if( Input.GetKeyDown( KeyCode.Z ) )
+                        {
+                            // Guarantee_pointer();
+                            packet_key_1_500 = packet_storage->Alloc_packet( 1_500 );
+                            Console.Log( "slot: " +  packet_key_1_500.slot );
+                        }
+
+
+                    // ** DEALLOCATE key
+                    if( Input.GetKeyDown( KeyCode.X ) )
+                        {
+                            // Guarantee_pointer();
+                            packet_storage->Dealloc_packet( packet_key_1_500 );
+                            packet_key_1_500 = default;
+                        }
+
+
+
+                    // ** ALLOC + DEALLOCATE key
+                    if( Input.GetKeyDown( KeyCode.C ) )
+                        {
+                            packet_key_1_500 = packet_storage->Alloc_packet( 1_500 );
+                            packet_storage->Dealloc_packet( packet_key_1_500 );
+                        }
+
+                return;
+
             }
 
 
-        // ** DEALLOCATE key
-        if( Input.GetKeyDown( KeyCode.Alpha2 ) )
+
+
+
+
+        // OPERATIONS
+        if( Input.GetKey( KeyCode.Keypad3 ) )
             {
-                // Guarantee_pointer();
-                packet_storage->Dealloc_packet( packet_key );
-                packet_key = default;
+
+                // ** FORCE EXPAND
+
+                    if( Input.GetKeyDown( KeyCode.Q ) )
+                        { packet_storage->Force_expand( Packet_storage_size._10_bytes ); }
+
+                    
+                    if( Input.GetKeyDown( KeyCode.W ) )
+                        { packet_storage->Force_expand( Packet_storage_size._200_bytes ); }
+
+                    
+                    if( Input.GetKeyDown( KeyCode.E ) )
+                        { packet_storage->Force_expand( Packet_storage_size._1500_bytes ); }
+
+
+
             }
 
-
-
-        // ** ALLOC + DEALLOCATE key
-        if( Input.GetKeyDown( KeyCode.Alpha3 ) )
-            {
-                packet_key = packet_storage->Alloc_packet( 10 );
-                packet_storage->Dealloc_packet( packet_key );
-            }
-
-
-        // ** use data
 
 
 

@@ -1,20 +1,24 @@
 
 unsafe public class Packet_storage_start_data {
 
+    public Packet_storage_start_data(){
+
+        sizes_settings = new Packet_storage_start_data_PER_SIZE[ (int) Packet_storage_size.END ];
+
+    }
+
     public int file_start_length;
     public Packet_storage_start_data_PER_SIZE[] sizes_settings;
-
-    // public Packet_storage_size size;
-    // public int slots;
-    
-    // public int slots_to_need_up;
-    // public int slots_add_per_expansion;
 
 
     public int Get_file_length(){
 
         
         int minimum_size = Get_minimun_size();
+
+        if( file_start_length == 0 )
+            { file_start_length = ( ( minimum_size * 12 ) / 10 ); }
+
         if( minimum_size > file_start_length )
             { CONTROLLER__errors.Throw( $"Asked to create a packet_storage but asked to create with a size of <Color=lightBlue>{ Formater.Format_number( file_start_length ) }</Color> but it needs at least <Color=lightBlue>{ Formater.Format_number( minimum_size ) }</Color>" ); }
 

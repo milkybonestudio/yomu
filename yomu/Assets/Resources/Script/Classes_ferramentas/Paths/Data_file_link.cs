@@ -3,37 +3,10 @@
 
 unsafe public struct Data_file_link {
 
-    // ** for testing / reconstruct
-    public static Data_file_link Construct_fast( void* _data_pointer, int _id, int _length ){
-
-        return new Data_file_link(){
-
-            heap_key = Heap_key.Construct_fast(
-                _pointer: _data_pointer,
-                _length: _length
-            ),
-            id = _id,
-            situation = Data_file_link.Situation.clean,
-            size = _length
-        };
-    }
-
-    //mark
-    // ** dont make sense being here
-    // ** is a struct
-    public enum Situation {
-        
-        clean, // ** not in sistem
-        used,
-        bin,
-    }
 
     public Heap_key heap_key;
     public int size;
-
-    // ** 0 is never used by a real file, 0 -> test
-    public int id; // ** always go up
-    public Situation situation;
+    public int id;  // ** 0 is never used by a real file, 0 -> test || always go up
 
 
     // test

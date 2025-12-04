@@ -74,12 +74,22 @@ public static class CONSTRUCTOR__program {
         if( !!!( System.IO.Directory.Exists( Paths_system.persistent_data ) ) )
             {  Directory.CreateDirectory( Paths_system.persistent_data ); } // only editor, is construct by default in build
 
+            
+        if( !!!( System.IO.Directory.Exists( Paths_version.path_to_version ) ) )
+            { TOOL__version_folders_constructor.Construct( Paths_system.persistent_data ); } // ** FIRST PLAY
 
 
-        bool is_first_play = !!!( System.IO.Directory.Exists( version_folder ) );
+        if( !!!( System.IO.Directory.Exists( Paths_version.security_file ) ) )
+            { 
+                Directories.Delete_safe( Paths_version.path_to_version );
+                TOOL__version_folders_constructor.Construct( Paths_system.persistent_data );
+            }
 
-        if( is_first_play )
-            { TOOL__version_folders_constructor.Construct( Paths_system.persistent_data ); }
+
+
+        // ** CREATE files + stack
+
+
 
         // --- CONTROLLERS GENERIC 2
 
@@ -88,7 +98,7 @@ public static class CONSTRUCTOR__program {
 
         if( System_run.activate_crash_handler )
             {
-                bool system_crashed = System.IO.Directory.Exists( Paths_program.saving_run_time_folder );
+                bool system_crashed = System.IO.Directory.Exists( Paths_run_time.saving_run_time_folder );
 
                 if( system_crashed )
                     { 
@@ -105,7 +115,7 @@ public static class CONSTRUCTOR__program {
             else
             {
                 // ** ignores older files
-                System.IO.Directory.Delete( Paths_program.saving_run_time_folder, true );
+                System.IO.Directory.Delete( Paths_run_time.saving_run_time_folder, true );
             }
         
 

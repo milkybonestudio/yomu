@@ -133,7 +133,7 @@ unsafe public struct MANAGER__safety_stack_buffer {
 
         Console.Log( "---- <Color=lightBlue>{ WILL SAVE NORMAL BUFFER IN FILE TO TEST }</Color> ----" );
 
-        try{ Files.Save_critical_file( ( Paths_program.safety_stack_file + "NORMAL_BUFFER.dat" ), buffer_pointer_0, buffer_size ); } catch( Exception e ){ Console.Log( "Could not save file NORMAL BUFFER" ); }
+        try{ Files.Save_critical_file( ( Paths_run_time.safety_stack_file + "NORMAL_BUFFER.dat" ), buffer_pointer_0, buffer_size ); } catch( Exception e ){ Console.Log( "Could not save file NORMAL BUFFER" ); }
 
     }
 
@@ -146,7 +146,7 @@ unsafe public struct MANAGER__safety_stack_buffer {
 
                     Console.Log( "---- is not saving no space ----" );
                     byte* aaa = stackalloc byte[ 10 ];
-                    Files.Save_critical_file( ( Paths_program.safety_stack_file + "NO_SPACE.dat" ),  aaa, 10 );
+                    Files.Save_critical_file( ( Paths_run_time.safety_stack_file + "NO_SPACE.dat" ),  aaa, 10 );
 
                 } catch( Exception e ){
                     Console.Log( "Could not save file NO_SPACE_buffer" );
@@ -157,7 +157,7 @@ unsafe public struct MANAGER__safety_stack_buffer {
         try{
 
             Console.Log( "---- <Color=lightBlue>{ WILL SAVE NO SPACE BUFFER IN FILE TO TEST }</Color> ----" );
-            Files.Save_critical_file( ( Paths_program.safety_stack_file + "NO_SPACE.dat" ), key_no_space.Get_pointer(), key_no_space.Get_length() );
+            Files.Save_critical_file( ( Paths_run_time.safety_stack_file + "NO_SPACE.dat" ), key_no_space.Get_pointer(), key_no_space.Get_length() );
 
         } catch( Exception e ){
 

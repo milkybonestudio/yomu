@@ -14,8 +14,11 @@ unsafe public static class CONSTRUCTOR__controller_packets_storage{
             { CONTROLLER__errors.Throw( $"The buffer in the packet_storage needs <Color=lightBlue>{ necessary_info_buffer }</Color> but the CONST is <Color=lightBlue>{ Packet_storage.LENGTH_INFO_BUFFER }</Color>" ); }
 
         
+        _controller_pointer.operations = MANAGER__controller_packet_storage_operations.Construct();
+        _controller_pointer.storage = MANAGER__controller_packet_storage_storage.Construct();
+
         _controller_pointer.sizes.Start();
-        _controller_pointer.creation.Start();
+        _controller_pointer.creation = MANAGER__packet_storage_creation.Construct();
         _controller_pointer.defaults.Start();
 
         // SIMPLE

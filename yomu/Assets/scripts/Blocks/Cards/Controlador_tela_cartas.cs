@@ -22,6 +22,7 @@ public class Controlador_tela_cartas {
         public void Criar_tela(){
 
                 // --- CANVAS
+                
                 GameObject canvas_jogo = GameObject.Find( "Tela/Canvas/Jogo" );
                 GameObject canvas_jogo_3d = GameObject.Find( "Canvas_3d" );
 

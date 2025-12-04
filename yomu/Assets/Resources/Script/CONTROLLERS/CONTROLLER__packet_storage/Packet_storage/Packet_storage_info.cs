@@ -166,7 +166,7 @@ unsafe public struct Packet_storage_info {
     public void Print_actives( Packet_storage* _storage_pointer ){
 
 
-        Console.Log( "<Color=lightBlue>----------------ACTIVES-------------------</Color>" );
+        Console.Log( $"<Color=lightBlue>----------------ACTIVES FOR { size_in_bytes } BYTES-------------------</Color>" );
 
         int* free_slot_pointer = (int*)( ((byte*)_storage_pointer) + pointer_to_FREE_SPACES );
         byte* flag_pointer = ( ((byte*)_storage_pointer) + pointer_to_FLAGS );
@@ -182,6 +182,8 @@ unsafe public struct Packet_storage_info {
                 { Console.Log( $"slot  { slot } is free" ); }
 
         }
+
+        Console.Log( "<Color=lightBlue>-----------------------------------</Color>" );
 
     }
 
@@ -331,7 +333,7 @@ unsafe public struct Packet_storage_info {
     }
 
 
-    public void Reajust_data( Packet_storage* storage_pointer ){
+    public int Reajust_data( Packet_storage* storage_pointer ){
 
         // ** Will assume the Packet_storage already moved the bigger sizes in the file
 
@@ -474,6 +476,7 @@ unsafe public struct Packet_storage_info {
                 Console.Log( $"current_pointer_of_free_space after reajust: <Color=lightBlue>{ current_pointer_of_free_space }</Color>" );
             }
 
+        return new_total_space_needed;
 
     }
 

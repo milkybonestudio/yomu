@@ -47,7 +47,7 @@ unsafe public struct MANAGER__controller_data_file_operations {
             if( System_run.max_security )   
                 {
                     if( !!!( Controllers.files.storage.Is_id_valid( _data.id ) ) )
-                        { CONTROLLER__errors.Throw( $"Tried to change data of the file <Color=lightBlue>{ _data.id }</Color> file but teh path is <Color=lightBlue>NULL</Color>" ); }
+                        { CONTROLLER__errors.Throw( $"Tried to change data of the file <Color=lightBlue>{ _data.id }</Color> the id is not valid" ); }
 
                     file_pointer = _data.Get_pointer();
                     length_file = _data.Get_length();
@@ -133,6 +133,34 @@ unsafe public struct MANAGER__controller_data_file_operations {
         }
         
     }
+
+
+
+    // ** call only when the file already exists
+    public Data_file_link Get_file( int _file_id ){
+
+        // no need to use stack
+
+        lock( lock_obj ){
+
+            if( System_run.max_security )   
+                {
+
+                    if( _file_id <= 0 )
+                        { CONTROLLER__errors.Throw( $"Tried to get a file but the id is not valid. Id: <Color=lightBlue>{ _file_id }</Color>" ); }
+
+                    if( !!!( Controllers.files.storage.Is_id_valid( _file_id )) )
+                        { CONTROLLER__errors.Throw( $"Tried to get the file with the id <Color=lightBlue>{ _file_id }</Color>, but it's not valid" ); }
+                    
+                }
+
+            return Controllers.files.storage.Get_data( _file_id );
+
+        }
+        
+    }
+
+
 
 
     // ** 
@@ -319,6 +347,9 @@ unsafe public struct MANAGER__controller_data_file_operations {
         }
 
     }
+
+
+
 
 
 

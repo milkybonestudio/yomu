@@ -17,19 +17,19 @@ unsafe public static class CONSTRUCTOR__controller_safety_stack{
         ret.message_heap_key = Controllers.heap.Get_unique( ret.message_max_size );
         ret.pointer_with_message = ret.message_heap_key.Get_pointer();
 
-        if( Paths_program.saving_run_time_folder == null )
+        if( Paths_run_time.saving_run_time_folder == null )
             { CONTROLLER__errors.Throw( $"Tried to create the safety_stack controller but the saving_run_time folder was not found " ); }
 
         
-        System.IO.Directory.CreateDirectory( Paths_program.saving_run_time_folder );
-            System.IO.Directory.CreateDirectory( Paths_program.safety_stack_folder );
+        System.IO.Directory.CreateDirectory( Paths_run_time.saving_run_time_folder );
+            System.IO.Directory.CreateDirectory( Paths_run_time.safety_stack_folder );
 
             
-        if( System.IO.File.Exists( Paths_program.safety_stack_file ) )
-            { CONTROLLER__errors.Throw( $"The stack_safety_file is in the path <Color=lightBlue>{ Paths_program.safety_stack_file }</Color> and shouldn't in the normal flow of the code" ); }
+        if( System.IO.File.Exists( Paths_run_time.safety_stack_file ) )
+            { CONTROLLER__errors.Throw( $"The stack_safety_file is in the path <Color=lightBlue>{ Paths_run_time.safety_stack_file }</Color> and shouldn't in the normal flow of the code" ); }
 
 
-        File.WriteAllBytes( Paths_program.safety_stack_file, ARRAY.Get_array<byte>( _length: ret.safety_file_size, _value: 45 ) );
+        File.WriteAllBytes( Paths_run_time.safety_stack_file, ARRAY.Get_array<byte>( _length: ret.safety_file_size, _value: 45 ) );
 
 
 

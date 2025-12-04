@@ -157,9 +157,10 @@ unsafe public static class TEST__crash {
                 Data_file_link data_7 = Controllers.files.operations.Create_new_file( new byte[ 500 ] , path_7_DONT_EXIST );
                 Controllers.files.operations.Delete_file( path_7_DONT_EXIST );
 
-                Packet_key pk = packet_storage->Alloc_packet( 10 );
-                Packet p = packet_storage->Get_packet( pk );
-                ((int*)( p.Get_pointer_partial() )) [ 0 ] = 4;
+                //mark
+                // Packet_key pk = packet_storage->Alloc_packet( 10 );
+                // Packet p = packet_storage->Get_packet( pk );
+                // ((int*)( p.Get_pointer_partial() )) [ 0 ] = 4;
                 
                 Controllers.stack.test.Save_stack_in_disk_sync();
 
@@ -172,21 +173,21 @@ unsafe public static class TEST__crash {
 
 
         if( current_state_crash == Crash.create_saving_files_folders )
-            { System.IO.Directory.CreateDirectory( Paths_program.saving_files_folder ); }
+            { System.IO.Directory.CreateDirectory( Paths_run_time.saving_files_folder ); }
 
         if( current_state_crash == Crash.create_half_run_time_saving_files )
             {
                 MANAGER__controller_saving_saver.Save_files( req );
                 string p = File_run_time_saving_operations.Get_run_time_path( data_3.id, File_IO_operation._switch );
                 if( !!!( System.IO.File.Exists( p )) ){ CONTROLLER__errors.Throw( "path dont exist: " + p ); }
-                System.IO.File.Move( p, Paths_program.safety_stack_folder + "AAA.dat" );
+                System.IO.File.Move( p, Paths_run_time.safety_stack_folder + "AAA.dat" );
             }
             
         if( current_state_crash == Crash.create_full_run_time_saving_files )
             {
                 string p = File_run_time_saving_operations.Get_run_time_path( data_3.id, File_IO_operation._switch );
                 if( System.IO.File.Exists( p ) ){ CONTROLLER__errors.Throw( "path exist: " + p ); }
-                System.IO.File.Move( Paths_program.safety_stack_folder + "AAA.dat", p );
+                System.IO.File.Move( Paths_run_time.safety_stack_folder + "AAA.dat", p );
             }
 
         if( current_state_crash == Crash.create_saving_files_security_file )
@@ -236,8 +237,8 @@ unsafe public static class TEST__crash {
 
         if( Input.GetKeyDown( KeyCode.M ) )
             {  
-                Packet pac = packet_storage->Get_packet( Packet_key.Construct( Packet_storage_size._10_bytes, 0, 10 ) ); 
-                Console.Log( (*(int*)pac.Get_pointer_partial()) );
+                // Packet pac = packet_storage->Get_packet( Packet_key.Construct( Packet_storage_size._10_bytes, 0, 10 ) ); 
+                // Console.Log( (*(int*)pac.Get_pointer_partial()) );
             }
 
 

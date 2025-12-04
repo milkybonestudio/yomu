@@ -6,6 +6,8 @@ using Unity.Burst;
 
 
 
+
+
 [StructLayout(LayoutKind.Sequential)]
 unsafe public struct Packet_storage {
 
@@ -20,31 +22,6 @@ unsafe public struct Packet_storage {
     public int file_length;
 
     public Packet_storage_TEST test;
-
-    // #if UNITY_EDITOR
-
-    // // ** TESTING
-        
-    //     public static Packet_storage* Start( Heap_key _key ){
-
-    //         Packet_storage* _pointer = ( Packet_storage* ) _key.Get_pointer();
-
-    //             _pointer->started = true;
-    //             _pointer->storage_pointer = _pointer;
-
-    //             _pointer->file_link.heap_key = _key;
-    //             _pointer->file_link.size = _key.Get_length();
-
-    //             _pointer->file_length = _key.Get_length();
-    //             _pointer->infos = (Packet_storage_info*) _pointer->infos_buffer;
-    //             _pointer->sizes.Start();
-
-    //         return _pointer;
-        
-    //     }
-
-    // #endif
-
 
     
     private Packet_storage_info* infos;
@@ -68,114 +45,40 @@ unsafe public struct Packet_storage {
     
     }
 
-
-
-
-
-    public bool Is_slot_used( Packet_storage_size _size, int _slot ){
-
-        Safety();
-        return infos[ (int)_size ].Is_slot_used( storage_pointer, _slot );
-
-    }
- 
-
-    public bool Can_have_specific_key( Packet_storage_size _size, int _slot ){
-
-        Safety();
-
-        if( _slot < 0 )
-            { CONTROLLER__errors.Throw( $"Came to <Color=lightBlue>Can_have_specific_key</Color>, but the slot asked for is <Color=lightBlue>{ _slot }</Color>" ); }
-
-        int max_slot = infos[ (int)_size ].number_slots;
-
-        bool can_have = _slot < max_slot;
-
-        if( System_run.packet_storage_show_messages )
-            {
-                Console.Log( "max_slot: " + max_slot );
-                Console.Log( "slot: " + _slot );
-                Console.Log( "can_have: " + can_have );
-                
-            }
-
-        return can_have;
-        
-
-    }
-
-
-
     public void End(){}
-
 
 
     // ** USES
 
-    public void Update(){
+    public bool Update(){
 
         // ** 
         Safety();
 
+        bool need_to_update = false;
+
         for( int index = ( int )Packet_storage_size._1_byte ; index < ( int )Packet_storage_size._MAX ; index++ ){
 
             if( infos[ index ].Can_to_expand() )
-                { Expand( index ); }
+                { 
+                    Expand( index ); 
+                    need_to_update = true;
+                }
 
         }
 
+        return need_to_update;
+
 
     }
 
-    private bool Verify_if_needs_to_expand_file( int _how_many_bytes_it_needs_to_expand ){
 
-
-        bool need = ( Get_used_bytes() + _how_many_bytes_it_needs_to_expand ) > file_length ;
-
-        if( System_run.packet_storage_show_messages && need )
-            { Console.Log( "Need to expand file" ); }
-
-    
-        return need;
-
-    }
-
-    public int Get_used_bytes(){
-
-
-        Packet_storage_info* last_size_info = infos + ( ( int ) Packet_storage_size._MAX - 1 );
-        int length_until_last_size_data = last_size_info->pointer_to_DATA;
-        int last_size_data = last_size_info->space_needed_DATA;
-
-        int current_used_length = ( length_until_last_size_data + last_size_data );
-
-        if( System_run.packet_storage_show_messages )
-            { Console.Log( "CURRENT BYTES: " + Formater.Format_number( current_used_length ) ); }
-        
-        return current_used_length;
-
-    }
 
     
     private void Expand_file( int _need_bytes ){
 
-        int multiplier = 1;
 
-        if( _need_bytes < 20_000 )
-            { multiplier = 2; }
-
-        if( _need_bytes < 5_000 )
-            { multiplier = 4; }
-
-        
-        if( _need_bytes < 1_000 )
-            { multiplier = 10; }
-
-        if( _need_bytes < 700 )
-            { multiplier = 15; }
-
-        int final_size = file_length + ( _need_bytes * multiplier );
-
+        int final_size = file_length + _need_bytes + 10_000 ;
 
         // ** if it's reconstructing with the stack it will NEVER came here
         // ** the message ( add ) is alwasy after the function executes. if it need more space it will call EXPAND 
@@ -186,7 +89,7 @@ unsafe public struct Packet_storage {
 
     }
 
-    private void Expand( int _index_info ){
+    private int Expand( int _index_info ){
 
         
         // ** logica é mudar os blocos 
@@ -207,13 +110,13 @@ unsafe public struct Packet_storage {
 
         // ** mover 
 
-        infos[ _index_info ].Reajust_data( storage_pointer );
+        return infos[ _index_info ].Reajust_data( storage_pointer );
 
 
     }
     
     
-    public void Force_expand( Packet_storage_size _size ){ Expand( (int)_size ); }
+    public int Force_expand( Packet_storage_size _size ){ return Expand( (int)_size ); }
     public void Print_flags( Packet_storage_size _size ){ infos[(int)_size].Print_flags( storage_pointer ); }
     public void Print_actives( Packet_storage_size _size ){ infos[(int)_size].Print_actives( storage_pointer ); }
 
@@ -243,7 +146,7 @@ unsafe public struct Packet_storage {
         
         Safety();
 
-        if( !!!(_key.is_valid) )
+        if( !!!(_key.is_valid ) )
             { CONTROLLER__errors.Throw( "tried to <Color=lightBlue>get teh pointer</Color> but have a invalid <Color=lightBlue>Packet_key</Color>" ); }
 
         if( _key.size == Packet_storage_size._0_bytes )
@@ -312,7 +215,7 @@ unsafe public struct Packet_storage {
 
         Safety();
 
-        if( !!!(_key.is_valid) )
+        if( !!!( _key.is_valid ) )
             { CONTROLLER__errors.Throw( "tried to <Color=lightBlue>get teh pointer</Color> but have a invalid <Color=lightBlue>Packet_key</Color>" ); }
 
         if( _key.size == Packet_storage_size._0_bytes )
@@ -360,7 +263,7 @@ unsafe public struct Packet_storage {
         if( System_run.packet_storage_show_messages )
             { Console.Log( "current_pointer_of_free_space : " + (infos[ size_index ].current_pointer_of_free_space )); }
 
-        Controllers.stack.packet_storage.Save_alloc( file_link.id, size, slot );
+        Controllers.stack.packet_storage.Save_data_alloc( file_link.id, size, _size_in_bytes, slot );
         
 
         return Packet_key.Construct(
@@ -375,7 +278,7 @@ unsafe public struct Packet_storage {
 
         Safety();
 
-        if( !!!(_key.is_valid) )
+        if( !!!( _key.is_valid ) )
             { CONTROLLER__errors.Throw( "tried to deallocate a invalid <Color=lightBlue>Packet_key</Color>" ); }
 
         if( _key.size == Packet_storage_size._0_bytes )
@@ -645,6 +548,70 @@ unsafe public struct Packet_storage {
 
 
 
+
+    // --- VERIFICATIONS AND INFORMATION
+
+    public bool Is_slot_used( Packet_storage_size _size, int _slot ){
+
+        Safety();
+        return infos[ (int)_size ].Is_slot_used( storage_pointer, _slot );
+
+    }
+ 
+
+    public bool Can_have_specific_key( Packet_storage_size _size, int _slot ){
+
+        Safety();
+
+        if( _slot < 0 )
+            { CONTROLLER__errors.Throw( $"Came to <Color=lightBlue>Can_have_specific_key</Color>, but the slot asked for is <Color=lightBlue>{ _slot }</Color>" ); }
+
+        int max_slot = infos[ (int)_size ].number_slots;
+
+        bool can_have = _slot < max_slot;
+
+        if( System_run.packet_storage_show_messages )
+            {
+                Console.Log( "max_slot: " + max_slot );
+                Console.Log( "slot: " + _slot );
+                Console.Log( "can_have: " + can_have );
+                
+            }
+
+        return can_have;
+        
+
+    }
+
+    private bool Verify_if_needs_to_expand_file( int _how_many_bytes_it_needs_to_expand ){
+
+
+        bool need = ( Get_used_bytes() + _how_many_bytes_it_needs_to_expand ) > file_length ;
+
+        if( System_run.packet_storage_show_messages && need )
+            { Console.Log( "Need to expand file" ); }
+
+    
+        return need;
+
+    }
+
+
+    public int Get_used_bytes(){
+
+
+        Packet_storage_info* last_size_info = infos + ( ( int ) Packet_storage_size._MAX - 1 );
+        int length_until_last_size_data = last_size_info->pointer_to_DATA;
+        int last_size_data = last_size_info->space_needed_DATA;
+
+        int current_used_length = ( length_until_last_size_data + last_size_data );
+
+        if( System_run.packet_storage_show_messages )
+            { Console.Log( "CURRENT BYTES: " + Formater.Format_number( current_used_length ) ); }
+        
+        return current_used_length;
+
+    }
 
 
 

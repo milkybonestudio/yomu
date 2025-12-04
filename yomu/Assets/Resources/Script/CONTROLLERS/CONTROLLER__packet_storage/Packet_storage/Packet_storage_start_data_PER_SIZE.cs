@@ -1,6 +1,23 @@
 
 public struct Packet_storage_start_data_PER_SIZE {
 
+    public const int BYTES_PER_SIZE = ( sizeof( int ) * 4 ) + ( 1 );
+
+
+    public static Packet_storage_start_data_PER_SIZE Construct( Packet_storage_size _size, int _slots, int _slots_to_need_up, int _slots_add_per_expansion ){
+
+        return new(){
+            used = true,
+            size = _size,
+            slots = _slots,
+            slots_to_need_up = _slots_to_need_up,
+            slots_add_per_expansion = _slots_add_per_expansion
+        };
+
+    }
+
+    public bool used;
+
     public Packet_storage_size size;
     public int slots;
     
@@ -9,8 +26,8 @@ public struct Packet_storage_start_data_PER_SIZE {
 
     public void Guarantee_size_make_sense(){
 
-        
-        return;Console.Log_slow( "remover depois" );
+        Console.Log_slow( "remover depois" );
+        return; 
 
         int minimum_need_to_go_up = 1;
         int minimum_slots_add_per_expansion = 1;

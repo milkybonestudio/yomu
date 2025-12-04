@@ -247,11 +247,11 @@ unsafe public struct Packet_key {
 
     }
 
+    // ** only for when is used, dealloc dont need
     public int length;
     public Packet_storage_size size;
     public int slot;
         public bool is_valid;
-
 
     public bool Have_data(){
 

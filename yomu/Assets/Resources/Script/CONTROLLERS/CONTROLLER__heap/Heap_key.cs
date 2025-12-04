@@ -53,6 +53,7 @@ unsafe public struct Heap_key {
 
         switch( type ){
             case Heap_key_type.fix: ret_pointer = fix_key.pointer; break;
+            case Heap_key_type.fast: ret_pointer = fast_key.pointer; break;
             case Heap_key_type.unique: ret_pointer = unique_key.pointer; break;
             case Heap_key_type.empty: ret_pointer = (void*)0; break;
             default: CONTROLLER__errors.Throw( $"can not handle type <Color=lightBlue>{ type }</Color>" ); break;
@@ -75,6 +76,7 @@ unsafe public struct Heap_key {
 
         switch( type ){
             case Heap_key_type.unique: ret_length = unique_key.length; break;
+            case Heap_key_type.fast: ret_length = fast_key.length; break;
             case Heap_key_type.empty: return 0;
             default: CONTROLLER__errors.Throw( $"can not handle type <Color=lightBlue>{ type }</Color>" ); break;
         }

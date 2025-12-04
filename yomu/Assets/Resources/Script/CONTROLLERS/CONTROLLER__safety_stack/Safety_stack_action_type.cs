@@ -30,6 +30,8 @@ public enum Safety_stack_action_type {
 
             alloc_packet,
             dealloc_packet,
+            create_new_storage,
+            resize_size_packet_storage, 
 
         STORAGE_END,
 

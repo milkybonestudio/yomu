@@ -17,7 +17,7 @@ unsafe public static class TOOL__reconstruct_from_stack{
             }
 
         // cuidar que stack_start_files pode estar desatualizado ou atualizado
-        string[] start_paths = System.IO.File.ReadAllLines( Paths_program.stack_start_files ); // ** only the files to save
+        string[] start_paths = System.IO.File.ReadAllLines( Paths_run_time.stack_start_files ); // ** only the files to save
 
         // Crash_cached_file[] files = new Crash_cached_file[ start_paths.Length ];
 
@@ -53,14 +53,14 @@ unsafe public static class TOOL__reconstruct_from_stack{
 
 
 
-        if( System.IO.Directory.Exists( Paths_program.saving_files_folder ) )
-            { System.IO.Directory.Delete( Paths_program.saving_files_folder, true ); }
+        if( System.IO.Directory.Exists( Paths_run_time.saving_files_folder ) )
+            { System.IO.Directory.Delete( Paths_run_time.saving_files_folder, true ); }
         
 
         if( System_run.show_program_construction_messages )
             { Console.Log( "Will create the folder again empty" ); }
             
-        System.IO.Directory.CreateDirectory( Paths_program.saving_files_folder );
+        System.IO.Directory.CreateDirectory( Paths_run_time.saving_files_folder );
 
         if( System_run.show_program_construction_messages )
             { Console.Log( "Will reconstruct the files in ram" ); }
@@ -161,7 +161,7 @@ unsafe public static class TOOL__reconstruct_from_stack{
         // foreach( string  p in active_paths )
         //     { Console.Log( $"actve: " + p ); }
 
-        Files.Save_critical_file( Paths_program.saving_link_file_to_path, active_paths );
+        Files.Save_critical_file( Paths_run_time.saving_link_file_to_path, active_paths );
 
             for( int path_index = 0  ; path_index < active_paths.Length ; path_index++ ){
 
@@ -203,7 +203,7 @@ unsafe public static class TOOL__reconstruct_from_stack{
         if( System_run.show_program_construction_messages )
             { Console.Log( "Will create the safety_file" ); }
 
-        Files.Save_critical_file( Paths_program.saving_files_security_file, new byte[ 1_000 ] );
+        Files.Save_critical_file( Paths_run_time.saving_files_security_file, new byte[ 1_000 ] );
 
         
   

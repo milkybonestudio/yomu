@@ -16,7 +16,7 @@ unsafe public struct MANAGER__safety_stack_saver {
             
 
             // ret.strem_stack = FILE_STREAM.Criar_stream( Paths_program.safety_stack_file, ret.stream_size );
-            ret.strem_stack = FILE_STREAM.Criar_stream( Paths_program.safety_stack_file, ret.stream_size );
+            ret.strem_stack = FILE_STREAM.Criar_stream( Paths_run_time.safety_stack_file, ret.stream_size );
             ret.file_size = _controller_ref.safety_file_size;
 
 

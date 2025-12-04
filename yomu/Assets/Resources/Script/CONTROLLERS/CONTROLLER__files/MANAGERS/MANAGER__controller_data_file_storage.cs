@@ -314,6 +314,14 @@ unsafe public struct MANAGER__controller_data_file_storage {
     }
 
 
+    public Data_file_link Get_data( int _file_id ){
+
+        return current_files[ _file_id ];
+
+    }
+
+
+
     public string Get_path_for_file( Data_file_link _data ){
 
         if( System_run.max_security )

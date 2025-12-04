@@ -36,7 +36,7 @@ unsafe public static class Crash_handler{
         if ( Verify_if_crash_at_final_OR_start() )
             { return  Crash_handle_return.Construct( "final or start", Crash_handle_result.sucess, Crash_handle_route.all_files_already_got_saved ); }
 
-        stack_file = System.IO.File.ReadAllBytes( Paths_program.safety_stack_file );
+        stack_file = System.IO.File.ReadAllBytes( Paths_run_time.safety_stack_file );
 
         bool already_pass_the_data = Is_stack_empty();
 
@@ -90,12 +90,12 @@ unsafe public static class Crash_handler{
 
 
 
-        string[] link_paths_updated = System.IO.File.ReadAllLines( Paths_program.saving_link_file_to_path );
+        string[] link_paths_updated = System.IO.File.ReadAllLines( Paths_run_time.saving_link_file_to_path );
 
 
         Deal_edge_cases( link_paths_updated );
 
-        string[] files_paths_in_saving_files_folder = System.IO.Directory.GetFiles( Paths_program.saving_files_folder );
+        string[] files_paths_in_saving_files_folder = System.IO.Directory.GetFiles( Paths_run_time.saving_files_folder );
         Dictionary<int,Crash_operation_key> file_ids_TO_key_paths = new( 100 );
 
 
@@ -105,7 +105,7 @@ unsafe public static class Crash_handler{
                 string saving_file_name = Path.GetFileName( path_in_saving_folder );
                 string extension = Path.GetExtension( saving_file_name );
 
-                if( ( saving_file_name == Paths_program.saving_files_security_file_NAME ) || ( extension == ".meta" ) )
+                if( ( saving_file_name == Paths_run_time.saving_files_security_file_NAME ) || ( extension == ".meta" ) )
                     { continue; }
 
                 bool name_is_a_number = int.TryParse( Path.GetFileNameWithoutExtension( saving_file_name ), out int file_id );
@@ -232,7 +232,7 @@ unsafe public static class Crash_handler{
         // ** all operations finished 
 
         // ** with this even if crash now will just know it saved all
-        Files.Save_critical_file( Paths_program.safety_stack_file, new byte[ 1_000 ] );
+        Files.Save_critical_file( Paths_run_time.safety_stack_file, new byte[ 1_000 ] );
 
 
         Delete_all();
@@ -336,13 +336,13 @@ unsafe public static class Crash_handler{
     private static bool Need_to_reconstruct_from_stack(){
 
 
-        bool crash_when_only_the_stack_was_saving = !!!( System.IO.Directory.Exists( Paths_program.saving_files_folder ) );
+        bool crash_when_only_the_stack_was_saving = !!!( System.IO.Directory.Exists( Paths_run_time.saving_files_folder ) );
 
         if( crash_when_only_the_stack_was_saving )
             { return true; }
 
 
-        if( System.IO.File.Exists( Paths_program.saving_files_security_file ) )
+        if( System.IO.File.Exists( Paths_run_time.saving_files_security_file ) )
             { return false; }
 
         
@@ -352,7 +352,7 @@ unsafe public static class Crash_handler{
                 Console.Log( "NO SECURITY FILE + DATA STILL IN STACK -> all the temp files are in the saving files folder ( if any ) and will be discarted to use only the stack" );
             }
 
-        System.IO.Directory.Delete( Paths_program.saving_files_folder, true );
+        System.IO.Directory.Delete( Paths_run_time.saving_files_folder, true );
 
         if( System_run.show_program_construction_messages )
             { Console.Log( "Delete saving files folder" ); }
@@ -422,9 +422,9 @@ unsafe public static class Crash_handler{
 
         // ** if a important file is not there -> it was going to end -> can just delete all the data 
             
-            some_file_is_missing |= Verify_folder( Paths_program.safety_stack_folder, "safety_stack_folder" );
-                some_file_is_missing |= Verify_file( Paths_program.safety_stack_file, "safety_stack_file" );
-                some_file_is_missing |= Verify_file( Paths_program.stack_start_files, "stack_start_files" );
+            some_file_is_missing |= Verify_folder( Paths_run_time.safety_stack_folder, "safety_stack_folder" );
+                some_file_is_missing |= Verify_file( Paths_run_time.safety_stack_file, "safety_stack_file" );
+                some_file_is_missing |= Verify_file( Paths_run_time.stack_start_files, "stack_start_files" );
 
 
         if( some_file_is_missing )
