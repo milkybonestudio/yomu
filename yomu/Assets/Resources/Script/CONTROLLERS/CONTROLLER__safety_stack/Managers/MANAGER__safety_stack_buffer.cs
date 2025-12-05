@@ -28,10 +28,26 @@ unsafe public struct MANAGER__safety_stack_buffer {
     }
 
 
+    public void Reset(){
 
+        Clean_normal_buffer();
+        Clean_no_space();
+        is_passing_data = 0;
+
+        return;
+    }
 
     // ** WILL BE A "COPY" OF THE STACK FILE, BUT ONLY IN BLOCKS
     // ** the file will probably be bigger, so this needs to loop in itself
+
+    public void Clean_normal_buffer(){
+
+        if( heap_key_buffer.Is_valid() )
+            { UnsafeUtility.MemClear( buffer_pointer_0, ( long ) heap_key_buffer.Get_length() ); }
+
+        pointer_in_buffer = 0;
+
+    }
 
     // --- NORMAL BUFFER
     // ** pointer_in_buffer 
@@ -270,13 +286,14 @@ unsafe public struct MANAGER__safety_stack_buffer {
 
 
     public bool is_reconstructing_stack;
-    public void Activate__is_reconstructing_stack(){
+    // public void Activate__is_reconstructing_stack(){
 
-        is_reconstructing_stack = true;
+    //     is_reconstructing_stack = true;
 
-    }
+    // }
 
     public void Deactivate__is_reconstructing_stack(){
+
 
         is_reconstructing_stack = false;
 
@@ -288,12 +305,18 @@ unsafe public struct MANAGER__safety_stack_buffer {
     #endif
     public void Save_data_inline( void* _data_pointer, int _length ){
 
-        if( is_reconstructing_stack )
-            { 
-                // ** in the reconstruct will call a lot of functions to change data again
-                // ** and this functions will call stack.save again, so block here
-                return; 
-            } 
+
+        //mark
+        // ** TEST
+        // ** dont need, the stack in the reconstruct will be a new one. The file in the disk will not change iven if change here
+        // ** after the reconstruct will give a Clean() and returns to nromal
+
+        // if( is_reconstructing_stack )
+        //     { 
+        //         // ** in the reconstruct will call a lot of functions to change data again
+        //         // ** and this functions will call stack.save again, so block here
+        //         return; 
+        //     } 
 
         if( System_run.show_stack_messages_buffer )
             { 
@@ -550,6 +573,17 @@ unsafe public struct MANAGER__safety_stack_buffer {
 
 
     // --- NO SPACE
+
+    public void Clean_no_space(){
+
+        if( key_no_space.Is_valid() )
+            { Controllers.heap.Return_key( key_no_space ); }
+
+        key_no_space = default;        
+        pointer_no_space_buffer = default;
+        is_saving_with_no_space = default;
+        pointer_in_NO_SPACE_buffer = default;
+    }
 
     public Heap_key key_no_space;
     public void* pointer_no_space_buffer;

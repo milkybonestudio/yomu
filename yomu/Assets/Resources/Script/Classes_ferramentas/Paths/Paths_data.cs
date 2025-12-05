@@ -133,7 +133,7 @@ unsafe public struct Tipo {
 
 unsafe public struct Type_packet_controller{
 
-    public Packet_storage* pointer;
+    public Packets_storage_data* pointer;
 
     public Packet_key Alloc( int _size ){
 

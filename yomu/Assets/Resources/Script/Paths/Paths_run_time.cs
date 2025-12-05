@@ -17,7 +17,7 @@ public static class Paths_run_time {
                 saving_files_security_file = Get_saving_files_security_file();
 
             safety_stack_folder = Get_safety_stack_folder();
-                stack_start_files = Get_stack_start_files();
+                _stack_start_files = Get_stack_start_files();
                 saving_link_file_to_path = Get_saving_link_file_to_path();
                 
                 safety_stack_file = Get_safety_stack_file(); 
@@ -58,9 +58,9 @@ public static class Paths_run_time {
                 
 
 
-                // => stack_start_files
+                // => tem que passar para program, o arquivo sempre vai reimportar os arquivos
                 public const string stack_start_files_NAME = "stack_start_files.txt";
-                public static string stack_start_files;
+                public static string _stack_start_files;
                 public static string Get_stack_start_files(){ return Combine( safety_stack_folder, stack_start_files_NAME ); }
                 public static string Get_stack_start_files( string _path ){ return Combine( _path, stack_start_files_NAME ); }
 

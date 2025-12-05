@@ -17,7 +17,9 @@ unsafe public static class TOOL__reconstruct_from_stack{
             }
 
         // cuidar que stack_start_files pode estar desatualizado ou atualizado
-        string[] start_paths = System.IO.File.ReadAllLines( Paths_run_time.stack_start_files ); // ** only the files to save
+
+        // --- nao vai mais estar no run time, vai estar no program, mas não vai dar problemas
+        string[] start_paths = System.IO.File.ReadAllLines( Paths_run_time._stack_start_files );
 
         // Crash_cached_file[] files = new Crash_cached_file[ start_paths.Length ];
 

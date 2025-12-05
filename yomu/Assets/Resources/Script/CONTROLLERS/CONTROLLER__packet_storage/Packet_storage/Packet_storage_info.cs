@@ -37,7 +37,7 @@ unsafe public struct Packet_storage_info {
 
 
 
-    public void* Get_pointer( Packet_storage* _storage_pointer, int _slot ){
+    public void* Get_pointer( Packets_storage_data* _storage_pointer, int _slot ){
 
         if( _slot >= number_slots )
             { CONTROLLER__errors.Throw( $"Tried to get the slot <Color=lightBlue>{ _slot }</Color> in the size <Color=lightBlue>{ size_in_bytes }</Color> but there are <Color=lightBlue>{ number_slots }</Color> slots" ); }
@@ -56,7 +56,7 @@ unsafe public struct Packet_storage_info {
     }
     
 
-    public bool Is_slot_used( Packet_storage* _storage_pointer, int _slot ){
+    public bool Is_slot_used( Packets_storage_data* _storage_pointer, int _slot ){
 
         if( _slot > number_slots )
             { return false; }
@@ -72,7 +72,7 @@ unsafe public struct Packet_storage_info {
 
 
 
-    public void Dealloc( Packet_storage* _storage_pointer, int _slot ){
+    public void Dealloc( Packets_storage_data* _storage_pointer, int _slot ){
 
         Controllers.stack.Need_to_add_stack_function();
     
@@ -99,7 +99,7 @@ unsafe public struct Packet_storage_info {
 
     }
 
-    public int Get_space( Packet_storage* _storage_pointer ){
+    public int Get_space( Packets_storage_data* _storage_pointer ){
 
         Controllers.stack.Need_to_add_stack_function();
 
@@ -146,7 +146,7 @@ unsafe public struct Packet_storage_info {
 
 
 
-    public void Print_flags( Packet_storage* _storage_pointer ){
+    public void Print_flags( Packets_storage_data* _storage_pointer ){
 
         byte* flag_pointer = ( ((byte*)_storage_pointer) + pointer_to_FLAGS );
 
@@ -163,7 +163,7 @@ unsafe public struct Packet_storage_info {
 
     }
 
-    public void Print_actives( Packet_storage* _storage_pointer ){
+    public void Print_actives( Packets_storage_data* _storage_pointer ){
 
 
         Console.Log( $"<Color=lightBlue>----------------ACTIVES FOR { size_in_bytes } BYTES-------------------</Color>" );
@@ -333,7 +333,7 @@ unsafe public struct Packet_storage_info {
     }
 
 
-    public int Reajust_data( Packet_storage* storage_pointer ){
+    public int Reajust_data( Packets_storage_data* storage_pointer ){
 
         // ** Will assume the Packet_storage already moved the bigger sizes in the file
 
@@ -483,7 +483,7 @@ unsafe public struct Packet_storage_info {
     
 
     // ** NEVER THE ONE ADJUSTED
-    public void Move_data( Packet_storage* storage_pointer, int how_many_bytes_it_needs_to_expand ){
+    public void Move_data( Packets_storage_data* storage_pointer, int how_many_bytes_it_needs_to_expand ){
 
         // Console.Log( "Will move the info size : " + size_in_bytes );
 

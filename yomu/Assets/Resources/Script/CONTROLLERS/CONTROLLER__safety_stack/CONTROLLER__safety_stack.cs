@@ -78,6 +78,8 @@ unsafe public struct CONTROLLER__safety_stack {
 
             last_message_length = _message_length;
         #endif
+
+
         buffer.Save_data_inline( pointer_with_message, _message_length ); 
     }
 
@@ -300,6 +302,13 @@ unsafe public struct CONTROLLER__safety_stack {
     }
 
     // ** SUPPORT
+
+
+    public void Reset_stack(){
+
+        buffer.Reset();
+        
+    }
 
 
     public bool Have_data_to_save(){

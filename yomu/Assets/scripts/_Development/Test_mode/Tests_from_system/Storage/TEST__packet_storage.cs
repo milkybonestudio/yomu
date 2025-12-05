@@ -17,7 +17,7 @@ unsafe public static class TEST__packet_storage {
 */
 
   
-    public static Packet_storage* packet_storage;
+    public static Packets_storage_data* packet_storage;
     
     public static void Set(){
 
@@ -54,7 +54,7 @@ unsafe public static class TEST__packet_storage {
     public static void Update(){
 
 
-        Packet_storage p;
+        Packets_storage_data p;
         Packet_key k;
         Packet pp;
         
@@ -95,7 +95,7 @@ unsafe public static class TEST__packet_storage {
                         // byte[] data = System.IO.File.ReadAllBytes( path_to_packet_storage );
                         Data_file_link data_link = Controllers.files.operations.Get_file_from_disk( path_to_packet_storage );
 
-                        packet_storage = Packet_storage.Start( data_link );
+                        packet_storage = Packets_storage_data.Start( data_link );
 
                         Console.Log( "Load packet store" );
                     }
@@ -121,7 +121,7 @@ unsafe public static class TEST__packet_storage {
 
                         // Controllers.packets.Create_new();
 
-                        packet_storage = Packet_storage.Start( data_link );
+                        packet_storage = Packets_storage_data.Start( data_link );
 
                         
                         Console.Log( "Created packet store" );
@@ -345,13 +345,18 @@ unsafe public static class TEST__packet_storage {
         // ** LER VALOR
         if( Input.GetKeyDown( KeyCode.Z ) )
             {
-                Packet_array_pointer dados =  packet_storage->Get_array_pointer( packet_key_test, sizeof( int ) );
+
+                Packet_array<int> dados =  packet_storage->Get_packet_array<int>( packet_key_test );
+                int* pointer = dados.Get( 0 );
 
                 for( int index = 0 ; index < dados.length ; index++ ){
 
                     Console.Log( (*(int*) dados.Get( index )) );
                     
                 }
+
+
+                
 
 
                 int* a = (int*) packet_storage->Get_pointer( packet_key_test );
@@ -394,10 +399,7 @@ unsafe public static class TEST__packet_storage {
                 Console.Log( $"--------{ packet_key_test.Get_text_of_identification() }---------" );
 
                 Packet pk = packet_storage->Get_packet( packet_key_test );
-
-                var tipo = (Test_packet*) pk.Get_pointer_complete();
-
-                    // pk.Change( &tipo->a, 10 );
+                Test_packet* tipo = (Test_packet*) pk.Get_pointer_complete();
 
                     // ** usar
 
@@ -418,22 +420,13 @@ unsafe public static class TEST__packet_storage {
                 Console.Log( $"--------{ packet_key_test.Get_text_of_identification() }---------" );
 
                 Packet pk = packet_storage->Get_packet( packet_key_test );
+                Test_packet* tipo = (Test_packet*) pk.Get_pointer_partial();
 
-                var tipo = (Test_packet*) pk.Get_pointer_partial();
+                pk.Change<int>( &tipo->a, 2 );
+                pk.Change<float>( &tipo->b, 5 );
 
-                    pk.Change( &tipo->a, 2 );
-                    pk.Change( &tipo->b, 5 );
-
-                pk.Finish_use();
                 
-
             }
-
-
-
-
-
-
 
 
 

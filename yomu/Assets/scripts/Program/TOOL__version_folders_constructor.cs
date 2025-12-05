@@ -19,23 +19,39 @@ unsafe public static class TOOL__version_folders_constructor {
 
     public static void Construct( string _path_to_persistent_location ){
 
+
+
         // --- CREATE VERSION FOLDER
 
         Yomu_version version = System_information.version;
         string version_folder = Path.Combine( _path_to_persistent_location, Yomu_version.Get_name( version ) );
         Paths_version.Define_version_folder( version_folder );
 
+
+
+
         if( System.IO.Directory.Exists( version_folder ) )
             { CONTROLLER__errors.Throw( $"Tried to create a new version folder but there is already a folder in { version_folder }" ); }
 
         Directory.CreateDirectory( version_folder );
-
-        
         Create_program_folder();
         Create_saves_folder();
 
-        // ** now is valid
-        Files.Save_critical_file( Paths_version.security_file, new byte[]{ 55, 55, 55 } );
+
+        // --- DATA FILES
+
+            // ** will create all the files with the normal flow
+            Files.Save_critical_file( Paths_version.data_link_current_files, new string[]{ null }  );
+
+
+
+        
+        Controllers.stack.Reset_stack();
+        
+
+        // --- SAFETY FILE
+
+            Files.Save_critical_file( Paths_version.security_file, new byte[]{ 55, 55, 55 } );
 
     
         return;
@@ -51,7 +67,7 @@ unsafe public static class TOOL__version_folders_constructor {
 
             Program_data* pointer_program = ( Program_data* ) Controllers.heap.Get_fast_pointer( sizeof( Program_data ) );
             CONSTRUCTOR__program_data_file.Construct_new_program_file(  ( Program_data* ) pointer_program );
-            Files.Save_file( Paths_program.program_data, pointer_program, sizeof( Program_data ) );
+            Files.Save_critical_file( Paths_program.program_data, pointer_program, sizeof( Program_data ) );
 
         // --- PACKED STORAGE
 
@@ -62,7 +78,12 @@ unsafe public static class TOOL__version_folders_constructor {
 
             Controllers.packets.creation.Apply_create_data( pointer_storage_program, length_storage_program , program_storage_data );
 
-            Files.Save_file( Paths_program.program_storage_SIMPLE, pointer_storage_program, length_storage_program );
+            Files.Save_critical_file( Paths_program.program_storage_SIMPLE, pointer_storage_program, length_storage_program );
+
+
+        // --- CURRENT PACKETS_STORES
+
+            Files.Save_critical_file( Paths_program.current_packets_storages, new string[]{ null }  );
 
 
         return;

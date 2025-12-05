@@ -30,7 +30,7 @@ unsafe public class Packet_storage_start_data {
     public int Get_minimun_size(){
 
 
-        int minimum_space = sizeof( Packet_storage );
+        int minimum_space = sizeof( Packets_storage_data );
 
         foreach( Packet_storage_start_data_PER_SIZE size_data in sizes_settings ){
 

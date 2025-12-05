@@ -1,25 +1,43 @@
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Threading;
 using Unity.Burst;
 
 
 
 
+unsafe public struct ____Packets_storage {
 
+    // ** will get fast 
+    public int file_id;
+
+    public Packet_array<T> Get_packet_array<T>( Packet_key _key )where T:unmanaged{ return Get_pointer()->Get_packet_array<T>( _key ); }
+    public Packet Get_packet( Packet_key _key ){ return Get_pointer()->Get_packet( _key ); }
+
+
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public Packets_storage_data* Get_pointer(){
+
+        return Controllers.packets.Get_pointer( file_id );
+
+    }
+
+}
 
 [StructLayout(LayoutKind.Sequential)]
-unsafe public struct Packet_storage {
+unsafe public struct Packets_storage_data {
 
+    // ** stay in controller
 
     public const int LENGTH_INFO_BUFFER = 3_000;
-    // public const int START_POINTER_DATA = 1_000;
-
-    public bool started;
-    private Packet_storage* storage_pointer;
+    
+    private Packets_storage_data* storage_pointer;
     public Data_file_link file_link;
     public Packet_storage_size_manager sizes;
     public int file_length;
+    public bool started;
 
     public Packet_storage_TEST test;
 
@@ -28,9 +46,9 @@ unsafe public struct Packet_storage {
     public fixed byte infos_buffer [ LENGTH_INFO_BUFFER ];
 
 
-    public static Packet_storage* Start( Data_file_link _data_file ){
+    public static Packets_storage_data* Start( Data_file_link _data_file ){
 
-        Packet_storage* pointer = (Packet_storage*) _data_file.heap_key.Get_pointer();
+        Packets_storage_data* pointer = (Packets_storage_data*) _data_file.heap_key.Get_pointer();
 
         pointer->started = true;
         pointer->storage_pointer = pointer;
@@ -52,7 +70,6 @@ unsafe public struct Packet_storage {
 
     public bool Update(){
 
-        // ** 
         Safety();
 
         bool need_to_update = false;
@@ -60,177 +77,25 @@ unsafe public struct Packet_storage {
         for( int index = ( int )Packet_storage_size._1_byte ; index < ( int )Packet_storage_size._MAX ; index++ ){
 
             if( infos[ index ].Can_to_expand() )
-                { 
-                    Expand( index ); 
-                    need_to_update = true;
-                }
+                { Expand( index ); need_to_update = true; }
 
         }
 
         return need_to_update;
 
-
     }
 
 
 
-    
-    private void Expand_file( int _need_bytes ){
-
-
-        int final_size = file_length + _need_bytes + 10_000 ;
-
-        // ** if it's reconstructing with the stack it will NEVER came here
-        // ** the message ( add ) is alwasy after the function executes. if it need more space it will call EXPAND 
-        // ** what means the message ( change length ) is always called before ( ADD ) -> the length the packet sees should be enough 
-        file_link = Controllers.files.operations.Change_length_file( file_link, final_size );
-
-        file_length = file_link.heap_key.Get_length();
-
-    }
-
-    private int Expand( int _index_info ){
-
-        
-        // ** logica é mudar os blocos 
-        Safety();
-
-
-        int how_many_bytes_it_needs_to_expand = infos[ _index_info ].Get_bytes_to_expand();
-
-        if( Verify_if_needs_to_expand_file( how_many_bytes_it_needs_to_expand ) )
-            { Expand_file( _index_info ); }
-
-        if( System_run.packet_storage_show_messages )
-            { Console.Log( $"<Color=lightBlue>WILL EXPAND SIZE: { (Packet_storage_size ) _index_info }</Color>" ); }
-
-        int last_size = ( (int) Packet_storage_size._MAX - 1 );
-        for( int index_to_expand = last_size ; index_to_expand > 0 ; index_to_expand-- )
-            { infos[ index_to_expand ].Move_data( storage_pointer, how_many_bytes_it_needs_to_expand ); }
-
-        // ** mover 
-
-        return infos[ _index_info ].Reajust_data( storage_pointer );
-
-
-    }
-    
-    
-    public int Force_expand( Packet_storage_size _size ){ return Expand( (int)_size ); }
-    public void Print_flags( Packet_storage_size _size ){ infos[(int)_size].Print_flags( storage_pointer ); }
-    public void Print_actives( Packet_storage_size _size ){ infos[(int)_size].Print_actives( storage_pointer ); }
 
 
 
 
-    public Packet Get_packet( Packet_key _key ){
-
-
-        Safety();
-
-        if( System_run.packet_storage_show_messages )
-            { Console.Log( $" Will get the Packet for the key { _key.Get_text_of_identification() }" ); }
-
-        return Packet.Create(
-            _packet_storage_pointer: storage_pointer,
-            _key: _key,
-            _pointer_to_data: Get_pointer( _key ),
-            _off_set_to_data_in_file: Get_off_set_to_data( _key )
-        );
-
-    }
-
-
-    public Packet_array_pointer Get_array_pointer( Packet_key _key, int _type_size ){
-
-        
-        Safety();
-
-        if( !!!(_key.is_valid ) )
-            { CONTROLLER__errors.Throw( "tried to <Color=lightBlue>get teh pointer</Color> but have a invalid <Color=lightBlue>Packet_key</Color>" ); }
-
-        if( _key.size == Packet_storage_size._0_bytes )
-            { 
-                if( System_run.packet_storage_show_messages )
-                    { Console.Log( "Called Get_array_pointer and is size 0" ); }
-                // ** não pode castar, no for(){} nao iria chamar pelo length 0
-                return Packet_array_pointer.Construct(
-
-                    _file_link : file_link,
-                    _start_point_in_file : 0,
-                    _pointer_0 : (void*) storage_pointer,
-                    _type_size : 0,
-                    _length : 0
-
-                );
-                
-            } 
-
-        // ** garante que faça sentido
-
-        if( System_run.max_security )
-            {
-                if( ( _key.length % _type_size ) != 0 )
-                    { CONTROLLER__errors.Throw( $"The length of the key {{ <Color=lightBlue>{ _key.length }</Color> }} and the type size {{ <Color=lightBlue>{ _type_size }</Color> }}. The rest of the division is <Color=lightBlue>{ ( _key.length % _type_size ) }</Color> and should be 0" ); }
-            }
-
-        int length_array = ( _key.length / _type_size );
-
-
-        void* pointer_to_data = Get_pointer( _key );
-        int off_set = Get_off_set_to_data( _key );
-
-        return Packet_array_pointer.Construct(
-
-            _file_link : file_link,
-            _start_point_in_file : off_set,
-            _pointer_0 : pointer_to_data,
-            _type_size : _type_size,
-            _length : length_array
-
-        );
-
-
-
-    }
-
-
-    private int Get_off_set_to_data( Packet_key _key ){
-
-        Packet_storage_info* info = ( infos + (int) _key.size );
-
-            int size_in_bytes = info->size_in_bytes;
-            int data_pointer = info->pointer_to_DATA;
-
-            int final_off_set = data_pointer + ( _key.slot * size_in_bytes );
-        
-        return final_off_set;
-
-    }
-
-    public int* Get_int_pointer( Packet_key _key ){ return (int*) Get_int_pointer( _key ); }
-    public byte* Get_byte_pointer( Packet_key _key ){ return (byte*) Get_int_pointer( _key ); }
-
-    public void* Get_pointer( Packet_key _key ){
-
-        Safety();
-
-        if( !!!( _key.is_valid ) )
-            { CONTROLLER__errors.Throw( "tried to <Color=lightBlue>get teh pointer</Color> but have a invalid <Color=lightBlue>Packet_key</Color>" ); }
-
-        if( _key.size == Packet_storage_size._0_bytes )
-            { return (void*) storage_pointer; } // ** não pode castar
-
-        return infos[ (int) _key.size ].Get_pointer( storage_pointer, _key.slot );
-
-    }
-
-
+    // ** KEYS
 
     public Packet_key Alloc_packet_of_type_array( int _type_size, int _number ){ return Alloc_packet( _type_size * _number ); }
     public Packet_key Alloc_packet_int_array( int _number ){ return Alloc_packet( sizeof( int ) * _number ); }
     public Packet_key Alloc_packet_float_array( int _number ){ return Alloc_packet( sizeof( float ) * _number ); }
-
 
     public Packet_key Alloc_packet( int _size_in_bytes ){
 
@@ -296,17 +161,7 @@ unsafe public struct Packet_storage {
     }
 
 
-
-
-
-
-//mark
-// ** PARA VER
-
-
-
-
-
+    public void Change_length_packet_key( Packet_key* _key, int _new_length ){ *_key = Change_length_packet_key( *_key, _new_length ); }
 
     public Packet_key Change_length_packet_key( Packet_key _key, int _new_length ){
 
@@ -317,7 +172,6 @@ unsafe public struct Packet_storage {
 
                 if( _new_length < 0 )
                     { CONTROLLER__errors.Throw( $"Tried to change length a key, but the length is <Color=lightBlue>{ _new_length }</Color>" ); }
-
             }
 
         
@@ -334,12 +188,11 @@ unsafe public struct Packet_storage {
             }
 
 
-
         Packet_storage_size new_size = sizes.Get_required_size( _new_length );
         void* old_key_pointer = Get_pointer( _key );
         int old_key_off_set = Get_off_set_to_data( _key );
 
-        bool can_use_the_same_key = ( new_size != _key.size );
+        bool can_use_the_same_key = ( new_size <= _key.size );
 
         if( can_use_the_same_key )
             {
@@ -378,7 +231,6 @@ unsafe public struct Packet_storage {
 
         Dealloc_packet( _key );
 
-
         if( System_run.packet_storage_show_messages )
             { Console.Log( $"---finish the change lenght---" ); }
 
@@ -387,6 +239,100 @@ unsafe public struct Packet_storage {
 
 
     }
+
+
+
+
+
+
+
+    // ** PACKETS
+
+    public Packet Get_packet( Packet_key _key ){
+
+        Safety();
+
+        if( System_run.packet_storage_show_messages )
+            { Console.Log( $" Will get the Packet for the key { _key.Get_text_of_identification() }" ); }
+
+        return Packet.Create(
+            _packet_storage_pointer: storage_pointer,
+            _key: _key,
+            _pointer_to_data: Get_pointer( _key ),
+            _off_set_to_data_in_file: Get_off_set_to_data( _key )
+        );
+
+    }
+
+
+    public Packet_array<T> Get_packet_array<T>( Packet_key _key ) where T : unmanaged {
+
+        Safety();
+
+        int _type_size = sizeof( T );
+
+        if( !!!(_key.is_valid ) )
+            { CONTROLLER__errors.Throw( "tried to <Color=lightBlue>get teh pointer</Color> but have a invalid <Color=lightBlue>Packet_key</Color>" ); }
+
+        if( _key.size == Packet_storage_size._0_bytes )
+            { 
+                if( System_run.packet_storage_show_messages )
+                    { Console.Log( "Called Get_array_pointer and is size 0" ); }
+                // ** não pode castar, no for(){} nao iria chamar pelo length 0
+                return Packet_array<T>.Construct(
+                    _key = _key,
+                    _file_link : file_link,
+                    _start_point_in_file : 0,
+                    _pointer_0 : (void*) storage_pointer
+                );
+                
+            } 
+
+
+        return Packet_array<T>.Construct(
+            _key : _key,
+            _file_link : file_link,
+            _start_point_in_file : Get_off_set_to_data( _key ),
+            _pointer_0 : Get_pointer( _key )
+        );
+
+    }
+
+
+    private int Get_off_set_to_data( Packet_key _key ){
+
+        Packet_storage_info* info = ( infos + (int) _key.size );
+
+            int size_in_bytes = info->size_in_bytes;
+            int data_pointer = info->pointer_to_DATA;
+
+            int final_off_set = data_pointer + ( _key.slot * size_in_bytes );
+        
+        return final_off_set;
+
+    }
+
+
+    public int* Get_int_pointer( Packet_key _key ){ return (int*) Get_int_pointer( _key ); }
+    public byte* Get_byte_pointer( Packet_key _key ){ return (byte*) Get_int_pointer( _key ); }
+
+
+    public void* Get_pointer( Packet_key _key ){
+
+        Safety();
+
+        if( System_run.max_security && !!!( _key.is_valid ) )
+            { CONTROLLER__errors.Throw( "tried to <Color=lightBlue>get teh pointer</Color> but have a invalid <Color=lightBlue>Packet_key</Color>" ); }
+
+        if( _key.size == Packet_storage_size._0_bytes )
+            { return (void*) storage_pointer; } // ** não pode castar
+
+        return infos[ (int) _key.size ].Get_pointer( storage_pointer, _key.slot );
+
+    }
+
+
+
 
 
     // ** Only activate stack
@@ -541,15 +487,62 @@ unsafe public struct Packet_storage {
 
 
 
+    // ** FILE OPERATIONS
+    
+    private void Expand_file( int _need_bytes ){
+
+
+        int final_size = file_length + _need_bytes + 10_000 ;
+
+        // ** if it's reconstructing with the stack it will NEVER came here
+        // ** the message ( add ) is alwasy after the function executes. if it need more space it will call EXPAND 
+        // ** what means the message ( change length ) is always called before ( ADD ) -> the length the packet sees should be enough 
+        file_link = Controllers.files.operations.Change_length_file( file_link, final_size );
+
+        file_length = file_link.heap_key.Get_length();
+
+    }
+
+    private int Expand( int _index_info ){
+
+        
+        // ** logica é mudar os blocos 
+        Safety();
+
+
+        int how_many_bytes_it_needs_to_expand = infos[ _index_info ].Get_bytes_to_expand();
+
+        if( Verify_if_needs_to_expand_file( how_many_bytes_it_needs_to_expand ) )
+            { Expand_file( _index_info ); }
+
+        if( System_run.packet_storage_show_messages )
+            { Console.Log( $"<Color=lightBlue>WILL EXPAND SIZE: { (Packet_storage_size ) _index_info }</Color>" ); }
+
+        int last_size = ( (int) Packet_storage_size._MAX - 1 );
+        for( int index_to_expand = last_size ; index_to_expand > 0 ; index_to_expand-- )
+            { infos[ index_to_expand ].Move_data( storage_pointer, how_many_bytes_it_needs_to_expand ); }
+
+        // ** mover 
+
+        return infos[ _index_info ].Reajust_data( storage_pointer );
+
+
+    }
+    
 
 
 
 
 
+    // --- DEBUG AND TEST
 
+    public int Force_expand( Packet_storage_size _size ){ return Expand( (int)_size ); }
+    public void Print_flags( Packet_storage_size _size ){ infos[(int)_size].Print_flags( storage_pointer ); }
+    public void Print_actives( Packet_storage_size _size ){ infos[(int)_size].Print_actives( storage_pointer ); }
 
 
     // --- VERIFICATIONS AND INFORMATION
+
 
     public bool Is_slot_used( Packet_storage_size _size, int _slot ){
 
@@ -631,14 +624,18 @@ unsafe public struct Packet_storage {
 
 
 
+    public void Safety_change(){
 
+        
+
+    }
 
     public void Safety(){
 
         if( !!!( System_run.max_security ) )
             { return; }
 
-        fixed( Packet_storage* pointer = &this ){
+        fixed( Packets_storage_data* pointer = &this ){
 
             if( pointer == null )
                 { CONTROLLER__errors.Throw( "Tried to cast a null pointer" ); }
@@ -654,6 +651,10 @@ unsafe public struct Packet_storage {
 
         if( infos == null )
             { CONTROLLER__errors.Throw( "The pointer of the storage_infos was <Color=lightBlue>NULL</Color>" ); }
+
+        // ** this type of storage can not be used in multithread
+        if( Thread.CurrentThread.ManagedThreadId != System_information.main_thread_id )
+            { CONTROLLER__errors.Throw( "Wrong thread id" ); }
 
 
     }

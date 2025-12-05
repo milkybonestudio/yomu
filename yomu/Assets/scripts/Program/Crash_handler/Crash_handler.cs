@@ -424,7 +424,7 @@ unsafe public static class Crash_handler{
             
             some_file_is_missing |= Verify_folder( Paths_run_time.safety_stack_folder, "safety_stack_folder" );
                 some_file_is_missing |= Verify_file( Paths_run_time.safety_stack_file, "safety_stack_file" );
-                some_file_is_missing |= Verify_file( Paths_run_time.stack_start_files, "stack_start_files" );
+                // some_file_is_missing |= Verify_file( Paths_run_time.stack_start_files, "stack_start_files" );
 
 
         if( some_file_is_missing )
@@ -487,14 +487,14 @@ unsafe public static class Crash_handler{
     public static void Change_variables_for_reconstruct(){
 
         // ** all the import constructors that need acces are structs
-        Controllers.stack.buffer.Activate__is_reconstructing_stack();
+        // Controllers.stack.buffer.Activate__is_reconstructing_stack();
         Controllers.files.Activate__is_reconstructing_stack_from_CRASH();
 
     }
 
     public static void End_stack_variables(){
 
-        Controllers.stack.buffer.Deactivate__is_reconstructing_stack();
+        Controllers.stack.Reset_stack();
         Controllers.files.Deactivate__is_reconstructing_stack_from_CRASH();
 
     }

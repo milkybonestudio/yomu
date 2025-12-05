@@ -23,14 +23,14 @@ unsafe public struct MANAGER__controller_packet_storage_operations {
     public Object lock_obj;
 
     // ** Assume the storege already exist in disk
-    public Packet_storage* Get_storage_from_disk( string _path_to_file ){
+    public Packets_storage_data* Get_storage_from_disk( string _path_to_file ){
 
         lock( lock_obj ){
 
             Data_file_link file_data_link = Controllers.files.operations.Get_file_from_disk( _path_to_file );
             Controllers.packets.storage.Add_storage( file_data_link );
 
-            Packet_storage* storage = Packet_storage.Start( file_data_link );
+            Packets_storage_data* storage = Packets_storage_data.Start( file_data_link );
 
             return storage;
 
@@ -39,14 +39,14 @@ unsafe public struct MANAGER__controller_packet_storage_operations {
         
     }
 
-    public Packet_storage* Get_storage( string _path_to_file ){
+    public Packets_storage_data* Get_storage( string _path_to_file ){
 
         lock( lock_obj ){
 
 
             Data_file_link file_data_link = Controllers.files.operations.Get_file( _path_to_file );
             
-            Packet_storage* storage = (Packet_storage*) file_data_link.Get_pointer();
+            Packets_storage_data* storage = (Packets_storage_data*) file_data_link.Get_pointer();
 
             if( System_run.max_security )
                 {
@@ -66,7 +66,7 @@ unsafe public struct MANAGER__controller_packet_storage_operations {
     }
 
 
-    public Packet_storage* Create_new_storage( string _path, int _file_length, Packet_storage_start_data _start_data ){
+    public Packets_storage_data* Create_new_storage( string _path, int _file_length, Packet_storage_start_data _start_data ){
 
     
         lock( lock_obj ){
@@ -100,7 +100,7 @@ unsafe public struct MANAGER__controller_packet_storage_operations {
 
             Controllers.stack.packet_storage.Save_data_create_storage( data_link.id, _start_data );
 
-            Packet_storage* storage = Packet_storage.Start( data_link );
+            Packets_storage_data* storage = Packets_storage_data.Start( data_link );
 
             return storage;
 

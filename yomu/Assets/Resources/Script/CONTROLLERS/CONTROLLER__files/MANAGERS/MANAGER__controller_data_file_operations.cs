@@ -1,5 +1,3 @@
-
-
 using System;
 
 unsafe public struct MANAGER__controller_data_file_operations {
@@ -37,7 +35,10 @@ unsafe public struct MANAGER__controller_data_file_operations {
     #endif
     public void Change_data_file( Data_file_link _data, int _off_set, void* _data_pointer, int _length ){
 
-        // no need to use stack
+
+        if( Controllers.files.is_reconstructing_stack_from_CRASH )
+            { return; }
+
 
         lock( lock_obj ){
 
@@ -111,6 +112,10 @@ unsafe public struct MANAGER__controller_data_file_operations {
     // ** call only when the file already exists
     public Data_file_link Get_file( string _path ){
 
+        
+        if( Controllers.files.is_reconstructing_stack_from_CRASH )
+            { return default; }
+
         // no need to use stack
 
         lock( lock_obj ){
@@ -141,6 +146,9 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
         // no need to use stack
 
+        if( Controllers.files.is_reconstructing_stack_from_CRASH )
+            { return default; }
+
         lock( lock_obj ){
 
             if( System_run.max_security )   
@@ -161,10 +169,46 @@ unsafe public struct MANAGER__controller_data_file_operations {
     }
 
 
+    public Data_file_link Get_file_start_program( string _path, int _slot ){
 
+        if( System_run.max_security )
+            {
+                if( _path == null  )
+                    { CONTROLLER__errors.Throw( $"Tried to get a file but tethe path is <Color=lightBlue>NULL</Color>" ); }
+
+                if( !!!( Directories.Is_sub_path( _path, Paths_version.path_to_version ) ) )
+                    { CONTROLLER__errors.Throw( $"Tried to get a file from disk but the paths is not part of the version. The path: <Color=lightBlue>{ _path }</Color>" ); }
+            
+                if( Controllers.files.storage.Is_file_already_taken( _path ) )
+                    { CONTROLLER__errors.Throw( $"Tried to get the file <Color=lightBlue>{ _path }</Color> from disk, but the system already heve it in with the index <Color=lightBlue>{ Controllers.files.storage.path_TO_id[ _path ] }</Color>" ); }
+
+                if( !!!( Controllers.files.storage.File_exist_in_final_disk( _path ) ) )
+                    { CONTROLLER__errors.Throw( $"File don't exist in disk. path: <Color=lightBlue>{ _path }</Color>" ); }
+                
+            }
+
+        byte[] data = System.IO.File.ReadAllBytes( _path );
+
+        Heap_key heap_key = Controllers.heap.Get_unique( data.Length );
+
+        Data_file_link link_data = new(){
+            heap_key = heap_key,
+            size = data.Length,
+            id = _slot
+        };
+
+        Controllers.files.storage.Add_file( link_data, _path );
+
+        return link_data;
+
+    }
 
     // ** 
     public Data_file_link Get_file_from_disk( string _path ){
+
+
+        if( Controllers.files.is_reconstructing_stack_from_CRASH )
+            { return default; }
 
         // add slot
 
@@ -213,6 +257,9 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
     public void Remove_file( Data_file_link _data_file ){
 
+        if( Controllers.files.is_reconstructing_stack_from_CRASH )
+            { return; }
+
         lock( lock_obj ){
 
             if( System_run.max_security )
@@ -248,6 +295,9 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
     public Data_file_link Create_new_file( byte[] _data, string _path ){
 
+        if( Controllers.files.is_reconstructing_stack_from_CRASH )
+            { return default; }
+
         if( _data == null )
             { CONTROLLER__errors.Throw( "tried to create a path but the data is null" ); }
 
@@ -257,6 +307,8 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
     public Data_file_link Create_new_file( void* _file_pointer, int _file_length, string _path ){
 
+        if( Controllers.files.is_reconstructing_stack_from_CRASH )
+            { return default; }
         // ** call only when create run time files
 
         lock( lock_obj ){
@@ -314,6 +366,9 @@ unsafe public struct MANAGER__controller_data_file_operations {
     public Data_file_link Create_new_file_EMPTY( string _path, int _file_length ){
 
         // ** call only when create run time files
+
+        if( Controllers.files.is_reconstructing_stack_from_CRASH )
+            { return default; }
 
         lock( lock_obj ){
 
@@ -377,6 +432,8 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
     private void Delete_file_intern( string _path ){
 
+        if( Controllers.files.is_reconstructing_stack_from_CRASH )
+            { return; }
     
         if( System_run.max_security )
             {             
@@ -416,12 +473,12 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
 
     public Data_file_link Change_length_file( Data_file_link _data_link, int _new_length ){
+        
+        if( Controllers.files.is_reconstructing_stack_from_CRASH )
+            { return _data_link; }
 
         lock( lock_obj ){
 
-            
-            if( Controllers.files.is_reconstructing_stack_from_CRASH )
-                { return _data_link; }
 
             if( System_run.max_security )
                 {                    

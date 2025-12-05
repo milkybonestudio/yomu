@@ -4,25 +4,28 @@ using System.Runtime.InteropServices;
 
 unsafe public static class CONSTRUCTOR__controller_packets_storage{
 
-    public static void Construct( ref CONTROLLER__packets_storage _controller_pointer ){
+    public static CONTROLLER__packets_storage Construct(){
 
         // --- VERIFICATIONS
 
 
         int necessary_info_buffer = ( sizeof( Packet_storage_info ) * (int) Packet_storage_size.END );
-        if( Packet_storage.LENGTH_INFO_BUFFER <= necessary_info_buffer )
-            { CONTROLLER__errors.Throw( $"The buffer in the packet_storage needs <Color=lightBlue>{ necessary_info_buffer }</Color> but the CONST is <Color=lightBlue>{ Packet_storage.LENGTH_INFO_BUFFER }</Color>" ); }
+
+        if( Packets_storage_data.LENGTH_INFO_BUFFER <= necessary_info_buffer )
+            { CONTROLLER__errors.Throw( $"The buffer in the packet_storage needs <Color=lightBlue>{ necessary_info_buffer }</Color> but the CONST is <Color=lightBlue>{ Packets_storage_data.LENGTH_INFO_BUFFER }</Color>" ); }
 
         
-        _controller_pointer.operations = MANAGER__controller_packet_storage_operations.Construct();
-        _controller_pointer.storage = MANAGER__controller_packet_storage_storage.Construct();
+        CONTROLLER__packets_storage ret = default;
 
-        _controller_pointer.sizes.Start();
-        _controller_pointer.creation = MANAGER__packet_storage_creation.Construct();
-        _controller_pointer.defaults.Start();
+            ret.operations = MANAGER__controller_packet_storage_operations.Construct();
+            ret.storage = MANAGER__controller_packet_storage_storage.Construct();
 
-        // SIMPLE
+            ret.sizes.Start();
+            ret.creation = MANAGER__packet_storage_creation.Construct();
+            ret.defaults.Start();
 
+    
+        
         if( System_run.show_big_ram_performance_impact_LONGER )
             { 
                 Console.Log( $"packet_controller is very poor optimize");
@@ -35,7 +38,7 @@ unsafe public static class CONSTRUCTOR__controller_packets_storage{
         
         
 
-        return;
+        return ret;
 
     }
 

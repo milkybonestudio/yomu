@@ -80,13 +80,13 @@ unsafe public static class TEST__crash {
 
         static string path_storage;
 
-        
+
 
         static Data_file_link data_1;
         static Data_file_link data_2;
         static Data_file_link data_3;
 
-        static Packet_storage* packet_storage;
+        static Packets_storage_data* packet_storage;
 
         static Crash current_state_crash;
 
@@ -121,7 +121,7 @@ unsafe public static class TEST__crash {
         data_3 = Controllers.files.operations.Get_file_from_disk( path_3 );
         Data_file_link data_storage = Controllers.files.operations.Get_file_from_disk( path_storage );
         
-        packet_storage = Packet_storage.Start( data_storage );
+        packet_storage = Packets_storage_data.Start( data_storage );
 
     }
     

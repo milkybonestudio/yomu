@@ -60,33 +60,20 @@ unsafe public struct MANAGER__controller_saving_saver {
 
     }
 
+    //mark
+    // ** talvez passar para Save_ids_TO_paths()
+    public static void Save_link_paths( Task_req _req ){
 
 
-
-    public bool Finish_saving_files(){
-
-        if( req_saving_files == null )
-            { CONTROLLER__errors.Throw( "Tried to verify if the files already saved, but the task is <Color=lightBlue>NULL</Color>" ); }
-
-        return req_saving_files.Is_finalized();
-
-    }
-
-    public static void Reset_stack( Task_req _req ){
-
+        string[] linked_files_lines = Controllers.files.storage.Get_link_files_lines();
+        _req.managed_data.string_array = linked_files_lines;
         
-        if( Controllers.stack.saver.strem_stack != null )
-            { Controllers.stack.saver.Clean_file(); }
-            else
-            { Files.Save_critical_file( Paths_run_time.stack_start_files, new byte[ 100_000 ] ); }
+        // ** need to be on the NEW_path because if the system crashes before saved all the files in disk
+        // ** it needs to use the old links to reconstruct the stack. this current_links and the one the Reconstruct_stack() 
+        // ** should be the same, so same behaviour
+        Files.Save_critical_file( Paths_run_time.saving_link_file_to_path, linked_files_lines );
 
-
-    }
-
-    public static void End_saving( Task_req _req ){
-
-        // ** clean all the heap pointer, delete paths, dics, etc
-        Controllers.files.storage.Sinalize_saved_files();
+        return;
 
     }
 
@@ -96,31 +83,9 @@ unsafe public struct MANAGER__controller_saving_saver {
 
     }
 
-    public static void Delete_saving_folder( Task_req _req ){
-
-        if( !!!( Directories.Is_sub_path( Paths_run_time.saving_files_folder, Paths_version.path_to_version ) ) )
-            { CONTROLLER__errors.Throw( "path wrong" ); }
-
-        System.IO.Directory.Delete( Paths_run_time.saving_files_folder, true );
-
-    }
-
-    public static void Delete_file_links( Task_req _req ){
-
-        System.IO.File.Delete( Paths_run_time.saving_link_file_to_path );
-
-    }
-
-
-    public static void Create_security_file( Task_req _req ){
-
-        Files.Save_critical_file( Paths_run_time.saving_files_security_file, new byte[ 500 ] );
-
-    }
 
     public static void Save_files( Task_req _req ){
 
-        
         // ** SAVE FILES IN DISK
 
         Dictionary<int,File_IO_operation> dic = new Dictionary<int, File_IO_operation>();
@@ -175,7 +140,6 @@ unsafe public struct MANAGER__controller_saving_saver {
         }
 
 
-
         if( System_run.saving_show_messages )
             { Console.Log( "Will loop throught the deleted files:" ); }
 
@@ -210,6 +174,13 @@ unsafe public struct MANAGER__controller_saving_saver {
 
         _req.managed_data.int_array = actions_ints;
         
+    }
+
+
+    public static void Create_security_file( Task_req _req ){
+
+        Files.Save_critical_file( Paths_run_time.saving_files_security_file, new byte[ 500 ] );
+
     }
 
     public static void Apply_actions_files_in_saving_folder( Task_req _req ){
@@ -305,33 +276,68 @@ unsafe public struct MANAGER__controller_saving_saver {
     }
 
 
-    public static void Save_link_paths( Task_req _req ){
+    public static void Reset_stack( Task_req _req ){
 
-
-        string[] linked_files_lines = Controllers.files.storage.Get_link_files_lines();
-        _req.managed_data.string_array = linked_files_lines;
+        if( Controllers.stack.saver.strem_stack != null )
+            { Controllers.stack.saver.Clean_file(); }
+            else
+            { Files.Save_critical_file( Paths_run_time.safety_stack_file, new byte[ 100_000 ] ); }  
         
-        // ** need to be on the NEW_path because if the system crashes before saved all the files in disk
-        // ** it needs to use the old links to reconstruct the stack. this current_links and the one the Reconstruct_stack() 
-        // ** should be the same, so same behaviour
-        Files.Save_critical_file( Paths_run_time.saving_link_file_to_path, linked_files_lines );
-
         return;
 
     }
 
+    public static void Delete_saving_folder( Task_req _req ){
+
+        if( !!!( Directories.Is_sub_path( Paths_run_time.saving_files_folder, Paths_version.path_to_version ) ) )
+            { CONTROLLER__errors.Throw( "path wrong" ); }
+
+        System.IO.Directory.Delete( Paths_run_time.saving_files_folder, true );
+
+    }
+
+    public static void Delete_file_links( Task_req _req ){
+
+        System.IO.File.Delete( Paths_run_time.saving_link_file_to_path );
+
+    }
 
     public static void Save_stack_start_files( Task_req _req ){
 
-        System.IO.File.Delete( Paths_run_time.stack_start_files );
+        //mark
+        // ** no file will be add or removed, because will NOT save in game, will stop when it can and wait it ends
 
         string[] start_lines = Controllers.files.storage.Get_current_links_lines();
 
-        Files.Save_critical_file( Paths_run_time.stack_start_files, start_lines );
+        System.IO.File.Delete( Paths_run_time._stack_start_files );
+        Files.Save_critical_file( Paths_run_time._stack_start_files, start_lines );
 
         return;
 
     }
+
+    public static void End_saving( Task_req _req ){
+
+        // ** clean all the heap pointer, delete paths, dics, etc
+        Controllers.files.storage.Sinalize_saved_files();
+
+    }
+
+
+
+    public bool Is_saving_files_task_finished(){
+
+        if( req_saving_files == null )
+            { CONTROLLER__errors.Throw( "Tried to verify if the files already saved, but the task is <Color=lightBlue>NULL</Color>" ); }
+
+        return req_saving_files.Is_finalized();
+
+    }
+
+
+
+
+
 
 
 

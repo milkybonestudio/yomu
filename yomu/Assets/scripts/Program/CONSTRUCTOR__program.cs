@@ -37,15 +37,6 @@ public static class CONSTRUCTOR__program {
 
 
 
-        // --- CONTROLLERS GENERIC 1
-            Controllers.heap = CONSTRUCTOR__controller_heap.Construct();
-            Controllers.tasks = CONSTRUCTOR__controller_tasks.Construct();
-            Controllers.resources = CONSTRUCTOR__controller_resources.Construct();
-            CONSTRUCTOR__controller_packets_storage.Construct( ref Controllers.packets );
-
-
-
-
         #if UNITY_EDITOR
 
 
@@ -67,6 +58,13 @@ public static class CONSTRUCTOR__program {
             
         #endif
         
+
+
+        // --- CONTROLLERS GENERIC 1
+            Controllers.heap = CONSTRUCTOR__controller_heap.Construct();
+            Controllers.tasks = CONSTRUCTOR__controller_tasks.Construct();
+            Controllers.resources = CONSTRUCTOR__controller_resources.Construct();
+            Controllers.packets = CONSTRUCTOR__controller_packets_storage.Construct();
 
         
         // --- PERSISTENT AND VERSION FOLDERS
@@ -96,28 +94,23 @@ public static class CONSTRUCTOR__program {
 
         // --- CRASH HANDLER
 
-        if( System_run.activate_crash_handler )
-            {
-                bool system_crashed = System.IO.Directory.Exists( Paths_run_time.saving_run_time_folder );
+        bool system_crashed = System.IO.Directory.Exists( Paths_run_time.saving_run_time_folder );
 
-                if( system_crashed )
-                    { 
+        if( system_crashed && System_run.activate_crash_handler )
+            { 
+                if( System_run.show_program_messages )
+                    { Console.Log( "The sistem crashed. Will handle it" ); }
 
-                        if( System_run.show_program_messages )
-                            { Console.Log( "The sistem crashed. Will handle it" ); }
-
-                        Crash_handler.Change_variables_for_reconstruct();
-                            Crash_handler.Deal_crash(); // ** GUARANTEE STATE
-                        Crash_handler.End_stack_variables();
-                    }
-
+                Crash_handler.Change_variables_for_reconstruct();
+                    Crash_handler.Deal_crash(); // ** GUARANTEE STATE
+                Crash_handler.End_stack_variables();
             }
             else
             {
                 // ** ignores older files
                 System.IO.Directory.Delete( Paths_run_time.saving_run_time_folder, true );
             }
-        
+
 
         TOOL__run_time_folders_constructor.Construct();
 
@@ -130,7 +123,7 @@ public static class CONSTRUCTOR__program {
         
         // --- CONSTRUIR CONTROLADORES GERAIS
 
-            CONSTRUCTOR__controller_data_files.Construct( ref Controllers.files );
+            Controllers.files = CONSTRUCTOR__controller_data_files.Construct();
             Controllers.input = CONSTRUCTOR__controller_input.Construct();
             Controllers.audio = CONSTRUCTOR__controller_audio.Construct();
             Controllers.configurations = CONSTRUCTOR__controller_configurations.Construct();

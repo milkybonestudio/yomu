@@ -22,6 +22,7 @@ public static class Paths_version {
         path_to_version = _path_to_version;
 
         security_file = Get_security_file( _path_to_version );
+        data_link_current_files = Get_data_link_current_files( _path_to_version );
 
         saves = Get_all_saves_folder( _path_to_version );
             Paths_saves.Define_saves_folder( saves );
@@ -31,6 +32,7 @@ public static class Paths_version {
 
         run_time = Get_run_time( _path_to_version );
             Paths_run_time.Define_run_time_folder( run_time );
+        
 
         return;
 
@@ -76,6 +78,15 @@ public static class Paths_version {
         public const string program_name = "program";
         public static string program;
         public static string Get_program( string _path_to_version ){ return Combine( _path_to_version, program_name ); }
+
+
+    // ** CURRENT FILES
+
+        public const string data_link_current_files_NAME = "data_link_current_files.txt";
+        public static string data_link_current_files;
+        public static string Get_data_link_current_files( string _path_to_version ){ return Combine( _path_to_version, data_link_current_files_NAME ); }
+
+
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

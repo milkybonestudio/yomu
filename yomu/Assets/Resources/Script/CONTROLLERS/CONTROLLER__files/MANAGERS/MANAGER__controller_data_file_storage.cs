@@ -148,6 +148,8 @@ unsafe public struct MANAGER__controller_data_file_storage {
         cached_data.heap_key = Controllers.heap.Get_empty();
         cached_data_files[ _path ] = cached_data;
 
+        //mark
+        // ** tirar daqui!!!
         Controllers.stack.files.Save_data_got_file_from_disk( new_data.id, _path );
         
         Add_current( new_data, _path );

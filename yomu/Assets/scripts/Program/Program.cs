@@ -22,6 +22,8 @@ unsafe public class Program : MonoBehaviour {
 
     public void Awake(){
 
+        System_information.main_thread_id = Thread.CurrentThread.ManagedThreadId;
+
         Console.Start();
         CONSTRUCTOR__program.Construir( this ); 
         Console.Update();

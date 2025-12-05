@@ -21,7 +21,7 @@ unsafe public struct CONTROLLER__packets_storage {
 
             foreach( Data_file_link file in storage.list_data_files_packets.values ){
 
-                var storage = (Packet_storage*) file.Get_pointer();
+                var storage = (Packets_storage_data*) file.Get_pointer();
 
                 if( storage->Update() )
                     { break; }
@@ -33,15 +33,20 @@ unsafe public struct CONTROLLER__packets_storage {
     }
 
     
+    #if !UNITY_EDITOR
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    #endif
+    public Packets_storage_data* Get_pointer( int _file_id ){
 
-    
+        return (Packets_storage_data*) storage.pointers[ _file_id ];
+    }
 
 
     // ** Assume the storege already exist in disk
-    public Packet_storage* Get_from_disk( string _path_to_file ){
+    public Packets_storage_data* Get_from_disk( string _path_to_file ){
         
         Data_file_link file_data_link = Controllers.files.operations.Get_file( _path: _path_to_file );
-        Packet_storage* storage = Packet_storage.Start( file_data_link );
+        Packets_storage_data* storage = Packets_storage_data.Start( file_data_link );
         return storage;
         
     }

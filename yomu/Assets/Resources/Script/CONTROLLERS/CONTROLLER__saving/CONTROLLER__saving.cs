@@ -35,7 +35,7 @@ public class CONTROLLER__saving {
 
     private bool Handle_saving_files(){
 
-        if( saver.Finish_saving_files() )
+        if( saver.Is_saving_files_task_finished() )
             {
                 Controllers.stack.Sinalize_saved_all_files();
                 state = Saving_state.waiting_to_save_files;

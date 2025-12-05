@@ -20,7 +20,7 @@ unsafe public struct MANAGER__packet_storage_creation {
             }
 
                 
-        Packet_storage* packet_storage = ( Packet_storage* ) _pointer;
+        Packets_storage_data* packets_storage = ( Packets_storage_data* ) _pointer;
 
         // ** GET FINAL SETTINGS
         Packet_storage_start_data default_args = Controllers.packets.defaults.Get_default_args();
@@ -41,11 +41,11 @@ unsafe public struct MANAGER__packet_storage_creation {
         Packet_storage_start_data_PER_SIZE[] correct_data_per_size_array = correct_data.sizes_settings;
 
 
-        int last_byte_of_buffer_pointer = (int)&((Packet_storage*)null)->infos_buffer[ Packet_storage.LENGTH_INFO_BUFFER - 1 ];
+        int last_byte_of_buffer_pointer = (int)&((Packets_storage_data*)null)->infos_buffer[ Packets_storage_data.LENGTH_INFO_BUFFER - 1 ];
         int current_pointer = ( last_byte_of_buffer_pointer + 1 );
 
         int* sizes = Controllers.packets.sizes.sizes;
-        Packet_storage_info* infos = (Packet_storage_info*) packet_storage->infos_buffer;
+        Packet_storage_info* infos = (Packet_storage_info*) packets_storage->infos_buffer;
 
         // Console.Log( "size type: " + sizeof( Packet_storage ) );
         

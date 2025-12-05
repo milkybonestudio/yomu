@@ -110,7 +110,7 @@ unsafe public struct MANAGER__safety_stack_packet_storage {
 
         fixed( byte* pointer_storage = storage_file ){
 
-            Packet_storage* storage = (Packet_storage*) pointer_storage;
+            Packets_storage_data* storage = (Packets_storage_data*) pointer_storage;
 
             if( storage->Is_slot_used( size, slot ) )
                 { return Stack_reconstruction_result_message.Construct( $"tried to alloc a slot and size that wa already allocated. slot: <Color=lightBlue>{ slot }</Color> size: <Color=lightBlue>{ size }</Color>", Stack_reconstruction_result.fail ); }
@@ -188,7 +188,7 @@ unsafe public struct MANAGER__safety_stack_packet_storage {
 
         fixed( byte* pointer_storage = storage_file ){
 
-            Packet_storage* storage = (Packet_storage*) pointer_storage;
+            Packets_storage_data* storage = (Packets_storage_data*) pointer_storage;
 
             if( storage->Is_slot_used( size, slot ) )
                 { CONTROLLER__errors.Throw( $"tried to alloc a slot and size that wa already allocated. slot: <Color=lightBlue>{ slot }</Color> size: <Color=lightBlue>{ size }</Color>" ); }
@@ -283,7 +283,7 @@ unsafe public struct MANAGER__safety_stack_packet_storage {
 
         fixed( byte* pointer_storage = storage_file ){
 
-            Packet_storage* storage = (Packet_storage*) pointer_storage;            
+            Packets_storage_data* storage = (Packets_storage_data*) pointer_storage;
             int real_size = storage->Force_expand( size );
 
             if( real_size != new_size_length )

@@ -124,10 +124,12 @@ unsafe public struct MANAGER__safety_stack_saver {
 
 
 
+    
+
     public void Clean_file(){
 
-        strem_stack.Seek( 0, SeekOrigin.Begin );
 
+        strem_stack.Seek( 0, SeekOrigin.Begin );
 
         const int buffer_size = ( 256 * 1024 ); // 4 MB
         byte[] buffer_0 = new byte[ buffer_size ];
