@@ -30,8 +30,6 @@ unsafe public struct MANAGER__safety_stack_files {
     public void* origianl_message_pointer;
 
 
-
-
     public static Stack_reconstruction_result_message Read_message( Crash_handle_ephemeral_files _files_OS, Crash_cached_files _files, void* _message ){
 
 
@@ -220,7 +218,14 @@ unsafe public struct MANAGER__safety_stack_files {
 
     	fixed( byte* data_pointer = file_data )
             { VOID.Transfer_data( &message->pointer_data, ( data_pointer + message->point_to_change ), message->length ); }
+
+
         
+        //mark
+        Data_file_link link = Controllers.files.storage.Get_data( message->file_id );
+        Controllers.files.operations.Change_data_file( link, message->point_to_change, &message->pointer_data, message->length );
+
+
         return Stack_reconstruction_result_message.Construct( null, Stack_reconstruction_result.succes );
 
     }
@@ -333,26 +338,17 @@ unsafe public struct MANAGER__safety_stack_files {
             { return Stack_reconstruction_result_message.Construct( $"There is already a file in the path <Color=lightBlue>{ path }</Color>", Stack_reconstruction_result.fail ); }
 
 
-        // if( _files.Length <= file_id ) 
-        //     {
-        //         if( System_run.show_program_construction_messages )
-        //             { Console.Log( $"need to expand for the id <Color=lightBlue>{ file_id }</Color>" ); }
-        //         // ** need to expand
-        //         Array.Resize( ref _files, ( file_id + 20 ) );
-        //     }
-
-
-
         if( _files.Have_data( file_id ) )
             { return Stack_reconstruction_result_message.Construct( "This id is already in use: " + path, Stack_reconstruction_result.fail ); }
         
-        // if( _files[ file_id ].Is_deleted() )
-        //     { return Stack_reconstruction_result_message.Construct( "This id was already used: " + path, Stack_reconstruction_result.fail ); }
-
 
         // ** create file
         byte[] data = _files_OS.Create_new_file( path, file_length );
         _files.Add_data( path, file_id, data );
+
+
+        //mark
+        Controllers.files.operations.Create_new_file_EMPTY( path, file_length );
 
 
         return Stack_reconstruction_result_message.Construct( null, Stack_reconstruction_result.succes );
@@ -479,6 +475,9 @@ unsafe public struct MANAGER__safety_stack_files {
         // _files[ file_id ].data = _files_OS.Get_file( path );
         // _files[ file_id ].path = path;
         
+        
+        //mark
+        Controllers.files.operations.Delete_file( path );
 
 
         return Stack_reconstruction_result_message.Construct( null, Stack_reconstruction_result.succes );
@@ -541,6 +540,11 @@ unsafe public struct MANAGER__safety_stack_files {
 
         _files_OS.Switch_file( _files.Get_path( file_id ), _files.Get_data( file_id ) );
         _files.Remove_data( file_id );
+
+
+        //mark
+        Data_file_link link = Controllers.files.storage.Get_data( file_id );
+        Controllers.files.operations.Remove_file( link );
 
 
         return Stack_reconstruction_result_message.Construct( null, Stack_reconstruction_result.succes );
@@ -681,6 +685,10 @@ unsafe public struct MANAGER__safety_stack_files {
 
         // ** create file
         _files.Add_data( path, file_id, _files_OS.Get_file( path ) );
+
+
+        //mark
+        Controllers.files.operations.Get_file_from_disk( path );
         
 
         return Stack_reconstruction_result_message.Construct( null, Stack_reconstruction_result.succes );
@@ -728,6 +736,7 @@ unsafe public struct MANAGER__safety_stack_files {
 
         message->core_message.length = message_length;
 
+
         
         Controllers.stack.Save_message( message_length );
 
@@ -758,6 +767,11 @@ unsafe public struct MANAGER__safety_stack_files {
 
         _files.Change_length_data( file_id, new_length );
 
+
+
+        Data_file_link link = Controllers.files.storage.Get_data( file_id );
+        Controllers.files.operations.Change_length_file( link, new_length );
+        
 
         return Stack_reconstruction_result_message.Construct( null, Stack_reconstruction_result.succes );
 

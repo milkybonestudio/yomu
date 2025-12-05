@@ -25,7 +25,7 @@ unsafe public struct MANAGER__packet_storage_creation {
         // ** GET FINAL SETTINGS
         Packet_storage_start_data default_args = Controllers.packets.defaults.Get_default_args();
         
-        for( int index = 0 ; index < (int) Packet_storage_size.END ; index++  ){ 
+        for( int index = 0 ; index < (int) Packet_storage_size._MAX ; index++  ){ 
 
             Packet_storage_start_data_PER_SIZE data = _start_data.sizes_settings[ index ];
 
@@ -34,7 +34,6 @@ unsafe public struct MANAGER__packet_storage_creation {
 
             if( !!!( data.used ) )
                 { _start_data.sizes_settings[ index ] = default_args.sizes_settings[ index ]; }
-
         }
 
         Packet_storage_start_data correct_data = _start_data;

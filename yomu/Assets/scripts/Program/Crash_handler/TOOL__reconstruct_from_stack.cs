@@ -18,8 +18,9 @@ unsafe public static class TOOL__reconstruct_from_stack{
 
         // cuidar que stack_start_files pode estar desatualizado ou atualizado
 
-        // --- nao vai mais estar no run time, vai estar no program, mas não vai dar problemas
-        string[] start_paths = System.IO.File.ReadAllLines( Paths_run_time._stack_start_files );
+        // --- nao vai mais estar no run time, vai estar no version, mas não vai dar problemas
+        // --- os links tem que tambem manter uma coerencia entre as runs, ids dentro de structs/files não podem se preocupar com "esse id é valido?"
+        string[] start_paths = System.IO.File.ReadAllLines( Paths_version.data_link_current_files );
 
         // Crash_cached_file[] files = new Crash_cached_file[ start_paths.Length ];
 

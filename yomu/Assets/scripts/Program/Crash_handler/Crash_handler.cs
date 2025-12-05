@@ -29,6 +29,19 @@ unsafe public static class Crash_handler{
     public static byte[] stack_file;
     
 
+    public static Crash_handle_result Reconstruct_state(){
+
+        Change_variables_for_reconstruct(); 
+        
+            Crash_handle_result result = Deal_crash().result;
+
+        End_stack_variables();
+
+        return result;
+
+    }
+
+
     public static Crash_handle_return Deal_crash(){
 
         Console.Log( System_run.show_program_construction_messages, "----------------------- CALLED <Color=lightBlue>DEAL CRASH</Color> -----------------------");
@@ -42,6 +55,9 @@ unsafe public static class Crash_handler{
 
         if ( already_pass_the_data )
             { 
+                if( System.IO.File.Exists( Paths_run_time.data_link_current_files_TEMP ) )
+                    {}
+
                 Delete_all(); 
                 return  Crash_handle_return.Construct( "already pass all the data", Crash_handle_result.sucess, Crash_handle_route.all_files_already_got_saved ); 
             }
@@ -60,6 +76,7 @@ unsafe public static class Crash_handler{
         return Pass_data_to_disk( Crash_handle_route.all_temp_files_were_already_there_just_move );
 
     }
+
 
 
     
@@ -453,6 +470,15 @@ unsafe public static class Crash_handler{
             { Console.Log( "Will just delete the folder and go with the flow normally" ); }
         
 
+
+        if( System.IO.File.Exists( Paths_run_time.data_link_current_files_TEMP ) )
+            {
+                if( System.IO.File.Exists( Paths_version.data_link_current_files ) )
+                    { System.IO.File.Delete( Paths_version.data_link_current_files ); }
+
+                System.IO.File.Move( Paths_run_time.data_link_current_files_TEMP, Paths_version.data_link_current_files );
+            }
+
         //mark
         Console.Log( "ATIVAR NOVAMENTE QUANDO PRONTO" );
         // System.IO.Directory.Delete( Paths_program.saving_run_time_folder, true );
@@ -488,14 +514,15 @@ unsafe public static class Crash_handler{
 
         // ** all the import constructors that need acces are structs
         // Controllers.stack.buffer.Activate__is_reconstructing_stack();
-        Controllers.files.Activate__is_reconstructing_stack_from_CRASH();
+        // Controllers.files.Activate__is_reconstructing_stack_from_CRASH();
 
     }
 
     public static void End_stack_variables(){
 
         Controllers.stack.Reset_stack();
-        Controllers.files.Deactivate__is_reconstructing_stack_from_CRASH();
+        Controllers.files.Reset_files();
+        // Controllers.files.Deactivate__is_reconstructing_stack_from_CRASH();
 
     }
 

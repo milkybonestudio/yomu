@@ -36,8 +36,8 @@ unsafe public struct MANAGER__controller_data_file_operations {
     public void Change_data_file( Data_file_link _data, int _off_set, void* _data_pointer, int _length ){
 
 
-        if( Controllers.files.is_reconstructing_stack_from_CRASH )
-            { return; }
+        // if( Controllers.files.is_reconstructing_stack_from_CRASH )
+        //     { return; }
 
 
         lock( lock_obj ){
@@ -113,8 +113,8 @@ unsafe public struct MANAGER__controller_data_file_operations {
     public Data_file_link Get_file( string _path ){
 
         
-        if( Controllers.files.is_reconstructing_stack_from_CRASH )
-            { return default; }
+        // if( Controllers.files.is_reconstructing_stack_from_CRASH )
+        //     { return default; }
 
         // no need to use stack
 
@@ -146,8 +146,8 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
         // no need to use stack
 
-        if( Controllers.files.is_reconstructing_stack_from_CRASH )
-            { return default; }
+        // if( Controllers.files.is_reconstructing_stack_from_CRASH )
+        //     { return default; }
 
         lock( lock_obj ){
 
@@ -207,8 +207,8 @@ unsafe public struct MANAGER__controller_data_file_operations {
     public Data_file_link Get_file_from_disk( string _path ){
 
 
-        if( Controllers.files.is_reconstructing_stack_from_CRASH )
-            { return default; }
+        // if( Controllers.files.is_reconstructing_stack_from_CRASH )
+        //     { return default; }
 
         // add slot
 
@@ -257,8 +257,8 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
     public void Remove_file( Data_file_link _data_file ){
 
-        if( Controllers.files.is_reconstructing_stack_from_CRASH )
-            { return; }
+        // if( Controllers.files.is_reconstructing_stack_from_CRASH )
+        //     { return; }
 
         lock( lock_obj ){
 
@@ -295,8 +295,8 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
     public Data_file_link Create_new_file( byte[] _data, string _path ){
 
-        if( Controllers.files.is_reconstructing_stack_from_CRASH )
-            { return default; }
+        // if( Controllers.files.is_reconstructing_stack_from_CRASH )
+        //     { return default; }
 
         if( _data == null )
             { CONTROLLER__errors.Throw( "tried to create a path but the data is null" ); }
@@ -307,8 +307,8 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
     public Data_file_link Create_new_file( void* _file_pointer, int _file_length, string _path ){
 
-        if( Controllers.files.is_reconstructing_stack_from_CRASH )
-            { return default; }
+        // if( Controllers.files.is_reconstructing_stack_from_CRASH )
+        //     { return default; }
         // ** call only when create run time files
 
         lock( lock_obj ){
@@ -367,8 +367,8 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
         // ** call only when create run time files
 
-        if( Controllers.files.is_reconstructing_stack_from_CRASH )
-            { return default; }
+        // if( Controllers.files.is_reconstructing_stack_from_CRASH )
+        //     { return default; }
 
         lock( lock_obj ){
 
@@ -432,8 +432,8 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
     private void Delete_file_intern( string _path ){
 
-        if( Controllers.files.is_reconstructing_stack_from_CRASH )
-            { return; }
+        // if( Controllers.files.is_reconstructing_stack_from_CRASH )
+        //     { return; }
     
         if( System_run.max_security )
             {             
@@ -474,8 +474,8 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
     public Data_file_link Change_length_file( Data_file_link _data_link, int _new_length ){
         
-        if( Controllers.files.is_reconstructing_stack_from_CRASH )
-            { return _data_link; }
+        // if( Controllers.files.is_reconstructing_stack_from_CRASH )
+        //     { return _data_link; }
 
         lock( lock_obj ){
 
@@ -484,6 +484,9 @@ unsafe public struct MANAGER__controller_data_file_operations {
                 {                    
                     if( Controllers.saving.state == Saving_state.saving_files )
                         { CONTROLLER__errors.Throw( $"Tried to change the length of the file <Color=lightBlue>{ Controllers.files.storage.Get_path_for_file( _data_link ) }</Color> from disk, but the system is saving the files. For not corrupt the system it can not happens" ); }
+
+                    if( !!!( Controllers.files.storage.Is_id_valid( _data_link.id ) ) )
+                        { CONTROLLER__errors.Throw( $"Tried to change the length of the file <Color=lightBlue>{ _data_link.id }</Color> but the id is invalid" ); }
                 }
 
             Heap_key heap_key = Controllers.heap.Change_length_key( _data_link.heap_key, _new_length );

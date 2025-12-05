@@ -309,8 +309,11 @@ unsafe public struct MANAGER__controller_saving_saver {
 
         string[] start_lines = Controllers.files.storage.Get_current_links_lines();
 
-        System.IO.File.Delete( Paths_run_time._stack_start_files );
-        Files.Save_critical_file( Paths_run_time._stack_start_files, start_lines );
+        Files.Save_critical_file( Paths_run_time.data_link_current_files_TEMP, start_lines );
+
+        System.IO.File.Delete( Paths_version.data_link_current_files );
+        System.IO.File.Move( Paths_run_time.data_link_current_files_TEMP, Paths_version.data_link_current_files );
+
 
         return;
 

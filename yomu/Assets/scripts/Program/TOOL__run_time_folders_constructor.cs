@@ -22,8 +22,6 @@ public static class TOOL__run_time_folders_constructor {
             if( System_run.show_program_construction_messages )
                 { Console.Log( "Constructed safety_stack_folder" ); }
 
-
-
         
         if( System_run.show_program_construction_messages )
             { Console.Log( "--- FINSH CONSTRUCT RUN TIME FOLDERS ---" ); }

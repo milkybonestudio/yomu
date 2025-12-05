@@ -87,8 +87,6 @@ public static class Paths_version {
         public static string Get_data_link_current_files( string _path_to_version ){ return Combine( _path_to_version, data_link_current_files_NAME ); }
 
 
-
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static string Combine( string _str_1, string _str_2 ){
 

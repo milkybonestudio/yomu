@@ -14,6 +14,27 @@ unsafe public struct CONTROLLER__safety_stack {
     // first 8 bytes always used for the same thing 
 
 
+    public void Start_saver(){
+
+        if( Paths_run_time.saving_run_time_folder == null )
+            { CONTROLLER__errors.Throw( $"Tried to create the safety_stack controller but the saving_run_time folder was not found " ); }
+
+
+        System.IO.Directory.CreateDirectory( Paths_run_time.saving_run_time_folder );
+            System.IO.Directory.CreateDirectory( Paths_run_time.safety_stack_folder );
+
+            
+        if( System.IO.File.Exists( Paths_run_time.safety_stack_file ) )
+            { CONTROLLER__errors.Throw( $"The stack_safety_file is in the path <Color=lightBlue>{ Paths_run_time.safety_stack_file }</Color> and shouldn't in the normal flow of the code" ); }
+
+
+        File.WriteAllBytes( Paths_run_time.safety_stack_file, ARRAY.Get_array<byte>( _length: safety_file_size, _value: 45 ) );
+
+        saver = MANAGER__safety_stack_saver.Construct();
+
+    }
+
+
     public void Destroy(){
 
         // saver.strem_stack?.Close();

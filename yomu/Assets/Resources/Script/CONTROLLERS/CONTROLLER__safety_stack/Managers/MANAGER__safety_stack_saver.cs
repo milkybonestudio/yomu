@@ -8,7 +8,7 @@ using System.Threading;
 unsafe public struct MANAGER__safety_stack_saver {
 
 
-    public static MANAGER__safety_stack_saver Construct( ref CONTROLLER__safety_stack _controller_ref ){
+    public static MANAGER__safety_stack_saver Construct(){
 
         MANAGER__safety_stack_saver ret = default;
 
@@ -17,7 +17,7 @@ unsafe public struct MANAGER__safety_stack_saver {
 
             // ret.strem_stack = FILE_STREAM.Criar_stream( Paths_program.safety_stack_file, ret.stream_size );
             ret.strem_stack = FILE_STREAM.Criar_stream( Paths_run_time.safety_stack_file, ret.stream_size );
-            ret.file_size = _controller_ref.safety_file_size;
+            ret.file_size = Controllers.stack.safety_file_size;
 
 
             ret.req_saving = new Task_req( "req_saving" );

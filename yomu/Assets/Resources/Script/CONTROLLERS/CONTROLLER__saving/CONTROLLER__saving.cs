@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 
 
-public class CONTROLLER__saving {
+unsafe public struct CONTROLLER__saving {
 
     public static CONTROLLER__saving instancia;
     public static CONTROLLER__saving Pegar_instancia(){ return instancia; }

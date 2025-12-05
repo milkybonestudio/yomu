@@ -43,7 +43,6 @@ unsafe public struct MANAGER__controller_data_file_storage {
     public Dictionary<string,int> path_TO_id;
     public Dictionary<int,string> id_TO_path;
 
-
     public Dictionary<int,Data_file_link> current_files;
 
     // ** files that would be in disk when saved, also count as files
@@ -69,7 +68,92 @@ unsafe public struct MANAGER__controller_data_file_storage {
     }
 
 
+    public void Force_syncronize_to_disk_PROGRAM_CONSTRUCTOR(){
+
+        
+        foreach( Data_file_link data in current_files.Values ){
+
+            string path = id_TO_path[ data.id ];
+            Files.Save_critical_file( path, data.Get_pointer(), data.Get_length() );
+
+        }
+
+        foreach( var kv in cached_data_files ){ 
+
+            string path = kv.Key;
+            Data_file_link data = kv.Value;
+
+            Files.Save_critical_file( path, data.Get_pointer(), data.Get_length() );
+
+        }
+
+        foreach( var kv in deleted_files ){ 
+            
+            string path = kv.Key;
+            Data_file_link data = kv.Value;
+
+            if( System.IO.File.Exists( path ) )
+                { System.IO.File.Delete( path ); }
+            
+        }
+
+    }
+
+    public bool Have_files_any_kind(){
+
+        return ( ( current_files.Count + cached_data_files.Count + deleted_files.Count ) > 0 );
+
+    }
+
+    public void Reset(){
+
+        foreach( Data_file_link data in current_files.Values )
+            { Controllers.heap.Return_key( data.heap_key ); }
+
+        foreach( Data_file_link data in cached_data_files.Values )
+            { Controllers.heap.Return_key( data.heap_key ); }
+
+        foreach( Data_file_link data in deleted_files.Values )
+            { Controllers.heap.Return_key( data.heap_key ); }
+
+        cached_data_files.Clear();
+        deleted_files.Clear();
+
+        current_files.Clear();
+        path_TO_id.Clear();
+        id_TO_path.Clear();
+
+        return;
+
+    }
+
+
     public string[] Get_current_links_lines(){
+
+        if( Controllers.files.storage.id_TO_path.Count == 0 )
+            { return new string[]{ "0??NULL" }; }
+
+        int[] sorted_ids = Controllers.files.storage.id_TO_path.Keys.ToArray();
+        Array.Sort( sorted_ids );
+
+        string[] result = new string[ sorted_ids.Length ];
+
+        for( int index = 0 ; index < result.Length ; index++ ){
+
+            int id = sorted_ids[ index ];
+            string path = Controllers.files.storage.id_TO_path[ id ];
+                result[ index ] = $"{ id.ToString() }??{ path }";
+        }
+
+        return result;
+
+    }
+
+
+    public string[] _Get_current_links_lines(){
+
+        if( Controllers.files.storage.id_TO_path.Count == 0 )
+            { return new string[]{ "0??NULL" }; }
 
         int max_key = Controllers.files.storage.id_TO_path.Keys.Max();
 
@@ -81,6 +165,7 @@ unsafe public struct MANAGER__controller_data_file_storage {
         return result;
 
     }
+
 
     public string[] Get_link_files_lines(){
 

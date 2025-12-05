@@ -35,6 +35,14 @@ public static class CONSTRUCTOR__program {
         Paths_version.Define_version_folder( version_folder );
 
 
+        // --- CONTROLLERS GENERIC 1
+            Controllers.heap = CONSTRUCTOR__controller_heap.Construct();
+            Controllers.tasks = CONSTRUCTOR__controller_tasks.Construct();
+            Controllers.resources = CONSTRUCTOR__controller_resources.Construct();
+            Controllers.packets = CONSTRUCTOR__controller_packets_storage.Construct();
+            Controllers.files = CONSTRUCTOR__controller_data_files.Construct();
+            Controllers.saving = CONSTRUCTOR__controller_saving.Construct();
+            Controllers.stack = CONSTRUCTOR__controller_safety_stack.Construct();
 
 
         #if UNITY_EDITOR
@@ -60,11 +68,6 @@ public static class CONSTRUCTOR__program {
         
 
 
-        // --- CONTROLLERS GENERIC 1
-            Controllers.heap = CONSTRUCTOR__controller_heap.Construct();
-            Controllers.tasks = CONSTRUCTOR__controller_tasks.Construct();
-            Controllers.resources = CONSTRUCTOR__controller_resources.Construct();
-            Controllers.packets = CONSTRUCTOR__controller_packets_storage.Construct();
 
         
         // --- PERSISTENT AND VERSION FOLDERS
@@ -72,47 +75,36 @@ public static class CONSTRUCTOR__program {
         if( !!!( System.IO.Directory.Exists( Paths_system.persistent_data ) ) )
             {  Directory.CreateDirectory( Paths_system.persistent_data ); } // only editor, is construct by default in build
 
-            
-        if( !!!( System.IO.Directory.Exists( Paths_version.path_to_version ) ) )
-            { TOOL__version_folders_constructor.Construct( Paths_system.persistent_data ); } // ** FIRST PLAY
 
+        bool is_first_play = !!!( System.IO.Directory.Exists( Paths_version.path_to_version ) );
+        if( is_first_play )
+            { TOOL__version_folders_constructor.Construct(); }
 
-        if( !!!( System.IO.Directory.Exists( Paths_version.security_file ) ) )
+        bool corrupted_when_creating_start_files = !!!( System.IO.Directory.Exists( Paths_version.security_file ) );
+        if( corrupted_when_creating_start_files )
             { 
                 Directories.Delete_safe( Paths_version.path_to_version );
-                TOOL__version_folders_constructor.Construct( Paths_system.persistent_data );
+                TOOL__version_folders_constructor.Construct();
             }
-
-
-
-        // ** CREATE files + stack
-
-
-
-        // --- CONTROLLERS GENERIC 2
-
-
-        // --- CRASH HANDLER
 
         bool system_crashed = System.IO.Directory.Exists( Paths_run_time.saving_run_time_folder );
-
-        if( system_crashed && System_run.activate_crash_handler )
+        if( system_crashed )
             { 
-                if( System_run.show_program_messages )
-                    { Console.Log( "The sistem crashed. Will handle it" ); }
+                Crash_handle_result result_reconstruct_from_crash = Crash_handle_result.fail;
 
-                Crash_handler.Change_variables_for_reconstruct();
-                    Crash_handler.Deal_crash(); // ** GUARANTEE STATE
-                Crash_handler.End_stack_variables();
-            }
-            else
-            {
-                // ** ignores older files
-                System.IO.Directory.Delete( Paths_run_time.saving_run_time_folder, true );
-            }
+                if( System_run.activate_crash_handler )
+                    { result_reconstruct_from_crash = Crash_handler.Reconstruct_state(); }
 
+                if( result_reconstruct_from_crash == Crash_handle_result.fail )
+                    { System.IO.Directory.Delete( Paths_run_time.saving_run_time_folder, true ); } // ** ignores older files
+                            
+            }
+            
 
         TOOL__run_time_folders_constructor.Construct();
+
+        Controllers.files.Get_links_with_disk_file();
+        Controllers.stack.Start_saver();
 
         
     
@@ -123,7 +115,6 @@ public static class CONSTRUCTOR__program {
         
         // --- CONSTRUIR CONTROLADORES GERAIS
 
-            Controllers.files = CONSTRUCTOR__controller_data_files.Construct();
             Controllers.input = CONSTRUCTOR__controller_input.Construct();
             Controllers.audio = CONSTRUCTOR__controller_audio.Construct();
             Controllers.configurations = CONSTRUCTOR__controller_configurations.Construct();
@@ -172,11 +163,6 @@ public static class CONSTRUCTOR__program {
         Controllers_program.canvas_spaces.canvas_space_current.content.world.Add( nothing_structure );
         
         
-        Controllers.saving = CONSTRUCTOR__controller_saving.Construct();
-
-        // ** STRUCTS CONTROLLERS
-
-            CONSTRUCTOR__controller_safety_stack.Construct( ref Controllers.stack );
 
         // --- LISTS
         //performance

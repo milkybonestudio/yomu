@@ -89,7 +89,7 @@ unsafe public static class TEST__stack {
 
         if( Input.GetKeyDown( KeyCode.A ) )
             {
-                Controllers.stack.files.Save_data_got_file_from_disk( '&', Path.Combine( Paths_version.data_link_current_files )  );
+                Controllers.stack.files.Save_data_got_file_from_disk( '&', "path_to_file"  );
                 Controllers.stack.test.Save_stack_in_disk_sync();
             }
 

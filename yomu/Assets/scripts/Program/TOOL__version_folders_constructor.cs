@@ -17,36 +17,38 @@ unsafe public static class TOOL__version_folders_constructor {
     private const int LENGTH_SAFETY_FILES = 1_000_000;
     private const int LENGTH_CREATE_FILE = 2_500_000;
 
-    public static void Construct( string _path_to_persistent_location ){
+    public static void Construct(){
 
 
+        // string _path_to_persistent_location = ;
 
-        // --- CREATE VERSION FOLDER
+        // // --- CREATE VERSION FOLDER
 
-        Yomu_version version = System_information.version;
-        string version_folder = Path.Combine( _path_to_persistent_location, Yomu_version.Get_name( version ) );
-        Paths_version.Define_version_folder( version_folder );
-
-
+        // Yomu_version version = System_information.version;
+        // string version_folder = Path.Combine( _path_to_persistent_location, Yomu_version.Get_name( version ) );
+        // Paths_version.Define_version_folder( version_folder );
 
 
-        if( System.IO.Directory.Exists( version_folder ) )
-            { CONTROLLER__errors.Throw( $"Tried to create a new version folder but there is already a folder in { version_folder }" ); }
+        // if( System.IO.Directory.Exists( version_folder ) )
+        //     { CONTROLLER__errors.Throw( $"Tried to create a new version folder but there is already a folder in { version_folder }" ); }
 
-        Directory.CreateDirectory( version_folder );
+        Directory.CreateDirectory( Paths_system.persistent_data );
         Create_program_folder();
         Create_saves_folder();
+
+        Controllers.files.operations.Create_new_file_EMPTY(  Path.Combine( Paths_version.path_to_version, "TEST_FILE" ), 100 );
 
 
         // --- DATA FILES
 
+            Controllers.files.storage.Force_syncronize_to_disk_PROGRAM_CONSTRUCTOR();
+
             // ** will create all the files with the normal flow
-            Files.Save_critical_file( Paths_version.data_link_current_files, new string[]{ null }  );
+            Files.Save_critical_file( Paths_version.data_link_current_files, Controllers.files.storage.Get_current_links_lines() );
 
 
-
-        
         Controllers.stack.Reset_stack();
+        Controllers.files.Reset_files();
         
 
         // --- SAFETY FILE
@@ -71,19 +73,23 @@ unsafe public static class TOOL__version_folders_constructor {
 
         // --- PACKED STORAGE
 
-            Packet_storage_start_data program_storage_data = CONSTRUCTOR__controller_packets_storage.Get_SIMPLE_args();
-            
-            int length_storage_program = program_storage_data.Get_file_length();
-            void* pointer_storage_program = Controllers.heap.Get_fast_pointer( length_storage_program );
+        if( false )
+            {
+                Packet_storage_start_data program_storage_data = CONSTRUCTOR__controller_packets_storage.Get_SIMPLE_args();
+                
+                int length_storage_program = program_storage_data.Get_file_length();
+                void* pointer_storage_program = Controllers.heap.Get_fast_pointer( length_storage_program );
 
-            Controllers.packets.creation.Apply_create_data( pointer_storage_program, length_storage_program , program_storage_data );
+                Controllers.packets.creation.Apply_create_data( pointer_storage_program, length_storage_program , program_storage_data );
 
-            Files.Save_critical_file( Paths_program.program_storage_SIMPLE, pointer_storage_program, length_storage_program );
+                Files.Save_critical_file( Paths_program.program_storage_SIMPLE, pointer_storage_program, length_storage_program );
+            }
+
 
 
         // --- CURRENT PACKETS_STORES
 
-            Files.Save_critical_file( Paths_program.current_packets_storages, new string[]{ null }  );
+            Files.Save_critical_file( Paths_program.current_packets_storages, new string[]{ "null" }  );
 
 
         return;

@@ -43,51 +43,54 @@ unsafe public static class CONSTRUCTOR__controller_packets_storage{
     }
 
 
+    private static void Change_value( Packet_storage_start_data_PER_SIZE[] _sizes, Packet_storage_size _size, int _slots_to_need_up, int _slots, int _slots_add_per_expansion ){
 
+        _sizes[ (int) _size ] = Packet_storage_start_data_PER_SIZE.Construct( _size, _slots, _slots_to_need_up, _slots_add_per_expansion );
+
+    }
 
     public static Packet_storage_start_data Get_SIMPLE_args(){
 
         int FILE_START_LENGTH = 4_500_000;
 
-        Packet_storage_start_data_PER_SIZE[] sizes = new Packet_storage_start_data_PER_SIZE[]{
+        Packet_storage_start_data_PER_SIZE[] sizes = new Packet_storage_start_data_PER_SIZE[ (int) Packet_storage_size.END ];
+        
 
-            new(){ size = Packet_storage_size._1_byte,     slots_to_need_up = 500, slots = 5_000,  slots_add_per_expansion = 150  },
-            new(){ size = Packet_storage_size._2_bytes,    slots_to_need_up = 500, slots = 5_000,  slots_add_per_expansion = 150  },
-            new(){ size = Packet_storage_size._3_bytes,    slots_to_need_up = 500, slots = 5_000,  slots_add_per_expansion = 150  },
-            new(){ size = Packet_storage_size._4_bytes,    slots_to_need_up = 500, slots = 5_000,  slots_add_per_expansion = 100  },
-            new(){ size = Packet_storage_size._5_bytes,    slots_to_need_up = 500, slots = 5_000,  slots_add_per_expansion = 100  },
-            new(){ size = Packet_storage_size._10_bytes,   slots_to_need_up = 250, slots = 4_000,  slots_add_per_expansion = 100  },
-            new(){ size = Packet_storage_size._20_bytes,   slots_to_need_up = 250, slots = 4_000,  slots_add_per_expansion = 100  },
-            new(){ size = Packet_storage_size._40_bytes,   slots_to_need_up = 250, slots = 3_000,  slots_add_per_expansion = 100  },
-            new(){ size = Packet_storage_size._60_bytes,   slots_to_need_up = 250, slots = 3_000,  slots_add_per_expansion = 75   },
-            new(){ size = Packet_storage_size._80_bytes,   slots_to_need_up = 100, slots = 2_000,  slots_add_per_expansion = 75   },
-            new(){ size = Packet_storage_size._120_bytes,  slots_to_need_up = 100, slots = 2_000,  slots_add_per_expansion = 75   },
-            new(){ size = Packet_storage_size._160_bytes,  slots_to_need_up = 100, slots = 1_500,  slots_add_per_expansion = 75   },
-            new(){ size = Packet_storage_size._200_bytes,  slots_to_need_up = 100, slots = 1_000,  slots_add_per_expansion = 50   },
+            Change_value( _sizes: sizes, _size : Packet_storage_size._1_byte,     _slots_to_need_up : 500, _slots : 5_000,  _slots_add_per_expansion : 150  );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._2_bytes,    _slots_to_need_up : 500, _slots : 5_000,  _slots_add_per_expansion : 150  );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._3_bytes,    _slots_to_need_up : 500, _slots : 5_000,  _slots_add_per_expansion : 150  );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._4_bytes,    _slots_to_need_up : 500, _slots : 5_000,  _slots_add_per_expansion : 100  );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._5_bytes,    _slots_to_need_up : 500, _slots : 5_000,  _slots_add_per_expansion : 100  );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._10_bytes,   _slots_to_need_up : 250, _slots : 4_000,  _slots_add_per_expansion : 100  );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._20_bytes,   _slots_to_need_up : 250, _slots : 4_000,  _slots_add_per_expansion : 100  );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._40_bytes,   _slots_to_need_up : 250, _slots : 3_000,  _slots_add_per_expansion : 100  );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._60_bytes,   _slots_to_need_up : 250, _slots : 3_000,  _slots_add_per_expansion : 75   );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._80_bytes,   _slots_to_need_up : 100, _slots : 2_000,  _slots_add_per_expansion : 75   );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._120_bytes,  _slots_to_need_up : 100, _slots : 2_000,  _slots_add_per_expansion : 75   );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._160_bytes,  _slots_to_need_up : 100, _slots : 1_500,  _slots_add_per_expansion : 75   );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._200_bytes,  _slots_to_need_up : 100, _slots : 1_000,  _slots_add_per_expansion : 50   );
 
-            new(){ size = Packet_storage_size._250_bytes,  slots_to_need_up = 100, slots = 700,  slots_add_per_expansion = 50    },
-            new(){ size = Packet_storage_size._300_bytes,  slots_to_need_up = 100, slots = 500,  slots_add_per_expansion = 25    },
-            new(){ size = Packet_storage_size._350_bytes,  slots_to_need_up = 100, slots = 500,  slots_add_per_expansion = 25    },
-            new(){ size = Packet_storage_size._400_bytes,  slots_to_need_up = 100, slots = 300,  slots_add_per_expansion = 25    },
-            new(){ size = Packet_storage_size._500_bytes,  slots_to_need_up = 75,  slots = 300,  slots_add_per_expansion = 25    },
-            new(){ size = Packet_storage_size._700_bytes,  slots_to_need_up = 75,  slots = 150,  slots_add_per_expansion = 15    },
-            new(){ size = Packet_storage_size._900_bytes,  slots_to_need_up = 75,  slots = 150,  slots_add_per_expansion = 15    },
-            new(){ size = Packet_storage_size._1000_bytes, slots_to_need_up = 30,  slots = 65,  slots_add_per_expansion = 15    },
-            new(){ size = Packet_storage_size._1500_bytes, slots_to_need_up = 30,  slots = 65,  slots_add_per_expansion = 15    },
-            new(){ size = Packet_storage_size._2000_bytes, slots_to_need_up = 15,  slots = 35,  slots_add_per_expansion = 10    },
-            new(){ size = Packet_storage_size._3000_bytes, slots_to_need_up = 15,  slots = 35,  slots_add_per_expansion = 10    },
-            new(){ size = Packet_storage_size._4000_bytes, slots_to_need_up = 7,   slots = 25,  slots_add_per_expansion = 7    },
-            new(){ size = Packet_storage_size._5000_bytes, slots_to_need_up = 7,   slots = 25,  slots_add_per_expansion = 7    },
-            new(){ size = Packet_storage_size._10_kb,      slots_to_need_up = 4,   slots = 15,  slots_add_per_expansion = 4    },
-            new(){ size = Packet_storage_size._15_kb,      slots_to_need_up = 3,   slots = 8,  slots_add_per_expansion = 3    },
-            new(){ size = Packet_storage_size._20_kb,      slots_to_need_up = 2,   slots = 8,  slots_add_per_expansion = 2    },
-            new(){ size = Packet_storage_size._25_kb,      slots_to_need_up = 2,   slots = 8,  slots_add_per_expansion = 2    },
-            new(){ size = Packet_storage_size._40_kb,      slots_to_need_up = 1,   slots = 6,  slots_add_per_expansion = 1    },
-            new(){ size = Packet_storage_size._55_kb,      slots_to_need_up = 1,   slots = 2,  slots_add_per_expansion = 1    },
-            new(){ size = Packet_storage_size._70_kb,      slots_to_need_up = 0,   slots = 1,  slots_add_per_expansion = 1    },
-            new(){ size = Packet_storage_size._100_kb,     slots_to_need_up = 0,   slots = 1,  slots_add_per_expansion = 1    },
-
-        };
+            Change_value( _sizes: sizes, _size : Packet_storage_size._250_bytes,  _slots_to_need_up : 100, _slots : 700,  _slots_add_per_expansion : 50    );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._300_bytes,  _slots_to_need_up : 100, _slots : 500,  _slots_add_per_expansion : 25    );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._350_bytes,  _slots_to_need_up : 100, _slots : 500,  _slots_add_per_expansion : 25    );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._400_bytes,  _slots_to_need_up : 100, _slots : 300,  _slots_add_per_expansion : 25    );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._500_bytes,  _slots_to_need_up : 75,  _slots : 300,  _slots_add_per_expansion : 25    );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._700_bytes,  _slots_to_need_up : 75,  _slots : 150,  _slots_add_per_expansion : 15    );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._900_bytes,  _slots_to_need_up : 75,  _slots : 150,  _slots_add_per_expansion : 15    );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._1000_bytes, _slots_to_need_up : 30,  _slots : 65,  _slots_add_per_expansion : 15    );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._1500_bytes, _slots_to_need_up : 30,  _slots : 65,  _slots_add_per_expansion : 15    );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._2000_bytes, _slots_to_need_up : 15,  _slots : 35,  _slots_add_per_expansion : 10    );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._3000_bytes, _slots_to_need_up : 15,  _slots : 35,  _slots_add_per_expansion : 10    );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._4000_bytes, _slots_to_need_up : 7,   _slots : 25,  _slots_add_per_expansion : 7    );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._5000_bytes, _slots_to_need_up : 7,   _slots : 25,  _slots_add_per_expansion : 7    );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._10_kb,      _slots_to_need_up : 4,   _slots : 15,  _slots_add_per_expansion : 4    );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._15_kb,      _slots_to_need_up : 3,   _slots : 8,  _slots_add_per_expansion : 3    );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._20_kb,      _slots_to_need_up : 2,   _slots : 8,  _slots_add_per_expansion : 2    );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._25_kb,      _slots_to_need_up : 2,   _slots : 8,  _slots_add_per_expansion : 2    );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._40_kb,      _slots_to_need_up : 1,   _slots : 6,  _slots_add_per_expansion : 1    );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._55_kb,      _slots_to_need_up : 1,   _slots : 2,  _slots_add_per_expansion : 1    );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._70_kb,      _slots_to_need_up : 0,   _slots : 1,  _slots_add_per_expansion : 1    );
+            Change_value( _sizes: sizes, _size : Packet_storage_size._100_kb,     _slots_to_need_up : 0,   _slots : 1,  _slots_add_per_expansion : 1    );
 
         return new Packet_storage_start_data(){
             sizes_settings = sizes,
