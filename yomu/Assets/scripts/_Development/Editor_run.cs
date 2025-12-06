@@ -10,7 +10,7 @@ public static class Editor_run {
 
         
         // --- FILE SYSTEM
-        public static bool reset_version_folder = false;
+        public static bool reset_version_folder = true;
 
 
         // --- CHANGE BEHAVIOR

@@ -19,32 +19,14 @@ unsafe public static class TOOL__version_folders_constructor {
 
     public static void Construct(){
 
-
-        // string _path_to_persistent_location = ;
-
-        // // --- CREATE VERSION FOLDER
-
-        // Yomu_version version = System_information.version;
-        // string version_folder = Path.Combine( _path_to_persistent_location, Yomu_version.Get_name( version ) );
-        // Paths_version.Define_version_folder( version_folder );
-
-
-        // if( System.IO.Directory.Exists( version_folder ) )
-        //     { CONTROLLER__errors.Throw( $"Tried to create a new version folder but there is already a folder in { version_folder }" ); }
-
         Directory.CreateDirectory( Paths_system.persistent_data );
         Create_program_folder();
         Create_saves_folder();
 
-        Controllers.files.operations.Create_new_file_EMPTY(  Path.Combine( Paths_version.path_to_version, "TEST_FILE" ), 100 );
+        Controllers.files.storage.Force_syncronize_to_disk_PROGRAM_CONSTRUCTOR();
 
-
-        // --- DATA FILES
-
-            Controllers.files.storage.Force_syncronize_to_disk_PROGRAM_CONSTRUCTOR();
-
-            // ** will create all the files with the normal flow
-            Files.Save_critical_file( Paths_version.data_link_current_files, Controllers.files.storage.Get_current_links_lines() );
+        // ** will create all the files with the normal flow
+        Files.Save_critical_file( Paths_version.data_link_current_files, Controllers.files.storage.Get_current_links_lines() );
 
 
         Controllers.stack.Reset_stack();
@@ -69,8 +51,8 @@ unsafe public static class TOOL__version_folders_constructor {
 
             Program_data* pointer_program = ( Program_data* ) Controllers.heap.Get_fast_pointer( sizeof( Program_data ) );
             CONSTRUCTOR__program_data_file.Construct_new_program_file(  ( Program_data* ) pointer_program );
-            Files.Save_critical_file( Paths_program.program_data, pointer_program, sizeof( Program_data ) );
-
+            Controllers.files.operations.Create_new_file( pointer_program, sizeof( Program_data ), Paths_program.program_data );
+            
         // --- PACKED STORAGE
 
         if( false )
@@ -83,13 +65,14 @@ unsafe public static class TOOL__version_folders_constructor {
                 Controllers.packets.creation.Apply_create_data( pointer_storage_program, length_storage_program , program_storage_data );
 
                 Files.Save_critical_file( Paths_program.program_storage_SIMPLE, pointer_storage_program, length_storage_program );
+            // --- CURRENT PACKETS_STORES
+
+                Files.Save_critical_file( Paths_program.current_packets_storages, new string[]{ "null" }  );
+                
             }
 
 
 
-        // --- CURRENT PACKETS_STORES
-
-            Files.Save_critical_file( Paths_program.current_packets_storages, new string[]{ "null" }  );
 
 
         return;

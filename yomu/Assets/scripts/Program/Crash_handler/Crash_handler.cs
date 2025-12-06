@@ -46,24 +46,16 @@ unsafe public static class Crash_handler{
 
         Console.Log( System_run.show_program_construction_messages, "----------------------- CALLED <Color=lightBlue>DEAL CRASH</Color> -----------------------");
 
-        if ( Verify_if_crash_at_final_OR_start() )
+        bool was_creating_or_deleting_stack =  !!!( File.Exists( Paths_run_time.safety_stack_file ) ) || !!!( Directory.Exists( Paths_run_time.safety_stack_folder ) );
+        if( was_creating_or_deleting_stack )
             { return  Crash_handle_return.Construct( "final or start", Crash_handle_result.sucess, Crash_handle_route.all_files_already_got_saved ); }
+
 
         stack_file = System.IO.File.ReadAllBytes( Paths_run_time.safety_stack_file );
 
-        bool already_pass_the_data = Is_stack_empty();
-
-        if ( already_pass_the_data )
-            { 
-                if( System.IO.File.Exists( Paths_run_time.data_link_current_files_TEMP ) )
-                    {}
-
-                Delete_all(); 
-                return  Crash_handle_return.Construct( "already pass all the data", Crash_handle_result.sucess, Crash_handle_route.all_files_already_got_saved ); 
-            }
-
+        bool data_was_lost = Lost_data_while_saving();
         
-        if( Need_to_reconstruct_from_stack() )
+        if( data_was_lost )
             { 
                 Stack_reconstruction_result_message message_reconstruct_stack = TOOL__reconstruct_from_stack.Reconstruct();
                 
@@ -71,6 +63,16 @@ unsafe public static class Crash_handler{
                     { return File_worst_corruption( message_reconstruct_stack.message, Crash_handle_route.need_to_recosntruct_with_the_stack ); }
 
                 return Pass_data_to_disk( Crash_handle_route.need_to_recosntruct_with_the_stack );
+            }
+
+        bool already_pass_the_data = Is_stack_empty();
+        if ( already_pass_the_data )
+            { 
+                if( System.IO.File.Exists( Paths_run_time.data_link_current_files_TEMP ) )
+                    {}
+
+                Delete_all(); 
+                return  Crash_handle_return.Construct( "already pass all the data", Crash_handle_result.sucess, Crash_handle_route.all_files_already_got_saved ); 
             }
 
         return Pass_data_to_disk( Crash_handle_route.all_temp_files_were_already_there_just_move );
@@ -107,7 +109,7 @@ unsafe public static class Crash_handler{
 
 
 
-        string[] link_paths_updated = System.IO.File.ReadAllLines( Paths_run_time.saving_link_file_to_path );
+        string[] link_paths_updated = System.IO.File.ReadAllLines( Paths_run_time.new_paths_ids );
 
 
         Deal_edge_cases( link_paths_updated );
@@ -350,8 +352,11 @@ unsafe public static class Crash_handler{
 
 
 
-    private static bool Need_to_reconstruct_from_stack(){
+    private static bool Lost_data_while_saving(){
 
+
+        bool lost_data = !!!( Is_stack_empty() )  Directory.GetFiles( Paths_run_time.saving_files_folder )
+        !!!( Directory.Exists( Paths_run_time.saving_files_folder ) );
 
         bool crash_when_only_the_stack_was_saving = !!!( System.IO.Directory.Exists( Paths_run_time.saving_files_folder ) );
 
@@ -383,86 +388,6 @@ unsafe public static class Crash_handler{
 
     }
     
-
-
-    // private static Crash_handle_route Handle_fail_reconstruct_stack( string _message ){
-
-    //     Console.Log_player_need_to_read( $"Was reconstructing the last session that ends wrong. Try to reconstruct with the stack safety but receive thsi error: <Color=lightBlue>{ _message }</Color>. Will ignore the last stack and go with files saved in disk. Sorry" );
-
-    //     Delete_all();
-    //     return Crash_handle_route.corrupted;
-
-    // }
-
-
-
-
-    private static bool Verify_if_crash_at_final_OR_start(){
-
-        bool Verify_file( string _path, string _name ){
-
-            if( !!!( System.IO.File.Exists( _path ) ) )
-                { 
-                    // rare case, but possible
-                    if( System_run.show_program_construction_messages )
-                        { Console.Log( $"<Color=lightBlue>{ _name }</Color> didn't exist" ); }
-
-                    return true;
-                }
-
-            return false;
-
-
-        }
-
-        bool Verify_folder( string _path, string _name ){
-            
-            if( !!!( System.IO.Directory.Exists( _path ) ) )
-                { 
-                    // rare case, but possible
-                    if( System_run.show_program_construction_messages )
-                        { Console.Log( $"<Color=lightBlue>{ _name }</Color> didn't exist" ); }
-
-                    return true;
-                }
-
-            return false;
-
-        }
-
-
-        if( System_run.show_program_construction_messages ) 
-            { Console.Log( "will Verify_if_crash_at_final_OR_start()" ); }
-        
-
-        bool some_file_is_missing = false;
-
-        // ** if a important file is not there -> it was going to end -> can just delete all the data 
-            
-            some_file_is_missing |= Verify_folder( Paths_run_time.safety_stack_folder, "safety_stack_folder" );
-                some_file_is_missing |= Verify_file( Paths_run_time.safety_stack_file, "safety_stack_file" );
-                // some_file_is_missing |= Verify_file( Paths_run_time.stack_start_files, "stack_start_files" );
-
-
-        if( some_file_is_missing )
-            {
-                if( System_run.show_program_construction_messages )
-                    { Console.Log( "Some important <Color=lightBlue>files are missing</Color>, what means the system already saved the files with the right data, but crashed when deleting the run time ones " ); }
-
-                Delete_all();
-                
-            }
-            else
-            {
-                if( System_run.show_program_construction_messages )
-                    { Console.Log( "The system have all the files, so it crashed in the middle of the game, will reconstruct state" ); }
-            }
-
-
-        return some_file_is_missing;
-
-
-    }
 
     private static void Delete_all(){
 

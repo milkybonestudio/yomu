@@ -27,6 +27,13 @@ unsafe public struct MANAGER__safety_stack_buffer {
 
     }
 
+    public void Destroy(){
+
+        if( heap_key_buffer.Is_valid() )
+            { Controllers.heap.Return_key( heap_key_buffer ); }        
+
+    }
+
 
     public void Reset(){
 
@@ -67,14 +74,6 @@ unsafe public struct MANAGER__safety_stack_buffer {
 
     }
 
-    public void End(){
-
-        if( heap_key_buffer.Is_valid() )
-            { Controllers.heap.Return_key( heap_key_buffer ); }
-
-        
-
-    }
 
 
     public void Simulate_is_passing_data_TEST(){

@@ -13,20 +13,10 @@ unsafe public struct MANAGER__safety_stack_saver {
         MANAGER__safety_stack_saver ret = default;
 
             ret.stream_size = 50_000;
-            
-
-            // ret.strem_stack = FILE_STREAM.Criar_stream( Paths_program.safety_stack_file, ret.stream_size );
-            ret.strem_stack = FILE_STREAM.Criar_stream( Paths_run_time.safety_stack_file, ret.stream_size );
             ret.file_size = Controllers.stack.safety_file_size;
-
 
             ret.req_saving = new Task_req( "req_saving" );
             ret.req_saving.Change_stage( Task_req_stage.finished );
-
-            // ** didn't save the 0
-            ret.pointer_buffer_already_saved = -1;
-            
-            ret.heap_key_span_safety_digits = Controllers.heap.Get_unique( ( 2 * sizeof( int ) ) );
 
 
         return ret;
@@ -34,7 +24,8 @@ unsafe public struct MANAGER__safety_stack_saver {
     }
 
 
-    public void End(){
+
+    public void Destroy(){
 
         if( heap_key_span_safety_digits.Is_valid() )
             { Controllers.heap?.Return_key( heap_key_span_safety_digits ); }
@@ -43,6 +34,37 @@ unsafe public struct MANAGER__safety_stack_saver {
 
     }
 
+
+    public void Start(){
+
+        if( System.IO.File.Exists( Paths_run_time.safety_stack_file ) )
+            { CONTROLLER__errors.Throw( $"The stack_safety_file is in the path <Color=lightBlue>{ Paths_run_time.safety_stack_file }</Color> and shouldn't in the normal flow of the code" ); }
+
+
+        File.WriteAllBytes( Paths_run_time.safety_stack_file, ARRAY.Get_array<byte>( _length: file_size, _value: 45 ) );
+        
+
+        // ret.strem_stack = FILE_STREAM.Criar_stream( Paths_program.safety_stack_file, ret.stream_size );
+        strem_stack = FILE_STREAM.Criar_stream( Paths_run_time.safety_stack_file, stream_size );
+
+
+        // ** didn't save the 0
+        pointer_buffer_already_saved = -1;
+        heap_key_span_safety_digits = Controllers.heap.Get_unique( ( 2 * sizeof( int ) ) );
+
+
+
+    }
+    public void Reset(){
+
+        Destroy();
+            
+        strem_stack = null;
+        pointer_buffer_already_saved = -1;
+        heap_key_span_safety_digits = default;
+
+    }
+    
 
     public bool Stack_file_is_close_to_end(){
 

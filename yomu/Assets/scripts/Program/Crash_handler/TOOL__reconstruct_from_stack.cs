@@ -164,7 +164,7 @@ unsafe public static class TOOL__reconstruct_from_stack{
         // foreach( string  p in active_paths )
         //     { Console.Log( $"actve: " + p ); }
 
-        Files.Save_critical_file( Paths_run_time.saving_link_file_to_path, active_paths );
+        Files.Save_critical_file( Paths_run_time.new_paths_ids, active_paths );
 
             for( int path_index = 0  ; path_index < active_paths.Length ; path_index++ ){
 

@@ -1,4 +1,6 @@
+using System;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 // persistentDataPath -> coisas que vão ser unicas de cada versao
@@ -15,14 +17,22 @@ using System.Runtime.CompilerServices;
 // ** data_path fica dentro de cada versao do jogo e nao vai ficar salvo caso o player exclua a pasta do jogo
 
 
+
+
 public static class Paths_version {
 
     public static void Define_version_folder( string _path_to_version ){
 
         path_to_version = _path_to_version;
 
-        security_file = Get_security_file( _path_to_version );
+        // ** dont make any sense
+        // ** the current files depend on context, menu, save_1, save_2, etc
         data_link_current_files = Get_data_link_current_files( _path_to_version );
+
+
+        file_id_TO_path = Get_file_id_TO_path( _path_to_version );
+        security_file = Get_security_file( _path_to_version );
+
 
         saves = Get_all_saves_folder( _path_to_version );
             Paths_saves.Define_saves_folder( saves );
@@ -85,6 +95,12 @@ public static class Paths_version {
         public const string data_link_current_files_NAME = "data_link_current_files.txt";
         public static string data_link_current_files;
         public static string Get_data_link_current_files( string _path_to_version ){ return Combine( _path_to_version, data_link_current_files_NAME ); }
+
+    // ** ID TO PATH 
+        public const string file_id_TO_path_NAME = "file_id_TO_path.txt";
+        public static string file_id_TO_path;
+        public static string Get_file_id_TO_path( string _path_to_version ){ return Combine( _path_to_version, file_id_TO_path_NAME ); }
+
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

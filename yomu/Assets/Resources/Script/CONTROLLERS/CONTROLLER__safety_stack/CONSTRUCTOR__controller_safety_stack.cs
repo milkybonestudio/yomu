@@ -23,7 +23,7 @@ unsafe public static class CONSTRUCTOR__controller_safety_stack{
             ret.packet_storage = MANAGER__safety_stack_packet_storage.Construct( ret.pointer_with_message );
             ret.files = MANAGER__safety_stack_files.Construct( ret.pointer_with_message );
 
-            ret.saver = default;
+            ret.saver  = MANAGER__safety_stack_saver.Construct();
             ret.buffer = MANAGER__safety_stack_buffer.Construct( ref ret );
 
 

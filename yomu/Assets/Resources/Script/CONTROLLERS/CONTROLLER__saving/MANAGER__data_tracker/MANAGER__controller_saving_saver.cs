@@ -43,22 +43,89 @@ unsafe public struct MANAGER__controller_saving_saver {
         Controllers.stack.saver.Give_multithread_saving_stack( req_saving_files );
 
         // ** SAVE LINK_FILE
-        req_saving_files.Give_multithread_sequencial_action( Save_link_paths );
+
+        //mark
+        // old
+
+        if( false )
+            {
+                req_saving_files.Give_multithread_sequencial_action( Save_link_paths );
+                req_saving_files.Give_multithread_sequencial_action( Create_saving_folder );
+                req_saving_files.Give_multithread_sequencial_action( Save_files );
+                req_saving_files.Give_multithread_sequencial_action( Create_security_file );
+                req_saving_files.Give_multithread_sequencial_action( Apply_actions_files_in_saving_folder );
+                req_saving_files.Give_multithread_sequencial_action( Reset_stack );
+                req_saving_files.Give_multithread_sequencial_action( Delete_saving_folder );
+                req_saving_files.Give_multithread_sequencial_action( Delete_file_links );
+                req_saving_files.Give_multithread_sequencial_action( Save_stack_start_files );
+                
+                req_saving_files.Give_single_final( End_saving );
+            }
+
+
+        // ** saving logic files
+        req_saving_files.Give_multithread_sequencial_action( Save_new_context );
+        req_saving_files.Give_multithread_sequencial_action( Save_old_context );
+        req_saving_files.Give_multithread_sequencial_action( Save_context_path );
+
+        req_saving_files.Give_multithread_sequencial_action( Save_new_paths_ids );
+
+
+        // ** start to saving files with data
         req_saving_files.Give_multithread_sequencial_action( Create_saving_folder );
+        
         req_saving_files.Give_multithread_sequencial_action( Save_files );
         req_saving_files.Give_multithread_sequencial_action( Create_security_file );
+        
+        // ** all the data in the folder
         req_saving_files.Give_multithread_sequencial_action( Apply_actions_files_in_saving_folder );
+
+        // ** all data passed
         req_saving_files.Give_multithread_sequencial_action( Reset_stack );
+        req_saving_files.Give_multithread_sequencial_action( Delete_sacurity_file );
+        
         req_saving_files.Give_multithread_sequencial_action( Delete_saving_folder );
         req_saving_files.Give_multithread_sequencial_action( Delete_file_links );
         req_saving_files.Give_multithread_sequencial_action( Save_stack_start_files );
-        
         
         req_saving_files.Give_single_final( End_saving );
 
         return;
 
     }
+
+    
+
+
+    public static void Save_new_context( Task_req _req ){
+
+
+
+    }
+
+    public static void Save_old_context( Task_req _req ){
+
+
+    }
+
+    public static void Save_context_path( Task_req _req ){
+
+
+    }
+
+
+    public static void Save_new_paths_ids( Task_req _req ){
+
+
+    }
+
+    public static void Delete_sacurity_file( Task_req _req ){
+
+
+    }
+
+
+
 
     //mark
     // ** talvez passar para Save_ids_TO_paths()
@@ -71,7 +138,7 @@ unsafe public struct MANAGER__controller_saving_saver {
         // ** need to be on the NEW_path because if the system crashes before saved all the files in disk
         // ** it needs to use the old links to reconstruct the stack. this current_links and the one the Reconstruct_stack() 
         // ** should be the same, so same behaviour
-        Files.Save_critical_file( Paths_run_time.saving_link_file_to_path, linked_files_lines );
+        Files.Save_critical_file( Paths_version.file_id_TO_path, linked_files_lines );
 
         return;
 
@@ -298,7 +365,7 @@ unsafe public struct MANAGER__controller_saving_saver {
 
     public static void Delete_file_links( Task_req _req ){
 
-        System.IO.File.Delete( Paths_run_time.saving_link_file_to_path );
+        System.IO.File.Delete( Paths_version.file_id_TO_path );
 
     }
 

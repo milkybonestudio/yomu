@@ -39,6 +39,16 @@ unsafe public static class TEST__crash {
     public enum Crash {
 
         save_stack,
+
+        //mark
+        // ** new 
+        save_final_context,
+        load_old_context,
+        save_context_path,
+
+        saving_new_paths_ids, // general
+
+
         save_new_slot_file_link,
         create_saving_files_folders,
 
@@ -56,13 +66,14 @@ unsafe public static class TEST__crash {
         apply_logic_full,
 
 
-
         reset_stack,
 
         delete_saving_files_folder,
-        
+
         delete_file_links,
         change_stack_start_files,
+        
+
         finish,
 
     }
@@ -247,13 +258,13 @@ unsafe public static class TEST__crash {
         if( Input.GetKey( KeyCode.Keypad1 )  )
             {
 
-                if( Input.GetKeyDown( KeyCode.P ) )
+                if( Input.GetKeyDown( KeyCode.Q ) )
                     { Go_to_state_saving_crash(); }
 
-                if( Input.GetKeyDown( KeyCode.O ) )
+                if( Input.GetKeyDown( KeyCode.W ) )
                     { Console.Log( "state: " + _Crash() ); }
 
-                if( Input.GetKeyDown( KeyCode.I ) )
+                if( Input.GetKeyDown( KeyCode.E ) )
                     { Controllers.stack.saver.test.Force_corrupt_file( 10 ); }
                     
             }

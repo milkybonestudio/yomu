@@ -10,6 +10,7 @@ public enum File_IO_operation {
 
     _not_give,
         _nothing,
+        
         _switch,
         _create,
         _delete,
@@ -209,7 +210,6 @@ unsafe public struct MANAGER__controller_data_file_storage {
         }
 
         return result;
-
 
 
     }

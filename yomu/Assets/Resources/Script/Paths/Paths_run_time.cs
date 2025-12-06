@@ -17,8 +17,13 @@ public static class Paths_run_time {
                 saving_files_security_file = Get_saving_files_security_file();
 
             safety_stack_folder = Get_safety_stack_folder();
+
+                context_new = Get_context_new();
+                context_old = Get_context_old();
+                context_path = Get_context_path();
+
                 data_link_current_files_TEMP = Get_data_link_current_files_TEMP();
-                saving_link_file_to_path = Get_saving_link_file_to_path();
+                new_paths_ids = Get_new_paths_ids();
                 
                 safety_stack_file = Get_safety_stack_file(); 
 
@@ -66,13 +71,29 @@ public static class Paths_run_time {
 
 
 
-                // => saving_link_file_to_path
+                // => new_paths_ids
                 // ** for when is saving, if it needs to recosntruct with the stack but the normal link files alredy have being changed
-                public const string saving_link_file_to_path_NAME = "saving_link_file_to_path.txt";
-                public static string saving_link_file_to_path;
-                public static string Get_saving_link_file_to_path(){ return Combine( safety_stack_folder, saving_link_file_to_path_NAME ); }
-                public static string Get_saving_link_file_to_path( string _path ){ return Combine( _path, saving_link_file_to_path_NAME ); }
+                public const string new_paths_ids_NAME = "new_paths_ids.txt";
+                public static string new_paths_ids;
+                public static string Get_new_paths_ids(){ return Combine( safety_stack_folder, new_paths_ids_NAME ); }
+                public static string Get_new_paths_ids( string _path ){ return Combine( _path, new_paths_ids_NAME ); }
 
+
+                public const string context_new_NAME = "context_new.txt";
+                public static string context_new;
+                public static string Get_context_new(){ return Combine( safety_stack_folder, context_new_NAME ); }
+                public static string Get_context_new( string _path ){ return Combine( _path, context_new_NAME ); }
+
+
+                public const string context_old_NAME = "context_old.txt";
+                public static string context_old;
+                public static string Get_context_old(){ return Combine( safety_stack_folder, context_old_NAME ); }
+                public static string Get_context_old( string _path ){ return Combine( _path, context_old_NAME ); }
+
+                public const string context_path_NAME = "context_path.txt";
+                public static string context_path;
+                public static string Get_context_path(){ return Combine( safety_stack_folder, context_path_NAME ); }
+                public static string Get_context_path( string _path ){ return Combine( _path, context_path_NAME ); }
 
 
             // ** SAVING FILES
