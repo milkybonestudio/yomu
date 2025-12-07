@@ -27,10 +27,10 @@ public static class Paths_version {
 
         // ** dont make any sense
         // ** the current files depend on context, menu, save_1, save_2, etc
-        data_link_current_files = Get_data_link_current_files( _path_to_version );
+        //data_link_current_files = Get_data_link_current_files( _path_to_version );
 
 
-        file_id_TO_path = Get_file_id_TO_path( _path_to_version );
+        paths_ids = Get_paths_ids( _path_to_version );
         security_file = Get_security_file( _path_to_version );
 
 
@@ -92,14 +92,17 @@ public static class Paths_version {
 
     // ** CURRENT FILES
 
-        public const string data_link_current_files_NAME = "data_link_current_files.txt";
-        public static string data_link_current_files;
-        public static string Get_data_link_current_files( string _path_to_version ){ return Combine( _path_to_version, data_link_current_files_NAME ); }
+        // public const string data_link_current_files_NAME = "data_link_current_files.txt";
+        // public static string data_link_current_files;
+        // public static string Get_data_link_current_files( string _path_to_version ){ return Combine( _path_to_version, data_link_current_files_NAME ); }
 
+
+    //mark
+    // ** MUDAR PARA PATHS IDS
     // ** ID TO PATH 
-        public const string file_id_TO_path_NAME = "file_id_TO_path.txt";
-        public static string file_id_TO_path;
-        public static string Get_file_id_TO_path( string _path_to_version ){ return Combine( _path_to_version, file_id_TO_path_NAME ); }
+        public const string paths_ids_NAME = "paths_ids.txt";
+        public static string paths_ids;
+        public static string Get_paths_ids( string _path_to_version ){ return Combine( _path_to_version, paths_ids_NAME ); }
 
 
 

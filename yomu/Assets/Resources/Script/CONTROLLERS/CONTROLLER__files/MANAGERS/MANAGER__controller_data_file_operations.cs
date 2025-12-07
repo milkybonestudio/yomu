@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 unsafe public struct MANAGER__controller_data_file_operations {
 
@@ -7,6 +8,35 @@ unsafe public struct MANAGER__controller_data_file_operations {
         MANAGER__controller_data_file_operations manager = default;
             manager.lock_obj = new();
         return manager;
+
+    }
+
+
+
+    public void Set_context( Program_context _context ){
+
+        int[] files_new_context_ids = _context.current_files_ids;
+
+        int[] current_files = Controllers.files.storage.Get_current_files_ids();
+
+        foreach( int file_id_in_system in current_files ){
+
+            if( !!!( files_new_context_ids.Contains( file_id_in_system ) ) )
+                {
+                    Data_file_link data = Get_file( file_id_in_system );
+                    Remove_file( data );
+                }
+
+        }
+
+        foreach( int file_to_have in files_new_context_ids ){
+
+            if( Controllers.files.storage.Is_id_valid( file_to_have ) )
+                { continue; }
+
+            Get_file_from_disk( file_to_have );
+
+        }
 
     }
 
@@ -203,7 +233,18 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
     }
 
-    // ** 
+    
+
+    public Data_file_link Get_file_from_disk( int _id ){
+
+        string path = Controllers.paths_ids.Get_path_from_id( _id );
+        return Get_file_from_disk( path );
+
+    }
+
+
+
+
     public Data_file_link Get_file_from_disk( string _path ){
 
 

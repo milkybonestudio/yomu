@@ -23,12 +23,20 @@ unsafe public static class TOOL__version_folders_constructor {
         Create_program_folder();
         Create_saves_folder();
 
+
+        Controllers.files.operations.Create_new_file_EMPTY( Paths_program.program_data + ".aaa", 100  );
+        Controllers.files.operations.Create_new_file_EMPTY( Paths_program.program_data + ".bbb", 100 );
+        
         Controllers.files.storage.Force_syncronize_to_disk_PROGRAM_CONSTRUCTOR();
 
-        // ** will create all the files with the normal flow
-        Files.Save_critical_file( Paths_version.data_link_current_files, Controllers.files.storage.Get_current_links_lines() );
+        // ** SAVE FILES
+        Program_context_operations.Save_current_data_as_context( Paths_program.program_context );
 
+        // ** PATHS
+        Controllers.paths_ids.Save_current_paths_in_disk();
+        
 
+        
         Controllers.stack.Reset_stack();
         Controllers.files.Reset_files();
         

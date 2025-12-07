@@ -44,27 +44,9 @@ unsafe public struct MANAGER__controller_saving_saver {
 
         // ** SAVE LINK_FILE
 
-        //mark
-        // old
-
-        if( false )
-            {
-                req_saving_files.Give_multithread_sequencial_action( Save_link_paths );
-                req_saving_files.Give_multithread_sequencial_action( Create_saving_folder );
-                req_saving_files.Give_multithread_sequencial_action( Save_files );
-                req_saving_files.Give_multithread_sequencial_action( Create_security_file );
-                req_saving_files.Give_multithread_sequencial_action( Apply_actions_files_in_saving_folder );
-                req_saving_files.Give_multithread_sequencial_action( Reset_stack );
-                req_saving_files.Give_multithread_sequencial_action( Delete_saving_folder );
-                req_saving_files.Give_multithread_sequencial_action( Delete_file_links );
-                req_saving_files.Give_multithread_sequencial_action( Save_stack_start_files );
-                
-                req_saving_files.Give_single_final( End_saving );
-            }
-
 
         // ** saving logic files
-        req_saving_files.Give_multithread_sequencial_action( Save_new_context );
+        req_saving_files.Give_multithread_sequencial_action( Save_logic_files );
         req_saving_files.Give_multithread_sequencial_action( Save_old_context );
         req_saving_files.Give_multithread_sequencial_action( Save_context_path );
 
@@ -75,7 +57,6 @@ unsafe public struct MANAGER__controller_saving_saver {
         req_saving_files.Give_multithread_sequencial_action( Create_saving_folder );
         
         req_saving_files.Give_multithread_sequencial_action( Save_files );
-        req_saving_files.Give_multithread_sequencial_action( Create_security_file );
         
         // ** all the data in the folder
         req_saving_files.Give_multithread_sequencial_action( Apply_actions_files_in_saving_folder );
@@ -97,8 +78,28 @@ unsafe public struct MANAGER__controller_saving_saver {
     
 
 
-    public static void Save_new_context( Task_req _req ){
+    public static void Save_logic_files( Task_req _req ){
 
+        // ** CONTEXT
+        int[] current_files_ids = Controllers.files.storage.Get_current_files_ids();
+        int[] current_packets_ids = Controllers.packets.storage.Get_current_ids();
+
+        string context = Program_context_operations.Create_program_context_file( _current_files_ids: current_files_ids, _current_packets_storages: current_packets_ids );
+
+        Files.Save_critical_file( Paths_run_time.context_new, context );
+
+        // ** PATHS
+        string[] current_paths_ids = Controllers.paths_ids.Get_current_paths_ids();
+
+        Files.Save_critical_file( Paths_run_time.new_paths_ids, current_paths_ids );
+
+
+
+        // ** create folder to save files
+        System.IO.Directory.CreateDirectory( Paths_run_time.saving_files_folder );
+
+        // ** define state
+        Files.Save_critical_file( Paths_run_time.logic_data_saved, new byte[ 100 ] );
 
 
     }
@@ -127,22 +128,22 @@ unsafe public struct MANAGER__controller_saving_saver {
 
 
 
-    //mark
-    // ** talvez passar para Save_ids_TO_paths()
-    public static void Save_link_paths( Task_req _req ){
+    // //mark
+    // // ** talvez passar para Save_ids_TO_paths()
+    // public static void Save_link_paths( Task_req _req ){
 
 
-        string[] linked_files_lines = Controllers.files.storage.Get_link_files_lines();
-        _req.managed_data.string_array = linked_files_lines;
+    //     string[] linked_files_lines = Controllers.files.storage.Get_link_files_lines();
+    //     _req.managed_data.string_array = linked_files_lines;
         
-        // ** need to be on the NEW_path because if the system crashes before saved all the files in disk
-        // ** it needs to use the old links to reconstruct the stack. this current_links and the one the Reconstruct_stack() 
-        // ** should be the same, so same behaviour
-        Files.Save_critical_file( Paths_version.file_id_TO_path, linked_files_lines );
+    //     // ** need to be on the NEW_path because if the system crashes before saved all the files in disk
+    //     // ** it needs to use the old links to reconstruct the stack. this current_links and the one the Reconstruct_stack() 
+    //     // ** should be the same, so same behaviour
+    //     Files.Save_critical_file( Paths_version.file_id_TO_path, linked_files_lines );
 
-        return;
+    //     return;
 
-    }
+    // }
 
     public static void Create_saving_folder( Task_req _req ){
 
@@ -168,17 +169,9 @@ unsafe public struct MANAGER__controller_saving_saver {
             if( System_run.saving_show_messages )
                 { Console.Log( $"--- have id " + id ); }
 
-            File_IO_operation operation = default;
+            File_run_time_saving_operations.Save_file_run_time( k_v.Value, File_IO_operation._add );
 
-            if( System.IO.File.Exists( path ) )
-                { operation = File_IO_operation._switch; }
-                else
-                { operation = File_IO_operation._create; }
-                
-
-            File_run_time_saving_operations.Save_file_run_time( k_v.Value, operation );
-
-            dic[ id ] = operation;
+            dic[ id ] = File_IO_operation._add;
             
         }
 
@@ -191,18 +184,9 @@ unsafe public struct MANAGER__controller_saving_saver {
             Data_file_link data = k_v.Value;
             string path =  k_v.Key;
 
-            
-            File_IO_operation operation = default;
+            File_run_time_saving_operations.Save_file_run_time( k_v.Value, File_IO_operation._add );
 
-            if( System.IO.File.Exists( path ) )
-                { operation = File_IO_operation._switch; }
-                else
-                { operation = File_IO_operation._create; }
-                
-
-            File_run_time_saving_operations.Save_file_run_time( k_v.Value, operation );
-
-            dic[ data.id ] = operation;
+            dic[ data.id ] = File_IO_operation._add;
             
         }
 
@@ -214,21 +198,12 @@ unsafe public struct MANAGER__controller_saving_saver {
 
             Data_file_link data = k_v.Value;
             string path =  k_v.Key;
-
                         
             if( System_run.saving_show_messages )
                 { Console.Log( $"--- have id " + data.id ); }
 
-            File_IO_operation operation = default;
-
-            if( System.IO.File.Exists( path ) )
-                { operation = File_IO_operation._delete; }
-                else
-                { operation = File_IO_operation._nothing; }
-                
-
-            File_run_time_saving_operations.Save_file_run_time( k_v.Value, operation );
-            dic[ data.id ] = operation;
+            File_run_time_saving_operations.Save_file_run_time( k_v.Value, File_IO_operation._delete);
+            dic[ data.id ] = File_IO_operation._delete;
             
         }
 
@@ -244,11 +219,8 @@ unsafe public struct MANAGER__controller_saving_saver {
     }
 
 
-    public static void Create_security_file( Task_req _req ){
 
-        Files.Save_critical_file( Paths_run_time.saving_files_security_file, new byte[ 500 ] );
 
-    }
 
     public static void Apply_actions_files_in_saving_folder( Task_req _req ){
 
@@ -287,38 +259,17 @@ unsafe public struct MANAGER__controller_saving_saver {
                 { CONTROLLER__errors.Throw( $"file dont exist in <Color=lightBlue>{ path_in_disk_saving_folder }</Color>" ); }
 
 
-            if( operation == File_IO_operation._switch )
+            if( operation == File_IO_operation._add )
                 {
-                    if( !!!( System.IO.File.Exists( final_path ) ) )
-                        { CONTROLLER__errors.Throw( "file dont exist in path : " + final_path ); }
+                    System.IO.File.Move( path_in_disk_saving_folder , temp_path );
 
-                    if( !!!( System.IO.File.Exists( path_in_disk_saving_folder ) ) )
-                        { CONTROLLER__errors.Throw( "file dont exist in path : " + path_in_disk_saving_folder ); }
+                    if( System.IO.File.Exists( final_path )  )
+                        { System.IO.File.Delete( final_path ); }
 
-                    try{
-                        System.IO.File.Move( path_in_disk_saving_folder , temp_path );
-                        System.IO.File.Delete( final_path );
-                        System.IO.File.Move( temp_path, final_path );
-
-                    }catch( Exception e ){
-                        Console.Log( "path_in_disk_saving_folder: " + path_in_disk_saving_folder );
-                        Console.Log( "temp_path: " + temp_path );
-                    }
+                    System.IO.File.Move( temp_path, final_path );
 
                 }
 
-            if( operation == File_IO_operation._create )
-                {
-                    if( System.IO.File.Exists( final_path ) )
-                        { CONTROLLER__errors.Throw( "file exist and should NOT in path : " + final_path ); }
-
-                    if( !!!( System.IO.File.Exists( path_in_disk_saving_folder ) ) )
-                        { CONTROLLER__errors.Throw( "file dont exist in path : " + path_in_disk_saving_folder ); }                    
-
-
-                    System.IO.File.Move( path_in_disk_saving_folder , final_path );
-
-                }
 
             if( operation == File_IO_operation._delete )
                 {
@@ -326,10 +277,6 @@ unsafe public struct MANAGER__controller_saving_saver {
                     if( !!!( System.IO.File.Exists( final_path ) ) )
                         { CONTROLLER__errors.Throw( "file dont exist in path : " + final_path ); }
 
-                    if( !!!( System.IO.File.Exists( path_in_disk_saving_folder ) ) )
-                        { CONTROLLER__errors.Throw( "file dont exist in path : " + path_in_disk_saving_folder ); }
-
-                    System.IO.File.Move( path_in_disk_saving_folder , temp_path );
                     System.IO.File.Delete( final_path );
                     System.IO.File.Delete( temp_path );
                 }
@@ -365,7 +312,7 @@ unsafe public struct MANAGER__controller_saving_saver {
 
     public static void Delete_file_links( Task_req _req ){
 
-        System.IO.File.Delete( Paths_version.file_id_TO_path );
+        System.IO.File.Delete( Paths_version.paths_ids );
 
     }
 
@@ -376,10 +323,10 @@ unsafe public struct MANAGER__controller_saving_saver {
 
         string[] start_lines = Controllers.files.storage.Get_current_links_lines();
 
-        Files.Save_critical_file( Paths_run_time.data_link_current_files_TEMP, start_lines );
+        // Files.Save_critical_file( Paths_run_time.data_link_current_files_TEMP, start_lines );
 
-        System.IO.File.Delete( Paths_version.data_link_current_files );
-        System.IO.File.Move( Paths_run_time.data_link_current_files_TEMP, Paths_version.data_link_current_files );
+        System.IO.File.Delete( Paths_version.paths_ids );
+        // System.IO.File.Move( Paths_run_time.data_link_current_files_TEMP, Paths_version.data_link_current_files );
 
 
         return;

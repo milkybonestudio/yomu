@@ -1,0 +1,126 @@
+
+
+using System.Collections.Generic;
+
+unsafe public struct CONTROLLER__paths_ids {
+
+
+    public static CONTROLLER__paths_ids Construct(){
+        CONTROLLER__paths_ids ret = default;
+            ret.path_TO_id = new Dictionary<string, int>( 100 );
+            ret.id_TO_path = new Dictionary<int, string>( 100 );
+            ret.path_TO_id[ "INVALID" ] = 0;
+            ret.id_TO_path[ 0 ] = "INVALID";
+        return ret;
+    }
+
+    // ** never 0. 0 is for development
+    private int current_file_id;
+
+
+    public void Save_current_paths_in_disk(){
+
+        string[] paths_ids = Controllers.paths_ids.Get_current_paths_ids();
+        Files.Save_critical_file( Paths_version.paths_ids, paths_ids );
+
+        return;
+    }
+
+
+    public int Get_id_from_path( string _path ){
+
+        if( id_TO_path == null )
+            { CONTROLLER__errors.Throw( $"Tried to define a new path with ids in the current program, but the Paths_manager dont have <Color=lightBlue>dic</Color>" ); }
+
+        if( path_TO_id.ContainsKey( _path ) )
+            { return path_TO_id[ _path ]; }
+
+        int new_id = ++current_file_id;
+
+            id_TO_path[ new_id ] = _path;
+            path_TO_id[ _path ] = new_id;
+
+        return new_id;
+
+    }
+
+    
+    // public string Get_path( int _id ){
+
+    //     return id_TO_path[ _id ];
+
+    // }
+
+    public string Get_path_from_id( int _id ){
+
+        if( id_TO_path == null )
+            { CONTROLLER__errors.Throw( $"Tried to define a new path with ids in the current program, but the Paths_manager dont have <Color=lightBlue>dic</Color>" ); }
+
+        if( !!!( id_TO_path.ContainsKey( _id ) ) )
+            { CONTROLLER__errors.Throw( $"Tried to get a path from an id path with ids in the current program, but the id <Color=lightBlue>{ _id }</Color>is not in the system" ); }
+
+        return id_TO_path[ _id ];
+
+    }
+
+    
+
+    public void Set_id( int _id ){
+        current_file_id = _id;
+    }
+
+    private Dictionary<string, int> path_TO_id;
+    private Dictionary<int, string> id_TO_path;
+
+    public void Define_paths_ids(){
+
+        string[] _lines = System.IO.File.ReadAllLines( Paths_version.paths_ids );
+
+        path_TO_id = new Dictionary<string, int>( _lines.Length + 50 );
+        id_TO_path = new Dictionary<int, string>( _lines.Length + 50 );
+
+        for( int index = 0 ; index < _lines.Length ; index++ ){ 
+            path_TO_id[ _lines[ index ] ] = index; 
+            id_TO_path[ index ] = _lines[ index ];
+        }
+
+        return;
+
+    }
+
+    public void Define_paths_ids( string _path ){
+
+        string[] _lines = System.IO.File.ReadAllLines( _path );
+
+        path_TO_id = new Dictionary<string, int>( _lines.Length + 50 );
+        id_TO_path = new Dictionary<int, string>( _lines.Length + 50 );
+
+        for( int index = 0 ; index < _lines.Length ; index++ ){ 
+            path_TO_id[ _lines[ index ] ] = index; 
+            id_TO_path[ index ] = _lines[ index ];
+        }
+
+        return;
+
+    }
+
+
+
+    public string[] Get_current_paths_ids(){
+
+        if( id_TO_path == null )
+            { CONTROLLER__errors.Throw( $"Tried to get the paths with ids in the current program, but the Paths_manager dont have <Color=lightBlue>dic</Color>" ); }
+
+        string[] paths = new string[ path_TO_id.Count ];
+
+        for( int index = 0 ; index < paths.Length ; index++ )
+            { paths[ index ] = id_TO_path[ index ]; }
+        
+        return paths;
+
+    }
+
+
+
+}
+

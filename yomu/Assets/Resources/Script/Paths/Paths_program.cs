@@ -35,6 +35,8 @@ public static class Paths_program {
 
         program_path = _path_to_program_folder;
 
+        program_context = Get_program_context();
+
         program_data = Get_program_data();
         program_storage_SIMPLE = Get_program_storage_SIMPLE();
 
@@ -54,6 +56,13 @@ public static class Paths_program {
     public static string program_data;
     public static string Get_program_data(){ return Combine( program_path, program_data_NAME ); }
     public static string Get_program_data( string _path ){ return Combine( _path, program_data_NAME ); }
+
+
+    public const string program_context_NAME = "program_context.dat";
+    public static string program_context;
+    public static string Get_program_context(){ return Combine( program_path, program_context_NAME ); }
+    public static string Get_program_context( string _path ){ return Combine( _path, program_context_NAME ); }
+
 
 
     public const string program_storage_SIMPLE_NAME = "program_storage_SIMPLE.storage";

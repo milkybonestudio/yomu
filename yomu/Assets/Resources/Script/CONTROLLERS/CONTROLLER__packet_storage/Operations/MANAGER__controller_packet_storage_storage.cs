@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 unsafe public struct MANAGER__controller_packet_storage_storage {
 
@@ -26,6 +27,15 @@ unsafe public struct MANAGER__controller_packet_storage_storage {
 
     public List<Data_file_link> list_data_files_packets;
     public Dictionary<int,long> pointers;
+
+    public int[] Get_current_ids(){
+
+        int[] ids = list_data_files_packets.values.Select( x => x.id ).ToArray<int>();
+        Array.Sort( ids );
+
+        return ids;
+
+    }
 
     public bool Have_data( Data_file_link _file_data_link ){
 

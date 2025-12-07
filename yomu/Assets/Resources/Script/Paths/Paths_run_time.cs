@@ -13,20 +13,25 @@ public static class Paths_run_time {
 
         saving_run_time_folder = Get_saving_run_time_folder();
 
+            // ** created only when nsaving 
             saving_files_folder = Get_saving_files_folder();
-                saving_files_security_file = Get_saving_files_security_file();
-
             safety_stack_folder = Get_safety_stack_folder();
 
-                context_new = Get_context_new();
-                context_old = Get_context_old();
+                // NEED:
+                safety_stack_file = Get_safety_stack_file(); 
                 context_path = Get_context_path();
 
-                data_link_current_files_TEMP = Get_data_link_current_files_TEMP();
+
+                // LOGIC TO CHANGE 
+                context_new = Get_context_new();
                 new_paths_ids = Get_new_paths_ids();
                 
-                safety_stack_file = Get_safety_stack_file(); 
-
+                // STAGES
+                logic_data_saved = Get_logic_data_saved();
+                data_files_saved_in_folder = Get_data_files_saved_in_folder();
+                data_files_actions_applied = Get_data_files_actions_applied();
+                logic_files_moved = Get_logic_files_moved();
+                saving_finished = Get_saving_finished();
                 
 
         return;
@@ -54,22 +59,23 @@ public static class Paths_run_time {
             public static string Get_safety_stack_folder(){ return Combine( saving_run_time_folder, safety_stack_folder_NAME ); }
             public static string Get_safety_stack_folder( string _path ){ return Combine( _path, safety_stack_folder_NAME ); }
 
+
+                // ** NEED
             
                 public const string safety_stack_file_NAME = "safety_stack_file.dat";
                 public static string safety_stack_file;
                 public static string Get_safety_stack_file(){ return Combine( safety_stack_folder, safety_stack_file_NAME ); }
                 public static string Get_safety_stack_file( string _path ){ return Combine( _path, safety_stack_file_NAME ); }
 
+                public const string context_path_NAME = "context_path.txt";
+                public static string context_path;
+                public static string Get_context_path(){ return Combine( safety_stack_folder, context_path_NAME ); }
+                public static string Get_context_path( string _path ){ return Combine( _path, context_path_NAME ); }
+
                 
 
 
-                // => tem que passar para program, o arquivo sempre vai reimportar os arquivos
-                public const string data_link_current_files_TEMP_NAME = "data_link_current_files_TEMP.txt";
-                public static string data_link_current_files_TEMP;
-                public static string Get_data_link_current_files_TEMP(){ return Combine( safety_stack_folder, data_link_current_files_TEMP_NAME ); }
-                public static string Get_data_link_current_files_TEMP( string _path ){ return Combine( _path, data_link_current_files_TEMP_NAME ); }
-
-
+                // ** NEW LOGIC
 
                 // => new_paths_ids
                 // ** for when is saving, if it needs to recosntruct with the stack but the normal link files alredy have being changed
@@ -85,15 +91,33 @@ public static class Paths_run_time {
                 public static string Get_context_new( string _path ){ return Combine( _path, context_new_NAME ); }
 
 
-                public const string context_old_NAME = "context_old.txt";
-                public static string context_old;
-                public static string Get_context_old(){ return Combine( safety_stack_folder, context_old_NAME ); }
-                public static string Get_context_old( string _path ){ return Combine( _path, context_old_NAME ); }
+                // ** SAVING STATE
 
-                public const string context_path_NAME = "context_path.txt";
-                public static string context_path;
-                public static string Get_context_path(){ return Combine( safety_stack_folder, context_path_NAME ); }
-                public static string Get_context_path( string _path ){ return Combine( _path, context_path_NAME ); }
+                
+                public const string logic_data_saved_NAME = "logic_data_saved.dat";
+                public static string logic_data_saved;
+                public static string Get_logic_data_saved(){ return Combine( safety_stack_folder, logic_data_saved_NAME ); }
+                public static string Get_logic_data_saved( string _path ){ return Combine( _path, logic_data_saved_NAME ); }
+
+                public const string data_files_saved_in_folder_NAME = "data_files_saved_in_folder.dat";
+                public static string data_files_saved_in_folder;
+                public static string Get_data_files_saved_in_folder(){ return Combine( safety_stack_folder, data_files_saved_in_folder_NAME ); }
+                public static string Get_data_files_saved_in_folder( string _path ){ return Combine( _path, data_files_saved_in_folder_NAME ); }
+
+                public const string data_files_actions_applied_NAME = "data_files_actions_applied.dat";
+                public static string data_files_actions_applied;
+                public static string Get_data_files_actions_applied(){ return Combine( safety_stack_folder, data_files_actions_applied_NAME ); }
+                public static string Get_data_files_actions_applied( string _path ){ return Combine( _path, data_files_actions_applied_NAME ); }
+
+                public const string logic_files_moved_NAME = "logic_files_moved.dat";
+                public static string logic_files_moved;
+                public static string Get_logic_files_moved(){ return Combine( safety_stack_folder, logic_files_moved_NAME ); }
+                public static string Get_logic_files_moved( string _path ){ return Combine( _path, logic_files_moved_NAME ); }
+
+                public const string saving_finished_NAME = "saving_finished.dat";
+                public static string saving_finished;
+                public static string Get_saving_finished(){ return Combine( safety_stack_folder, saving_finished_NAME ); }
+                public static string Get_saving_finished( string _path ){ return Combine( _path, saving_finished_NAME ); }
 
 
             // ** SAVING FILES
@@ -111,12 +135,6 @@ public static class Paths_run_time {
                         -> começar mover os arquivos
 
                 */
-
-                public const string saving_files_security_file_NAME = "saving_files_security_file.txt";
-                public static string saving_files_security_file;
-                public static string Get_saving_files_security_file(){ return Combine( saving_files_folder, saving_files_security_file_NAME ); }
-                public static string Get_saving_files_security_file( string _path ){ return Combine( _path, saving_files_security_file_NAME ); }
-
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

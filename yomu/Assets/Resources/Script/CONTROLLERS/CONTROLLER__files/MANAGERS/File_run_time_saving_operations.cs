@@ -20,10 +20,10 @@ unsafe public static class File_run_time_saving_operations {
             { Console.Log( "Called Move_file()" ); }
 
 
-        string path_run_time = Get_run_time_path( _data.id, File_IO_operation._switch );
+        string path_run_time = Get_run_time_path( _data.id, File_IO_operation._add );
 
         string path_final = Controllers.files.storage.Get_path_for_file( _data );
-        string final_path_temp = Get_run_time_path_TEMP( path_final, File_IO_operation._switch );
+        string final_path_temp = Get_run_time_path_TEMP( path_final, File_IO_operation._add );
 
         if( System_run.max_security )
             {
@@ -48,7 +48,7 @@ unsafe public static class File_run_time_saving_operations {
     public static void Switch_files( Data_file_link _data ){
 
         string path_final = Controllers.files.storage.Get_path_for_file( _data );
-        string temp_file = Get_run_time_path_TEMP( path_final, File_IO_operation._switch );
+        string temp_file = Get_run_time_path_TEMP( path_final, File_IO_operation._add );
 
         if( System_run.max_security )
             {
@@ -105,33 +105,6 @@ unsafe public static class File_run_time_saving_operations {
     }
 
 
-    // // ??????
-    // public static void Save_file_run_time_SWITCH( Data_file_link _data ){
-
-    //     string path = Get_run_time_path( _data.id, File_IO_operation._switch );
-    //     Files.Save_critical_file( path, _data.Get_pointer(), _data.Get_length() );
-
-    //     return;
-    // }
-
-
-    // public static void Save_file_run_time_DELETE( Data_file_link _data ){
-
-    //     string path = Get_run_time_path( _data.id, File_IO_operation._delete );
-    //     Files.Save_critical_file( path, _data.Get_pointer(), _data.Get_length() );
-
-    //     return;
-    // }
-
-    // public static void Save_file_run_time_CREATE( Data_file_link _data ){
-
-    //     string path = Get_run_time_path( _data.id, File_IO_operation._create );
-    //     Files.Save_critical_file( path, _data.Get_pointer(), _data.Get_length() );
-
-    //     return;
-    // }
-
-
     
 
     
@@ -142,10 +115,8 @@ unsafe public static class File_run_time_saving_operations {
 
         switch( _operation ){
 
-            case File_IO_operation._create: suf = ".create"; break;
-            case File_IO_operation._switch: suf = ".switch"; break;
+            case File_IO_operation._add: suf = ".add"; break;
             case File_IO_operation._delete: suf = ".delete"; break;
-            case File_IO_operation._nothing: suf = ".nothing"; break;
             default: CONTROLLER__errors.Throw( "Can not handle type: " + _operation ); break;
 
         }
@@ -156,20 +127,16 @@ unsafe public static class File_run_time_saving_operations {
     }
 
 
-    // public static string Get_run_time_path( int _slot, bool _is_delete = false ){
-
-    //     if( _is_delete )
-    //         { return Path.Combine( Paths_program.saving_files_folder, ( INT.ToString( _slot ) + ".delete" ) ); }
-    //         else
-    //         { return Path.Combine( Paths_program.saving_files_folder, ( INT.ToString( _slot ) + ".switch" ) ); }
-
-
-    // }
-
-
     public static string Get_run_time_path_TEMP( string _path_final, File_IO_operation _operation ){
 
         return _path_final + ".temp" + _operation.ToString();
+
+    }
+
+
+    public static string Get_run_time_path_TEMP( string _path_final ){
+
+        return ( _path_final + ".temp" );
 
     }
 

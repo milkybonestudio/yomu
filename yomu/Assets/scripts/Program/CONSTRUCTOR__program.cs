@@ -43,6 +43,7 @@ public static class CONSTRUCTOR__program {
             Controllers.files = CONSTRUCTOR__controller_data_files.Construct();
             Controllers.saving = CONSTRUCTOR__controller_saving.Construct();
             Controllers.stack = CONSTRUCTOR__controller_safety_stack.Construct();
+            Controllers.paths_ids = CONTROLLER__paths_ids.Construct();
 
 
         #if UNITY_EDITOR
@@ -103,7 +104,12 @@ public static class CONSTRUCTOR__program {
 
         TOOL__run_time_folders_constructor.Construct();
 
-        Controllers.files.Get_links_with_disk_file();
+        
+        // --- LOAD CONTEXT
+        Program_context_operations.Change_context( Paths_program.program_context );
+
+
+        // --- START 
         Controllers.stack.Start_saver();
 
         

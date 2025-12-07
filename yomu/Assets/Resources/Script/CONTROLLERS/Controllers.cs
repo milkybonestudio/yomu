@@ -4,6 +4,7 @@ public static class Controllers {
 
         public static CONTROLLER__safety_stack stack;
         public static CONTROLLER__data_files files;
+        public static CONTROLLER__paths_ids paths_ids;
 
         public static CONTROLLER__data data;
         public static CONTROLLER__tasks tasks;
@@ -22,8 +23,5 @@ public static class Controllers {
         public static CONTROLLER__saving saving;
         public static CONTROLLER__packets_storage packets;
 
-
-
-
-    
+   
 }

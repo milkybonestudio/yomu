@@ -19,11 +19,11 @@ unsafe public class Crash_handle_ephemeral_files {
 
         // ** la arte de la gambiarra
         // ** vai dar 1 slot extra para ig
-        active_files[ STRING_TO_IGNORE ] = true;
+        // active_files[ _STRING_TO_IGNORE ] = true;
 
     }
 
-    public const string STRING_TO_IGNORE = "?? used_to_ignor_zero_index ??";
+    // public const string _STRING_TO_IGNORE = "?? used_to_ignor_zero_index ??";
 
     public Dictionary<string, byte[]> files;
 
@@ -33,12 +33,15 @@ unsafe public class Crash_handle_ephemeral_files {
 
     public string[] Get_active_paths(){
 
+        if( active_files.Count == 0 )
+            { return new string[ 0 ]; }
+
         string[] paths = active_files.Keys.ToArray();
 
-        int index_to_change = Array.IndexOf( paths, STRING_TO_IGNORE );
+        // int index_to_change = Array.IndexOf( paths, _STRING_TO_IGNORE );
 
-        string valid_path = paths[ 0 ];
-        paths[ index_to_change ] = valid_path;
+        // string valid_path = paths[ 0 ];
+        // paths[ index_to_change ] = valid_path;
 
         return paths;
 
@@ -47,7 +50,6 @@ unsafe public class Crash_handle_ephemeral_files {
     public void Switch_file( string _path, byte[] _data ){
 
         Set_active( _path );
-
         files[ _path ] = _data;
 
     }
@@ -55,7 +57,6 @@ unsafe public class Crash_handle_ephemeral_files {
     public byte[] Get_file( string _path ){
 
         Set_active( _path );
-
         return  files[ _path ];
 
     }
@@ -64,17 +65,15 @@ unsafe public class Crash_handle_ephemeral_files {
     public byte[] Create_new_file( string _path, int _length ){
 
         Set_active( _path );
-
         files[ _path ] = new byte[ _length ];
-
         return files[ _path ];
     }
 
     public void Delete_file( string _path ){
 
         Set_active( _path );
-        
         files[ _path ] = null;
+        return;
 
     }
 
@@ -84,11 +83,6 @@ unsafe public class Crash_handle_ephemeral_files {
 
     }
 
-    public void Change_length_file( string _path, int _new_length ){
-
-        Set_active( _path );
-
-    }
 
 
     private void Set_active( string _path ){

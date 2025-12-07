@@ -9,12 +9,9 @@ using System.Linq;
 public enum File_IO_operation {
 
     _not_give,
-        _nothing,
-        
-        _switch,
-        _create,
-        _delete,
 
+        _add,
+        _delete,
 
 }
 
@@ -37,9 +34,6 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
     }
 
-
-    // ** never 0. 0 is for development
-    public int current_file_id;
 
     public Dictionary<string,int> path_TO_id;
     public Dictionary<int,string> id_TO_path;
@@ -67,6 +61,15 @@ unsafe public struct MANAGER__controller_data_file_storage {
         return;
 
     }
+
+    public int[] Get_current_files_ids(){
+
+        int[] ids = current_files.Keys.ToArray<int>();
+        Array.Sort( ids );
+        return ids;
+
+    }
+
 
 
     public void Force_syncronize_to_disk_PROGRAM_CONSTRUCTOR(){
@@ -168,52 +171,7 @@ unsafe public struct MANAGER__controller_data_file_storage {
     }
 
 
-    public string[] Get_link_files_lines(){
-
-        int current_max = 0;
-        int cached_max = 0;
-        int max_deleted = 0;
-
-        if( id_TO_path.Count > 0 )
-            { current_max = id_TO_path.Keys.Max(); }
-
-        if( deleted_files.Count > 0 )
-            { max_deleted = deleted_files.Values.Max( s => s.id ); }
-
-        if( cached_data_files.Count > 0 )
-            { cached_max = cached_data_files.Values.Max( s => s.id ); }
-        
-        
-        int max_key = Math.Max( current_max, Math.Max( cached_max, max_deleted ) );
-
-        string[] result = new string[ ( max_key + 1 ) ];
-
-        foreach (var kv in id_TO_path ) 
-            { result[ kv.Key ] = kv.Value; }
-
-        
-        foreach (var kv in cached_data_files ){ 
-
-            if( result[ kv.Value.id ] != null )
-                { CONTROLLER__errors.Throw( $"Tried to creat the new link_paths, but id <Color=lightBlue>{ kv.Value.id }</Color> got duplicated" ); }
-
-            result[ kv.Value.id ] = kv.Key;
-
-        }
-        foreach (var kv in deleted_files ){ 
-
-            if( result[ kv.Value.id ] != null )
-                { CONTROLLER__errors.Throw( $"Tried to creat the new link_paths, but id <Color=lightBlue>{ kv.Value.id }</Color> got duplicated" ); }
-
-            result[ kv.Value.id ] = kv.Key;
-
-        }
-
-        return result;
-
-
-    }
-
+ 
 
     public bool Have_data_in_cache( string _path ){
 
@@ -310,14 +268,14 @@ unsafe public struct MANAGER__controller_data_file_storage {
     public Data_file_link Lock_slot( string _path, int _size ){
 
         
-        Heap_key heap_key = Controllers.heap.Get_unique( _size );;
+        Heap_key heap_key = Controllers.heap.Get_unique( _size );
 
-        current_file_id += 1;
-        
+        int id = Controllers.paths_ids.Get_id_from_path( _path );
+
         Data_file_link data = new(){
             heap_key = heap_key,
             size = _size,
-            id = current_file_id
+            id = id
         };
 
         Add_file( data, _path );
@@ -331,13 +289,13 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
         
         Heap_key heap_key = Controllers.heap.Get_empty();;
-        
-        current_file_id += 1;
+
+        int id = Controllers.paths_ids.Get_id_from_path( _path );
         
         Data_file_link data = new(){
             heap_key = heap_key,
             size = 0,
-            id = current_file_id
+            id = id
         };
         
         return data;
@@ -348,13 +306,20 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
     public Data_file_link Lock_slot_recicle( string _path, Data_file_link _cached_data ){
 
-        current_file_id += 1;
-        _cached_data.id = current_file_id;
+        CONTROLLER__errors.Throw( "asd" );
+        // current_file_id += 1;
+        // _cached_data.id = current_file_id;
         return _cached_data;
         
     }
 
     
+
+    public bool Is_file_already_taken( int _id ){
+
+        return id_TO_path.ContainsKey( _id );
+
+    }
 
     public bool Is_file_already_taken( string _path ){
 

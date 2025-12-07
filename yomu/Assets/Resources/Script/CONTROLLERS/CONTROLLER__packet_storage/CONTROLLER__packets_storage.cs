@@ -15,6 +15,20 @@ unsafe public struct CONTROLLER__packets_storage {
     public MANAGER__packet_storage_defaults defaults;
 
 
+
+    public void Give_context( Program_context _context ){
+
+        int[] packets_storages_ids = _context.current_packets_storages;
+
+        foreach( int id in packets_storages_ids ){
+
+            Data_file_link data = Controllers.files.operations.Get_file( id );;
+            storage.Add_storage( data );
+        }
+
+
+    }
+
     public void Update(){
 
         lock( operations.lock_obj ){

@@ -6,6 +6,29 @@ using System.IO;
 unsafe public static class Files {
 
 
+    public static void Try_delete( string _path ){
+
+        if( File.Exists( _path ) )
+            { File.Delete( _path ); }
+
+        return;
+
+    }
+
+
+    public static void Try_override( string _path_with_data, string _final_path ){
+
+        string temp = File_run_time_saving_operations.Get_run_time_path_TEMP( _final_path ); 
+
+        File.Move( _path_with_data, temp );
+        Files.Try_delete( _final_path );
+        File.Move( temp, _final_path );
+        return;
+
+    }
+
+
+
     public static void Save_critical_file( string _path, string[] _array ){
 
         
@@ -27,6 +50,28 @@ unsafe public static class Files {
         return;
 
     }
+
+
+    public static void Save_critical_file( string _path, string combined_text ){
+
+        byte[] data = System.Text.Encoding.UTF8.GetBytes( combined_text );
+
+        FileMode file_mode = FileMode.Create;
+        FileAccess file_accees = FileAccess.ReadWrite;
+        FileShare file_share = FileShare.None;
+        FileOptions file_options = FileOptions.WriteThrough;
+
+        FileStream stream = new FileStream( _path, file_mode, file_accees , file_share, data.Length , file_options );
+        
+
+        stream.Write( data );
+            stream.Flush( true );
+        stream.Close();
+
+        return;
+
+    }
+
 
 
 

@@ -1,35 +1,5 @@
 
 
-
-// public struct Crash_cached_file {
-
-//     /*
-//         path[ n ] -> null + data[ n ] -> null ==> empty
-//         path[ n ] -> "path" + data[ n ] -> byte[]    ==> active data
-//         path[ n ] -> "path" + data[ n ] ->  null   ==> deleted the file
-//     */
-
-
-//     public string path;
-//     public byte[] data;
-
-
-//     // logica não vai funcionar 
-
-//     public bool Is_deleted(){
-
-//         return ( path != null ) && ( data == null );
-
-//     }
-
-//     public bool Have_content(){
-
-//         return ( data != null );
-
-//     }
-
-// }
-
 using System;
 using System.Collections.Generic;
 
@@ -82,17 +52,8 @@ public class Crash_cached_files{
 
     }
 
-    public byte[] Get_data( string _path ){
-
-        return id_TO_data[ path_TO_id[ _path ] ];
-
-    }
-
-    public byte[] Get_data( int _id ){
-
-        return id_TO_data[ _id ];
-
-    }
+    public byte[] Get_data( string _path ){ return id_TO_data[ path_TO_id[ _path ] ];}
+    public byte[] Get_data( int _id ){ return id_TO_data[ _id ]; }
 
 
     public bool Have_file( int _id ){

@@ -10,8 +10,6 @@ unsafe public static class CONSTRUCTOR__controller_heap{
         CONTROLLER__heap controller = new CONTROLLER__heap();
         CONTROLLER__heap.instance = controller;
 
-        UnityEngine.Debug.Log( "AAA" );
-
                 // controller.fix_space_length = 10_000_000;
                 // controller.fix_pointer = Marshal.AllocHGlobal( controller.fix_space_length );
                 // controller.current_pointer = controller.fix_pointer.ToPointer();
