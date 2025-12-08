@@ -34,15 +34,15 @@ unsafe public class CONTROLLER__development {
 
     private void _Apply_development_modifications_start(){
 
-        if( Editor_run.reset_version_folder )
+        if( Editor_run.delete_version_folder )
             {
                 if( System.IO.Directory.Exists( Paths_system.persistent_data ) )
                     { 
                         System.IO.Directory.Delete( Paths_system.persistent_data, true ); 
                         Directory.CreateDirectory( Paths_system.persistent_data );
                     }
-                    
-                TOOL__version_folders_constructor.Construct();
+                if( Editor_run.reset_version_folder )
+                    { TOOL__version_folders_constructor.Construct(); }
                 
             }
 

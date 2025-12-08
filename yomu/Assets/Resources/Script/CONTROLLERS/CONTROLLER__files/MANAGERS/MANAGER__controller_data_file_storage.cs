@@ -132,43 +132,43 @@ unsafe public struct MANAGER__controller_data_file_storage {
     }
 
 
-    public string[] Get_current_links_lines(){
+    // public string[] Get_current_links_lines(){
 
-        if( Controllers.files.storage.id_TO_path.Count == 0 )
-            { return new string[]{ "0??NULL" }; }
+    //     if( Controllers.files.storage.id_TO_path.Count == 0 )
+    //         { return new string[]{ "0??NULL" }; }
 
-        int[] sorted_ids = Controllers.files.storage.id_TO_path.Keys.ToArray();
-        Array.Sort( sorted_ids );
+    //     int[] sorted_ids = Controllers.files.storage.id_TO_path.Keys.ToArray();
+    //     Array.Sort( sorted_ids );
 
-        string[] result = new string[ sorted_ids.Length ];
+    //     string[] result = new string[ sorted_ids.Length ];
 
-        for( int index = 0 ; index < result.Length ; index++ ){
+    //     for( int index = 0 ; index < result.Length ; index++ ){
 
-            int id = sorted_ids[ index ];
-            string path = Controllers.files.storage.id_TO_path[ id ];
-                result[ index ] = $"{ id.ToString() }??{ path }";
-        }
+    //         int id = sorted_ids[ index ];
+    //         string path = Controllers.files.storage.id_TO_path[ id ];
+    //             result[ index ] = $"{ id.ToString() }??{ path }";
+    //     }
 
-        return result;
+    //     return result;
 
-    }
+    // }
 
 
-    public string[] _Get_current_links_lines(){
+    // public string[] _Get_current_links_lines(){
 
-        if( Controllers.files.storage.id_TO_path.Count == 0 )
-            { return new string[]{ "0??NULL" }; }
+    //     if( Controllers.files.storage.id_TO_path.Count == 0 )
+    //         { return new string[]{ "0??NULL" }; }
 
-        int max_key = Controllers.files.storage.id_TO_path.Keys.Max();
+    //     int max_key = Controllers.files.storage.id_TO_path.Keys.Max();
 
-        string[] result = new string[ ( max_key + 1 ) ];
+    //     string[] result = new string[ ( max_key + 1 ) ];
 
-        foreach (var kv in Controllers.files.storage.id_TO_path ) 
-            { result[ kv.Key ] = kv.Value; }
+    //     foreach (var kv in Controllers.files.storage.id_TO_path ) 
+    //         { result[ kv.Key ] = kv.Value; }
 
-        return result;
+    //     return result;
 
-    }
+    // }
 
 
  

@@ -13,6 +13,15 @@ unsafe public struct CONTROLLER__safety_stack {
     // MESSAGE:    [ type ] [ size ] [ body ]
     // first 8 bytes always used for the same thing 
 
+    public void Restart_stack(){
+
+        if( saver.strem_stack != null )
+            { Reset_stack(); }
+
+        Start_saver();
+
+    }
+
     public void Reset_stack(){
 
         buffer.Reset();

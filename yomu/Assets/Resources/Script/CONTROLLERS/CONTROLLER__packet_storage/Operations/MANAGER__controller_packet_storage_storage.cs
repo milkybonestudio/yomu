@@ -11,8 +11,8 @@ unsafe public struct MANAGER__controller_packet_storage_storage {
 
         MANAGER__controller_packet_storage_storage ret = default;
 
-            ret.list_data_files_packets = new List<Data_file_link>( 10 );
-            ret.pointers = new Dictionary<int, long>( 10 );
+            ret.list_data_files_packets = new List<Data_file_link>( 0 );
+            ret.pointers = new Dictionary<int, long>();
             
         return ret;
 
@@ -32,6 +32,7 @@ unsafe public struct MANAGER__controller_packet_storage_storage {
 
         int[] ids = list_data_files_packets.values.Select( x => x.id ).ToArray<int>();
         Array.Sort( ids );
+        Console.Log( ids.ToString() );
 
         return ids;
 
@@ -44,6 +45,8 @@ unsafe public struct MANAGER__controller_packet_storage_storage {
     }
 
     public void Add_storage( Data_file_link _data ){
+
+        Console.Log( "vai adicionar " + _data.id );
 
         list_data_files_packets.Add( _data );
 

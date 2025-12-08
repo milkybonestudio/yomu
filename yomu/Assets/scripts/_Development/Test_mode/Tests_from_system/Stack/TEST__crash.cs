@@ -42,22 +42,20 @@ unsafe public static class TEST__crash {
 
         //mark
         // ** new 
-        save_final_context,
-        load_old_context,
-        save_context_path,
 
-        saving_new_paths_ids, // general
+        save_logic_files,
+        SECURITY_FILE_save_logic_files,
 
-
-        save_new_slot_file_link,
-        create_saving_files_folders,
+        // save_new_slot_file_link,
+        // create_saving_files_folders,
 
         // ** create files in saving folder
         create_half_run_time_saving_files,
         create_full_run_time_saving_files,
 
-        // // ** 
-        // create_saving_files_security_file,
+        SECURITY_FILE_data_files_saved_in_folder,
+
+
 
         // --> have all the data
 
@@ -65,16 +63,16 @@ unsafe public static class TEST__crash {
         apply_logic_half,
         apply_logic_full,
 
+        SECURITY_FILE_data_files_actions_applied,
 
-        reset_stack,
 
-        delete_saving_files_folder,
+        move_logic_files,
+        SECURITY_FILE_saving_finished,
 
-        delete_file_links,
-        change_stack_start_files,
-        
 
         finish,
+        
+
 
     }
 
@@ -142,7 +140,7 @@ unsafe public static class TEST__crash {
     private static void Go_to_state_saving_crash(){
 
 
-        Console.Log( "vai: " + current_state_crash );
+        Console.Log( "----------------------------------vai: " + current_state_crash );
 
         req.data.int_values[ 69 ] = 0;
 
@@ -173,24 +171,62 @@ unsafe public static class TEST__crash {
             }
 
 
+        if( current_state_crash == Crash.save_logic_files )
+            { 
+                // ** context
+                string file_context = Controllers.context.Create_program_context_file(
 
-        if( current_state_crash == Crash.create_saving_files_folders )
-            { System.IO.Directory.CreateDirectory( Paths_run_time.saving_files_folder ); }
+                    _current_files_ids: Controllers.files.storage.Get_current_files_ids(),
+                    _current_packets_storages: Controllers.packets.storage.Get_current_ids()
+
+                );
+
+                Files.Save_critical_file( Paths_run_time.context_new, file_context );
+
+                // ** paths
+                string[] new_paths = Controllers.paths_ids.Get_current_paths_ids();
+                Files.Save_critical_file( Paths_run_time.new_paths_ids, new_paths );
+
+                System.IO.Directory.CreateDirectory( Paths_run_time.saving_files_folder );
+
+            }
+
+        if( current_state_crash == Crash.SECURITY_FILE_save_logic_files )
+            { Files.Save_critical_file( Paths_run_time.logic_data_saved, new byte[ 100 ] ); }
+
+        
+
+
 
         if( current_state_crash == Crash.create_half_run_time_saving_files )
             {
                 MANAGER__controller_saving_saver.Save_files( req );
-                string p = File_run_time_saving_operations.Get_run_time_path( data_3.id, File_IO_operation._add );
-                if( !!!( System.IO.File.Exists( p )) ){ CONTROLLER__errors.Throw( "path dont exist: " + p ); }
-                System.IO.File.Move( p, Paths_run_time.safety_stack_folder + "AAA.dat" );
+                string file_to_remove = File_run_time_saving_operations.Get_run_time_path( data_3.id, File_IO_operation._add );
+
+                if( !!!( File.Exists( file_to_remove ) ) )
+                    { CONTROLLER__errors.Throw( "path dont exist: " + file_to_remove ); }
+
+                string path_to_move = Paths_run_time.safety_stack_folder + "AAA.dat";
+                System.IO.File.Move( file_to_remove, path_to_move );
+
+                Files.Try_delete( Paths_run_time.data_files_saved_in_folder );
             }
             
         if( current_state_crash == Crash.create_full_run_time_saving_files )
             {
-                string p = File_run_time_saving_operations.Get_run_time_path( data_3.id, File_IO_operation._add );
-                if( System.IO.File.Exists( p ) ){ CONTROLLER__errors.Throw( "path exist: " + p ); }
-                System.IO.File.Move( Paths_run_time.safety_stack_folder + "AAA.dat", p );
+                string path_with_file_to_move = ( Paths_run_time.safety_stack_folder + "AAA.dat" );
+                string rigth_path = File_run_time_saving_operations.Get_run_time_path( data_3.id, File_IO_operation._add );
+                if( System.IO.File.Exists( rigth_path ) ){ CONTROLLER__errors.Throw( "file exist and shoudl not: " + rigth_path ); }
+                if( !!! ( System.IO.File.Exists( path_with_file_to_move )) ){ CONTROLLER__errors.Throw( "file dont exist: " + path_with_file_to_move ); }
+
+                System.IO.File.Move( path_with_file_to_move, rigth_path );
+                Files.Try_delete( Paths_run_time.data_files_saved_in_folder );
+                
             }
+
+        
+        if( current_state_crash == Crash.SECURITY_FILE_data_files_saved_in_folder )
+            { Files.Save_critical_file( Paths_run_time.data_files_saved_in_folder, new byte[ 100 ] ); }
 
         
         if( current_state_crash == Crash.apply_logic_half )
@@ -199,19 +235,25 @@ unsafe public static class TEST__crash {
         if( current_state_crash == Crash.apply_logic_full )
             { req.data.int_values[ 69 ] = 2; MANAGER__controller_saving_saver.Apply_actions_files_in_saving_folder( req ); }
 
+        
+        if( current_state_crash == Crash.SECURITY_FILE_data_files_actions_applied )
+            { Files.Save_critical_file( Paths_run_time.data_files_actions_applied, new byte[ 100 ] ); }
 
-        if( current_state_crash == Crash.reset_stack )
-            { MANAGER__controller_saving_saver.Reset_stack( req ); }
+        if( current_state_crash == Crash.move_logic_files )
+            { 
+                string path_context = File.ReadAllText( Paths_run_time.context_path );
+                Files.Try_override( Paths_run_time.context_new, path_context );
+                Files.Try_override( Paths_run_time.new_paths_ids, Paths_version.paths_ids );
+            }
+        
+        if( current_state_crash == Crash.SECURITY_FILE_saving_finished )
+            { Files.Save_critical_file( Paths_run_time.saving_finished, new byte[ 100 ] ); }
 
-        if( current_state_crash == Crash.delete_saving_files_folder )
-            { MANAGER__controller_saving_saver.Delete_saving_folder( req ); }
 
-        if( current_state_crash == Crash.delete_file_links )
-            { MANAGER__controller_saving_saver.Delete_file_links( req ); }
-
-        if( current_state_crash == Crash.change_stack_start_files )
-            { MANAGER__controller_saving_saver.Save_stack_start_files( req ); }
-            
+        if( current_state_crash == Crash.finish )
+            { 
+                File.Delete( Paths_run_time.safety_stack_file ); 
+            }
 
 
         current_state_crash++;
@@ -266,10 +308,10 @@ unsafe public static class TEST__crash {
                     { Verify_crash(Crash.save_stack, Crash_handle_route.need_to_recosntruct_with_the_stack ); }
 
                 if( Input.GetKeyDown( KeyCode.W ) )
-                    { Verify_crash( Crash.save_new_slot_file_link,  Crash_handle_route.need_to_recosntruct_with_the_stack ); }
+                //     { Verify_crash( Crash.save_new_slot_file_link,  Crash_handle_route.need_to_recosntruct_with_the_stack ); }
 
-                if( Input.GetKeyDown( KeyCode.E ) )
-                    { Verify_crash( Crash.create_saving_files_folders,  Crash_handle_route.need_to_recosntruct_with_the_stack ); }
+                // if( Input.GetKeyDown( KeyCode.E ) )
+                //     { Verify_crash( Crash.create_saving_files_folders,  Crash_handle_route.need_to_recosntruct_with_the_stack ); }
 
                 if( Input.GetKeyDown( KeyCode.R ) )
                     { Verify_crash( Crash.create_half_run_time_saving_files,  Crash_handle_route.need_to_recosntruct_with_the_stack ); }
@@ -284,11 +326,11 @@ unsafe public static class TEST__crash {
                 if( Input.GetKeyDown( KeyCode.S ) )
                     { Verify_crash( Crash.apply_logic_full,  Crash_handle_route.all_temp_files_were_already_there_just_move ); }
 
-                if( Input.GetKeyDown( KeyCode.D ) )
-                    { Verify_crash( Crash.reset_stack,  Crash_handle_route.all_files_already_got_saved ); }
+                // if( Input.GetKeyDown( KeyCode.D ) )
+                //     { Verify_crash( Crash.reset_stack,  Crash_handle_route.all_files_already_got_saved ); }
 
-                if( Input.GetKeyDown( KeyCode.F ) )
-                    { Verify_crash( Crash.delete_saving_files_folder,  Crash_handle_route.all_files_already_got_saved ); }
+                // if( Input.GetKeyDown( KeyCode.F ) )
+                //     { Verify_crash( Crash.delete_saving_files_folder,  Crash_handle_route.all_files_already_got_saved ); }
 
 
             }

@@ -297,7 +297,7 @@ unsafe public class CONTROLLER__heap {
             { CONTROLLER__errors.Throw( "type is not UNIQUE" ); }
 
         if( !!!( unique_keys.ContainsKey( key.unique_id ) ) )
-            { CONTROLLER__errors.Throw( "Tried to return key <Color=lightBlue>{ key.unique_id }</Color> but it was not allocated. Probably already free the key and try it again" ); }
+            { CONTROLLER__errors.Throw( $"Tried to return key <Color=lightBlue>{ key.unique_id }</Color> but it was not allocated. Probably already free the key and try it again" ); }
 
         Marshal.FreeHGlobal( key.unique_key.int_pointer );
 

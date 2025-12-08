@@ -20,31 +20,23 @@ unsafe public static class TOOL__version_folders_constructor {
     public static void Construct(){
 
         Directory.CreateDirectory( Paths_system.persistent_data );
-        Create_program_folder();
-        Create_saves_folder();
 
-
-        Controllers.files.operations.Create_new_file_EMPTY( Paths_program.program_data + ".aaa", 100  );
-        Controllers.files.operations.Create_new_file_EMPTY( Paths_program.program_data + ".bbb", 100 );
-        
-        Controllers.files.storage.Force_syncronize_to_disk_PROGRAM_CONSTRUCTOR();
+            Create_program_folder();
+            Create_saves_folder();
 
         // ** SAVE FILES
-        Program_context_operations.Save_current_data_as_context( Paths_program.program_context );
-
-        // ** PATHS
-        Controllers.paths_ids.Save_current_paths_in_disk();
         
-
-        
-        Controllers.stack.Reset_stack();
-        Controllers.files.Reset_files();
-        
+            // ** the files will be in majority in cached 
+            Controllers.files.storage.Force_syncronize_to_disk_PROGRAM_CONSTRUCTOR();
+            
+            Controllers.stack.Reset_stack();
+            Controllers.files.Reset_files();
+            
+            Controllers.paths_ids.Save_current_paths_in_disk();
 
         // --- SAFETY FILE
 
             Files.Save_critical_file( Paths_version.security_file, new byte[]{ 55, 55, 55 } );
-
     
         return;
 
@@ -79,7 +71,10 @@ unsafe public static class TOOL__version_folders_constructor {
                 
             }
 
+        
 
+        
+        Controllers.context.Save_current_data_as_context( Paths_program.program_context );
 
 
 
@@ -106,13 +101,28 @@ unsafe public static class TOOL__version_folders_constructor {
 
     private static void Create_save_folder( int _save ){
 
+        // ** starts with program
+        Program_context context_start = Controllers.context.Get_context_with_path( Paths_program.program_context );
+        // ** dont have side effects on controller_context
+        Controllers.context.Change_context_data( context_start );
+
+        Paths_current_save.Start_save( _save );
+
         // NORMAL   
-        string  save_path = Paths_saves.Get_save_folder( _save );
-        Directory.CreateDirectory( save_path );
+        Directory.CreateDirectory( Paths_current_save.save_path );
         
         // DEATH
-        string save_DEATH = Paths_current_save.Get_save_death( save_path );
-        Directory.CreateDirectory( save_DEATH );
+        Directory.CreateDirectory( Paths_current_save.save_death );
+
+
+        // ** crate
+
+        Save_data* pointer_program = ( Save_data* ) Controllers.heap.Get_fast_pointer( sizeof( Save_data ) );
+        Controllers.files.operations.Create_new_file( pointer_program, sizeof( Save_data ), Paths_current_save.brute_data );
+
+        
+        Controllers.context.Save_current_data_as_context( Paths_current_save.save_context );
+
 
         return;
 

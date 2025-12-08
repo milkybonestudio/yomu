@@ -25,7 +25,7 @@ unsafe public static class TOOL__reconstruct_from_stack{
         
         Controllers.paths_ids.Define_paths_ids( Paths_version.paths_ids );
 
-        Program_context_operations.Change_context( Crash_handler.context_path ); // ** change the files to the old ones 
+        Controllers.context.Force_change_context( Crash_handler.context_path ); // ** change the files to the old ones 
 
 
 
@@ -148,7 +148,7 @@ unsafe public static class TOOL__reconstruct_from_stack{
 
 
         // ** SAVE NEW CONTEXT
-        string new_context = Program_context_operations.Create_program_context_file(
+        string new_context = Controllers.context.Create_program_context_file(
             _current_files_ids: Controllers.files.storage.Get_current_files_ids(),
             _current_packets_storages: Controllers.packets.storage.Get_current_ids()
         );

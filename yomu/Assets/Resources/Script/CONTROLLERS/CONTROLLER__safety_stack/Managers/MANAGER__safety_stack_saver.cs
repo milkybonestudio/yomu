@@ -8,13 +8,13 @@ using System.Threading;
 unsafe public struct MANAGER__safety_stack_saver {
 
 
-    public static MANAGER__safety_stack_saver Construct(){
+    public static MANAGER__safety_stack_saver Construct( ref CONTROLLER__safety_stack _controller ){
 
         MANAGER__safety_stack_saver ret = default;
 
             ret.stream_size = 50_000;
-            ret.file_size = Controllers.stack.safety_file_size;
-
+            // ret.file_size = _controller.safety_file_size;
+            
             ret.req_saving = new Task_req( "req_saving" );
             ret.req_saving.Change_stage( Task_req_stage.finished );
 
@@ -37,12 +37,16 @@ unsafe public struct MANAGER__safety_stack_saver {
 
     public void Start(){
 
+        if( strem_stack != null )
+            { CONTROLLER__errors.Throw( "Came in Start() in stack saver. But the stream was already with a file" ); }
+
+        // ** CREATE STACK
         if( System.IO.File.Exists( Paths_run_time.safety_stack_file ) )
             { CONTROLLER__errors.Throw( $"The stack_safety_file is in the path <Color=lightBlue>{ Paths_run_time.safety_stack_file }</Color> and shouldn't in the normal flow of the code" ); }
 
+        Files.Save_critical_file( Paths_run_time.safety_stack_file, ARRAY.Get_array<byte>( _length: file_size, _value: 45 ) );
 
-        File.WriteAllBytes( Paths_run_time.safety_stack_file, ARRAY.Get_array<byte>( _length: file_size, _value: 45 ) );
-        
+
 
         // ret.strem_stack = FILE_STREAM.Criar_stream( Paths_program.safety_stack_file, ret.stream_size );
         strem_stack = FILE_STREAM.Criar_stream( Paths_run_time.safety_stack_file, stream_size );
@@ -50,11 +54,13 @@ unsafe public struct MANAGER__safety_stack_saver {
 
         // ** didn't save the 0
         pointer_buffer_already_saved = -1;
+        file_size = Controllers.stack.safety_file_size;
         heap_key_span_safety_digits = Controllers.heap.Get_unique( ( 2 * sizeof( int ) ) );
 
 
 
     }
+    
     public void Reset(){
 
         Destroy();
@@ -64,11 +70,17 @@ unsafe public struct MANAGER__safety_stack_saver {
         heap_key_span_safety_digits = default;
 
     }
-    
+
 
     public bool Stack_file_is_close_to_end(){
 
+        if( strem_stack == null )
+            { return false; }
+
         int _80 = 8 * ( file_size / 10 );
+
+        // Console.Log( "file_size: " + file_size );
+        // Console.Log( "current_pointer_in_file: " + current_pointer_in_file );
 
         return current_pointer_in_file > ( _80 );
 

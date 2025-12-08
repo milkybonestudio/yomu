@@ -35,7 +35,7 @@ public enum Saving_files_stages{
     data_files_actions_applied,
 
     // ** move the context and new_paths_ids
-    logic_files_moved, 
+    // logic_files_moved, 
 
     // ** cleaned the stack and delete things 
     saving_finished,
@@ -102,9 +102,6 @@ unsafe public static class Crash_handler{
             if( File.Exists( Paths_run_time.data_files_actions_applied ) )
                 { stage = Saving_files_stages.data_files_actions_applied; }
 
-            if( File.Exists( Paths_run_time.logic_files_moved ) )
-                { stage = Saving_files_stages.logic_files_moved; }
-
             if( File.Exists( Paths_run_time.saving_finished ) )
                 { stage = Saving_files_stages.saving_finished; }
 
@@ -115,7 +112,7 @@ unsafe public static class Crash_handler{
                 case Saving_files_stages.logic_data_saved: return Handle_logic_data_saved();
                 case Saving_files_stages.data_files_saved_in_folder: return Handle_data_files_saved_in_folder();
                 case Saving_files_stages.data_files_actions_applied: return Handle_data_files_actions_applied();
-                case Saving_files_stages.logic_files_moved: return Handle_logic_files_moved();
+                // case Saving_files_stages.logic_files_moved: return Handle_logic_files_moved();
                 case Saving_files_stages.saving_finished: return Handle_saving_finished();
                 default: CONTROLLER__errors.Throw( "can not handle type:" + stage ); return default;
             }
@@ -208,24 +205,43 @@ unsafe public static class Crash_handler{
     private static Crash_handle_return Handle_data_files_actions_applied(){
 
         // ** CONTEXT 
-            string new_context = File.ReadAllText( Paths_run_time.context_new );
-            Files.Try_override( new_context, context_path );
+
+            string path_temp_context = File_run_time_saving_operations.Get_run_time_path_TEMP( context_path );
+
+            if( File.Exists( Paths_run_time.context_new ) )
+                { File.Move( Paths_run_time.context_new, path_temp_context ); }
+
+            if( File.Exists( path_temp_context ) )
+                { 
+                    if( !!!( File.Exists( context_path ) ) )
+                        { CONTROLLER__errors.Throw( "path in the contex should exist" ); }
+
+                    File.Delete( context_path ); 
+                    File.Move( path_temp_context, context_path );
+                }
+
 
         // ** PATHS IDS
 
-            string paths_ids = File.ReadAllText( Paths_run_time.new_paths_ids );
-            Files.Try_override( paths_ids, Paths_version.paths_ids );
+            string path_paths_ids_TEMP = File_run_time_saving_operations.Get_run_time_path_TEMP( Paths_version.paths_ids );
+            
+            if( File.Exists( Paths_run_time.new_paths_ids ) )
+                { File.Move( Paths_run_time.new_paths_ids, path_paths_ids_TEMP ); }
 
-        Files.Save_critical_file( Paths_run_time.logic_files_moved, new byte[ 100 ] );
-        return Handle_logic_files_moved();
-    }
+            if( File.Exists( path_paths_ids_TEMP ) )
+                { 
+                    if( !!!( File.Exists( Paths_version.paths_ids ) ) )
+                        { CONTROLLER__errors.Throw( "path in the contex should exist" ); }
 
-    private static Crash_handle_return Handle_logic_files_moved(){
+                    File.Delete( Paths_version.paths_ids ); 
+                    File.Move( path_paths_ids_TEMP, Paths_version.paths_ids );
+                }
+
 
         Files.Save_critical_file( Paths_run_time.saving_finished, new byte[ 100 ] );
         return Handle_saving_finished();
     }
-    
+
     private static Crash_handle_return Handle_saving_finished(){
 
         // ** will not start even if crash here

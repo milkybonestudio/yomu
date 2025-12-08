@@ -6,8 +6,8 @@ unsafe public struct CONTROLLER__data_file_TESTING {
 
     public void Save_link_paths_sync(){
 
-        string[] result = Controllers.files.storage.Get_current_links_lines();
-        Files.Save_critical_file( Paths_version.paths_ids, result );
+        // string[] result = Controllers.files.storage.Get_current_links_lines();
+        // Files.Save_critical_file( Paths_version.paths_ids, result );
 
         return;
 

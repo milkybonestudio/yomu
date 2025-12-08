@@ -4,6 +4,8 @@ using System.Runtime.CompilerServices;
 
 unsafe public static class INT {
 
+    public static int[] array_0 = new int[ 0 ];
+
 
     public static void Transfer_int_to_byte_arr( byte[] _array, int _off_set, int _value ){
 

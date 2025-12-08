@@ -44,6 +44,7 @@ public static class CONSTRUCTOR__program {
             Controllers.saving = CONSTRUCTOR__controller_saving.Construct();
             Controllers.stack = CONSTRUCTOR__controller_safety_stack.Construct();
             Controllers.paths_ids = CONTROLLER__paths_ids.Construct();
+            Controllers.context = CONTROLLER__context.Construct();
 
 
         #if UNITY_EDITOR
@@ -101,16 +102,17 @@ public static class CONSTRUCTOR__program {
                             
             }
             
+            
 
         TOOL__run_time_folders_constructor.Construct();
 
         
         // --- LOAD CONTEXT
-        Program_context_operations.Change_context( Paths_program.program_context );
+        Controllers.context.Force_change_context( Paths_program.program_context );
 
 
         // --- START 
-        Controllers.stack.Start_saver();
+        // Controllers.stack.Start_saver();
 
         
     

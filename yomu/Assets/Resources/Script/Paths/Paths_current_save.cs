@@ -4,6 +4,7 @@ using System.IO;
 
 public static class Paths_current_save {
 
+
     public static void Start_save( int _save ){
 
         Paths_version.Guarantee_version_folder();
@@ -13,15 +14,17 @@ public static class Paths_current_save {
         
         save_path = Paths_saves.Get_save_folder( _save );
 
-            normal.save_data = Get_save_data();
-            normal.save_image = Get_save_image();
-            normal.save_storage = Get_save_storage(); 
+            save_context = Get_save_context();
+            save_death = Get_save_death( save_path );
 
-        save_path_death = Get_save_death( save_path );
 
-            death.save_data = Get_save_data();
-            death.save_image = Get_save_image();
-            death.save_storage = Get_save_storage(); 
+            save_data = Get_save_data();
+            save_image = Get_save_image();
+            save_storage = Get_save_storage();
+
+            brute_data = Get_save_brute_data();
+            
+
             
         return;
             
@@ -29,17 +32,19 @@ public static class Paths_current_save {
     }
 
 
-
-    public static Save_paths normal;
-    public static Save_paths death;
-
     public static string save_path;
-    public static string save_path_death;
+    // public static string save_path_death;
 
     public const string save_data_name = "save_data.dat";
     public static string save_data;
     public static string Get_save_data(){ return Path.Combine( save_path, save_data_name ); }
     public static string Get_save_data( string _save_path ){ return Path.Combine( _save_path, save_data_name ); }
+
+
+    
+    public const string save_context_name = "save_context.dat";
+    public static string save_context;
+    public static string Get_save_context(){ return Path.Combine( save_path, save_context_name ); }
 
 
     //mark
@@ -50,7 +55,7 @@ public static class Paths_current_save {
     public static string Get_save_brute_data( string _save_path ){ return Path.Combine( _save_path, brute_data_name ); }
 
     public const string storage_name = "storage.dat";
-    public static string storage;
+    public static string save_storage;
     public static string Get_save_storage(){ return Path.Combine( save_path, storage_name ); }
     public static string Get_save_storage( string _save_path ){ return Path.Combine( _save_path, storage_name ); }
 
@@ -71,9 +76,6 @@ public static class Paths_current_save {
     public static string save_death;
     public static string Get_save_death(){ return System.IO.Path.Combine( save_path, save_death_name ); }
     public static string Get_save_death( string _save_path ){ return System.IO.Path.Combine( _save_path, save_death_name ); }
-
-
-
 
 
 }

@@ -24,15 +24,7 @@ using System.IO;
 //         }
 //     ** save_image.png
 
-public struct Save_paths{
 
-    // ** para duplicar o normal e o de morte
-
-    public string save_data;
-    public string save_image;
-    public string save_storage;
-    
-}
 
 public static class Paths_saves {
 
