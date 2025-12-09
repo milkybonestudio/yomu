@@ -53,7 +53,7 @@ public static class Paths_saves {
             if( _save > 7 )
                 { CONTROLLER__errors.Throw( $"Can not handle save number <Color=lightBlue>{ _save }</Color>" ); }
 
-            return Path.Combine( saves_path, save_prefix_name, INT.ToString( _save ) );
+            return Path.Combine( saves_path, ( save_prefix_name + INT.ToString( _save ) ) );
 
     }
 

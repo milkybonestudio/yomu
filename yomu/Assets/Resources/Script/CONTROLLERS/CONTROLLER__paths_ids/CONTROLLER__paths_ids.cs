@@ -2,6 +2,18 @@
 
 using System.Collections.Generic;
 
+
+public struct CONTROLLER__paths_ids_TEST {
+
+    public void Save_paths_sync(){
+
+        System.IO.File.Delete( Paths_version.paths_ids );
+        System.IO.File.WriteAllLines( Paths_version.paths_ids, Controllers.paths_ids.Get_current_paths_ids() );
+        
+    }
+
+}
+
 unsafe public struct CONTROLLER__paths_ids {
 
 
@@ -14,9 +26,15 @@ unsafe public struct CONTROLLER__paths_ids {
         return ret;
     }
 
+    public bool Have_path( string _path ){
+
+        return path_TO_id.ContainsKey( _path );
+
+    }
+
     // ** never 0. 0 is for development
     private int current_file_id;
-
+    public CONTROLLER__paths_ids_TEST test;
 
     public void Save_current_paths_in_disk(){
 

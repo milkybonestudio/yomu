@@ -56,7 +56,7 @@ unsafe public struct MANAGER__controller_saving_saver {
     }
 
 
-    public void Force_save_synchronous(){
+    public void Force_save_synchronous_safe(){
 
         // ** SAVE STACK
         Task_req req_stack = Controllers.stack.saver.Sinalize_to_save();
@@ -185,7 +185,7 @@ unsafe public struct MANAGER__controller_saving_saver {
 
     public static void Apply_actions_files_in_saving_folder( Task_req _req ){
 
-        string[] paths_of_slots = File.ReadAllLines( Paths_run_time.new_paths_ids );
+        string[] paths_of_slots = Controllers.paths_ids.Get_current_paths_ids(); // File.ReadAllLines( Paths_run_time.new_paths_ids );
         int[] operations_array = _req.managed_data.int_array;
 
         int _testing = _req.data.int_values[ 69 ];
@@ -195,8 +195,12 @@ unsafe public struct MANAGER__controller_saving_saver {
             
             if( ( _testing == 1 )  && ( file_id == operations_array.Length - 1 ) ){ break; }// jump last
             if( _testing == 2 ){ file_id = operations_array.Length - 1; }// go to last
+
             
             File_IO_operation operation = ( File_IO_operation ) operations_array[ file_id ];
+
+            if( operation == default )
+                { continue; }
 
             string final_path = paths_of_slots[ file_id ];
             string path_in_disk_saving_folder = File_run_time_saving_operations.Get_run_time_path( file_id, operation );
@@ -221,7 +225,7 @@ unsafe public struct MANAGER__controller_saving_saver {
         // ** define state
         Files.Save_critical_file( Paths_run_time.data_files_actions_applied, new byte[ 100 ] );
 
-        if( _testing == 1 )
+        if( _testing != 0 )
             { File.Delete( Paths_run_time.data_files_actions_applied ); }
 
         return;
@@ -231,7 +235,7 @@ unsafe public struct MANAGER__controller_saving_saver {
 
     public static void Move_logic_files( Task_req _req ){
 
-        string path_to_context = Paths_run_time.context_path;
+        string path_to_context = Paths_run_time.path_to_file_with_context_path;
         Files.Try_override( Paths_run_time.context_new, File.ReadAllText( path_to_context ) );
         Files.Try_override( Paths_run_time.new_paths_ids, Paths_version.paths_ids );
 

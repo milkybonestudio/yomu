@@ -24,18 +24,16 @@ unsafe public struct CONTROLLER__data_files {
     public MANAGER__controller_data_file_storage storage; // ** have the real files
 
 
-    public void Update(){
-
-    }
-
-
-
+    public void Update(){}
 
     public void Reset_files(){
 
-        Console.Log( "Called reset_files()" );
+        if( System_run.files_show_messages )
+            { Console.Log( "Called reset_files()" ); }
 
         storage.Reset();
+        
+        return;
 
     }
 

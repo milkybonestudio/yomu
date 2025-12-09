@@ -25,11 +25,6 @@ public static class Directories {
 
     public static bool Is_sub_path( string full_path, string sub_part ){
 
-
-        Console.Log_super_slow( "REMOVER DEPOIS" );
-        if( sub_part != Paths_version.path_to_version )
-            { CONTROLLER__errors.Throw( "usou program_path" ); }
-
         // Normalize trailing slashes
         full_path = full_path.TrimEnd( Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar ) + Path.DirectorySeparatorChar;
         sub_part = sub_part.TrimEnd( Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar ) + Path.DirectorySeparatorChar;

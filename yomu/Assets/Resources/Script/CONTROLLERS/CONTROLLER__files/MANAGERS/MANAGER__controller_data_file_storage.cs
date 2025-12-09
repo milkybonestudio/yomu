@@ -132,46 +132,6 @@ unsafe public struct MANAGER__controller_data_file_storage {
     }
 
 
-    // public string[] Get_current_links_lines(){
-
-    //     if( Controllers.files.storage.id_TO_path.Count == 0 )
-    //         { return new string[]{ "0??NULL" }; }
-
-    //     int[] sorted_ids = Controllers.files.storage.id_TO_path.Keys.ToArray();
-    //     Array.Sort( sorted_ids );
-
-    //     string[] result = new string[ sorted_ids.Length ];
-
-    //     for( int index = 0 ; index < result.Length ; index++ ){
-
-    //         int id = sorted_ids[ index ];
-    //         string path = Controllers.files.storage.id_TO_path[ id ];
-    //             result[ index ] = $"{ id.ToString() }??{ path }";
-    //     }
-
-    //     return result;
-
-    // }
-
-
-    // public string[] _Get_current_links_lines(){
-
-    //     if( Controllers.files.storage.id_TO_path.Count == 0 )
-    //         { return new string[]{ "0??NULL" }; }
-
-    //     int max_key = Controllers.files.storage.id_TO_path.Keys.Max();
-
-    //     string[] result = new string[ ( max_key + 1 ) ];
-
-    //     foreach (var kv in Controllers.files.storage.id_TO_path ) 
-    //         { result[ kv.Key ] = kv.Value; }
-
-    //     return result;
-
-    // }
-
-
- 
 
     public bool Have_data_in_cache( string _path ){
 
@@ -181,23 +141,24 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
     public Data_file_link Get_via_cached_data( string _path ){
 
+
         Data_file_link cached_data = cached_data_files[ _path ];
-        Data_file_link new_data = Lock_slot_recicle( _path, cached_data_files[ _path ] );
+        cached_data_files.Remove( _path );
 
-        // ** technically it will save the data as "0".data or something
-        // ** but if it saves in disk means that the new data also will be saved 
-        // ** so even if id 20 "erased" the data the new id 30 will switch for the right version
+        Add_current( cached_data, _path );
 
-        cached_data.heap_key = Controllers.heap.Get_empty();
-        cached_data_files[ _path ] = cached_data;
+        return cached_data;
 
-        //mark
-        // ** tirar daqui!!!
-        Controllers.stack.files.Save_data_got_file_from_disk( new_data.id, _path );
+
+        // Data_file_link cached_data = cached_data_files[ _path ];
+        // Data_file_link new_data = Lock_slot_recicle( _path, cached_data_files[ _path ] );
+
+        // cached_data.heap_key = Controllers.heap.Get_empty();
+        // cached_data_files[ _path ] = cached_data;
         
-        Add_current( new_data, _path );
+        // Add_current( new_data, _path );
 
-        return new_data;
+        // return new_data;
 
     }
 
@@ -235,6 +196,9 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
 
     public Data_file_link Delete_file( string _path ){
+
+        if( !!!( Controllers.paths_ids.Have_path( _path ) ) )
+            { CONTROLLER__errors.Throw( "Tried to delete a file, but the file don't exist in the paths_ids. Path: " + _path ); }
         
         Data_file_link data = default;
 
@@ -288,9 +252,10 @@ unsafe public struct MANAGER__controller_data_file_storage {
     public Data_file_link Lock_slot_delete( string _path ){
 
         
-        Heap_key heap_key = Controllers.heap.Get_empty();;
+        Heap_key heap_key = Controllers.heap.Get_empty();
 
         int id = Controllers.paths_ids.Get_id_from_path( _path );
+        Console.Log( "Deu lock delete, id: { id }, path: : " + _path  );
         
         Data_file_link data = new(){
             heap_key = heap_key,
@@ -304,6 +269,8 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
 
 
+    //mark
+    // ** remover
     public Data_file_link Lock_slot_recicle( string _path, Data_file_link _cached_data ){
 
         CONTROLLER__errors.Throw( "asd" );
@@ -343,6 +310,14 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
 
     public bool File_exist_in_final_disk( string _path ){
+
+        if( false )
+            {
+                Console.Log( "Exist in deleted: " + deleted_files.ContainsKey( _path ) );
+                Console.Log( "Exist in disk: " + System.IO.File.Exists( _path ) );
+                Console.Log( "Cached: " + cached_data_files.ContainsKey( _path ) );
+                Console.Log( "current: " + path_TO_id.ContainsKey( _path ) );
+            }
 
         return !!!( deleted_files.ContainsKey( _path ) ) && ( System.IO.File.Exists( _path ) || cached_data_files.ContainsKey( _path ) || path_TO_id.ContainsKey( _path ) );
 
@@ -407,9 +382,11 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
     private void Removed_current( string _path ){
 
-
         int id = path_TO_id[ _path ];
-        Console.Log( "came to remove id: " + id );
+
+        if( System_run.files_show_messages )
+            { Console.Log( "came to remove id: " + id ); }
+    
         id_TO_path.Remove( id );
         path_TO_id.Remove( _path );
         current_files.Remove( id );

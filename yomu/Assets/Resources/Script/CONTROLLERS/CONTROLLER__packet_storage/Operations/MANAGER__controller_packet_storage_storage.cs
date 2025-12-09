@@ -19,20 +19,29 @@ unsafe public struct MANAGER__controller_packet_storage_storage {
     }
 
 
-    public void End(){
+    public void End(){}
 
-        
 
-    }
 
     public List<Data_file_link> list_data_files_packets;
+
+    //mark
+    // ** vai ter que ser por data_link, pointer pode ficar com o valor errado
+    // ** se o arquivo mudar de tamanho
     public Dictionary<int,long> pointers;
+
+    public void Reset(){
+
+        list_data_files_packets.Reset();
+        pointers.Clear();
+
+    }
 
     public int[] Get_current_ids(){
 
         int[] ids = list_data_files_packets.values.Select( x => x.id ).ToArray<int>();
         Array.Sort( ids );
-        Console.Log( ids.ToString() );
+        // Console.Log( ids.ToString() );
 
         return ids;
 
@@ -46,7 +55,7 @@ unsafe public struct MANAGER__controller_packet_storage_storage {
 
     public void Add_storage( Data_file_link _data ){
 
-        Console.Log( "vai adicionar " + _data.id );
+        // Console.Log( "vai adicionar " + _data.id );
 
         list_data_files_packets.Add( _data );
 

@@ -43,31 +43,41 @@ unsafe public static class TEST__crash {
         //mark
         // ** new 
 
-        save_logic_files,
-        SECURITY_FILE_save_logic_files,
+        // save_logic_files,
 
-        // save_new_slot_file_link,
-        // create_saving_files_folders,
+            save_new_context,
+            save_new_paths,
+            create_saving_files_folders,
+
+            SECURITY_FILE_save_logic_files,
 
         // ** create files in saving folder
-        create_half_run_time_saving_files,
-        create_full_run_time_saving_files,
 
-        SECURITY_FILE_data_files_saved_in_folder,
+            create_half_run_time_saving_files,
+            create_full_run_time_saving_files,
 
+            SECURITY_FILE_data_files_saved_in_folder,
 
-
-        // --> have all the data
 
         // ** apply logic
-        apply_logic_half,
-        apply_logic_full,
+            apply_logic_half,
+            apply_logic_full,
 
-        SECURITY_FILE_data_files_actions_applied,
+            SECURITY_FILE_data_files_actions_applied,
 
 
-        move_logic_files,
-        SECURITY_FILE_saving_finished,
+        // move_logic_files,
+
+            move_new_paths_ids,
+            delete_old_paths_ids,
+            switch_old_paths_ids,
+
+            move_new_context,
+            delete_old_context,
+            switch_old_context,
+
+            
+            SECURITY_FILE_saving_finished,
 
 
         finish,
@@ -151,13 +161,13 @@ unsafe public static class TEST__crash {
                 data_1 = Controllers.files.operations.Change_length_file( data_1, 500 );
                 Controllers.files.operations.Remove_file( data_1 );
 
-                // Controllers.files.operations.Change_data_file( data_2, 20, v );
-                 Controllers.files.operations.Change_data_file( data_2, 20, 10d );
-                //Controllers.files.operations.Change_data_file( data_2, 20, 4f );
+                Controllers.files.operations.Change_data_file( data_2, 20, 'f' );
                 Controllers.files.operations.Remove_file( data_2 );
 
-                Data_file_link data_4 = Controllers.files.operations.Get_file_from_disk( path_4_EXIST_OU_SYSTEM );
-                Controllers.files.operations.Delete_file( path_5_EXIST_OU_SYSTEM );
+                Data_file_link data_4 = Controllers.files.operations.Get_file_from_disk( Paths_current_save.brute_data );
+
+                Paths_current_save.Start_save( 5 );
+                Controllers.files.operations.Delete_file( Paths_current_save.brute_data );
                 
                 
                 Data_file_link data_6 = Controllers.files.operations.Create_new_file( new byte[ 500 ] , path_6_DONT_EXIST );
@@ -167,29 +177,29 @@ unsafe public static class TEST__crash {
                 Controllers.files.operations.Delete_file( path_7_DONT_EXIST );
 
                 Controllers.stack.test.Save_stack_in_disk_sync();
+                Controllers.paths_ids.test.Save_paths_sync();
 
             }
 
 
-        if( current_state_crash == Crash.save_logic_files )
-            { 
-                // ** context
+        if( current_state_crash == Crash.save_new_context )
+            {
                 string file_context = Controllers.context.Create_program_context_file(
-
                     _current_files_ids: Controllers.files.storage.Get_current_files_ids(),
                     _current_packets_storages: Controllers.packets.storage.Get_current_ids()
-
                 );
-
                 Files.Save_critical_file( Paths_run_time.context_new, file_context );
+            }
 
-                // ** paths
+        if( current_state_crash == Crash.save_new_paths )
+            {
                 string[] new_paths = Controllers.paths_ids.Get_current_paths_ids();
                 Files.Save_critical_file( Paths_run_time.new_paths_ids, new_paths );
-
-                System.IO.Directory.CreateDirectory( Paths_run_time.saving_files_folder );
-
             }
+
+        if( current_state_crash == Crash.create_saving_files_folders )
+            { System.IO.Directory.CreateDirectory( Paths_run_time.saving_files_folder ); }
+
 
         if( current_state_crash == Crash.SECURITY_FILE_save_logic_files )
             { Files.Save_critical_file( Paths_run_time.logic_data_saved, new byte[ 100 ] ); }
@@ -239,12 +249,37 @@ unsafe public static class TEST__crash {
         if( current_state_crash == Crash.SECURITY_FILE_data_files_actions_applied )
             { Files.Save_critical_file( Paths_run_time.data_files_actions_applied, new byte[ 100 ] ); }
 
-        if( current_state_crash == Crash.move_logic_files )
-            { 
-                string path_context = File.ReadAllText( Paths_run_time.context_path );
-                Files.Try_override( Paths_run_time.context_new, path_context );
-                Files.Try_override( Paths_run_time.new_paths_ids, Paths_version.paths_ids );
+
+        // ** PATHS
+        if( current_state_crash ==  Crash.move_new_paths_ids )
+            { File.Move( Paths_run_time.new_paths_ids, File_run_time_saving_operations.Get_run_time_path_TEMP( Paths_version.paths_ids ) ); }
+
+        if( current_state_crash ==  Crash.delete_old_paths_ids )
+            { File.Delete( Paths_version.paths_ids ); }
+
+        if( current_state_crash ==  Crash.switch_old_paths_ids )
+            { { File.Move( File_run_time_saving_operations.Get_run_time_path_TEMP( Paths_version.paths_ids ), Paths_version.paths_ids ); } }
+
+
+        // ** CONTEXT
+        if( current_state_crash ==  Crash.move_new_context )
+            {
+                string path_context = File.ReadAllText( Paths_run_time.path_to_file_with_context_path );
+                string temp = File_run_time_saving_operations.Get_run_time_path_TEMP( path_context ); 
+                File.Move( Paths_run_time.context_new, temp );
             }
+        if( current_state_crash ==  Crash.delete_old_context )
+            {
+                string path_context = File.ReadAllText( Paths_run_time.path_to_file_with_context_path );
+                File.Delete( path_context );
+            }
+        if( current_state_crash ==  Crash.switch_old_context )
+            {
+                string path_context = File.ReadAllText( Paths_run_time.path_to_file_with_context_path );
+                string temp = File_run_time_saving_operations.Get_run_time_path_TEMP( path_context ); 
+                File.Move( temp, path_context );
+            }
+
         
         if( current_state_crash == Crash.SECURITY_FILE_saving_finished )
             { Files.Save_critical_file( Paths_run_time.saving_finished, new byte[ 100 ] ); }
@@ -252,7 +287,9 @@ unsafe public static class TEST__crash {
 
         if( current_state_crash == Crash.finish )
             { 
-                File.Delete( Paths_run_time.safety_stack_file ); 
+                Controllers.stack.saver.Clean_file();
+                // File.Delete( Paths_run_time.safety_stack_file ); 
+
             }
 
 
@@ -308,29 +345,66 @@ unsafe public static class TEST__crash {
                     { Verify_crash(Crash.save_stack, Crash_handle_route.need_to_recosntruct_with_the_stack ); }
 
                 if( Input.GetKeyDown( KeyCode.W ) )
-                //     { Verify_crash( Crash.save_new_slot_file_link,  Crash_handle_route.need_to_recosntruct_with_the_stack ); }
+                    { Verify_crash( Crash.save_new_context, Crash_handle_route.need_to_recosntruct_with_the_stack ); }
 
-                // if( Input.GetKeyDown( KeyCode.E ) )
-                //     { Verify_crash( Crash.create_saving_files_folders,  Crash_handle_route.need_to_recosntruct_with_the_stack ); }
-
+                if( Input.GetKeyDown( KeyCode.E ) )
+                    { Verify_crash( Crash.save_new_paths,  Crash_handle_route.need_to_recosntruct_with_the_stack ); }
+                
                 if( Input.GetKeyDown( KeyCode.R ) )
-                    { Verify_crash( Crash.create_half_run_time_saving_files,  Crash_handle_route.need_to_recosntruct_with_the_stack ); }
+                    { Verify_crash( Crash.create_saving_files_folders,  Crash_handle_route.need_to_recosntruct_with_the_stack ); }
                 
                 if( Input.GetKeyDown( KeyCode.T ) )
+                    { Verify_crash( Crash.SECURITY_FILE_save_logic_files,  Crash_handle_route.need_to_recosntruct_with_the_stack ); }
+
+
+
+
+
+                if( Input.GetKeyDown( KeyCode.Y ) )
+                    { Verify_crash( Crash.create_half_run_time_saving_files,  Crash_handle_route.need_to_recosntruct_with_the_stack ); }
+                
+                if( Input.GetKeyDown( KeyCode.U ) )
                     { Verify_crash( Crash.create_full_run_time_saving_files,  Crash_handle_route.need_to_recosntruct_with_the_stack ); }
 
-
                 if( Input.GetKeyDown( KeyCode.A ) )
-                    { Verify_crash( Crash.apply_logic_half,  Crash_handle_route.all_temp_files_were_already_there_just_move ); }
+                    { Verify_crash( Crash.SECURITY_FILE_data_files_saved_in_folder,  Crash_handle_route.all_temp_files_were_already_there_just_move ); }
+
+
+
+
 
                 if( Input.GetKeyDown( KeyCode.S ) )
+                    { Verify_crash( Crash.apply_logic_half,  Crash_handle_route.all_temp_files_were_already_there_just_move ); }
+
+                if( Input.GetKeyDown( KeyCode.D ) )
                     { Verify_crash( Crash.apply_logic_full,  Crash_handle_route.all_temp_files_were_already_there_just_move ); }
 
-                // if( Input.GetKeyDown( KeyCode.D ) )
-                //     { Verify_crash( Crash.reset_stack,  Crash_handle_route.all_files_already_got_saved ); }
+                if( Input.GetKeyDown( KeyCode.F ) )
+                    { Verify_crash( Crash.SECURITY_FILE_data_files_actions_applied,  Crash_handle_route.all_data_files_already_got_saved ); }
 
-                // if( Input.GetKeyDown( KeyCode.F ) )
-                //     { Verify_crash( Crash.delete_saving_files_folder,  Crash_handle_route.all_files_already_got_saved ); }
+
+
+
+                if( Input.GetKeyDown( KeyCode.G ) )
+                    { Verify_crash( Crash.move_new_paths_ids,  Crash_handle_route.all_data_files_already_got_saved ); } 
+                if( Input.GetKeyDown( KeyCode.H ) )
+                    { Verify_crash( Crash.delete_old_paths_ids,  Crash_handle_route.all_data_files_already_got_saved ); } 
+                if( Input.GetKeyDown( KeyCode.Z ) )
+                    { Verify_crash( Crash.switch_old_paths_ids,  Crash_handle_route.all_data_files_already_got_saved ); } 
+
+                if( Input.GetKeyDown( KeyCode.X ) )
+                    { Verify_crash( Crash.move_new_context,  Crash_handle_route.all_data_files_already_got_saved ); } 
+                if( Input.GetKeyDown( KeyCode.C ) )
+                    { Verify_crash( Crash.delete_old_context,  Crash_handle_route.all_data_files_already_got_saved ); } 
+                if( Input.GetKeyDown( KeyCode.V ) )
+                    { Verify_crash( Crash.switch_old_context,  Crash_handle_route.all_data_files_already_got_saved ); } 
+
+
+                if( Input.GetKeyDown( KeyCode.B ) )
+                    { Verify_crash( Crash.SECURITY_FILE_saving_finished,  Crash_handle_route.all_files_already_got_saved ); }
+
+                if( Input.GetKeyDown( KeyCode.N ) )
+                    { Verify_crash( Crash.finish,  Crash_handle_route.all_files_already_got_saved ); }
 
 
             }
@@ -351,7 +425,7 @@ unsafe public static class TEST__crash {
     
     private static Crash_handle_return _Crash(){
 
-        Controllers.stack.saver.strem_stack.Close();
+        // Controllers.stack.saver.strem_stack.Close();
         return Crash_handler.Deal_crash();
 
 
@@ -363,6 +437,8 @@ unsafe public static class TEST__crash {
 
             Crash_test_until( _crash );
             
+            Controllers.context.Reset_context_data();
+
             Crash_handle_return ret = _Crash();
             Crash_handle_route real_crash_handler = ret.route;
 

@@ -24,27 +24,34 @@ public struct CONTROLLER__context{
         if( current_context_path == _path_to_context )
             { return; }
 
+        if( !!!( System.IO.File.Exists( _path_to_context ) ) )
+            { CONTROLLER__errors.Throw( "Tried to change context, but the is no file in " + _path_to_context ); }
+
         Program_context context = Controllers.context.Get_context_with_path( _path_to_context );
 
-        if( current_context_path == null )
-            {
-                Change_context_data( context );
-                current_context_path = _path_to_context;
-                return;
-            }
+        if( current_context_path != null )
+            {Controllers.saving.saver.Force_save_synchronous_safe();                 }
 
-        Controllers.saving.saver.Force_save_synchronous();
-        Controllers.stack.Reset_stack();
 
         Change_context_data( context );
 
-            
-        Files.Save_critical_file( Paths_run_time.context_path, _path_to_context );
+        Controllers.stack.Restart_stack();
+        Files.Save_critical_file( Paths_run_time.path_to_file_with_context_path, _path_to_context );
         current_context_path = _path_to_context;
+
         return;
 
     }
 
+    
+    public void Reset_context_data(){
+
+        Controllers.files.Reset_files();
+        Controllers.packets.Reset();
+        Controllers.stack.Reset_stack();
+
+        return;
+    }
 
     public void Change_context_data( Program_context _context ){
 
@@ -52,7 +59,6 @@ public struct CONTROLLER__context{
         Controllers.packets.Give_context( _context );
 
         return;
-
     }
 
 
@@ -65,7 +71,6 @@ public struct CONTROLLER__context{
         );
 
         Files.Save_critical_file( _path_to_context, context );
-
         
     }
 
@@ -90,12 +95,8 @@ public struct CONTROLLER__context{
 
     public Program_context Get_context_with_path( string _context_path ){
 
-
         string _context_file = System.IO.File.ReadAllText( _context_path );
 
-        
-
-        Console.Log( _context_file );
         Program_context context = new();
 
             string[] lines = _context_file.Split( "|" );

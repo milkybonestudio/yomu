@@ -27,16 +27,6 @@ unsafe public static class TOOL__reconstruct_from_stack{
 
         Controllers.context.Force_change_context( Crash_handler.context_path ); // ** change the files to the old ones 
 
-
-
-
-        // ** TROCAR
-        // ** nao precisa?
-        //mark
-        // Crash_cached_files files_in_system = new Crash_cached_files();
-        // Crash_handle_ephemeral_files files_OS = new Crash_handle_ephemeral_files();
-
-
         
         int[] old_files_ids = Controllers.files.storage.Get_current_files_ids();
 
@@ -53,13 +43,7 @@ unsafe public static class TOOL__reconstruct_from_stack{
             if( !!!( System.IO.File.Exists( path ) ) )
                 { return Stack_reconstruction_result_message.Construct( $"Should have a file in the path <Color=lightBlue>{ path }</Color>", Stack_reconstruction_result.fail ); }
 
-            // if( !!!( files_OS.Have_file( path ) ) )
-            //     { return Stack_reconstruction_result_message.Construct( $"Should have a file in the path <Color=lightBlue>{ path }</Color>", Stack_reconstruction_result.fail ); }
-
             Controllers.files.operations.Get_file_from_disk( path );
-
-            // byte[] data = files_OS.Get_file( path );
-            // files_in_system.Add_data( path, index, data );
 
             continue;
 
@@ -72,9 +56,6 @@ unsafe public static class TOOL__reconstruct_from_stack{
 
         if( System_run.show_program_construction_messages )
             { Console.Log( "Will reconstruct the files in ram" ); }
-
-
-
 
 
         // ** SPLIT STACK BLOCKS
@@ -135,25 +116,16 @@ unsafe public static class TOOL__reconstruct_from_stack{
             }
 
 
-        // ** com isso OS tem o estado atualizado do jogo
-        // foreach( string path in files_in_system.path_TO_id.Keys )
-        //     { files_OS.Switch_file(  path, files_in_system.Get_data( path ) ); }
-
-        // files_in_system.Reset();
-        
-        // Save_files_in_saving_files_folder( files_OS, files_in_system );
-
         MANAGER__controller_saving_saver.Save_files( new Task_req() );
-
-
 
         // ** SAVE NEW CONTEXT
         string new_context = Controllers.context.Create_program_context_file(
             _current_files_ids: Controllers.files.storage.Get_current_files_ids(),
             _current_packets_storages: Controllers.packets.storage.Get_current_ids()
         );
+        Console.Log( new_context );
         
-        Files.Save_critical_file( Paths_run_time.context_path, new_context );
+        Files.Save_critical_file( Paths_run_time.context_new, new_context );
 
         // ** SAVE NEW FILE LINKS
 

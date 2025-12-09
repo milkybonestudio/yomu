@@ -94,6 +94,8 @@ unsafe public static class TOOL__version_folders_constructor {
         for( int save_slot = 0 ; save_slot < 8 ; save_slot++ )
             { Create_save_folder( save_slot ); }
 
+        Paths_current_save.Start_save( 0 );
+
         return;
 
     }

@@ -17,8 +17,12 @@ unsafe public struct CONTROLLER__safety_stack {
 
         if( saver.strem_stack != null )
             { Reset_stack(); }
+            else
+            { buffer.Reset(); }
 
         Start_saver();
+
+        return;
 
     }
 

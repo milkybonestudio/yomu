@@ -65,11 +65,6 @@ unsafe public struct MANAGER__controller_data_file_operations {
     #endif
     public void Change_data_file( Data_file_link _data, int _off_set, void* _data_pointer, int _length ){
 
-
-        // if( Controllers.files.is_reconstructing_stack_from_CRASH )
-        //     { return; }
-
-
         lock( lock_obj ){
 
             void* file_pointer = default;
@@ -83,8 +78,8 @@ unsafe public struct MANAGER__controller_data_file_operations {
                     file_pointer = _data.Get_pointer();
                     length_file = _data.Get_length();
 
-                    if( _off_set <= 0 )
-                        { CONTROLLER__errors.Throw( $"Tried to change data in the file {_data.id } but the _off_set is { _off_set }" ); }
+                    if( _off_set < 0 )
+                        { CONTROLLER__errors.Throw( $"Tried to change data in the file {_data.id } but the _off_set is negative: { _off_set }" ); }
 
                     if( _data_pointer == null )
                         { CONTROLLER__errors.Throw( $"Tried to change data in the file {_data.id } but the _data_pointer is null" ); }
@@ -142,12 +137,6 @@ unsafe public struct MANAGER__controller_data_file_operations {
     // ** call only when the file already exists
     public Data_file_link Get_file( string _path ){
 
-        
-        // if( Controllers.files.is_reconstructing_stack_from_CRASH )
-        //     { return default; }
-
-        // no need to use stack
-
         lock( lock_obj ){
 
             if( System_run.max_security )   
@@ -173,11 +162,6 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
     // ** call only when the file already exists
     public Data_file_link Get_file( int _file_id ){
-
-        // no need to use stack
-
-        // if( Controllers.files.is_reconstructing_stack_from_CRASH )
-        //     { return default; }
 
         lock( lock_obj ){
 
@@ -243,15 +227,7 @@ unsafe public struct MANAGER__controller_data_file_operations {
     }
 
 
-
-
     public Data_file_link Get_file_from_disk( string _path ){
-
-
-        // if( Controllers.files.is_reconstructing_stack_from_CRASH )
-        //     { return default; }
-
-        // add slot
 
         lock( lock_obj ){
 
@@ -298,9 +274,6 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
     public void Remove_file( Data_file_link _data_file ){
 
-        // if( Controllers.files.is_reconstructing_stack_from_CRASH )
-        //     { return; }
-
         lock( lock_obj ){
 
             if( System_run.max_security )
@@ -324,8 +297,6 @@ unsafe public struct MANAGER__controller_data_file_operations {
                 }
 
             Controllers.files.storage.Remove_file( _data_file );
-
-            Console.Log( "VER O CERTO DEPOIS DEPOIS" );
             Controllers.stack.files.Save_data_remove_file( _data_file.id );
 
             return;
@@ -336,9 +307,6 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
     public Data_file_link Create_new_file( byte[] _data, string _path ){
 
-        // if( Controllers.files.is_reconstructing_stack_from_CRASH )
-        //     { return default; }
-
         if( _data == null )
             { CONTROLLER__errors.Throw( "tried to create a path but the data is null" ); }
 
@@ -347,10 +315,6 @@ unsafe public struct MANAGER__controller_data_file_operations {
     }
 
     public Data_file_link Create_new_file( void* _file_pointer, int _file_length, string _path ){
-
-        // if( Controllers.files.is_reconstructing_stack_from_CRASH )
-        //     { return default; }
-        // ** call only when create run time files
 
         lock( lock_obj ){
 
@@ -405,11 +369,6 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
 
     public Data_file_link Create_new_file_EMPTY( string _path, int _file_length ){
-
-        // ** call only when create run time files
-
-        // if( Controllers.files.is_reconstructing_stack_from_CRASH )
-        //     { return default; }
 
         lock( lock_obj ){
 
@@ -473,9 +432,8 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
     private void Delete_file_intern( string _path ){
 
-        // if( Controllers.files.is_reconstructing_stack_from_CRASH )
-        //     { return; }
-    
+        Console.Log( $"<Color=lightBlue>vai deletar path: { _path }</Color>" );
+
         if( System_run.max_security )
             {             
                 if( _path == null )
@@ -514,12 +472,8 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
 
     public Data_file_link Change_length_file( Data_file_link _data_link, int _new_length ){
-        
-        // if( Controllers.files.is_reconstructing_stack_from_CRASH )
-        //     { return _data_link; }
 
         lock( lock_obj ){
-
 
             if( System_run.max_security )
                 {                    

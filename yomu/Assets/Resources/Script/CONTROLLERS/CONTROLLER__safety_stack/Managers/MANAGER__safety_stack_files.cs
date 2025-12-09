@@ -29,7 +29,6 @@ unsafe public struct MANAGER__safety_stack_files {
 
     public void* origianl_message_pointer;
 
-    // public static Stack_reconstruction_result_message Read_message( Crash_handle_ephemeral_files _files_OS, Crash_cached_files _files, void* _message ){
     public static Stack_reconstruction_result_message Read_message( void* _message ){
 
 
@@ -37,24 +36,11 @@ unsafe public struct MANAGER__safety_stack_files {
         Safety_stack_action_type type = ((Stack_message_core*)_message)->type;
 
         if( System_run.show_program_construction_messages ) 
-            { Console.Log( "type: " + type ); }
+            { Console.Log( "FILES type: " + type ); }
 
         
 
         switch( type ){
-
-            // // ** OK
-            // case Safety_stack_action_type.change_data_in_file: return Reconstruct_by_message__CHANGE_DATA_IN_FILE( _files_OS, _files, _message ); 
-            // // ** OK
-            // case Safety_stack_action_type.got_file_from_disk: return Reconstruct_by_message__GOT_FILE_FROM_DISK( _files_OS, _files, _message );
-
-            
-            // case Safety_stack_action_type.create_new_file: return Reconstruct_by_message__CREATE_NEW_FILE( _files_OS, _files, _message );
-            // case Safety_stack_action_type.change_length_file: return Reconstruct_by_message__CHANGE_LENGTH_FILE( _files_OS, _files, _message );
-
-            // case Safety_stack_action_type.delete_file: return Reconstruct_by_message__DELETE_FILE( _files_OS, _files, _message );
-            // case Safety_stack_action_type.remove_file: return Reconstruct_by_message__REMOVE_FILE( _files_OS, _files, _message );
-
 
             // ** OK
             case Safety_stack_action_type.change_data_in_file: return Reconstruct_by_message__CHANGE_DATA_IN_FILE( _message ); 
@@ -182,7 +168,6 @@ unsafe public struct MANAGER__safety_stack_files {
 
     }
 
-    // private static Stack_reconstruction_result_message Reconstruct_by_message__CHANGE_DATA_IN_FILE( Crash_handle_ephemeral_files _files_OS, Crash_cached_files _files, void* _message ){
     private static Stack_reconstruction_result_message Reconstruct_by_message__CHANGE_DATA_IN_FILE( void* _message ){
 
         if( System_run.show_program_construction_messages )
@@ -203,18 +188,12 @@ unsafe public struct MANAGER__safety_stack_files {
         if( message->file_id <= 0 )
             { return Stack_reconstruction_result_message.Construct( $"The message <Color=lightBlue>STACK_MESSAGE__file_change</Color> file_id is invalid: <Color=lightBlue>{ message->file_id }</Color>", Stack_reconstruction_result.fail ); }
 
-        // byte[] file_data = _files.Get_data( message->file_id );
-
-
-        Data_file_link data = Controllers.files.operations.Get_file( message->file_id );
         
         if(  !!!(  Controllers.files.storage.Is_file_already_taken( message->file_id ) ) )
             { return Stack_reconstruction_result_message.Construct( $"came in <Color=lightBlue>STACK_MESSAGE__file_change </Color> but there is no file in the file id  <Color=lightBlue>{ message->file_id }</Color>", Stack_reconstruction_result.fail ); }
 
-        // if(  !!!( _files.Have_data( message->file_id ) ) )
-        //     { return Stack_reconstruction_result_message.Construct( $"came in <Color=lightBlue>STACK_MESSAGE__file_change </Color> but there is no file in the file id  <Color=lightBlue>{ message->file_id }</Color>", Stack_reconstruction_result.fail ); }
-
-
+        Data_file_link data = Controllers.files.operations.Get_file( message->file_id );
+        
         if( message->length <= 0 )
             { return Stack_reconstruction_result_message.Construct( $"The message <Color=lightBlue>STACK_MESSAGE__file_change</Color> length is <Color=lightBlue>{ message->length }</Color>", Stack_reconstruction_result.fail ); }
 
@@ -227,14 +206,6 @@ unsafe public struct MANAGER__safety_stack_files {
         if( System_run.show_program_construction_messages )
             { Console.Log( "final_pointer: " + final_pointer ); }
 
-        // if( final_pointer >= file_data.Length )
-        //     { 
-        //         return Stack_reconstruction_result_message.Construct( 
-        //             $"The file <Color=lightBlue>{ message->file_id } </Color>in the <Color=lightBlue>STACK_MESSAGE__file_change " + 
-        //             $"</Color> final pointer is <Color=lightBlue>{ Formater.Format_number( final_pointer )  }</Color> but the file have <Color=lightBlue>{ Formater.Format_number( file_data.Length ) }</Color> bytes", 
-        //             Stack_reconstruction_result.fail
-        //         ); 
-        //     }
 
         if( final_pointer >= data.Get_length() )
             { 
@@ -251,11 +222,6 @@ unsafe public struct MANAGER__safety_stack_files {
 
         Data_file_link link = Controllers.files.storage.Get_data( message->file_id );
         Controllers.files.operations.Change_data_file( link, message->point_to_change, &message->pointer_data, message->length );
-
-
-    	// fixed( byte* data_pointer = file_data )
-        //     { VOID.Transfer_data( &message->pointer_data, ( data_pointer + message->point_to_change ), message->length ); }
-
 
 
         return Stack_reconstruction_result_message.Construct( null, Stack_reconstruction_result.succes );
@@ -284,16 +250,6 @@ unsafe public struct MANAGER__safety_stack_files {
 
                 if( !!!( Directories.Is_sub_path( _path, Paths_version.path_to_version ))  )
                     { CONTROLLER__errors.Throw( $"Tried to create a new file message, but the path is not in the version folder:<Color=lightBlue>{ _path }</Color>" ); }
-
-                //mark
-                // ** is conflicting with lock_id(), if came here the file dont exist
-                // if( Controllers.files.storage.File_exist_in_final_disk( _path ) )
-                //     { CONTROLLER__errors.Throw( $"Tried to create a new file message, but the file already exist in the path :<Color=lightBlue>{ _path }</Color>" ); }
-
-                // if( Controllers.files.storage.Is_id_valid( _file_id ) )
-                //     { CONTROLLER__errors.Throw( $"Tried to create a new file message, but the file id { _file_id } is already in use" ); }
-
-
                 
             }
 
@@ -332,7 +288,6 @@ unsafe public struct MANAGER__safety_stack_files {
 
     }
 
-    // private static Stack_reconstruction_result_message Reconstruct_by_message__CREATE_NEW_FILE( Crash_handle_ephemeral_files _files_OS, Crash_cached_files _files, void* _message ){
     private static Stack_reconstruction_result_message Reconstruct_by_message__CREATE_NEW_FILE( void* _message ){
 
 
@@ -365,21 +320,8 @@ unsafe public struct MANAGER__safety_stack_files {
                 );
             }
 
-        // if( _files_OS.Have_file( path ) )
-        //     { return Stack_reconstruction_result_message.Construct( $"There is already a file in the path <Color=lightBlue>{ path }</Color>", Stack_reconstruction_result.fail ); }
-
-        // if( _files.Have_data( file_id ) )
-        //     { return Stack_reconstruction_result_message.Construct( "This id is already in use: " + path, Stack_reconstruction_result.fail ); }
-
-
         if( Controllers.files.storage.File_exist_in_final_disk( path ) )
             { return Stack_reconstruction_result_message.Construct( "There is alreadya a file in the path: " + path, Stack_reconstruction_result.fail ); }
-
-        
-
-        // ** create file
-        // byte[] data = _files_OS.Create_new_file( path, file_length );
-        // _files.Add_data( path, file_id, data );
 
         Controllers.files.operations.Create_new_file_EMPTY( path, file_length );
 
@@ -401,8 +343,7 @@ unsafe public struct MANAGER__safety_stack_files {
     public void Save_data_delete_file( int _file_id, string _path  ){
 
 
-        Console.Log( "remover false depois" );
-        if( false && System_run.max_security )
+        if( System_run.max_security )
             {
                 if( _path == null )
                     { CONTROLLER__errors.Throw( "Tried to delete file in the stack with a null path" ); }
@@ -440,7 +381,6 @@ unsafe public struct MANAGER__safety_stack_files {
 
     }
 
-    // private static Stack_reconstruction_result_message Reconstruct_by_message__DELETE_FILE( Crash_handle_ephemeral_files _files_OS, Crash_cached_files _files, void* _message ){
     private static Stack_reconstruction_result_message Reconstruct_by_message__DELETE_FILE( void* _message ){
 
         if( System_run.show_program_construction_messages_messages_detail_in_messages )
@@ -480,35 +420,10 @@ unsafe public struct MANAGER__safety_stack_files {
                 );
             }
 
-
-        // bool file_is_in_the_system = _files.Have_data( path );
-        // bool file_is_in_OS = _files_OS.Have_file( path );
-
-        // if( !!!( file_is_in_the_system ) && !!!( file_is_in_OS ) )
-        //     { return Stack_reconstruction_result_message.Construct( $"The message <Color=lightBlue>STACK_MESSAGE__delete_file</Color> there is no fle to delete in the id <Color=lightBlue>{ file_id }</Color>", Stack_reconstruction_result.fail ); }
-
         if( !!!( Controllers.files.storage.File_exist_in_final_disk( path ) ) )
             { return Stack_reconstruction_result_message.Construct( $"The message <Color=lightBlue>STACK_MESSAGE__delete_file</Color> there is no fle to delete in the id <Color=lightBlue>{ file_id }</Color>", Stack_reconstruction_result.fail ); }
-
-
-        
-
-        
-        // if( file_is_in_the_system )
-        //     { _files.Remove_data( file_id ); }
-
-        // if( file_is_in_OS )
-        //     { _files_OS.Delete_file( path ); }
-
-
-        // // ** create file
-        // _files[ file_id ].data = _files_OS.Get_file( path );
-        // _files[ file_id ].path = path;
-        
-        
-        //mark
+            
         Controllers.files.operations.Delete_file( path );
-
 
         return Stack_reconstruction_result_message.Construct( null, Stack_reconstruction_result.succes );
 
@@ -553,8 +468,6 @@ unsafe public struct MANAGER__safety_stack_files {
 
     }
 
-
-    // private static Stack_reconstruction_result_message Reconstruct_by_message__REMOVE_FILE( Crash_handle_ephemeral_files _files_OS, Crash_cached_files _files, void* _message ){
     private static Stack_reconstruction_result_message Reconstruct_by_message__REMOVE_FILE( void* _message ){
 
         STACK_MESSAGE__remove_file* message = (STACK_MESSAGE__remove_file*) _message;
@@ -564,16 +477,8 @@ unsafe public struct MANAGER__safety_stack_files {
         if( file_id <= 0 )
             { return Stack_reconstruction_result_message.Construct( $"The message <Color=lightBlue>STACK_MESSAGE__remove_file</Color> file_id is <Color=lightBlue>{ file_id }</Color>", Stack_reconstruction_result.fail ); }
 
-        // if( !!!( _files.Have_data( file_id ) ) )
-        //     { return Stack_reconstruction_result_message.Construct( $"There is no file in the id <Color=lightBlue>{ file_id }</Color>", Stack_reconstruction_result.fail ); }
-
         if( !!!( Controllers.files.storage.Is_file_already_taken( file_id ) ) )
             { return Stack_reconstruction_result_message.Construct( $"There is no file in the id <Color=lightBlue>{ file_id }</Color>", Stack_reconstruction_result.fail ); }
-
-
-        // _files_OS.Switch_file( _files.Get_path( file_id ), _files.Get_data( file_id ) );
-        // _files.Remove_data( file_id );
-
 
         Data_file_link link = Controllers.files.storage.Get_data( file_id );
         Controllers.files.operations.Remove_file( link );
@@ -582,36 +487,6 @@ unsafe public struct MANAGER__safety_stack_files {
         return Stack_reconstruction_result_message.Construct( null, Stack_reconstruction_result.succes );
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -667,7 +542,6 @@ unsafe public struct MANAGER__safety_stack_files {
 
     }
 
-    // private static Stack_reconstruction_result_message Reconstruct_by_message__GOT_FILE_FROM_DISK( Crash_handle_ephemeral_files _files_OS, Crash_cached_files _files, void* _message ){
     private static Stack_reconstruction_result_message Reconstruct_by_message__GOT_FILE_FROM_DISK( void* _message ){
 
 
@@ -710,19 +584,11 @@ unsafe public struct MANAGER__safety_stack_files {
         if( Controllers.files.storage.Is_file_already_taken( file_id ) )
             { return Stack_reconstruction_result_message.Construct( "Should get a file, but it was already in the system so got duplicated: " + path, Stack_reconstruction_result.fail ); }
 
-        // if( _files.Have_data( file_id ) )
-        //     { return Stack_reconstruction_result_message.Construct( "Should get a file, but it was already in the system so got duplicated: " + path, Stack_reconstruction_result.fail ); }
-
-
-        // if( !!!( _files_OS.Have_file( path ) ) )
-        //     { return Stack_reconstruction_result_message.Construct( "File don't exist in path: " + path, Stack_reconstruction_result.fail ); }
-        
         if( !!!( Controllers.files.storage.File_exist_in_final_disk( path ) ) )
             { return Stack_reconstruction_result_message.Construct( "File don't exist in path: " + path, Stack_reconstruction_result.fail ); }
 
 
         // ** create file
-        //_files.Add_data( path, file_id, _files_OS.Get_file( path ) );
         Controllers.files.operations.Get_file_from_disk( path );
 
         return Stack_reconstruction_result_message.Construct( null, Stack_reconstruction_result.succes );
@@ -769,8 +635,6 @@ unsafe public struct MANAGER__safety_stack_files {
         );
 
         message->core_message.length = message_length;
-
-
         
         Controllers.stack.Save_message( message_length );
 
@@ -779,7 +643,7 @@ unsafe public struct MANAGER__safety_stack_files {
 
     }
 
-    // private static Stack_reconstruction_result_message Reconstruct_by_message__CHANGE_LENGTH_FILE( Crash_handle_ephemeral_files _files_OS, Crash_cached_files _files, void* _message ){
+
     private static Stack_reconstruction_result_message Reconstruct_by_message__CHANGE_LENGTH_FILE( void* _message ){
 
 
@@ -795,15 +659,9 @@ unsafe public struct MANAGER__safety_stack_files {
         if( new_length <= 0 )
             { return Stack_reconstruction_result_message.Construct( $"The message <Color=lightBlue>STACK_MESSAGE__change_length_file</Color> point_to_change is <Color=lightBlue>{ new_length }</Color>", Stack_reconstruction_result.fail ); }
 
-        // if( !!!( _files.Have_data( file_id ) ) )
-        //     { return Stack_reconstruction_result_message.Construct( $"The message <Color=lightBlue>STACK_MESSAGE__change_length_file</Color> but there is no file in the id <Color=lightBlue>{ file_id }</Color>. Can not expand a file that don't exist", Stack_reconstruction_result.fail ); }
-
         if( !!!( Controllers.files.storage.Is_file_already_taken( file_id ) ) )
             { return Stack_reconstruction_result_message.Construct( $"The message <Color=lightBlue>STACK_MESSAGE__change_length_file</Color> but there is no file in the id <Color=lightBlue>{ file_id }</Color>. Can not expand a file that don't exist", Stack_reconstruction_result.fail ); }
 
-
-
-        // _files.Change_length_data( file_id, new_length );
 
         Data_file_link link = Controllers.files.storage.Get_data( file_id );
         Controllers.files.operations.Change_length_file( link, new_length );
@@ -812,11 +670,6 @@ unsafe public struct MANAGER__safety_stack_files {
         return Stack_reconstruction_result_message.Construct( null, Stack_reconstruction_result.succes );
 
     }
-
-
-
-
-
 
 
     private void Safety(){

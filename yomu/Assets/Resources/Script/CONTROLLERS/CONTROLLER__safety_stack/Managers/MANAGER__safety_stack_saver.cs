@@ -44,19 +44,18 @@ unsafe public struct MANAGER__safety_stack_saver {
         if( System.IO.File.Exists( Paths_run_time.safety_stack_file ) )
             { CONTROLLER__errors.Throw( $"The stack_safety_file is in the path <Color=lightBlue>{ Paths_run_time.safety_stack_file }</Color> and shouldn't in the normal flow of the code" ); }
 
-        Files.Save_critical_file( Paths_run_time.safety_stack_file, ARRAY.Get_array<byte>( _length: file_size, _value: 45 ) );
-
-
-
-        // ret.strem_stack = FILE_STREAM.Criar_stream( Paths_program.safety_stack_file, ret.stream_size );
-        strem_stack = FILE_STREAM.Criar_stream( Paths_run_time.safety_stack_file, stream_size );
-
 
         // ** didn't save the 0
         pointer_buffer_already_saved = -1;
         file_size = Controllers.stack.safety_file_size;
         heap_key_span_safety_digits = Controllers.heap.Get_unique( ( 2 * sizeof( int ) ) );
 
+
+        Files.Save_critical_file( Paths_run_time.safety_stack_file, ARRAY.Get_array<byte>( _length: file_size, _value: 45 ) );
+
+
+        // ret.strem_stack = FILE_STREAM.Criar_stream( Paths_program.safety_stack_file, ret.stream_size );
+        strem_stack = FILE_STREAM.Criar_stream( Paths_run_time.safety_stack_file, stream_size );
 
 
     }

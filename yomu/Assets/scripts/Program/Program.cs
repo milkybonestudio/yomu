@@ -124,6 +124,7 @@ unsafe public class Program : MonoBehaviour {
         Controllers.packets.Destroy();
         Controllers.tasks?.Destroy();
         Controllers.heap?.Destroy();
+        Controllers.context.Destroy();
 
 
 

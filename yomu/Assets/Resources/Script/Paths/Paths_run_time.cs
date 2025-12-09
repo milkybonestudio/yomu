@@ -22,7 +22,7 @@ public static class Paths_run_time {
 
                 //mark
                 // ** mudar para current_context_path
-                context_path = Get_context_path();
+                path_to_file_with_context_path = Get_path_to_file_with_context_path();
 
 
                 // LOGIC TO CHANGE 
@@ -70,10 +70,10 @@ public static class Paths_run_time {
                 public static string Get_safety_stack_file(){ return Combine( safety_stack_folder, safety_stack_file_NAME ); }
                 public static string Get_safety_stack_file( string _path ){ return Combine( _path, safety_stack_file_NAME ); }
 
-                public const string context_path_NAME = "context_path.txt";
-                public static string context_path;
-                public static string Get_context_path(){ return Combine( safety_stack_folder, context_path_NAME ); }
-                public static string Get_context_path( string _path ){ return Combine( _path, context_path_NAME ); }
+                public const string path_to_file_with_context_path_NAME = "path_to_file_with_context_path.txt";
+                public static string path_to_file_with_context_path;
+                public static string Get_path_to_file_with_context_path(){ return Combine( safety_stack_folder, path_to_file_with_context_path_NAME ); }
+                public static string Get_path_to_file_with_context_path( string _path ){ return Combine( _path, path_to_file_with_context_path_NAME ); }
 
                 
 

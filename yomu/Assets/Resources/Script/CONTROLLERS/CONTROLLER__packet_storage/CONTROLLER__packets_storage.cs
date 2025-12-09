@@ -15,6 +15,10 @@ unsafe public struct CONTROLLER__packets_storage {
     public MANAGER__packet_storage_defaults defaults;
 
 
+    public void Reset(){
+
+        storage.Reset();
+    }
 
     public void Give_context( Program_context _context ){
 
