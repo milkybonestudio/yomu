@@ -149,17 +149,6 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
         return cached_data;
 
-
-        // Data_file_link cached_data = cached_data_files[ _path ];
-        // Data_file_link new_data = Lock_slot_recicle( _path, cached_data_files[ _path ] );
-
-        // cached_data.heap_key = Controllers.heap.Get_empty();
-        // cached_data_files[ _path ] = cached_data;
-        
-        // Add_current( new_data, _path );
-
-        // return new_data;
-
     }
 
 
@@ -222,6 +211,9 @@ unsafe public struct MANAGER__controller_data_file_storage {
         if( System_run.files_show_messages )
             { Console.Log( $"Move file to deleted files. path: <Color=lightBlue>{ _path }</Color>" ); }
 
+        //mark
+        // ** TEM QUE DELETAR OS DADOS DEPOIS
+
         deleted_files[ _path ] = data;
         return data;
 
@@ -255,7 +247,6 @@ unsafe public struct MANAGER__controller_data_file_storage {
         Heap_key heap_key = Controllers.heap.Get_empty();
 
         int id = Controllers.paths_ids.Get_id_from_path( _path );
-        Console.Log( "Deu lock delete, id: { id }, path: : " + _path  );
         
         Data_file_link data = new(){
             heap_key = heap_key,

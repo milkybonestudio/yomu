@@ -24,30 +24,7 @@ unsafe public static class TOOL__reconstruct_from_stack{
         
         
         Controllers.paths_ids.Define_paths_ids( Paths_version.paths_ids );
-
-        Controllers.context.Force_change_context( Crash_handler.context_path ); // ** change the files to the old ones 
-
-        
-        int[] old_files_ids = Controllers.files.storage.Get_current_files_ids();
-
-        for( int index = 0 ; index < old_files_ids.Length ; index++ ){
-
-            string path = Controllers.paths_ids.Get_path_from_id( old_files_ids[ index ] );
-
-            if( ( path == null ) || ( path == "" ) )
-                { continue; }
-
-            if ( !!!( Directories.Is_sub_path( path, Paths_version.path_to_version ) ) )
-                { return Stack_reconstruction_result_message.Construct( $"The path <Color=lightBlue>{ path }</Color> is not part of the program path <Color=lightBlue>{ Paths_version.path_to_version }</Color>", Stack_reconstruction_result.fail ); }
-                
-            if( !!!( System.IO.File.Exists( path ) ) )
-                { return Stack_reconstruction_result_message.Construct( $"Should have a file in the path <Color=lightBlue>{ path }</Color>", Stack_reconstruction_result.fail ); }
-
-            Controllers.files.operations.Get_file_from_disk( path );
-
-            continue;
-
-        }
+        Controllers.context.Change_context_data( Crash_handler.context_path ); // ** change the files to the old ones 
         
         if( System_run.show_program_construction_messages )
             { Console.Log( "Will create the folder again empty" ); }

@@ -10,32 +10,31 @@ public static class Paths_run_time {
 
         run_time_path = _path_to_run_time_folder;
 
+            saving_run_time_folder = Get_saving_run_time_folder();
 
-        saving_run_time_folder = Get_saving_run_time_folder();
+                // ** created only when nsaving 
+                saving_files_folder = Get_saving_files_folder();
+                safety_stack_folder = Get_safety_stack_folder();
 
-            // ** created only when nsaving 
-            saving_files_folder = Get_saving_files_folder();
-            safety_stack_folder = Get_safety_stack_folder();
+                    // NEED:
+                    safety_stack_file = Get_safety_stack_file(); 
 
-                // NEED:
-                safety_stack_file = Get_safety_stack_file(); 
-
-                //mark
-                // ** mudar para current_context_path
-                path_to_file_with_context_path = Get_path_to_file_with_context_path();
+                    //mark
+                    // ** mudar para current_context_path
+                    path_to_file_with_context_path = Get_path_to_file_with_context_path();
 
 
-                // LOGIC TO CHANGE 
-                context_new = Get_context_new();
-                new_paths_ids = Get_new_paths_ids();
-                
-                // STAGES
-                logic_data_saved = Get_logic_data_saved();
-                data_files_saved_in_folder = Get_data_files_saved_in_folder();
-                data_files_actions_applied = Get_data_files_actions_applied();
-                // logic_files_moved = Get_logic_files_moved();
-                saving_finished = Get_saving_finished();
-                
+                    // LOGIC TO CHANGE 
+                    context_new = Get_context_new();
+                    new_paths_ids = Get_new_paths_ids();
+                    
+                    // STAGES
+                    logic_data_saved = Get_logic_data_saved();
+                    data_files_saved_in_folder = Get_data_files_saved_in_folder();
+                    data_files_actions_applied = Get_data_files_actions_applied();
+                    // logic_files_moved = Get_logic_files_moved();
+                    saving_finished = Get_saving_finished();
+                    
 
         return;
         

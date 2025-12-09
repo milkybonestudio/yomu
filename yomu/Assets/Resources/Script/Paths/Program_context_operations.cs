@@ -22,7 +22,7 @@ public struct CONTROLLER__context{
     public void Force_change_context( string _path_to_context ){
 
         if( current_context_path == _path_to_context )
-            { return; }
+            { Console.Log( "Era igual" ); return; }
 
         if( !!!( System.IO.File.Exists( _path_to_context ) ) )
             { CONTROLLER__errors.Throw( "Tried to change context, but the is no file in " + _path_to_context ); }
@@ -51,6 +51,12 @@ public struct CONTROLLER__context{
         Controllers.stack.Reset_stack();
 
         return;
+    }
+
+
+    public void Change_context_data( string _path_to_context ){
+
+        Change_context_data( Get_context_with_path( _path_to_context ) );
     }
 
     public void Change_context_data( Program_context _context ){
@@ -96,6 +102,7 @@ public struct CONTROLLER__context{
     public Program_context Get_context_with_path( string _context_path ){
 
         string _context_file = System.IO.File.ReadAllText( _context_path );
+        Console.Log( "path : " + _context_file );
 
         Program_context context = new();
 

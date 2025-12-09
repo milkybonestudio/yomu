@@ -432,8 +432,6 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
     private void Delete_file_intern( string _path ){
 
-        Console.Log( $"<Color=lightBlue>vai deletar path: { _path }</Color>" );
-
         if( System_run.max_security )
             {             
                 if( _path == null )
