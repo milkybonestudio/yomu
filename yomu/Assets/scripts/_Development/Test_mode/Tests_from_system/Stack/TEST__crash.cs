@@ -182,7 +182,7 @@ unsafe public static class TEST__crash {
                 Controllers.files.operations.Delete_file( path_7_DONT_EXIST );
 
                 Controllers.stack.test.Save_stack_in_disk_sync();
-                //Controllers.paths_ids.test.Save_paths_sync();
+                Controllers.paths_ids.test.Save_paths_sync();
 
             }
 
@@ -367,8 +367,8 @@ unsafe public static class TEST__crash {
 
             if( stage == 2 )
                 {
-                    if( !!! Input.GetKeyDown( KeyCode.Keypad9 ) )
-                        { return; }
+                    // if( !!! Input.GetKeyDown( KeyCode.Keypad9 ) )
+                    //     { return; }
 
                     UnityEngine.SceneManagement.SceneManager.LoadScene( UnityEngine.SceneManagement.SceneManager.GetActiveScene().name );
                     

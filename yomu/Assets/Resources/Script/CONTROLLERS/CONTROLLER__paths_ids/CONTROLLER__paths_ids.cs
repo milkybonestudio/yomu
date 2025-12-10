@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 
 unsafe public struct CONTROLLER__paths_ids {
@@ -98,7 +99,7 @@ unsafe public struct CONTROLLER__paths_ids {
 
         //mark
         // ** testar
-        current_file_id = ( _lines.Length );
+        current_file_id = ( _lines.Length - 1  );
 
         return;
 
@@ -132,8 +133,16 @@ unsafe public struct CONTROLLER__paths_ids {
 
         string[] paths = new string[ path_TO_id.Count ];
 
+        Console.Log( "lenght: " + paths.Length );
+        Console.Log( "values: " );
+        Console.Log( string.Join(   ',',  path_TO_id.Values.Select( s => s.ToString()).ToArray() ));
+
+        Console.Update();
+
         for( int index = 0 ; index < paths.Length ; index++ )
-            { paths[ index ] = id_TO_path[ index ]; }
+            { 
+                paths[ index ] = id_TO_path[ index ]; 
+            }
         
         return paths;
 

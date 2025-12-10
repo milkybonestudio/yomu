@@ -28,7 +28,7 @@ public struct CONTROLLER__context{
         Program_context context = Controllers.context.Get_context_with_path( _path_to_context );
 
         if( current_context_path != null )
-            {Controllers.saving.saver.Force_save_synchronous_safe();                 }
+            {Controllers.saving.saver.Force_save_synchronous_safe(); }
 
         Controllers.paths_ids.Print_ids();
         Change_context_data( context );

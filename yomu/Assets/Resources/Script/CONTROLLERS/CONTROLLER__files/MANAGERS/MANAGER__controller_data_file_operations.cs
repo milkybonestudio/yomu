@@ -19,17 +19,17 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
         int[] current_files = Controllers.files.storage.Get_current_files_ids();
 
-        Console.Log( Controllers.files.storage.Get_current_files_text() );
+        // Console.Log( Controllers.files.storage.Get_current_files_text() );
 
-        Console.Log( "----------- set context ----------------" );
+        // Console.Log( "----------- set context ----------------" );
 
         foreach( int file_id_in_system in current_files ){
 
-            Console.Log( "system id: " + file_id_in_system );
+            // Console.Log( "system id: " + file_id_in_system );
 
             if( !!!( files_new_context_ids.Contains( file_id_in_system ) ) )
                 {
-                    Console.Log( "will remove " + file_id_in_system );
+                    // Console.Log( "will remove " + file_id_in_system );
                     Data_file_link data = Get_file( file_id_in_system );
                     Remove_file( data );
                 }
@@ -38,7 +38,8 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
         foreach( int file_to_have in files_new_context_ids ){
 
-            Console.Log( $"Will get " + file_to_have );
+            // Console.Log( $"Will get " + file_to_have );
+
             if( Controllers.files.storage.Is_id_valid( file_to_have ) )
                 { continue; }
 
@@ -46,7 +47,7 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
         }
 
-        Console.Log( "---------------------------" );
+        // Console.Log( "---------------------------" );
 
     }
 
@@ -238,6 +239,7 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
 
     public Data_file_link Get_file_from_disk( string _path ){
+        
 
         lock( lock_obj ){
 
@@ -275,6 +277,7 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
             VOID.Transfer_data( data, data_link.heap_key.Get_pointer() );
 
+        
 
             return data_link;
 
@@ -442,7 +445,7 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
     private void Delete_file_intern( string _path ){
 
-        Console.Log( " AAAAAAAAAAAAAAAA call delete path: " + _path );
+        // Console.Log( " AAAAAAAAAAAAAAAA call delete path: " + _path );
 
         if( System_run.max_security )
             {             

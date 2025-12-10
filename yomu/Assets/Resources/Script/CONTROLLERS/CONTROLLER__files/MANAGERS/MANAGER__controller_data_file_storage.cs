@@ -326,8 +326,8 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
     public bool Is_id_valid( int _id ){
 
-        Console.Log( "id_TO_path.ContainsKey: " + id_TO_path.ContainsKey( _id ) );
-        Console.Log( "current_files.ContainsKey: " + current_files.ContainsKey( _id ) );
+        // Console.Log( "id_TO_path.ContainsKey: " + id_TO_path.ContainsKey( _id ) );
+        // Console.Log( "current_files.ContainsKey: " + current_files.ContainsKey( _id ) );
 
         return id_TO_path.ContainsKey( _id );
 
