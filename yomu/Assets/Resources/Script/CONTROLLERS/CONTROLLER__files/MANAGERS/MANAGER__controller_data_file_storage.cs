@@ -62,6 +62,11 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
     }
 
+    public string Get_current_files_text(){
+
+        return string.Join( ',', Get_current_files_ids().Select( x => x.ToString() ).ToArray<string>());
+
+    }
     public int[] Get_current_files_ids(){
 
         int[] ids = current_files.Keys.ToArray<int>();
@@ -161,7 +166,10 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
         
         if( id_TO_path.ContainsKey( _data.id ) )
-            { CONTROLLER__errors.Throw( $"try to add the file id <Color=lightBlue>{ _data.id }</Color> but it already exists" ); }
+            { 
+                // Console.Log( Is_file_already_taken );
+                CONTROLLER__errors.Throw( $"try to add the file id <Color=lightBlue>{ _data.id }</Color> but it already exists" ); 
+            }
 
         Add_current( _data, _path );
         return;
@@ -223,7 +231,6 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
     public Data_file_link Lock_slot( string _path, int _size ){
 
-        
         Heap_key heap_key = Controllers.heap.Get_unique( _size );
 
         int id = Controllers.paths_ids.Get_id_from_path( _path );
@@ -318,6 +325,9 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
 
     public bool Is_id_valid( int _id ){
+
+        Console.Log( "id_TO_path.ContainsKey: " + id_TO_path.ContainsKey( _id ) );
+        Console.Log( "current_files.ContainsKey: " + current_files.ContainsKey( _id ) );
 
         return id_TO_path.ContainsKey( _id );
 

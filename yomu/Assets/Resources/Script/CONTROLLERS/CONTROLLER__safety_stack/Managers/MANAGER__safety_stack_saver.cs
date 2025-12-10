@@ -53,8 +53,6 @@ unsafe public struct MANAGER__safety_stack_saver {
 
         Files.Save_critical_file( Paths_run_time.safety_stack_file, ARRAY.Get_array<byte>( _length: file_size, _value: 45 ) );
 
-
-        // ret.strem_stack = FILE_STREAM.Criar_stream( Paths_program.safety_stack_file, ret.stream_size );
         strem_stack = FILE_STREAM.Criar_stream( Paths_run_time.safety_stack_file, stream_size );
 
 

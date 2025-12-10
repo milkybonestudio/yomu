@@ -1,29 +1,14 @@
-
-
 using System.Collections.Generic;
 
-
-public struct CONTROLLER__paths_ids_TEST {
-
-    public void Save_paths_sync(){
-
-        System.IO.File.Delete( Paths_version.paths_ids );
-        System.IO.File.WriteAllLines( Paths_version.paths_ids, Controllers.paths_ids.Get_current_paths_ids() );
-        
-    }
-
-}
 
 unsafe public struct CONTROLLER__paths_ids {
 
 
-    public static CONTROLLER__paths_ids Construct(){
-        CONTROLLER__paths_ids ret = default;
-            ret.path_TO_id = new Dictionary<string, int>( 100 );
-            ret.id_TO_path = new Dictionary<int, string>( 100 );
-            ret.path_TO_id[ "INVALID" ] = 0;
-            ret.id_TO_path[ 0 ] = "INVALID";
-        return ret;
+
+    public void Destroy(){
+
+        current_file_id = 0;
+
     }
 
     public bool Have_path( string _path ){
@@ -62,6 +47,13 @@ unsafe public struct CONTROLLER__paths_ids {
 
     }
 
+    public void Print_ids(){
+
+        foreach( int id in id_TO_path.Keys )
+            { Console.Log( $"id { id } path { id_TO_path[ id ] }" ); }
+
+    }
+
     
     // public string Get_path( int _id ){
 
@@ -75,7 +67,7 @@ unsafe public struct CONTROLLER__paths_ids {
             { CONTROLLER__errors.Throw( $"Tried to define a new path with ids in the current program, but the Paths_manager dont have <Color=lightBlue>dic</Color>" ); }
 
         if( !!!( id_TO_path.ContainsKey( _id ) ) )
-            { CONTROLLER__errors.Throw( $"Tried to get a path from an id path with ids in the current program, but the id <Color=lightBlue>{ _id }</Color>is not in the system" ); }
+            { Print_ids(); CONTROLLER__errors.Throw( $"Tried to get a path from an id path with ids in the current program, but the id <Color=lightBlue>{ _id }</Color>is not in the system" ); }
 
         return id_TO_path[ _id ];
 
@@ -83,14 +75,16 @@ unsafe public struct CONTROLLER__paths_ids {
 
     
 
-    public void Set_id( int _id ){
-        current_file_id = _id;
-    }
+    // public void Set_id( int _id ){
+    //     current_file_id = _id;
+    // }
 
-    private Dictionary<string, int> path_TO_id;
-    private Dictionary<int, string> id_TO_path;
+    public Dictionary<string, int> path_TO_id;
+    public Dictionary<int, string> id_TO_path;
 
     public void Define_paths_ids(){
+
+        Console.Log( "<Color=lightBlue>CAME DEFINE IDS PATHS</Color>" );
 
         string[] _lines = System.IO.File.ReadAllLines( Paths_version.paths_ids );
 
@@ -102,13 +96,21 @@ unsafe public struct CONTROLLER__paths_ids {
             id_TO_path[ index ] = _lines[ index ];
         }
 
+        //mark
+        // ** testar
+        current_file_id = ( _lines.Length );
+
         return;
 
     }
 
     public void Define_paths_ids( string _path ){
 
+        Console.Log( "<Color=lightBlue>CAME DEFINE IDS PATHS</Color>" );
+
         string[] _lines = System.IO.File.ReadAllLines( _path );
+
+        // for( int i = 0 ; i < _lines.Length ; i++ ){ Console.Log( $" id { i } path { _lines[ i ] }" ); }
 
         path_TO_id = new Dictionary<string, int>( _lines.Length + 50 );
         id_TO_path = new Dictionary<int, string>( _lines.Length + 50 );
@@ -121,7 +123,6 @@ unsafe public struct CONTROLLER__paths_ids {
         return;
 
     }
-
 
 
     public string[] Get_current_paths_ids(){

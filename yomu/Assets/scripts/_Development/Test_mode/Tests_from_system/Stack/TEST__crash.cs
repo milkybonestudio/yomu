@@ -87,7 +87,6 @@ unsafe public static class TEST__crash {
     }
 
 
-
         static string path_1;
         static string path_2;
         static string path_3;
@@ -111,6 +110,11 @@ unsafe public static class TEST__crash {
 
     public static void Set(){
 
+        Console.Log( "called set" );
+
+        if( tests != null && ( tests.stage == 3 ) )
+            { return; }
+        
         current_state_crash = Crash.save_stack;
 
         path_1 = Path.Combine( Paths_program.program_path, "test_1.dat" );
@@ -141,6 +145,7 @@ unsafe public static class TEST__crash {
         Data_file_link data_storage = Controllers.files.operations.Get_file_from_disk( path_storage );
         
         packet_storage = Packets_storage_data.Start( data_storage );
+        Console.Log( Controllers.files.storage.Get_current_files_text() );
 
     }
     
@@ -177,7 +182,7 @@ unsafe public static class TEST__crash {
                 Controllers.files.operations.Delete_file( path_7_DONT_EXIST );
 
                 Controllers.stack.test.Save_stack_in_disk_sync();
-                Controllers.paths_ids.test.Save_paths_sync();
+                //Controllers.paths_ids.test.Save_paths_sync();
 
             }
 
@@ -298,6 +303,139 @@ unsafe public static class TEST__crash {
 
     }
 
+    private struct Test{
+
+        public Crash crash;
+        public Crash_handle_route route;
+
+    }
+
+
+    private class Tests {
+
+        public Test[] tests = new Test[ ((int) Crash.finish + 1) ];
+        public void Add_test( Crash _crash, Crash_handle_route _route ){
+
+            tests[ (int)_crash ] = new Test(){ crash = _crash, route = _route };
+
+        }
+
+        public int current_test = 0;
+        public int stage = 0;
+
+        public void Update(){
+
+        if( Editor_run.delete_version_folder )
+            { CONTROLLER__errors.Throw( "Editor_run.delete_version_folder is mark as TRUE, can not reset for this test" ); }
+
+        Test test = tests[ current_test ];
+
+            Console.Log( $"-------- CRASH : { test.crash } stage { stage }-------");
+
+        if( test.route == Crash_handle_route.not_give )
+            {
+                current_test++;
+                stage = 0;
+                return;
+            }
+
+
+
+            // RE FAZ FOLDER
+            if( stage == 0 )
+                {
+                    // ** força a refazer o folder
+                    Files.Try_delete( Paths_version.security_file );
+                    UnityEngine.SceneManagement.SceneManager.LoadScene( UnityEngine.SceneManagement.SceneManager.GetActiveScene().name );
+                    stage = 1;
+
+                    return;
+                }
+
+
+            // APLICA ESTADO
+            if( stage == 1 )
+                {
+                    // ** check results;
+                    // Set();
+                    Crash_test_until( test.crash );
+                    
+                    stage = 2;
+                    return;
+                }
+
+
+            if( stage == 2 )
+                {
+                    if( !!! Input.GetKeyDown( KeyCode.Keypad9 ) )
+                        { return; }
+
+                    UnityEngine.SceneManagement.SceneManager.LoadScene( UnityEngine.SceneManagement.SceneManager.GetActiveScene().name );
+                    
+                    stage = 3;
+                    return;
+                }
+
+
+
+            if( stage == 3 )
+                {
+                    // COnstructor vai fazer tudo
+                    // Controllers.stack.Reset_stack();
+                    // _Crash();
+                    stage = 4;
+                }
+
+            if( stage == 4 )
+                {
+                    Crash_handle_return ret = Controllers_program.crash_handler.current_return;
+                    if( ret.route == Crash_handle_route.not_give )
+                        {CONTROLLER__errors.Throw( "didn't get a return in crash" ); }
+
+                    Crash_handle_route real_crash_handler = ret.route;
+
+                    if( ret.result == Crash_handle_result.fail )
+                        { Console.LogError( $"<Color=red>FAIL</Color>: " + ret.message ); }
+
+
+
+                    Console.Log( "stage crash test: " + test.crash );
+                    Console.Log( "real route: " + real_crash_handler );
+                    Console.Log( "expected route: " + test.route );
+
+
+                    if( ( real_crash_handler != test.route ) )
+                        { CONTROLLER__errors.Throw( $"Expedcted <Color=lightBlue>{ test.route }</Color> but give <Color=lightBlue>{ real_crash_handler }</Color>" ); }
+
+                    if( ret.result == Crash_handle_result.fail )
+                        { CONTROLLER__errors.Throw( $"Falhou" ); }
+
+                    Console.Log( "<Color=lime>PASS TEST</Color>" );
+
+                    stage = 5;
+                }
+
+
+            if( stage == 5 )
+                {
+                    Console.Log( "will go up" );
+                    current_test++;
+                    stage = 0;
+                    if( current_test == ((int) Crash.finish + 1) )
+                        { TEST__crash.tests = null; }
+
+                    return;
+                }
+            
+
+        }
+
+
+
+        
+
+    }
+
 
     static SS v = new SS(){
         a = INT.Return_int_4_bytes_asc2( 'a' ),
@@ -311,6 +449,12 @@ unsafe public static class TEST__crash {
 
 
     public static void Update(){
+
+        if( tests != null )
+            {
+                tests.Update();
+                return;
+            }
 
 
         if( Input.GetKeyDown( KeyCode.M ) )
@@ -335,6 +479,9 @@ unsafe public static class TEST__crash {
                     { Controllers.stack.saver.test.Force_corrupt_file( 10 ); }
                     
             }
+
+        
+
 
 
         // ** TESTS FOR STAGES INTERUPTIONS
@@ -410,6 +557,43 @@ unsafe public static class TEST__crash {
             }
 
 
+        if( Input.GetKeyDown( KeyCode.Keypad3 ) )
+            {
+                tests = new Tests();
+                                
+                    tests.Add_test(Crash.save_stack, Crash_handle_route.need_to_recosntruct_with_the_stack );    
+                    tests.Add_test( Crash.save_new_context, Crash_handle_route.need_to_recosntruct_with_the_stack );                
+                    tests.Add_test( Crash.save_new_paths,  Crash_handle_route.need_to_recosntruct_with_the_stack );            
+                    tests.Add_test( Crash.create_saving_files_folders,  Crash_handle_route.need_to_recosntruct_with_the_stack );
+                    tests.Add_test( Crash.SECURITY_FILE_save_logic_files,  Crash_handle_route.need_to_recosntruct_with_the_stack );
+
+                
+                    tests.Add_test( Crash.create_half_run_time_saving_files,  Crash_handle_route.need_to_recosntruct_with_the_stack );                                
+                    tests.Add_test( Crash.create_full_run_time_saving_files,  Crash_handle_route.need_to_recosntruct_with_the_stack );                
+                    tests.Add_test( Crash.SECURITY_FILE_data_files_saved_in_folder,  Crash_handle_route.all_temp_files_were_already_there_just_move );
+
+
+                    tests.Add_test( Crash.apply_logic_half,  Crash_handle_route.all_temp_files_were_already_there_just_move );                
+                    tests.Add_test( Crash.apply_logic_full,  Crash_handle_route.all_temp_files_were_already_there_just_move );
+                    tests.Add_test( Crash.SECURITY_FILE_data_files_actions_applied,  Crash_handle_route.all_data_files_already_got_saved );
+
+                
+                    tests.Add_test( Crash.move_new_paths_ids,  Crash_handle_route.all_data_files_already_got_saved );                
+                    tests.Add_test( Crash.delete_old_paths_ids,  Crash_handle_route.all_data_files_already_got_saved );
+                    tests.Add_test( Crash.switch_old_paths_ids,  Crash_handle_route.all_data_files_already_got_saved );
+
+                
+                    tests.Add_test( Crash.move_new_context,  Crash_handle_route.all_data_files_already_got_saved );
+                    tests.Add_test( Crash.delete_old_context,  Crash_handle_route.all_data_files_already_got_saved );
+                    tests.Add_test( Crash.switch_old_context,  Crash_handle_route.all_data_files_already_got_saved );
+
+
+                    tests.Add_test( Crash.SECURITY_FILE_saving_finished,  Crash_handle_route.all_files_already_got_saved );
+                    tests.Add_test( Crash.finish,  Crash_handle_route.all_files_already_got_saved );
+
+            }
+
+
         // ** test for corruptiosn
 
 
@@ -422,28 +606,29 @@ unsafe public static class TEST__crash {
 
     }
 
-    
+    static Tests tests;
     private static Crash_handle_return _Crash(){
 
         // Controllers.stack.saver.strem_stack.Close();
-        return Crash_handler.Deal_crash();
-
-
+        return Controllers_program.crash_handler.Deal_crash();
     }
+
+
+
 
 
     private static void Verify_crash( Crash _crash, Crash_handle_route _expected ){
 
 
             Crash_test_until( _crash );
-            
             Controllers.context.Reset_context_data();
+
 
             Crash_handle_return ret = _Crash();
             Crash_handle_route real_crash_handler = ret.route;
 
             if( ret.result == Crash_handle_result.fail )
-                { Console.LogError( $"<Color=red>FAIL</Color>FAIL: " + ret.message ); }
+                { Console.LogError( $"<Color=red>FAIL</Color>: " + ret.message ); }
 
 
 
@@ -457,14 +642,13 @@ unsafe public static class TEST__crash {
 
             Console.Log( "<Color=lime>PASS TEST</Color>" );
 
-        // try{
 
-        // } catch( Exception e )
-        // {
-        //     Console
-        // }
 
     }
+
+
+
+
 
 
     private static void Crash_test_until( Crash _crash ){

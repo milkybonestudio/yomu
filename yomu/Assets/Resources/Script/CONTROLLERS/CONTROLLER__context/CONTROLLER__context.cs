@@ -10,9 +10,7 @@ using System.Linq;
 
 public struct CONTROLLER__context{
 
-    public static CONTROLLER__context Construct(){
-        return default;
-    }
+
 
     public void Destroy(){}
 
@@ -32,7 +30,7 @@ public struct CONTROLLER__context{
         if( current_context_path != null )
             {Controllers.saving.saver.Force_save_synchronous_safe();                 }
 
-
+        Controllers.paths_ids.Print_ids();
         Change_context_data( context );
 
         Controllers.stack.Restart_stack();
@@ -102,8 +100,7 @@ public struct CONTROLLER__context{
     public Program_context Get_context_with_path( string _context_path ){
 
         string _context_file = System.IO.File.ReadAllText( _context_path );
-        Console.Log( "path : " + _context_file );
-
+        
         Program_context context = new();
 
             string[] lines = _context_file.Split( "|" );

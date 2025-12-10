@@ -289,7 +289,7 @@ unsafe public class CONTROLLER__heap {
     private void Return_key_UNIQUE( Heap_key key, bool _remove_from_list = true ){
 
         Heap_key_UNIQUE key_unique = key.unique_key;
-
+        
         if( key.Get_pointer() == null )
             { CONTROLLER__errors.Throw( "pointer is null" ); }
         
@@ -297,7 +297,7 @@ unsafe public class CONTROLLER__heap {
             { CONTROLLER__errors.Throw( "type is not UNIQUE" ); }
 
         if( !!!( unique_keys.ContainsKey( key.unique_id ) ) )
-            { CONTROLLER__errors.Throw( $"Tried to return key <Color=lightBlue>{ key.unique_id }</Color> but it was not allocated. Probably already free the key and try it again" ); }
+            { CONTROLLER__errors.Throw( $"Tried to return heap key <Color=lightBlue>{ key.unique_id }</Color> but it was not allocated. Probably already free the key and try it again" ); }
 
         Marshal.FreeHGlobal( key.unique_key.int_pointer );
 

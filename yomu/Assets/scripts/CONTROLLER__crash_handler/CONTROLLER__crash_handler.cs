@@ -5,56 +5,19 @@ using System.IO;
 using System.Linq;
 
 
-//mark
-// ** ver depois
-public struct Crash_handle_return {
-
-    public static Crash_handle_return Construct( string _message, Crash_handle_result _result, Crash_handle_route _route ){
-        Crash_handler.Delete_all();
-        return new Crash_handle_return(){ message = _message, result = _result, route = _route };
-    }
-
-    public Crash_handle_result result;
-    public Crash_handle_route route;
-    public string message;
-
-
-}
-
-public enum Saving_files_stages{
-
-
-    waiting_to_start,
-
-    // ** context, new paths_ids
-    logic_data_saved,
-
-    // ** all the id.action saved in the saving_folder
-    data_files_saved_in_folder,
-
-    // ** all the files are updated 
-    data_files_actions_applied,
-
-    // ** move the context and new_paths_ids
-    // logic_files_moved, 
-
-    // ** cleaned the stack and delete things 
-    saving_finished,
-
-}
-
-unsafe public static class Crash_handler{
+unsafe public struct CONTROLLER__crash_handler {
 
 
     public const int MAX_LENGTH_FILES = 100_000_000;
-    public static int current_bytes;
+    public int current_bytes;
 
-    public static byte[] stack_file;
-    public static string context_path;
-    
-    public static Crash_handle_route route;
+    public byte[] stack_file;
+    public string context_path;
+    public Crash_handle_route route;
 
-    public static Crash_handle_result Reconstruct_state(){
+    public Crash_handle_return current_return;
+
+    public Crash_handle_result Reconstruct_state(){
 
         Change_variables_for_reconstruct(); 
         
@@ -67,7 +30,7 @@ unsafe public static class Crash_handler{
     }
 
 
-    public static Crash_handle_return Deal_crash(){
+    public Crash_handle_return Deal_crash(){
 
         Console.Log( System_run.show_program_construction_messages, "----------------------- CALLED <Color=lightBlue>DEAL CRASH</Color> -----------------------");
 
@@ -130,20 +93,20 @@ unsafe public static class Crash_handler{
 
 
 
-    private static Crash_handle_return Handle_waiting_to_start(){
+    private Crash_handle_return Handle_waiting_to_start(){
 
         Change_route( Crash_handle_route.need_to_recosntruct_with_the_stack );
         return Reconstruct_with_stack();
     }
 
-    private static Crash_handle_return Handle_logic_data_saved(){
+    private Crash_handle_return Handle_logic_data_saved(){
 
         Change_route( Crash_handle_route.need_to_recosntruct_with_the_stack );
         return Reconstruct_with_stack();
 
     }
 
-    private static Crash_handle_return Reconstruct_with_stack(){
+    private Crash_handle_return Reconstruct_with_stack(){
 
         Change_route( Crash_handle_route.need_to_recosntruct_with_the_stack );
 
@@ -166,7 +129,7 @@ unsafe public static class Crash_handler{
     }
 
 
-    private static Crash_handle_return Handle_data_files_saved_in_folder(){
+    private Crash_handle_return Handle_data_files_saved_in_folder(){
 
         Change_route( Crash_handle_route.all_temp_files_were_already_there_just_move );
         string[] link_paths_updated = System.IO.File.ReadAllLines( Paths_run_time.new_paths_ids );
@@ -214,7 +177,7 @@ unsafe public static class Crash_handler{
 
 
 
-    private static Crash_handle_return Handle_data_files_actions_applied(){
+    private Crash_handle_return Handle_data_files_actions_applied(){
 
         Change_route( Crash_handle_route.all_data_files_already_got_saved );
 
@@ -273,7 +236,7 @@ unsafe public static class Crash_handler{
         return Handle_saving_finished();
     }
 
-    private static Crash_handle_return Handle_saving_finished(){
+    private Crash_handle_return Handle_saving_finished(){
 
         Change_route( Crash_handle_route.all_files_already_got_saved );
         // ** will not start even if crash here
@@ -287,7 +250,7 @@ unsafe public static class Crash_handler{
     
 
 
-    private static void EDGE_CASE__interrupt_on_switching_files( string[] link_paths_updated ){
+    private void EDGE_CASE__interrupt_on_switching_files( string[] link_paths_updated ){
 
         // ** verifica todos os arquivos, mas não vai importar
 
@@ -317,7 +280,7 @@ unsafe public static class Crash_handler{
     }
 
 
-    public static void Delete_all(){
+    public void Delete_all(){
 
         if( System_run.show_program_construction_messages )
             { Console.Log( "Will just delete the folder and go with the flow normally" ); }
@@ -334,13 +297,13 @@ unsafe public static class Crash_handler{
 
     }
 
-    private static void Change_route( Crash_handle_route _route ){
+    private void Change_route( Crash_handle_route _route ){
 
         if( route == Crash_handle_route.not_give )
             { route = _route; }
     }
 
-    private static Crash_handle_return File_worst_corruption( string _reason ){
+    private Crash_handle_return File_worst_corruption( string _reason ){
 
         Console.LogError( "<Color=red>GET CORRUPTED</Color>" );
         Console.Log_player_need_to_read( "Reason: " + _reason );
@@ -353,13 +316,13 @@ unsafe public static class Crash_handler{
     }
 
 
-    private static bool Is_stack_empty(){
+    private bool Is_stack_empty(){
 
         return ( stack_file[ 0 ] == 0 );
 
     }
 
-    public static void Change_variables_for_reconstruct(){
+    public void Change_variables_for_reconstruct(){
 
         // ** all the import constructors that need acces are structs
         // Controllers.stack.buffer.Activate__is_reconstructing_stack();
@@ -367,7 +330,7 @@ unsafe public static class Crash_handler{
 
     }
 
-    public static void End_stack_variables(){
+    public void End_stack_variables(){
 
         Controllers.stack.Reset_stack();
         Controllers.files.Reset_files();

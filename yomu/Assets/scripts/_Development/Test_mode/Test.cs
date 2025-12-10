@@ -66,7 +66,6 @@ unsafe public partial class Test {
                 // });
 
 
-
                 // test_figures.Set();
 
                 // image = Single_image.Construct( "arvore", Controllers.resources.images.Get_image_reference( Resource_context.images, "a", "arvore", Resource_image_content.compress_data ) );
@@ -87,10 +86,20 @@ unsafe public partial class Test {
         }
 
         
-        
+        public void Restart(){
+
+            // Program.instance.OnDisable();
+            // Program.instance.Awake();
+            UnityEngine.SceneManagement.SceneManager.LoadScene( UnityEngine.SceneManagement.SceneManager.GetActiveScene().name );
+
+            
+
+        }
 
         public void Update( Control_flow _flow ){
 
+                if( Input.GetKeyDown(KeyCode.L) )
+                    { Restart(); }
 
                 TO_DELETE_AFTER.Update();
 

@@ -16,6 +16,8 @@ unsafe public struct CONTROLLER__saving {
     public MANAGER__controller_saving_saver saver;
     
     public Saving_state state;
+
+    public void Destroy(){}
     
 
     public bool Update(){

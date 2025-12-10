@@ -77,19 +77,12 @@ public class CONTROLLER__resources {
 
         }
 
+        public void Destroy(){
+
+            structures.Destroy();
+
+        }
+
         
 
 }
-
-
-
-
-// public enum Resources_type {
-
-//     image, 
-//     audio, 
-//     dat_files,
-
-// }
-
-

@@ -107,6 +107,7 @@ unsafe public class Program : MonoBehaviour {
     public void OnDisable(){
 
 
+        Console.Log( "veio disable" );
         System_run.force_stop = false;
         Dados_fundamentais_sistema.jogo_ativo = false;
         
@@ -118,14 +119,18 @@ unsafe public class Program : MonoBehaviour {
         // ** NAO FAZ SENTIDO
         MANAGER__textures_resources.Clean_all();
 
-        Controllers_program.data?.Destroy();
-        // Controllers.saving?.Destroy();
+        // ** structs type
+        Controllers.saving.Destroy();
         Controllers.stack.Destroy();
         Controllers.packets.Destroy();
+        Controllers.context.Destroy();
+        Controllers.paths_ids.Destroy();
+
+        Controllers_program.data?.Destroy();
         Controllers.tasks?.Destroy();
         Controllers.heap?.Destroy();
-        Controllers.context.Destroy();
 
+        Controllers.resources.Destroy();
 
 
         Console.Update();

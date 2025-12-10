@@ -175,7 +175,7 @@ public class MANAGER__resources_structures : MANAGER__RESOURCES {
         }
 
 
-
+        public void Destroy(){}
     
 
 

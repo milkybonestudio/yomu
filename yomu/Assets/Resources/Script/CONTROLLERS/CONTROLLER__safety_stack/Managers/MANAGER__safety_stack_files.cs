@@ -421,7 +421,7 @@ unsafe public struct MANAGER__safety_stack_files {
             }
 
         if( !!!( Controllers.files.storage.File_exist_in_final_disk( path ) ) )
-            { return Stack_reconstruction_result_message.Construct( $"The message <Color=lightBlue>STACK_MESSAGE__delete_file</Color> there is no fle to delete in the id <Color=lightBlue>{ file_id }</Color>", Stack_reconstruction_result.fail ); }
+            { Controllers.paths_ids.Print_ids(); return Stack_reconstruction_result_message.Construct( $"The message <Color=lightBlue>STACK_MESSAGE__delete_file</Color> there is no fle to delete in the id <Color=lightBlue>{ file_id }</Color>.", Stack_reconstruction_result.fail ); }
             
         Controllers.files.operations.Delete_file( path );
 

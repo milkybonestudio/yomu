@@ -29,13 +29,16 @@ public static class CONSTRUCTOR__program {
 
         Dados_fundamentais_sistema.jogo_ativo = true;
 
-
+        // return;
 
         string version_folder = Path.Combine( Paths_system.persistent_data, System_information.version.Get_name() );
         Paths_version.Define_version_folder( version_folder );
 
 
         // --- CONTROLLERS GENERIC 1
+
+            Controllers_program.crash_handler = CONSTRUCTOR__controller_crash_handler.Construct();
+
             Controllers.heap = CONSTRUCTOR__controller_heap.Construct();
             Controllers.tasks = CONSTRUCTOR__controller_tasks.Construct();
             Controllers.resources = CONSTRUCTOR__controller_resources.Construct();
@@ -43,10 +46,11 @@ public static class CONSTRUCTOR__program {
             Controllers.files = CONSTRUCTOR__controller_data_files.Construct();
             Controllers.saving = CONSTRUCTOR__controller_saving.Construct();
             Controllers.stack = CONSTRUCTOR__controller_safety_stack.Construct();
-            Controllers.paths_ids = CONTROLLER__paths_ids.Construct();
-            Controllers.context = CONTROLLER__context.Construct();
+            Controllers.paths_ids = CONSTRUCTOR__controller_paths_ids.Construct();
+            Controllers.context =  CONSTRUCTOR__controller_context.Construct();
 
 
+        
         #if UNITY_EDITOR
 
 
@@ -68,10 +72,6 @@ public static class CONSTRUCTOR__program {
             
         #endif
         
-
-
-
-        
         // --- PERSISTENT AND VERSION FOLDERS
 
         if( !!!( System.IO.Directory.Exists( Paths_system.persistent_data ) ) )
@@ -82,32 +82,36 @@ public static class CONSTRUCTOR__program {
         if( is_first_play )
             { TOOL__version_folders_constructor.Construct(); }
 
-        bool corrupted_when_creating_start_files = !!!( System.IO.Directory.Exists( Paths_version.security_file ) );
+        bool corrupted_when_creating_start_files = !!!( System.IO.File.Exists( Paths_version.security_file ) );
         if( corrupted_when_creating_start_files )
             { 
                 Directories.Delete_safe( Paths_version.path_to_version );
                 TOOL__version_folders_constructor.Construct();
             }
 
+    
         bool system_crashed = System.IO.Directory.Exists( Paths_run_time.saving_run_time_folder );
+
         if( system_crashed )
             { 
+                Console.Log( "CAME DEAL CRASH" );
                 Crash_handle_result result_reconstruct_from_crash = Crash_handle_result.fail;
 
                 if( System_run.activate_crash_handler )
-                    { result_reconstruct_from_crash = Crash_handler.Reconstruct_state(); }
+                    { result_reconstruct_from_crash = Controllers_program.crash_handler.Reconstruct_state(); }
 
                 if( result_reconstruct_from_crash == Crash_handle_result.fail )
-                    { System.IO.Directory.Delete( Paths_run_time.saving_run_time_folder, true ); } // ** ignores older files
+                    { 
+                        // ** handle, tem que usar o save morte nesse caso
+                    }
                             
             }
             
-            
-
         TOOL__run_time_folders_constructor.Construct();
 
         
         // --- LOAD CONTEXT
+            Controllers.paths_ids.Define_paths_ids();
             Controllers.context.Force_change_context( Paths_program.program_context );
 
 

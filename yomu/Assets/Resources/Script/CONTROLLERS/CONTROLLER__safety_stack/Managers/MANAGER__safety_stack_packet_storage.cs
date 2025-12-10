@@ -21,19 +21,12 @@ unsafe public struct MANAGER__safety_stack_packet_storage {
 
     public void* origianl_message_pointer;
 
-    // public static Stack_reconstruction_result_message Read_message( Crash_handle_ephemeral_files _files_OS, Crash_cached_files _files, void* _message ){
     public static Stack_reconstruction_result_message Read_message( void* _message ){
 
 
         Safety_stack_action_type type = ((Stack_message_core*)_message)->type;
 
         switch( type ){
-
-            // case Safety_stack_action_type.alloc_packet: return Reconstruct_by_message__PACKET_SOTRAGE_ALLOC( _files_OS, _files, _message );
-            // case Safety_stack_action_type.dealloc_packet: return Reconstruct_by_message__PACKET_SOTRAGE_DEALLOC( _files_OS, _files, _message );
-
-            // case Safety_stack_action_type.create_new_storage: return Reconstruct_by_message__PACKET_SOTRAGE_CREATE_NEW( _files_OS, _files, _message );
-            // case Safety_stack_action_type.resize_size_packet_storage: return Reconstruct_by_message__PACKET_SOTRAGE_RESIZE_SIZE( _files_OS, _files, _message );
 
             case Safety_stack_action_type.alloc_packet: return Reconstruct_by_message__PACKET_SOTRAGE_ALLOC( _message );
             case Safety_stack_action_type.dealloc_packet: return Reconstruct_by_message__PACKET_SOTRAGE_DEALLOC( _message );
@@ -85,7 +78,7 @@ unsafe public struct MANAGER__safety_stack_packet_storage {
 
     }
 
-    // public static Stack_reconstruction_result_message Reconstruct_by_message__PACKET_SOTRAGE_ALLOC( Crash_handle_ephemeral_files _files_OS, Crash_cached_files _files, void* _message ){
+
     public static Stack_reconstruction_result_message Reconstruct_by_message__PACKET_SOTRAGE_ALLOC( void* _message ){
 
 
@@ -106,35 +99,12 @@ unsafe public struct MANAGER__safety_stack_packet_storage {
         if( size < 0 || ( (int) size >= (int) Packet_storage_size.END ) )
             { return Stack_reconstruction_result_message.Construct( $"The message <Color=lightBlue>STACK_MESSAGE__packet_storage_alloc</Color> slot is: <Color=lightBlue>{ size }</Color>", Stack_reconstruction_result.fail ); }
 
-        // if(  !!!( _files.Have_data( file_id ) ) )
-        //     { return Stack_reconstruction_result_message.Construct( $"the message  <Color=lightBlue>STACK_MESSAGE__packet_storage_alloc </Color> dont have file for id <Color=lightBlue>{ file_id }</Color>", Stack_reconstruction_result.fail ); }
-        
         if( !!!( Controllers.files.storage.Is_file_already_taken( file_id ) ) )
             { return Stack_reconstruction_result_message.Construct( $"the message  <Color=lightBlue>STACK_MESSAGE__packet_storage_alloc </Color> dont have file for id <Color=lightBlue>{ file_id }</Color>", Stack_reconstruction_result.fail ); }
 
         if( size != Controllers.packets.sizes.Get_required_size( bytes_alloc ) )
             { return Stack_reconstruction_result_message.Construct( $"tried to alloc but the size in the message is  <Color=lightBlue>{ size }</Color> and for { bytes_alloc } needs <Color=lightBlue>{ Controllers.packets.sizes.Get_required_size( bytes_alloc ) }</Color>", Stack_reconstruction_result.fail ); }
     
-
-        // byte[] storage_file = _files.Get_data( file_id );
-
-        // fixed( byte* pointer_storage = storage_file ){
-
-        //     Packets_storage_data* storage = (Packets_storage_data*) pointer_storage;
-
-        //     if( storage->Is_slot_used( size, slot ) )
-        //         { return Stack_reconstruction_result_message.Construct( $"tried to alloc a slot and size that wa already allocated. slot: <Color=lightBlue>{ slot }</Color> size: <Color=lightBlue>{ size }</Color>", Stack_reconstruction_result.fail ); }
-            
-
-        //     // ** the resize will always come before save the message of alloc -> will never resize here because IF need it already did
-        //     Packet_key key = storage->Alloc_packet( bytes_alloc );
-            
-        //     if( key.slot != slot )
-        //         { return Stack_reconstruction_result_message.Construct( $"tried to alloc but slot real is <Color=lightBlue>{ key.slot }</Color> and in ht emessage is <Color=lightBlue>{ slot }</Color>", Stack_reconstruction_result.fail ); }
-
-        // }
-
-
 
         void* pointer_storage = Controllers.files.operations.Get_file( file_id ).Get_pointer();
 
@@ -190,7 +160,6 @@ unsafe public struct MANAGER__safety_stack_packet_storage {
 
     }
 
-    // public static Stack_reconstruction_result_message Reconstruct_by_message__PACKET_SOTRAGE_DEALLOC( Crash_handle_ephemeral_files _files_OS, Crash_cached_files _files, void* _message ){
     public static Stack_reconstruction_result_message Reconstruct_by_message__PACKET_SOTRAGE_DEALLOC( void* _message ){
 
 
@@ -210,28 +179,11 @@ unsafe public struct MANAGER__safety_stack_packet_storage {
         if( size < 0 || ( (int) size >= (int) Packet_storage_size.END ) )
             { return Stack_reconstruction_result_message.Construct( $"The message <Color=lightBlue>STACK_MESSAGE__packet_storage_dealloc</Color> slot is: <Color=lightBlue>{ size }</Color>", Stack_reconstruction_result.fail ); }
 
-        // if(  !!!(  _files.Have_data( file_id ) ) )
-        //     { return Stack_reconstruction_result_message.Construct( $"the message  <Color=lightBlue>STACK_MESSAGE__packet_storage_dealloc </Color> dont have file for id <Color=lightBlue>{ file_id }</Color>", Stack_reconstruction_result.fail ); }
     
         if(  !!!( Controllers.files.storage.Is_file_already_taken( file_id ) ) )
             { return Stack_reconstruction_result_message.Construct( $"the message  <Color=lightBlue>STACK_MESSAGE__packet_storage_dealloc </Color> dont have file for id <Color=lightBlue>{ file_id }</Color>", Stack_reconstruction_result.fail ); }
     
 
-
-        // byte[] storage_file = _files.Get_data( file_id );
-
-        // fixed( byte* pointer_storage = storage_file ){
-
-        //     Packets_storage_data* storage = (Packets_storage_data*) pointer_storage;
-
-        //     if( storage->Is_slot_used( size, slot ) )
-        //         { CONTROLLER__errors.Throw( $"tried to alloc a slot and size that wa already allocated. slot: <Color=lightBlue>{ slot }</Color> size: <Color=lightBlue>{ size }</Color>" ); }
-
-        //     Packet_key key = Packet_key.Construct( size, slot, Controllers.packets.sizes.Get_size_in_bytes( size ) );
-            
-        //     storage->Dealloc_packet( key );
-
-        // }
 
         Packets_storage_data* storage = (Packets_storage_data*) Controllers.files.operations.Get_file( file_id ).Get_pointer();
 
@@ -299,8 +251,6 @@ unsafe public struct MANAGER__safety_stack_packet_storage {
 
     }
 
-
-    // public static Stack_reconstruction_result_message Reconstruct_by_message__PACKET_SOTRAGE_RESIZE_SIZE( Crash_handle_ephemeral_files _files_OS, Crash_cached_files _files, void* _message ){
     public static Stack_reconstruction_result_message Reconstruct_by_message__PACKET_SOTRAGE_RESIZE_SIZE( void* _message ){
 
 
@@ -324,19 +274,6 @@ unsafe public struct MANAGER__safety_stack_packet_storage {
             { return Stack_reconstruction_result_message.Construct( $"the message  <Color=lightBlue>STACK_MESSAGE__packet_storage_resize_size </Color> dont have file for id <Color=lightBlue>{ file_id }</Color>", Stack_reconstruction_result.fail ); }
     
 
-        // byte[] storage_file = _files.Get_data( file_id );
-
-        // fixed( byte* pointer_storage = storage_file ){
-
-        //     Packets_storage_data* storage = (Packets_storage_data*) pointer_storage;
-        //     int real_size = storage->Force_expand( size );
-
-        //     if( real_size != new_size_length )
-        //         { return Stack_reconstruction_result_message.Construct( $"the message <Color=lightBlue>STACK_MESSAGE__packet_storage_resize_size </Color> but the real_size is <Color=lightBlue>{ real_size }</Color> and in the message is <Color=lightBlue>{ new_size_length }</Color>", Stack_reconstruction_result.fail ); }
-
-        // }
-
-
         Packets_storage_data* storage = (Packets_storage_data*) Controllers.files.operations.Get_file( file_id ).Get_pointer();
         int real_size = storage->Force_expand( size );
 
@@ -349,23 +286,6 @@ unsafe public struct MANAGER__safety_stack_packet_storage {
 
     }
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -406,7 +326,7 @@ unsafe public struct MANAGER__safety_stack_packet_storage {
 
     }
 
-    // public static Stack_reconstruction_result_message Reconstruct_by_message__PACKET_SOTRAGE_CREATE_NEW( Crash_handle_ephemeral_files _files_OS, Crash_cached_files _files, void* _message ){
+
     public static Stack_reconstruction_result_message Reconstruct_by_message__PACKET_SOTRAGE_CREATE_NEW( void* _message ){
 
 
@@ -420,30 +340,10 @@ unsafe public struct MANAGER__safety_stack_packet_storage {
 
         if( start_file_length <= 0 )
             { return Stack_reconstruction_result_message.Construct( $"The message <Color=lightBlue>STACK_MESSAGE__packet_storage_create_new</Color> length is negative: <Color=lightBlue>{ start_file_length }</Color>", Stack_reconstruction_result.fail ); }
-
-        // if(  !!!( _files.Have_data( file_id ) ) )
-        //     { return Stack_reconstruction_result_message.Construct( $"the message  <Color=lightBlue>STACK_MESSAGE__packet_storage_create_new </Color> dont have file for id <Color=lightBlue>{ file_id }</Color>", Stack_reconstruction_result.fail ); }
     
         if(  !!!( Controllers.files.storage.Is_file_already_taken( file_id ) ) )
             { return Stack_reconstruction_result_message.Construct( $"the message  <Color=lightBlue>STACK_MESSAGE__packet_storage_create_new </Color> dont have file for id <Color=lightBlue>{ file_id }</Color>", Stack_reconstruction_result.fail ); }
     
-
-
-        // byte[] storage_file = _files.Get_data( file_id );
-
-        // fixed( byte* pointer_storage = storage_file ){
-
-        //     Packet_storage_start_data new_start_data = new();
-            
-        //     Packet_storage_start_data_PER_SIZE* data_pointer = (Packet_storage_start_data_PER_SIZE*)&(message->data);
-
-        //     for( int index = 0 ; index < (int) Packet_storage_size.END ; index++ )
-        //         {  new_start_data.sizes_settings[ index ] = data_pointer[ index ]; }
-
-        //     Controllers.packets.creation.Apply_create_data( pointer_storage, storage_file.Length, new_start_data );
-
-        // }
-
 
 
         Data_file_link data_link = Controllers.files.operations.Get_file( file_id );
@@ -466,9 +366,6 @@ unsafe public struct MANAGER__safety_stack_packet_storage {
 
     }
 
-
-
-    
 
 
 
