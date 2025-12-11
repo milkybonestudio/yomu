@@ -85,8 +85,6 @@ unsafe public struct CONTROLLER__paths_ids {
 
     public void Define_paths_ids(){
 
-        Console.Log( "<Color=lightBlue>CAME DEFINE IDS PATHS</Color>" );
-
         string[] _lines = System.IO.File.ReadAllLines( Paths_version.paths_ids );
 
         path_TO_id = new Dictionary<string, int>( _lines.Length + 50 );
@@ -132,12 +130,6 @@ unsafe public struct CONTROLLER__paths_ids {
             { CONTROLLER__errors.Throw( $"Tried to get the paths with ids in the current program, but the Paths_manager dont have <Color=lightBlue>dic</Color>" ); }
 
         string[] paths = new string[ path_TO_id.Count ];
-
-        Console.Log( "lenght: " + paths.Length );
-        Console.Log( "values: " );
-        Console.Log( string.Join(   ',',  path_TO_id.Values.Select( s => s.ToString()).ToArray() ));
-
-        Console.Update();
 
         for( int index = 0 ; index < paths.Length ; index++ )
             { 

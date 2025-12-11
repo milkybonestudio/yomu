@@ -107,7 +107,6 @@ unsafe public class Program : MonoBehaviour {
     public void OnDisable(){
 
 
-        Console.Log( "veio disable" );
         System_run.force_stop = false;
         Dados_fundamentais_sistema.jogo_ativo = false;
         

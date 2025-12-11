@@ -11,8 +11,7 @@ unsafe public struct MANAGER__controller_packet_storage_storage {
 
         MANAGER__controller_packet_storage_storage ret = default;
 
-            ret.list_data_files_packets = new List<Data_file_link>( 0 );
-            ret.pointers = new Dictionary<int, long>();
+            ret.list_data_files_packets = new HashSet<Data_file_link>();
             
         return ret;
 
@@ -21,48 +20,38 @@ unsafe public struct MANAGER__controller_packet_storage_storage {
 
     public void End(){}
 
-
-
-    public List<Data_file_link> list_data_files_packets;
-
-    //mark
-    // ** vai ter que ser por data_link, pointer pode ficar com o valor errado
-    // ** se o arquivo mudar de tamanho
-    public Dictionary<int,long> pointers;
+    public HashSet<Data_file_link> list_data_files_packets;
+    
 
     public void Reset(){
 
-        list_data_files_packets.Reset();
-        pointers.Clear();
-
+        list_data_files_packets.Clear();
+        
     }
 
     public int[] Get_current_ids(){
 
-        int[] ids = list_data_files_packets.values.Select( x => x.id ).ToArray<int>();
+        int[] ids = list_data_files_packets.Select( x => x.id ).ToArray<int>();
         Array.Sort( ids );
-        // Console.Log( ids.ToString() );
-
+        
         return ids;
 
     }
 
-    public bool Have_data( Data_file_link _file_data_link ){
+    public bool Is_storage_already_taken( Data_file_link _file_data_link ){
 
-        return list_data_files_packets.Have_value( _file_data_link );
+        return list_data_files_packets.Contains( _file_data_link );
 
     }
 
     public void Add_storage( Data_file_link _data ){
 
-        // Console.Log( "vai adicionar " + _data.id );
+        if( list_data_files_packets.Contains( _data ) )
+            { CONTROLLER__errors.Throw( $"Tried to add file <Color=lightBlue>{ _data.id }</Color> but it was already in the list" ); }
 
         list_data_files_packets.Add( _data );
-
-        if( pointers.ContainsKey( _data.id ) )
-            { CONTROLLER__errors.Throw( $"Already have a file for the id <Color=lightBlue>{ _data.id }</Color>" ); }
-
-        pointers[ _data.id ] = ( long ) _data.Get_pointer();
+        
+        Controllers.stack.packet_storage.Save_data_add_storage( _data.id );
 
     }
 
@@ -70,16 +59,10 @@ unsafe public struct MANAGER__controller_packet_storage_storage {
     public void Remove_storage( Data_file_link _data ){
 
         list_data_files_packets.Remove( _data );
-        pointers.Remove( _data.id );
-
+        
     }
 
     
-
-
-    // public Dictionary<Data_file_link>
-
-
 
 
 }

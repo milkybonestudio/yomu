@@ -47,29 +47,25 @@ unsafe public static class TOOL__version_folders_constructor {
 
         Directory.CreateDirectory( Paths_version.program );
 
+        // --- PACKED STORAGE
+
+            Packet_storage_start_data program_storage_data = CONSTRUCTOR__controller_packets_storage.Get_SIMPLE_args();
+            Packets_storage storage_program = Controllers.packets.operations.Create_new_storage( Paths_program.program_storage_SIMPLE, program_storage_data );
+
+            
+
+
+        // --- CURRENT PACKETS_STORES
+
+            Files.Save_critical_file( Paths_program.current_packets_storages, new string[]{ "null" }  );
+            
+        
         // --- PROGAM DATA FILE
 
             Program_data* pointer_program = ( Program_data* ) Controllers.heap.Get_fast_pointer( sizeof( Program_data ) );
             CONSTRUCTOR__program_data_file.Construct_new_program_file(  ( Program_data* ) pointer_program );
             Controllers.files.operations.Create_new_file( pointer_program, sizeof( Program_data ), Paths_program.program_data );
             
-        // --- PACKED STORAGE
-
-        if( false )
-            {
-                Packet_storage_start_data program_storage_data = CONSTRUCTOR__controller_packets_storage.Get_SIMPLE_args();
-                
-                int length_storage_program = program_storage_data.Get_file_length();
-                void* pointer_storage_program = Controllers.heap.Get_fast_pointer( length_storage_program );
-
-                Controllers.packets.creation.Apply_create_data( pointer_storage_program, length_storage_program , program_storage_data );
-
-                Files.Save_critical_file( Paths_program.program_storage_SIMPLE, pointer_storage_program, length_storage_program );
-            // --- CURRENT PACKETS_STORES
-
-                Files.Save_critical_file( Paths_program.current_packets_storages, new string[]{ "null" }  );
-                
-            }
 
         
 

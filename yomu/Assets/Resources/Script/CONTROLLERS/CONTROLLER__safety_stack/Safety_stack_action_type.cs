@@ -28,10 +28,18 @@ public enum Safety_stack_action_type {
 
         STORAGE_START,
 
+            // ** allocation
             alloc_packet,
             dealloc_packet,
-            create_new_storage,
+
+            // ** files 
+            applied_new_storage_data,
             resize_size_packet_storage, 
+
+            // ** ownership
+            add_storage,
+            remove_storage,
+
 
         STORAGE_END,
 

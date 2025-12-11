@@ -30,7 +30,6 @@ public struct CONTROLLER__context{
         if( current_context_path != null )
             {Controllers.saving.saver.Force_save_synchronous_safe(); }
 
-        Controllers.paths_ids.Print_ids();
         Change_context_data( context );
 
         Controllers.stack.Restart_stack();

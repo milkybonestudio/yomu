@@ -104,7 +104,7 @@ unsafe public static class TEST__crash {
         static Data_file_link data_2;
         static Data_file_link data_3;
 
-        static Packets_storage_data* packet_storage;
+        static Packets_storage packet_storage;
 
         static Crash current_state_crash;
 
@@ -142,10 +142,10 @@ unsafe public static class TEST__crash {
         data_1 = Controllers.files.operations.Get_file_from_disk( path_1 );
         data_2 = Controllers.files.operations.Get_file_from_disk( path_2 );
         data_3 = Controllers.files.operations.Get_file_from_disk( path_3 );
-        Data_file_link data_storage = Controllers.files.operations.Get_file_from_disk( path_storage );
-        
-        packet_storage = Packets_storage_data.Start( data_storage );
-        Console.Log( Controllers.files.storage.Get_current_files_text() );
+
+    
+        packet_storage = Controllers.packets.operations.Get_storage_from_disk( Paths_program.program_storage_SIMPLE );
+
 
     }
     

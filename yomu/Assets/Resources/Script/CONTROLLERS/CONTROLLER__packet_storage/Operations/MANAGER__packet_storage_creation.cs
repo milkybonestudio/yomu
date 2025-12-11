@@ -6,7 +6,14 @@ unsafe public struct MANAGER__packet_storage_creation {
     public void Destroy(){}
 
 
-    public void Apply_create_data( void* _pointer, int _pointer_max_length, Packet_storage_start_data _start_data ){
+
+    public void Apply_create_data( Data_file_link _data, Packet_storage_start_data _start_data ){
+
+
+        void* _pointer = _data.Get_pointer();
+        int _pointer_max_length = _data.Get_length();
+
+
 
         // info:[   dados necessario  ]  -> [ keys free ][ all keys flags ][ data ]
 
@@ -21,11 +28,16 @@ unsafe public struct MANAGER__packet_storage_creation {
 
                 
         Packets_storage_data* packets_storage = ( Packets_storage_data* ) _pointer;
+    
+            packets_storage->file_link = _data;
+            packets_storage->file_length = _data.Get_length();
+            packets_storage->sizes.Start();
+            packets_storage->Set_from_disk();
 
         // ** GET FINAL SETTINGS
         Packet_storage_start_data default_args = Controllers.packets.defaults.Get_default_args();
         
-        for( int index = 0 ; index < (int) Packet_storage_size._MAX ; index++  ){ 
+        for( int index = (int) Packet_storage_size._1_byte ; index < (int) Packet_storage_size._MAX ; index++  ){
 
             Packet_storage_start_data_PER_SIZE data = _start_data.sizes_settings[ index ];
 

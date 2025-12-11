@@ -17,14 +17,17 @@ unsafe public static class TEST__packet_storage {
 */
 
   
-    public static Packets_storage_data* packet_storage;
+    public static Packets_storage packet_storage_NEW;
+    // ** antigo
+    public static Packets_storage_data* packet_storage_pointer;
     
     public static void Set(){
 
-        if( packet_storage != null )
+        if( packet_storage_NEW.Is_valid() )
             { Console.Log( "Didn't save the last packet_storage, lose the data" ); }
 
-        packet_storage = null;
+        packet_storage_NEW = default;
+        // packet_storage_pointer = null;
         packet_key_test = default;
 
         
@@ -41,7 +44,7 @@ unsafe public static class TEST__packet_storage {
     public static Packet_key packet_key_test;
 
     public static int file_length = 1_000_000;
-    public static string path_to_packet_storage = $"{ System.IO.Directory.GetCurrentDirectory() }\\Assets\\Editor\\packet_storage.dat"; 
+    public static string path_to_packet_storage = $"{ Paths_system.persistent_data }\\packet_storage.dat"; 
 
     unsafe public struct Test_packet {
 
@@ -79,25 +82,21 @@ unsafe public static class TEST__packet_storage {
 
 
 
-        // ** file from disk
+        // ** I/O OPERATONS
         if( Input.GetKey( KeyCode.Keypad1 ) )
             {
 
                 // ** carregar 
                 if( Input.GetKeyDown( KeyCode.Q ) )
                     {
-                        if( !!!( System.IO.File.Exists( path_to_packet_storage ) ))
+
+                        if( !!!( Controllers.files.storage.File_exist_in_final_disk( path_to_packet_storage ) ))
                             { Console.Log( "File didnt exist" ); return; }
-
-                        if( packet_storage != null )
-                            { Console.Log( "pointer already have a file" ); return; }
                             
-                        // byte[] data = System.IO.File.ReadAllBytes( path_to_packet_storage );
-                        Data_file_link data_link = Controllers.files.operations.Get_file_from_disk( path_to_packet_storage );
-
-                        packet_storage = Packets_storage_data.Start( data_link );
+                        packet_storage_NEW = Controllers.packets.operations.Get_storage_from_disk( path_to_packet_storage );
 
                         Console.Log( "Load packet store" );
+                        
                     }
 
 
@@ -107,25 +106,16 @@ unsafe public static class TEST__packet_storage {
                 if( Input.GetKeyDown( KeyCode.W ) )
                     {
 
-                        if( packet_storage != null )
+                        if( packet_storage_NEW.Is_valid() )
                             { Console.Log( "already have the packet storage" ); return; }
-
-                        if( System.IO.File.Exists( path_to_packet_storage ) )
+                        
+                        if( Controllers.files.storage.File_exist_in_final_disk( path_to_packet_storage ) )
                             { Console.Log( "Arquivo já existe" ); return; }
 
-
-                        key = Controllers.heap.Get_unique( file_length );
-
-
-                        Data_file_link data_link = Controllers.files.operations.Create_new_file_EMPTY( path_to_packet_storage, file_length );
-
-                        // Controllers.packets.Create_new();
-
-                        packet_storage = Packets_storage_data.Start( data_link );
-
-                        
+                        packet_storage_NEW = Controllers.packets.operations.Create_new_storage( path_to_packet_storage, Controllers.packets.defaults.Get_default_args() );
+                
                         Console.Log( "Created packet store" );
-
+                        Console.Log( path_to_packet_storage );
 
                     }
 
@@ -133,14 +123,15 @@ unsafe public static class TEST__packet_storage {
                 if( Input.GetKeyDown( KeyCode.E ) )
                     {
 
-                        if( packet_storage == null )
+                        if( !!!( packet_storage_NEW.Is_valid() ) )
                             { Console.Log( "didnt have any store_packet" ); return; }
 
-                        Files.Save_file( path_to_packet_storage, packet_storage, file_length );
-                        Controllers.heap.Return_key( packet_storage->file_link.heap_key );
-                        packet_storage = null;
-                        Console.Log( "Saved packet store" );
 
+                        Controllers.packets.operations.Remove_storage( packet_storage_NEW );
+                        Controllers.saving.saver.Force_save_synchronous_safe();
+
+                        
+                        
                     }
 
 
@@ -148,18 +139,15 @@ unsafe public static class TEST__packet_storage {
                 if( Input.GetKeyDown( KeyCode.R ) )
                     {
 
-                        if( packet_storage != null )    
-                            { 
-                                Controllers.heap.Return_key( packet_storage->file_link.heap_key );
-                                packet_storage = null;
-                            }
+                        if( packet_storage_NEW.Is_valid() )
+                            { Controllers.packets.operations.Delete_storage( packet_storage_NEW ); }
+                            
+                        if( Controllers.files.storage.File_exist_in_final_disk( path_to_packet_storage ) )
+                            { Controllers.files.operations.Delete_file( path_to_packet_storage ); }
 
-                        if( System.IO.File.Exists( path_to_packet_storage ) )
-                            { System.IO.File.Delete( path_to_packet_storage ); }
-
+                        Controllers.saving.saver.Force_save_synchronous_safe();
                         Console.Log( "Removed all data" );
                     }
-
 
 
             }
@@ -171,20 +159,20 @@ unsafe public static class TEST__packet_storage {
 
                 if( Input.GetKeyDown( KeyCode.Q ) )
                     { 
-                        packet_storage->Print_actives( Packet_storage_size._10_bytes ); 
-                        packet_storage->Print_flags( Packet_storage_size._10_bytes );
+                        packet_storage_pointer->Print_actives( Packet_storage_size._10_bytes ); 
+                        packet_storage_pointer->Print_flags( Packet_storage_size._10_bytes );
                     }
 
                 if( Input.GetKeyDown( KeyCode.W ) )
                     { 
-                        packet_storage->Print_actives( Packet_storage_size._200_bytes ); 
-                        packet_storage->Print_flags( Packet_storage_size._200_bytes );
+                        packet_storage_pointer->Print_actives( Packet_storage_size._200_bytes ); 
+                        packet_storage_pointer->Print_flags( Packet_storage_size._200_bytes );
                     }
 
                 if( Input.GetKeyDown( KeyCode.E ) )
                     { 
-                        packet_storage->Print_actives( Packet_storage_size._1500_bytes ); 
-                        packet_storage->Print_flags( Packet_storage_size._1500_bytes );
+                        packet_storage_pointer->Print_actives( Packet_storage_size._1500_bytes ); 
+                        packet_storage_pointer->Print_flags( Packet_storage_size._1500_bytes );
                     }
 
                 
@@ -205,7 +193,7 @@ unsafe public static class TEST__packet_storage {
                     if( Input.GetKeyDown( KeyCode.Q ) )
                         {
                             // Guarantee_pointer();
-                            packet_key_10 = packet_storage->Alloc_packet( 10 );
+                            packet_key_10 = packet_storage_pointer->Alloc_packet( 10 );
                             Console.Log( "slot: " +  packet_key_10.slot );
                         }
 
@@ -214,7 +202,7 @@ unsafe public static class TEST__packet_storage {
                     if( Input.GetKeyDown( KeyCode.W ) )
                         {
                             // Guarantee_pointer();
-                            packet_storage->Dealloc_packet( packet_key_10 );
+                            packet_storage_pointer->Dealloc_packet( packet_key_10 );
                             packet_key_10 = default;
                         }
 
@@ -223,8 +211,8 @@ unsafe public static class TEST__packet_storage {
                     // ** ALLOC + DEALLOCATE key
                     if( Input.GetKeyDown( KeyCode.E ) )
                         {
-                            packet_key_10 = packet_storage->Alloc_packet( 10 );
-                            packet_storage->Dealloc_packet( packet_key_10 );
+                            packet_key_10 = packet_storage_pointer->Alloc_packet( 10 );
+                            packet_storage_pointer->Dealloc_packet( packet_key_10 );
                     }
 
                 // 189 BYTES
@@ -233,7 +221,7 @@ unsafe public static class TEST__packet_storage {
                     if( Input.GetKeyDown( KeyCode.A ) )
                         {
                             // Guarantee_pointer();
-                            packet_key_189 = packet_storage->Alloc_packet( 189 );
+                            packet_key_189 = packet_storage_pointer->Alloc_packet( 189 );
                             Console.Log( "slot: " +  packet_key_189.slot );
                         }
 
@@ -242,7 +230,7 @@ unsafe public static class TEST__packet_storage {
                     if( Input.GetKeyDown( KeyCode.S ) )
                         {
                             // Guarantee_pointer();
-                            packet_storage->Dealloc_packet( packet_key_189 );
+                            packet_storage_pointer->Dealloc_packet( packet_key_189 );
                             packet_key_189 = default;
                         }
 
@@ -251,8 +239,8 @@ unsafe public static class TEST__packet_storage {
                     // ** ALLOC + DEALLOCATE key
                     if( Input.GetKeyDown( KeyCode.D ) )
                         {
-                            packet_key_189 = packet_storage->Alloc_packet( 200 );
-                            packet_storage->Dealloc_packet( packet_key_189 );
+                            packet_key_189 = packet_storage_pointer->Alloc_packet( 200 );
+                            packet_storage_pointer->Dealloc_packet( packet_key_189 );
                         }
 
                 // 1500 BYTES
@@ -261,7 +249,7 @@ unsafe public static class TEST__packet_storage {
                     if( Input.GetKeyDown( KeyCode.Z ) )
                         {
                             // Guarantee_pointer();
-                            packet_key_1_500 = packet_storage->Alloc_packet( 1_500 );
+                            packet_key_1_500 = packet_storage_pointer->Alloc_packet( 1_500 );
                             Console.Log( "slot: " +  packet_key_1_500.slot );
                         }
 
@@ -270,7 +258,7 @@ unsafe public static class TEST__packet_storage {
                     if( Input.GetKeyDown( KeyCode.X ) )
                         {
                             // Guarantee_pointer();
-                            packet_storage->Dealloc_packet( packet_key_1_500 );
+                            packet_storage_pointer->Dealloc_packet( packet_key_1_500 );
                             packet_key_1_500 = default;
                         }
 
@@ -279,8 +267,8 @@ unsafe public static class TEST__packet_storage {
                     // ** ALLOC + DEALLOCATE key
                     if( Input.GetKeyDown( KeyCode.C ) )
                         {
-                            packet_key_1_500 = packet_storage->Alloc_packet( 1_500 );
-                            packet_storage->Dealloc_packet( packet_key_1_500 );
+                            packet_key_1_500 = packet_storage_pointer->Alloc_packet( 1_500 );
+                            packet_storage_pointer->Dealloc_packet( packet_key_1_500 );
                         }
 
                 return;
@@ -299,15 +287,15 @@ unsafe public static class TEST__packet_storage {
                 // ** FORCE EXPAND
 
                     if( Input.GetKeyDown( KeyCode.Q ) )
-                        { packet_storage->Force_expand( Packet_storage_size._10_bytes ); }
+                        { packet_storage_pointer->Force_expand( Packet_storage_size._10_bytes ); }
 
                     
                     if( Input.GetKeyDown( KeyCode.W ) )
-                        { packet_storage->Force_expand( Packet_storage_size._200_bytes ); }
+                        { packet_storage_pointer->Force_expand( Packet_storage_size._200_bytes ); }
 
                     
                     if( Input.GetKeyDown( KeyCode.E ) )
-                        { packet_storage->Force_expand( Packet_storage_size._1500_bytes ); }
+                        { packet_storage_pointer->Force_expand( Packet_storage_size._1500_bytes ); }
 
 
 
@@ -320,7 +308,7 @@ unsafe public static class TEST__packet_storage {
         // ** GET KEY
         if( Input.GetKeyDown( KeyCode.H ) )
             {
-                packet_key_test = packet_storage->test.Get_key_FOR_TEST( packet_storage, Packet_storage_size._10_bytes, 10 );
+                packet_key_test = packet_storage_pointer->test.Get_key_FOR_TEST( packet_storage_pointer, Packet_storage_size._10_bytes, 10 );
                 packet_key_test.length = 8;
             }
 
@@ -328,14 +316,14 @@ unsafe public static class TEST__packet_storage {
         // ** COLOCAR VALOR
         if( Input.GetKeyDown( KeyCode.J ) )
             {
-                int* data_pointer = (int*) packet_storage->Get_pointer( packet_key_test );
+                int* data_pointer = (int*) packet_storage_pointer->Get_pointer( packet_key_test );
                 *data_pointer = ( *data_pointer + 10 );
             }
 
         // ** LER VALOR
         if( Input.GetKeyDown( KeyCode.K ) )
             {
-                int* dados = (int*) packet_storage->Get_pointer( packet_key_test );
+                int* dados = (int*) packet_storage_pointer->Get_pointer( packet_key_test );
                 Console.Log( "valor: " + *dados );
             }
 
@@ -346,7 +334,7 @@ unsafe public static class TEST__packet_storage {
         if( Input.GetKeyDown( KeyCode.Z ) )
             {
 
-                Packet_array<int> dados =  packet_storage->Get_packet_array<int>( packet_key_test );
+                Packet_array<int> dados =  packet_storage_pointer->Get_packet_array<int>( packet_key_test );
                 int* pointer = dados.Get( 0 );
 
                 for( int index = 0 ; index < dados.length ; index++ ){
@@ -359,7 +347,7 @@ unsafe public static class TEST__packet_storage {
                 
 
 
-                int* a = (int*) packet_storage->Get_pointer( packet_key_test );
+                int* a = (int*) packet_storage_pointer->Get_pointer( packet_key_test );
 
                 for( int index_2 = 0 ; index_2 < (packet_key_test.length / sizeof( int )) ; index_2++ ){
 
@@ -369,7 +357,7 @@ unsafe public static class TEST__packet_storage {
 
 
 
-                Packet pk = packet_storage->Get_packet( packet_key_test );
+                Packet pk = packet_storage_pointer->Get_packet( packet_key_test );
 
 
                 // var tipo = (Tipo*) pk.pointer;
@@ -398,7 +386,7 @@ unsafe public static class TEST__packet_storage {
 
                 Console.Log( $"--------{ packet_key_test.Get_text_of_identification() }---------" );
 
-                Packet pk = packet_storage->Get_packet( packet_key_test );
+                Packet pk = packet_storage_pointer->Get_packet( packet_key_test );
                 Test_packet* tipo = (Test_packet*) pk.Get_pointer_complete();
 
                     // ** usar
@@ -419,7 +407,7 @@ unsafe public static class TEST__packet_storage {
 
                 Console.Log( $"--------{ packet_key_test.Get_text_of_identification() }---------" );
 
-                Packet pk = packet_storage->Get_packet( packet_key_test );
+                Packet pk = packet_storage_pointer->Get_packet( packet_key_test );
                 Test_packet* tipo = (Test_packet*) pk.Get_pointer_partial();
 
                 pk.Change<int>( &tipo->a, 2 );
@@ -436,7 +424,7 @@ unsafe public static class TEST__packet_storage {
 
     private  static void Guarantee_pointer(){
 
-        if( packet_storage == null )
+        if( packet_storage_pointer == null )
             { CONTROLLER__errors.Throw( "pointer null" ); }
 
     }

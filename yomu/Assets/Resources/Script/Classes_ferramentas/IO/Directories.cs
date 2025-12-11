@@ -25,6 +25,9 @@ public static class Directories {
 
     public static bool Is_sub_path( string full_path, string sub_part ){
 
+        if( System_run.ignore_path )
+            { return true; }
+
         // Normalize trailing slashes
         full_path = full_path.TrimEnd( Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar ) + Path.DirectorySeparatorChar;
         sub_part = sub_part.TrimEnd( Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar ) + Path.DirectorySeparatorChar;

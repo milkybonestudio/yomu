@@ -28,11 +28,19 @@ unsafe public struct MANAGER__safety_stack_packet_storage {
 
         switch( type ){
 
+            // ** allocations
             case Safety_stack_action_type.alloc_packet: return Reconstruct_by_message__PACKET_SOTRAGE_ALLOC( _message );
             case Safety_stack_action_type.dealloc_packet: return Reconstruct_by_message__PACKET_SOTRAGE_DEALLOC( _message );
 
-            case Safety_stack_action_type.create_new_storage: return Reconstruct_by_message__PACKET_SOTRAGE_CREATE_NEW( _message );
+            // ** files
+            case Safety_stack_action_type.applied_new_storage_data: return Reconstruct_by_message__PACKET_SOTRAGE_CREATE_NEW( _message );
             case Safety_stack_action_type.resize_size_packet_storage: return Reconstruct_by_message__PACKET_SOTRAGE_RESIZE_SIZE( _message );
+
+            // ** ownership
+
+            case Safety_stack_action_type.add_storage: return Reconstruct_by_message__PACKET_SOTRAGE_ADD_STORAGE( _message );
+            case Safety_stack_action_type.remove_storage: return Reconstruct_by_message__PACKET_SOTRAGE_REMOVE_STORAGE( _message );
+
 
             default: return Stack_reconstruction_result_message.Construct( $"Can not handle message is with type <Color=lightBlue>{ type }</Color>", Stack_reconstruction_result.fail ) ;
 
@@ -303,12 +311,12 @@ unsafe public struct MANAGER__safety_stack_packet_storage {
 
         Packet_storage_start_data_PER_SIZE* data_pointer = (Packet_storage_start_data_PER_SIZE*)&( message->data );
 
-        for( int index = 0 ; index < (int) Packet_storage_size.END ; index++ )
+        for( int index = 0 ; index < (int) Packet_storage_size._MAX ; index++ )
             { data_pointer[ index ] = _start_data.sizes_settings[ index ]; }
 
         
 
-        message->core_message.type = Safety_stack_action_type.create_new_storage;
+        message->core_message.type = Safety_stack_action_type.applied_new_storage_data;
         int message_length = (
             1 * sizeof( int ) + // ** length of the message
             1 * sizeof( int ) + // ** type of the message
@@ -357,7 +365,7 @@ unsafe public struct MANAGER__safety_stack_packet_storage {
         for( int index = 0 ; index < (int) Packet_storage_size.END ; index++ )
             {  new_start_data.sizes_settings[ index ] = data_pointer[ index ]; }
 
-        Controllers.packets.creation.Apply_create_data( data_link.Get_pointer(), data_link.Get_length(), new_start_data );
+        Controllers.packets.creation.Apply_create_data( data_link, new_start_data );
 
         
         return Stack_reconstruction_result_message.Construct( null, Stack_reconstruction_result.succes );
@@ -365,6 +373,111 @@ unsafe public struct MANAGER__safety_stack_packet_storage {
 
 
     }
+
+
+
+    // ** OWNERSHIP
+
+    public void Save_data_add_storage( int _file_id ){
+
+        Safety();
+
+        STACK_MESSAGE__packet_storage_add_storage* message = (STACK_MESSAGE__packet_storage_add_storage*) origianl_message_pointer;
+
+        message->file_id = _file_id;
+        
+        message->core_message.type = Safety_stack_action_type.add_storage;
+        int message_length = (
+            1 * sizeof( int ) + // ** length of the message
+            1 * sizeof( int ) + // ** type of the message
+
+            1 * sizeof( int )   // ** file id
+        );
+
+        message->core_message.length = message_length;        
+        Controllers.stack.Save_message( message_length );
+
+    }
+
+
+    
+    public static Stack_reconstruction_result_message Reconstruct_by_message__PACKET_SOTRAGE_ADD_STORAGE( void* _message ){
+
+
+        STACK_MESSAGE__packet_storage_add_storage* message = (STACK_MESSAGE__packet_storage_add_storage*) _message;
+
+        int file_id = message->file_id;
+        
+        if( file_id <= 0 )
+            { return Stack_reconstruction_result_message.Construct( $"The message <Color=lightBlue>STACK_MESSAGE__packet_storage_add_storage</Color> file_id is <Color=lightBlue>{ file_id }</Color>", Stack_reconstruction_result.fail ); }
+
+        if(  !!!( Controllers.files.storage.Is_file_already_taken( file_id ) ) )
+            { return Stack_reconstruction_result_message.Construct( $"the message  <Color=lightBlue>STACK_MESSAGE__packet_storage_add_storage </Color> dont have file for id <Color=lightBlue>{ file_id }</Color>", Stack_reconstruction_result.fail ); }
+    
+
+        Data_file_link data_link = Controllers.files.operations.Get_file( file_id );
+
+        Controllers.packets.storage.Add_storage( data_link );
+
+        // ** Get_pointer
+        ((Packets_storage_data*)data_link.Get_pointer())->Set_from_disk();
+        
+        return Stack_reconstruction_result_message.Construct( null, Stack_reconstruction_result.succes );
+
+    }
+
+
+    public void Save_data_remove_storage( int _file_id ){
+
+        Safety();
+
+        STACK_MESSAGE__packet_storage_remove_storage* message = (STACK_MESSAGE__packet_storage_remove_storage*) origianl_message_pointer;
+
+        message->file_id = _file_id;
+        
+        message->core_message.type = Safety_stack_action_type.remove_storage;
+        int message_length = (
+            1 * sizeof( int ) + // ** length of the message
+            1 * sizeof( int ) + // ** type of the message
+
+            1 * sizeof( int )   // ** file id
+        );
+
+        message->core_message.length = message_length;        
+        Controllers.stack.Save_message( message_length );
+
+    }
+
+
+    
+    public static Stack_reconstruction_result_message Reconstruct_by_message__PACKET_SOTRAGE_REMOVE_STORAGE( void* _message ){
+
+
+        STACK_MESSAGE__packet_storage_add_storage* message = (STACK_MESSAGE__packet_storage_add_storage*) _message;
+
+        int file_id = message->file_id;
+        
+        if( file_id <= 0 )
+            { return Stack_reconstruction_result_message.Construct( $"The message <Color=lightBlue>STACK_MESSAGE__packet_storage_add_storage</Color> file_id is <Color=lightBlue>{ file_id }</Color>", Stack_reconstruction_result.fail ); }
+
+        if(  !!!( Controllers.files.storage.Is_file_already_taken( file_id ) ) )
+            { return Stack_reconstruction_result_message.Construct( $"the message  <Color=lightBlue>STACK_MESSAGE__packet_storage_add_storage </Color> dont have file for id <Color=lightBlue>{ file_id }</Color>", Stack_reconstruction_result.fail ); }
+    
+        Data_file_link data_to_remove = new Data_file_link(){
+            id = file_id
+        };
+        
+        Controllers.packets.storage.Remove_storage( data_to_remove );
+
+        return Stack_reconstruction_result_message.Construct( null, Stack_reconstruction_result.succes );
+
+    }
+
+
+
+
+
+
 
 
 

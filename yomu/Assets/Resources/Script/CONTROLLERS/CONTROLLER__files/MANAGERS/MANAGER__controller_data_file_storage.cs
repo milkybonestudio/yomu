@@ -307,6 +307,11 @@ unsafe public struct MANAGER__controller_data_file_storage {
     }
 
 
+    public bool File_exist_in_final_disk( Data_file_link _data ){
+
+        return File_exist_in_final_disk( Get_path_for_file( _data ) );
+    }
+
     public bool File_exist_in_final_disk( string _path ){
 
         if( false )
@@ -323,6 +328,11 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
 
 
+    public bool Is_id_valid( Data_file_link _data ){
+
+        return id_TO_path.ContainsKey( _data.id );
+
+    }
 
     public bool Is_id_valid( int _id ){
 

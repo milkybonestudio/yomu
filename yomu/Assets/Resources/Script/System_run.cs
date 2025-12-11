@@ -90,6 +90,8 @@ public static class System_run {
     // --- SETTINGS
 
         public const bool max_security = true && NOT_IN_BUILD;
+        public const bool ignore_path = true && NOT_IN_BUILD;
+        
         public const bool warnings = true && NOT_IN_BUILD;
 
 

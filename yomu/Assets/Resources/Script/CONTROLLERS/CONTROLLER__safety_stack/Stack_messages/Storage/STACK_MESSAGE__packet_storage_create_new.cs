@@ -20,7 +20,5 @@ unsafe public struct STACK_MESSAGE__packet_storage_create_new {
         public byte data;
 
         
-
-
 }
 

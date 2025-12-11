@@ -7,20 +7,45 @@ using Unity.Burst;
 
 
 
-unsafe public struct ____Packets_storage {
+unsafe public struct Packets_storage {
 
-    // ** will get fast 
-    public int file_id;
+    public static Packets_storage Construct( Data_file_link _data ){
+        return new(){
+            data = _data
+        };
+    }
 
+
+    //mark
+    // ** need to only have the id
+    public Data_file_link data;
+
+
+
+
+
+    // ** WRITE/READ
     public Packet_array<T> Get_packet_array<T>( Packet_key _key )where T:unmanaged{ return Get_pointer()->Get_packet_array<T>( _key ); }
     public Packet Get_packet( Packet_key _key ){ return Get_pointer()->Get_packet( _key ); }
 
+
+    // ** ALOC/FREE
+
+
+
+
+
+    public bool Is_valid(){
+
+        return data.Is_valid();
+
+    }
 
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Packets_storage_data* Get_pointer(){
 
-        return Controllers.packets.Get_pointer( file_id );
+        return Controllers.packets.Get_pointer( data );
 
     }
 
@@ -29,39 +54,42 @@ unsafe public struct ____Packets_storage {
 [StructLayout(LayoutKind.Sequential)]
 unsafe public struct Packets_storage_data {
 
+
+    public bool Is_valid(){
+
+        return Controllers.files.storage.Is_id_valid( file_link );
+
+    }
+
+    // ** called in the controller
+    public void Set_from_disk(){
+
+        if( !!!( file_link.Is_valid() ) )
+            { CONTROLLER__errors.Throw( "Tried to Set_from_disk() but dont give a valid data_key" ); }
+
+        storage_pointer = (Packets_storage_data*)file_link.Get_pointer();
+        infos = (Packet_storage_info*)&( storage_pointer->infos);
+
+        return;
+    }
+
     // ** stay in controller
 
-    public const int LENGTH_INFO_BUFFER = 3_000;
     
-    private Packets_storage_data* storage_pointer;
+    public Packets_storage_data* storage_pointer;
     public Data_file_link file_link;
     public Packet_storage_size_manager sizes;
     public int file_length;
-    public bool started;
-
+    
     public Packet_storage_TEST test;
 
     
     private Packet_storage_info* infos;
+    public const int LENGTH_INFO_BUFFER = 3_000;
     public fixed byte infos_buffer [ LENGTH_INFO_BUFFER ];
 
 
-    public static Packets_storage_data* Start( Data_file_link _data_file ){
 
-        Packets_storage_data* pointer = (Packets_storage_data*) _data_file.heap_key.Get_pointer();
-
-        pointer->started = true;
-        pointer->storage_pointer = pointer;
-
-        pointer->file_link = _data_file;
-
-        pointer->file_length = _data_file.size;
-        pointer->infos = (Packet_storage_info*) pointer->infos_buffer;
-        pointer->sizes.Start();
-
-        return pointer;
-    
-    }
 
     public void End(){}
 
@@ -643,7 +671,7 @@ unsafe public struct Packets_storage_data {
         }
 
 
-        if( !!!( started ) )
+        if( !!!( Is_valid() ) )
             { CONTROLLER__errors.Throw( "Tried to use a Packet_storage, but did not started it" ); }
 
         if( storage_pointer == null )
