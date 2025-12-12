@@ -92,13 +92,13 @@ unsafe public static class File_run_time_saving_operations {
 
         string path = Get_run_time_path( _data.id, _operation );
 
-        if( _data.heap_key.type == Heap_key_type.empty )
+        if( _data.Get_heap_key_type() == Heap_key_type.empty )
             {
                 Files.Save_critical_file( path, new byte[ 100 ]);
                 return;
             }
         
-        Files.Save_critical_file( path, _data.Get_pointer(), _data.Get_length() );
+        Files.Save_critical_file( path, _data );
 
         return;         
 

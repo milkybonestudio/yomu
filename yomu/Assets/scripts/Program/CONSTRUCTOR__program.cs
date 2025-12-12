@@ -10,6 +10,7 @@ public static class CONSTRUCTOR__program {
 
     public static void Construir( Program _program ){
 
+
         Controllers.errors =  CONSTRUCTOR__controller_errors.Construct();
         Program.instance = _program;
         

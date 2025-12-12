@@ -14,7 +14,6 @@ unsafe public struct MANAGER__packet_storage_creation {
         int _pointer_max_length = _data.Get_length();
 
 
-
         // info:[   dados necessario  ]  -> [ keys free ][ all keys flags ][ data ]
 
         if( System_run.max_security )
@@ -62,9 +61,6 @@ unsafe public struct MANAGER__packet_storage_creation {
         
         for( int index = ( int ) Packet_storage_size._1_byte ; index < ( int ) Packet_storage_size._MAX ; index++  )
             { infos[ index ].Applay_start_data( correct_data_per_size_array[ index ], _pointer, &current_pointer, sizes[ index ] ); }
-
-
-
 
         return;
 

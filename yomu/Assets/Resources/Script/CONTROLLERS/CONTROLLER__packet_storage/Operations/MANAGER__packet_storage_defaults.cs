@@ -61,7 +61,7 @@ unsafe public struct MANAGER__packet_storage_defaults {
             new(){ size = Packet_storage_size._3_bytes,    slots_to_need_up = 50,  slots = 500 , slots_add_per_expansion =50  },
             new(){ size = Packet_storage_size._4_bytes,    slots_to_need_up = 50,  slots = 500 , slots_add_per_expansion =50  },
             new(){ size = Packet_storage_size._5_bytes,    slots_to_need_up = 50,   slots = 300   , slots_add_per_expansion =50  },
-            new(){ size = Packet_storage_size._10_bytes,   slots_to_need_up = 12,   slots = 50   , slots_add_per_expansion = 50  },
+            new(){ size = Packet_storage_size._10_bytes,   slots_to_need_up = 13,   slots = 50   , slots_add_per_expansion = 50  },
             new(){ size = Packet_storage_size._20_bytes,   slots_to_need_up = 50,   slots = 150   , slots_add_per_expansion =50  },
             new(){ size = Packet_storage_size._40_bytes,   slots_to_need_up = 50,   slots = 150   , slots_add_per_expansion =50  },
             new(){ size = Packet_storage_size._60_bytes,   slots_to_need_up = 20,   slots = 100   , slots_add_per_expansion =50  },

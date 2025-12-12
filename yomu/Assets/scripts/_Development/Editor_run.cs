@@ -10,6 +10,10 @@ public static class Editor_run {
 
         
         // --- FILE SYSTEM
+
+        
+        public static bool delete_persistent_folder = false;
+
         public static bool delete_version_folder = true;
             public static bool reset_version_folder = false && delete_version_folder;
 

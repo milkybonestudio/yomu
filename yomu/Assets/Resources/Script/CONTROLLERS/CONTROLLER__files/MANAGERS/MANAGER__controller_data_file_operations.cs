@@ -13,6 +13,7 @@ unsafe public struct MANAGER__controller_data_file_operations {
 
 
 
+
     public void Set_context( Program_context _context ){
 
         int[] files_new_context_ids = _context.current_files_ids;
@@ -193,7 +194,20 @@ unsafe public struct MANAGER__controller_data_file_operations {
         
     }
 
+    public Heap_key Get_heap_key( int _id ){
 
+        lock( lock_obj ){
+
+
+            return Controllers.files.storage.Get_heap_key( _id );
+
+        }
+
+    
+    }
+
+    //mark
+    // ???
     public Data_file_link Get_file_start_program( string _path, int _slot ){
 
         if( System_run.max_security )
@@ -215,14 +229,11 @@ unsafe public struct MANAGER__controller_data_file_operations {
         byte[] data = System.IO.File.ReadAllBytes( _path );
 
         Heap_key heap_key = Controllers.heap.Get_unique( data.Length );
+        
+        
+        Data_file_link link_data = Data_file_link.Construct( _slot );
 
-        Data_file_link link_data = new(){
-            heap_key = heap_key,
-            size = data.Length,
-            id = _slot
-        };
-
-        Controllers.files.storage.Add_file( link_data, _path );
+        Controllers.files.storage.Add_file( link_data, heap_key, _path );
 
         return link_data;
 
@@ -275,7 +286,7 @@ unsafe public struct MANAGER__controller_data_file_operations {
             Data_file_link data_link = Controllers.files.storage.Lock_slot( _path, data.Length );
             Controllers.stack.files.Save_data_got_file_from_disk( data_link.id, _path );
 
-            VOID.Transfer_data( data, data_link.heap_key.Get_pointer() );
+            VOID.Transfer_data( data, data_link.Get_heap_key().Get_pointer() );
 
         
 
@@ -408,7 +419,7 @@ unsafe public struct MANAGER__controller_data_file_operations {
             
             Data_file_link data_link = Controllers.files.storage.Lock_slot( _path, _file_length );
 
-            Controllers.stack.files.Save_data_create_new_file( data_link.id, data_link.size, _path );
+            Controllers.stack.files.Save_data_create_new_file( data_link.id, _file_length, _path );
             
             return data_link;
 
@@ -497,10 +508,11 @@ unsafe public struct MANAGER__controller_data_file_operations {
                         { CONTROLLER__errors.Throw( $"Tried to change the length of the file <Color=lightBlue>{ _data_link.id }</Color> but the id is invalid" ); }
                 }
 
-            Heap_key heap_key = Controllers.heap.Change_length_key( _data_link.heap_key, _new_length );
-            _data_link.heap_key = heap_key;
+            Heap_key new_heap_key = Controllers.heap.Change_length_key( _data_link.Get_heap_key(), _new_length );
+            // _data_link.heap_key = heap_key;
+            Controllers.files.storage.Change_heap_key( _data_link.id, new_heap_key );
 
-            Controllers.files.storage.current_files[ _data_link.id ] = _data_link;
+            // Controllers.files.storage.current_files[ _data_link.id ] = _data_link;
 
             Controllers.stack.files.Save_data_change_length_file( _data_link.id, _new_length );
 

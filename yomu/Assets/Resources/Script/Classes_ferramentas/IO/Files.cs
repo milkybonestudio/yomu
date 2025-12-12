@@ -18,6 +18,8 @@ unsafe public static class Files {
 
     public static void Try_override( string _path_with_data, string _final_path ){
 
+        Console.Log( "EH OVERWRITE!!! mudar nome depois" );
+
         string temp = File_run_time_saving_operations.Get_run_time_path_TEMP( _final_path ); 
 
         File.Move( _path_with_data, temp );
@@ -116,6 +118,14 @@ unsafe public static class Files {
         return;
 
     }
+
+    public static void Save_critical_file( string _path, Data_file_link _data ){
+
+        Heap_key key = _data.Get_heap_key();
+        Save_critical_file( _path, key.Get_pointer(), key.Get_length() );
+
+    }
+
 
 
 

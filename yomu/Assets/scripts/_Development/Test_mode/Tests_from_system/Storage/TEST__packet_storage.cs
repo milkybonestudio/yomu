@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 unsafe public static class TEST__packet_storage {
@@ -43,6 +44,12 @@ unsafe public static class TEST__packet_storage {
 
     public static Packet_key packet_key_test;
 
+    public static Packet_key packet_key_SIMPLE;
+    public static Packet_key packet_key_ARRAY;
+
+    public static Test_packet test_packet_simple;
+    public static Test_packet test_packet_array;
+
     public static int file_length = 1_000_000;
     public static string path_to_packet_storage = $"{ Paths_system.persistent_data }\\packet_storage.dat"; 
 
@@ -50,6 +57,8 @@ unsafe public static class TEST__packet_storage {
 
         public int a;
         public int b;
+
+        public float c;
         
     }
 
@@ -70,11 +79,7 @@ unsafe public static class TEST__packet_storage {
                 if( Input.GetKeyDown( KeyCode.Q ) )
                     {
 
-                        // Test.SHOULD_PASS( "message create new file", () => {
-
-                        //     Data_file_link data = Data_file_link.Construct_fast()
-
-                        // });
+                        
 
                     }
 
@@ -113,6 +118,7 @@ unsafe public static class TEST__packet_storage {
                             { Console.Log( "Arquivo já existe" ); return; }
 
                         packet_storage_NEW = Controllers.packets.operations.Create_new_storage( path_to_packet_storage, Controllers.packets.defaults.Get_default_args() );
+                        packet_storage_NEW.Get_pointer()->Print_data( Packet_storage_size._10_bytes );
                 
                         Console.Log( "Created packet store" );
                         Console.Log( path_to_packet_storage );
@@ -126,7 +132,7 @@ unsafe public static class TEST__packet_storage {
                         if( !!!( packet_storage_NEW.Is_valid() ) )
                             { Console.Log( "didnt have any store_packet" ); return; }
 
-
+                        
                         Controllers.packets.operations.Remove_storage( packet_storage_NEW );
                         Controllers.saving.saver.Force_save_synchronous_safe();
 
@@ -145,10 +151,9 @@ unsafe public static class TEST__packet_storage {
                         if( Controllers.files.storage.File_exist_in_final_disk( path_to_packet_storage ) )
                             { Controllers.files.operations.Delete_file( path_to_packet_storage ); }
 
-                        Controllers.saving.saver.Force_save_synchronous_safe();
+                        Controllers.saving.saver.Force_save_synchronous_safe(); 
                         Console.Log( "Removed all data" );
                     }
-
 
             }
 
@@ -161,18 +166,22 @@ unsafe public static class TEST__packet_storage {
                     { 
                         packet_storage_NEW.Get_pointer()->Print_actives( Packet_storage_size._10_bytes ); 
                         packet_storage_NEW.Get_pointer()->Print_flags( Packet_storage_size._10_bytes );
+                        packet_storage_NEW.Get_pointer()->Print_data( Packet_storage_size._10_bytes );
                     }
 
                 if( Input.GetKeyDown( KeyCode.W ) )
                     { 
                         packet_storage_NEW.Get_pointer()->Print_actives( Packet_storage_size._200_bytes ); 
                         packet_storage_NEW.Get_pointer()->Print_flags( Packet_storage_size._200_bytes );
+                        packet_storage_NEW.Get_pointer()->Print_data( Packet_storage_size._200_bytes );
+                        
                     }
 
                 if( Input.GetKeyDown( KeyCode.E ) )
                     { 
                         packet_storage_NEW.Get_pointer()->Print_actives( Packet_storage_size._1500_bytes ); 
                         packet_storage_NEW.Get_pointer()->Print_flags( Packet_storage_size._1500_bytes );
+                        packet_storage_NEW.Get_pointer()->Print_data( Packet_storage_size._1500_bytes );
                     }
 
                 
@@ -301,120 +310,84 @@ unsafe public static class TEST__packet_storage {
 
 
 
+        // ** PACKETS
+        if( Input.GetKey( KeyCode.Keypad4 ) )
+            {
+                if( !!!( packet_storage_NEW.Is_valid() ) )
+                    { Console.Log( "Dont have packet storage" );  return;  }
 
-        // // ** GET KEY
-        // if( Input.GetKeyDown( KeyCode.H ) )
-        //     {
-        //         packet_key_test = packet_storage_NEW.Get_pointer()->test.Get_key_FOR_TEST( packet_storage_pointer, Packet_storage_size._10_bytes, 10 );
-        //         packet_key_test.length = 8;
-        //     }
+                if( !!!( packet_key_SIMPLE.is_valid ) )
+                    { packet_key_SIMPLE = packet_storage_NEW.Alloc_packet( sizeof( Test_packet ) ); }
 
+                if( !!!( packet_key_ARRAY.is_valid ) )
+                    { packet_key_ARRAY = packet_storage_NEW.Alloc_packet_array<Test_packet>( 10 ); }
 
-        // // ** COLOCAR VALOR
-        // if( Input.GetKeyDown( KeyCode.J ) )
-        //     {
-                
-        //         Packet packet = packet_storage_NEW.Get_packet( packet_key_test );
+                // ** SIMPLE
 
-        //         packet.Change<int>( 10 );
-                
-        //     }
+                    // ** PARTIAL
+                    if( Input.GetKeyDown( KeyCode.Q ) )
+                        {
 
-        // // ** LER VALOR
-        // if( Input.GetKeyDown( KeyCode.K ) )
-        //     {
-        //         int* dados = (int*) packet_storage_pointer->Get_pointer( packet_key_test );
-        //         Console.Log( "valor: " + *dados );
-        //     }
+                            Packet packet = packet_storage_NEW.Get_packet( packet_key_SIMPLE );
+                            Test_packet* pointer = (Test_packet*)packet.Get_pointer_partial();
 
+                                packet.Change( &pointer->a, ( pointer->a + 10 ) );
+                                packet.Change<int>( &pointer->b, ( pointer->b + 5 ) );
+                                packet.Change( &pointer->c, ( pointer->c + 5 ) );
+                            
+                                test_packet_simple = *pointer;
 
+                        }
 
+                    // ** COMPLETE
+                    if( Input.GetKeyDown( KeyCode.W ) )
+                        {
 
-        // // ** LER VALOR
-        // if( Input.GetKeyDown( KeyCode.Z ) )
-        //     {
+                            Packet packet = packet_storage_NEW.Get_packet( packet_key_SIMPLE );
+                            Test_packet* pointer = (Test_packet*) packet.Get_pointer_complete();
 
-        //         Packet_array<int> dados =  packet_storage_pointer->Get_packet_array<int>( packet_key_test );
-        //         int* pointer = dados.Get( 0 );
+                                pointer->a += 10;
+                                pointer->b += 5;
+                        
+                                test_packet_simple = *pointer;
 
-        //         for( int index = 0 ; index < dados.length ; index++ ){
+                            packet.Finish_use();
 
-        //             Console.Log( (*(int*) dados.Get( index )) );
-                    
-        //         }
+                        }
 
+                    // ** OVERWRITE
+                    if( Input.GetKeyDown( KeyCode.E ) )
+                        {
+                            packet_storage_NEW.Overwrite_packet<Test_packet>( packet_key_SIMPLE, new(){
+                                a = 33,
+                                b = 45
+                            });
+                        }
 
-                
-
-
-        //         int* a = (int*) packet_storage_pointer->Get_pointer( packet_key_test );
-
-        //         for( int index_2 = 0 ; index_2 < (packet_key_test.length / sizeof( int )) ; index_2++ ){
-
-        //             Console.Log( a[ index_2 ] );
-                    
-        //         }
-
-
-
-        //         Packet pk = packet_storage_NEW.Get_packet( packet_key_test );
-
-
-        //         // var tipo = (Tipo*) pk.pointer;
-
-
-        //         // // ** save isolate data
-        //         // pk.Change( &tipo->age, 10 );
-
-
-        //         // tipo->age = 18;
-
-                
-
-        //         // int o = &(((Packet_usable_key*)null )->pointer);
-
-
-        //     }
+                // ** ARRAY
 
 
 
+                    // ** PARTIAL
+                    if( Input.GetKeyDown( KeyCode.A ) )
+                        {
+                            Packet_array<int> dados =  packet_storage_NEW.Get_packet_array<int>( packet_key_ARRAY );
+                            int* pointer = dados.Get( 0 );
+
+                            for( int index = 0 ; index < dados.length ; index++ ){
+
+                                Console.Log( (*(int*) dados.Get( index )) );
+                                
+                            }
 
 
-        // // ** CHANGE PACKET COMPLETE
-        // if( Input.GetKeyDown( KeyCode.Y ) )
-        //     {
-
-        //         Console.Log( $"--------{ packet_key_test.Get_text_of_identification() }---------" );
-
-        //         Packet pk = packet_storage_NEW.Get_packet( packet_key_test );
-        //         Test_packet* tipo = (Test_packet*) pk.Get_pointer_complete();
-
-        //             // ** usar
-
-        //             tipo->a = 2;
-        //             tipo->b = 5;
-                    
-                
-        //         pk.Finish_use();
-                
-
-        //     }
+                            
+                        }
 
 
-        // // ** CHANGE PACKET PARTIAL
-        // if( Input.GetKeyDown( KeyCode.U ) )
-        //     {
 
-        //         Console.Log( $"--------{ packet_key_test.Get_text_of_identification() }---------" );
+            }
 
-        //         Packet pk = packet_storage_pointer->Get_packet( packet_key_test );
-        //         Test_packet* tipo = (Test_packet*) pk.Get_pointer_partial();
-
-        //         pk.Change<int>( &tipo->a, 2 );
-        //         pk.Change<float>( &tipo->b, 5 );
-
-                
-        //     }
 
 
 

@@ -29,31 +29,83 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
             manager.cached_data_files = new Dictionary<string, Data_file_link>();
             manager.deleted_files = new Dictionary<string, Data_file_link>();
+            manager.heap_keys = new Dictionary<int, Heap_key>();
 
         return manager;
 
     }
 
 
+    public Dictionary<int,Heap_key> heap_keys;
+
     public Dictionary<string,int> path_TO_id;
     public Dictionary<int,string> id_TO_path;
 
+    // ** passar para hashSet?
     public Dictionary<int,Data_file_link> current_files;
-
+    
     // ** files that would be in disk when saved, also count as files
     public Dictionary<string,Data_file_link> cached_data_files;
     public Dictionary<string,Data_file_link> deleted_files;
+
+
+    public Heap_key Get_heap_key( int _id ){
+    
+        //Console.Log( "Asked for key " + _id );
+        if( System_run.max_security )
+            {
+                if( !!!( heap_keys.ContainsKey( _id ) ) )
+                    { CONTROLLER__errors.Throw( $"Asked for the heap key for the id <Color=lightBlue>{ _id }</Color> but there is no heap_key for this id" ); }
+            }
+
+        return heap_keys[ _id ];
+
+    }
+
+    public void Add_heap_key( int _id, Heap_key _key ){
+
+        // Console.Log( "Will add for the id : " + _id );
+
+        if( System_run.max_security )
+            {
+                if( heap_keys.ContainsKey( _id ) )
+                    { CONTROLLER__errors.Throw( $"Tried to add a heap key in the id for the id <Color=lightBlue>{ _id }</Color> but already exist one" ); }
+            }
+        heap_keys[ _id ] = _key;
+
+        return;
+
+    }
+
+    public void Change_heap_key( int _id, Heap_key _key ){
+
+        if( System_run.max_security )
+            {
+                if( !!!( heap_keys.ContainsKey( _id ) ) )
+                    { CONTROLLER__errors.Throw( $"Tried to change a heap key in the id for the id <Color=lightBlue>{ _id }</Color> but there is no heap_key for this id" ); }
+            }
+        heap_keys[ _id ] = _key;
+
+        return;
+
+    }
+
 
 
     public void Sinalize_saved_files(){
 
         // free memory 
 
-        foreach( Data_file_link data in cached_data_files.Values )
-            { Controllers.heap.Return_key( data.heap_key ); }
+        foreach( Data_file_link data in cached_data_files.Values ){ 
 
-        foreach( Data_file_link data in deleted_files.Values )
-            { Controllers.heap.Return_key( data.heap_key ); }
+            Heap_key key = heap_keys[ data.id ];
+            Controllers.heap.Return_key( key ); 
+        }
+
+        foreach( Data_file_link data in deleted_files.Values ){ 
+            Heap_key key = heap_keys[ data.id ];
+            Controllers.heap.Return_key( key ); 
+        }
 
         cached_data_files.Clear();
         deleted_files.Clear();
@@ -116,14 +168,11 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
     public void Reset(){
 
-        foreach( Data_file_link data in current_files.Values )
-            { Controllers.heap.Return_key( data.heap_key ); }
+        foreach( Heap_key key in heap_keys.Values )
+            { Controllers.heap.Return_key( key ); }
 
-        foreach( Data_file_link data in cached_data_files.Values )
-            { Controllers.heap.Return_key( data.heap_key ); }
 
-        foreach( Data_file_link data in deleted_files.Values )
-            { Controllers.heap.Return_key( data.heap_key ); }
+        heap_keys.Clear();
 
         cached_data_files.Clear();
         deleted_files.Clear();
@@ -162,16 +211,10 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
     // --- API
 
-    public void Add_file( Data_file_link _data, string _path ){
-
-        
-        if( id_TO_path.ContainsKey( _data.id ) )
-            { 
-                // Console.Log( Is_file_already_taken );
-                CONTROLLER__errors.Throw( $"try to add the file id <Color=lightBlue>{ _data.id }</Color> but it already exists" ); 
-            }
+    public void Add_file( Data_file_link _data, Heap_key _heap_key, string _path ){
 
         Add_current( _data, _path );
+        Add_heap_key( _data.id, _heap_key );
         return;
 
     }
@@ -229,19 +272,16 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
 
 
+    //mark
+    // ** poderia mudar de nome
     public Data_file_link Lock_slot( string _path, int _size ){
 
         Heap_key heap_key = Controllers.heap.Get_unique( _size );
-
         int id = Controllers.paths_ids.Get_id_from_path( _path );
 
-        Data_file_link data = new(){
-            heap_key = heap_key,
-            size = _size,
-            id = id
-        };
+        Data_file_link data = Data_file_link.Construct( id );
 
-        Add_file( data, _path );
+        Add_file( data, heap_key, _path );
 
         
         return data;
@@ -250,35 +290,18 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
     public Data_file_link Lock_slot_delete( string _path ){
 
-        
-        Heap_key heap_key = Controllers.heap.Get_empty();
 
         int id = Controllers.paths_ids.Get_id_from_path( _path );
+
+        Heap_key heap_key = Controllers.heap.Get_empty();
+        Add_heap_key( id, heap_key );
         
-        Data_file_link data = new(){
-            heap_key = heap_key,
-            size = 0,
-            id = id
-        };
+        Data_file_link data = Data_file_link.Construct( id );
         
         return data;
 
     }
 
-
-
-    //mark
-    // ** remover
-    public Data_file_link Lock_slot_recicle( string _path, Data_file_link _cached_data ){
-
-        CONTROLLER__errors.Throw( "asd" );
-        // current_file_id += 1;
-        // _cached_data.id = current_file_id;
-        return _cached_data;
-        
-    }
-
-    
 
     public bool Is_file_already_taken( int _id ){
 
@@ -382,6 +405,12 @@ unsafe public struct MANAGER__controller_data_file_storage {
 
     private void Add_current( Data_file_link _data, string _path ){
         
+        if( System_run.max_security )
+            {
+                if( id_TO_path.ContainsKey( _data.id ) )
+                    { CONTROLLER__errors.Throw( $"try to add the file id <Color=lightBlue>{ _data.id }</Color> but it already exists" ); }
+            }
+
         deleted_files.Remove( _path );
 
         id_TO_path[ _data.id ] = _path;

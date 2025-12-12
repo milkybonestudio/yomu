@@ -29,6 +29,9 @@ unsafe public struct Packet {
 
     public Packet_key key;
     public Packets_storage storage;
+
+    // ** precisa ser o pointer?
+    // ** vai ser usado somente no momento + nao expanso
     public Packets_storage_data* packet_storage_pointer;
 
     private byte* pointer;

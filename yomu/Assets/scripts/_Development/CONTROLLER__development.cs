@@ -34,13 +34,25 @@ unsafe public class CONTROLLER__development {
 
     private void _Apply_development_modifications_start(){
 
-        if( Editor_run.delete_version_folder )
+
+        if( Editor_run.delete_persistent_folder )
             {
                 if( System.IO.Directory.Exists( Paths_system.persistent_data ) )
                     { 
                         System.IO.Directory.Delete( Paths_system.persistent_data, true ); 
                         Directory.CreateDirectory( Paths_system.persistent_data );
                     }
+
+            }
+
+        if( Editor_run.delete_version_folder )
+            {
+                if( System.IO.Directory.Exists( Paths_version.path_to_version ) )
+                    { 
+                        System.IO.Directory.Delete( Paths_version.path_to_version, true ); 
+                        Directory.CreateDirectory( Paths_version.path_to_version );
+                    }
+
                 if( Editor_run.reset_version_folder )
                     { TOOL__version_folders_constructor.Construct(); }
                 
