@@ -28,6 +28,7 @@ unsafe public struct Packet {
 
 
     public Packet_key key;
+    public Packets_storage storage;
     public Packets_storage_data* packet_storage_pointer;
 
     private byte* pointer;

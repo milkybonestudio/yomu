@@ -22,24 +22,28 @@ unsafe public struct Packets_storage {
 
 
 
-
-
     // ** WRITE/READ
-    public Packet_array<T> Get_packet_array<T>( Packet_key _key )where T:unmanaged{ return Get_pointer()->Get_packet_array<T>( _key ); }
-    public Packet Get_packet( Packet_key _key ){ return Get_pointer()->Get_packet( _key ); }
+        public Packet_array<T> Get_packet_array<T>( Packet_key _key )where T:unmanaged{ return Get_pointer()->Get_packet_array<T>( _key ); }
+        public Packet Get_packet( Packet_key _key ){ return Get_pointer()->Get_packet( _key ); }
 
 
     // ** ALOC/FREE
 
+        public Packet_key Alloc_packet( int _size ){ return Get_pointer()->Alloc_packet( _size ); }
+        public Packet_key Alloc_packet_array<T>( int _size )where T:unmanaged{ return Get_pointer()->Alloc_packet_array<T>( _size ); }
+
+        public void Dealloc_packet( Packet_key _key ){ Get_pointer()->Dealloc_packet( _key ); }
 
 
+    // ** CHANGES
 
+        public void Sinalize_partial_local_change<T>( int _point_to_change_in_file, T _value )where T: unmanaged{ Get_pointer()->Sinalize_partial_local_change<T>( _point_to_change_in_file, _value ); }
 
-    public bool Is_valid(){
+        public void Force_expand( Packet_storage_size _size ){ Get_pointer()->Force_expand( _size ); }
 
-        return data.Is_valid();
+    // ** CHECKS
 
-    }
+        public bool Is_valid(){ return data.Is_valid(); }
 
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -81,7 +85,7 @@ unsafe public struct Packets_storage_data {
     public Packet_storage_size_manager sizes;
     public int file_length;
     
-    public Packet_storage_TEST test;
+    // public Packet_storage_TEST test;
 
     
     private Packet_storage_info* infos;
@@ -125,6 +129,7 @@ unsafe public struct Packets_storage_data {
     public Packet_key Alloc_packet_int_array( int _number ){ return Alloc_packet( sizeof( int ) * _number ); }
     public Packet_key Alloc_packet_float_array( int _number ){ return Alloc_packet( sizeof( float ) * _number ); }
 
+    public Packet_key Alloc_packet_array<T>( int _number_elements ) where T : unmanaged { return Alloc_packet( sizeof( T ) * _number_elements ); }
     public Packet_key Alloc_packet( int _size_in_bytes ){
 
         Safety();
@@ -341,11 +346,11 @@ unsafe public struct Packets_storage_data {
     }
 
 
-    public int* Get_int_pointer( Packet_key _key ){ return (int*) Get_int_pointer( _key ); }
-    public byte* Get_byte_pointer( Packet_key _key ){ return (byte*) Get_int_pointer( _key ); }
+    // public int* Get_int_pointer( Packet_key _key ){ return (int*) Get_int_pointer( _key ); }
+    // public byte* Get_byte_pointer( Packet_key _key ){ return (byte*) Get_int_pointer( _key ); }
 
 
-    public void* Get_pointer( Packet_key _key ){
+    private void* Get_pointer( Packet_key _key ){
 
         Safety();
 
