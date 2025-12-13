@@ -336,11 +336,8 @@ unsafe public static class TEST__packet_storage {
                                 packet.Change( &pointer->a, ( pointer->a + 10 ) );
                                 packet.Change<int>( &pointer->b, ( pointer->b + 5 ) );
                                 packet.Change( &pointer->c, ( pointer->c + 5 ) );
-                            
-                                test_packet_simple_parcial = *pointer;
-
                                 
-                            Console.Log( test_packet_simple_parcial.a );
+                            Console.Log( packet_storage_NEW.Get_value<Test_packet>( packet_key_SIMPLE ).a );
 
                         }
 
@@ -354,11 +351,9 @@ unsafe public static class TEST__packet_storage {
                                 pointer->a += 10;
                                 pointer->b += 5;
                         
-                                test_packet_simple_complete = *pointer;
-
                             packet.Finish_use();
 
-                            Console.Log( test_packet_simple_complete.a );
+                            Console.Log( packet_storage_NEW.Get_value<Test_packet>( packet_key_SIMPLE ).a );
 
                         }
 
@@ -382,21 +377,38 @@ unsafe public static class TEST__packet_storage {
                     // ** PARTIAL
                     if( Input.GetKeyDown( KeyCode.A ) )
                         {
-                            Packet_array<int> dados =  packet_storage_NEW.Get_packet_array<int>( packet_key_ARRAY );
-                            int* pointer = dados.Get( 0 );
+
+                            Packet_array<Test_packet> dados =  packet_storage_NEW.Get_packet_array<Test_packet>( packet_key_ARRAY );
 
                             for( int index = 0 ; index < dados.length ; index++ ){
 
-                                Console.Log( (*(int*) dados.Get( index )) );
+                                Test_packet* pointer = dados.Get_element_parcial( index );
+
+                                    dados.Add( &pointer->a, index );
+                                    Console.Log( ( dados.Get_value( index ).a ) );
                                 
                             }
-
-
                             
                         }
 
                     // ** COMPLETE
+                    if( Input.GetKeyDown( KeyCode.S ) )
+                        {
 
+                            Packet_array<Test_packet> dados =  packet_storage_NEW.Get_packet_array<Test_packet>( packet_key_ARRAY );
+
+                            for( int index = 0 ; index < dados.length ; index++ ){
+
+                                Test_packet* pointer = dados.Get_element_complete( index );
+
+                                    pointer->a += 10;
+                                    Console.Log( ( dados.Get_value( index ).a ) );
+
+                                dados.Finish_use();
+                                
+                            }
+                            
+                        }
 
 
             }

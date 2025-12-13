@@ -255,7 +255,7 @@ unsafe public struct Packets_storage_data {
                 // ** não pode castar, no for(){} nao iria chamar pelo length 0
                 return Packet_array<T>.Construct(
                     _key = _key,
-                    _file_link : file_link,
+                    _storage : Packets_storage.Construct( file_link ),
                     _start_point_in_file : 0,
                     _pointer_0 : (void*) storage_pointer
                 );
@@ -265,7 +265,7 @@ unsafe public struct Packets_storage_data {
 
         return Packet_array<T>.Construct(
             _key : _key,
-            _file_link : file_link,
+            _storage : Packets_storage.Construct( file_link ),
             _start_point_in_file : Get_off_set_to_data( _key ),
             _pointer_0 : Get_pointer( _key )
         );
@@ -302,21 +302,6 @@ unsafe public struct Packets_storage_data {
 
     }
 
-    public T Get_value<T>( Packet_key _key )where T:unmanaged{ 
-
-        if( System_run.max_security )
-            {
-                if( sizeof( T ) != _key.length )
-                    { CONTROLLER__errors.Throw( $"" ); }
-
-                if( sizeof( T ) > 1_000 )
-                    { CONTROLLER__errors.Throw( $"Size of the key <Color=lightBlue>{ _key.Get_text_of_identification() }</Color> is <Color=lightBlue>{ sizeof( T ) }</Color> bytes" ); }
-
-            }
-
-        return *(T*)Get_pointer( _key );
-
-    }
 
     public void Overwrite_packet_array<T>( Packet_key _key, int _element, T _value )where T:unmanaged{
 
@@ -332,6 +317,21 @@ unsafe public struct Packets_storage_data {
 
     }
 
+    public T Get_value<T>( Packet_key _key )where T:unmanaged{ 
+
+        if( System_run.max_security )
+            {
+                if( sizeof( T ) != _key.length )
+                    { CONTROLLER__errors.Throw( $"" ); }
+
+                if( sizeof( T ) > 1_000 )
+                    { CONTROLLER__errors.Throw( $"Size of the key <Color=lightBlue>{ _key.Get_text_of_identification() }</Color> is <Color=lightBlue>{ sizeof( T ) }</Color> bytes" ); }
+
+            }
+
+        return *(T*)Get_pointer( _key );
+
+    }
     
 
     public void* Get_pointer( Packet_key _key ){
@@ -347,160 +347,6 @@ unsafe public struct Packets_storage_data {
         return infos[ (int) _key.size ].Get_pointer( storage_pointer, _key.slot );
 
     }
-
-
-
-
-
-    // ** Only activate stack
-    // ** the system would need to get a struct pointer to change/use the data 
-    // ** so the struct need to be big
-    public void Sinalize_change( Packet_key _key ){
-
-        if( System_run.max_security )
-            {
-                if( !!!( _key.Have_data() ) )
-                    { CONTROLLER__errors.Throw( $"Tried to change the data to a key, but the key is not valid. { _key.Get_text_of_situation() }" ); }
-            }
-
-        if( System_run.packet_storage_show_messages )
-            { Console.Log( $"---will sinalize the value change of the key { _key.Get_text_of_identification() }---" ); }
-
-
-        Controllers.stack.files.Save_data_change_data_in_file(
-            _file_id              : file_link.id,
-            _file_point_to_change : Get_off_set_to_data( _key ),
-            _data_pointer         : Get_pointer( _key ),
-            _length               : _key.length
-        );
-
-
-        if( System_run.packet_storage_show_messages )
-            { 
-                Console.Log( "----pass change to stack----" ); 
-                Console.Log( "----FINISHED----" ); 
-            }
-
-    }
-
-
-
-    // --- LOCAL CHANGES
-    // ** most in data/flags
-
-    // public void Sinalize_partial_local_change<T>( int _off_set_in_file, T _value ) where T : unmanaged {
-
-    //     Controllers.stack.files.Save_data_change_data_in_file<T>(
-    //         _file_id              : file_link.id,
-    //         _file_point_to_change : _off_set_in_file,
-    //         _data                 : _value
-    //     );
-
-    // }
-
-    // public void Sinalize_partial_local_change( int _off_set_in_file, void* _pointer_to_data, int _length ){
-
-    //     Controllers.stack.files.Save_data_change_data_in_file(
-    //         _file_id              : file_link.id,
-    //         _file_point_to_change : _off_set_in_file,
-    //         _data_pointer         : _pointer_to_data,
-    //         _length               : _length
-    //     );
-
-    // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // ** Change_data
-    // ** the struct would be copy to the function scope and then saved when is not more necessary
-    public void Change_value_packet( Packet_key _key, void* _pointer_new_data, int _length ){
-
-
-        if( _key.size == Packet_storage_size._0_bytes )
-            {
-                if( System_run.packet_storage_show_messages )
-                    { Console.Log( $"Tried to change value packet a key a size <Color=lightBlue>0 BYTES</Color>. will skip" ); }
-                
-                return;
-            }
-
-        if( System_run.max_security )
-            {
-
-                if( _pointer_new_data == null )
-                    { CONTROLLER__errors.Throw( $"Tried to change value of the size { _key.size } in slot { _key.slot } but the pointer to the data is NULL" ); }
-
-                if( _length <= 0 )
-                    { CONTROLLER__errors.Throw( $"Tried to change value of the size { _key.size } in slot { _key.slot } but the length for the new data is <Color=lightBlue>{ _length }</Color>" ); }
-
-
-                if( !!!( _key.Have_data() ) )
-                    { CONTROLLER__errors.Throw( $"Tried to change the data to a key, but the key is not valid. { _key.Get_text_of_situation() }" ); }
-
-                if( _length != _key.length )
-                    { CONTROLLER__errors.Throw( $"Tried to change value of the size { _key.size } in slot { _key.slot } but the length of the new data is <Color=lightBlue>{ _length }</Color> and in the key is <Color=lightBlue>{ _key.length }</Color>" ); }
-
-            }
-
-        if( System_run.packet_storage_show_messages )
-            {
-                Console.Log( $"---will change the value of the key { _key.Get_text_of_identification() }---" );
-
-                if( _length < 10 )
-                    { for( int index = 0 ; index < _length ; index++ ){ Console.Log( $"Index { index } value: " + (((byte*)_pointer_new_data)[index]) ); } }
-                    else
-                    { Console.Log( $"Size have <Color=lightBlue>{ _length }</Color>, is too long to print the bytes" ); }
-            }
-
-
-        void* key_data_pointer = Get_pointer( _key );
-
-        VOID.Transfer_data( _pointer_data: _pointer_new_data, _pointer_to_transfer: key_data_pointer, _length  );
-
-
-        if( System_run.packet_storage_show_messages )
-            { Console.Log( "----changed data in store----" ); }
-
-        void* pointer_to_data = Get_pointer( _key );
-        int off_set = Get_off_set_to_data( _key );
-
-        Controllers.stack.files.Save_data_change_data_in_file(
-            _file_id              : file_link.id,
-            _file_point_to_change : off_set,
-            _data_pointer         : pointer_to_data,
-            _length               : _length
-        );
-
-
-        if( System_run.packet_storage_show_messages )
-            { 
-                Console.Log( "----pass change to stack----" ); 
-                Console.Log( "----FINISHED----" ); 
-            }
-
-
-    }
-
-    public void B(){
-
-        Character_desire str = default;
-        Packet_key key = default;
-
-        Change_value_packet( key, &str, sizeof( Character_desire ) );
-
-    }
-
 
 
 

@@ -21,7 +21,7 @@ unsafe public struct Packets_storage {
     // ** ALOC/FREE
         public Packet_key Alloc_packet( int _size ){ return Get_pointer()->Alloc_packet( _size ); }
         public Packet_key Alloc_packet_array<T>( int _size )where T:unmanaged{ return Get_pointer()->Alloc_packet_array<T>( _size ); }
-
+        
         public void Dealloc_packet( Packet_key _key ){ Get_pointer()->Dealloc_packet( _key ); }
 
 
@@ -38,7 +38,6 @@ unsafe public struct Packets_storage {
 
 
     // ** CHANGES
-        public void Sinalize_change( Packet_key _key ){ Get_pointer()->Sinalize_change( _key ); }
         public void Force_expand( Packet_storage_size _size ){ Get_pointer()->Force_expand( _size ); }
 
     // ** CHECKS

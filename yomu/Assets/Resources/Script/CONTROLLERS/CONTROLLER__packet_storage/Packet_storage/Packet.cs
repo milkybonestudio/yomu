@@ -1,15 +1,6 @@
 
 
 
-public enum Packet_change_type {
-
-    not_give, 
-        partial,
-        complete,
-
-}
-
-
 // ** usada para fazer operacoes
 unsafe public struct Packet {
 
@@ -141,18 +132,20 @@ unsafe public struct Packet {
                     if( type != Packet_change_type.partial )
                         { CONTROLLER__errors.Throw( $"Tried to change a value in the key <Color=lightBlue>{ key.Get_text_of_identification() }</Color> but the type is <Color=lightBlue>{ type }</Color>" ); }
                     int size = sizeof( T );
-                    if(  (size != 1) || (size != 2) || (size != 4) || (size != 8) )
+                    if(  (size != 1) && (size != 2) && (size != 4) && (size != 8) )
                         { CONTROLLER__errors.Throw( $"Tried to Add a value in the key <Color=lightBlue>{ key.Get_text_of_identification() }</Color> but the generic <T> have a size <Color=lightBlue>{ sizeof( T ) }</Color>" ); }  
                 }
 
             T* data_pointer_file = ((T*)( pointer + _off_set ));
             T new_value = default;
 
-            switch( sizeof( T ) ){
-                case 1: new_value = *(T*)( (*(byte*)data_pointer_file) + (*(byte*)&_value_to_add) ); break;
-                case 2: new_value = *(T*)( (*(short*)data_pointer_file) + (*(short*)&_value_to_add) ); break;
-                case 4: new_value = *(T*)( (*(int*)data_pointer_file) + (*(int*)&_value_to_add) ); break;
-                case 8: new_value = *(T*)( (*(long*)data_pointer_file) + (*(long*)&_value_to_add) ); break;
+            unchecked{
+                switch( sizeof( T ) ){
+                    case 1: byte v_byte = (byte)( (*(byte*)data_pointer_file) + (*(byte*)&_value_to_add) ); new_value = *(T*)&v_byte; break;
+                    case 2: short v_short = (short)( (*(short*)data_pointer_file) + (*(short*)&_value_to_add) ); new_value = *(T*)&v_short ; break;
+                    case 4: int v_int = (int)( (*(int*)data_pointer_file) + (*(int*)&_value_to_add) ); new_value = *(T*)&v_int ; break;
+                    case 8: long v_long = (long)( (*(long*)data_pointer_file) + (*(long*)&_value_to_add) ); new_value = *(T*)&v_long ; break;
+                }
             }
             
             int point_to_change_in_file = INT.Add( off_set_to_data_in_file, _off_set );
@@ -234,8 +227,14 @@ unsafe public struct Packet {
 
             }
 
-        storage.Sinalize_change( key );
-        
+        // storage.Sinalize_change( key );
+
+        Controllers.stack.files.Save_data_change_data_in_file(
+            _file_id              : storage.data.id,
+            _file_point_to_change : off_set_to_data_in_file,
+            _data_pointer         : pointer,
+            _length               : key.length
+        );
 
     }
 
