@@ -47,7 +47,10 @@ unsafe public static class TEST__packet_storage {
     public static Packet_key packet_key_SIMPLE;
     public static Packet_key packet_key_ARRAY;
 
-    public static Test_packet test_packet_simple;
+    public static Test_packet test_packet_simple_parcial;
+    public static Test_packet test_packet_simple_complete;
+    public static Test_packet test_packet_simple_overwrite;
+
     public static Test_packet test_packet_array;
 
     public static int file_length = 1_000_000;
@@ -55,6 +58,7 @@ unsafe public static class TEST__packet_storage {
 
     unsafe public struct Test_packet {
 
+        
         public int a;
         public int b;
 
@@ -118,11 +122,9 @@ unsafe public static class TEST__packet_storage {
                             { Console.Log( "Arquivo já existe" ); return; }
 
                         packet_storage_NEW = Controllers.packets.operations.Create_new_storage( path_to_packet_storage, Controllers.packets.defaults.Get_default_args() );
-                        packet_storage_NEW.Get_pointer()->Print_data( Packet_storage_size._10_bytes );
-                
+                        
                         Console.Log( "Created packet store" );
-                        Console.Log( path_to_packet_storage );
-
+                        
                     }
 
                 // ** salvar
@@ -329,13 +331,16 @@ unsafe public static class TEST__packet_storage {
                         {
 
                             Packet packet = packet_storage_NEW.Get_packet( packet_key_SIMPLE );
-                            Test_packet* pointer = (Test_packet*)packet.Get_pointer_partial();
+                            Test_packet* pointer = packet.Get_pointer_partial<Test_packet>();
 
                                 packet.Change( &pointer->a, ( pointer->a + 10 ) );
                                 packet.Change<int>( &pointer->b, ( pointer->b + 5 ) );
                                 packet.Change( &pointer->c, ( pointer->c + 5 ) );
                             
-                                test_packet_simple = *pointer;
+                                test_packet_simple_parcial = *pointer;
+
+                                
+                            Console.Log( test_packet_simple_parcial.a );
 
                         }
 
@@ -349,9 +354,11 @@ unsafe public static class TEST__packet_storage {
                                 pointer->a += 10;
                                 pointer->b += 5;
                         
-                                test_packet_simple = *pointer;
+                                test_packet_simple_complete = *pointer;
 
                             packet.Finish_use();
+
+                            Console.Log( test_packet_simple_complete.a );
 
                         }
 
@@ -359,13 +366,17 @@ unsafe public static class TEST__packet_storage {
                     if( Input.GetKeyDown( KeyCode.E ) )
                         {
                             packet_storage_NEW.Overwrite_packet<Test_packet>( packet_key_SIMPLE, new(){
-                                a = 33,
-                                b = 45
+                                a = test_packet_simple_overwrite.a + 4,
+                                b = test_packet_simple_overwrite.b + 4,
+                                c = test_packet_simple_overwrite.c + 4
+                                
                             });
+
+                            Console.Log( packet_storage_NEW.Get_value<Test_packet>( packet_key_SIMPLE ).a );
+
                         }
 
                 // ** ARRAY
-
 
 
                     // ** PARTIAL
@@ -383,6 +394,8 @@ unsafe public static class TEST__packet_storage {
 
                             
                         }
+
+                    // ** COMPLETE
 
 
 

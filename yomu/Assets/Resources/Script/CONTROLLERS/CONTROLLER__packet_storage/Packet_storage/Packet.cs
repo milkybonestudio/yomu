@@ -13,12 +13,12 @@ public enum Packet_change_type {
 // ** usada para fazer operacoes
 unsafe public struct Packet {
 
-    public static Packet Create( Packet_key _key, Packets_storage_data* _packet_storage_pointer, void* _pointer_to_data, int _off_set_to_data_in_file ){
+    public static Packet Create( Packet_key _key, Packets_storage _packet_storage, void* _pointer_to_data, int _off_set_to_data_in_file ){
 
         Packet  ret = default;
 
             ret.key = _key;
-            ret.packet_storage_pointer = _packet_storage_pointer;
+            ret.storage = _packet_storage;
             ret.pointer = (byte*)_pointer_to_data;
             ret.off_set_to_data_in_file  = _off_set_to_data_in_file;
 
@@ -30,10 +30,8 @@ unsafe public struct Packet {
     public Packet_key key;
     public Packets_storage storage;
 
-    // ** precisa ser o pointer?
-    // ** vai ser usado somente no momento + nao expanso
-    public Packets_storage_data* packet_storage_pointer;
 
+    // ** points to start of the data
     private byte* pointer;
 
     private int off_set_to_data_in_file;
@@ -43,20 +41,22 @@ unsafe public struct Packet {
 
     // --- SMALL CHANGES
 
-
-        public void* Get_pointer_partial(){
+        public T* Get_pointer_partial<T>()where T : unmanaged{
 
             Safety();
-            if( System_run.max_security && type != Packet_change_type.not_give )
-                { CONTROLLER__errors.Throw( $"Already get the pointer to the packet <Color=lightBlue>{ key.Get_text_of_identification() }</Color>" ); }
+            if( System_run.max_security )
+                { 
+                    if( type != Packet_change_type.not_give )
+                        { CONTROLLER__errors.Throw( $"Already get the pointer to the packet <Color=lightBlue>{ key.Get_text_of_identification() }</Color>" );  }
+                    if( sizeof( T ) != key.length )
+                        { CONTROLLER__errors.Throw( $"The type { typeof(T).Name } <Color=lightBlue> have { sizeof( T ) } bytes, but the key jave { key.length } in the key { key.Get_text_of_identification() }</Color>" );  }
+                }
 
             type = Packet_change_type.partial;
 
-            return pointer;
+            return (T*)pointer;
 
         }
-
-
 
         // NORMAL TYPE 
 
@@ -69,98 +69,122 @@ unsafe public struct Packet {
             if( System_run.packet_storage_show_messages )
                 { Change_SHOW( _off_set, _value.ToString().ToUpper(), sizeof( T ) ); }
 
+            if( System_run.max_security )
+                {
+                    if( type != Packet_change_type.partial )
+                        { CONTROLLER__errors.Throw( $"Tried to change a value in the key <Color=lightBlue>{ key.Get_text_of_identification() }</Color> but the type is <Color=lightBlue>{ type }</Color>" ); }
+
+                    if( sizeof( T ) > ( 16 * 10 ) )
+                        { CONTROLLER__errors.Throw( $"Tried to change a value in the key <Color=lightBlue>{ key.Get_text_of_identification() }</Color> but the generic <T> have a size <Color=lightBlue>{ sizeof( T ) }</Color>" ); }  
+                }
+
+
+            int point_to_change_in_file = INT.Add( off_set_to_data_in_file, _off_set );            
+            Controllers.files.operations.Change_data_file<T>( storage.data, point_to_change_in_file, _value );
+
+            return;
+
+        }
+
+
+        
+        public void Change( void* _address_variable, void* _pointer_to_data, int _length ){
+
+            Safety();
+            long _off_set =( (long)_address_variable - (long)pointer );
+
+            if( System_run.packet_storage_show_messages )
+                { Change_SHOW( _off_set, "NOT FIX", _length ); }
+
 
             if( System_run.max_security )
                 {
                     if( type != Packet_change_type.partial )
                         { CONTROLLER__errors.Throw( $"Tried to change a value in the key <Color=lightBlue>{ key.Get_text_of_identification() }</Color> but the type is <Color=lightBlue>{ type }</Color>" ); }
 
-                    if( sizeof( T ) > 16 )
-                        { CONTROLLER__errors.Throw( $"Tried to change a value in the key <Color=lightBlue>{ key.Get_text_of_identification() }</Color> but the generic <T> have a size <Color=lightBlue>{ sizeof( T ) }</Color>" ); }
-                        
+                    if( _pointer_to_data == null )
+                        { CONTROLLER__errors.Throw( $"in the packet <Color=lightBlue>{ key.Get_text_of_identification() }</Color> the _pointer_to_data is <Color=lightBlue>NULL</Color>" ); }
+
+                    if( _length < 0 )
+                        { CONTROLLER__errors.Throw( $"in the packet <Color=lightBlue>{ key.Get_text_of_identification() }</Color> the _length is <Color=lightBlue>0</Color>" ); }
                 }
 
+            if( _length == 0 )
+                { if( System_run.packet_storage_show_messages ) { Console.Log( $"Came in the packet { key.Get_text_of_identification() } and the length is 0, will jump" ); } return; } // ** JUMP
 
-            ((T*)( pointer + (long)_off_set ))[ 0 ]  = _value;
-
-            unchecked{
-
-                int point_to_change_in_file = ( off_set_to_data_in_file + (int)_off_set );
-                packet_storage_pointer->Sinalize_partial_local_change<T>( point_to_change_in_file, _value );
-
-            }
-
-
-
-        }
-
-
-    
-    public void Change( void* _address_variable, void* _pointer_to_data, int _length ){
-
-        Safety();
-
-        long _off_set =( (long)_address_variable - (long)pointer );
-
-
-        if( System_run.packet_storage_show_messages )
-            { Change_SHOW( _off_set, "NOT FIX", _length ); }
-
-
-        if( System_run.max_security )
-            {
-                if( type != Packet_change_type.partial )
-                    { CONTROLLER__errors.Throw( $"Tried to change a value in the key <Color=lightBlue>{ key.Get_text_of_identification() }</Color> but the type is <Color=lightBlue>{ type }</Color>" ); }
-
-                if( _pointer_to_data == null )
-                    { CONTROLLER__errors.Throw( $"in the packet <Color=lightBlue>{ key.Get_text_of_identification() }</Color> the _pointer_to_data is <Color=lightBlue>NULL</Color>" ); }
-
-                if( _length < 0 )
-                    { CONTROLLER__errors.Throw( $"in the packet <Color=lightBlue>{ key.Get_text_of_identification() }</Color> the _length is <Color=lightBlue>0</Color>" ); }
-            }
-
-        if( _length == 0 )
-            { if( System_run.packet_storage_show_messages ) { Console.Log( $"Came in the packet { key.Get_text_of_identification() } and the length is 0, will jump" ); } return; } // ** JUMP
-
-        unchecked{
 
             if( System_run.packet_storage_show_messages )
                 { Console.Log( $"Came in the packet { key.Get_text_of_identification() } and will <Color=lightBlue>transfer the data</Color>" ); }
 
-            VOID.Transfer_data(
-                _pointer_data: _pointer_to_data,
-                _pointer_to_transfer: (void*)( pointer + (long) _off_set ),
-                _length: _length
-            );
+            int point_to_change_in_file = INT.Add( off_set_to_data_in_file, _off_set );
+
+            Controllers.files.operations.Change_data_file( storage.data, point_to_change_in_file, _pointer_to_data, _length );
+
+            if( System_run.packet_storage_show_messages )
+                { Console.Log( $"---finish---" ); }
+
+            return;
+            
+        }
+
+        public void Add<T>( void* _address_variable, T _value_to_add ) where T : unmanaged {
+
+            Safety();
+            long _off_set =( (long)_address_variable - (long) pointer );
+            Check_off_set( _off_set );
+
+            if( System_run.packet_storage_show_messages )
+                { Change_SHOW( _off_set, _value_to_add.ToString().ToUpper(), sizeof( T ) ); }
+
+            if( System_run.max_security )
+                {
+                    if( type != Packet_change_type.partial )
+                        { CONTROLLER__errors.Throw( $"Tried to change a value in the key <Color=lightBlue>{ key.Get_text_of_identification() }</Color> but the type is <Color=lightBlue>{ type }</Color>" ); }
+                    int size = sizeof( T );
+                    if(  (size != 1) || (size != 2) || (size != 4) || (size != 8) )
+                        { CONTROLLER__errors.Throw( $"Tried to Add a value in the key <Color=lightBlue>{ key.Get_text_of_identification() }</Color> but the generic <T> have a size <Color=lightBlue>{ sizeof( T ) }</Color>" ); }  
+                }
+
+            T* data_pointer_file = ((T*)( pointer + _off_set ));
+            T new_value = default;
+
+            switch( sizeof( T ) ){
+                case 1: new_value = *(T*)( (*(byte*)data_pointer_file) + (*(byte*)&_value_to_add) ); break;
+                case 2: new_value = *(T*)( (*(short*)data_pointer_file) + (*(short*)&_value_to_add) ); break;
+                case 4: new_value = *(T*)( (*(int*)data_pointer_file) + (*(int*)&_value_to_add) ); break;
+                case 8: new_value = *(T*)( (*(long*)data_pointer_file) + (*(long*)&_value_to_add) ); break;
+            }
+            
+            int point_to_change_in_file = INT.Add( off_set_to_data_in_file, _off_set );
+            Controllers.files.operations.Change_data_file<T>( storage.data, point_to_change_in_file, new_value );
+            
+            return; 
 
         }
 
-        if( System_run.packet_storage_show_messages )
-            { Console.Log( $"---finish---" ); }
-
-        return;
-        
-    }
 
 
-    private void Check_off_set( long _off_set ){
 
-        if( System_run.max_security )
-            {
-                if( _off_set < 0 || _off_set > key.length )
-                    { CONTROLLER__errors.Throw( $"in the packet <Color=lightBlue>{ key.Get_text_of_identification() }</Color> can not hndle off set <Color=lightBlue>{ _off_set }</Color>" ); }
-            }
 
-    }
 
-    private void Change_SHOW( long _off_set, string _type_name, int _type_size ){
+        private void Check_off_set( long _off_set ){
 
-        Console.Log( $"---Came in CHANGE in a packet with type <Color=lightBlue>{ _type_name }</Color>---" );
-        Console.Log( $"---key: { key.Get_text_of_identification() }---" );
-        Console.Log( $"-----off_set: { (long)_off_set }---" );
-        Console.Log( $"-----length: { _type_size }---" );
+            if( System_run.max_security )
+                {
+                    if( _off_set < 0 || _off_set > key.length )
+                        { CONTROLLER__errors.Throw( $"in the packet <Color=lightBlue>{ key.Get_text_of_identification() }</Color> can not hndle off set <Color=lightBlue>{ _off_set }</Color>" ); }
+                }
 
-    }
+        }
+
+        private void Change_SHOW( long _off_set, string _type_name, int _type_size ){
+
+            Console.Log( $"---Came in CHANGE in a packet with type <Color=lightBlue>{ _type_name }</Color>---" );
+            Console.Log( $"---key: { key.Get_text_of_identification() }---" );
+            Console.Log( $"-----off_set: { (long)_off_set }---" );
+            Console.Log( $"-----length: { _type_size }---" );
+
+        }
 
 
 
@@ -210,9 +234,40 @@ unsafe public struct Packet {
 
             }
 
-        packet_storage_pointer->Sinalize_change( key );
+        storage.Sinalize_change( key );
+        
 
     }
+
+
+    // ** OVERWRITE
+
+        public void Overwrite<T>( T _value ) where T : unmanaged {
+
+            Safety();
+
+            if( System_run.packet_storage_show_messages )
+                { Change_SHOW( 0, _value.ToString().ToUpper(), sizeof( T ) ); }
+
+            if( System_run.max_security )
+                {
+                    if( type != Packet_change_type.not_give )
+                        { CONTROLLER__errors.Throw( $"Tried to overwrite with a value in the key <Color=lightBlue>{ key.Get_text_of_identification() }</Color> but the type is <Color=lightBlue>{ type }</Color>" ); }
+
+                    if( sizeof( T ) > ( 16 * 10 ) )
+                        { CONTROLLER__errors.Throw( $"Tried to overwrite with a value in the key <Color=lightBlue>{ key.Get_text_of_identification() }</Color> but the generic <T> have a size <Color=lightBlue>{ sizeof( T ) }</Color>" ); }  
+
+                    if( sizeof( T ) != key.length )
+                        { CONTROLLER__errors.Throw( $"Tried to overwrite with a value in the key <Color=lightBlue>{ key.Get_text_of_identification() }</Color> but the generic <T> have a size <Color=lightBlue>{ sizeof( T ) }</Color>" ); }  
+
+                }
+
+
+            Controllers.files.operations.Change_data_file<T>( storage.data, off_set_to_data_in_file, _value );
+
+            return;
+
+        }    
 
 
 
@@ -222,17 +277,17 @@ unsafe public struct Packet {
 
         if( System_run.max_security )
             {
-
                 if( !!!( key.Have_data() ) )
                     { CONTROLLER__errors.Throw( "Packet_key have <Color=lightBlue>NO DATA</Color>" ); }
 
-                if( packet_storage_pointer == null )
+                if( !!!( storage.Is_valid() ) )
                     { CONTROLLER__errors.Throw( "storage pointer is <Color=lightBlue>NULL</Color>" ); }
 
                 if( pointer == null  )
                     { CONTROLLER__errors.Throw( "pointer to data is <Color=lightBlue>NULL</Color>" ); }
-
             }
+
+        return;
 
     }
 

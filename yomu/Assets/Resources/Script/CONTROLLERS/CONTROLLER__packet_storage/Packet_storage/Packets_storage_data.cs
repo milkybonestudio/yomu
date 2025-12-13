@@ -226,8 +226,11 @@ unsafe public struct Packets_storage_data {
         if( System_run.packet_storage_show_messages )
             { Console.Log( $" Will get the Packet for the key { _key.Get_text_of_identification() }" ); }
 
+        
+
         return Packet.Create(
-            _packet_storage_pointer: storage_pointer,
+
+            _packet_storage: Packets_storage.Construct( file_link ),
             _key: _key,
             _pointer_to_data: Get_pointer( _key ),
             _off_set_to_data_in_file: Get_off_set_to_data( _key )
@@ -286,12 +289,32 @@ unsafe public struct Packets_storage_data {
 
     public void Overwrite_packet<T>( Packet_key _key, T _value )where T:unmanaged{
 
-        if( sizes.Get_size_in_bytes( _key.size ) != _key.length )
-            { CONTROLLER__errors.Throw( "" ); }
+        if( sizeof( T ) != _key.length )
+            { 
+                Console.Log( "sizes.Get_size_in_bytes( _key.size ): " + sizes.Get_size_in_bytes( _key.size ) );
+                Console.Log( "_key.length: " + _key.length );
+                CONTROLLER__errors.Throw( $"" ); 
+            }
 
         *(T*)Get_pointer( _key ) = _value;
 
         return;
+
+    }
+
+    public T Get_value<T>( Packet_key _key )where T:unmanaged{ 
+
+        if( System_run.max_security )
+            {
+                if( sizeof( T ) != _key.length )
+                    { CONTROLLER__errors.Throw( $"" ); }
+
+                if( sizeof( T ) > 1_000 )
+                    { CONTROLLER__errors.Throw( $"Size of the key <Color=lightBlue>{ _key.Get_text_of_identification() }</Color> is <Color=lightBlue>{ sizeof( T ) }</Color> bytes" ); }
+
+            }
+
+        return *(T*)Get_pointer( _key );
 
     }
 
@@ -365,26 +388,26 @@ unsafe public struct Packets_storage_data {
     // --- LOCAL CHANGES
     // ** most in data/flags
 
-    public void Sinalize_partial_local_change<T>( int _off_set_in_file, T _value ) where T : unmanaged {
+    // public void Sinalize_partial_local_change<T>( int _off_set_in_file, T _value ) where T : unmanaged {
 
-        Controllers.stack.files.Save_data_change_data_in_file<T>(
-            _file_id              : file_link.id,
-            _file_point_to_change : _off_set_in_file,
-            _data                 : _value
-        );
+    //     Controllers.stack.files.Save_data_change_data_in_file<T>(
+    //         _file_id              : file_link.id,
+    //         _file_point_to_change : _off_set_in_file,
+    //         _data                 : _value
+    //     );
 
-    }
+    // }
 
-    public void Sinalize_partial_local_change( int _off_set_in_file, void* _pointer_to_data, int _length ){
+    // public void Sinalize_partial_local_change( int _off_set_in_file, void* _pointer_to_data, int _length ){
 
-        Controllers.stack.files.Save_data_change_data_in_file(
-            _file_id              : file_link.id,
-            _file_point_to_change : _off_set_in_file,
-            _data_pointer         : _pointer_to_data,
-            _length               : _length
-        );
+    //     Controllers.stack.files.Save_data_change_data_in_file(
+    //         _file_id              : file_link.id,
+    //         _file_point_to_change : _off_set_in_file,
+    //         _data_pointer         : _pointer_to_data,
+    //         _length               : _length
+    //     );
 
-    }
+    // }
 
 
 

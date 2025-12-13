@@ -32,11 +32,13 @@ unsafe public struct Packets_storage {
 
     // ** WRITE/READ
         public void Overwrite_packet<T>( Packet_key _key, T _value )where T:unmanaged{ Get_pointer()->Overwrite_packet<T>( _key, _value ); }
+        public T Get_value<T>( Packet_key _key )where T:unmanaged{ return Get_pointer()->Get_value<T>( _key ); }
+
         public void Overwrite_packet_array<T>( Packet_key _key, int _index, T _value )where T:unmanaged{ Get_pointer()->Overwrite_packet_array<T>( _key, _index, _value ); }
 
 
     // ** CHANGES
-        public void Sinalize_partial_local_change<T>( int _point_to_change_in_file, T _value )where T: unmanaged{ Get_pointer()->Sinalize_partial_local_change<T>( _point_to_change_in_file, _value ); }
+        public void Sinalize_change( Packet_key _key ){ Get_pointer()->Sinalize_change( _key ); }
         public void Force_expand( Packet_storage_size _size ){ Get_pointer()->Force_expand( _size ); }
 
     // ** CHECKS

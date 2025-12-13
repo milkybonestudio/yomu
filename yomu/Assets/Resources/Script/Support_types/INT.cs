@@ -6,6 +6,20 @@ unsafe public static class INT {
 
     public static int[] array_0 = new int[ 0 ];
 
+    public static int Add( long _value_1, long _value_2 ){
+
+        unchecked{ return (int)(_value_1 + _value_2); }
+    }
+
+    public static int Add( int _value_1, long _value_2 ){
+
+        unchecked{ return (_value_1 + (int) _value_2); }
+    }
+
+    public static int Add( long _value_1, int _value_2 ){
+
+        unchecked{ return ((int)_value_1 + _value_2); }
+    }
 
     public static void Transfer_int_to_byte_arr( byte[] _array, int _off_set, int _value ){
 

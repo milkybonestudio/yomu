@@ -65,7 +65,7 @@ public static class System_run {
 
         // --- PACKET STORE
 
-        public const bool packet_storage_show_messages = true && NOT_IN_BUILD;
+        public const bool packet_storage_show_messages = false && NOT_IN_BUILD;
             public const bool packet_show_messages = true && NOT_IN_BUILD;
             public const bool packet_show_messages_full_detail = false && packet_show_messages && NOT_IN_BUILD;
 
