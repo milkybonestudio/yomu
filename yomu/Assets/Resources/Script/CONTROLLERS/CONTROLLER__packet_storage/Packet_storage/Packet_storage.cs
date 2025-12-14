@@ -10,6 +10,12 @@ using Unity.Burst;
 unsafe public struct Packets_storage {
 
     public static Packets_storage Construct( Data_file_link _data ){
+        if( System_run.max_security )
+            {
+                if( !!!( Controllers.packets.storage.Is_storage_already_taken( _data ) ) && false)
+                    { CONTROLLER__errors.Throw( $"Tried to get create a Packet_storage with the id { _data.id } but the storage_data is not taken" ); }
+            }
+
         return new(){
             data = _data
         };
@@ -35,6 +41,8 @@ unsafe public struct Packets_storage {
         public T Get_value<T>( Packet_key _key )where T:unmanaged{ return Get_pointer()->Get_value<T>( _key ); }
 
         public void Overwrite_packet_array<T>( Packet_key _key, int _index, T _value )where T:unmanaged{ Get_pointer()->Overwrite_packet_array<T>( _key, _index, _value ); }
+        public T Get_value_array<T>( Packet_key _key, int _index )where T:unmanaged{ return Get_pointer()->Get_value_array<T>( _key, _index ); }
+        
 
 
     // ** CHANGES

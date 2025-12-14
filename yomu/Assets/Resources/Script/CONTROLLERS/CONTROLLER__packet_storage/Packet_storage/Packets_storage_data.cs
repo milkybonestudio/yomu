@@ -15,8 +15,6 @@ unsafe public struct Packets_storage_data {
     // ** called in the controller
     public void Set_from_disk(){
 
-        Console.Log( "called Set_from_disk()" );
-
         if( !!!( file_link.Is_valid() ) )
             { CONTROLLER__errors.Throw( "Tried to Set_from_disk() but dont give a valid data_key" ); }
 
@@ -78,6 +76,7 @@ unsafe public struct Packets_storage_data {
                     { Console.Log( "Alloced a 0 byte size" ); }
 
                 return Packet_key.Construct(
+                    _storage_data_file: file_link,
                     _slot : 0,
                     _size : Packet_storage_size._0_bytes,
                     _length : _size_in_bytes
@@ -103,6 +102,7 @@ unsafe public struct Packets_storage_data {
         
 
         return Packet_key.Construct(
+            _storage_data_file: file_link,
             _slot : slot,
             _size : size,
             _length : _size_in_bytes
@@ -114,7 +114,7 @@ unsafe public struct Packets_storage_data {
 
         Safety();
 
-        if( !!!( _key.is_valid ) )
+        if( !!!( _key.Is_valid() ) )
             { CONTROLLER__errors.Throw( "tried to deallocate a invalid <Color=lightBlue>Packet_key</Color>" ); }
 
         if( _key.size == Packet_storage_size._0_bytes )
@@ -245,7 +245,7 @@ unsafe public struct Packets_storage_data {
 
         int _type_size = sizeof( T );
 
-        if( !!!(_key.is_valid ) )
+        if( !!!(_key.Is_valid() ) )
             { CONTROLLER__errors.Throw( "tried to <Color=lightBlue>get teh pointer</Color> but have a invalid <Color=lightBlue>Packet_key</Color>" ); }
 
         if( _key.size == Packet_storage_size._0_bytes )
@@ -289,14 +289,8 @@ unsafe public struct Packets_storage_data {
 
     public void Overwrite_packet<T>( Packet_key _key, T _value )where T:unmanaged{
 
-        if( sizeof( T ) != _key.length )
-            { 
-                Console.Log( "sizes.Get_size_in_bytes( _key.size ): " + sizes.Get_size_in_bytes( _key.size ) );
-                Console.Log( "_key.length: " + _key.length );
-                CONTROLLER__errors.Throw( $"" ); 
-            }
-
-        *(T*)Get_pointer( _key ) = _value;
+        Safety();
+        Get_packet( _key ).Overwrite<T>( _value );
 
         return;
 
@@ -305,24 +299,22 @@ unsafe public struct Packets_storage_data {
 
     public void Overwrite_packet_array<T>( Packet_key _key, int _element, T _value )where T:unmanaged{
 
-        throw new System.Exception();
-        // ** ver depois
-
-        if( sizes.Get_size_in_bytes( _key.size ) != _key.length )
-            { CONTROLLER__errors.Throw( "" ); }
-
-        *(T*)Get_pointer( _key ) = _value;
-
+        Safety();
+        Get_packet_array<T>( _key ).Overwrite( _element, _value );
         return;
 
     }
+
+    // ** talvez usar span<type>?
+
+
 
     public T Get_value<T>( Packet_key _key )where T:unmanaged{ 
 
         if( System_run.max_security )
             {
                 if( sizeof( T ) != _key.length )
-                    { CONTROLLER__errors.Throw( $"" ); }
+                    { CONTROLLER__errors.Throw( $"Tried to get the value of the key { _key.Get_text_of_identification() } but the type size is <Color=lightBlue>{ sizeof( T ) }</Color> and the key have <Color=lightBlue>{ _key.length }</Color>" ); }
 
                 if( sizeof( T ) > 1_000 )
                     { CONTROLLER__errors.Throw( $"Size of the key <Color=lightBlue>{ _key.Get_text_of_identification() }</Color> is <Color=lightBlue>{ sizeof( T ) }</Color> bytes" ); }
@@ -332,13 +324,32 @@ unsafe public struct Packets_storage_data {
         return *(T*)Get_pointer( _key );
 
     }
+
+    public T Get_value_array<T>( Packet_key _key, int _index )where T:unmanaged{
+
+            if( System_run.max_security )
+                {
+                    if(  (_key.length % sizeof( T )) != 0 )
+                        { CONTROLLER__errors.Throw( $"Tried to get the value of the key { _key.Get_text_of_identification() } but the type size is <Color=lightBlue>{ sizeof( T ) }</Color> and the key have <Color=lightBlue>{ _key.length }</Color>" ); }
+
+                    if( sizeof( T ) > 1_000 )
+                        { CONTROLLER__errors.Throw( $"Size of the key <Color=lightBlue>{ _key.Get_text_of_identification() }</Color> is <Color=lightBlue>{ sizeof( T ) }</Color> bytes" ); }
+
+                }
+
+            return *(T*)( (byte*)Get_pointer( _key ) + ( sizeof( T ) * _index) );
+
+        }
+
+
+    
     
 
     public void* Get_pointer( Packet_key _key ){
 
         Safety();
 
-        if( System_run.max_security && !!!( _key.is_valid ) )
+        if( System_run.max_security && !!!( _key.Is_valid() ) )
             { CONTROLLER__errors.Throw( "tried to <Color=lightBlue>get teh pointer</Color> but have a invalid <Color=lightBlue>Packet_key</Color>" ); }
 
         if( _key.size == Packet_storage_size._0_bytes )

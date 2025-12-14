@@ -192,13 +192,13 @@ unsafe public struct MANAGER__safety_stack_packet_storage {
             { return Stack_reconstruction_result_message.Construct( $"the message  <Color=lightBlue>STACK_MESSAGE__packet_storage_dealloc </Color> dont have file for id <Color=lightBlue>{ file_id }</Color>", Stack_reconstruction_result.fail ); }
     
 
-
-        Packets_storage_data* storage = (Packets_storage_data*) Controllers.files.operations.Get_file( file_id ).Get_pointer();
+        Data_file_link data = Controllers.files.operations.Get_file( file_id );
+        Packets_storage_data* storage = (Packets_storage_data*) data.Get_pointer();
 
         if( storage->Is_slot_used( size, slot ) )
             { CONTROLLER__errors.Throw( $"tried to alloc a slot and size that wa already allocated. slot: <Color=lightBlue>{ slot }</Color> size: <Color=lightBlue>{ size }</Color>" ); }
 
-        Packet_key key = Packet_key.Construct( size, slot, Controllers.packets.sizes.Get_size_in_bytes( size ) );
+        Packet_key key = Packet_key.Construct( data, size, slot, Controllers.packets.sizes.Get_size_in_bytes( size ) );
         
         storage->Dealloc_packet( key );
 

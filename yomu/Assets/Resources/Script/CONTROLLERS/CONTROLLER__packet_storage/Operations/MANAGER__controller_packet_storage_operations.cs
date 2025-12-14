@@ -60,6 +60,8 @@ unsafe public struct MANAGER__controller_packet_storage_operations {
             Data_file_link data_link = Controllers.files.operations.Create_new_file_EMPTY( _path, _start_data.Get_file_length() );
 
             Controllers.packets.creation.Apply_create_data( data_link, _start_data );    
+            Controllers.packets.storage.Add_storage( data_link );
+
             Controllers.stack.packet_storage.Save_data_create_storage( data_link.id, _start_data );
 
             return Packets_storage.Construct( data_link );

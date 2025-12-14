@@ -30,6 +30,8 @@ unsafe public struct Packet_array<T> where T: unmanaged {
 
     }
 
+
+
     public Packet_key key;
     // public Data_file_link file_link;
     public int start_point_in_file;
@@ -205,39 +207,22 @@ unsafe public struct Packet_array<T> where T: unmanaged {
     // ** OVERWRITE
 
         // ** element
-            public void Overwrite<T>( T _value, int _element ) where T : unmanaged {
+            public void Overwrite( int _element, T _value ){
 
-                
-                // if( System_run.packet_storage_show_messages )
-                //     { Change_SHOW( 0, _value.ToString().ToUpper(), sizeof( T ) ); }
+                Check_data_to_get_pointer( _element );
+                if( System_run.max_security )
+                    {
+                        if( sizeof( T ) > ( 1_000 ) )
+                            { CONTROLLER__errors.Throw( $"Tried to overwrite with a value in the key <Color=lightBlue>{ key.Get_text_of_identification() }</Color> but the generic <T> have a size <Color=lightBlue>{ sizeof( T ) }</Color>" ); }  
+                    }
 
-                // if( System_run.max_security )
-                //     {
-                //         if( type != Packet_change_type.not_give )
-                //             { CONTROLLER__errors.Throw( $"Tried to overwrite with a value in the key <Color=lightBlue>{ key.Get_text_of_identification() }</Color> but the type is <Color=lightBlue>{ type }</Color>" ); }
-
-                //         if( sizeof( T ) > ( 16 * 10 ) )
-                //             { CONTROLLER__errors.Throw( $"Tried to overwrite with a value in the key <Color=lightBlue>{ key.Get_text_of_identification() }</Color> but the generic <T> have a size <Color=lightBlue>{ sizeof( T ) }</Color>" ); }  
-
-                //         if( sizeof( T ) != key.length )
-                //             { CONTROLLER__errors.Throw( $"Tried to overwrite with a value in the key <Color=lightBlue>{ key.Get_text_of_identification() }</Color> but the generic <T> have a size <Color=lightBlue>{ sizeof( T ) }</Color>" ); }  
-
-                //     }
-
-
-                // Controllers.files.operations.Change_data_file<T>( storage.data, off_set_to_data_in_file, _value );
+                T* pointer = (T*) Get_pointer( _element );
+                *pointer = _value;
+                Controllers.files.operations.Change_data_file<T>( storage.data, ( start_point_in_file + Get_off_set_index( _element ) ), pointer );
 
                 return;
 
-            }    
-
-
-        // ** all
-
-        // ??
-
-
-
+            }
 
 
 

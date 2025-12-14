@@ -185,7 +185,7 @@ unsafe public struct Packet {
     // --- BIG CHANGES
 
 
-    public void* Get_pointer_complete(){
+    public T* Get_pointer_complete<T>() where T:unmanaged{
 
         Safety();
         if( System_run.max_security && type != Packet_change_type.not_give )
@@ -193,7 +193,8 @@ unsafe public struct Packet {
 
         type = Packet_change_type.complete;
 
-        return pointer;
+        return ((T*) pointer);
+
 
     }
 

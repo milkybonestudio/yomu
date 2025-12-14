@@ -66,7 +66,10 @@ unsafe public struct CONTROLLER__packets_storage {
 
         foreach( int id in packets_storages_ids ){
 
-            Data_file_link data = Controllers.files.operations.Get_file( id );;
+            if( storage.Is_storage_already_taken( new Data_file_link(){ id = id } ) )
+                { continue; }
+
+            Data_file_link data = Controllers.files.operations.Get_file( id );
             storage.Add_storage( data );
         }
 
