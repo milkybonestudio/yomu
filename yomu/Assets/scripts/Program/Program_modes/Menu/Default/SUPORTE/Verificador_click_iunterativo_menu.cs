@@ -4,8 +4,8 @@ public static class Verificador_click_interativo_menu {
 
     public static int Verificar( Interativo_menu[] _arr ){
      
-            float mouse_x = CONTROLLER__data.Pegar_instancia().posicao_mouse[0] - 960f;
-            float mouse_y = CONTROLLER__data.Pegar_instancia().posicao_mouse[1] - 540f;
+            float mouse_x = CONTROLLER__UI.Pegar_instancia().posicao_mouse[0] - 960f;
+            float mouse_y = CONTROLLER__UI.Pegar_instancia().posicao_mouse[1] - 540f;
 
             Color cor = Cores.Pegar_cor( Nome_cor.dark_2 );
 

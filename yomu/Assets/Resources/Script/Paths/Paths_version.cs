@@ -90,16 +90,6 @@ public static class Paths_version {
         public static string Get_program( string _path_to_version ){ return Combine( _path_to_version, program_name ); }
 
 
-    // ** CURRENT FILES
-
-        // public const string data_link_current_files_NAME = "data_link_current_files.txt";
-        // public static string data_link_current_files;
-        // public static string Get_data_link_current_files( string _path_to_version ){ return Combine( _path_to_version, data_link_current_files_NAME ); }
-
-
-    //mark
-    // ** MUDAR PARA PATHS IDS
-    // ** ID TO PATH 
         public const string paths_ids_NAME = "paths_ids.txt";
         public static string paths_ids;
         public static string Get_paths_ids( string _path_to_version ){ return Combine( _path_to_version, paths_ids_NAME ); }

@@ -162,7 +162,7 @@ public class Controlador_tela_story {
                 // pergaminho = new Pergaminho_modelo_1( canvas_visual_novel.transform );
 
 
-                posicao_mouse = CONTROLLER__data.Pegar_instancia().posicao_mouse;
+                posicao_mouse = CONTROLLER__UI.Pegar_instancia().posicao_mouse;
 
 
 

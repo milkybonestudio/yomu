@@ -39,25 +39,26 @@ using System.Collections.Generic;
 public class CONTROLLER__resources {
 
 
-        // --- IMAGES
-        public MANAGER__resources_images images;
-        public MANAGER__resources_images_sequences resources_images_sequences;
-
-
-        public MANAGER__resources_combined_images resources_combined_images;
-
-        // --- AUDIOS
-        public MANAGER__resources_audios resources_audios;
-
-        // --- STRUCTURES
-        public MANAGER__resources_structures structures;
-        public MANAGER__resources_complex_structures resources_complex_structures;
-
-        // --- LOGICS
-        public MANAGER__resources_logics resources_logics;
-
-
         public Circular_list<MANAGER__RESOURCES> managers;
+
+            // --- IMAGES
+            public MANAGER__resources_images images;
+            public MANAGER__resources_images_sequences resources_images_sequences;
+
+
+            public MANAGER__resources_combined_images resources_combined_images;
+
+            // --- AUDIOS
+            public MANAGER__resources_audios resources_audios;
+
+            // --- STRUCTURES
+            public MANAGER__resources_structures structures;
+            public MANAGER__resources_complex_structures resources_complex_structures;
+
+            // --- LOGICS
+            public MANAGER__resources_logics resources_logics;
+
+
 
         public void Update( Control_flow _control_flow ){
 

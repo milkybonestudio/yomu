@@ -9,7 +9,6 @@ public static class Controllers {
         public static CONTROLLER__packets_storage packets;
         public static CONTROLLER__context context;
 
-        public static CONTROLLER__data data;
         public static CONTROLLER__tasks tasks;
         public static CONTROLLER__audio audio;
         public static CONTROLLER__input input;

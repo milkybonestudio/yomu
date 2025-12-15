@@ -19,8 +19,6 @@ public static class Paths_run_time {
                     // NEED:
                     safety_stack_file = Get_safety_stack_file(); 
 
-                    //mark
-                    // ** mudar para current_context_path
                     path_to_file_with_context_path = Get_path_to_file_with_context_path();
 
 
@@ -32,7 +30,6 @@ public static class Paths_run_time {
                     logic_data_saved = Get_logic_data_saved();
                     data_files_saved_in_folder = Get_data_files_saved_in_folder();
                     data_files_actions_applied = Get_data_files_actions_applied();
-                    // logic_files_moved = Get_logic_files_moved();
                     saving_finished = Get_saving_finished();
                     
 
@@ -111,10 +108,6 @@ public static class Paths_run_time {
                 public static string Get_data_files_actions_applied(){ return Combine( safety_stack_folder, data_files_actions_applied_NAME ); }
                 public static string Get_data_files_actions_applied( string _path ){ return Combine( _path, data_files_actions_applied_NAME ); }
 
-                // public const string logic_files_moved_NAME = "logic_files_moved.dat";
-                // public static string logic_files_moved;
-                // public static string Get_logic_files_moved(){ return Combine( safety_stack_folder, logic_files_moved_NAME ); }
-                // public static string Get_logic_files_moved( string _path ){ return Combine( _path, logic_files_moved_NAME ); }
 
                 public const string saving_finished_NAME = "saving_finished.dat";
                 public static string saving_finished;

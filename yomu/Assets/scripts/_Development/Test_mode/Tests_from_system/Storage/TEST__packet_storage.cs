@@ -345,7 +345,6 @@ unsafe public static class TEST__packet_storage {
                                 
                             Console.Log( packet_storage.Get_value<Test_packet>( packet_key_SIMPLE ).a );
 
-                            
                         }
 
                     // ** COMPLETE
@@ -367,6 +366,7 @@ unsafe public static class TEST__packet_storage {
                     // ** OVERWRITE
                     if( Input.GetKeyDown( KeyCode.E ) )
                         {
+
                             packet_storage.Overwrite_packet<Test_packet>( packet_key_SIMPLE, new(){
                                 a = test_packet_simple_overwrite.a + 4,
                                 b = test_packet_simple_overwrite.b + 4,
@@ -416,7 +416,7 @@ unsafe public static class TEST__packet_storage {
                                     pointer->a += 10;
                                     Console.Log( ( dados.Get_value( index ).a ) );
 
-                                dados.Finish_use();
+                                dados.Finish_use_element();
                                 
                             }
 
@@ -473,30 +473,5 @@ unsafe public static class TEST__packet_storage {
 
 
     }
-
-
-    public Test_packet[] arr;
-    public void Fn(){
-
-        // ** ALLOC
-        arr = new Test_packet[ 10 ];
-        
-        for( int i = 0 ; i < arr.Length ; i++ ){
-
-            // ** change value
-            arr[ i ].a = 10;
-
-            // ** get value
-            Console.Log( arr[ i ].b );
-
-        }
-
-        // ** GC will clean
-        arr = null;
-
-    }
-
-
-
 
 }

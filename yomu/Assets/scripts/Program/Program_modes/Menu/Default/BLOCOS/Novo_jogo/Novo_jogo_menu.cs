@@ -27,8 +27,8 @@ public class Novo_jogo_menu {
         public void Update(){
 
 
-            float mouse_x = ( CONTROLLER__data.Pegar_instancia().posicao_mouse[ 0 ] - 960f );
-            float mouse_y = ( CONTROLLER__data.Pegar_instancia().posicao_mouse[ 1 ] - 540f );
+            float mouse_x = ( CONTROLLER__UI.Pegar_instancia().posicao_mouse[ 0 ] - 960f );
+            float mouse_y = ( CONTROLLER__UI.Pegar_instancia().posicao_mouse[ 1 ] - 540f );
 
 
             novo_jogo.image.color = Cores.Pegar_cor( Nome_cor.dark_2 );

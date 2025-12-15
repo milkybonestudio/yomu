@@ -214,13 +214,13 @@ public class MODULO__multithread {
                             continue;
                         }
 
-                    if( !!! ( Dados_fundamentais_sistema.jogo_ativo ) || force_stop == 1 )
+                    if( !!! ( System_run.game_on ) || force_stop == 1 )
                         {
                             if( System_run.tasks_show_messages )
                                 {
                                     Console.Log( $"<Color=lightBlue>VAI MATAR A THERAD</Color>>" );
                                     Console.Log( $"force_stop: " + force_stop );
-                                    Console.Log( $"Dados_fundamentais_sistema.jogo_ativo: " + Dados_fundamentais_sistema.jogo_ativo );
+                                    Console.Log( $"System_run.game_on: " + System_run.game_on );
 
                                 }
                             Kill_thread_safe();

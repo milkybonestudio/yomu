@@ -69,18 +69,7 @@ unsafe public class Game__STANDART : PROGRAM_MODE__INTERFACE {
         }
 
 
-        public static void Zerar_dados(){
-
-
-                //mark
-                // ** ativar depois
-                // // --- ZERAR BLOCOS
-                // foreach( INTERFACE__bloco bloco_interface in Jogo.Pegar_instancia().interfaces_blocos )
-                //     { bloco_interface.Destruir(); }
-
-                Controllers.data.Destroy_data();
-
- 
+        public static void Zerar_dados(){ 
 
                 Finalizador_UI.Finalizar();
 

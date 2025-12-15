@@ -20,6 +20,32 @@ public class CONTROLLER__UI {
         }
 
 
+        
+
+        // testei e a velocidade para struc é basicamente a mesma. 
+        public float[] posicao_mouse = new float[ 2 ];
+        public float  screen_h = 0f;
+        public float  screen_w = 0f;
+        public float  alpha = 0f;
+
+        public float  dif = 0f;
+
+
+
+        public Vector2 Ajustar_posicao_vec2( Vector2 _vec ){ return _vec * (1080f / Screen.height); }
+
+
+        public void Mudar_scale( Vector2 _vec ){ _vec *= 1080f / Screen.height; }
+
+
+
+        public void Atualizar_mouse_atual( Control_flow _control_flow ){
+
+
+                posicao_mouse[ 0 ] =   Input.mousePosition.x  * (  1920f / Screen.width ) ;
+                posicao_mouse[ 1 ] =   Input.mousePosition.y  * (  1920f / Screen.width )  ;
+
+        }
 
 
 

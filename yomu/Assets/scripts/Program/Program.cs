@@ -90,11 +90,17 @@ unsafe public class Program : MonoBehaviour {
     }
 
 
+
     public void OnApplicationQuit(){ OnApplicationPause( true ); }
+
+
 
     public void OnApplicationPause( bool _pause ){
 
         // ** para mobile, nunca pausa no pc
+        // -> onApplicationQuit nunca é chamado, tem que ser feito em onApplicationPause
+        // -> onApplicationPause é chamado quando a thread demora muito tempo para executar
+
         #if UNITY_EDITOR
 
         #endif
@@ -108,7 +114,7 @@ unsafe public class Program : MonoBehaviour {
 
 
         System_run.force_stop = false;
-        Dados_fundamentais_sistema.jogo_ativo = false;
+        System_run.game_on = false;
         
         
         Program_modes.game?.Destroy();

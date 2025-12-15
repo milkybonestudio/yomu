@@ -117,50 +117,49 @@ unsafe public static class TOOL__reconstruct_from_stack{
     }
 
 
-    private static void Save_files_in_saving_files_folder( Crash_handle_ephemeral_files _files_OS, Crash_cached_files _files ){
+    // private static void ___________Save_files_in_saving_files_folder( Crash_handle_ephemeral_files _files_OS, Crash_cached_files _files ){
 
-        if( System_run.show_program_messages )
-            { Console.Log( "Will save the files in the folder saving_files_run_time in the slot.dat format. if the system crashes when recosntruct the stack it can start over again" ); }
+    //     if( System_run.show_program_messages )
+    //         { Console.Log( "Will save the files in the folder saving_files_run_time in the slot.dat format. if the system crashes when recosntruct the stack it can start over again" ); }
 
-        // ** pass data for cached_files -> file_OS
+    //     // ** pass data for cached_files -> file_OS
 
-        string[] active_paths = _files_OS.Get_active_paths();
+    //     string[] active_paths = _files_OS.Get_active_paths();
 
-        Files.Save_critical_file( Paths_run_time.new_paths_ids, active_paths );
+    //     Files.Save_critical_file( Paths_run_time.new_paths_ids, active_paths );
 
-            for( int path_index = 0  ; path_index < active_paths.Length ; path_index++ ){
+    //         for( int path_index = 0  ; path_index < active_paths.Length ; path_index++ ){
 
-                /*jump 0*/
-                if( path_index == 0 )
-                    { continue; }
+    //             /*jump 0*/
+    //             if( path_index == 0 )
+    //                 { continue; }
 
-                string path = active_paths[ path_index ];
+    //             string path = active_paths[ path_index ];
 
-                // ** path -> arquivo mudou
-                File_IO_operation operation = default;
-                byte[] data = _files_OS.Get_file( path );
+    //             // ** path -> arquivo mudou
+    //             File_IO_operation operation = default;
+    //             byte[] data = _files_OS.Get_file( path );
 
-                bool have_data_in_cache = ( data != null );
-                // bool file_exist_in_real_disk = System.IO.File.Exists( path );
+    //             bool have_data_in_cache = ( data != null );
+                
+    //             if( have_data_in_cache )
+    //                 { operation = File_IO_operation._add; }
+    //                 else
+    //                 { operation = File_IO_operation._delete; }
 
-                if( have_data_in_cache )
-                    { operation = File_IO_operation._add; }
-                    else
-                    { operation = File_IO_operation._delete; }
+    //             string path_in_saving_files = File_run_time_saving_operations.Get_run_time_path( path_index, operation );
+    //             data ??= new byte[ 100 ];
 
-                string path_in_saving_files = File_run_time_saving_operations.Get_run_time_path( path_index, operation );
-                data ??= new byte[ 100 ];
+    //             Files.Save_critical_file( path_in_saving_files, data );
 
-                Files.Save_critical_file( path_in_saving_files, data );
-
-            }
-
-
-        if( System_run.show_program_construction_messages )
-            { Console.Log( "Will create the safety_file" ); }
+    //         }
 
 
-    }
+    //     if( System_run.show_program_construction_messages )
+    //         { Console.Log( "Will create the safety_file" ); }
+
+
+    // }
 
 
 

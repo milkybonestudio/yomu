@@ -52,8 +52,7 @@ unsafe public class Menu__STANDART : PROGRAM_MODE__INTERFACE {
 
 
         public Menu_bloco estado_atual = Menu_bloco.novo_jogo;        
-        public CONTROLLER__data controlador_dados;
-
+        
 
     public override void Clean_resources(){ throw new NotImplementedException(); }
 

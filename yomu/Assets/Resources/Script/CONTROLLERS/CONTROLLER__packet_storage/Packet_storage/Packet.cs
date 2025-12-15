@@ -185,6 +185,7 @@ unsafe public struct Packet {
     // --- BIG CHANGES
 
 
+
     public T* Get_pointer_complete<T>() where T:unmanaged{
 
         Safety();

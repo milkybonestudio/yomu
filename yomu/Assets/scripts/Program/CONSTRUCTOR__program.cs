@@ -28,7 +28,7 @@ public static class CONSTRUCTOR__program {
             { Thread.CurrentThread.Name = "Main"; }
 
 
-        Dados_fundamentais_sistema.jogo_ativo = true;
+        System_run.game_on = true;
 
         // return;
 
@@ -131,8 +131,6 @@ public static class CONSTRUCTOR__program {
             Controllers.configurations = CONSTRUCTOR__controller_configurations.Construct();
 
             // ** can not be here
-            // ???
-            Controllers.data = CONSTRUCTOR__controller_data.Construct();
             Controllers.items = CONSTRUCTOR__controller_items.Construct();
 
         // --- PROGRAM

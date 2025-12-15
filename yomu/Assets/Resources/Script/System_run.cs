@@ -4,6 +4,16 @@ public static class System_run {
 
 
 
+    // ** LOGIC
+
+
+    public static bool game_on;
+    public static bool acesso_internet;
+
+
+
+    // ** FLAGS 
+
     #if UNITY_EDITOR
 
         public const bool WORK_IN_BUILD = false;

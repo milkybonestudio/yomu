@@ -182,7 +182,7 @@ unsafe public struct Packet_array<T> where T: unmanaged {
             
         }
 
-        public void Finish_use(){
+        public void Finish_use_element(){
 
             if( System_run.max_security )
                 {

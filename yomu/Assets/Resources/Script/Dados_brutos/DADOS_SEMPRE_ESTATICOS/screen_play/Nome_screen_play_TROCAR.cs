@@ -24,11 +24,3 @@ public enum Nome_screen_play {
 
 
 }
-
-
-
-
-
-
-
-

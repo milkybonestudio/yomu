@@ -15,8 +15,6 @@
 
     // ** principais diferenças: 
 
-        -> onApplicationQuit nunca é chamado, tem que ser feito em onApplicationPause
-        -> onApplicationPause é chamado quando a thread demora muito tempo para executar
 
 
     // ** build com algumas imagens e poucos scripts?
