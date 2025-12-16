@@ -19,7 +19,7 @@ unsafe public class Game__STANDART : PROGRAM_MODE__INTERFACE {
         
         public override void Construct(){
 
-            PROGRAM_DATA__game* data = &( Controllers_program.data.modes.program_data->game );
+            PROGRAM_DATA__game* data = &( Data.program.Get_pointer<Program_data>()->program_modes.game );
 
                 controlador_sistema = CONSTRUCTOR__controller_system.Construct__STANDART();
             

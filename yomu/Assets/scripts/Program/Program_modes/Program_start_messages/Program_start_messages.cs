@@ -9,7 +9,7 @@ unsafe public class Program_start_messages : PROGRAM_MODE {
         public override void Construct(){
 
 
-                PROGRAM_DATA__program_start_messages* data = Controllers_program.data.modes.Lock_data__PROGRAM_START_MESSAGES();
+                PROGRAM_DATA__program_start_messages* data = default; // Controllers_program.data.modes.Lock_data__PROGRAM_START_MESSAGES();
                 Program_start_messages_type type = data->global.persistent.type;
 
                 switch( type ){

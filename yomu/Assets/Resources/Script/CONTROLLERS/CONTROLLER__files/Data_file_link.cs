@@ -4,15 +4,10 @@
 using System;
 
 
-// unsafe struct Data_file_link {
-
-//     void* pointer;
-//     int length;
-
-// }
 
 
 unsafe public struct Data_file_link : IEquatable<Data_file_link> {
+
 
     public static Data_file_link Construct( int _id ){ return new Data_file_link(){ id = _id };  }
     
@@ -22,6 +17,12 @@ unsafe public struct Data_file_link : IEquatable<Data_file_link> {
     public void* Get_pointer(){
 
         return Get_heap_key().Get_pointer();
+    }
+
+    
+    public T* Get_pointer<T>()where T: unmanaged{
+
+        return (T*)(Get_heap_key().Get_pointer());
     }
 
     public int Get_length(){
@@ -39,6 +40,23 @@ unsafe public struct Data_file_link : IEquatable<Data_file_link> {
 
         return Controllers.files.operations.Get_heap_key( id );
     }
+
+
+
+
+    public void Change_data<K>( void* _pointer_in_file, K* _pointer )where K : unmanaged{
+
+        Controllers.files.operations.Change_data_file<K>( this,_pointer_in_file, _pointer );
+
+    }
+
+    public void Change_data<K>( void* _pointer_in_file, K _value )where K : unmanaged{
+
+        Controllers.files.operations.Change_data_file<K>( this, _pointer_in_file, &_value );
+
+    }
+
+
 
 
 

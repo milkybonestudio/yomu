@@ -18,7 +18,7 @@ unsafe public class Program_start_messages__standart : PROGRAM_MODE__INTERFACE {
 
         public override void Construct(){
 
-            PROGRAM_DATA__program_start_messages* data = Controllers_program.data.modes.Get_data__PROGRAM_START_MESSAGES();
+            PROGRAM_DATA__program_start_messages* data = default;
             
                 global = &( data->global );
                 standart = &( data->standart );

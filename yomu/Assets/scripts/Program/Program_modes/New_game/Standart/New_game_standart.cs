@@ -8,7 +8,7 @@ unsafe public class New_game_standart : PROGRAM_MODE__INTERFACE {
 
         public override void Construct(){
 
-            PROGRAM_DATA__new_game* data = Controllers_program.data.modes.Get_data__NEW_GAME();
+            PROGRAM_DATA__new_game* data = default;
             
                 global = &( data->global );
                 standart = &( data->standart );

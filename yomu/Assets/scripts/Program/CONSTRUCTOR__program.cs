@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 
 
-public static class CONSTRUCTOR__program {
+unsafe public static class CONSTRUCTOR__program {
 
     public static void Construir( Program _program ){
 
@@ -116,8 +117,12 @@ public static class CONSTRUCTOR__program {
             Controllers.context.Force_change_context( Paths_program.program_context );
 
 
-        // // --- START 
-        //     Controllers.stack.Start_saver();
+            // ** defaults 
+            Data.program = Controllers.files.operations.Get_file( Paths_program.program_data );
+
+                Data.menu = &(Data.program.Get_pointer<Program_data>()->program_modes.menu);
+
+
     
         // --- CONTAINERS
 
@@ -136,7 +141,6 @@ public static class CONSTRUCTOR__program {
         // --- PROGRAM
 
             Controllers_program.program = _program;
-            Controllers_program.data = CONSTRUCTOR__controller_program_data.Construct();
             Controllers_program.program_transition = CONSTRUCTOR__controller_program_transition.Construct();
             Controllers_program.canvas_spaces = CONSTRUCTOR__controller_canvas_spaces.Construct();
                 
@@ -145,22 +149,19 @@ public static class CONSTRUCTOR__program {
 
         // --- CREATE MODES
 
-        _program.modes = new PROGRAM_MODE[ ( int ) Program_mode.END ];
+        
+        _program.modes = new Dictionary<Program_mode,PROGRAM_MODE>();
 
-        Program_modes.login = new Login();
         Program_modes.menu = new Menu();
         Program_modes.game = new Game();
 
-
-        _program.modes[ ( int ) Program_mode.login ] = Program_modes.login;
-        _program.modes[ ( int ) Program_mode.menu ] = Program_modes.menu;
-        _program.modes[ ( int ) Program_mode.game ] = Program_modes.game;
+        _program.modes[ Program_mode.menu ] = Program_modes.menu;
+        _program.modes[ Program_mode.game ] = Program_modes.game;
                         
 
-        _program.modes[ ( int ) Program_mode.rebuild_save ] = new Rebuild_save();
-        _program.modes[ ( int ) Program_mode.nothing ] = new Nothing();
-        _program.modes[ ( int ) Program_mode.new_game ] = new New_game();
-        _program.modes[ ( int ) Program_mode.program_start_messages ] = new Program_start_messages();
+        _program.modes[ Program_mode.nothing ] = new Nothing();
+        _program.modes[ Program_mode.new_game ] = new New_game();
+        _program.modes[ Program_mode.program_start_messages ] = new Program_start_messages();
 
 
         // ** FORCE NOTHING STAGE 

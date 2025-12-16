@@ -8,7 +8,7 @@ unsafe public class New_game : PROGRAM_MODE {
         public override void Construct(){
 
 
-                PROGRAM_DATA__new_game* data = Controllers_program.data.modes.Lock_data__NEW_GAME();
+                PROGRAM_DATA__new_game* data = default;
                                 
                 switch( data->type ){
 

@@ -1,5 +1,5 @@
 
 
 
-unsafe public struct LOGIN_DATA__standart {}
+// unsafe public struct LOGIN_DATA__standart {}
 

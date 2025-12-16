@@ -2,10 +2,10 @@
 
 
 
-public enum Login_type {
+// public enum Login_type {
 
-    not_give,
+//     not_give,
         
-        standart,
+//         standart,
 
-}
+// }

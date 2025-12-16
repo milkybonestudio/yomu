@@ -8,15 +8,14 @@ public enum Program_mode {
 
         not_give = 0b__0000_0000__0000_0000__0000_0000__0000_0000,
 
-            nothing ,
-            rebuild_save ,
-            login ,
-            menu ,
-            game ,
-            new_game ,
-            program_start_messages ,
+            nothing = 0b__0000_0000__0000_0000__0000_0000__0000_0001,
+            program_start_messages = 0b__0000_0000__0000_0000__0000_0000__0000_0010,
 
-        END,
+            menu = 0b__0000_0000__0000_0000__0000_0000__0000_0100,
+            game = 0b__0000_0000__0000_0000__0000_0000__0000_1000,
+            new_game = 0b__0000_0000__0000_0000__0000_0000__0001_0000,
+
+        END = 6,
 
 
         //transicao,

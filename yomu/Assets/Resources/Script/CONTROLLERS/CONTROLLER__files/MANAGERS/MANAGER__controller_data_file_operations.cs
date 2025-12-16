@@ -53,6 +53,22 @@ unsafe public struct MANAGER__controller_data_file_operations {
     }
 
 
+
+    #if !UNITY_EDITOR
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    #endif
+    public void Change_data_file<T>( Data_file_link _data, void* _pointer_in_file, T* _data_pointer ) where T: unmanaged{
+
+        int _off_set = INT.Sub( (long)_pointer_in_file, (long)_data.Get_pointer() );
+
+        if( _off_set < 0  )
+            { CONTROLLER__errors.Throw( "_off_set: " + _off_set ); }
+
+        Change_data_file( _data, _off_set, _data_pointer, sizeof( T ) );
+
+    }
+
+
     #if !UNITY_EDITOR
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
     #endif

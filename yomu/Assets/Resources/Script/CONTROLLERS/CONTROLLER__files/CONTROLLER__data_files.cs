@@ -12,14 +12,10 @@ using System.Threading;
 
 */
 
-
 unsafe public struct CONTROLLER__data_files {
 
     public Controller_data_files_state state;
     
-
-    public CONTROLLER__data_file_TESTING test;
-
     public MANAGER__controller_data_file_operations operations;
     public MANAGER__controller_data_file_storage storage; // ** have the real files
 
@@ -37,8 +33,6 @@ unsafe public struct CONTROLLER__data_files {
 
     }
 
-
-
     public void Give_context( Program_context _context ){
 
         operations.Set_context( _context );
@@ -46,9 +40,4 @@ unsafe public struct CONTROLLER__data_files {
     }
 
 
-
-
 }
-
-
-

@@ -19,7 +19,6 @@ public class Development__PROGRAM_MODE : Development_mode {
                         switch( Editor_run.program_mode ){
                             
                             case Program_mode.game: _controller.current_test = Tests_development__GAME.Get_test( Editor_run.block_type, Editor_run.game_test_key ); break;
-                            case Program_mode.login: _controller.current_test = Tests_development__LOGIN.Get_test( Editor_run.login_test_key ); break;
                             case Program_mode.menu: _controller.current_test = Tests_development__MENU.Get_test( Editor_run.login_test_key ); break;
                             default: CONTROLLER__errors.Throw( $"Can not handle Program_mode: <Color=lightBlue>{ Editor_run.program_mode }</Color>" ); break;
                             

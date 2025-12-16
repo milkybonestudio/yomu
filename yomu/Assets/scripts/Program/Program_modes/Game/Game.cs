@@ -13,7 +13,7 @@ unsafe public class Game : PROGRAM_MODE {
 
         public override void Construct(){
 
-                PROGRAM_DATA__game* data = Controllers_program.data.modes.Lock_data__GAME();
+                PROGRAM_DATA__game* data = &(Data.program.Get_pointer<Program_data>()->program_modes.game);
                 Game_type type = data->type;
 
                     switch( type ){

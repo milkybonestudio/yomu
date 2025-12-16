@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Numerics;
 using System.Reflection;
 using System.Threading;
+using System.Collections.Generic;
 
 
 unsafe public class Program : MonoBehaviour {
@@ -13,7 +14,7 @@ unsafe public class Program : MonoBehaviour {
 
     public Program_mode current_mode;
 
-    public PROGRAM_MODE[] modes;
+    public Dictionary<Program_mode,PROGRAM_MODE> modes;
     public Control_flow control_flow;
 
     public Action<Control_flow> Update_development;
@@ -79,11 +80,11 @@ unsafe public class Program : MonoBehaviour {
                 if( current_mode >= Program_mode.END )
                     { CONTROLLER__errors.Throw( "tried to get the program mode: " + current_mode ); }
 
-                if( modes[ ( int ) current_mode ] == null )
+                if( !!!( modes.ContainsKey( current_mode ) ) )
                     { CONTROLLER__errors.Throw( $"tried to get the program mode <Color=lightBlue>{ current_mode }</Color> but the mode is null" ); }
             }
 
-        modes[ ( int ) current_mode ].Update( _control_flow );
+        modes[ current_mode ].Update( _control_flow );
 
         return;
 
@@ -118,7 +119,6 @@ unsafe public class Program : MonoBehaviour {
         
         
         Program_modes.game?.Destroy();
-        Program_modes.login?.Destroy();
         Program_modes.menu?.Destroy();
     
         // ** NAO FAZ SENTIDO
@@ -131,7 +131,6 @@ unsafe public class Program : MonoBehaviour {
         Controllers.context.Destroy();
         Controllers.paths_ids.Destroy();
 
-        Controllers_program.data?.Destroy();
         Controllers.tasks?.Destroy();
         Controllers.heap?.Destroy();
 

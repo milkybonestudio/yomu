@@ -24,7 +24,7 @@ public static class Editor_run {
 
 
         // ** nao troca direto, tem que trocar no Set_program_environment();
-        public static Program_mode program_mode = Program_mode.login;
+        public static Program_mode program_mode = Program_mode.menu;
         public static bool use_generic = true;
 
             // --- TEST

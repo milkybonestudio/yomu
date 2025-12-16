@@ -10,22 +10,9 @@ unsafe public abstract class In_game_test {
         Console.Log( "----Set_program_environment is set as the <Color=lightBlue>default</Color>" );
 
 
-              if( Editor_run.program_mode == Program_mode.login )
+             if(  Editor_run.program_mode == Program_mode.menu )
                 {
-                    PROGRAM_DATA__login* data = Controllers_program.data.modes.Get_data__LOGIN();
-
-                        LOGIN_DATA__global* global = &( data->global );
-                
-                        STRING.Transfer_string_to_char_pointer( global->image_path, LOGIN_DATA__global.image_path_limit, "image_login_1" );
-                        
-                    Controllers_program.program_transition.Switch_program_mode( Program_mode.login, new Transition_program_data() ); 
-
-                }
-        else if(  Editor_run.program_mode == Program_mode.menu )
-                {
-
-                    PROGRAM_DATA__menu* menu_data = Controllers_program.data.modes.Get_data__MENU();
-                    
+                    PROGRAM_DATA__menu* menu_data = (PROGRAM_DATA__menu*) Data.menu; 
                     Controllers_program.program_transition.Switch_program_mode( Program_mode.menu, new Transition_program_data() ); 
 
                 }
@@ -33,7 +20,7 @@ unsafe public abstract class In_game_test {
                 {
 
                     // ** VAI PARA O MINIMO QUE O GAME PRECISA
-                    PROGRAM_DATA__game* game_data = Controllers_program.data.modes.Get_data__GAME();
+                    PROGRAM_DATA__game* game_data = default; // Controllers_program.data.modes.Get_data__GAME();
 
                         game_data->global.save = 0;
 

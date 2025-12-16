@@ -10,7 +10,7 @@ unsafe public class Menu : PROGRAM_MODE {
         public override void Construct(){
 
 
-                PROGRAM_DATA__menu* data = Controllers_program.data.modes.Lock_data__MENU();
+                PROGRAM_DATA__menu* data = (PROGRAM_DATA__menu*) Data.menu;
                                 
                 switch( data->type ){
 
