@@ -124,7 +124,7 @@ unsafe public struct MANAGER__packet_storage_sizes {
 
     }
 
-    [BurstCompile]
+    
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private int Ceiling( int* _data, int _length, int _value ){
 

@@ -1,0 +1,25 @@
+
+<>
+file : THIS_FILE
+<>
+
+
+
+
+
+NARA_ROOM_up_buraco {
+
+    area :
+
+    540, 542
+
+    
+
+
+
+    
+
+
+
+
+}

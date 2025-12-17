@@ -1,0 +1,37 @@
+
+flow:
+
+    --> normal / salvando stack
+    --> stack full 
+    --> vai salvar os arquivos no disco
+
+    order de salvar:
+
+        --> salva stack em disco e assume que essa é a stack final
+        --> atualizar arquivo especial saving_link_file_to_path
+        --> cria saving_files_folder
+        --> salva todos os arquivos como "slot_number.dat"
+            // ** tem que pegar novamente da stack ↑
+        --> salva saving_files_security_file ( assume que todos os arquivos estao no foler )
+            // ** garante que tem todos ↓
+        --> move todo os arquivos como .temp
+        --> faz o switch dos arquivos
+        --> reseta stack( se estiver resetada os dados em disco estão corretos )
+            // ** irrerevante ↓
+        --> deleta saving_files_security_file
+        --> deleta o folder saving_files_folder
+
+    salvando arquivos:
+
+    --> salvar arquivo com a lista dos arquivos por id que salvou
+            "1,2,3,7,21" -> 
+
+
+scenariou: 
+    --> crashed whem the game was being created/finished
+    ->
+
+order to delete normal: 
+
+    --> delete file 
+    --> delete folder "saving_files_folder"

@@ -92,22 +92,20 @@ public class MODULE__context_audios {
         }
 
 
-
-
         private RESOURCE__audio_ref Create_audio_ref( RESOURCE__audio _image, Resource_audio_content _level_pre_allocation ){
 
+            RESOURCE__audio_ref image_ref = manager.container_audio_refs.Get_resource_audio_ref( _image, _level_pre_allocation );
 
-                RESOURCE__audio_ref image_ref = manager.container_audio_refs.Get_resource_audio_ref( _image, _level_pre_allocation );
+            ARRAY.Guaranty_size( ref _image.refs, _image.refs_pointer, 1, 20 );
 
-                ARRAY.Guaranty_size( ref _image.refs, _image.refs_pointer, 1, 20 );
 
-                // --- GURADA REF
-                image_ref.audio_slot_index = _image.refs_pointer;
-                _image.refs[ _image.refs_pointer++ ] = image_ref;
-                
-                TOOL__resource_audio.Increase_count( _image, Resource_audio_content.nothing );
+            // --- GURADA REF
+            image_ref.audio_slot_index = _image.refs_pointer;
+            _image.refs[ _image.refs_pointer++ ] = image_ref;
+            
+            TOOL__resource_audio.Increase_count( _image, Resource_audio_content.nothing );
 
-                return image_ref;
+            return image_ref;
 
         }
 
