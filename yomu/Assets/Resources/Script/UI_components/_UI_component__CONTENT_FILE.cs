@@ -45,11 +45,11 @@ unsafe public abstract partial class UI_component{
         private const int WEIGHT_PREPARE_BODY = 150;
         
     
-        private int Update_content( Control_flow _flow ){
+        private int Update_content(){
 
                 int weight = 0;
                 
-                if( _flow.weight_frame_available <= 0 )
+                if( Control_flow.weight_frame_available <= 0 )
                     { return weight; }
 
                 // Console.Log( $"UI {name } esta com o current { current_content } and is going to { content_going_to }" );

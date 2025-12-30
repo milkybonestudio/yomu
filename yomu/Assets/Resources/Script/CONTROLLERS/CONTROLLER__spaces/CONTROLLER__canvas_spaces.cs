@@ -49,7 +49,7 @@ public class CONTROLLER__canvas_spaces {
             public string current_camera_name =  "__not_give__";
             
             
-            public void Update( Control_flow _control_flow ){
+            public void Update(){
 
 
                     if( stage == Stage_spaces.switching && current_switcher == null )

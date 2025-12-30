@@ -36,9 +36,9 @@ public class Golden_text_display_DOWN : Story_text_display {
 
 
 
-    protected override void Update_phase(Control_flow _control_flow){
+    protected override void Update_phase(){
 
-        base.Update_phase( _control_flow );
+        base.Update_phase();
 
     }
 

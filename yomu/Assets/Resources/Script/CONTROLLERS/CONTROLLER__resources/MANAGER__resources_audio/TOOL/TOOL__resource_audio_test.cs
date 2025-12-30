@@ -5,12 +5,12 @@ using UnityEngine;
 public static class TOOL__resource_audio_testing {
 
 
-        public static void Test( ref RESOURCE__audio_ref _audio_ref, AudioSource _audio_source, Control_flow _control_flow  ){
+        public static void Test( ref RESOURCE__audio_ref _audio_ref, AudioSource _audio_source  ){
 
                 
-                Controllers.resources.Update( _control_flow );
+                Controllers.resources.Update();
             
-                CONTROLLER__tasks.Pegar_instancia().Update( _control_flow );
+                CONTROLLER__tasks.Pegar_instancia().Update();
 
                 int i = 0;
 

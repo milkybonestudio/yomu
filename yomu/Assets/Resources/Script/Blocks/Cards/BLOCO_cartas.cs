@@ -53,7 +53,7 @@ public class BLOCO_cartas : BLOCK {
 
         }
 
-        public override void Update( Control_flow _control_flow ){}
+        public override void Update(){}
 
         public Action Lidar_saida;
 

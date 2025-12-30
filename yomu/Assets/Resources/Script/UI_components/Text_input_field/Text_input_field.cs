@@ -11,7 +11,7 @@ public class Text_input_field : UI_component {
     public override void Force_inactive(){ Console.Log( "tem que fazer" ); }
     public override void Force_nothing(){ Console.Log( "tem que fazer" ); }
 
-        protected override void Update_phase( Control_flow _control_flow ){}
+        protected override void Update_phase(){}
         protected override void Create_data_FROM_creation_data(){ throw new System.NotImplementedException(); }
         protected override void Link_to_UI_game_object_in_structure( GameObject _UI_game_object ){ throw new System.NotImplementedException(); }
     

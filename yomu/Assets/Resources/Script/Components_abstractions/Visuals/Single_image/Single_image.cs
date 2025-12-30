@@ -26,7 +26,7 @@ public class Single_image{
 
         private Resource_image_content original_minimum;
 
-        public void Update( Control_flow _flow ){
+        public void Update(){
 
             if( deleted )
                 { CONTROLLER__errors.Throw( $"Tried to update the single image <Color=lightBlue>{ name }</Color> but it was deletad" ); }
@@ -36,7 +36,7 @@ public class Single_image{
             if( !!!( activate ) )
                 { return; }
 
-            _flow.weight_frame_available -= body.Update();
+            Control_flow.weight_frame_available -= body.Update();
             
         }
 

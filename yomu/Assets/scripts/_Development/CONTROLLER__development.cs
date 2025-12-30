@@ -28,8 +28,8 @@ unsafe public class CONTROLLER__development {
 
     public static void Apply_development_modifications_end(){ instancia._Apply_development_modifications_end(); }
     public static void Apply_development_modifications_start(){ instancia._Apply_development_modifications_start(); }
-    public static Action<Control_flow> Get_update(){ return Update; }
-    public static void Update( Control_flow _flow ){ instancia._Update( _flow ); }
+    public static Action Get_update(){ return Update; }
+    public static void Update(){ instancia._Update(); }
 
 
     private void _Apply_development_modifications_start(){
@@ -71,10 +71,10 @@ unsafe public class CONTROLLER__development {
     }
 
         
-    public void _Update( Control_flow _flow ){
+    public void _Update(){
 
         Simulate_others_pcs();
-        development_modes[ ( int ) Editor_run.type_testing ].Update( program.control_flow, this );
+        development_modes[ ( int ) Editor_run.type_testing ].Update( this );
 
         return;
         

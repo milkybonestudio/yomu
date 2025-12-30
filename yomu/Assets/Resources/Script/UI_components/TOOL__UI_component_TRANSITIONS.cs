@@ -4,7 +4,7 @@ using System;
 unsafe public static class TOOL__UI_component_TRANSITIONS  {
 
 
-    public static void Update_nothing( Control_flow _flow, UI_component _UI, Action _force_nothing ){
+    public static void Update_nothing( UI_component _UI, Action _force_nothing ){
 
         if( ( _UI.final_state == UI_component_state.active ) || ( _UI.final_state == UI_component_state.inactive ) )
             {
@@ -16,9 +16,9 @@ unsafe public static class TOOL__UI_component_TRANSITIONS  {
 
 
     }
-    public static bool Update_transition_nothing_TO_inactive( Control_flow _flow, UI_component _UI ){
+    public static bool Update_transition_nothing_TO_inactive( UI_component _UI ){
 
-        bool finished_transition = _UI.transitions.nothing__TO__inactive.Update( _flow );
+        bool finished_transition = _UI.transitions.nothing__TO__inactive.Update();
 
         if( finished_transition )
             {
@@ -49,9 +49,9 @@ unsafe public static class TOOL__UI_component_TRANSITIONS  {
     }
 
 
-    public static bool Update_transition_inactive_TO_active( Control_flow _flow, UI_component _UI ){
+    public static bool Update_transition_inactive_TO_active( UI_component _UI ){
 
-        bool finished_transition = _UI.transitions.inactive__TO__active.Update( _flow );
+        bool finished_transition = _UI.transitions.inactive__TO__active.Update();
 
         if( finished_transition )
             {
@@ -76,9 +76,9 @@ unsafe public static class TOOL__UI_component_TRANSITIONS  {
     }
 
 
-    public static bool Update_transition_active_TO_inactive( Control_flow _flow, UI_component _UI ){
+    public static bool Update_transition_active_TO_inactive( UI_component _UI ){
 
-        bool finished_transition = _UI.transitions.active__TO__inactive.Update( _flow );
+        bool finished_transition = _UI.transitions.active__TO__inactive.Update();
 
         if( finished_transition )
             {
@@ -104,9 +104,9 @@ unsafe public static class TOOL__UI_component_TRANSITIONS  {
 
 
 
-    public static bool Update_transition_inactive_TO_nothing( Control_flow _flow, UI_component _UI ){
+    public static bool Update_transition_inactive_TO_nothing( UI_component _UI ){
 
-        bool finished_transition = _UI.transitions.inactive__TO__nothing.Update( _flow );
+        bool finished_transition = _UI.transitions.inactive__TO__nothing.Update();
 
         if( finished_transition )
             {

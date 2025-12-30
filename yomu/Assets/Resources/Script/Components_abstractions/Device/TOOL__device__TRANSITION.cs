@@ -7,7 +7,7 @@ unsafe public static class TOOL__device__TRANSITION {
 
 
 
-    public static bool Update_nothing( Control_flow _flow, Device _device, Action _force_nothing ){
+    public static bool Update_nothing( Device _device, Action _force_nothing ){
 
         if( ( _device.going_to_state == Device_state.active ) || ( _device.going_to_state == Device_state.inactive ) )
             {
@@ -23,9 +23,9 @@ unsafe public static class TOOL__device__TRANSITION {
 
 
     }
-    public static bool Update_transition_nothing_TO_inactive( Control_flow _flow, Device _device ){
+    public static bool Update_transition_nothing_TO_inactive( Device _device ){
 
-        bool finished_transition = _device.transitions.nothing__TO__inactive.Update( _flow );
+        bool finished_transition = _device.transitions.nothing__TO__inactive.Update();
 
         if( finished_transition )
             {
@@ -49,9 +49,9 @@ unsafe public static class TOOL__device__TRANSITION {
     }
 
 
-    public static bool Update_transition_inactive_TO_active( Control_flow _flow, Device _device ){
+    public static bool Update_transition_inactive_TO_active( Device _device ){
 
-        bool finished_transition = _device.transitions.inactive__TO__active.Update( _flow );
+        bool finished_transition = _device.transitions.inactive__TO__active.Update();
 
         if( finished_transition )
             {
@@ -76,9 +76,9 @@ unsafe public static class TOOL__device__TRANSITION {
     }
 
 
-    public static bool Update_transition_active_TO_inactive( Control_flow _flow, Device _device ){
+    public static bool Update_transition_active_TO_inactive( Device _device ){
 
-        bool finished_transition = _device.transitions.active__TO__inactive.Update( _flow );
+        bool finished_transition = _device.transitions.active__TO__inactive.Update();
 
         if( finished_transition )
             {
@@ -104,9 +104,9 @@ unsafe public static class TOOL__device__TRANSITION {
 
 
 
-    public static bool Update_transition_inactive_TO_nothing( Control_flow _flow, Device _device ){
+    public static bool Update_transition_inactive_TO_nothing( Device _device ){
 
-        bool finished_transition = _device.transitions.inactive__TO__nothing.Update( _flow );
+        bool finished_transition = _device.transitions.inactive__TO__nothing.Update();
 
         if( finished_transition )
             {
@@ -121,15 +121,6 @@ unsafe public static class TOOL__device__TRANSITION {
         return finished_transition;
 
     }
-
-
-
-
-
-
-
-
-
 
 
 }

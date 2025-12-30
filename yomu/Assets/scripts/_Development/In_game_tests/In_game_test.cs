@@ -12,8 +12,8 @@ unsafe public abstract class In_game_test {
 
              if(  Editor_run.program_mode == Program_mode.menu )
                 {
-                    PROGRAM_DATA__menu* menu_data = (PROGRAM_DATA__menu*) Data.menu; 
-                    Controllers_program.program_transition.Switch_program_mode( Program_mode.menu, new Transition_program_data() ); 
+                    PROGRAM_DATA__menu* menu_data = (PROGRAM_DATA__menu*) &Program_data.root->program_modes.menu; 
+                    Controllers.program_transition.Switch_program_mode( Program_mode.menu, new Transition_program_data() ); 
 
                 }
         else if(  Editor_run.program_mode == Program_mode.game )
@@ -24,7 +24,7 @@ unsafe public abstract class In_game_test {
 
                         game_data->global.save = 0;
 
-                    Controllers_program.program_transition.Switch_program_mode( Program_mode.game, new Transition_program_data() ); 
+                    Controllers.program_transition.Switch_program_mode( Program_mode.game, new Transition_program_data() ); 
                     
                 }                
 
@@ -33,6 +33,6 @@ unsafe public abstract class In_game_test {
     public abstract void Create_state();
     public virtual void Start(){ Console.Log( "----Start is set as the <Color=lightBlue>default</Color>" ); }
     public virtual void End(){ Console.Log( "----End is set as the <Color=lightBlue>default</Color>" ); }
-    public virtual void Update( Control_flow _flow ){}
+    public virtual void Update(){}
 
 }

@@ -96,7 +96,7 @@ unsafe public partial class Test {
 
         }
 
-        public void Update( Control_flow _flow ){
+        public void Update(){
 
                 if( Input.GetKeyDown(KeyCode.L) )
                     { Restart(); }

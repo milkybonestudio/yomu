@@ -98,8 +98,8 @@ public abstract partial class Figure{
 
         
         // --- DATA
-        public virtual void Update_support( Control_flow _flow ){}
-        public void Update( Control_flow _flow ){
+        public virtual void Update_support(){}
+        public void Update(){
 
                 if( deleted )
                     { CONTROLLER__errors.Throw( $"Tried to update the figure <Color=lightBlue>{ name }</Color> but it was <Color=lightBlue>deleted</Color>" ); }
@@ -107,16 +107,16 @@ public abstract partial class Figure{
                 Console.Log( Figure.teste, $"<Color=lightBlue>--------------------------</Color>" );
                 Console.Log( Figure.teste, $"Update figure <Color=lightBlue>{ name }</Color>" );
 
-                Update_support( _flow );
+                Update_support();
             
                 // ** when the modes are not implemented it still works, but there is no modes to update
                 // ** for( nothing ){ ... }
-                modes.Update( _flow );
+                modes.Update();
 
                 if( state != Figure_state.active )
-                    {  Update_content( _flow ); return; }
+                    {  Update_content(); return; }
 
-                _flow.weight_frame_available -= body.Update();
+                Control_flow.weight_frame_available -= body.Update();
                 
         }
 

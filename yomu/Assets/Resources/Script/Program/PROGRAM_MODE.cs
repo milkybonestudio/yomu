@@ -12,7 +12,7 @@ unsafe public abstract class PROGRAM_MODE {
             // ** nao faz sentido colocar como obrigação de cada mode ter uma struct propria
             // ** internamente eles vão ter, mas então cada modo fica responsavel por colcoar ele na camera
             
-            public abstract void Update( Control_flow _control_flow );
+            public abstract void Update();
             public abstract Transition_program Construct_transition( Transition_program_data _data );
             
             public abstract void Clean_resources();

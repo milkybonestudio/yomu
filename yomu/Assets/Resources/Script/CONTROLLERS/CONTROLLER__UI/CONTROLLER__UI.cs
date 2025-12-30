@@ -39,7 +39,7 @@ public class CONTROLLER__UI {
 
 
 
-        public void Atualizar_mouse_atual( Control_flow _control_flow ){
+        public void Atualizar_mouse_atual(){
 
 
                 posicao_mouse[ 0 ] =   Input.mousePosition.x  * (  1920f / Screen.width ) ;

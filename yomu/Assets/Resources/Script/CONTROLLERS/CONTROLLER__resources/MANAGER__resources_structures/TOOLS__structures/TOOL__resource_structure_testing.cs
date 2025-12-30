@@ -24,11 +24,11 @@ public static class TOOL__resource_structure_testing {
         private static bool block_print = true;
 
     
-        public static void Test( Control_flow _control ){
+        public static void Test(){
 
 
-                Controllers.resources.Update( _control );
-                CONTROLLER__tasks.Pegar_instancia().Update( _control );
+                Controllers.resources.Update();
+                CONTROLLER__tasks.Pegar_instancia().Update();
 
 
                 int i = 0;

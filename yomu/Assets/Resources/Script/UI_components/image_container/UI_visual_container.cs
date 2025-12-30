@@ -109,7 +109,7 @@ public class UI_visual_container : UI_component {
 
         }
 
-        protected override void Update_phase( Control_flow _flow ){
+        protected override void Update_phase(){
 
                                 
         }

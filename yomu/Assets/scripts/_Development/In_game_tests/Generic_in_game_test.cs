@@ -7,7 +7,7 @@ unsafe public class Generic_in_game_test : In_game_test {
     // ** seta o programa login, menu, game
     public override void Set_program_environment(){
 
-            Controllers_program.program_transition.Switch_program_mode( Editor_run.program_mode, new Transition_program_data() ); 
+            Controllers.program_transition.Switch_program_mode( Editor_run.program_mode, new Transition_program_data() ); 
 
     }
 
@@ -15,7 +15,7 @@ unsafe public class Generic_in_game_test : In_game_test {
     public override void Create_state(){}
 
     // ** called everyframe
-    public override void Update( Control_flow _flow ){}
+    public override void Update(){}
 
 
 

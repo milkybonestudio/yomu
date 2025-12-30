@@ -45,7 +45,7 @@ public class CONTROLLER__audio {
         public Audio_objeto audio_source_uso_interno;
 
         
-         public void Update( Control_flow _control_flow ){
+         public void Update(){
 
                 Checar_sfx();
                 return;

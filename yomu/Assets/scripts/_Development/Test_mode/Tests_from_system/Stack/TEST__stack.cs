@@ -101,7 +101,7 @@ unsafe public static class TEST__stack {
         if( Input.GetKeyDown( KeyCode.Space ) )
             {
                 Console.Log( "<Color=lightBlue>----- WILL UPDATE STACK -----</Color>" );
-                Controllers.stack.Update( new Control_flow() );
+                Controllers.stack.Update();
                 Console.Log( "<Color=lightBlue>----- END UPDATE -----</Color>" );
             }
 

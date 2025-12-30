@@ -148,7 +148,7 @@ public class BLOCO_conversas : BLOCK {
 
 
 
-        public override void Update( Control_flow _control_flow ){
+        public override void Update(){
 
 
                 if(  Input.GetKeyDown( KeyCode.Escape)){ 

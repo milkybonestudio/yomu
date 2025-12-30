@@ -8,7 +8,7 @@ public struct Transition {
 
             transition.Finish = ()=>{};
             transition.Prepare = ()=>{};
-            transition.Update = ( Control_flow _flow )=>{ return true; };
+            transition.Update = ()=>{ return true; };
 
         return transition;
 

@@ -13,9 +13,9 @@ public class Development__TEST : Development_mode {
     }
 
 
-    public void Update( Control_flow _flow, CONTROLLER__development _controller ){
+    public void Update( CONTROLLER__development _controller ){
 
-            _controller.test.Update( _flow );
+            _controller.test.Update();
 
     }
 

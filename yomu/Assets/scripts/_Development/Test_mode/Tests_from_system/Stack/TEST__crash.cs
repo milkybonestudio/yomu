@@ -388,7 +388,7 @@ unsafe public static class TEST__crash {
 
             if( stage == 4 )
                 {
-                    Crash_handle_return ret = Controllers_program.crash_handler.current_return;
+                    Crash_handle_return ret = Controllers.crash_handler.current_return;
                     if( ret.route == Crash_handle_route.not_give )
                         {CONTROLLER__errors.Throw( "didn't get a return in crash" ); }
 
@@ -610,7 +610,7 @@ unsafe public static class TEST__crash {
     private static Crash_handle_return _Crash(){
 
         // Controllers.stack.saver.strem_stack.Close();
-        return Controllers_program.crash_handler.Deal_crash();
+        return Controllers.crash_handler.Deal_crash();
     }
 
 

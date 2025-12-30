@@ -79,13 +79,13 @@ public abstract partial class FIGURE_MODE {
         public Figure_emojis emojis = Figure_emojis.Get(); // ** talvez nao precise sempre
 
         
-        public virtual void Update( Control_flow _flow ){
+        public virtual void Update(){
 
 
             Console.Log( Figure.teste, $"--------Update mode <Color=lightBlue>{ name }</Color> " );
         
             if( state != Figure_mode_state.activated )
-                { Update_content( _flow ); return; }
+                { Update_content(); return; }
 
             Instanciate_content();
 

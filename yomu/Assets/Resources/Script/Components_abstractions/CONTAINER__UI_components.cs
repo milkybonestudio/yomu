@@ -35,7 +35,7 @@ public struct CONTAINER__UI_components {
         }
         
 
-        public void Update( Control_flow _flow ){ foreach( UI_component UI in UI_components_dic.Values ){ UI.Update( _flow ); } }
+        public void Update(){ foreach( UI_component UI in UI_components_dic.Values ){ UI.Update(); } }
         
 
         // --- CONTROLLERS 

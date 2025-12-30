@@ -2,9 +2,9 @@
 
 public enum Minerio {
 
-        nada, 
+    nada, 
 
-        // --- MINIRIOS REAIS 
+        // --- MINIRIOS REAIS
         
         cobre, 
         ferro, 

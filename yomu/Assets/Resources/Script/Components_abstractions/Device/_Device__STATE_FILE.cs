@@ -19,8 +19,8 @@ public unsafe abstract partial class Device {
 
 
         // ** chama somente quando ativo
-        protected virtual void Update_phase( Control_flow _flow ){ /*Console.Log( $"Nao criou phase update no device <Color=lightBlue>{ name }</Color>" );*/ }
-        protected virtual void Update_waiting_phase( Control_flow _flow ){ /*Console.Log( $"Nao criou Update_waiting_phase no device <Color=lightBlue>{ name }</Color>" );*/ }
+        protected virtual void Update_phase(){ /*Console.Log( $"Nao criou phase update no device <Color=lightBlue>{ name }</Color>" );*/ }
+        protected virtual void Update_waiting_phase(){ /*Console.Log( $"Nao criou Update_waiting_phase no device <Color=lightBlue>{ name }</Color>" );*/ }
 
 
         //mark

@@ -42,9 +42,9 @@ public class Development__PROGRAM_MODE : Development_mode {
     }
 
 
-    public void Update( Control_flow _flow, CONTROLLER__development _controller ){
+    public void Update( CONTROLLER__development _controller ){
 
-            _controller.current_test?.Update( _flow ); 
+            _controller.current_test?.Update(); 
             _controller.development_tools.Atualizar_ferramentas_desenvolvimento();
 
     }

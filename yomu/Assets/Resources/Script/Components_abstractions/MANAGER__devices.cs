@@ -27,7 +27,7 @@ public class MANAGER__devices {
 
     
 
-    public virtual void Update_all_devices( Control_flow _flow ){
+    public virtual void Update_all_devices(){
 
         // if( deleted )
         //     { CONTROLLER__errors.Throw( "Tried to use the a manager devices that was deleted" ); }

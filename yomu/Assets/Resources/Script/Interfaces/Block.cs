@@ -15,7 +15,7 @@ public abstract class BLOCK {
     
         public abstract void Finalizar(); // destroi os objetos que precisam ser destruido os dados do bloco, mas mantem o BLOCO_objeto ** destroy o container
         public abstract void Iniciar();   //  junto com os dados de Dados_blocos inicia o bloco sempre na transicao 
-        public abstract void Update( Control_flow _control_flow );
+        public abstract void Update();
 
 
         // ** se null nao precisa carregar

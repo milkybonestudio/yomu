@@ -5,12 +5,12 @@ using UnityEngine;
 public static class TOOL__resource_logic_testing {
 
 
-        public static void Test( ref RESOURCE__logic_ref _logic_ref, object[] _args, Control_flow _control_flow ){
+        public static void Test( ref RESOURCE__logic_ref _logic_ref, object[] _args ){
 
 
-                Controllers.resources.Update( _control_flow );
+                Controllers.resources.Update();
                 
-                CONTROLLER__tasks.Pegar_instancia().Update( _control_flow );
+                CONTROLLER__tasks.Pegar_instancia().Update();
 
 
 

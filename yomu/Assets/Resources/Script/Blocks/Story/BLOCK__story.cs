@@ -83,7 +83,7 @@ public class BLOCO_story : BLOCK {
 
 
 
-        public override void Update( Control_flow _control_flow ){
+        public override void Update(){
 
 
                 CONTROLLER__input.Pegar_instancia().manager_cursor.Change_action( Cursor_action.choice ); //Mudar_cursor( Cor_cursor.off );

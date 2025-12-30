@@ -513,7 +513,7 @@ unsafe public struct Packets_storage_data {
             { CONTROLLER__errors.Throw( "The pointer of the storage_infos was <Color=lightBlue>NULL</Color>" ); }
 
         // ** this type of storage can not be used in multithread
-        if( Thread.CurrentThread.ManagedThreadId != System_information.main_thread_id )
+        if( Thread.CurrentThread.ManagedThreadId != System_run.main_thread_id )
             { CONTROLLER__errors.Throw( "Wrong thread id" ); }
 
 

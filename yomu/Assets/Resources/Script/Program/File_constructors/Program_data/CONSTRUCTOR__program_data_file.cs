@@ -4,7 +4,7 @@
 unsafe public static class CONSTRUCTOR__program_data_file {
 
 
-    public static void Construct_new_program_file( Program_data* _data ){
+    public static void Construct_new_program_file( PROGRAM_DATA* _data ){
 
         Construct( &( _data->program_modes ) );
 

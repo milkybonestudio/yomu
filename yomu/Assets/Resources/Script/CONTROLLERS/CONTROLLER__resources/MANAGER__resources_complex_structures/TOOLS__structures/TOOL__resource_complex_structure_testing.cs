@@ -22,11 +22,11 @@ public static class TOOL__resource_complex_structure_testing {
         private static GameObject canvas;
 
     
-        public static void Test( Control_flow _control_flow ){
+        public static void Test(){
 
 
-                Controllers.resources.Update( _control_flow );
-                CONTROLLER__tasks.Pegar_instancia().Update( _control_flow );
+                Controllers.resources.Update();
+                CONTROLLER__tasks.Pegar_instancia().Update();
 
 
                 int i = 0;

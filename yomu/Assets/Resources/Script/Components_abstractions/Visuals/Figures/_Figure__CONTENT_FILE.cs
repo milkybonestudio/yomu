@@ -20,7 +20,7 @@ public abstract partial class Figure {
 
 
 
-    private int Update_content( Control_flow _flow ){
+    private int Update_content(){
 
             int weight = 0;
 
@@ -32,11 +32,11 @@ public abstract partial class Figure {
 
             switch( current_content ){
 
-                case Figure_content.nothing: Check_nothing( _flow ); break;
-                    case Figure_content.construct_modes: Check_construct_modes( _flow ); break;
-                        case Figure_content.create_body: Check_create_body( _flow ); break;
-                            case Figure_content.modes_content: Check_modes_content( _flow ); break;
-                                case Figure_content.start_mode_full_content: Check_start_mode_full_content( _flow ); break;
+                case Figure_content.nothing: Check_nothing(); break;
+                    case Figure_content.construct_modes: Check_construct_modes(); break;
+                        case Figure_content.create_body: Check_create_body(); break;
+                            case Figure_content.modes_content: Check_modes_content(); break;
+                                case Figure_content.start_mode_full_content: Check_start_mode_full_content(); break;
                                     case Figure_content.finished: break;
                                         default : CONTROLLER__errors.Throw( "State not accept: " + current_content ); return -1;
 
@@ -47,7 +47,7 @@ public abstract partial class Figure {
     }
 
 
-    private void Check_nothing( Control_flow _flow ){
+    private void Check_nothing(){
 
         if( current_content < final_content  )
             {
@@ -74,7 +74,7 @@ public abstract partial class Figure {
     }
 
 
-    private void Check_construct_modes( Control_flow _flow ){
+    private void Check_construct_modes(){
 
         if( current_content < final_content )
             {
@@ -86,7 +86,7 @@ public abstract partial class Figure {
     }
 
     
-    private void Check_create_body( Control_flow _flow ){
+    private void Check_create_body(){
 
         if( current_content < final_content )
             {
@@ -103,7 +103,7 @@ public abstract partial class Figure {
 
 
     
-    private void Check_modes_content( Control_flow _flow ){
+    private void Check_modes_content(){
 
         
         foreach( FIGURE_MODE mode in modes.Get_values() ){
@@ -128,7 +128,7 @@ public abstract partial class Figure {
 
 
 
-    private void Check_start_mode_full_content( Control_flow _flow ){
+    private void Check_start_mode_full_content(){
 
         FIGURE_MODE mode = modes.Get( data.start_mode );
         mode.Change_content_level( Content_level.full );

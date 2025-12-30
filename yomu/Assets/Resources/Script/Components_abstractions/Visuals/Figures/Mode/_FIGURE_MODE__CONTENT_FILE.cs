@@ -58,7 +58,7 @@ public abstract partial class FIGURE_MODE {
         }
 
 
-        private int Update_content( Control_flow _flow ){
+        private int Update_content(){
 
             Console.Log( Figure.teste, $"------------Update content:" );
             Console.Log( Figure.teste, $"----------------Current_content: <Color=lightBlue>{ current_content }</Color>" );
@@ -68,14 +68,14 @@ public abstract partial class FIGURE_MODE {
 
             switch( current_content ){
 
-                case Figure_mode_content.nothing: Check_nothing( _flow ); break;
-                    case Figure_mode_content.link_data: Check_link_data( _flow ); break;
-                        case Figure_mode_content.getting_directions_structures: Check_getting_directions_structures( _flow ); break;
-                            case Figure_mode_content.structures: Check_structures( _flow ); break;    
-                                case Figure_mode_content.link_data_to_directions: Check_link_data_to_directions( _flow ); break;    
-                                    case Figure_mode_content.resources_minimum: Check_resources_minimum( _flow ); break;    
-                                        case Figure_mode_content.combined_image: Check_combined_image( _flow ); break;
-                                            case Figure_mode_content.resources_full: Check_resources_full( _flow ); break;  
+                case Figure_mode_content.nothing: Check_nothing(); break;
+                    case Figure_mode_content.link_data: Check_link_data(); break;
+                        case Figure_mode_content.getting_directions_structures: Check_getting_directions_structures(); break;
+                            case Figure_mode_content.structures: Check_structures(); break;    
+                                case Figure_mode_content.link_data_to_directions: Check_link_data_to_directions(); break;    
+                                    case Figure_mode_content.resources_minimum: Check_resources_minimum(); break;    
+                                        case Figure_mode_content.combined_image: Check_combined_image(); break;
+                                            case Figure_mode_content.resources_full: Check_resources_full(); break;  
                                                 case Figure_mode_content.finished: break;
                                                     default : CONTROLLER__errors.Throw( "State not accept: " + current_content ); return -1;
 
@@ -92,7 +92,7 @@ public abstract partial class FIGURE_MODE {
 
         }
 
-        private void Check_nothing( Control_flow _flow ){
+        private void Check_nothing(){
 
             if( current_content < final_content )
                 { 
@@ -134,7 +134,7 @@ public abstract partial class FIGURE_MODE {
         }
 
 
-        private void Check_link_data( Control_flow _flow ){
+        private void Check_link_data(){
 
             if( current_content < final_content )
                 {
@@ -164,7 +164,7 @@ public abstract partial class FIGURE_MODE {
             }
 
         }
-        private void Check_getting_directions_structures( Control_flow _flow ){
+        private void Check_getting_directions_structures(){
 
 
             if( current_content < final_content )
@@ -178,7 +178,7 @@ public abstract partial class FIGURE_MODE {
 
 
 
-        private void Check_structures( Control_flow _flow ){
+        private void Check_structures(){
 
             if( current_content < final_content )
                 {
@@ -237,7 +237,7 @@ public abstract partial class FIGURE_MODE {
             } 
 
         }
-        private void Check_link_data_to_directions( Control_flow _flow ){
+        private void Check_link_data_to_directions(){
 
             if( current_content < final_content )
                 {   
@@ -251,7 +251,7 @@ public abstract partial class FIGURE_MODE {
 
 
 
-        private void Check_resources_minimum( Control_flow _flow ){
+        private void Check_resources_minimum(){
 
 
             if( current_content < final_content )
@@ -310,7 +310,7 @@ public abstract partial class FIGURE_MODE {
 
 
 
-        private void Check_combined_image( Control_flow _flow ){
+        private void Check_combined_image(){
 
 
             if( current_content < final_content )
@@ -325,7 +325,7 @@ public abstract partial class FIGURE_MODE {
 
 
 
-        private void Check_resources_full( Control_flow _flow ){
+        private void Check_resources_full(){
 
 
             if( current_content < final_content )

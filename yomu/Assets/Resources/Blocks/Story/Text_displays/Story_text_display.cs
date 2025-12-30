@@ -11,7 +11,7 @@ public abstract class Story_text_display : Device {
         public string root;
 
         public abstract void Show();
-        protected override void Update_phase( Control_flow _control_flow ){}
+        protected override void Update_phase(){}
         public abstract void Hide();
 
         public abstract void Put_text();

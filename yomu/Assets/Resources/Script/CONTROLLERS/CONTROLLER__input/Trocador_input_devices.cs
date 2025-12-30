@@ -44,7 +44,7 @@ public static class Trocador_input_devices {
         private static void Garantir( Input_device_type _input,  DeviceType _opcao_1, DeviceType _opcao_2 , DeviceType _opcao_3 ){
 
 
-                DeviceType tipo = CONTROLLER__application_information.Get_instance().device;
+                DeviceType tipo = Controllers.device.type;
 
                 if( tipo == _opcao_1 )
                     { return; }

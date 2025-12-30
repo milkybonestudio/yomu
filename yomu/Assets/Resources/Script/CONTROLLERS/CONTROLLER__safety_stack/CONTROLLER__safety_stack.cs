@@ -125,7 +125,7 @@ unsafe public struct CONTROLLER__safety_stack {
 
 
     public SAFETY_STACK__state state;
-    public void Update( Control_flow _control_flow ){
+    public void Update(  ){
 
         #if UNITY_EDITOR
             for( int index = 0 ; index < 10 ; index++ )
@@ -147,8 +147,8 @@ unsafe public struct CONTROLLER__safety_stack {
 
 
         switch( state ){
-            case SAFETY_STACK__state.saving_stack: Handle_saving( _control_flow ); break;
-            case SAFETY_STACK__state.waiting_to_save_stack : Handle_waiting_to_save_stack( _control_flow ); break;
+            case SAFETY_STACK__state.saving_stack: Handle_saving(); break;
+            case SAFETY_STACK__state.waiting_to_save_stack : Handle_waiting_to_save_stack(); break;
             case SAFETY_STACK__state.waiting_files_to_end_saving: Handle_waiting_files_to_end_saving(); break;
             default: CONTROLLER__errors.Throw( "Can not handle type: " + state ); break;
         }
@@ -200,7 +200,7 @@ unsafe public struct CONTROLLER__safety_stack {
 
     }
 
-    private void Handle_saving( Control_flow _control_flow ){
+    private void Handle_saving(){
 
         if( System_run.show_stack_messages_update )
             { 
@@ -223,7 +223,7 @@ unsafe public struct CONTROLLER__safety_stack {
 
     }
 
-    private void Handle_waiting_to_save_stack( Control_flow _control_flow  ){
+    private void Handle_waiting_to_save_stack(){
 
 
         bool time_is_over = ( last_update_ms > minimun_time_to_save_ms );
@@ -253,7 +253,7 @@ unsafe public struct CONTROLLER__safety_stack {
                             { Console.Log( "Have a few bytes, will loop" ); }
 
                         int weight_of_loop = buffer.Loop();
-                        _control_flow.Add_weight( weight_of_loop );
+                        Control_flow.Add_weight( weight_of_loop );
 
                     }
                     else

@@ -9,9 +9,6 @@ public unsafe struct PROGRAM_DATA__program_start_messages {
 
         public PROGRAM_START_MESSAGES_DATA__global global;
 
-        public PROGRAM_START_MESSAGES_DATA__standart standart;
-
-
 
 }
 

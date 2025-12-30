@@ -46,7 +46,7 @@ unsafe public class UI_text_container : UI_component {
         public Text_constructor[] constructors;
 
 
-        protected override void Update_phase( Control_flow _flow ){
+        protected override void Update_phase(){
 
 
             if( constructors == null )

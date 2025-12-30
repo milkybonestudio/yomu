@@ -15,7 +15,8 @@ unsafe public static class CONSTRUCTOR__program {
         Controllers.errors =  CONSTRUCTOR__controller_errors.Construct();
         Program.instance = _program;
         
-        _program.control_flow = new Control_flow();
+        Control_flow.Reset();
+        
 
 
         // --- SETTINGS
@@ -39,7 +40,7 @@ unsafe public static class CONSTRUCTOR__program {
 
         // --- CONTROLLERS GENERIC 1
 
-            Controllers_program.crash_handler = CONSTRUCTOR__controller_crash_handler.Construct();
+            Controllers.crash_handler = CONSTRUCTOR__controller_crash_handler.Construct();
 
             Controllers.heap = CONSTRUCTOR__controller_heap.Construct();
             Controllers.tasks = CONSTRUCTOR__controller_tasks.Construct();
@@ -68,7 +69,7 @@ unsafe public static class CONSTRUCTOR__program {
 
                 // -- UPDATE
 
-                    Action<Control_flow> Update_development = ( Action<Control_flow> ) CONTROLLER__development.GetMethod( "Get_update" ).Invoke( controller_development, null );
+                    Action Update_development = ( Action ) CONTROLLER__development.GetMethod( "Get_update" ).Invoke( controller_development, null );
                     _program.Update_development = Update_development;
 
             
@@ -100,7 +101,7 @@ unsafe public static class CONSTRUCTOR__program {
                 Crash_handle_result result_reconstruct_from_crash = Crash_handle_result.fail;
 
                 if( System_run.activate_crash_handler )
-                    { result_reconstruct_from_crash = Controllers_program.crash_handler.Reconstruct_state(); }
+                    { result_reconstruct_from_crash = Controllers.crash_handler.Reconstruct_state(); }
 
                 if( result_reconstruct_from_crash == Crash_handle_result.fail )
                     { 
@@ -117,10 +118,7 @@ unsafe public static class CONSTRUCTOR__program {
             Controllers.context.Force_change_context( Paths_program.program_context );
 
 
-            // ** defaults 
-            Data.program = Controllers.files.operations.Get_file( Paths_program.program_data );
-
-                Data.menu = &(Data.program.Get_pointer<Program_data>()->program_modes.menu);
+            Program_data.Start();
 
 
     
@@ -140,9 +138,9 @@ unsafe public static class CONSTRUCTOR__program {
 
         // --- PROGRAM
 
-            Controllers_program.program = _program;
-            Controllers_program.program_transition = CONSTRUCTOR__controller_program_transition.Construct();
-            Controllers_program.canvas_spaces = CONSTRUCTOR__controller_canvas_spaces.Construct();
+            Controllers.program = _program;
+            Controllers.program_transition = CONSTRUCTOR__controller_program_transition.Construct();
+            Controllers.canvas_spaces = CONSTRUCTOR__controller_canvas_spaces.Construct();
                 
 
         
@@ -154,14 +152,18 @@ unsafe public static class CONSTRUCTOR__program {
 
         Program_modes.menu = new Menu();
         Program_modes.game = new Game();
+        Program_modes.new_game = new New_game();
 
-        _program.modes[ Program_mode.menu ] = Program_modes.menu;
-        _program.modes[ Program_mode.game ] = Program_modes.game;
-                        
+        Program_modes.program_start_messages = new Program_start_messages();
 
-        _program.modes[ Program_mode.nothing ] = new Nothing();
-        _program.modes[ Program_mode.new_game ] = new New_game();
-        _program.modes[ Program_mode.program_start_messages ] = new Program_start_messages();
+
+            _program.modes[ Program_mode.menu ] = Program_modes.menu;
+            _program.modes[ Program_mode.game ] = Program_modes.game;
+                            
+            _program.modes[ Program_mode.new_game ] = Program_modes.new_game;
+            _program.modes[ Program_mode.program_start_messages ] = Program_modes.program_start_messages;
+
+            _program.modes[ Program_mode.nothing ] = new Nothing();
 
 
         // ** FORCE NOTHING STAGE 
@@ -170,7 +172,7 @@ unsafe public static class CONSTRUCTOR__program {
 
         RESOURCE__structure_copy nothing_structure = Controllers.resources.structures.Get_structure_copy( Resource_context.System, "Nothing", "structure", Resource_structure_content.game_object );
         nothing_structure.Instanciate();
-        Controllers_program.canvas_spaces.canvas_space_current.content.world.Add( nothing_structure );
+        Controllers.canvas_spaces.canvas_space_current.content.world.Add( nothing_structure );
         
         
 
@@ -188,7 +190,6 @@ unsafe public static class CONSTRUCTOR__program {
 
 
         #if UNITY_EDITOR
-
         
             // --- CONTAINERS 
 
@@ -210,7 +211,6 @@ unsafe public static class CONSTRUCTOR__program {
         #endif
 
 
-            
         return;
 
     }

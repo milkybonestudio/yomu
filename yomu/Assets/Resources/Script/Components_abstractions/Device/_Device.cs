@@ -55,7 +55,7 @@ public unsafe abstract partial class Device {
 
         // public void Set_place_to_instanciate( GameObject _place_to_instanciate ){ return;  structure.place_to_instanciate = _place_to_instanciate; }
 
-        public void Update( Control_flow _flow ){
+        public void Update(){
 
 
             if( deleted )
@@ -64,10 +64,10 @@ public unsafe abstract partial class Device {
             if( structure == null )
                 { CONTROLLER__errors.Throw( $"Did not give the structure in the device { name }. The structure need to be given in the constructor of the device itself ( not the abstraction )." ); };
             
-            UIs_manager.Update( _flow ); 
+            UIs_manager.Update(); 
 
             if( ( going_to_state == Device_state.nothing ) && ( state == Device_state.nothing ) )
-                { Update_content( _flow ); return; }
+                { Update_content(); return; }
 
             if( state == Device_state.nothing )
                 { Instanciate_content(); }
@@ -81,19 +81,19 @@ public unsafe abstract partial class Device {
                 
                 switch( state ){
 
-                    case Device_state.nothing: locker.re_do = TOOL__device__TRANSITION.Update_nothing( _flow, this, Force_nothing ); break;
-                    case Device_state.transition_nothing_TO_inactive: locker.re_do = TOOL__device__TRANSITION.Update_transition_nothing_TO_inactive( _flow, this ); break;
-                    case Device_state.inactive: Update_waiting_phase( _flow ); break;
-                    case Device_state.transition_inactive_TO_active: locker.re_do = TOOL__device__TRANSITION.Update_transition_inactive_TO_active( _flow, this ); break;
-                    case Device_state.active: Update_phase( _flow ); break;
-                    case Device_state.transition_active_TO_inactive: locker.re_do = TOOL__device__TRANSITION.Update_transition_active_TO_inactive( _flow, this ); break;
-                    case Device_state.transition_inactive_TO_nothing: locker.re_do = TOOL__device__TRANSITION.Update_transition_inactive_TO_nothing( _flow, this ); break;
+                    case Device_state.nothing: locker.re_do = TOOL__device__TRANSITION.Update_nothing( this, Force_nothing ); break;
+                    case Device_state.transition_nothing_TO_inactive: locker.re_do = TOOL__device__TRANSITION.Update_transition_nothing_TO_inactive( this ); break;
+                    case Device_state.inactive: Update_waiting_phase(); break;
+                    case Device_state.transition_inactive_TO_active: locker.re_do = TOOL__device__TRANSITION.Update_transition_inactive_TO_active( this ); break;
+                    case Device_state.active: Update_phase(); break;
+                    case Device_state.transition_active_TO_inactive: locker.re_do = TOOL__device__TRANSITION.Update_transition_active_TO_inactive( this ); break;
+                    case Device_state.transition_inactive_TO_nothing: locker.re_do = TOOL__device__TRANSITION.Update_transition_inactive_TO_nothing( this ); break;
 
                 }
 
             }
             
-            _flow.weight_frame_available -= body.Update();
+            Control_flow.weight_frame_available -= body.Update();
 
         }
 

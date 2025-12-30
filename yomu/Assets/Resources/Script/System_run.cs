@@ -5,8 +5,8 @@ public static class System_run {
 
 
     // ** LOGIC
-
-
+    
+    public static int main_thread_id;
     public static bool game_on;
     public static bool acesso_internet;
 

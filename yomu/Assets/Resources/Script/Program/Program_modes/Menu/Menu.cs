@@ -1,49 +1,106 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using System;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+using TMPro;
+
+
+// ** Menu seria uma interface, vai ter coisas como MENU__default, MENU__halloween etc
+unsafe public class Menu : PROGRAM_MODE { 
+
+    public Menu(){ type = Program_mode.menu; }
+
+    // public static Menu instancia;
+    // public static Menu Pegar_instancia(){ return instancia; }
+    
+    public override void Construct(){ return; }
+
+    public override Transition_program Construct_transition( Transition_program_data _data ){ 
+
+        Transition_program transition = new Transition_program();
+
+        return transition;
+
+    }
+
+    // --- CONTROLADORES
+
+    public Controlador_tela_menu controlador_tela_menu;
+
+    public Tipo_menu_background menu_background;
+        
+    // --- BLOCOS
+
+    public Galeria_menu galeria_menu;
+    public Personagens_menu personagens_menu;
+    public Configuracoes_menu configuracoes_menu;
+    public Novo_jogo_menu novo_jogo_menu;
+    
+
+
+    public Action[] updates;
 
 
 
+    // --- OPCOES
 
-unsafe public class Menu : PROGRAM_MODE {
-
-
-        public Menu(){ type = Program_mode.menu; }
-        private PROGRAM_MODE__INTERFACE __interface__ ;
-        public override void Construct(){
+    public GameObject opcoes_container;
+    public Interativo_menu[] menu_opcoes_arr;
+    public UI_button[] botoes = new UI_button[ 5 ];
 
 
-                PROGRAM_DATA__menu* data = (PROGRAM_DATA__menu*) Data.menu;
-                                
-                switch( data->type ){
 
-                    case Menu_type.standart: __interface__ = new Menu__STANDART(); break;
-                    default: CONTROLLER__errors.Throw( $" Can not handle { type } in menu" ); break;
-
-                }
-                
-                
-                // ** use data
-
-                __interface__.Construct();
-
-                return;
-
-        }
-        public override void Destroy(){
-
-                // if( __interface__ == null )
-                //     { CONTROLLER__errors.Throw( "Tried to destroy menu, but there is no interface" ); }
-                    
-                __interface__?.Destroy();
-                __interface__ = null;
-
-
-        }
-
-        public override void Update( Control_flow _control_flow ){ __interface__.Update( _control_flow ); }
-        public override Transition_program Construct_transition( Transition_program_data _data ){ return __interface__.Construct_transition( _data ); }
-        public override void Clean_resources(){ __interface__.Clean_resources(); }
+    public Menu_bloco estado_atual = Menu_bloco.novo_jogo;        
         
 
+    public override void Clean_resources(){ throw new NotImplementedException(); }
+
+    
+    public override void Update(){
+
+            
+        bool esta_nos_botoes = Update_botoes();
+
+        if( esta_nos_botoes )
+            { return; }
+        
+        switch( estado_atual ){
 
 
+                case Menu_bloco.transition: break;
+                case Menu_bloco.novo_jogo: novo_jogo_menu.Update(); break;
+                case Menu_bloco.configuracoes: configuracoes_menu.Update(); break;
+
+                case Menu_bloco.galeria:  galeria_menu.Update(); break;
+                case Menu_bloco.personagens:  personagens_menu.Update(); break;
+                case Menu_bloco.saves:  ; break;
+                
+        }
+
+        return;
+
+    }
+
+    public override void Destroy(){
+        
+    }
+
+    public bool Update_botoes(){
+
+        
+            // bool is_click =  Input.GetMouseButtonUp( 0 );
+            
+            for( int i = 0 ;    i <  botoes.Length ;   i++)
+                { botoes[ i ].Update(); }
+
+            return false ;
+
+    }
+
+    public void Finalizar(){}
+
+    
 }
-

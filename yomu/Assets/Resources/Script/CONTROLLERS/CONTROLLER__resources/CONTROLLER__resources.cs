@@ -60,9 +60,9 @@ public class CONTROLLER__resources {
 
 
 
-        public void Update( Control_flow _control_flow ){
+        public void Update(){
 
-                managers.Get().Update();
+            managers.Get().Update();
 
         }
 

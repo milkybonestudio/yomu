@@ -32,7 +32,7 @@ public class BLOCO_interacao : BLOCK {
 
 
 
-        public override void Update( Control_flow _control_flow ){ 
+        public override void Update(){ 
 
 
                 // --- VERIFICA SE TEM QUE MUDAR TELA

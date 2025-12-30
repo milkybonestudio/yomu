@@ -17,7 +17,7 @@ public unsafe abstract partial class Device {
         // --- INTERFACE
 
 
-        private int Update_content( Control_flow _flow ){
+        private int Update_content(){
 
             int weight = 0;
 
@@ -25,8 +25,8 @@ public unsafe abstract partial class Device {
 
                 case Device_content.nothing: Check_nothing(); break;
                     case Device_content.structure: Check_structure(); break;
-                        case Device_content.UIs : Check_UIs( _flow ); break;
-                            case Device_content.create_body : Check_create_body( _flow ); break;
+                        case Device_content.UIs : Check_UIs(); break;
+                            case Device_content.create_body : Check_create_body(); break;
                                 case Device_content.finished: break;
                                     default : CONTROLLER__errors.Throw( "State not accept: " + current_content ); return -1;
 
@@ -60,7 +60,7 @@ public unsafe abstract partial class Device {
 
         }
 
-        private void Check_UIs( Control_flow _flow ){
+        private void Check_UIs(){
 
         
             if( current_content < content_going_to )
@@ -82,7 +82,7 @@ public unsafe abstract partial class Device {
         }
 
 
-        private void Check_create_body( Control_flow _flow ){
+        private void Check_create_body(){
 
             // ** se o device precisar de um render externo ele precisa esperar as uis instanciarem para pegar o tamanho da camera?
             

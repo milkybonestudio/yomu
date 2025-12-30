@@ -53,7 +53,7 @@ unsafe public static class White_canvas{
 
         // ( White_canvas.s.data )
 
-        Program_data* program = (Program_data*) STATIC_data.program.Get_pointer();
+        PROGRAM_DATA* program = (PROGRAM_DATA*) STATIC_data.program.Get_pointer();
         Fn( &program->program_modes.menu );
 
 

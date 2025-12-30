@@ -24,7 +24,7 @@ unsafe public static class TOOL__reconstruct_from_stack{
         
         
         Controllers.paths_ids.Define_paths_ids( Paths_version.paths_ids );
-        Controllers.context.Change_context_data( Controllers_program.crash_handler.context_path ); // ** change the files to the old ones 
+        Controllers.context.Change_context_data( Controllers.crash_handler.context_path ); // ** change the files to the old ones 
         
         if( System_run.show_program_construction_messages )
             { Console.Log( "Will create the folder again empty" ); }
@@ -36,7 +36,7 @@ unsafe public static class TOOL__reconstruct_from_stack{
 
 
         // ** SPLIT STACK BLOCKS
-        byte[] stack_file = Controllers_program.crash_handler.stack_file;
+        byte[] stack_file = Controllers.crash_handler.stack_file;
         fixed( byte* pointer_stack = stack_file ){
 
             int max_length_stack = stack_file.Length;

@@ -290,7 +290,7 @@ public static class TOOL__get_data_images_resources {
 
             private static byte[] Get_single_generico_BUILD( RESOURCE__image _image ){
 
-                    CONTROLLER__game_current_state.Get_instance().Verify_plataform();
+                    //CONTROLLER__game_current_state.Get_instance().Verify_plataform();
                     return null;
                                                   
             }

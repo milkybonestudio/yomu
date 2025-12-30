@@ -60,7 +60,7 @@ public class Teste_figure : Figure {
         }
 
 
-        public override void Update_support( Control_flow _flow ){
+        public override void Update_support(){
 
             // ** something
 

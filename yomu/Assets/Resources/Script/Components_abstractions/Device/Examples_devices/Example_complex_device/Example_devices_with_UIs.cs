@@ -228,7 +228,7 @@ public class Example_devices_with_UIs__TYPE_1 : Example_devices_with_UIs {
 
 
 
-        protected override void Update_phase( Control_flow _control_flow ){
+        protected override void Update_phase(){
 
                 
                 if( Input.GetKeyDown( KeyCode.Alpha7 ) )

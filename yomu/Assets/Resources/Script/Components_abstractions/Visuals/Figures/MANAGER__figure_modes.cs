@@ -57,7 +57,7 @@ public struct MANAGER__figure_modes {
         public FIGURE_MODE Get( Figure_mode _mode ){ return modes_dic[ _mode ]; }
 
 
-        public void Update( Control_flow _flow ){
+        public void Update(){
 
             Guarantee_pairs();
 
@@ -67,7 +67,7 @@ public struct MANAGER__figure_modes {
             Console.Log( Figure.teste, "----Update modes:" );
         
             foreach( Pair_key_value<Figure_mode, FIGURE_MODE> pair in pairs ){ 
-                pair.value.Update( _flow ); 
+                pair.value.Update(); 
             }
 
         }

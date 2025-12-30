@@ -17,4 +17,12 @@ unsafe public static class BOOL {
     }
 
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool Not_in_range( long _min, long _value, long _max ){
+
+        return ( _value < _min ) && ( _max < _value );
+    }
+
+
+
 }

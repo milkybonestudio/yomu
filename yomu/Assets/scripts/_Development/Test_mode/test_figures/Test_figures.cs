@@ -27,10 +27,10 @@ unsafe public partial class Test {
             
         }
 
-        public void Update( Control_flow _flow ){
+        public void Update(){
 
 
-                figure?.Update( _flow );
+                figure?.Update();
 
                 // ** CONTENT
 

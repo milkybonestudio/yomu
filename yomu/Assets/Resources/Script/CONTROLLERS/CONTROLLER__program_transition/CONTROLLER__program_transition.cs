@@ -42,7 +42,7 @@ unsafe public class CONTROLLER__program_transition {
     public System.Diagnostics.Stopwatch watch;
     public long[] max_time_to_transition_ms;
 
-    public void Update( Control_flow _control_flow ){
+    public void Update(){
 
 
         if( state == Swithcing_program_transition_state.nothing )
@@ -53,11 +53,11 @@ unsafe public class CONTROLLER__program_transition {
 
         switch( transition.stage ){
 
-            case Transition_stage.up   : Handle_UP( _control_flow ); break;
-            case Transition_stage.mid  : handle_MID( _control_flow ); break;
-            case Transition_stage.down : Handle_DOWN( _control_flow ); break;
-            case Transition_stage.mode_set : Handle_MODE_SET( _control_flow ); break;
-            case Transition_stage.mode_start : Handle_MODE_START( _control_flow ); break; 
+            case Transition_stage.up   : Handle_UP(); break;
+            case Transition_stage.mid  : handle_MID(); break;
+            case Transition_stage.down : Handle_DOWN(); break;
+            case Transition_stage.mode_set : Handle_MODE_SET(); break;
+            case Transition_stage.mode_start : Handle_MODE_START(); break; 
             default: CONTROLLER__errors.Throw( $"In Program_transition the type was <Color=lightBlue>{ transition.stage }</Color>" ); break;
 
         }
@@ -69,11 +69,11 @@ unsafe public class CONTROLLER__program_transition {
         
         Console.Log( "vai para: " + _new_mode );
 
-        Program program = Controllers_program.program;
+        Program program = Controllers.program;
 
         // --- VERIFICATIONS
 
-            if( program.control_flow.program_mode_update_blocked )
+            if( Control_flow.program_mode_update_blocked )
                 { CONTROLLER__errors.Throw( $"Tried to switch to program mode <Color=lightBlue>{ _new_mode }</Color> but the program update is blocked. the only thing that can call Switch_program_mode() is another mode" ); }
 
             if( state == Swithcing_program_transition_state.switching )
@@ -92,7 +92,7 @@ unsafe public class CONTROLLER__program_transition {
             
             //mark
             // ** removi
-            // Controllers_program.data.modes.Verify_lock_data( _new_mode );
+            // Controllers.data.modes.Verify_lock_data( _new_mode );
             transition = new_mode.Construct_transition( _mode_transition );
             
 
@@ -107,7 +107,7 @@ unsafe public class CONTROLLER__program_transition {
             // current_mode.state = Program_mode_state.swithing_to_inactive;
 
         // --- GET CAMERA DATA
-            transition.space_switcher = Controllers_program.canvas_spaces.Switch_cameras( _new_mode.ToString() );
+            transition.space_switcher = Controllers.canvas_spaces.Switch_cameras( _new_mode.ToString() );
         
         // --- START
 
@@ -125,7 +125,7 @@ unsafe public class CONTROLLER__program_transition {
     // --- INTERN
 
 
-    private void Handle_UP( Control_flow _control_flow ){
+    private void Handle_UP(){
 
             if( transition.sections_actions.up() )
                 { transition.Pass_stage();}
@@ -133,7 +133,7 @@ unsafe public class CONTROLLER__program_transition {
 
     }
 
-    private void handle_MID( Control_flow _control_flow ){
+    private void handle_MID(){
 
         transition.sections_actions.mid();
         
@@ -151,7 +151,7 @@ unsafe public class CONTROLLER__program_transition {
     }
 
 
-    private void Handle_DOWN( Control_flow _control_flow ){
+    private void Handle_DOWN(){
 
         if( transition.sections_actions.down() )
             { transition.Pass_stage(); return; }
@@ -163,14 +163,14 @@ unsafe public class CONTROLLER__program_transition {
 
 
 
-    private void Handle_MODE_SET( Control_flow _control_flow ){ 
+    private void Handle_MODE_SET(){ 
 
 
             if( transition.sections_actions.mode_set() )
                 { transition.Pass_stage(); }
             
-            _control_flow.Set_UI( transition.stage_to_liberate_UI <= transition.stage );
-            _control_flow.Block_program_mode_update();
+            Control_flow.Set_UI( transition.stage_to_liberate_UI <= transition.stage );
+            Control_flow.Block_program_mode_update();
 
             return;
 
@@ -178,7 +178,7 @@ unsafe public class CONTROLLER__program_transition {
 
 
 
-    private void Handle_MODE_START( Control_flow _control_flow ){
+    private void Handle_MODE_START(){
         
         //** logic back
 
@@ -192,7 +192,7 @@ unsafe public class CONTROLLER__program_transition {
 
         // --- NEW
 
-            Controllers_program.program.current_mode = new_mode.type;
+            Controllers.program.current_mode = new_mode.type;
             new_mode = null;
 
 
@@ -201,10 +201,10 @@ unsafe public class CONTROLLER__program_transition {
         state = Swithcing_program_transition_state.nothing;
 
 
-        _control_flow.Unblock_program_mode_update();
-        _control_flow.Unblock_UI();
-        Controllers_program.canvas_spaces.End_switch();
-        // Controllers_program.data.modes.Unlock_data();
+        Control_flow.Unblock_program_mode_update();
+        Control_flow.Unblock_UI();
+        Controllers.canvas_spaces.End_switch();
+        // Controllers.data.modes.Unlock_data();
 
 
     }

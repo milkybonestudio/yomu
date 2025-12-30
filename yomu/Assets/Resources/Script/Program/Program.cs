@@ -15,18 +15,17 @@ unsafe public class Program : MonoBehaviour {
     public Program_mode current_mode;
 
     public Dictionary<Program_mode,PROGRAM_MODE> modes;
-    public Control_flow control_flow;
-
-    public Action<Control_flow> Update_development;
     
+    public Action Update_development;
     
+    public Program_update_mode current_update_mode;
 
     public void Awake(){
 
-        System_information.main_thread_id = Thread.CurrentThread.ManagedThreadId;
+        System_run.main_thread_id = Thread.CurrentThread.ManagedThreadId;
 
         Console.Start();
-        CONSTRUCTOR__program.Construir( this ); 
+            CONSTRUCTOR__program.Construir( this );
         Console.Update();
 
     }
@@ -37,31 +36,34 @@ unsafe public class Program : MonoBehaviour {
         if( System_run.force_stop )
             { return; }
 
+
     
         // --- ALWAYS
         SYSTEM.Update();
         Controllers.input.Update();
-        TOOL__cleaner_control_flow.Clean( control_flow );
+        Control_flow.Clean();
 
 
         #if UNITY_EDITOR
-            Update_development( control_flow );
+            Update_development();
         #endif
 
-        Controllers.stack.Update( control_flow );
+        Controllers.stack.Update();
 
         // --- 
-        Controllers_program.canvas_spaces.Update( control_flow );
-        Controllers.resources.Update( control_flow );
-        Controllers.tasks.Update( control_flow );
+        Controllers.canvas_spaces.Update();
+        Controllers.resources.Update();
+        Controllers.tasks.Update();
 
-        Controllers_program.program_transition.Update( control_flow );
+        Controllers.program_transition.Update();
         Controllers.files.Update();
 
-        if( Controllers.saving.Update() )
-            { Console.Update(); return; }
-
-        Update_mode( control_flow );
+        switch( current_update_mode ){
+            case Program_update_mode.modes: Update_mode(); break;
+            case Program_update_mode.nothing: break;
+            case Program_update_mode.waiting_task: break;
+            case Program_update_mode.transition: Controllers.program_transition.Update(); break;
+        }
         
         Console.Update(); // --- SEMPRE POR ULTIMO
         
@@ -69,10 +71,12 @@ unsafe public class Program : MonoBehaviour {
         
     }
 
-    private void Update_mode( Control_flow _control_flow ){
+    private void Update_mode(){
 
-        
-        if( control_flow.program_mode_update_blocked )
+        if( Controllers.saving.Update() )
+            { return; }
+
+        if( Control_flow.program_mode_update_blocked )
             { return; }
 
         if( System_run.max_security )
@@ -84,7 +88,7 @@ unsafe public class Program : MonoBehaviour {
                     { CONTROLLER__errors.Throw( $"tried to get the program mode <Color=lightBlue>{ current_mode }</Color> but the mode is null" ); }
             }
 
-        modes[ current_mode ].Update( _control_flow );
+        modes[ current_mode ].Update();
 
         return;
 
@@ -141,19 +145,6 @@ unsafe public class Program : MonoBehaviour {
 
     }
 
-
-    public static void Force_crash_program(){
-
-        byte* p = (byte*)Marshal.AllocHGlobal( 1 );
-
-        for( int index = 0 ; index < 10_000 ; index++ )
-            { p[ index ] = 1; }
-
-    }
-
-    
-
-        
 
 }
 

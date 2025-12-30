@@ -2,6 +2,9 @@
 
 public static class Controllers {
 
+        public static Program program;
+
+
         public static CONTROLLER__safety_stack stack;
         public static CONTROLLER__data_files files;
         public static CONTROLLER__paths_ids paths_ids;
@@ -20,8 +23,15 @@ public static class Controllers {
         public static CONTROLLER__errors errors;
         public static CONTROLLER__configurations configurations;
         public static CONTROLLER__items items;
-        // public static CONTROLLER__canvas_spaces canvas_spaces;
+        
 
+        // ** program 
 
-   
+        public static CONTROLLER__program_transition program_transition;
+        public static CONTROLLER__canvas_spaces canvas_spaces;
+        public static CONTROLLER__crash_handler crash_handler;
+
+        public static CONTROLLER__device device;
+
+        
 }
